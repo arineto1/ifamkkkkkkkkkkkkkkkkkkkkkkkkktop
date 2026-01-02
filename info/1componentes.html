@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Hardware - IFAM (CEFETMINAS)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffffff;
+            color: #2d3436;
+            line-height: 1.7;
+        }
+
+        /* Efeito de Marca-Texto Amarelo Suave */
+        .highlight {
+            background-color: #fff9c4; /* Amarelo canário suave */
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .section-card {
+            border: 1px solid #edf2f7;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            background: #ffffff;
+        }
+
+        h2 {
+            color: #1a202c;
+            border-left: 5px solid #3182ce;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+        }
+
+        /* Prevenção de scroll horizontal em tabelas */
+        .table-container {
+            width: 100%;
+            overflow-x: hidden; /* Força o conteúdo a caber na largura se possível */
+        }
+
+        .mnemonic-box {
+            background-color: #f1f5f9;
+            border-radius: 6px;
+            padding: 1rem;
+            border-left: 4px solid #64748b;
+            font-style: italic;
+        }
+
+        .audio-player-fixed {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-action {
+            display: inline-block;
+            background: #2d3436;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-action:hover {
+            background: #000000;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-6 py-10">
+
+    <!-- ÁUDIO PLAYER -->
+    <div class="audio-player-fixed">
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Escutar Resumo em Áudio</p>
+        <!-- INSIRA O NOME DO ARQUIVO MP3 NO SRC ABAIXO -->
+        <audio controls class="w-full">
+            <source src="1componentes.mp3" type="audio/mpeg">
+            Seu navegador não suporta áudio.
+        </audio>
+    </div>
+
+    <header class="text-center mb-16">
+        <h1 class="text-4xl font-extrabold text-slate-900 mb-2">Hardware: Conceitos, Componentes e Periféricos</h1>
+        <p class="text-slate-500">Tutor Especialista: Preparação para Docente EBTT - IFAM</p>
+    </header>
+
+    <main>
+        
+        <!-- SEÇÃO 1: DEFINIÇÕES -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold">1. Definições e Arquitetura</h2>
+            <p>O hardware compreende a parte física. No nível de concurso para professor, a banca foca na <span class="highlight">Arquitetura de Von Neumann</span>, caracterizada por ter um único caminho (barramento) para dados e instruções.</p>
+            
+            <div class="mnemonic-box my-4">
+                <strong>Mnemônico de Von Neumann:</strong> "No Von Neumann é <span class="highlight">Normal</span> (um só caminho), no Harvard é <span class="highlight">High-tech</span> (caminhos separados)".
+            </div>
+
+            <h3 class="font-bold mt-6 mb-2">Ciclo de Instrução (O Pulo do Gato)</h3>
+            <p>A banca adora cobrar a ordem: <span class="highlight">Busca (Fetch)</span>, <span class="highlight">Decodificação (Decode)</span> e <span class="highlight">Execução (Execute)</span>. 
+            Lembre-se: O <span class="highlight">Program Counter (PC)</span> armazena o endereço da <span class="underline">próxima</span> instrução.</p>
+        </section>
+
+        <!-- SEÇÃO 2: PROCESSADORES -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold">2. CPU: Unidades e Tecnologias</h2>
+            <ul class="space-y-3">
+                <li><strong>UC (Unidade de Controle):</strong> Gerencia o fluxo, interpreta instruções.</li>
+                <li><strong>ULA (Unidade Lógica e Aritmética):</strong> Faz os <span class="highlight">cálculos e decisões lógicas</span>.</li>
+                <li><strong>Registradores:</strong> A memória mais <span class="highlight">rápida e cara</span> (dentro do processador).</li>
+            </ul>
+
+            <div class="table-container mt-6">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>RISC</th>
+                            <th>CISC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Instruções</td>
+                            <td><span class="highlight">Simples e Fixo</span></td>
+                            <td>Complexas e Variáveis</td>
+                        </tr>
+                        <tr>
+                            <td>Hardware</td>
+                            <td>Simples (foco em software)</td>
+                            <td>Complexo (foco em hardware)</td>
+                        </tr>
+                        <tr>
+                            <td>Exemplos</td>
+                            <td>ARM, Apple M1/M2</td>
+                            <td>Intel x86, AMD Ryzen</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: MEMÓRIAS -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold">3. Hierarquia de Memória</h2>
+            <p>Regra de Ouro: Quanto mais perto do topo (CPU), <span class="highlight">maior a velocidade, maior o custo e menor a capacidade</span>.</p>
+            
+            <div class="space-y-4 mt-4">
+                <div class="p-3 border rounded">
+                    <h4 class="font-bold">SRAM (Estática / Cache)</h4>
+                    <p>Usa transistores (flip-flops). <span class="highlight">Não precisa de refresh</span>. É a base da Cache L1, L2 e L3.</p>
+                </div>
+                <div class="p-3 border rounded">
+                    <h4 class="font-bold">DRAM (Dinâmica / RAM Principal)</h4>
+                    <p>Usa capacitores. <span class="highlight">Exige refresh (recarga) constante</span>. Mais lenta que a SRAM.</p>
+                </div>
+                <div class="p-3 border rounded">
+                    <h4 class="font-bold">ROM (Read Only)</h4>
+                    <p><span class="highlight">Não volátil</span>. Exemplos: BIOS (Firmware). Evoluções: PROM, EPROM, EEPROM e <span class="highlight">Flash</span> (usada em SSDs).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: ARMAZENAMENTO E RAID -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold">4. SSD e RAID</h2>
+            <p>SSDs não possuem partes móveis e usam memória Flash <span class="highlight">NAND</span>. 
+            <strong>Interfaces:</strong> SATA (lenta), NVMe (rápida, via barramento PCIe).</p>
+
+            <h3 class="font-bold mt-6 mb-2">Níveis de RAID (Memorização)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>RAID</th>
+                            <th>Nome Técnico</th>
+                            <th>Mnemônico de Prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td>Striping (Fatiamento)</td>
+                            <td><span class="highlight">Zero Segurança</span>. Soma velocidades.</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Mirroring (Espelhamento)</td>
+                            <td><span class="highlight">Um é igual ao Outro</span>. Segurança total.</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Paridade Distribuída</td>
+                            <td>Mínimo 3 discos. <span class="highlight">Perde 1 disco</span> para paridade.</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Dupla Paridade</td>
+                            <td>Mínimo 4 discos. <span class="highlight">Perde 2 discos</span>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 5: PERIFÉRICOS E BARRAMENTOS -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold">5. Periféricos e Interfaces</h2>
+            <ul class="list-disc ml-5 space-y-2">
+                <li><strong>Entrada:</strong> Teclado, Mouse, Scanner, Microfone.</li>
+                <li><strong>Saída:</strong> Monitor, Impressora, Caixa de Som.</li>
+                <li><strong>Híbridos (E/S):</strong> <span class="highlight">Monitor Touch</span>, Multifuncional, Headset, Pendrive.</li>
+            </ul>
+
+            <h3 class="font-bold mt-6 mb-2">Tendência CEFETMINAS: USB e USB-C</h3>
+            <p>O conector <span class="highlight">USB Type-C</span> é reversível e suporta o protocolo <span class="highlight">USB4</span> (baseado no Thunderbolt 3), chegando a 40 Gbps. 
+            Cuidado: O padrão <span class="highlight">USB 3.2 Gen 2x2</span> atinge 20 Gbps.</p>
+        </section>
+
+        <!-- SEÇÃO 6: COMANDOS LINUX (HARDWARE) -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold">6. Gestão via Software (Linux)</h2>
+            <p>Comandos essenciais para cargos técnicos de Informática:</p>
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
+                <div class="bg-slate-50 p-3 rounded">
+                    <code><strong>lsusb / lspci</strong></code>: Listar dispositivos nos barramentos.
+                </div>
+                <div class="bg-slate-50 p-3 rounded">
+                    <code><strong>lscpu</strong></code>: Ver detalhes do <span class="highlight">processador</span> (Cores, Cache).
+                </div>
+                <div class="bg-slate-50 p-3 rounded">
+                    <code><strong>lsblk</strong></code>: Listar <span class="highlight">blocos/discos</span> e partições.
+                </div>
+                <div class="bg-slate-50 p-3 rounded">
+                    <code><strong>free -m</strong></code>: Verificar uso da <span class="highlight">memória RAM</span>.
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 7: BIOS E UEFI -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold">7. Firmware e Particionamento</h2>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="flex-1">
+                    <h4 class="font-bold underline">Legado (BIOS + MBR)</h4>
+                    <ul class="text-sm">
+                        <li>BIOS é limitado (texto).</li>
+                        <li>MBR aceita até <span class="highlight">2 TB</span> de disco.</li>
+                        <li>Máximo 4 partições primárias.</li>
+                    </ul>
+                </div>
+                <div class="flex-1">
+                    <h4 class="font-bold underline">Moderno (UEFI + GPT)</h4>
+                    <ul class="text-sm">
+                        <li>UEFI tem interface gráfica.</li>
+                        <li>GPT suporta discos <span class="highlight">acima de 2 TB</span>.</li>
+                        <li>Possui o <span class="highlight">Secure Boot</span> (evita boot por malware).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- TENDÊNCIAS DA BANCA -->
+        <div class="bg-blue-900 text-white p-6 rounded-lg mb-12">
+            <h3 class="text-xl font-bold mb-3 italic">🔥 Visão do Especialista (Banca FCM)</h3>
+            <p class="text-sm opacity-90">A CEFETMINAS costuma cobrar questões que envolvem a <span class="font-bold">intersecção entre Hardware e Sistemas Operacionais</span>. Não estude apenas as peças; saiba como o S.O. as enxerga (drivers, IRQs, endereçamento de E/S). Em provas de docente, o foco é na <span class="font-bold">terminologia técnica precisa</span> (ex: não diga apenas "memória", especifique se é DRAM, SRAM ou SDRAM).</p>
+        </div>
+
+        <!-- BOTÃO FINAL -->
+        <div class="text-center pb-10">
+            <a href="1questoes.html" class="btn-action">
+                Ir para o Banco de Questões (Simulado)
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-10 border-t border-slate-100 text-slate-400 text-sm">
+        Material Exclusivo - Preparatório Professor IFAM - Informática
+    </footer>
+
+</body>
+</html>

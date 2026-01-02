@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Hardware - Professor EBTT</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-color: #f1f2f6;
+            --correct-color: #27ae60;
+            --wrong-color: #d63031;
+            --border-color: #dfe6e9;
+            --max-width: 850px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--secondary-color);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #1e272e;
+        }
+
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.1rem;
+            color: #636e72;
+            max-width: var(--max-width);
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            width: 90%;
+            max-width: var(--max-width);
+            margin-bottom: 100px;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            display: block;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            width: fit-content;
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f9f9f9;
+            border-color: var(--primary-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            background-color: #e3f2fd;
+            border-color: var(--primary-color);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0771c1;
+        }
+
+        /* Results & Resolutions Styling */
+        #results-container {
+            display: none;
+            margin-top: 50px;
+            border-top: 3px solid var(--primary-color);
+            padding-top: 30px;
+        }
+
+        .score-banner {
+            text-align: center;
+            padding: 30px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .score-banner h2 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .resolution-card {
+            background: #fff;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 40px;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .resolution-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #1e272e;
+        }
+
+        .correct-answer-pill {
+            display: inline-block;
+            padding: 4px 12px;
+            background-color: var(--correct-color);
+            color: white;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .feedback-correct {
+            background-color: #d4edda !important;
+            border-color: var(--correct-color) !important;
+        }
+
+        .feedback-wrong {
+            background-color: #f8d7da !important;
+            border-color: var(--wrong-color) !important;
+        }
+
+        .resolution-text {
+            white-space: pre-wrap;
+            color: #4b5563;
+            font-size: 0.95rem;
+            background: #fdfdfd;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            color: #95a5a6;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .question-card { padding: 20px; }
+            header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado Hardware: Interfaces E/S</h1>
+    <p>Perfil: Professor EBTT - Banca Fundação CEFETMINAS</p>
+</header>
+
+<div class="container">
+    <div id="quiz-form">
+        <!-- As questões serão injetadas aqui via JS -->
+    </div>
+    <button class="btn-submit" id="btn-submit" onclick="gradeQuiz()">Finalizar Simulado</button>
+
+    <div id="results-container">
+        <div class="score-banner">
+            <h2 id="final-score">0 / 10</h2>
+            <p id="performance-msg"></p>
+        </div>
+        <div id="resolutions-list">
+            <!-- Resoluções serão injetadas aqui -->
+        </div>
+    </div>
+</div>
+
+<footer>
+    © 2024 - Simulado para Concursos de Alto Nível
+</footer>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            text: "O barramento USB (Universal Serial Bus) revolucionou a conexão de periféricos ao padronizar interfaces e protocolos. No entanto, para garantir a integridade do sinal e a sincronização entre transmissor e receptor sem uma linha de clock dedicada em versões anteriores ao USB 3.0, o padrão adota mecanismos específicos de codificação de linha. Considerando as especificações elétricas e lógicas do USB 2.0 (High Speed), analise o funcionamento conjunto da codificação NRZI (Non-Return-to-Zero Inverted) e da técnica de bit stuffing. Assinale a alternativa que descreve corretamente o comportamento da camada física neste contexto.",
+            options: [
+                "A codificação NRZI inverte o nível de tensão (de alto para baixo ou vice-versa) para representar o bit lógico 1 e mantém o nível de tensão constante para representar o bit lógico 0. O bit stuffing insere um bit 0 após cada sequência de seis bits 1 consecutivos para forçar uma transição de sinal.",
+                "A codificação NRZI define que uma transição no nível de sinal representa o bit lógico 0, enquanto a ausência de transição representa o bit lógico 1. Para evitar a perda de sincronismo do PLL (Phase Locked Loop) do receptor durante longas sequências de bits 1, o transmissor insere um bit 0 (stuff bit) após seis bits 1 consecutivos no fluxo de dados.",
+                "O bit stuffing é um mecanismo de controle de erro da camada de enlace que insere um bit de paridade ímpar a cada 7 bits de dados transmitidos, independentemente da codificação NRZI utilizada na camada física, garantindo a detecção de erros de bit único.",
+                "No padrão USB 2.0, a codificação NRZI é substituída pela codificação 8b/10b, que mapeia bytes de 8 bits em símbolos de 10 bits para garantir o balanceamento DC (Direct Current) e densidade de transições suficiente, dispensando o uso de bit stuffing.",
+                "O bit stuffing no USB atua inserindo um bit 1 após uma sequência de cinco bits 0 consecutivos, pois o padrão NRZI do USB interpreta níveis de tensão constantes como nível lógico 0, o que poderia dessincronizar o relógio do receptor."
+            ],
+            correct: 1,
+            resolution: "A codificação USB 2.0 utiliza NRZI onde a transição representa o bit 0 e a ausência de transição representa o bit 1. Para evitar longos períodos sem transição (sequência de 1s), o bit stuffing insere um 0 após seis 1s consecutivos."
+        },
+        {
+            id: 2,
+            text: "A norma IEEE 1284, ratificada em 1994, consolidou e expandiu as capacidades da antiga interface paralela Centronics, definindo cinco modos de operação distintos para suportar periféricos de alta velocidade e bidirecionais. Sobre as características técnicas do modo ECP (Extended Capabilities Port) e sua implementação em hardware (chipsets Super I/O), é correto afirmar:",
+            options: [
+                "O modo ECP utiliza exclusivamente ciclos de E/S programada (PIO) para transferência de dados, exigindo que a CPU gerencie cada byte transferido através da manipulação direta dos pinos de handshake.",
+                "Diferentemente do modo EPP (Enhanced Parallel Port), que intercala ciclos de leitura e escrita de dados e endereços no mesmo canal, o ECP separa os ciclos em fases de comando e dados e implementa compressão RLE (Run-Length Encoding) em hardware, além de utilizar buffers FIFO e canais de DMA.",
+                "O Registrador de Controle Estendido (ECR) é mapeado no mesmo endereço base dos registradores de dados da porta paralela (offset +000h), compartilhando os bits de dados D0-D7.",
+                "O protocolo de negociação IEEE 1284 permite que um periférico inicie em modo ECP, mas reverta automaticamente para o modo Nibble caso o buffer FIFO do hospedeiro transborde.",
+                "O modo ECP é eletricamente incompatível com cabos paralelos padrão IEEE 1284 devido à exigência de pares diferenciais trançados para as linhas de dados."
+            ],
+            correct: 1,
+            resolution: "O ECP foi projetado para alta vazão (impressoras/scanners), suportando compressão RLE em hardware e o uso de DMA para liberar o processador."
+        },
+        {
+            id: 3,
+            text: "Um professor observa um sinal serial RS-232 em um osciloscópio. Considerando as especificações de nível de tensão e lógica do RS-232, assinale a interpretação correta do sinal visualizado.",
+            options: [
+                "O estado de repouso (Idle) da linha é caracterizado por uma tensão negativa (entre -3V e -15V), correspondendo ao nível lógico 1 (Mark). O Start Bit é sinalizado por uma transição para tensão positiva (entre +3V e +15V), correspondendo ao nível lógico 0 (Space).",
+                "O RS-232 utiliza lógica positiva convencional, onde tensões entre +3V e +15V representam o bit 1 e tensões entre -3V e -15V representam o bit 0. O estado de repouso é 0V.",
+                "O estado de repouso da linha é tensão positiva (+12V), indicando nível lógico 1. O Start Bit é uma transição para tensão negativa (-12V), indicando nível lógico 0.",
+                "A interface RS-232 é um barramento diferencial; portanto, o osciloscópio deve medir a diferença de potencial entre os pinos TX+ e TX-.",
+                "Os níveis de tensão do RS-232 variam de 0V a 5V, mas a lógica é invertida em relação ao TTL: 0V representa bit 1 e 5V representa bit 0."
+            ],
+            correct: 0,
+            resolution: "No RS-232, tensões negativas representam o nível lógico 1 (Mark) e tensões positivas representam o 0 (Space). O estado Idle é Mark (negativo)."
+        },
+        {
+            id: 4,
+            text: "Sobre o protocolo PS/2 (padrão Mini-DIN 6 pinos) e a interação elétrica entre hospedeiro (Host) e dispositivo (Device), assinale a afirmativa tecnicamente correta.",
+            options: [
+                "O Host (computador) é o mestre do barramento e gera o sinal de clock (CLK) continuamente.",
+                "O dispositivo (teclado ou mouse) é o responsável pela geração do sinal de clock, que oscila tipicamente entre 10 kHz e 16,7 kHz. O Host pode inibir a comunicação puxando o Clock para baixo.",
+                "O protocolo PS/2 suporta nativamente a conexão quente (hot-swap), possuindo circuitos de proteção contra transientes.",
+                "A comunicação PS/2 utiliza um frame de 8 bits puros, sem bits de paridade, start ou stop.",
+                "Quando o Host deseja enviar um comando, ele deve esperar que o dispositivo inicie um ciclo de clock e então inserir os dados durante as bordas de descida."
+            ],
+            correct: 1,
+            resolution: "Em PS/2, o dispositivo gera o clock. O Host 'manda' na linha forçando estados de inibição (Clock Low por >100μs)."
+        },
+        {
+            id: 5,
+            text: "Considere um dispositivo que ostenta a certificação 'USB 3.2 Gen 2x2'. Quais são as características técnicas obrigatórias associadas a esta especificação?",
+            options: [
+                "10 Gbps; Codificação 8b/10b; Conector USB Tipo-A ou Tipo-C.",
+                "20 Gbps; Codificação 128b/132b; Conector USB Tipo-C (uso obrigatório de duas pistas diferenciais).",
+                "40 Gbps; Codificação 64b/66b; Conector USB Tipo-C com suporte a tunelamento Thunderbolt 3.",
+                "20 Gbps; Codificação 8b/10b; Conector USB Tipo-A (SuperSpeed+ Dual Lane).",
+                "10 Gbps; Codificação 128b/132b; Conector USB Tipo-C, operando em modo Alternate Mode."
+            ],
+            correct: 1,
+            resolution: "Gen 2x2 indica 10Gbps por pista (Gen 2) vezes duas pistas (x2), totalizando 20Gbps. Isso exige obrigatoriamente o conector Tipo-C devido aos pinos extras."
+        },
+        {
+            id: 6,
+            text: "Qual é a principal inovação arquitetural da UART 16550A em relação aos seus antecessores (8250/16450) e qual problema sistêmico ela resolveu?",
+            options: [
+                "Introduziu buffers FIFO (First-In, First-Out) de 16 bytes para transmissão e recepção, reduzindo a frequência de interrupções geradas à CPU.",
+                "Implementou um barramento de dados de 16 bits para comunicação com a CPU, dobrando a largura de banda interna.",
+                "Substituiu a comunicação assíncrona pela síncrona, eliminando a necessidade de bits de Start e Stop.",
+                "Adicionou um coprocessador aritmético dedicado para cálculo de paridade e CRC em hardware.",
+                "Permitiu a conexão direta com o barramento PCI, eliminando a necessidade de controladores Super I/O."
+            ],
+            correct: 0,
+            resolution: "A UART 16550A resolveu o problema de perda de dados e overhead da CPU em altas velocidades ao introduzir buffers FIFO de 16 bytes."
+        },
+        {
+            id: 7,
+            text: "Assinale a configuração de pinagem correta para um cabo Null Modem com handshake completo em loopback (simulação local de controle de fluxo) entre dois conectores DB-9.",
+            options: [
+                "Conexão pino a pino direta (1-1, 2-2,..., 9-9).",
+                "Cruzamento dos pinos de dados: TX (3) ao RX (2) e vice-versa. Os pinos de controle RTS (7) e CTS (8) são interligados localmente, assim como DTR (4), DSR (6) e CD (1).",
+                "Cruzamento total: TX (3) com TX (3) e RX (2) com RX (2). O terra (5) não deve ser conectado.",
+                "Conexão cruzada apenas dos pinos de dados (2 e 3). Os pinos de controle de fluxo devem ser deixados desconectados (floating).",
+                "O pino 2 (TX no DB-9) conecta ao pino 3 (RX no DB-9). O pino 5 (GND) conecta ao pino 5. Os pinos 7 e 8 são cruzados remotamente."
+            ],
+            correct: 1,
+            resolution: "O cabo Null Modem com loopback local 'engana' o software jumpeando os sinais de controle de hardware no próprio conector (Ex: RTS ligado ao CTS do mesmo lado)."
+        },
+        {
+            id: 8,
+            text: "A especificação USB Power Delivery (USB PD) 3.1 introduziu o conceito de Extended Power Range (EPR). Com base nesse padrão, assinale a alternativa correta.",
+            options: [
+                "O USB PD 3.1 manteve a tensão máxima de 20V, mas aumentou a corrente máxima para 10A.",
+                "O padrão EPR introduziu novas tensões fixas de 28V, 36V e 48V, permitindo atingir até 240W, exigindo cabos E-Marker específicos.",
+                "A potência de 240W é alcançada através do uso simultâneo dos pinos de dados SuperSpeed para transmissão de energia.",
+                "O USB PD 3.1 é retrocompatível apenas com dispositivos USB Tipo-C; conectores Tipo-A podem fornecer no máximo 100W.",
+                "As tensões de EPR (28V, 36V, 48V) são negociadas analogicamente através de resistores de pull-up no canal CC."
+            ],
+            correct: 1,
+            resolution: "O PD 3.1 saltou de 100W para 240W usando tensões de até 48V (mantendo 5A). Cabos E-Marker são necessários para validar essa capacidade."
+        },
+        {
+            id: 9,
+            text: "No modo SPP (Standard Parallel Port) da porta paralela, qual é a explicação técnica para a falha de leitura de dados e qual o método padrão para contorná-la?",
+            options: [
+                "No modo SPP, os 8 pinos de dados são unidirecionais (saída). Para ler dados, o software utiliza o 'Nibble Mode', lendo 4 bits por vez através das linhas de Status.",
+                "O modo SPP opera com lógica invertida (0V = 1), causando erro de interpretação.",
+                "O barramento de controle exige que o sinal Strobe seja mantido em nível alto durante a leitura.",
+                "A porta paralela SPP não possui linhas de entrada; é uma interface estritamente de saída ('write-only').",
+                "O problema reside na ausência de sinal de clock, exigindo o modo ECP síncrono."
+            ],
+            correct: 0,
+            resolution: "A porta Centronics original era unidirecional. O 'Nibble Mode' foi a solução padrão para receber dados do periférico usando as 5 linhas de status disponíveis."
+        },
+        {
+            id: 10,
+            text: "Comparando a pinagem RS-232 de um conector DB-25 macho com a de um DB-9 macho (ambos DTE), assinale a correta correspondência funcional.",
+            options: [
+                "No DB-25, o pino 2 é TXD e o pino 3 é RXD. No DB-9, o pino 2 é RXD e o pino 3 é TXD.",
+                "O Terra de Sinal (Signal Ground) está localizado no pino 7 em ambos os conectores.",
+                "O pino 2 é RXD e o pino 3 é TXD em ambos os conectores.",
+                "No DB-25, o pino 20 é DTR e no DB-9 o DTR é o pino 1.",
+                "A pinagem é idêntica para os primeiros 9 pinos de ambos os conectores."
+            ],
+            correct: 0,
+            resolution: "Houve uma inversão clássica na mudança para o padrão do IBM AT (DB-9). O pino 2 no DB-25 é Transmissão (TX), enquanto no DB-9 o pino 2 é Recepção (RX)."
+        }
+    ];
+
+    function initQuiz() {
+        const quizForm = document.getElementById('quiz-form');
+        let html = '';
+
+        questions.forEach((q, index) => {
+            html += `
+                <div class="question-card" id="q-card-${index}">
+                    <span class="question-header">QUESTÃO ${index + 1}</span>
+                    <div class="question-text">${q.text}</div>
+                    <ul class="options">
+                        ${q.options.map((opt, optIndex) => `
+                            <li class="option-item" onclick="selectOption(${index}, ${optIndex})">
+                                <input type="radio" name="q${index}" id="q${index}o${optIndex}" value="${optIndex}">
+                                <label for="q${index}o${optIndex}">${String.fromCharCode(65 + optIndex)}) ${opt}</label>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            `;
+        });
+
+        quizForm.innerHTML = html;
+    }
+
+    window.selectOption = function(qIndex, optIndex) {
+        const options = document.querySelectorAll(`#q-card-${qIndex} .option-item`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        options[optIndex].classList.add('selected');
+        document.getElementById(`q${qIndex}o${optIndex}`).checked = true;
+    }
+
+    window.gradeQuiz = function() {
+        let score = 0;
+        const resolutionsList = document.getElementById('resolutions-list');
+        let resHtml = '<h3>Resoluções Comentadas</h3>';
+
+        questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const selectedValue = selected ? parseInt(selected.value) : -1;
+            const isCorrect = selectedValue === q.correct;
+
+            if (isCorrect) score++;
+
+            // Visual feedback on the cards
+            const card = document.getElementById(`q-card-${index}`);
+            const options = card.querySelectorAll('.option-item');
+            
+            // Highlight correct and wrong
+            options[q.correct].classList.add('feedback-correct');
+            if (selectedValue !== -1 && !isCorrect) {
+                options[selectedValue].classList.add('feedback-wrong');
+            }
+
+            // Build Resolution
+            resHtml += `
+                <div class="resolution-card">
+                    <div class="resolution-header">Questão ${index + 1}: ${isCorrect ? '✅ Acertou' : '❌ Errou'}</div>
+                    <div class="correct-answer-pill">Gabarito: ${String.fromCharCode(65 + q.correct)}</div>
+                    <div class="resolution-text">${q.resolution}</div>
+                </div>
+            `;
+        });
+
+        // Show Results Section
+        document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+        const msg = score >= 8 ? "Excelente! Você está pronto para a banca CEFETMINAS." : (score >= 5 ? "Bom desempenho, mas revise os pontos técnicos específicos." : "Atenção: Revise a bibliografia de portas e barramentos.");
+        document.getElementById('performance-msg').innerText = msg;
+        
+        resolutionsList.innerHTML = resHtml;
+        document.getElementById('results-container').style.display = 'block';
+        document.getElementById('btn-submit').style.display = 'none';
+
+        // Scroll to results
+        document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

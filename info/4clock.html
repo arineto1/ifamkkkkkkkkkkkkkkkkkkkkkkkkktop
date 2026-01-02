@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Hardware e Clock - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+
+        .highlight-text {
+            background-color: #fef3c7;
+            padding: 0 2px;
+            font-weight: 600;
+            border-bottom: 2px solid #fcd34d;
+        }
+
+        .section-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            background: #ffffff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        h1, h2, h3 {
+            color: #111827;
+            letter-spacing: -0.025em;
+        }
+
+        .math-display {
+            background-color: #f8fafc;
+            border-left: 5px solid #3b82f6;
+            padding: 1.5rem;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Tabelas Anti-Scroll Horizontal */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th {
+            background-color: #f9fafb;
+            text-align: left;
+            padding: 14px;
+            border-bottom: 2px solid #e5e7eb;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: #4b5563;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: top;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr { border: 1px solid #e5e7eb; margin-bottom: 1rem; border-radius: 8px; }
+            td { border: none; border-bottom: 1px solid #f3f4f6; position: relative; padding-left: 50%; text-align: right; }
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 12px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: 700;
+                color: #374151;
+            }
+            td:last-child { border-bottom: 0; }
+        }
+
+        .audio-player-card {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 1.25rem;
+            border-radius: 16px;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #111827;
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: transform 0.2s, background 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            background-color: #1f2937;
+            transform: translateY(-2px);
+        }
+
+        .mnemonic-box {
+            background-color: #fff7ed;
+            border: 1px dashed #fb923c;
+            padding: 1rem;
+            border-radius: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-10 max-w-5xl mx-auto">
+
+    <header class="text-center mb-10">
+        <span class="text-blue-600 font-bold uppercase tracking-widest text-sm">Preparatório IFAM 2024/2025</span>
+        <h1 class="text-4xl md:text-5xl font-extrabold mt-2 mb-4">Hardware: Teoria do Clock</h1>
+        <p class="text-gray-500 text-lg">Guia Definitivo focado na Banca Fundação CEFETMINAS (Cargos EBTT)</p>
+    </header>
+
+    <!-- Player de Áudio -->
+    <div class="audio-player-card">
+        <div class="flex flex-col md:flex-row items-center gap-4">
+            <div class="bg-blue-600 p-3 rounded-full text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+            </div>
+            <div class="flex-1 text-center md:text-left">
+                <p class="font-bold text-slate-800">Resumo em Áudio (2 Minutos)</p>
+                <p class="text-xs text-slate-500">Ouça o resumo estratégico enquanto revisa o texto abaixo.</p>
+            </div>
+            <!-- ARQUIVO MP3 ABAIXO -->
+            <audio controls class="w-full md:w-64">
+                <source src="4clock.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </audio>
+        </div>
+    </div>
+
+    <main>
+        <!-- Definição -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-blue-500">01.</span> Definição e Física do Clock
+            </h2>
+            <p>O clock é um <span class="highlight-text">sinal de sincronização</span> (geralmente uma onda quadrada) gerado por um cristal de quartzo. Ele dita o ritmo de trabalho do computador. Sem clock, não há coordenação entre os componentes.</p>
+            
+            <div class="math-display">
+                <p><strong>Frequência ($f$):</strong> Número de ciclos por segundo (Hertz - Hz).</p>
+                <p><strong>Período ($T$):</strong> Tempo de duração de um único ciclo (Segundos - s).</p>
+                <p class="mt-2 text-blue-700 font-bold">Fórmula de Prova: $f = \frac{1}{T}$ ou $T = \frac{1}{f}$</p>
+            </div>
+
+            <p class="mt-4">Na prática de concursos, lembre-se da correlação direta entre as escalas:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Frequência</th>
+                        <th>Período (Tempo)</th>
+                        <th>Importância</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Frequência">1 KHz ($10^3$)</td>
+                        <td data-label="Período">1 milissegundo (ms)</td>
+                        <td>Processos lentos / Áudio</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Frequência">1 MHz ($10^6$)</td>
+                        <td data-label="Período">1 microssegundo ($\mu s$)</td>
+                        <td>Microcontroladores básicos</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Frequência"><span class="highlight-text">1 GHz ($10^9$)</span></td>
+                        <td data-label="Período"><span class="highlight-text">1 nanossegundo (ns)</span></td>
+                        <td>Processadores Atuais (Foco total aqui)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Mnemonicos -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-blue-500">02.</span> Mnemônicos e Memorização SI
+            </h2>
+            <p class="mb-4">Para não errar a ordem dos prefixos na hora de calcular taxas de transferência ou tempos de ciclo:</p>
+            
+            <div class="mnemonic-box mb-6">
+                <strong>Mnemônico para Prefixos Grandes:</strong><br>
+                "<span class="font-bold text-orange-600">T</span>odo <span class="font-bold text-orange-600">G</span>igante <span class="font-bold text-orange-600">M</span>uito <span class="font-bold text-orange-600">K</span>awasaki" <br>
+                (<span class="highlight-text">T</span>era, <span class="highlight-text">G</span>iga, <span class="highlight-text">M</span>ega, <span class="highlight-text">K</span>ilo)
+            </div>
+
+            <div class="mnemonic-box">
+                <strong>Mnemônico para Prefixos Pequenos (Tempo):</strong><br>
+                "O <span class="font-bold text-orange-600">m</span>ili- <span class="font-bold text-orange-600">micro</span>- <span class="font-bold text-orange-600">nano</span> <span class="font-bold text-orange-600">p</span>icou" <br>
+                (<span class="highlight-text">m</span>ili $10^{-3}$, <span class="highlight-text">m</span>icro $10^{-6}$, <span class="highlight-text">n</span>ano $10^{-9}$, <span class="highlight-text">p</span>ico $10^{-12}$)
+            </div>
+        </section>
+
+        <!-- Arquitetura e Memória -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-blue-500">03.</span> Clock Real vs. Efetivo (DDR)
+            </h2>
+            <p>A Fundação CEFETMINAS adora cobrar a diferença entre o clock que a memória opera fisicamente e o clock "comercial".</p>
+            <ul class="list-disc ml-6 space-y-2 mt-4">
+                <li><strong>Clock Real:</strong> Frequência física de oscilação do barramento.</li>
+                <li><strong>DDR (Double Data Rate):</strong> Transfere dados na <span class="highlight-text">subida (rising edge)</span> e na <span class="highlight-text">descida (falling edge)</span> do pulso de clock.</li>
+                <li><strong>Clock Efetivo:</strong> O dobro do real (medido em MT/s - MegaTransfers por segundo).</li>
+            </ul>
+
+            <div class="bg-gray-50 p-4 border rounded mt-4">
+                <p class="font-bold mb-2">Cálculo de Largura de Banda (Taxa de Transferência):</p>
+                <div class="text-lg font-mono">Taxa (MB/s) = Clock Efetivo × 8</div>
+                <p class="text-sm text-gray-500 mt-2">Explicação: Como o barramento de memória padrão tem 64 bits (8 bytes), multiplicamos o clock efetivo por 8.</p>
+            </div>
+        </section>
+
+        <!-- Ciclo de Instrução -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-blue-500">04.</span> Ciclo de Instrução e Pipeline
+            </h2>
+            <p>O processador não faz tudo de uma vez. Ele divide a execução em etapas sincronizadas pelo clock.</p>
+            
+            <h3 class="font-bold mt-4 mb-2">As 5 fases clássicas (Stallings):</h3>
+            <ol class="list-decimal ml-6 space-y-2">
+                <li><span class="font-semibold">Busca (Fetch):</span> Traz a instrução da memória para o IR (Instruction Register).</li>
+                <li><span class="font-semibold">Decodificação:</span> A Unidade de Controle entende o que deve ser feito.</li>
+                <li><span class="font-semibold">Cálculo de Endereços:</span> Identifica onde estão os operandos.</li>
+                <li><span class="font-semibold">Execução:</span> A ULA (Unidade Lógica e Aritmética) entra em ação.</li>
+                <li><span class="font-semibold">Escrita (Write Back):</span> Grava o resultado no registrador ou memória.</li>
+            </ol>
+
+            <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-500">
+                <p><strong>Pipeline:</strong> Técnica que permite processar várias instruções ao mesmo tempo, cada uma em uma fase diferente. <span class="highlight-text">Aumenta a vazão (throughput)</span>, mas <span class="highlight-text">não reduz a latência</span> de uma única instrução.</p>
+            </div>
+        </section>
+
+        <!-- CEFETMINAS Trends -->
+        <section class="section-box border-red-200 bg-red-50/10">
+            <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                <span class="text-red-600">05.</span> Análise CEFETMINAS: Tendências e "Peguinhas"
+            </h2>
+            <p class="mb-4">Baseado no histórico de provas EBTT (Ensino Básico, Técnico e Tecnológico):</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Assunto</th>
+                        <th>O "Peguinha"</th>
+                        <th>O Acerto Crítico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Assunto">Interrupções</td>
+                        <td data-label="Peguinha">Dizer que a interrupção para a instrução no meio.</td>
+                        <td data-label="Acerto">O CPU verifica interrupções <span class="highlight-text">apenas ao final</span> de cada ciclo de instrução.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Assunto">Wait States</td>
+                        <td data-label="Peguinha">Confundir com erro de hardware.</td>
+                        <td data-label="Acerto">São <span class="highlight-text">ciclos de clock "vazios"</span> inseridos para esperar periféricos lentos (ex: RAM).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Assunto">Throttling</td>
+                        <td data-label="Peguinha">Confundir com Overclocking.</td>
+                        <td data-label="Acerto">Redução proposital do clock para <span class="highlight-text">evitar superaquecimento</span>.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Assunto">Overclocking</td>
+                        <td data-label="Peguinha">Afirmar que é sempre seguro se houver ventoinha.</td>
+                        <td data-label="Acerto">Aumenta o clock além do nominal, gerando calor e <span class="highlight-text">instabilidade eletromagnética (jitter)</span>.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="font-bold mt-6 text-red-700">Conceitos Adicionais para Gabaritar:</h3>
+            <ul class="list-disc ml-6 mt-2 space-y-2">
+                <li><strong>Clock Externo (FSB/Base Clock):</strong> Frequência de comunicação com a placa-mãe.</li>
+                <li><strong>Multiplicador de Clock:</strong> Fator que define o Clock Interno (Ex: Base 100MHz x Mult 32 = 3.2GHz).</li>
+                <li><strong>CPI vs IPC:</strong> Ciclos por Instrução vs Instruções por Ciclo. Se o IPC sobe, a performance sobe mesmo com o mesmo Clock.</li>
+            </ul>
+        </section>
+
+        <div class="flex flex-col items-center gap-4 mt-10 mb-20">
+            <a href="4questoes.html" class="btn-link w-full md:w-auto">
+                <span>Praticar com Questões Inéditas</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+            <p class="text-gray-400 text-sm italic">O sucesso no IFAM exige precisão técnica e calma. Revise as fórmulas!</p>
+        </div>
+    </main>
+
+    <footer class="text-center text-gray-400 text-xs pb-10">
+        Material desenvolvido para o cargo de Professor de Informática - IFAM. <br>
+        Foco: Hardware e Arquitetura de Computadores.
+    </footer>
+
+</body>
+</html>

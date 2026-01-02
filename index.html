@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo Ágil - Links Diretos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --duo-green: #58cc02;
+            --duo-blue: #1cb0f6;
+            --duo-purple: #ce82ff;
+            --duo-orange: #ff9600;
+            --duo-gray: #e5e5e5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff;
+            color: #4b4b4b;
+        }
+
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .category-section {
+            margin-bottom: 80px;
+        }
+
+        .unit-header {
+            width: 100%;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            color: white;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px 20px;
+            justify-items: center;
+        }
+
+        @media (max-width: 1024px) {
+            .lesson-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .lesson-grid { grid-template-columns: repeat(2, 1fr); gap: 30px 10px; }
+        }
+
+        /* Botão da Aula como Link */
+        .lesson-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.1s ease;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .lesson-node:active {
+            transform: translateY(4px);
+        }
+
+        .lesson-circle {
+            width: 75px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lesson-node:active .lesson-circle {
+            box-shadow: none;
+        }
+
+        .lesson-circle i {
+            color: white;
+            font-size: 26px;
+        }
+
+        .lesson-title {
+            margin-top: 12px;
+            font-weight: bold;
+            text-align: center;
+            max-width: 160px;
+            font-size: 13px;
+            line-height: 1.2;
+            color: #4b4b4b;
+        }
+
+        /* Novo estilo para o tempo decorrido */
+        .last-seen {
+            font-size: 10px;
+            color: #888;
+            margin-top: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .theme-portuguesa { --color: var(--duo-green); --darker: #46a302; }
+        .theme-legislacao { --color: var(--duo-blue); --darker: #1899d6; }
+        .theme-didatica { --color: var(--duo-purple); --darker: #af6fdb; }
+        .theme-informatica { --color: var(--duo-orange); --darker: #d97f00; }
+
+        .bg-theme { background-color: var(--color); }
+        .shadow-theme { box-shadow: 0 6px 0 var(--darker); }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-black text-green-500">CURRÍCULO DE ESTUDOS</h1>
+            <p class="text-gray-400 mt-2 font-bold uppercase tracking-widest">Clique em uma aula para acessar o conteúdo</p>
+        </header>
+
+        <div id="content-root"></div>
+    </div>
+
+    <script>
+        const conteudos = [
+            {
+                titulo: 'Língua Portuguesa',
+                corClass: 'theme-portuguesa',
+                aulas: [
+                    { nome: "1. Leitura e interpretação", url: "#" },
+                    { nome: "2. Informações implícitas", url: "#" },
+                    { nome: "3. Significação contextual", url: "#" },
+                    { nome: "4. Ponto de vista do autor", url: "#" },
+                    { nome: "5. Linguagem verbal/mista", url: "#" },
+                    { nome: "6. Polissemia e Sinonímia", url: "#" },
+                    { nome: "7. Denotação e Conotação", url: "#" },
+                    { nome: "8. Figuras de linguagem", url: "#" },
+                    { nome: "9. Recursos de estilo", url: "#" },
+                    { nome: "10. Funções da linguagem", url: "#" },
+                    { nome: "11. Intertextualidade", url: "#" },
+                    { nome: "12. Tipos de discurso", url: "#" },
+                    { nome: "13. Tipologia textual", url: "#" },
+                    { nome: "14. Objetivos discursivos", url: "#" },
+                    { nome: "15. Contexto de circulação", url: "#" },
+                    { nome: "16. Aspectos linguísticos", url: "#" },
+                    { nome: "17. Texto e textualidade", url: "#" },
+                    { nome: "18. Variedades linguísticas", url: "#" },
+                    { nome: "19. Registros de escrita", url: "#" },
+                    { nome: "20. Fonética e Fonologia", url: "#" },
+                    { nome: "21. Acentuação gráfica", url: "#" },
+                    { nome: "22. Crase", url: "#" },
+                    { nome: "23. Morfologia e Flexão", url: "#" },
+                    { nome: "24. Análise morfológica", url: "#" },
+                    { nome: "25. Frase, oração e período", url: "#" },
+                    { nome: "26. Termos da oração", url: "#" },
+                    { nome: "27. Sintaxe composta", url: "#" },
+                    { nome: "28. Sequenciação", url: "#" },
+                    { nome: "29. Discurso argumentativo", url: "#" },
+                    { nome: "30. Relações lógicas", url: "#" },
+                    { nome: "31. Análise sintática", url: "#" },
+                    { nome: "32. Concordâncias", url: "#" },
+                    { nome: "33. Regências", url: "#" },
+                    { nome: "34. Colocação pronominal", url: "#" },
+                    { nome: "35. Sinais de pontuação", url: "#" },
+                    { nome: "36. Padrão culto", url: "#" },
+                    { nome: "37. Novo Acordo Ortográfico", url: "#" }
+                ]
+            },
+            {
+                titulo: 'Legislação Aplicada',
+                corClass: 'theme-legislacao',
+                aulas: [
+                    { nome: "1.1 CF/88: Princípios", url: "#" },
+                    { nome: "1.2 CF/88: Direitos", url: "#" },
+                    { nome: "1.3 CF/88: Org. Estado", url: "#" },
+                    { nome: "1.4 CF/88: Educação", url: "#" },
+                    { nome: "2. Lei nº 8.112/1990", url: "#" },
+                    { nome: "3. Decreto nº 12.374/2025", url: "#" },
+                    { nome: "4. Lei nº 11.892/2008", url: "#" },
+                    { nome: "5. Lei nº 14.540/2023", url: "#" },
+                    { nome: "6. LGPD", url: "#" },
+                    { nome: "7. Lei nº 12.772/2012", url: "#" },
+                    { nome: "8.1 Resolução 94 IFAM", url: "#" },
+                    { nome: "8.2 Resolução 66 IFAM", url: "#" },
+                    { nome: "8.3 Resolução 72 IFAM", url: "#" }
+                ]
+            },
+            {
+                titulo: 'Didática',
+                corClass: 'theme-didatica',
+                aulas: [
+                    { nome: "1. Teorias pedagógicas", url: "#" },
+                    { nome: "2. Avaliação externa", url: "#" },
+                    { nome: "3. Avaliação formativa", url: "#" },
+                    { nome: "4. Instrumentos/Rubricas", url: "#" },
+                    { nome: "5. Ed. Infantil/Iniciais", url: "#" },
+                    { nome: "6. Recomposição", url: "#" },
+                    { nome: "7. Tecnologias no ensino", url: "#" },
+                    { nome: "8. Profissionalidade", url: "#" },
+                    { nome: "9. Organização do ensino", url: "#" },
+                    { nome: "10. Mediação pedagógica", url: "#" },
+                    { nome: "11. Interação pedagógica", url: "#" },
+                    { nome: "12. Trabalho docente", url: "#" },
+                    { nome: "13. Projeto pedagógico", url: "#" },
+                    { nome: "14. Situações de sala", url: "#" },
+                    { nome: "15. Didática Geral", url: "#" },
+                    { nome: "16. Indisciplina/Ciclos", url: "#" },
+                    { nome: "17. Didática na Amazônia", url: "#" },
+                    { nome: "18. Estratégias locais", url: "#" },
+                    { nome: "19. Inclusão", url: "#" },
+                    { nome: "20. Sequências IFAM", url: "#" },
+                    { nome: "21. Formação continuada", url: "#" },
+                    { nome: "22. Formação pela pesquisa", url: "#" },
+                    { nome: "23. Narrativas docentes", url: "#" },
+                    { nome: "24. Pós-graduação profissional", url: "#" }
+                ]
+            },
+            {
+                titulo: 'Informática',
+                corClass: 'theme-informatica',
+                aulas: [
+                    { nome: "1. Hardware: Componentes", url: "1componentes.html" },
+                    { nome: "2. Tipos de memória", url: "2memoria.html" },
+                    { nome: "3. Drivers", url: "3drivers.html" },
+                    { nome: "4. Clock", url: "4clock.html" },
+                    { nome: "5. Barramentos", url: "5barramentos.html" },
+                    { nome: "6. Armazenamento", url: "6armazenamento.html" },
+                    { nome: "7. Portas (USB/PS2)", url: "7portas.html" },
+                    { nome: "8. Memória Primária", url: "#" },
+                    { nome: "9. Periféricos", url: "#" },
+                    { nome: "10. Impressão", url: "#" },
+                    { nome: "11. Disp. Entrada/Saída", url: "#" },
+                    { nome: "12. Manutenção", url: "#" },
+                    { nome: "13. Vírus e Antivírus", url: "#" },
+                    { nome: "14. Criptografia", url: "#" },
+                    { nome: "15. Conceitos Internet", url: "#" },
+                    { nome: "16. Navegadores/E-mail", url: "#" },
+                    { nome: "17. Busca (Google)", url: "#" },
+                    { nome: "18. Arquitetura Rede", url: "#" },
+                    { nome: "19. Hardware de rede", url: "#" },
+                    { nome: "20. Protocolos", url: "#" },
+                    { nome: "21. Meios transmissão", url: "#" },
+                    { nome: "22. Local e Wireless", url: "#" },
+                    { nome: "23. Redes TCP/IP", url: "#" },
+                    { nome: "24. Roteamento", url: "#" },
+                    { nome: "25. Tipos de rede", url: "#" },
+                    { nome: "26. Firewall/VPN", url: "#" },
+                    { nome: "27. DNS", url: "#" },
+                    { nome: "28. DHCP", url: "#" },
+                    { nome: "29. Gerenciamento", url: "#" },
+                    { nome: "30. Conceito Algoritmos", url: "#" },
+                    { nome: "31. Resolução problemas", url: "#" },
+                    { nome: "32. Português Estruturado", url: "#" },
+                    { nome: "33. Tipos de dados", url: "#" },
+                    { nome: "34. Variáveis/Operadores", url: "#" },
+                    { nome: "35. Estruturas controle", url: "#" },
+                    { nome: "36. Vetores e Matrizes", url: "#" },
+                    { nome: "37. Sub-rotinas", url: "#" },
+                    { nome: "38. Parâmetros/Ponteiros", url: "#" },
+                    { nome: "39. Arquitetura Software", url: "#" },
+                    { nome: "40. POO: Conceitos", url: "#" },
+                    { nome: "41. Modelagem OO", url: "#" },
+                    { nome: "42. SQL Básico", url: "#" },
+                    { nome: "43. Operações BD", url: "#" },
+                    { nome: "44. Inserir/Excluir", url: "#" },
+                    { nome: "45. MySQL", url: "#" },
+                    { nome: "46. Diferentes Bancos", url: "#" },
+                    { nome: "47. Relacionais/ER", url: "#" },
+                    { nome: "48. NoSQL", url: "#" },
+                    { nome: "49. Tipos NoSQL", url: "#" }
+                ]
+            }
+        ];
+
+        // Função para calcular o tempo relativo
+        function formatRelativeTime(timestamp) {
+            if (!timestamp) return '';
+            
+            const now = new Date();
+            const past = new Date(parseInt(timestamp));
+            const diffInSeconds = Math.floor((now - past) / 1000);
+            
+            if (diffInSeconds < 60) return 'Agora mesmo';
+            
+            const diffInMinutes = Math.floor(diffInSeconds / 60);
+            if (diffInMinutes < 60) return `Visto há ${diffInMinutes} min`;
+            
+            const diffInHours = Math.floor(diffInMinutes / 60);
+            if (diffInHours < 24) return `Visto há ${diffInHours}h`;
+            
+            const diffInDays = Math.floor(diffInHours / 24);
+            if (diffInDays < 7) return `Visto há ${diffInDays} ${diffInDays === 1 ? 'dia' : 'dias'}`;
+            
+            const diffInWeeks = Math.floor(diffInDays / 7);
+            return `Visto há ${diffInWeeks} ${diffInWeeks === 1 ? 'semana' : 'semanas'}`;
+        }
+
+        // Função para salvar o clique
+        function handleLessonAction(categoryName, lessonName, url) {
+            const lessonId = `seen_${categoryName}_${lessonName}`.replace(/\s+/g, '_');
+            localStorage.setItem(lessonId, Date.now().toString());
+            
+            // Se for um link real (não apenas #), navega
+            if (url !== '#') {
+                window.location.href = url;
+            } else {
+                render(); // Atualiza a tela para mostrar o tempo se for só um clique de teste
+            }
+        }
+
+        function getIconForIndex(i) {
+            const icons = ['fa-star', 'fa-book-open', 'fa-pencil-alt', 'fa-brain', 'fa-check-circle', 'fa-graduation-cap'];
+            return icons[i % icons.length];
+        }
+
+        function render() {
+            const root = document.getElementById('content-root');
+            let finalHtml = '';
+
+            conteudos.forEach(secao => {
+                let gridHtml = '';
+                secao.aulas.forEach((aula, i) => {
+                    const lessonId = `seen_${secao.titulo}_${aula.nome}`.replace(/\s+/g, '_');
+                    const lastSeenTimestamp = localStorage.getItem(lessonId);
+                    const lastSeenText = lastSeenTimestamp ? formatRelativeTime(lastSeenTimestamp) : '';
+
+                    gridHtml += `
+                        <div onclick="handleLessonAction('${secao.titulo}', '${aula.nome}', '${aula.url}')" class="lesson-node">
+                            <div class="lesson-circle bg-theme shadow-theme">
+                                <i class="fas ${getIconForIndex(i)}"></i>
+                            </div>
+                            <span class="lesson-title">${aula.nome}</span>
+                            ${lastSeenText ? `<span class="last-seen">${lastSeenText}</span>` : ''}
+                        </div>
+                    `;
+                });
+
+                finalHtml += `
+                    <section class="category-section ${secao.corClass}">
+                        <div class="unit-header bg-theme">
+                            <h2 class="text-2xl font-black">${secao.titulo}</h2>
+                        </div>
+                        <div class="lesson-grid">
+                            ${gridHtml}
+                        </div>
+                    </section>
+                `;
+            });
+
+            root.innerHTML = finalHtml;
+        }
+
+        window.onload = render;
+    </script>
+</body>
+</html>

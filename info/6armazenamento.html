@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo de Elite: Hardware IFAM - CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef08a;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .cefet-trend {
+            border-left: 4px solid #10b981;
+            background-color: #ecfdf5;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .trap-box {
+            border-left: 4px solid #ef4444;
+            background-color: #fef2f2;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .mnemonic-box {
+            border-left: 4px solid #3b82f6;
+            background-color: #eff6ff;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+            padding: 14px;
+            color: #334155;
+        }
+
+        td {
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+        }
+
+        h2 { border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; margin-top: 2.5rem; }
+        
+        .audio-container {
+            position: sticky;
+            top: 1rem;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Player de Áudio Fixo -->
+    <div class="audio-container mb-12 p-4 border rounded-xl shadow-sm bg-white">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h3 class="text-sm font-bold text-blue-600 uppercase tracking-widest">Player de Estudo</h3>
+                <p class="text-xs text-gray-500">Resumo Técnico em Áudio - Hardware IFAM</p>
+            </div>
+            <div class="flex-1">
+                <!-- ESPAÇO PARA O NOME DO ARQUIVO MP3 -->
+                <audio controls class="w-full h-10">
+                    <source src="6armazenamento.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                </audio>
+            </div>
+        </div>
+    </div>
+
+    <header class="mb-16">
+        <h1 class="text-4xl font-extrabold text-slate-900 mb-4 text-center">Hardware: Dispositivos e Placas</h1>
+        <p class="text-center text-lg text-slate-600">Conteúdo Integral & Estruturado para Professor de Informática (EBTT)</p>
+    </header>
+
+    <main>
+        <!-- SEÇÃO 1: PLACAS -->
+        <section>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">1. Placas-Mãe, Chipsets e Barramentos</h2>
+            
+            <h3 class="text-xl font-semibold mt-4 mb-2">Fatores de Forma (Dimensões Físicas)</h3>
+            <p>A CEFETMINAS costuma cobrar a compatibilidade física em cenários de montagem de laboratórios.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Padrão</th>
+                            <th>Tamanho Aprox.</th>
+                            <th>Uso Típico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ATX</strong></td>
+                            <td>305 x 244 mm</td>
+                            <td>Padrão desktop comum, mais slots de expansão.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Micro-ATX</strong></td>
+                            <td>244 x 244 mm</td>
+                            <td>Equilíbrio, cabe em gabinetes menores.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mini-ITX</strong></td>
+                            <td>170 x 170 mm</td>
+                            <td>Foco em baixo consumo e sistemas compactos (HTPC).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">PCI Express (PCIe) - Barramento Serial</h3>
+            <p>Diferente do PCI antigo (paralelo), o PCIe é <span class="highlight">ponto-a-ponto</span>. A velocidade dobra a cada geração.</p>
+            <ul class="list-disc ml-8 space-y-2">
+                <li><strong>Lanes (Trilhas):</strong> x1, x4, x8, x16.</li>
+                <li><strong>PCIe 3.0:</strong> ~1 GB/s por lane.</li>
+                <li><strong>PCIe 4.0:</strong> ~2 GB/s por lane.</li>
+                <li><strong>PCIe 5.0:</strong> ~4 GB/s por lane.</li>
+            </ul>
+
+            <div class="cefet-trend">
+                <strong>TENDÊNCIA CEFETMINAS:</strong> Questões sobre a função do <strong>Chipset</strong>. Lembre-se: Em sistemas modernos, o chipset (PCH) não controla mais a memória RAM nem o slot gráfico principal (PCIe x16), pois estas funções foram movidas para o <span class="highlight">Die do Processador</span> para reduzir a latência.
+            </div>
+        </section>
+
+        <!-- SEÇÃO 2: ARMAZENAMENTO -->
+        <section>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">2. Dispositivos de Armazenamento</h2>
+            
+            <h3 class="text-xl font-semibold mt-4 mb-2">Duelo Técnico: HDD vs SSD</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>HDD (Hard Disk Drive)</th>
+                            <th>SSD (Solid State Drive)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tecnologia</td>
+                            <td>Magnética / Mecânica</td>
+                            <td>Eletrônica (Flash NAND)</td>
+                        </tr>
+                        <tr>
+                            <td>Latência</td>
+                            <td>Alta (ms) - Busca física</td>
+                            <td><span class="highlight">Mínima (µs)</span> - Acesso direto</td>
+                        </tr>
+                        <tr>
+                            <td>IOPS</td>
+                            <td>Baixo (~80-120)</td>
+                            <td><span class="highlight">Altíssimo (+100.000)</span></td>
+                        </tr>
+                        <tr>
+                            <td>Resistência</td>
+                            <td>Sensível a choques físicos</td>
+                            <td>Alta resistência a vibrações</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">Hierarquia de Células SSD (Durabilidade)</h3>
+            <p>O número de bits por célula afeta a vida útil (TBW - Total Bytes Written).</p>
+            <div class="mnemonic-box text-center">
+                <strong>SLC</strong> (1 bit) > <strong>MLC</strong> (2 bits) > <strong>TLC</strong> (3 bits) > <strong>QLC</strong> (4 bits)
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">Conectores e Protocolos</h3>
+            <ul class="list-disc ml-8 space-y-2">
+                <li><strong>SATA III:</strong> Limite teórico de 6 Gbps (máximo real ~560 MB/s). Usa protocolo <strong>AHCI</strong>.</li>
+                <li><strong>M.2 NVMe:</strong> Usa o barramento <strong>PCIe</strong>. Protocolo desenhado para memórias não-voláteis, permitindo paralelismo.</li>
+            </ul>
+        </section>
+
+        <!-- SEÇÃO 3: RAID -->
+        <section>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">3. RAID - Tolerância a Falhas e Desempenho</h2>
+            <p class="mb-4">Para o IFAM, foque no cálculo de capacidade e segurança.</p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nível</th>
+                            <th>Mín. Discos</th>
+                            <th>Fórmula de Capacidade</th>
+                            <th>Foco Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>RAID 0</strong></td>
+                            <td>2</td>
+                            <td>$N \times C$</td>
+                            <td>Velocidade (Sem segurança)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RAID 1</strong></td>
+                            <td>2</td>
+                            <td>$C$ (metade do total)</td>
+                            <td><span class="highlight">Espelhamento</span> (Segurança)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RAID 5</strong></td>
+                            <td>3</td>
+                            <td>$(N - 1) \times C$</td>
+                            <td>Paridade Distribuída</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RAID 6</strong></td>
+                            <td>4</td>
+                            <td>$(N - 2) \times C$</td>
+                            <td>Sobrevive a <span class="highlight">2 falhas simultâneas</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>RAID 10</strong></td>
+                            <td>4</td>
+                            <td>$(N / 2) \times C$</td>
+                            <td>Striping + Mirroring</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: MEMORIZAÇÃO -->
+        <section>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">4. Técnicas de Memorização e "Peguinhas"</h2>
+            
+            <div class="mnemonic-box">
+                <strong>Mnemônico para Hierarquia de Memória (Velocidade):</strong><br>
+                "<strong>Re Ca Ra Di Di</strong>"<br>
+                1. <strong>Re</strong>gistradores | 2. <strong>Ca</strong>che | 3. <strong>RA</strong>M | 4. <strong>Di</strong>sco SSD | 5. <strong>Di</strong>sco Rígido (HD)
+            </div>
+
+            <div class="trap-box">
+                <strong>ALERTA DE PEGUINHA:</strong> A banca pode tentar confundir <strong>Memória Flash</strong> com <strong>Memória EEPROM</strong>. 
+                <br><em>Fato:</em> A Flash é um tipo de EEPROM, mas é apagada em blocos (mais rápida), enquanto a EEPROM tradicional pode ser apagada byte a byte.
+            </div>
+
+            <div class="cefet-trend">
+                <strong>ANÁLISE CEFETMINAS:</strong> Em provas de Professor de Informática, a banca adora cobrar o termo <strong>S.M.A.R.T.</strong> (Self-Monitoring, Analysis and Reporting Technology). É o sistema que prevê falhas em HDDs e SSDs.
+            </div>
+        </section>
+
+        <!-- Seção de Ação Final -->
+        <div class="mt-16 border-t pt-10 text-center">
+            <h3 class="text-xl font-bold mb-6">Pronto para testar seus conhecimentos?</h3>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="6questoes.html" class="bg-slate-900 hover:bg-black text-white px-8 py-4 rounded-lg font-bold transition-all transform hover:-translate-y-1">
+                    Simular Questões CEFETMINAS
+                </a>
+                <button onclick="window.print()" class="border-2 border-slate-900 text-slate-900 px-8 py-4 rounded-lg font-bold hover:bg-slate-50 transition-all">
+                    Imprimir Resumo (PDF)
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-20 text-center text-gray-400 text-sm border-t py-8">
+        Material de Estudo Intensivo - Concurso IFAM | Tutor Especialista em Hardware
+    </footer>
+
+</body>
+</html>

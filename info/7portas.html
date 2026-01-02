@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Hardware - IFAM (CEFETMINAS)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fef08a;
+            font-weight: 600;
+            padding: 0 4px;
+            border-radius: 2px;
+        }
+
+        .mnemonic-box {
+            border-left: 4px solid #3b82f6;
+            background-color: #eff6ff;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            border-left: 4px solid #ef4444;
+            background-color: #fef2f2;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.875rem;
+            table-layout: auto;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #e5e7eb;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            word-wrap: break-word;
+        }
+
+        /* Prevenção de scroll horizontal em tabelas */
+        .table-responsive {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        @media (max-width: 600px) {
+            td, th {
+                padding: 6px 4px;
+                font-size: 0.75rem;
+            }
+        }
+
+        .audio-player {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+            margin-top: 40px;
+            color: #111827;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 max-w-4xl mx-auto">
+
+    <header>
+        <span class="text-blue-600 font-bold tracking-widest text-sm uppercase">Tutor Especialista - IFAM</span>
+        <h1 class="text-4xl font-extrabold text-gray-900 mt-2 mb-4">Hardware: Portas e Interfaces</h1>
+        <p class="text-lg text-gray-600 mb-8">Guia completo focado em memorização para Professor de Informática (Banca CEFETMINAS).</p>
+
+        <!-- Player de Áudio -->
+        <div class="audio-player">
+            <h3 class="text-sm font-bold uppercase text-gray-500 mb-3 flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                Resumo em Áudio
+            </h3>
+            <audio controls class="w-full">
+                <source src="7portas.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </audio>
+            <p class="text-xs text-gray-400 mt-2 italic">Insira o arquivo 'aula_hardware.mp3' no mesmo diretório para reprodução.</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- SEÇÃO SERIAL -->
+        <section>
+            <h2 class="text-2xl font-bold mb-4">1. Porta Serial (RS-232 / UART)</h2>
+            <p class="mb-4">Responsável pela transmissão de dados <span class="highlight-yellow">um bit por vez</span>. Historicamente utilizada para mouses antigos e hoje essencial para consoles de configuração de roteadores e switches.</p>
+            
+            <ul class="list-disc ml-6 space-y-2 mb-6">
+                <li><strong>Protocolo:</strong> Assíncrono (usa <span class="highlight-yellow">Start Bit</span> e <span class="highlight-yellow">Stop Bit</span>).</li>
+                <li><strong>Controlador:</strong> Chip <span class="highlight-yellow">UART</span> (Universal Asynchronous Receiver-Transmitter).</li>
+                <li><strong>Tensões (Lógica Inversa):</strong>
+                    <ul class="list-circle ml-6 mt-1">
+                        <li>Lógica 0: <span class="highlight-yellow">+3V a +15V</span> (chamado de <em>Space</em>).</li>
+                        <li>Lógica 1: <span class="highlight-yellow">-3V a -15V</span> (chamado de <em>Mark</em>).</li>
+                    </ul>
+                </li>
+                <li><strong>Conector:</strong> Geralmente DB9 (9 pinos) ou DB25 (25 pinos), ambos <span class="highlight-yellow">Machos</span> no computador.</li>
+            </ul>
+
+            <div class="mnemonic-box">
+                <strong>💡 Mnemônico para o Conector:</strong><br>
+                A porta <strong>S</strong>erial tem <strong>S</strong>aliência (é <strong>S</strong>exy). <br>
+                Portanto, o conector no PC é <strong>MACHO</strong> (possui pinos).
+            </div>
+        </section>
+
+        <!-- SEÇÃO PARALELA -->
+        <section>
+            <h2 class="text-2xl font-bold mb-4">2. Porta Paralela (IEEE 1284)</h2>
+            <p class="mb-4">Transmite <span class="highlight-yellow">8 bits (1 byte) simultaneamente</span>. Utilizada para impressoras (LPT) e scanners antigos.</p>
+
+            <ul class="list-disc ml-6 space-y-2 mb-4">
+                <li><strong>Conector:</strong> DB25 <span class="highlight-yellow">Fêmea</span> no PC; <span class="highlight-yellow">Centronics</span> de 36 pinos no dispositivo.</li>
+                <li><strong>Recurso de Sistema:</strong> Mapeada na <span class="highlight-yellow">IRQ 7</span> (LPT1) ou IRQ 5 (LPT2).</li>
+            </ul>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modo</th>
+                            <th>Direção</th>
+                            <th>Aplicação Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>SPP</strong> (Standard)</td>
+                            <td>Unidirecional</td>
+                            <td>Modo Legado / Original</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EPP</strong> (Enhanced)</td>
+                            <td>Bidirecional</td>
+                            <td>Scanners e Discos Externos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ECP</strong> (Extended)</td>
+                            <td>Bidirecional</td>
+                            <td><span class="highlight-yellow">Impressoras (usa DMA e Compressão)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mnemonic-box">
+                <strong>💡 Mnemônico para o Conector:</strong><br>
+                A porta <strong>P</strong>aralela é <strong>P</strong>erfurada.<br>
+                Portanto, o conector no PC é <strong>FÊMEA</strong> (possui furos).
+            </div>
+        </section>
+
+        <!-- SEÇÃO PS/2 -->
+        <section>
+            <h2 class="text-2xl font-bold mb-4">3. Interface PS/2 (Mini-DIN)</h2>
+            <p class="mb-4">Conector circular de 6 pinos. <span class="highlight-yellow">Não é Plug & Play verdadeiro</span> e não suporta hot-swap nativo com segurança.</p>
+            
+            <div class="warning-box">
+                <strong>⚠️ Ponto de Prova (FCM):</strong> Conectar um dispositivo PS/2 com o computador ligado pode causar um curto-circuito e queimar o controlador na placa-mãe.
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="p-4 border rounded border-purple-200">
+                    <span class="text-purple-700 font-bold">ROXO:</span> Teclado. <br>
+                    <small>(Mnemônico: Teclad<b>O</b> = Rox<b>O</b>)</small>
+                </div>
+                <div class="p-4 border rounded border-green-200">
+                    <span class="text-green-700 font-bold">VERDE:</span> Mouse. <br>
+                    <small>(Mnemônico: Mous<b>E</b> = Verd<b>E</b>)</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO USB -->
+        <section>
+            <h2 class="text-2xl font-bold mb-4">4. USB (Universal Serial Bus)</h2>
+            <p class="mb-4">Arquitetura <span class="highlight-yellow">Mestre-Escravo</span>. Permite até 127 dispositivos em cascata usando Hubs. Suporta <span class="highlight-yellow">Hot-swap</span> e <span class="highlight-yellow">Plug and Play</span>.</p>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Versão</th>
+                            <th>Nome Comercial</th>
+                            <th>Velocidade Máxima</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>USB 1.1</td>
+                            <td>Full Speed</td>
+                            <td>12 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td>USB 2.0</td>
+                            <td>High Speed</td>
+                            <td>480 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td>USB 3.0 (3.1 Gen1)</td>
+                            <td>SuperSpeed</td>
+                            <td><span class="highlight-yellow">5 Gbps</span> (Cor Azul)</td>
+                        </tr>
+                        <tr>
+                            <td>USB 3.1 (3.1 Gen2)</td>
+                            <td>SuperSpeed+</td>
+                            <td>10 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>USB 3.2 (Gen 2x2)</td>
+                            <td>SuperSpeed 20Gbps</td>
+                            <td>20 Gbps (Tipo-C)</td>
+                        </tr>
+                        <tr>
+                            <td>USB4</td>
+                            <td>Next Generation</td>
+                            <td>40 Gbps</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ESTRATÉGIA DE PROVA -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-orange-600">5. "Peguinhas" da CEFETMINAS</h2>
+            <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 space-y-4">
+                <div class="flex items-start">
+                    <span class="text-red-500 mr-2">➜</span>
+                    <p><strong>Bits vs Bytes:</strong> A banca pode dizer que o USB 2.0 transmite a 480 MB/s (Megabytes). <strong>FALSO!</strong> É em <span class="highlight-yellow">Mbps (Megabits)</span>.</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-red-500 mr-2">➜</span>
+                    <p><strong>Serial vs VGA:</strong> Ambas usam conectores D-Sub. A Serial (DB9) tem 9 pinos <span class="highlight-yellow">macho</span>. O VGA tem 15 furos <span class="highlight-yellow">fêmea</span> em 3 fileiras.</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-red-500 mr-2">➜</span>
+                    <p><strong>Hot-Swap:</strong> USB e FireWire aceitam. PS/2 e Paralela <strong>NÃO</strong> aceitam (em nível de hardware seguro).</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-red-500 mr-2">➜</span>
+                    <p><strong>Alimentação USB:</strong> O USB 2.0 fornece 500mA. O padrão USB-PD (Power Delivery) pode chegar a <span class="highlight-yellow">240W</span> em cabos USB-C modernos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTÃO DE AÇÃO -->
+        <div class="text-center mt-12 mb-20">
+            <p class="text-sm text-gray-500 mb-4">Finalizou o estudo teórico?</p>
+            <a href="7questoes.html" class="inline-block bg-gray-900 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-blue-700 transition-all transform hover:scale-105 shadow-xl">
+                Resolver Questões da Banca
+            </a>
+        </div>
+    </main>
+
+    <footer class="text-center text-gray-400 text-xs border-t pt-8 pb-12">
+        Conteúdo elaborado para preparação intensiva EBTT / IFAM. <br>
+        Foco total em critérios de desempate e precisão técnica.
+    </footer>
+
+</body>
+</html>

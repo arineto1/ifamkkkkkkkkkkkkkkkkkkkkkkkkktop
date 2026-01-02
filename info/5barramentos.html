@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Definitivo: Hardware - IFAM & CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fef3c7;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #92400e;
+        }
+
+        .highlight-blue {
+            background-color: #e0f2fe;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #075985;
+        }
+
+        .table-container {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-weight: 700;
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .section-box {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .mnemonico {
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        h1 { color: #0f172a; letter-spacing: -0.025em; }
+        h2 { color: #1e293b; margin-top: 2.5rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+        h2::before { content: ""; width: 4px; height: 24px; background-color: #3b82f6; border-radius: 2px; }
+
+        .trap-alert {
+            background-color: #fff1f2;
+            border: 1px solid #fda4af;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Áudio Player -->
+    <header class="mb-12 p-8 bg-slate-50 rounded-3xl border border-slate-200">
+        <div class="flex items-center gap-3 mb-4">
+            <span class="flex h-3 w-3 rounded-full bg-red-500 animate-pulse"></span>
+            <h3 class="text-sm font-bold uppercase tracking-widest text-slate-500">Audioaula de Revisão</h3>
+        </div>
+        <!-- Nome do arquivo para substituição: resumo_hardware_ifam.mp3 -->
+        <audio controls class="w-full h-12">
+            <source src="5barramentos.mp3" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+        <p class="text-xs text-slate-400 mt-3 italic">Dica: Ouça enquanto revisa os tópicos grifados.</p>
+    </header>
+
+    <main>
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-black mb-4">Hardware: Barramentos e Interfaces</h1>
+            <p class="text-xl text-slate-500">Manual Técnico para o Concurso de Professor de Informática - IFAM</p>
+            <div class="flex justify-center gap-4 mt-6">
+                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold">Banca: FCM</span>
+                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">Foco: EBTT</span>
+            </div>
+        </div>
+
+        <!-- 1. DEFINIÇÕES ESSENCIAIS -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold">1. Definições e Fundamentos de Barramentos</h2>
+            <p class="mb-4 text-lg">Um barramento (Bus) é o caminho de comunicação entre dois ou mais dispositivos. No contexto de concurso, entenda as três dimensões:</p>
+            <ul class="space-y-3 ml-4">
+                <li><span class="highlight-blue">Barramento de Dados:</span> Carrega a informação propriamente dita. É <span class="highlight-yellow">bidirecional</span>. Sua largura (ex: 64 bits) dita o desempenho.</li>
+                <li><span class="highlight-blue">Barramento de Endereços:</span> Identifica a origem ou destino dos dados. É <span class="highlight-yellow">unidirecional (CPU -> RAM)</span>. Sua largura define a capacidade máxima de endereçamento de memória ($2^{n}$).</li>
+                <li><span class="highlight-blue">Barramento de Controle:</span> Gerencia o acesso e o uso das linhas de dados e endereços (Sinais de interrupção <span class="highlight-yellow">IRQ</span>, leitura/escrita, clock).</li>
+            </ul>
+
+            <div class="trap-alert">
+                <p class="font-bold text-red-600">⚠ Peguinha CEFETMINAS:</p>
+                <p class="text-sm">A banca pode afirmar que o barramento de endereços é bidirecional para confundir com o de dados. <strong>Lembre-se:</strong> A CPU diz qual endereço quer ler; a memória apenas responde no barramento de dados.</p>
+            </div>
+
+            <div class="mt-6 p-4 border border-blue-100 rounded-lg bg-blue-50/30">
+                <p class="font-bold mb-2">Fórmula de Throughput (Vazão):</p>
+                <code class="text-blue-700 font-mono">Taxa de Transferência = Frequência (Hz) × Largura (bits) / 8</code>
+                <p class="text-xs text-slate-500 mt-1">* Dividimos por 8 para obter o resultado em Bytes/s.</p>
+            </div>
+        </section>
+
+        <!-- 2. PADRÕES E EVOLUÇÃO -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold">2. Evolução dos Padrões (Paralelo → Serial)</h2>
+            <p class="mb-4">O grande marco das provas é a transição do modelo paralelo para o serial ponto-a-ponto.</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tecnologia</th>
+                            <th>Tipo</th>
+                            <th>Características Técnicas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>PCI (Comum)</strong></td>
+                            <td>Paralelo</td>
+                            <td>32 ou 64 bits. Compartilhado (gargalo se muitos cartões forem usados). 33MHz ou 66MHz.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PCIe (Express)</strong></td>
+                            <td>Serial</td>
+                            <td><span class="highlight-yellow">Ponto-a-ponto</span>, Full-duplex. Usa "Lanes" (vias). Cada via é um par diferencial.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SATA</strong></td>
+                            <td>Serial</td>
+                            <td>Substituiu o PATA (IDE). SATA III chega a <span class="highlight-blue">600 MB/s (6 Gbps)</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>USB</strong></td>
+                            <td>Serial</td>
+                            <td>Plug-and-play e Hot-swappable. Suporta até 127 dispositivos via hubs.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. CHIPSET E ARQUITETURA MODERNA -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold">3. A Morte da Ponte Norte</h2>
+            <p class="mb-4">Em sistemas antigos, o Chipset era dividido em <strong>Northbridge</strong> (Ponte Norte) e <strong>Southbridge</strong> (Ponte Sul).</p>
+            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                <p class="mb-2"><strong>Hoje:</strong> O Controlador de Memória e o controlador de Vídeo (PCIe x16) foram <span class="highlight-yellow">integrados diretamente no Die da CPU</span>.</p>
+                <p><strong>Resultado:</strong> Redução drástica da latência. O que sobrou da Ponte Sul virou o <strong>PCH (Platform Controller Hub)</strong> na Intel ou <strong>FCH</strong> na AMD.</p>
+            </div>
+        </section>
+
+        <!-- 4. INTERFACES DE VÍDEO E PERIFÉRICOS -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold">4. Interfaces de I/O e Vídeo</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Interface</th>
+                            <th>Sinal</th>
+                            <th>Destaque para Prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>VGA (D-Sub)</strong></td>
+                            <td>Analógico</td>
+                            <td>15 pinos. Sujeito a interferências. Legado.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DVI</strong></td>
+                            <td>Híbrido</td>
+                            <td>DVI-D (Digital), DVI-A (Analógico), DVI-I (Integrado).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HDMI</strong></td>
+                            <td>Digital</td>
+                            <td>Transporta <span class="highlight-blue">Vídeo + Áudio</span>. Versão 2.1 suporta 8K.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DisplayPort</strong></td>
+                            <td>Digital</td>
+                            <td>Foco profissional. Suporta <strong>Daisy Chaining</strong> (vários monitores em série).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Thunderbolt</strong></td>
+                            <td>Digital</td>
+                            <td>Interface de alta velocidade (Intel). Usa o conector <span class="highlight-yellow">USB-C</span>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 5. TENDÊNCIAS E TÉCNICAS DE MEMORIZAÇÃO -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold">5. Mnemônicos e Técnicas de Memorização</h2>
+            
+            <div class="mnemonico">
+                <p class="font-bold">Para as gerações PCIe:</p>
+                <p>"Sempre dobre o valor anterior, começando em 250MB/s (v1) -> 500 (v2) -> 1000 (v3)..."</p>
+            </div>
+
+            <div class="mnemonico">
+                <p class="font-bold">Protocolos de SSD:</p>
+                <p><span class="highlight-blue">SATA = AHCI</span> (Antigo, 1 fila, 32 comandos)</p>
+                <p><span class="highlight-blue">PCIe = NVMe</span> (Novo, 64k filas, 64k comandos)</p>
+            </div>
+
+            <div class="mnemonico">
+                <p class="font-bold">Barramento de Endereço vs Dados:</p>
+                <p>"O <strong>E</strong>ndereço só <strong>E</strong>nvia (CPU p/ RAM). O <strong>D</strong>ado <strong>D</strong>escamba pros dois lados (Bidirecional)."</p>
+            </div>
+        </section>
+
+        <!-- 6. ANÁLISE CEFETMINAS (EBTT) -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold">6. Perfil da Banca: O que cai no IFAM?</h2>
+            <p class="mb-4">Baseado em provas anteriores da FCM para cargos de Professor:</p>
+            <ul class="list-disc ml-8 space-y-2">
+                <li><strong>Questões de Comparação:</strong> Eles amam pedir para você identificar qual padrão é mais rápido (ex: comparar USB 3.0 com Firewire ou SATA III).</li>
+                <li><strong>Terminologia de Barramentos:</strong> Diferença entre <span class="highlight-yellow">Largura</span> (bits) e <span class="highlight-yellow">Frequência</span> (MHz).</li>
+                <li><strong>Barramento Local:</strong> Entenda que o barramento que conecta CPU ao Cache L1/L2 é o mais rápido do sistema.</li>
+                <li><strong>DMA (Direct Memory Access):</strong> A capacidade de periféricos acessarem a RAM sem sobrecarregar a CPU. <span class="highlight-blue">Cai muito!</span></li>
+            </ul>
+        </section>
+
+        <!-- Botão Final -->
+        <div class="mt-16 mb-24 text-center">
+            <a href="5questoes.html" class="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-200 bg-blue-600 font-pj rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 hover:bg-blue-700">
+                Testar Conhecimentos: Simulado Questões
+                <svg class="w-5 h-5 ml-3 transition-all duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+            </a>
+            <p class="text-slate-400 text-sm mt-6">Versão 2.0 - Conteúdo revisado e expandido para IFAM 2024/2025.</p>
+        </div>
+    </main>
+
+    <footer class="text-center py-10 border-t border-slate-100 text-slate-400 text-sm">
+        Material desenvolvido para fins didáticos - Concurso Professor EBTT Informática.
+    </footer>
+
+</body>
+</html>

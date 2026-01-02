@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Estruturado - Hardware: Memórias - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.7;
+        }
+
+        .container-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        h1, h2, h3 {
+            color: #0f172a;
+            font-weight: 700;
+        }
+
+        .highlight-important {
+            background-color: #fef08a;
+            color: #854d0e;
+            padding: 0 4px;
+            font-weight: 600;
+            border-radius: 2px;
+        }
+
+        .cefet-trap {
+            border: 2px solid #ef4444;
+            background-color: #fff1f2;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .mnemonic-box {
+            border: 2px solid #3b82f6;
+            background-color: #eff6ff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            border: 1px solid #cbd5e1;
+            padding: 12px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .audio-player-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+        }
+
+        .btn-questoes {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 3rem auto 1rem;
+            background-color: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-questoes:hover {
+            background-color: #334155;
+            transform: translateY(-2px);
+        }
+
+        /* Garantia de tabelas sem scroll horizontal */
+        .table-wrapper {
+            width: 100%;
+            overflow: visible;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-content">
+        <!-- Cabeçalho e Áudio -->
+        <header class="text-center mb-10">
+            <span class="text-blue-600 font-bold uppercase tracking-widest text-sm">Professor de Informática - EBTT IFAM</span>
+            <h1 class="text-4xl mt-2 mb-4">Hardware: Tipos de Memória</h1>
+            <p class="text-slate-500">Tutor Especialista: Aula Teórica e Técnica (Banca CEFETMINAS)</p>
+        </header>
+
+        <div class="audio-player-card">
+            <h4 class="font-bold mb-3 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+                Resumo em Áudio
+            </h4>
+            <audio controls class="w-full">
+                <!-- SUBSTITUA O NOME DO ARQUIVO ABAIXO -->
+                <source src="2memoria.mp3" type="audio/mpeg">
+                Seu navegador não suporta o áudio.
+            </audio>
+            <p class="text-xs text-slate-400 mt-2 italic">Dica: Ouça enquanto acompanha o material para reforçar a memorização.</p>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <section>
+            <h2 class="text-2xl border-b-2 border-slate-100 pb-2 mb-4">1. Hierarquia de Memórias</h2>
+            <p>A organização segue um triângulo onde a <span class="highlight-important">velocidade é inversamente proporcional à capacidade e diretamente proporcional ao custo</span>.</p>
+            
+            <div class="mnemonic-box">
+                <p><strong>Mnemônico para a Ordem (Topo para Base):</strong></p>
+                <p class="text-lg">"<strong>R</strong>ico <strong>C</strong>ome <strong>R</strong>ato <strong>F</strong>rito <strong>H</strong>oje"</p>
+                <ul class="mt-2 text-sm space-y-1">
+                    <li><strong>R</strong>egistradores (Interna à CPU - Flip-flops)</li>
+                    <li><strong>C</strong>ache (SRAM - Estática)</li>
+                    <li><strong>R</strong>AM (DRAM - Dinâmica / Principal)</li>
+                    <li><strong>F</strong>lash (SSD / Pen Drive)</li>
+                    <li><strong>H</strong>D (Disco Rígido / Auxiliar)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-2xl border-b-2 border-slate-100 pb-2 mb-4">2. Memória Interna e Cache</h2>
+            <p>Os <strong>Registradores</strong> são o topo da pirâmide. Já a <strong>Memória Cache</strong> (SRAM) visa reduzir o <em>gap</em> de velocidade entre a CPU e a RAM.</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nível</th>
+                            <th>Localização</th>
+                            <th>Características</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>L1</strong></td>
+                            <td>Dentro de cada núcleo</td>
+                            <td>Dividida em Instruções e Dados. Muito rápida.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>L2</strong></td>
+                            <td>Próxima ao núcleo</td>
+                            <td>Antigamente externa, hoje é <span class="highlight-important">On-Die</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>L3</strong></td>
+                            <td>Compartilhada</td>
+                            <td>Atende a todos os núcleos do processador.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold mt-6 mb-2">Políticas de Escrita (Cache)</h3>
+            <ul class="list-disc ml-6 space-y-2">
+                <li><span class="highlight-important">Write-Through:</span> Atualiza Cache e RAM simultaneamente. Mais seguro, porém lento.</li>
+                <li><span class="highlight-important">Write-Back:</span> Atualiza apenas a Cache. A RAM só é atualizada quando o bloco é substituído (usa o <strong>Dirty Bit</strong>).</li>
+            </ul>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-2xl border-b-2 border-slate-100 pb-2 mb-4">3. Memória Principal (RAM)</h2>
+            <p>A memória <strong>DRAM</strong> (Dynamic RAM) é a base da nossa memória principal. Ela utiliza capacitores que perdem carga com o tempo.</p>
+            
+            <div class="cefet-trap">
+                <strong>O Peguinha da CEFETMINAS:</strong> A banca costuma cobrar o conceito de <span class="highlight-important">Refresh (Refresco)</span>. Apenas a DRAM precisa de refresh periódico; a SRAM (cache) não precisa, o que a torna mais rápida e cara.
+            </div>
+
+            <h3 class="text-xl font-bold mt-6 mb-2">Tecnologia DDR (Double Data Rate)</h3>
+            <p>A transferência ocorre tanto na <span class="highlight-important">borda de subida quanto na borda de descida</span> do clock. O que diferencia as gerações (DDR3, 4, 5) é a voltagem menor e a taxa de transferência maior.</p>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-2xl border-b-2 border-slate-100 pb-2 mb-4">4. Memória ROM (Read Only Memory)</h2>
+            <p>Memória <span class="highlight-important">não volátil</span> que armazena o <strong>Firmware</strong> (BIOS/UEFI).</p>
+            <ul class="space-y-3 mt-4">
+                <li><strong>PROM:</strong> Gravada apenas uma vez (fusíveis).</li>
+                <li><strong>EPROM:</strong> Apagável por <strong>Luz Ultravioleta</strong>.</li>
+                <li><strong>EEPROM:</strong> Apagável eletricamente. Base para a Memória Flash.</li>
+                <li><strong>Flash:</strong> Evolução da EEPROM, mas permite apagar <span class="highlight-important">blocos de dados</span> em vez de bytes individuais.</li>
+            </ul>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-2xl border-b-2 border-slate-100 pb-2 mb-4">5. Memória Virtual</h2>
+            <p>Técnica que utiliza o HD/SSD para simular RAM extra. Gerenciada pela <strong>MMU</strong> (Memory Management Unit).</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+                <div class="p-4 border rounded shadow-sm">
+                    <p class="font-bold text-blue-800">Paginação</p>
+                    <p class="text-sm">Divide a memória em blocos de <span class="highlight-important">tamanho fixo</span>. Pode causar Fragmentação Interna.</p>
+                </div>
+                <div class="p-4 border rounded shadow-sm">
+                    <p class="font-bold text-blue-800">Segmentação</p>
+                    <p class="text-sm">Divide a memória em blocos de <span class="highlight-important">tamanho variável</span> (lógico). Pode causar Fragmentação Externa.</p>
+                </div>
+            </div>
+
+            <p>Conceitos rápidos de prova:</p>
+            <ul class="list-disc ml-6">
+                <li><strong>Thrashing:</strong> Sistema passa mais tempo trocando páginas do que executando processos (memória RAM insuficiente).</li>
+                <li><strong>TLB:</strong> Um cache específico para traduções de endereços virtuais.</li>
+            </ul>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-2xl border-b-2 border-slate-100 pb-2 mb-4">6. Memória Auxiliar (SSD e NAND)</h2>
+            <p>Os SSDs usam células NAND. A CEFETMINAS adora cobrar a durabilidade vs densidade:</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo de Célula</th>
+                            <th>Bits</th>
+                            <th>Características</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>SLC</strong></td>
+                            <td>1 bit</td>
+                            <td><span class="highlight-important">Mais durável</span> e rápida. Uso empresarial.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MLC</strong></td>
+                            <td>2 bits</td>
+                            <td>Equilíbrio entre custo e performance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TLC</strong></td>
+                            <td>3 bits</td>
+                            <td>Mais comum no mercado doméstico.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>QLC</strong></td>
+                            <td>4 bits</td>
+                            <td>Mais barata, <span class="highlight-important">menor vida útil</span>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="mt-10 bg-slate-50 p-6 rounded-xl">
+            <h2 class="text-2xl mb-4">🎯 Check-list de Tendências CEFETMINAS</h2>
+            <ul class="space-y-3">
+                <li class="flex items-start gap-2">
+                    <span class="text-green-500 font-bold">✔</span>
+                    <span><strong>DMA (Direct Memory Access):</strong> Permite que periféricos acessem a RAM sem sobrecarregar a CPU.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-500 font-bold">✔</span>
+                    <span><strong>Localidade Temporal vs Espacial:</strong> Princípios que justificam o uso da Cache.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-green-500 font-bold">✔</span>
+                    <span><strong>Diferença SRAM vs DRAM:</strong> Questão recorrente. Lembre-se: Cache=SRAM=Transistores; RAM=DRAM=Capacitores.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Navegação -->
+        <footer>
+            <a href="2questoes.html" class="btn-questoes">
+                Ir para o Simulado →
+            </a>
+            <div class="text-center text-slate-400 text-xs mt-10">
+                Material de Estudo Exclusivo - Concurso IFAM Informática
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

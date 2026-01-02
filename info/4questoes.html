@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Professor EBTT - Hardware: Clock</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-color: #636e72;
+            --border-color: #dfe6e9;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+            --explanation-bg: #f1f2f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .quiz-info {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            margin-top: 5px;
+        }
+
+        .question-block {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f0f7ff;
+            border-color: var(--primary-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            background-color: #e3f2fd;
+            border-color: var(--primary-color);
+        }
+
+        button#submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button#submit-btn:hover {
+            background-color: #0773c5;
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: #fff;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+        }
+
+        .score-summary {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .resolution-block {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: var(--explanation-bg);
+            border-left: 5px solid var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .res-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .status-correct { color: var(--correct-color); font-weight: bold; }
+        .status-incorrect { color: var(--incorrect-color); font-weight: bold; }
+
+        .table-data {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .table-data th, .table-data td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        pre {
+            background: #eee;
+            padding: 10px;
+            overflow-x: auto;
+        }
+
+        .math {
+            font-style: italic;
+            font-family: 'Times New Roman', serif;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Técnico: Hardware (Clock e Temporização)</h1>
+        <div class="quiz-info">Banca: Fundação CEFETMINAS (FCM) | Cargo: Professor EBTT - Informática</div>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questões serão inseridas aqui via JS -->
+        <div id="questions-container"></div>
+        
+        <button type="button" id="submit-btn" onclick="gradeQuiz()">Finalizar Simulado e Ver Resoluções</button>
+    </form>
+
+    <section id="results-section">
+        <div class="score-summary" id="score-display"></div>
+        <div id="resolutions-container"></div>
+    </section>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: `Analise as seguintes sentenças a respeito das características fundamentais do sinal de clock em sistemas digitais síncronos:<br><br>
+            I. O clock é um sinal oscilatório, tipicamente uma onda quadrada, utilizado para sincronizar as transições de estado dos elementos de armazenamento e definir o ritmo de transferência de dados entre os componentes do sistema.<br>
+            II. O período do clock (T) é inversamente proporcional à sua frequência (f); logo, aumentar a frequência do processador implica necessariamente aumentar o tempo disponível para a propagação dos sinais nas portas lógicas entre dois estágios de registradores.<br>
+            III. Em processadores modernos, o clock interno do núcleo (core) frequentemente opera em uma frequência superior à do clock do barramento externo (FSB ou QPI), utilizando-se de circuitos multiplicadores de frequência (PLLs).`,
+            options: [
+                "Apenas I.",
+                "Apenas I e III.",
+                "Apenas II e III.",
+                "Apenas III.",
+                "I, II e III."
+            ],
+            answer: 1, // B
+            explanation: `<b>Justificativa:</b><br>
+            - <b>I (Correta):</b> Define o clock como o metrônomo do sistema. Em sistemas síncronos, todas as mudanças de estado ocorrem nas bordas do clock.<br>
+            - <b>II (Incorreta):</b> Ao aumentar a frequência (f), o período (T) diminui (T=1/f). Se o período diminui, o sinal elétrico tem MENOS tempo para viajar através das portas lógicas entre dois estágios de registradores.<br>
+            - <b>III (Correta):</b> Processadores operam muito mais rápido que a placa-mãe usando PLL (Phase-Locked Loop) para multiplicar a frequência base.`
+        },
+        {
+            id: 2,
+            question: `Um engenheiro está avaliando o desempenho de um processador hipotético "X" que opera a uma frequência de 2 GHz. Um programa de teste (benchmark) específico consiste em 10⁶ instruções. A mistura de instruções e seus respectivos ciclos de clock (CPI) são dados na tabela abaixo:<br>
+            <table class="table-data">
+                <tr><th>Tipo</th><th>%</th><th>CPI</th></tr>
+                <tr><td>Aritmética Inteira</td><td>60%</td><td>1</td></tr>
+                <tr><td>Acesso à Memória</td><td>20%</td><td>4</td></tr>
+                <tr><td>Ponto Flutuante</td><td>10%</td><td>2</td></tr>
+                <tr><td>Controle (Desvios)</td><td>10%</td><td>3</td></tr>
+            </table>
+            Com base nesses dados, qual é, respectivamente, o CPI médio efetivo e o Tempo de Execução do programa?`,
+            options: [
+                "1,9 e 0,95 ms.",
+                "2,5 e 1,25 ms.",
+                "1,9 e 950 µs.",
+                "2,1 e 1,05 ms.",
+                "1,5 e 0,75 ms."
+            ],
+            answer: 2, // C
+            explanation: `<b>Cálculo:</b><br>
+            1. CPI Médio = (1 × 0,6) + (4 × 0,2) + (2 × 0,1) + (3 × 0,1) = 0,6 + 0,8 + 0,2 + 0,3 = <b>1,9</b>.<br>
+            2. Tempo de Execução = (Instruções × CPI) / Frequência<br>
+            T = (10⁶ × 1,9) / (2 × 10⁹ Hz) = 1,9 / 2000 s = 0,00095 s = <b>950 µs</b>.`
+        },
+        {
+            id: 3,
+            question: `Sobre a implementação de pipeline e sua relação com o ciclo de clock, assinale a alternativa INCORRETA:`,
+            options: [
+                "O pipeline aumenta o throughput (vazão) de instruções, permitindo que múltiplas instruções estejam em diferentes estágios de execução simultaneamente, mas não reduz o tempo de execução individual (latência) de uma única instrução.",
+                "Em um pipeline ideal de k estágios perfeitamente balanceado, o speedup potencial em relação a uma implementação não-pipelined é de k vezes.",
+                "O tempo do ciclo de clock em um processador com pipeline é determinado pelo estágio mais lento (o gargalo), somado ao overhead dos registradores de pipeline (pipeline registers).",
+                "Hazards de dados e controle introduzem 'bolhas' (stalls) no pipeline, que são ciclos de clock onde nenhuma instrução é completada, efetivamente aumentando o CPI médio para valores acima de 1.",
+                "O aprofundamento excessivo do pipeline (superpipelining) sempre resulta em aumento linear de desempenho, pois permite frequências de clock arbitrariamente altas sem penalidades significativas de flush em casos de previsão de desvio incorreta."
+            ],
+            answer: 4, // E
+            explanation: `<b>Justificativa:</b> A alternativa E está incorreta porque o aprofundamento excessivo sofre de retornos decrescentes. Pipelines muito longos aumentam drasticamente a penalidade de erro de desvio (branch misprediction), pois é necessário descartar muitas instruções no flush, além do overhead físico de muitos registradores de estágio.`
+        },
+        {
+            id: 4,
+            question: `Considere as duas asserções abaixo sobre a interação entre CPU e Memória Principal:<br><br>
+            I. A inserção de Wait States (estados de espera) nos ciclos de leitura de memória é necessária quando a frequência do barramento ou o tempo de acesso da memória RAM são insuficientes para fornecer dados na velocidade exigida pelo ciclo de busca do processador.<br>
+            PORQUE<br>
+            II. O uso de memórias Cache (L1, L2, L3) elimina completamente a ocorrência de Wait States no sistema, garantindo que o processador nunca precise paralisar suas operações por falta de dados.`,
+            options: [
+                "As duas asserções são verdadeiras, e a segunda é uma justificativa correta da primeira.",
+                "As duas asserções são verdadeiras, mas a segunda não é uma justificativa correta da primeira.",
+                "A primeira asserção é verdadeira, e a segunda é falsa.",
+                "A primeira asserção é falsa, e a segunda é verdadeira.",
+                "As duas asserções são falsas."
+            ],
+            answer: 2, // C
+            explanation: `<b>Justificativa:</b> A asserção I é verdadeira (Wait states sincronizam dispositivos lentos). A asserção II é <b>Falsa</b> porque as caches apenas REDUZEM a frequência de acessos lentos; quando ocorre um 'Cache Miss', o processador ainda precisa acessar a RAM e sofrer a latência (Wait States).`
+        },
+        {
+            id: 5,
+            question: `Em projetos de circuitos digitais de alta velocidade, a integridade do sinal de clock é crítica. O fenômeno caracterizado pela diferença espacial no tempo de chegada da borda ativa do clock aos pinos de clock de diferentes flip-flops síncronos dentro do mesmo domínio de clock é denominado:`,
+            options: [
+                "Clock Jitter.",
+                "Clock Skew.",
+                "Crosstalk.",
+                "Ground Bounce.",
+                "Duty Cycle Distortion."
+            ],
+            answer: 1, // B
+            explanation: `<b>Justificativa:</b> O <b>Clock Skew</b> é o atraso causado pela diferença física (distância nos fios) que faz o sinal chegar em tempos diferentes em pontos distintos do chip. <b>Jitter</b> é a variação temporal no mesmo ponto.`
+        },
+        {
+            id: 6,
+            question: `A filosofia de projeto RISC (Reduced Instruction Set Computer) contrasta com a CISC (Complex Instruction Set Computer) em diversos aspectos arquiteturais. No que tange ao comportamento do clock e execução de instruções, é correto afirmar que arquiteturas RISC clássicas visam:`,
+            options: [
+                "Minimizar o número total de instruções por programa, aceitando um CPI (Ciclos por Instrução) elevado e frequências de clock mais baixas.",
+                "Maximizar a complexidade do hardware de decodificação para reduzir o tamanho do código em memória, utilizando microcódigo.",
+                "Executar instruções simples em um único ciclo de clock (ou próximo disso), facilitando o pipelining e permitindo frequências de operação mais elevadas.",
+                "Utilizar instruções de tamanho variável para otimizar o uso do barramento de dados, independentemente do número de ciclos necessários para a busca.",
+                "Eliminar o uso de registradores de propósito geral, favorecendo operações diretas memória-memória que economizam ciclos de clock de carga e armazenamento."
+            ],
+            answer: 2, // C
+            explanation: `<b>Justificativa:</b> O objetivo fundamental do RISC é a simplicidade: instruções de tamanho fixo e operações simples que completam em 1 ciclo (CPI=1 ideal), o que permite pipelines eficientes e clocks altos.`
+        },
+        {
+            id: 7,
+            question: `Um processador possui um clock de 2 GHz (ciclo de 0,5 ns). O tempo de acesso físico à memória RAM principal é de 50 ns. Caso ocorra uma falha na cache (cache miss) e o dado precise ser buscado na RAM, quantos ciclos de clock, no mínimo, o processador ficará ocioso?`,
+            options: [
+                "10 ciclos.",
+                "25 ciclos.",
+                "50 ciclos.",
+                "100 ciclos.",
+                "200 ciclos."
+            ],
+            answer: 3, // D
+            explanation: `<b>Cálculo:</b><br>
+            Latência da RAM = 50 ns<br>
+            Ciclo de Clock = 0,5 ns<br>
+            N = 50 ns / 0,5 ns = <b>100 ciclos</b>. Isso ilustra o "Memory Wall" (gargalo de memória).`
+        },
+        {
+            id: 8,
+            question: `Sobre o problema de Clock Domain Crossing (CDC) e metaestabilidade, analise as afirmativas:<br><br>
+            I. Quando um sinal passa de um domínio de clock rápido para um lento sem sincronização adequada, pode ocorrer perda de dados se o pulso do sinal for menor que o período do clock de destino.<br>
+            II. O uso de um sincronizador de dois estágios (dois flip-flops em série) reduz a probabilidade de propagação de um estado metaestável, mas adiciona latência ao sinal.<br>
+            III. Em sistemas totalmente síncronos, onde todos os componentes compartilham o mesmo clock global sem desvio (skew), o problema de metaestabilidade é matematicamente impossível de ocorrer sob qualquer condição física.`,
+            options: [
+                "I e II.",
+                "II e III.",
+                "I e III.",
+                "Apenas I.",
+                "I, II e III."
+            ],
+            answer: 0, // A
+            explanation: `<b>Justificativa:</b> As afirmativas I e II estão corretas. A III é falsa pois a metaestabilidade pode ocorrer mesmo em sistemas síncronos devido a violações de timing por ruído, temperatura ou flutuações de energia.`
+        },
+        {
+            id: 9,
+            question: `A prática de overclocking consiste em configurar o processador para operar em uma frequência superior à especificada pelo fabricante. Sobre as implicações físicas dessa prática, assinale a alternativa correta sobre a relação entre frequência, tensão e potência dinâmica:`,
+            options: [
+                "O aumento da frequência reduz linearmente a potência dinâmica dissipada, exigindo menos refrigeração.",
+                "Para sustentar frequências mais altas, geralmente é necessário aumentar a tensão de alimentação (V), o que faz a potência dinâmica crescer de forma quadrática em relação à tensão (P ∝ f · V²).",
+                "O overclocking afeta apenas o desempenho lógico, não tendo impacto na vida útil do componente por eletromigração.",
+                "O aumento da frequência diminui a corrente de fuga (leakage current), tornando o processador mais eficiente energeticamente.",
+                "A potência dinâmica é inversamente proporcional à frequência; portanto, overclocks extremos são limitados apenas pela estabilidade do software, não pela temperatura."
+            ],
+            answer: 1, // B
+            explanation: `<b>Justificativa:</b> A equação da potência dinâmica CMOS é P = C · V² · f. Ao subir a frequência, a potência sobe linearmente, mas se subir a tensão (V) para estabilizar, a potência sobe ao quadrado em relação à tensão, gerando muito calor.`
+        },
+        {
+            id: 10,
+            question: `Associe os termos da Coluna A com suas definições na Coluna B:<br><br>
+            <b>Coluna A</b><br>
+            1. Front Side Bus (FSB)<br>
+            2. Multiplicador de Clock<br>
+            3. Largura de Banda (Bandwidth)<br><br>
+            <b>Coluna B</b><br>
+            ( ) Razão entre a frequência interna da CPU e a frequência do barramento externo.<br>
+            ( ) Barramento que conecta o processador à ponte norte (Northbridge) ou controlador de memória.<br>
+            ( ) Quantidade de dados que podem ser transferidos por unidade de tempo.`,
+            options: [
+                "1, 2, 3",
+                "2, 1, 3",
+                "3, 1, 2",
+                "2, 3, 1",
+                "1, 3, 2"
+            ],
+            answer: 1, // B
+            explanation: `<b>Associação:</b><br>
+            - (2) Multiplicador de Clock: Razão CPU/Barramento.<br>
+            - (1) FSB: Conexão CPU/Ponte Norte.<br>
+            - (3) Bandwidth: Volume de dados/tempo.<br>
+            Sequência: 2, 1, 3.`
+        }
+    ];
+
+    function loadQuestions() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((q, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question-block';
+            qDiv.innerHTML = `
+                <div class="question-text">${index + 1}. ${q.question}</div>
+                <div class="options-list" id="q${index}-options">
+                    ${q.options.map((opt, optIndex) => `
+                        <label class="option-item" onclick="selectOption(${index}, ${optIndex})">
+                            <input type="radio" name="question${index}" value="${optIndex}">
+                            <span>${String.fromCharCode(65 + optIndex)}) ${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(qDiv);
+        });
+    }
+
+    function selectOption(qIndex, optIndex) {
+        const options = document.querySelectorAll(`#q${qIndex}-options .option-item`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        options[optIndex].classList.add('selected');
+    }
+
+    function gradeQuiz() {
+        let score = 0;
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        resolutionsContainer.innerHTML = '';
+        
+        quizData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="question${index}"]:checked`);
+            const isCorrect = selected && parseInt(selected.value) === q.answer;
+            
+            if (isCorrect) score++;
+
+            // Construir resolução
+            const resDiv = document.createElement('div');
+            resDiv.className = 'resolution-block';
+            resDiv.innerHTML = `
+                <span class="res-title">Questão ${index + 1}: ${isCorrect ? '<span class="status-correct">CORRETA</span>' : '<span class="status-incorrect">INCORRETA</span>'}</span>
+                <p><b>Gabarito: ${String.fromCharCode(65 + q.answer)}</b></p>
+                <p>${q.explanation}</p>
+            `;
+            resolutionsContainer.appendChild(resDiv);
+        });
+
+        // Mostrar Resultados
+        document.getElementById('score-display').innerHTML = `Resultado: <strong>${score} de ${quizData.length} acertos</strong> (${(score/quizData.length*100).toFixed(0)}%)`;
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('submit-btn').innerText = "Simulado Finalizado";
+        document.getElementById('submit-btn').disabled = true;
+
+        // Rolar para os resultados
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.onload = loadQuestions;
+</script>
+
+</body>
+</html>
