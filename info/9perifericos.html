@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Periféricos - IFAM/CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background-color: #ffffff;
+        }
+
+        .highlight {
+            background-color: #fef08a;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 2.5rem 1.25rem;
+        }
+
+        /* Tabelas sem Scroll Horizontal */
+        .table-container {
+            width: 100%;
+            overflow-x: hidden; /* Garantia de não ter scroll */
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            table-layout: auto;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 10px;
+            text-align: left;
+            word-wrap: break-word;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        h1 { font-size: 2.25rem; font-weight: 800; color: #111827; margin-bottom: 1rem; letter-spacing: -0.025em; border-bottom: 4px solid #2563eb; display: inline-block; }
+        h2 { font-size: 1.5rem; font-weight: 700; color: #1e40af; margin-top: 2.5rem; margin-bottom: 1rem; border-left: 5px solid #2563eb; padding-left: 1rem; background: #f0f4ff; padding-top: 5px; padding-bottom: 5px; }
+        h3 { font-size: 1.2rem; font-weight: 700; margin-top: 1.5rem; color: #111827; display: flex; align-items: center; }
+        h3::before { content: "•"; color: #2563eb; margin-right: 8px; font-size: 1.5rem; }
+
+        .audio-player {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .button-nav {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 4rem auto 2rem;
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
+
+        .button-nav:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .alert-box {
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid #fca5a5;
+            background-color: #fef2f2;
+        }
+
+        ul { list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; }
+        li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem; }
+        li::before { content: "→"; position: absolute; left: 0; color: #3b82f6; font-weight: bold; }
+
+        strong { color: #111827; }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 1.75rem; }
+            table { font-size: 0.75rem; }
+            th, td { padding: 6px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <span class="text-blue-600 font-bold uppercase tracking-wider text-sm">Tutor Especialista - IFAM</span>
+            <h1>Hardware: Periféricos</h1>
+            <p class="text-gray-500 text-lg">Guia Definitivo de Teoria e Memorização para a CEFETMINAS.</p>
+        </header>
+
+        <!-- Reprodutor de Áudio -->
+        <div class="audio-player mt-8">
+            <p class="font-bold text-gray-700 flex items-center mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+                Resumo em Áudio (Estudo Passivo)
+            </p>
+            <audio controls class="w-full">
+                <source src="9perifericos.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+            <p class="text-xs text-gray-400 mt-2">Substitua "resumo_audio.mp3" pelo caminho do seu arquivo.</p>
+        </div>
+
+        <section>
+            <h2>1. Definição e Arquitetura de E/S</h2>
+            <p>Periféricos são dispositivos conectados ao <span class="highlight">Barramento de E/S</span> que permitem a interação entre o processamento interno e o mundo externo. Essencial entender a divisão:</p>
+            <ul>
+                <li><strong>Dispositivo de E/S (Hardware):</strong> O componente físico (teclado, monitor).</li>
+                <li><strong>Controlador de Dispositivo (Chipset/Placa):</strong> Responsável por traduzir os sinais elétricos do barramento em comandos para o dispositivo.</li>
+                <li><strong>Device Driver (Software):</strong> Código que permite ao Sistema Operacional conversar com o controlador.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>2. Técnicas de Comunicação (Ponto de Prova!)</h2>
+            <p>Como a CPU gerencia a enorme diferença de velocidade entre ela (GHz) e um HD ou Teclado (ms)?</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Técnica</th>
+                            <th>Mecanismo</th>
+                            <th>Desvantagem / Vantagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>E/S Programada</strong></td>
+                            <td>A CPU fica em loop perguntando se o dado está pronto (<span class="highlight">Polling</span>).</td>
+                            <td>Desperdiça tempo da CPU (Busy Waiting).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>E/S por Interrupção</strong></td>
+                            <td>O dispositivo envia um sinal (<span class="highlight">IRQ</span>) quando termina a tarefa.</td>
+                            <td>Libera a CPU para outras tarefas enquanto o periférico trabalha.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DMA (Acesso Direto)</strong></td>
+                            <td>O <span class="highlight">Controlador DMA</span> assume o barramento e move dados entre Periférico e RAM.</td>
+                            <td>A CPU só é interrompida no final do bloco. Ideal para grandes volumes (Discos).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>3. Mapeamento e Endereçamento</h2>
+            <p>A CEFETMINAS costuma cobrar como a CPU identifica um periférico:</p>
+            <ul>
+                <li><strong>Memory-Mapped I/O:</strong> O periférico ocupa um endereço na memória RAM. Usa as mesmas instruções (<span class="highlight">LOAD/STORE</span>).</li>
+                <li><strong>Isolated I/O:</strong> Existe um espaço de endereçamento separado. Exige instruções de CPU exclusivas (<span class="highlight">IN/OUT</span>).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. Interfaces Externas: O Padrão USB</h2>
+            <p>A nomenclatura USB mudou drasticamente. Decore as velocidades para cargos EBTT:</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Padrão</th>
+                            <th>Nome Comercial</th>
+                            <th>Velocidade Máxima</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>USB 2.0</td>
+                            <td>High Speed</td>
+                            <td>480 Mbps</td>
+                        </tr>
+                        <tr>
+                            <td>USB 3.2 Gen 1</td>
+                            <td>SuperSpeed</td>
+                            <td><span class="highlight">5 Gbps</span></td>
+                        </tr>
+                        <tr>
+                            <td>USB 3.2 Gen 2</td>
+                            <td>SuperSpeed+ (ou 10Gbps)</td>
+                            <td>10 Gbps</td>
+                        </tr>
+                        <tr>
+                            <td>USB 3.2 Gen 2x2</td>
+                            <td>SuperSpeed 20Gbps</td>
+                            <td><span class="highlight">20 Gbps</span> (apenas USB-C)</td>
+                        </tr>
+                        <tr>
+                            <td>USB4</td>
+                            <td>USB4 40Gbps</td>
+                            <td>40 Gbps (baseado em Thunderbolt 3)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Armazenamento e Conectores</h2>
+            <ul>
+                <li><strong>M.2:</strong> Conector físico versátil (pode ser SATA ou PCIe).</li>
+                <li><strong>NVMe:</strong> Protocolo otimizado para memória Flash, rodando sobre <span class="highlight">PCI Express</span>.</li>
+                <li><strong>Hot Swapping:</strong> Capacidade de remover/inserir o periférico com o sistema ligado (Ex: USB, SATA).</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>6. Periféricos de Saída (Vídeo e Impressão)</h2>
+            <h3>Processo de Impressão a Laser (As 6 Fases)</h3>
+            <ol class="list-decimal pl-6 space-y-1 mb-6">
+                <li><strong>Limpeza:</strong> Remove resíduos de toner do cilindro.</li>
+                <li><strong>Condicionamento (Carga):</strong> Aplica carga negativa no cilindro.</li>
+                <li><strong>Escrita (Exposição):</strong> O <span class="highlight">Laser</span> descarrega as áreas onde haverá imagem.</li>
+                <li><strong>Revelação:</strong> O toner (negativo) gruda nas áreas descarregadas (positivas).</li>
+                <li><strong>Transferência:</strong> O toner passa para o papel.</li>
+                <li><strong>Fusão:</strong> O <span class="highlight">Fusor</span> aquece e prensa o toner no papel definitivamente.</li>
+            </ol>
+
+            <h3>Vídeo</h3>
+            <ul>
+                <li><strong>HDMI vs DisplayPort:</strong> O DP suporta <span class="highlight">Daisy Chaining</span> (conectar vários monitores em um único cabo via MST).</li>
+                <li><strong>Refresh Rate:</strong> Medido em Hz. Tecnologias G-Sync/FreeSync sincronizam Hz da GPU com o monitor para evitar "tearing".</li>
+            </ul>
+        </section>
+
+        <div class="alert-box">
+            <h2 style="margin-top: 0; color: #b91c1c; border: none; background: transparent; padding: 0;">⚠️ Radar CEFETMINAS - Não erre isso!</h2>
+            <ul class="mt-4">
+                <li><span class="highlight">Interrupção vs Polling:</span> A banca adora dizer que Polling é mais eficiente. <strong>Mentira.</strong> Interrupção é mais eficiente para a CPU.</li>
+                <li><span class="highlight">DMA e Barramento:</span> O DMA "rouba" ciclos de barramento da CPU (técnica de <span class="highlight">Cycle Stealing</span>).</li>
+                <li><span class="highlight">Híbridos:</span> Impressoras Multifuncionais e Monitores Touch são periféricos de <strong>Entrada e Saída</strong> simultaneamente.</li>
+                <li><span class="highlight">USB-C:</span> Não é uma velocidade, é apenas o <strong>formato físico</strong> do conector (reversível).</li>
+            </ul>
+        </div>
+
+        <div class="text-center">
+            <a href="9questoes.html" class="button-nav">Praticar com Questões →</a>
+        </div>
+
+        <footer class="mt-20 pb-10 text-center text-gray-400 text-sm border-top pt-8">
+            Resumo Teórico - Concurso IFAM - Docente EBTT
+        </footer>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Técnico: Hardware e Manutenção</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --correct-color: #27ae60;
+            --incorrect-color: #d63031;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --resolution-bg: #f1f2f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 90%;
+            margin-bottom: 4rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 12px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .option-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* Classes de Resultado */
+        .option-item.selected {
+            background-color: #e3f2fd;
+            border-color: var(--accent-color);
+        }
+
+        .option-item.correct {
+            background-color: #d4edda !important;
+            border-color: var(--correct-color) !important;
+            color: #155724;
+            font-weight: 600;
+        }
+
+        .option-item.incorrect {
+            background-color: #f8d7da !important;
+            border-color: var(--incorrect-color) !important;
+            color: #721c24;
+        }
+
+        .resolution-box {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 4px;
+            display: none; /* Escondido por padrão */
+            font-size: 0.95rem;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .submit-area {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background-color: #0771c1;
+        }
+
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        #result-summary {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .score-circle {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 600px) {
+            .question-card {
+                padding: 1rem;
+            }
+            header h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado: Montagem e Manutenção de Hardware</h1>
+    <p>Estilo: Fundação CEFETMINAS | 10 Questões Técnicas</p>
+</header>
+
+<div class="container">
+    <div id="result-summary">
+        <h2>Resultado Final</h2>
+        <div class="score-circle" id="score-display">0/10</div>
+        <p id="score-text"></p>
+        <button onclick="window.location.reload()">Reiniciar Simulado</button>
+    </div>
+
+    <form id="quiz-form">
+        <!-- Questão 1 -->
+        <div class="question-card" data-correct="A">
+            <span class="question-text">QUESTÃO 01 - Durante a montagem de um laboratório de informática, um técnico depara-se com fontes de alimentação que possuem chave seletora de tensão (115V/230V). Considerando os princípios de eletricidade e o funcionamento de fontes chaveadas, assinale a alternativa que descreve CORRETAMENTE a consequência de uma configuração equivocada:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q1" value="A" id="q1a"><label for="q1a">A) Se a fonte estiver configurada para 115V e for ligada em uma tomada de 220V, ocorrerá a queima imediata de componentes do estágio primário, como fusíveis e varistores, devido à sobretensão.</label></div>
+                <div class="option-item"><input type="radio" name="q1" value="B" id="q1b"><label for="q1b">B) Se a fonte estiver configurada para 230V e for ligada em uma tomada de 110V, a fonte queimará devido ao esforço excessivo para compensar a baixa tensão de entrada.</label></div>
+                <div class="option-item"><input type="radio" name="q1" value="C" id="q1c"><label for="q1c">C) A chave seletora serve apenas para ajustar a frequência da rede (50Hz ou 60Hz), sendo indiferente à tensão da tomada, pois todas as fontes modernas possuem PFC Ativo.</label></div>
+                <div class="option-item"><input type="radio" name="q1" value="D" id="q1d"><label for="q1d">D) Ao ligar uma fonte chaveada em 220V com a chave na posição 115V, o computador funcionará normalmente, mas a vida útil da fonte será reduzida pela metade.</label></div>
+                <div class="option-item"><input type="radio" name="q1" value="E" id="q1e"><label for="q1e">E) A inversão da seleção de voltagem causa danos lógicos ao BIOS da placa-mãe, exigindo a reprogramação do chip, mas não causa danos físicos à fonte.</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                Fontes com chave seletora possuem um circuito dobrador de tensão no estágio de entrada. Quando a chave está em 115V, o circuito prepara-se para dobrar a tensão para atingir o nível necessário no barramento DC interno. Se ligada em 220V nessa configuração, a tensão dobra para valores acima de 400V, excedendo a tensão de isolamento dos capacitores e varistores, causando explosão e queima imediata.
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-card" data-correct="C">
+            <span class="question-text">QUESTÃO 02 - Na arquitetura de microcomputadores, o gabinete (chassis) desempenha papéis fundamentais além do alojamento dos componentes. Em relação à manutenção e montagem, qual é a principal função técnica do gabinete metálico?</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q2" value="A" id="q2a"><label for="q2a">A) Converter os sinais digitais da placa-mãe em sinais analógicos para o painel frontal.</label></div>
+                <div class="option-item"><input type="radio" name="q2" value="B" id="q2b"><label for="q2b">B) Atuar como dissipador de calor passivo para o processador, eliminando a necessidade de coolers.</label></div>
+                <div class="option-item"><input type="radio" name="q2" value="C" id="q2c"><label for="q2c">C) Prover sustentação mecânica, direcionar o fluxo de ar para refrigeração e atuar como blindagem eletromagnética (Gaiola de Faraday) contra interferências.</label></div>
+                <div class="option-item"><input type="radio" name="q2" value="D" id="q2d"><label for="q2d">D) Armazenar energia residual para manter o relógio do sistema (RTC) funcionando durante quedas de energia.</label></div>
+                <div class="option-item"><input type="radio" name="q2" value="E" id="q2e"><label for="q2e">E) Gerenciar as conexões USB frontais através de um controlador lógico embutido na chapa metálica.</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                As funções primárias do gabinete são: suporte estrutural para os componentes, blindagem contra Interferência Eletromagnética (EMI) - agindo como gaiola de Faraday - e canalização do fluxo de ar (entrada de ar frio e exaustão de ar quente).
+            </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card" data-correct="C">
+            <span class="question-text">QUESTÃO 03 - Um técnico está instruindo estagiários sobre a conexão dos cabos do painel frontal (Front Panel) na placa-mãe. Ele alerta sobre o perigo de conectar o cabo das portas USB frontais de maneira invertida ou deslocada. Qual é a consequência técnica desse erro de montagem?</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q3" value="A" id="q3a"><label for="q3a">A) O pendrive conectado será formatado automaticamente pelo sistema operacional.</label></div>
+                <div class="option-item"><input type="radio" name="q3" value="B" id="q3b"><label for="q3b">B) O computador emitirá bipes de erro, mas funcionará normalmente em velocidade reduzida (USB 1.1).</label></div>
+                <div class="option-item"><input type="radio" name="q3" value="C" id="q3c"><label for="q3c">C) Pode ocorrer um curto-circuito enviando 5V para as linhas de dados, causando a queima imediata de dispositivos USB conectados e possível dano ao controlador da placa-mãe.</label></div>
+                <div class="option-item"><input type="radio" name="q3" value="D" id="q3d"><label for="q3d">D) Os dispositivos USB não serão reconhecidos, aparecendo como "Dispositivo Desconhecido", sem risco de danos físicos.</label></div>
+                <div class="option-item"><input type="radio" name="q3" value="E" id="q3e"><label for="q3e">E) A inversão inverte a polaridade dos dados, fazendo com que arquivos sejam gravados de trás para frente.</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                Os pinos USB possuem VCC (+5V) e GND nas extremidades. A inversão ou deslocamento do conector pode alinhar o pino de 5V da placa-mãe com um pino de dados do dispositivo USB. Como os controladores de dados operam com baixa tensão/corrente, a injeção de 5V causa queima imediata dos circuitos do pendrive e potencial dano à Ponte Sul da placa-mãe.
+            </div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card" data-correct="B">
+            <span class="question-text">QUESTÃO 04 - Sobre a instalação física de processadores (CPU) e o sistema de refrigeração, analise as afirmativas a seguir:<br><br>
+            I. O mecanismo ZIF (Zero Insertion Force) permite que o processador seja inserido no soquete sem a aplicação de pressão manual excessiva, preservando os pinos de contato.<br>
+            II. A pasta térmica deve ser aplicada em abundância, preenchendo todo o espaço entre o soquete e o dissipador, inclusive transbordando para as laterais para auxiliar na refrigeração dos VRMs.<br>
+            III. Em soquetes do tipo LGA (Land Grid Array), os pinos de contato encontram-se no soquete da placa-mãe, exigindo extremo cuidado para não entortá-los durante a instalação.<br>
+            IV. O cooler do processador deve ser conectado, preferencialmente, ao conector da placa-mãe identificado como SYS_FAN ou CHA_FAN para garantir o controle de rotação correto pela temperatura da CPU.</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q4" value="A" id="q4a"><label for="q4a">A) I e II.</label></div>
+                <div class="option-item"><input type="radio" name="q4" value="B" id="q4b"><label for="q4b">B) I e III.</label></div>
+                <div class="option-item"><input type="radio" name="q4" value="C" id="q4c"><label for="q4c">C) II e IV.</label></div>
+                <div class="option-item"><input type="radio" name="q4" value="D" id="q4d"><label for="q4d">D) III e IV.</label></div>
+                <div class="option-item"><input type="radio" name="q4" value="E" id="q4e"><label for="q4e">E) I, II e III.</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                I (Correto): ZIF é o padrão para evitar força na inserção. III (Correto): LGA transfere os pinos para o soquete, que são extremamente frágeis. II está incorreto porque o excesso de pasta térmica isola o calor. IV está incorreto porque o cooler da CPU deve ser ligado no conector CPU_FAN.
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card" data-correct="A">
+            <span class="question-text">QUESTÃO 05 - Considere a atualização de computadores antigos substituindo Discos Rígidos (HDD) por Unidades de Estado Sólido (SSD). Sobre as tecnologias de armazenamento e interfaces, é CORRETO afirmar:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q5" value="A" id="q5a"><label for="q5a">A) Um SSD conectado a uma porta SATA II terá seu desempenho limitado a 3 Gbps, mesmo que o dispositivo suporte velocidades superiores.</label></div>
+                <div class="option-item"><input type="radio" name="q5" value="B" id="q5b"><label for="q5b">B) A tecnologia NVMe foi desenvolvida para HDDs mecânicos de alta rotação, sendo incompatível com memória Flash.</label></div>
+                <div class="option-item"><input type="radio" name="q5" value="C" id="q5c"><label for="q5c">C) Discos SSD requerem desfragmentação periódica semanal para manter a organização das células de memória e garantir a velocidade de acesso.</label></div>
+                <div class="option-item"><input type="radio" name="q5" value="D" id="q5d"><label for="q5d">D) A instalação de um SSD M.2 PCIe em um slot compatível desabilita automaticamente todas as portas USB do computador devido ao compartilhamento de linhas PCI.</label></div>
+                <div class="option-item"><input type="radio" name="q5" value="E" id="q5e"><label for="q5e">E) SSDs são dispositivos magnéticos que utilizam gravação perpendicular, o que os torna mais sensíveis a campos magnéticos do que os HDDs convencionais.</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                A interface SATA é retrocompatível, mas a velocidade é nivelada por baixo. Um SSD SATA III (6 Gbps) ligado em uma porta SATA II (3 Gbps) funcionará, mas limitado à velocidade máxima da porta (aprox. 300 MB/s reais).
+            </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card" data-correct="C">
+            <span class="question-text">QUESTÃO 06 - Durante o procedimento de manutenção corretiva, ao ligar um computador, o técnico percebe que não há imagem no monitor e o speaker da placa-mãe emite uma sequência de bipes longos e repetitivos (intermitentes). Com base nos códigos de erro padrão (BIOS AMI/Award), esse comportamento indica falha no subsistema de:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q6" value="A" id="q6a"><label for="q6a">A) Processamento (Superaquecimento da CPU).</label></div>
+                <div class="option-item"><input type="radio" name="q6" value="B" id="q6b"><label for="q6b">B) Armazenamento (HDD/SSD não detectado).</label></div>
+                <div class="option-item"><input type="radio" name="q6" value="C" id="q6c"><label for="q6c">C) Memória RAM (Módulo mal encaixado ou defeituoso).</label></div>
+                <div class="option-item"><input type="radio" name="q6" value="D" id="q6d"><label for="q6d">D) Alimentação (Tensão de 12V ausente).</label></div>
+                <div class="option-item"><input type="radio" name="q6" value="E" id="q6e"><label for="q6e">E) Vídeo (Monitor desconectado).</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                Nos BIOS mais comuns (AMI, Award), bipes longos contínuos ou repetitivos são o código padrão para falha na detecção ou teste de leitura/escrita da Memória RAM (freqüentemente oxidação ou mau encaixe).
+            </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card" data-correct="C">
+            <span class="question-text">QUESTÃO 07 - Ao acessar o Gerenciador de Dispositivos do Microsoft Windows 10, um técnico observa um ícone de "Ponto de Interrogação" (ou ícone de alerta em "Outros Dispositivos") referente a um componente de hardware. Esse símbolo indica que:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q7" value="A" id="q7a"><label for="q7a">A) O dispositivo está fisicamente danificado e deve ser substituído.</label></div>
+                <div class="option-item"><input type="radio" name="q7" value="B" id="q7b"><label for="q7b">B) O dispositivo foi desativado manualmente pelo administrador no BIOS.</label></div>
+                <div class="option-item"><input type="radio" name="q7" value="C" id="q7c"><label for="q7c">C) O hardware foi detectado eletricamente pelo sistema, mas o driver (software controlador) adequado não está instalado.</label></div>
+                <div class="option-item"><input type="radio" name="q7" value="D" id="q7d"><label for="q7d">D) Há um conflito de IRQ (Interrupção de Hardware) impedindo o funcionamento.</label></div>
+                <div class="option-item"><input type="radio" name="q7" value="E" id="q7e"><label for="q7e">E) O dispositivo é incompatível com a versão do Windows instalada e foi bloqueado pelo sistema de segurança.</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                O ícone indica que o kernel do Windows identificou um dispositivo conectado ao barramento, obteve seus IDs de hardware, mas não encontrou um driver compatível instalado para instruir o sistema sobre como operar aquele componente.
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card" data-correct="E">
+            <span class="question-text">QUESTÃO 08 - A memória RAM opera em sincronia com o barramento do sistema. Sobre as características técnicas e instalação de módulos de memória, assinale a alternativa INCORRETA:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q8" value="A" id="q8a"><label for="q8a">A) A latência CAS (CL) refere-se ao tempo de atraso entre a solicitação de dados pelo processador e a disponibilização desses dados pela memória; quanto menor o valor, mais rápida é a resposta.</label></div>
+                <div class="option-item"><input type="radio" name="q8" value="B" id="q8b"><label for="q8b">B) A tecnologia Dual Channel dobra a largura de banda teórica da memória, permitindo acessos simultâneos a dois módulos distintos.</label></div>
+                <div class="option-item"><input type="radio" name="q8" value="C" id="q8c"><label for="q8c">C) Módulos DDR3 e DDR4 são eletricamente e fisicamente incompatíveis; o chanfro (encaixe) em posições diferentes impede a instalação incorreta.</label></div>
+                <div class="option-item"><input type="radio" name="q8" value="D" id="q8d"><label for="q8d">D) Memórias do tipo ECC (Error Correction Code) são capazes de detectar e corrigir erros de bit simples, sendo essenciais para servidores, mas opcionais em desktops domésticos.</label></div>
+                <div class="option-item"><input type="radio" name="q8" value="E" id="q8e"><label for="q8e">E) Ao instalar dois módulos de memória de frequências diferentes (ex: um de 2400MHz e outro de 3200MHz), o sistema operará na velocidade do módulo mais rápido (3200MHz) para evitar gargalos.</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                A alternativa E está incorreta porque, ao instalar memórias de frequências diferentes, o BIOS/UEFI nivelará a velocidade de todo o sistema pela memória mais lenta para garantir a estabilidade. O módulo de 3200MHz funcionará a 2400MHz.
+            </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card" data-correct="C">
+            <span class="question-text">QUESTÃO 09 - Para a instalação de uma placa de vídeo dedicada de alto desempenho (High-End) em um computador moderno, qual barramento de expansão deve ser utilizado para garantir a máxima taxa de transferência de dados com o processador?</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q9" value="A" id="q9a"><label for="q9a">A) PCI (Peripheral Component Interconnect) de 32 bits.</label></div>
+                <div class="option-item"><input type="radio" name="q9" value="B" id="q9b"><label for="q9b">B) ISA (Industry Standard Architecture).</label></div>
+                <div class="option-item"><input type="radio" name="q9" value="C" id="q9c"><label for="q9c">C) PCI Express (PCIe) x16.</label></div>
+                <div class="option-item"><input type="radio" name="q9" value="D" id="q9d"><label for="q9d">D) SATA III (Serial ATA).</label></div>
+                <div class="option-item"><input type="radio" name="q9" value="E" id="q9e"><label for="q9e">E) AGP (Accelerated Graphics Port) 8x.</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                O PCI Express x16 (16 linhas) é o padrão atual para placas de vídeo, oferecendo a maior largura de banda dedicada. PCI, ISA e AGP são barramentos obsoletos. SATA é para armazenamento.
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" data-correct="B">
+            <span class="question-text">QUESTÃO 10 - A Eletricidade Estática (ESD) representa um risco silencioso para componentes eletrônicos. Qual das seguintes condutas é recomendada para minimizar riscos de danos por ESD durante a manutenção de microcomputadores?</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q10" value="A" id="q10a"><label for="q10a">A) Manusear as placas eletrônicas segurando-as pelos contatos dourados para garantir firmeza.</label></div>
+                <div class="option-item"><input type="radio" name="q10" value="B" id="q10b"><label for="q10b">B) Utilizar pulseira antiestática conectada ao aterramento ou tocar em partes metálicas não pintadas do gabinete antes de manusear os componentes.</label></div>
+                <div class="option-item"><input type="radio" name="q10" value="C" id="q10c"><label for="q10c">C) Trabalhar sobre superfícies de carpete ou tapetes sintéticos para isolar o técnico do chão.</label></div>
+                <div class="option-item"><input type="radio" name="q10" value="D" id="q10d"><label for="q10d">D) Realizar a limpeza dos contatos da memória RAM utilizando flanela seca e vigorosa fricção para gerar carga protetora.</label></div>
+                <div class="option-item"><input type="radio" name="q10" value="E" id="q10e"><label for="q10e">E) Manter o computador ligado na tomada durante a troca de memória RAM para garantir que o aterramento da rede elétrica esteja ativo.</label></div>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                A equalização de potencial elétrico é a chave da proteção ESD. A pulseira ou o toque no chassi descarrega a estática do corpo para o terra. Contatos dourados jamais devem ser tocados.
+            </div>
+        </div>
+
+        <div class="submit-area">
+            <button type="button" id="submit-btn">Finalizar e Ver Resoluções</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('quiz-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const summary = document.getElementById('result-summary');
+        const scoreDisplay = document.getElementById('score-display');
+        const scoreText = document.getElementById('score-text');
+
+        // Adicionar efeito visual ao selecionar
+        const optionItems = document.querySelectorAll('.option-item');
+        optionItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const radio = item.querySelector('input');
+                if(!radio.disabled) {
+                    radio.checked = true;
+                    // Limpar seleção anterior do grupo
+                    const name = radio.getAttribute('name');
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                        r.closest('.option-item').classList.remove('selected');
+                    });
+                    item.classList.add('selected');
+                }
+            });
+        });
+
+        submitBtn.addEventListener('click', () => {
+            let score = 0;
+            const total = 10;
+            const cards = document.querySelectorAll('.question-card');
+
+            cards.forEach((card, index) => {
+                const correctValue = card.getAttribute('data-correct');
+                const selected = card.querySelector(`input[name="q${index + 1}"]:checked`);
+                const resolution = card.querySelector('.resolution-box');
+                const options = card.querySelectorAll('.option-item');
+
+                // Mostrar resolução
+                resolution.style.display = 'block';
+
+                if (selected) {
+                    if (selected.value === correctValue) {
+                        score++;
+                        selected.closest('.option-item').classList.add('correct');
+                    } else {
+                        selected.closest('.option-item').classList.add('incorrect');
+                        // Mostrar qual era a correta
+                        card.querySelector(`input[value="${correctValue}"]`).closest('.option-item').classList.add('correct');
+                    }
+                } else {
+                    // Se não respondeu, destaca a correta
+                    card.querySelector(`input[value="${correctValue}"]`).closest('.option-item').classList.add('correct');
+                }
+
+                // Desabilitar inputs
+                card.querySelectorAll('input').forEach(input => input.disabled = true);
+            });
+
+            // Mostrar Sumário
+            submitBtn.style.display = 'none';
+            summary.style.display = 'block';
+            scoreDisplay.textContent = `${score}/${total}`;
+            
+            if(score >= 8) {
+                scoreText.textContent = "Excelente desempenho! Você domina os conceitos da FCM.";
+            } else if (score >= 5) {
+                scoreText.textContent = "Bom resultado. Revise as questões que errou para consolidar o conhecimento.";
+            } else {
+                scoreText.textContent = "Continue estudando. A arquitetura de hardware exige atenção aos detalhes técnicos.";
+            }
+
+            // Scroll suave para o topo do resultado
+            summary.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+
+</body>
+</html>

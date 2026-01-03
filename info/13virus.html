@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Estudo IFAM - Segurança da Informação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fef3c7;
+            color: #92400e;
+            font-weight: 600;
+            padding: 1px 4px;
+            border-radius: 2px;
+        }
+
+        .highlight-blue {
+            color: #1e40af;
+            font-weight: 700;
+        }
+
+        .section-box {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 2.5rem 0;
+        }
+
+        /* Tabela sem scroll horizontal: usa display block em telas pequenas */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr {
+                border: 1px solid #e5e7eb;
+                margin-bottom: 1rem;
+                padding: 0.5rem;
+                border-radius: 8px;
+            }
+            td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+                color: #4b5563;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th {
+            background-color: #f9fafb;
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+            color: #374151;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: top;
+        }
+
+        .audio-card {
+            background-color: #fcfcfc;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .btn-footer {
+            background-color: #111827;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .btn-footer:hover {
+            background-color: #374151;
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            color: #111827;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+    </style>
+</head>
+<body class="antialiased px-4">
+    <div class="max-w-4xl mx-auto">
+        
+        <!-- Header -->
+        <header class="py-12 border-b border-gray-100">
+            <h1 class="text-4xl font-black text-gray-900 mb-2">Segurança da Informação</h1>
+            <p class="text-lg text-gray-500 font-medium">Material Didático para Concurso IFAM | Banca Fundação CEFETMINAS</p>
+        </header>
+
+        <!-- Player de Áudio -->
+        <div class="audio-card">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-2xl">🎧</span>
+                <div>
+                    <h3 class="font-bold text-gray-800">Resumo em Áudio</h3>
+                    <p class="text-sm text-gray-500">Ouça os pontos chave para memorização</p>
+                </div>
+            </div>
+            <audio controls class="w-full">
+                <!-- Espaço para o nome do arquivo conforme solicitado -->
+                <source src="13virus.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio HTML5.
+            </audio>
+        </div>
+
+        <!-- Seção 1 -->
+        <section class="section-box">
+            <h2 class="text-2xl mb-6">🛡️ 1. O Triângulo de Ouro (Pilares CID)</h2>
+            <p class="mb-6">Para a CEFETMINAS, a segurança não é apenas uma ferramenta, é um estado garantido por três pilares fundamentais:</p>
+            <ul class="space-y-4">
+                <li class="flex items-start gap-3">
+                    <span class="mt-1">🔹</span>
+                    <span><span class="highlight-yellow">Confidencialidade:</span> Garante que o acesso à informação seja obtido somente por pessoas autorizadas. Principal mecanismo: <span class="highlight-blue">Criptografia</span>.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="mt-1">🔹</span>
+                    <span><span class="highlight-yellow">Integridade:</span> Garante que a informação não foi alterada ou destruída de forma não autorizada. Principal mecanismo: <span class="highlight-blue">Funções Hash</span>.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="mt-1">🔹</span>
+                    <span><span class="highlight-yellow">Disponibilidade:</span> Garante que a informação esteja acessível sempre que necessário. Mecanismos: <span class="highlight-blue">Backup, Nobreaks, Redundância</span>.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Seção 2 -->
+        <section class="section-box">
+            <h2 class="text-2xl mb-6">🦠 2. Dicionário de Malware (Definições Técnicas)</h2>
+            <div class="overflow-hidden">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ameaça</th>
+                            <th>Característica Vital</th>
+                            <th>Gatilho de Memória</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Ameaça" class="font-bold text-red-700">VÍRUS</td>
+                            <td data-label="Característica Vital"><span class="highlight-yellow">Parasitário.</span> Precisa de um arquivo hospedeiro e depende de <span class="highlight-yellow">intervenção humana</span> para se propagar.</td>
+                            <td data-label="Gatilho">"O vírus é um anexo."</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Ameaça" class="font-bold text-red-700">WORM</td>
+                            <td data-label="Característica Vital"><span class="highlight-yellow">Autônomo.</span> Não precisa de hospedeiro. Foco total em <span class="highlight-yellow">redes</span>. Realiza auto-replicação automática.</td>
+                            <td data-label="Gatilho">"O verme rasteja na rede."</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Ameaça" class="font-bold text-red-700">TROJAN</td>
+                            <td data-label="Característica Vital">"Presente de Grego". Entra no sistema como algo legítimo para liberar portas (<span class="highlight-yellow">Backdoors</span>).</td>
+                            <td data-label="Gatilho">"Cavalo que abre a porta."</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Ameaça" class="font-bold text-red-700">RANSOMWARE</td>
+                            <td data-label="Característica Vital">Software de <span class="highlight-yellow">sequestro</span>. Criptografa os dados e exige resgate em criptomoedas.</td>
+                            <td data-label="Gatilho">"Ransom = Resgate."</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Ameaça" class="font-bold text-red-700">SPYWARE</td>
+                            <td data-label="Característica Vital">Monitoramento e espionagem. Subtipos: <span class="highlight-blue">Keylogger</span> (teclado) e <span class="highlight-blue">Screenlogger</span> (tela).</td>
+                            <td data-label="Gatilho">"Spy = Espião."</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Ameaça" class="font-bold text-red-700">ROOTKIT</td>
+                            <td data-label="Característica Vital">Conjunto de ferramentas para garantir a <span class="highlight-yellow">invisibilidade</span> do invasor, escondendo-se no Kernel.</td>
+                            <td data-label="Gatilho">"Raiz invisível."</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Ameaça" class="font-bold text-red-700">STALKERWARE</td>
+                            <td data-label="Característica Vital">Focado em invasão de privacidade e vigilância de parceiros/indivíduos próximos.</td>
+                            <td data-label="Gatilho">"Stalker = Perseguidor."</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 3 -->
+        <section class="section-box">
+            <h2 class="text-2xl mb-6">🎣 3. Ataques e Engenharia Social</h2>
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                    <h3 class="text-xl font-bold mb-3 text-blue-900">Phishing</h3>
+                    <p>Focado em <span class="highlight-yellow">Engenharia Social</span>. O usuário recebe um e-mail ou link falso e fornece os dados voluntariamente ao clicar.</p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-100">
+                    <h3 class="text-xl font-bold mb-3 text-blue-900">Pharming</h3>
+                    <p>Focado em <span class="highlight-yellow">Infraestrutura (DNS)</span>. O atacante envenena o DNS. O usuário digita o endereço correto, mas o navegador o leva ao site falso.</p>
+                </div>
+            </div>
+            <div class="space-y-4">
+                <p><strong>Baiting:</strong> Uso de iscas físicas (pen drives infectados deixados em locais públicos).</p>
+                <p><strong>Tailgating:</strong> Ato de seguir um funcionário autorizado para entrar fisicamente em locais restritos.</p>
+                <p><strong>Cryptojacking:</strong> Uso não autorizado do processamento do computador da vítima para <span class="highlight-blue">minerar criptomoedas</span>.</p>
+            </div>
+        </section>
+
+        <!-- Seção 4 -->
+        <section class="section-box">
+            <h2 class="text-2xl mb-6">🧱 4. Mecanismos de Defesa</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-xl font-bold mb-2">Métodos de Detecção Antivírus:</h3>
+                    <ul class="list-disc ml-5 space-y-2">
+                        <li><strong>Assinatura:</strong> Método <span class="highlight-blue">Reativo</span>. Compara o código com um banco de dados conhecido.</li>
+                        <li><strong>Heurística:</strong> Método <span class="highlight-blue">Proativo</span>. Analisa o comportamento e padrões suspeitos do código.</li>
+                        <li><strong>Quarentena:</strong> Isolamento do arquivo suspeito para análise posterior; <span class="highlight-yellow">não é exclusão automática</span>.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-2">Firewall:</h3>
+                    <p>Atua como um filtro entre redes. <span class="highlight-yellow">NÃO remove vírus de arquivos</span>, apenas controla portas e tráfego de pacotes (IP/Protocolos).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 5 -->
+        <section class="section-box">
+            <h2 class="text-2xl mb-6">🔐 5. Integridade e Hash</h2>
+            <p class="mb-4">O <span class="highlight-blue">Hash (MD5, SHA-256)</span> é uma função matemática que gera um código único para cada arquivo.</p>
+            <ul class="space-y-2">
+                <li>✅ <strong>Irreversibilidade:</strong> Não é possível recuperar o arquivo original a partir do Hash.</li>
+                <li>✅ <strong>Efeito Avalanche:</strong> Se 1 bit do arquivo for alterado, o código Hash muda completamente.</li>
+                <li>✅ <strong>Finalidade:</strong> Verificação de <span class="highlight-yellow">Integridade</span>.</li>
+            </ul>
+        </section>
+
+        <!-- Seção 6 -->
+        <section class="section-box border-none">
+            <h2 class="text-2xl mb-6 text-red-600">🚩 6. Checklist de Peguinhas CEFETMINAS</h2>
+            <div class="space-y-6 text-gray-700">
+                <p>📍 <strong>INCORRETO:</strong> Atenção redobrada quando a banca pedir a alternativa errada. Geralmente trocam definições de Vírus por Worm.</p>
+                <p>📍 <strong>Linux e Segurança:</strong> Saiba que permissões (<span class="highlight-blue">chmod</span>) e o firewall <span class="highlight-blue">iptables/nftables</span> são temas recorrentes para cargos EBTT.</p>
+                <p>📍 <strong>Ransomware:</strong> Lembre-se que antivírus NÃO descriptografa dados sequestrados. <span class="highlight-yellow">Apenas o Backup</span> garante a recuperação.</p>
+                <p>📍 <strong>Assinatura Digital:</strong> Garante <span class="highlight-blue">Autenticidade, Integridade e Não-repúdio</span>. Note que ela sozinha NÃO garante confidencialidade (o texto pode estar legível).</p>
+                <p>📍 <strong>Termos Extras:</strong> <span class="font-bold">Spoofing</span> (falsificação de identidade de IP ou e-mail) e <span class="font-bold">Botnet</span> (rede de computadores infectados controlados remotamente).</p>
+            </div>
+        </section>
+
+        <!-- Botão Final -->
+        <div class="py-16 text-center">
+            <a href="13questoes.html" class="btn-footer">
+                🚀 Praticar com Questões de Prova
+            </a>
+            <p class="mt-4 text-sm text-gray-400">Página otimizada para estudo individual - Versão 1.0</p>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão de Hardware - IFAM (CEFETMINAS)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c; /* Cinza bem escuro para melhor contraste */
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef08a; /* Amarelo suave */
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .section-header {
+            border-left: 4px solid #2d3748;
+            padding-left: 1rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Estilo para garantir que as tabelas não quebrem o layout */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Garante que o conteúdo não fique espremido */
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #4a5568;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .audio-player-box {
+            background-color: #fcfcfc;
+            border: 2px dashed #e2e8f0;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .btn-questoes {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 3rem auto;
+            background-color: #1a202c;
+            color: white;
+            text-align: center;
+            padding: 1.25rem;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-questoes:hover {
+            background-color: #2d3748;
+            transform: translateY(-2px);
+        }
+
+        .note-box {
+            background-color: #f7fafc;
+            border-left: 4px solid #cbd5e0;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-6 py-10">
+
+    <header class="mb-12 border-b pb-6">
+        <h1 class="text-4xl font-extrabold text-slate-900 mb-2">Hardware: Montagem e Manutenção</h1>
+        <p class="text-slate-500 font-medium uppercase tracking-widest text-sm">Resumo Didático para Professor EBTT - IFAM (Banca CEFETMINAS)</p>
+    </header>
+
+    <!-- ÁUDIO PLAYER -->
+    <div class="audio-player-box">
+        <h3 class="text-sm font-bold text-slate-700 mb-3 flex items-center">
+            <span class="mr-2">🎧</span> REPRODUTOR DE ÁUDIO DE REVISÃO
+        </h3>
+        <audio controls class="w-full">
+            <!-- COLOQUE O NOME DO SEU ARQUIVO MP3 AQUI -->
+            <source src="12montagem.mp3" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+    </div>
+
+    <main>
+        
+        <!-- 1. ARQUITETURA -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold">1. Arquitetura e Placa-Mãe</h2>
+            </div>
+            <p class="mb-4">O foco aqui é a transição entre o modelo clássico de barramentos e a integração moderna.</p>
+            
+            <h4 class="font-bold text-slate-700 underline mb-2">Evolução do Chipset:</h4>
+            <ul class="list-disc ml-8 space-y-2 mb-6">
+                <li><span class="highlight">Ponte Norte (Northbridge/MCH):</span> Gerenciava CPU, RAM e Vídeo (AGP/PCIe x16). Comunicação de alta velocidade.</li>
+                <li><span class="highlight">Ponte Sul (Southbridge/ICH):</span> Gerenciava I/O, USB, SATA, BIOS, Áudio e PCI legado. Baixa velocidade.</li>
+                <li><span class="highlight">Modelo Moderno (PCH/SoC):</span> Os controladores de memória e PCIe de vídeo foram <span class="highlight">integrados diretamente na CPU</span>. O Chipset tornou-se um chip único (PCH) para periféricos.</li>
+            </ul>
+
+            <h4 class="font-bold text-slate-700 underline mb-2">Diferenças Cruciais: BIOS vs UEFI</h4>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>BIOS (Legado)</th>
+                            <th>UEFI (Moderno)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Arquitetura de Software</td>
+                            <td>16-bit (Modo Real)</td>
+                            <td>32-bit ou <span class="highlight">64-bit</span></td>
+                        </tr>
+                        <tr>
+                            <td>Tabela de Partição</td>
+                            <td><span class="highlight">MBR</span> (Master Boot Record)</td>
+                            <td><span class="highlight">GPT</span> (GUID Partition Table)</td>
+                        </tr>
+                        <tr>
+                            <td>Capacidade Máxima de Disco</td>
+                            <td>Até <span class="highlight">2 TB</span></td>
+                            <td>Zettabytes (Teórico)</td>
+                        </tr>
+                        <tr>
+                            <td>Limite de Partições</td>
+                            <td>Máx. 4 Primárias</td>
+                            <td>Até <span class="highlight">128 partições</span> (no Windows)</td>
+                        </tr>
+                        <tr>
+                            <td>Segurança de Boot</td>
+                            <td>Inexistente</td>
+                            <td><span class="highlight">Secure Boot</span> (Assinatura Digital)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 2. PROCESSADORES -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold">2. Processadores (CPU) e Refrigeração</h2>
+            </div>
+            <ul class="list-disc ml-8 space-y-4">
+                <li><span class="highlight">LGA (Land Grid Array):</span> Pinos localizados no soquete da placa-mãe. CPU tem apenas contatos planos. Padrão Intel e AM5.</li>
+                <li><span class="highlight">PGA (Pin Grid Array):</span> Pinos localizados na própria CPU. Padrão AM4 e anteriores. Risco de <span class="highlight">"arrancamento"</span> do processador colado ao cooler.</li>
+                <li><span class="highlight">TDP (Thermal Design Power):</span> Valor em Watts que indica a dissipação térmica necessária. <span class="highlight">Não é o consumo elétrico real</span>, mas uma diretriz para o sistema de refrigeração.</li>
+                <li><span class="highlight">Pasta Térmica:</span> Função de preencher irregularidades microscópicas. O excesso atua como <span class="highlight">isolante térmico</span>, piorando a temperatura.</li>
+            </ul>
+        </section>
+
+        <!-- 3. MEMÓRIAS E BARRAMENTOS -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold">3. Memórias (RAM) e Barramentos</h2>
+            </div>
+            <ul class="list-disc ml-8 space-y-3 mb-6">
+                <li><span class="highlight">DRAM:</span> Memória dinâmica. Requer <span class="highlight">Refresh Elétrico</span> constante para não perder os dados.</li>
+                <li><span class="highlight">DDR (Double Data Rate):</span> Transfere dois dados por pulso de clock (subida e descida).</li>
+                <li><span class="highlight">Voltagens:</span> DDR3 (1.5V) ➔ DDR4 (1.2V) ➔ <span class="highlight">DDR5 (1.1V)</span>. A DDR5 possui o chip <span class="highlight">PMIC</span> integrado no módulo para gestão de energia.</li>
+                <li><span class="highlight">Dual Channel:</span> Largura de banda sobe de 64-bit para <span class="highlight">128-bit</span>.</li>
+                <li><span class="highlight">PCI Express (PCIe):</span> Barramento serial, ponto-a-ponto e <span class="highlight">Full-Duplex</span>. 
+                    <br>➔ PCIe 3.0: ~1 GB/s por pista. ➔ PCIe 4.0: ~2 GB/s por pista.</li>
+            </ul>
+        </section>
+
+        <!-- 4. ARMAZENAMENTO -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold">4. Armazenamento e RAID</h2>
+            </div>
+            <p class="mb-4">O protocolo define a velocidade, o formato define o encaixe.</p>
+            <ul class="list-disc ml-8 space-y-2 mb-6">
+                <li><span class="highlight">SATA III:</span> Protocolo AHCI, limite teórico de <span class="highlight">600 MB/s</span>.</li>
+                <li><span class="highlight">NVMe:</span> Protocolo desenvolvido para memórias Flash via barramento PCIe. Latência muito menor que o SATA.</li>
+                <li><span class="highlight">M.2:</span> É apenas o <span class="highlight">conector/formato</span>. Pode ser M.2 SATA ou M.2 NVMe.</li>
+            </ul>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nível RAID</th>
+                            <th>Característica Principal</th>
+                            <th>Capacidade Útil</th>
+                            <th>Resiliência</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="highlight">RAID 0</span></td>
+                            <td>Striping (Fracionamento)</td>
+                            <td>100% (Soma de todos)</td>
+                            <td>Nenhuma. 1 disco falha = perda total.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">RAID 1</span></td>
+                            <td>Mirroring (Espelhamento)</td>
+                            <td>50% (Metade)</td>
+                            <td>Resiste à falha de 1 disco (por par).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">RAID 5</span></td>
+                            <td>Paridade Distribuída</td>
+                            <td><span class="highlight">N - 1</span></td>
+                            <td>Resiste à falha de exatamente <span class="highlight">1 disco</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">RAID 10</span></td>
+                            <td>Striping + Mirroring</td>
+                            <td>50%</td>
+                            <td>Alta performance e alta segurança.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 5. ENERGIA -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold">5. Energia e Manutenção</h2>
+            </div>
+            
+            <h4 class="font-bold text-slate-700 mb-2">Tensões da Fonte ATX:</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 text-sm">
+                <div class="p-4 border rounded">
+                    <p>🟡 <span class="font-bold">+12V:</span> CPU, GPU e Motores.</p>
+                    <p>🔴 <span class="font-bold">+5V:</span> Lógica de discos e periféricos.</p>
+                    <p>🟠 <span class="font-bold">+3.3V:</span> Memórias e Chipsets.</p>
+                </div>
+                <div class="p-4 border rounded">
+                    <p>🟢 <span class="font-bold">PS_ON (Verde):</span> Aciona a fonte quando aterrado (Black).</p>
+                    <p>🔘 <span class="font-bold">Power Good (Cinza):</span> Sinal de que as tensões estão estáveis.</p>
+                    <p>🟣 <span class="font-bold">+5VSB (Roxo):</span> Standby (sempre alimentado).</p>
+                </div>
+            </div>
+
+            <p class="mb-4">O <span class="highlight">PFC Ativo</span> melhora a eficiência energética e permite que a fonte opere em <span class="highlight">Full Range</span> (100V-240V automático).</p>
+            
+            <div class="note-box">
+                <strong>Manutenção Preventiva:</strong> O uso de borracha escolar em contatos é <span class="highlight">proibido</span> em provas de alto nível por ser abrasivo e gerar resíduos. O correto é <span class="highlight">Álcool Isopropílico (mínimo 99.8% de pureza)</span>.
+            </div>
+        </section>
+
+        <!-- 6. PERIFÉRICOS -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold">6. Periféricos e Peguinhas de Prova</h2>
+            </div>
+            
+            <h4 class="font-bold text-slate-700 mb-2">Processo da Impressora Laser (6 etapas):</h4>
+            <p class="text-sm mb-4">1. Limpeza ➔ 2. Condicionamento (Carga) ➔ 3. Escrita (Laser) ➔ 4. Revelação (Toner) ➔ 5. Transferência ➔ <span class="highlight">6. Fusão (Calor)</span>.</p>
+
+            <ul class="list-disc ml-8 space-y-3">
+                <li><span class="highlight">USB 3.2 Gen 1:</span> 5 Gbps (Antigo USB 3.0).</li>
+                <li><span class="highlight">USB 3.2 Gen 2:</span> 10 Gbps (Antigo USB 3.1).</li>
+                <li><span class="highlight">Bips de Diagnóstico:</span> 
+                    <br>• Bip Contínuo: Falha na Memória RAM.
+                    <br>• 1 Longo e 2 curtos: Falha na Placa de Vídeo (VGA).
+                </li>
+                <li><span class="highlight">Conversão de Unidades:</span> Velocidade de rede é <span class="highlight">bits/s</span>. Arquivos são <span class="highlight">Bytes</span>. Divida por 8 para saber a taxa de download real.</li>
+            </ul>
+        </section>
+
+        <!-- BOTÃO DE AÇÃO -->
+        <a href="12questoes.html" class="btn-questoes">
+            📝 PRATICAR QUESTÕES DE HARDWARE
+        </a>
+
+    </main>
+
+    <footer class="mt-20 pt-8 border-t text-center text-slate-400 text-sm">
+        Material preparado para o Concurso IFAM - Foco na Fundação CEFETMINAS.
+    </footer>
+
+</body>
+</html>

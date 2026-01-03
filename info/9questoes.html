@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Hardware - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --success-color: #27ae60;
+            --error-color: #d63031;
+            --border-color: #dfe6e9;
+            --card-bg: #ffffff;
+            --max-width: 850px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.65;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #1e272e;
+            margin-bottom: 10px;
+        }
+
+        .meta-info {
+            color: #636e72;
+            font-style: italic;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f1f2f6;
+            border-color: var(--accent-color);
+        }
+
+        input[type="radio"] {
+            margin-top: 6px;
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 40px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0773c5;
+        }
+
+        /* Results View */
+        #results-container {
+            display: none;
+        }
+
+        .score-banner {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .resolution-card {
+            margin-bottom: 50px;
+            border-left: 5px solid var(--border-color);
+            padding-left: 20px;
+        }
+
+        .correct-answer-banner {
+            color: var(--success-color);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .user-answer-banner {
+            margin-bottom: 10px;
+        }
+
+        .wrong { color: var(--error-color); }
+        .right { color: var(--success-color); }
+
+        .explanation-box {
+            background: #f1f2f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            white-space: pre-line;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            .question-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Técnico: Hardware e Periféricos</h1>
+        <p class="meta-info">Estilo de Banca: Fundação CEFETMINAS</p>
+    </header>
+
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- Questions injected via JS -->
+        </div>
+        <button type="submit" class="btn-submit">Finalizar e Ver Resoluções</button>
+    </form>
+
+    <div id="results-container">
+        <div class="score-banner">
+            <h2>Resultado Final</h2>
+            <div class="score-number" id="final-score">0/10</div>
+            <p id="score-message"></p>
+            <button onclick="window.location.reload()" style="margin-top:20px; padding: 10px 20px; cursor: pointer;">Refazer Simulado</button>
+        </div>
+
+        <h2 style="margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 10px;">Gabarito Comentado</h2>
+        <div id="resolutions-list">
+            <!-- Resolutions injected via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "Questão 1: A arquitetura de computadores moderna baseia-se no modelo de Von Neumann, onde o fluxo de dados entre a Unidade Central de Processamento (CPU) e o mundo externo é mediado por dispositivos de Entrada e Saída (E/S). Considerando o comportamento dos periféricos e a direção do fluxo de dados, analise as afirmativas abaixo:\n\nI. O scanner de mesa é um dispositivo classificado estritamente como de entrada, pois sua função consiste na conversão de sinais analógicos de luz refletida em dados digitais binários...\nII. As impressoras multifuncionais representam a convergência de hardware, sendo categorizadas como dispositivos híbridos (entrada e saída)...\nIII. Monitores com tecnologia touchscreen são considerados periféricos exclusivamente de saída...",
+            options: [
+                "A) Apenas I.",
+                "B) Apenas II.",
+                "C) Apenas I e II.",
+                "D) Apenas I e III.",
+                "E) I, II e III."
+            ],
+            correct: 2, // C
+            explanation: "Esta questão exige uma compreensão profunda da Arquitetura de Von Neumann. \n\nI. Correta: O scanner converte luz refletida em bits, movendo dados do mundo físico para o digital (Entrada).\nII. Correta: Multifuncionais integram scanner (entrada) e impressora (saída), operando nos dois sentidos.\nIII. Incorreta: O monitor touchscreen integra um painel de exibição (saída) e um digitador (entrada), sendo portanto um dispositivo híbrido."
+        },
+        {
+            id: 2,
+            question: "Questão 2: Assinale a alternativa que identifica corretamente o barramento serial universal projetado para padronizar a conexão de periféricos como teclados, mouses, impressoras e unidades de armazenamento, permitindo a conexão a quente (hot-swap) e fornecendo alimentação elétrica através do próprio cabo de dados.",
+            options: [
+                "A) ISA (Industry Standard Architecture).",
+                "B) PCI (Peripheral Component Interconnect).",
+                "C) USB (Universal Serial Bus).",
+                "D) AGP (Accelerated Graphics Port).",
+                "E) PATA (Parallel Advanced Technology Attachment)."
+            ],
+            correct: 2, // C
+            explanation: "O USB (Universal Serial Bus) foi criado para substituir as portas legadas (Serial, Paralela, PS/2). Suas principais vantagens são a padronização, a capacidade de hot-swap e o fornecimento de energia (bus power) para os periféricos."
+        },
+        {
+            id: 3,
+            question: "Questão 3: Qual é a especificação de interface de controlador de host projetada especificamente para explorar o paralelismo interno dos Dispositivos de Estado Sólido (SSDs) conectados através do barramento PCI Express (PCIe), superando as limitações impostas pelo padrão AHCI/SATA?",
+            options: [
+                "A) SATA III (Serial ATA).",
+                "B) NVMe (Non-Volatile Memory express).",
+                "C) SCSI (Small Computer System Interface).",
+                "D) IDE (Integrated Drive Electronics).",
+                "E) DDR4 (Double Data Rate 4)."
+            ],
+            correct: 1, // B
+            explanation: "O NVMe foi desenvolvido para tirar proveito da baixa latência e do paralelismo das memórias Flash. Diferente do SATA/AHCI (que suporta 1 fila de 32 comandos), o NVMe suporta mais de 65 mil filas, conectando o SSD diretamente ao barramento PCIe."
+        },
+        {
+            id: 4,
+            question: "Questão 4: Sobre as funções padronizadas dos botões de um mouse em ambiente Microsoft Windows, é correto afirmar que:",
+            options: [
+                "A) O acionamento do botão direito sobre um objeto ou área vazia tem como função primária a abertura de um menu de contexto.",
+                "B) O botão esquerdo deve ser pressionado simultaneamente com a tecla Ctrl para realizar a seleção simples.",
+                "C) A roda de rolagem (scroll wheel) possui função estritamente mecânica, não contendo interruptores eletrônicos.",
+                "D) O clique duplo com o botão direito é o comando padrão para a execução de aplicativos.",
+                "E) A função de 'arrastar e soltar' exige que o usuário mantenha pressionado o botão direito."
+            ],
+            correct: 0, // A
+            explanation: "No Windows, o botão direito abre o menu de contexto. O botão esquerdo é usado para seleção simples (clique) e execução (clique duplo). A roda de rolagem geralmente funciona como um terceiro botão (clique central)."
+        },
+        {
+            id: 5,
+            question: "Questão 5: Assinale a alternativa que apresenta a interface de transmissão totalmente digital capaz de trafegar, em um único cabo, fluxos de vídeo de alta resolução e áudio multicanal.",
+            options: [
+                "A) VGA (Video Graphics Array).",
+                "B) DVI-I (Digital Visual Interface - Integrated).",
+                "C) HDMI (High-Definition Multimedia Interface).",
+                "D) Vídeo Componente (YPbPr).",
+                "E) S-Video (Separate Video)."
+            ],
+            correct: 2, // C
+            explanation: "O HDMI é o padrão digital dominante na eletrônica de consumo. Ele transmite vídeo não comprimido e áudio multicanal simultaneamente. O VGA é analógico e o DVI (originalmente) não transporta áudio."
+        },
+        {
+            id: 6,
+            question: "Questão 6: Qual tecnologia de impressão utiliza um processo eletrofotográfico (xerográfico), envolvendo um cilindro fotorreceptor carregado eletrostaticamente, feixes de luz para desenhar a imagem latente e pó pigmentado (toner)?",
+            options: [
+                "A) Jato de Tinta (Inkjet).",
+                "B) Matricial de Impacto.",
+                "C) Laser.",
+                "D) Térmica Direta.",
+                "E) Sublimação de Tinta."
+            ],
+            correct: 2, // C
+            explanation: "A impressão a Laser baseia-se na eletrofotografia. Um cilindro fotorreceptor é carregado, o laser 'desenha' a imagem removendo a carga em certos pontos, o toner é atraído por essas áreas e depois fundido ao papel por calor e pressão."
+        },
+        {
+            id: 7,
+            question: "Questão 7: Considere que um usuário está editando um documento. Antes de acionar o comando 'Salvar', os dados residem temporariamente em uma memória de acesso aleatório. Se houver interrupção de energia, os dados são perdidos. Essa memória é:",
+            options: [
+                "A) Memória ROM (Read-Only Memory).",
+                "B) Memória Cache L1.",
+                "C) Memória RAM (Random Access Memory).",
+                "D) Memória Flash (SSD).",
+                "E) Memória EPROM."
+            ],
+            correct: 2, // C
+            explanation: "A RAM é a memória principal e volátil do sistema. Ela serve como área de trabalho para o SO e aplicativos. Sem energia elétrica, os capacitores que guardam os dados descarregam, causando a perda da informação não salva."
+        },
+        {
+            id: 8,
+            question: "Questão 8: O dispositivo de entrada que utiliza uma fonte de luz e sensores fotossensíveis para ler padrões de barras escuras e claras, convertendo-os em sequências alfanuméricas via emulação de teclado, é o:",
+            options: [
+                "A) Scanner de Mesa (Flatbed).",
+                "B) Leitor de Código de Barras.",
+                "C) Leitor Biométrico.",
+                "D) Trackpad.",
+                "E) Webcam com software OCR."
+            ],
+            correct: 1, // B
+            explanation: "O leitor de código de barras decodifica a reflexão da luz em barras pretas e brancas. Sua principal característica de integração é a emulação de teclado (keyboard wedge), facilitando o uso em qualquer software."
+        },
+        {
+            id: 9,
+            question: "Questão 9: No padrão PC99 para conectores de áudio de 3,5mm (P2) em placas-mãe, as cores Rosa e Verde correspondem, respectivamente, às funções de:",
+            options: [
+                "A) Saída de Linha e Entrada de Microfone.",
+                "B) Entrada de Microfone e Saída de Linha (Fones).",
+                "C) Entrada de Linha (Line-In) e Saída de Subwoofer.",
+                "D) Saída Traseira (Surround) e Entrada de Microfone.",
+                "E) Entrada de Microfone e Entrada de Linha."
+            ],
+            correct: 1, // B
+            explanation: "A padronização internacional (PC99) define cores para evitar erros de conexão: Rosa para Microfone (entrada) e Verde para Caixas de Som/Fones (saída)."
+        },
+        {
+            id: 10,
+            question: "Questão 10: Assinale a alternativa que nomeia o programa específico, fornecido pelo fabricante do periférico, responsável por controlar as funções do dispositivo e permitir que o Sistema Operacional o utilize.",
+            options: [
+                "A) Firmware da BIOS.",
+                "B) Kernel.",
+                "C) Driver de Dispositivo.",
+                "D) Chipset.",
+                "E) Codec de Áudio/Vídeo."
+            ],
+            correct: 2, // C
+            explanation: "O Driver de Dispositivo é a camada de software que traduz os comandos genéricos do sistema operacional em instruções específicas que o hardware do periférico consegue entender."
+        }
+    ];
+
+    const container = document.getElementById('questions-container');
+    const form = document.getElementById('quiz-form');
+    const resultsContainer = document.getElementById('results-container');
+    const resolutionsList = document.getElementById('resolutions-list');
+
+    // Load Questions
+    function initQuiz() {
+        quizData.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q${index}" value="${optIndex}" required>
+                            <span>${opt}</span>
+                        </label>
+                    </li>
+                `;
+            });
+
+            div.innerHTML = `
+                <p class="question-text">${q.question.replace(/\n/g, '<br>')}</p>
+                <ul class="options-list">${optionsHtml}</ul>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        let score = 0;
+        let resultsHtml = '';
+
+        quizData.forEach((q, index) => {
+            const userAnswer = parseInt(formData.get(`q${index}`));
+            const isCorrect = userAnswer === q.correct;
+            if (isCorrect) score++;
+
+            resultsHtml += `
+                <div class="resolution-card">
+                    <p style="font-weight:bold; font-size: 1.1rem;">${q.id}. ${q.question.split(':')[1].substring(0, 100)}...</p>
+                    <p class="user-answer-banner">
+                        Sua resposta: <span class="${isCorrect ? 'right' : 'wrong'}">${q.options[userAnswer]}</span>
+                        ${isCorrect ? ' (Acertou!)' : ` - <span class="right">Correta: ${q.options[q.correct]}</span>`}
+                    </p>
+                    <div class="explanation-box">
+                        <strong>Resolução Técnica:</strong><br>
+                        ${q.explanation}
+                    </div>
+                </div>
+            `;
+        });
+
+        // UI Updates
+        form.style.display = 'none';
+        resultsContainer.style.display = 'block';
+        document.getElementById('final-score').innerText = `${score} / ${quizData.length}`;
+        document.getElementById('score-message').innerText = score >= 7 ? "Excelente desempenho!" : "Bom esforço! Revise as resoluções abaixo.";
+        resolutionsList.innerHTML = resultsHtml;
+        window.scrollTo(0,0);
+    });
+
+    initQuiz();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Técnico: Hardware, Multimídia e Impressão</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-color: #636e72;
+            --correct-color: #27ae60;
+            --incorrect-color: #d63031;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --resolution-bg: #f1f2f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .quiz-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background-color: #f8f9fa;
+            border-color: var(--primary-color);
+        }
+
+        .option input {
+            margin-top: 5px;
+            margin-right: 12px;
+        }
+
+        .option.selected {
+            background-color: #e3f2fd;
+            border-color: var(--primary-color);
+        }
+
+        /* Classes para o resultado */
+        .option.correct {
+            background-color: #e6fcf5;
+            border-color: var(--correct-color);
+            color: var(--correct-color);
+            font-weight: 600;
+        }
+
+        .option.incorrect {
+            background-color: #fff5f5;
+            border-color: var(--incorrect-color);
+            color: var(--incorrect-color);
+        }
+
+        .resolution {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .resolution h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        #action-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #0873c4;
+        }
+
+        #results-summary {
+            display: none;
+            background: var(--primary-color);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        #results-summary h2 {
+            margin: 0 0 10px 0;
+        }
+
+        .score-box {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 15px; }
+            header h1 { font-size: 1.5rem; }
+            .quiz-item { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado de Hardware e Multimídia</h1>
+        <p>Estilo Fundação CEFETMINAS - 10 Questões Técnicas</p>
+    </header>
+
+    <div id="results-summary">
+        <h2>Resultado Final</h2>
+        <div class="score-box" id="score-display">0/10</div>
+        <p id="score-message"></p>
+    </div>
+
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- As questões serão injetadas aqui via JS -->
+        </div>
+
+        <div id="action-container">
+            <button type="button" class="btn" id="finish-btn" onclick="gradeQuiz()">Finalizar e Ver Resoluções</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "Questão 1: No âmbito da manutenção de periféricos e tecnologias de impressão em ambientes corporativos e industriais, a escolha do equipamento adequado depende das propriedades físicas do processo de impressão. Considere um cenário onde um Técnico de Laboratório precisa configurar uma estação de trabalho para a emissão de notas fiscais e ordens de serviço utilizando formulários contínuos carbonados (vias múltiplas). O requisito mandatório é que a impressão seja capaz de marcar fisicamente todas as vias do formulário simultaneamente através de pressão mecânica. Analisando as tecnologias disponíveis, qual dispositivo atende a essa especificidade física, apesar de apresentar, em geral, menor resolução gráfica e maior nível de ruído acústico em comparação com tecnologias modernas?",
+            options: [
+                "A) Impressora a Laser Eletrofotográfica.",
+                "B) Impressora a Jato de Tinta Piezoelétrica.",
+                "C) Impressora Matricial de Impacto.",
+                "D) Impressora Térmica Direta.",
+                "E) Plotter de Recorte Vinílico."
+            ],
+            answer: 2, // Índice C
+            resolution: "A chave da questão reside na expressão 'marcar fisicamente todas as vias'. Impressoras matriciais utilizam um cabeçote com agulhas que colidem fisicamente contra uma fita entintada e o papel. Essa pressão mecânica é a única capaz de transferir a imagem através de papel carbono ou autocopiativo em múltiplas vias simultâneas. Tecnologias como laser ou jato de tinta não exercem pressão suficiente para tal fim."
+        },
+        {
+            id: 2,
+            question: "Questão 2: Um técnico de audiovisual está configurando um auditório e precisa conectar um computador a um projetor moderno. O sistema exige uma conexão puramente digital que suporte não apenas o fluxo de vídeo de alta definição, mas também o transporte de áudio multicanal descomprimido e sinais de controle (CEC) através de um único cabo. Dentre as interfaces listadas, qual é o padrão dominante na eletrônica de consumo que satisfaz nativamente todos esses requisitos?",
+            options: [
+                "A) VGA (Video Graphics Array) – DE-15.",
+                "B) DVI-D (Digital Visual Interface - Digital).",
+                "C) HDMI (High-Definition Multimedia Interface).",
+                "D) Vídeo Componente (YPbPr).",
+                "E) S-Video (Separate Video)."
+            ],
+            answer: 2, // Índice C
+            resolution: "O HDMI foi projetado especificamente para unificar vídeo digital, áudio multicanal e controle (CEC) em um único barramento. Enquanto o VGA e o Vídeo Componente são analógicos, e o DVI-D é digital mas focado apenas em vídeo, o HDMI é o padrão convergente da eletrônica de consumo."
+        },
+        {
+            id: 3,
+            question: "Questão 3: Na especificação de monitores para departamentos de design gráfico, uma tecnologia de painel LCD específica foi desenvolvida para alinhar os cristais líquidos paralelamente ao substrato de vidro, oferecendo ângulos de visão próximos a 178 graus e reprodução superior do espectro de cores sRGB. Assinale a alternativa que identifica corretamente essa tecnologia.",
+            options: [
+                "A) CRT (Cathode Ray Tube).",
+                "B) IPS (In-Plane Switching).",
+                "C) Plasma Display Panel (PDP).",
+                "D) PMOLED (Passive Matrix OLED).",
+                "E) VFD (Vacuum Fluorescent Display)."
+            ],
+            answer: 1, // Índice B
+            resolution: "O painel IPS (In-Plane Switching) alinha os cristais líquidos horizontalmente. Isso permite que a luz disperse de forma mais uniforme, garantindo que as cores e o contraste não se distorçam quando vistos de ângulos laterais, ao contrário dos painéis TN (Twisted Nematic)."
+        },
+        {
+            id: 4,
+            question: "Questão 4: Ao analisar as especificações de um scanner de mesa, um técnico depara-se com dois valores de resolução: 600 dpi e 9600 dpi. O primeiro refere-se à capacidade real do sensor CCD, enquanto o segundo é obtido através de algoritmos matemáticos. Esses conceitos são definidos, respectivamente, como:",
+            options: [
+                "A) Resolução Óptica e Resolução Interpolada.",
+                "B) Resolução de Saída e Resolução de Entrada.",
+                "C) Profundidade de Bits e Taxa de Amostragem.",
+                "D) Resolução Vetorial e Resolução Rasterizada.",
+                "E) Resolução Nativa e Resolução Dinâmica."
+            ],
+            answer: 0, // Índice A
+            resolution: "A Resolução Óptica é o limite físico do sensor (quantos pontos ele realmente 'vê'). A Resolução Interpolada é um cálculo de software que 'inventa' pixels entre os pontos reais para aumentar o tamanho da imagem, sem adicionar detalhe real capturado."
+        },
+        {
+            id: 5,
+            question: "Questão 5: O recurso técnico, presente na maioria dos projetores modernos, que permite corrigir digitalmente ou opticamente a distorção em formato de trapézio (causada por um projetor não perpendicular à tela) é denominado:",
+            options: [
+                "A) Lens Shift (Deslocamento de Lente).",
+                "B) Autofocus (Foco Automático).",
+                "C) Zoom Digital.",
+                "D) Keystone Correction (Correção de Trapézio).",
+                "E) Aspect Ratio Adjustment (Ajuste de Proporção)."
+            ],
+            answer: 3, // Índice D
+            resolution: "Keystone Correction (ou Correção Trapezoidal) é o ajuste que 'endireita' a imagem quando o projetor está inclinado para cima ou para baixo. O Lens Shift move a imagem sem inclinar o aparelho, mas a correção da distorção de formato descrita é o Keystone."
+        },
+        {
+            id: 6,
+            question: "Questão 6: Sobre a física das mídias ópticas e suas capacidades padrão, analise:\nI. O DVD utiliza laser vermelho de 650 nm (4,7 GB).\nII. O Blu-ray utiliza laser azul-violeta de 405 nm (25 GB).\nIII. Mídias RW utilizam liga de mudança de fase para regravação.\nEstá(ão) correta(s):",
+            options: [
+                "A) Apenas I.",
+                "B) Apenas II.",
+                "C) Apenas I e III.",
+                "D) Apenas II e III.",
+                "E) I, II e III."
+            ],
+            answer: 4, // Índice E
+            resolution: "Todas estão corretas. O comprimento de onda menor do Blu-ray (azul) permite maior densidade que o DVD (vermelho). Discos regraváveis (RW) usam materiais que mudam entre estados cristalino e amorfo para permitir a escrita e o apagamento de dados via calor do laser."
+        },
+        {
+            id: 7,
+            question: "Questão 7: No áudio profissional, para mitigar ruídos em cabos longos, utiliza-se o sistema balanceado. O conector padrão industrial de três pinos, robusto e com trava mecânica, associado a microfones balanceados é o:",
+            options: [
+                "A) RCA (Phono).",
+                "B) TRS 1/8\" (P2).",
+                "C) XLR (Cannon).",
+                "D) TS 1/4\" (P10 Mono).",
+                "E) TOSLINK (Optical)."
+            ],
+            answer: 2, // Índice C
+            resolution: "O conector XLR (conhecido popularmente como Cannon) é o padrão para áudio balanceado. Ele possui três pinos (Terra, Hot e Cold) que permitem o cancelamento de interferências eletromagnéticas em cabos longos por inversão de fase."
+        },
+        {
+            id: 8,
+            question: "Questão 8: Assinale a alternativa que nomeia corretamente a etapa final do processo de impressão a laser, responsável por derreter o polímero do toner e fixá-lo permanentemente nas fibras do papel.",
+            options: [
+                "A) Carregamento (Charging).",
+                "B) Exposição (Exposing).",
+                "C) Revelação (Developing).",
+                "D) Fusão (Fusing).",
+                "E) Limpeza (Cleaning)."
+            ],
+            answer: 3, // Índice D
+            resolution: "A Fusão ocorre na Unidade Fusora, composta por rolos aquecidos e sob pressão. Como o toner é basicamente um pó plástico, ele precisa ser derretido para 'grudar' no papel, caso contrário, a imagem sairia ao passar o dedo."
+        },
+        {
+            id: 9,
+            question: "Questão 9: Com base na taxonomia estrita de hardware, assinale a opção que apresenta um conjunto composto EXCLUSIVAMENTE por periféricos de entrada.",
+            options: [
+                "A) Monitor Touchscreen, Teclado, Mouse.",
+                "B) Scanner de Mesa, Leitor de Código de Barras, Webcam.",
+                "C) Impressora Multifuncional, Joystick, Microfone.",
+                "D) Projetor Multimídia, Plotter, Caixas de Som.",
+                "E) Pen Drive, Mesa Digitalizadora, Monitor LCD."
+            ],
+            answer: 1, // Índice B
+            resolution: "Scanner, Leitor de Barras e Webcam apenas enviam dados para o computador. O Touchscreen é híbrido (saída de imagem/entrada de toque), a Multifuncional é híbrida (imprime/escaneia) e o Pen Drive é dispositivo de armazenamento (entrada/saída)."
+        },
+        {
+            id: 10,
+            question: "Questão 10: Considerando os padrões de indústria para multimídia, assinale a alternativa INCORRETA:",
+            options: [
+                "A) O padrão de CD utiliza taxa de 44.1 kHz e 16 bits.",
+                "B) A profundidade de bits determina a faixa dinâmica (16 bits = 96 dB).",
+                "C) O Teorema de Nyquist diz que a amostragem deve ser o dobro da frequência máxima.",
+                "D) Aumentar a taxa de amostragem de 48 kHz para 96 kHz reduz o tamanho do arquivo final.",
+                "E) Em um sistema de 8 bits, existem 256 níveis possíveis de amplitude."
+            ],
+            answer: 3, // Índice D
+            resolution: "A alternativa D está incorreta. Aumentar a taxa de amostragem (Sample Rate) significa coletar mais amostras por segundo. Isso invariavelmente aumenta a quantidade de dados brutos e, consequentemente, o tamanho do arquivo final."
+        }
+    ];
+
+    function initQuiz() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'quiz-item';
+            questionDiv.id = `q-block-${index}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <label class="option" id="opt-${index}-${optIndex}">
+                        <input type="radio" name="question-${index}" value="${optIndex}">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            questionDiv.innerHTML = `
+                <span class="question-text">${q.question}</span>
+                <div class="options">
+                    ${optionsHtml}
+                </div>
+                <div class="resolution" id="res-${index}">
+                    <h4>Resolução Analítica</h4>
+                    <p>${q.resolution}</p>
+                </div>
+            `;
+            container.appendChild(questionDiv);
+        });
+
+        // Adicionar listener para marcar visualmente a seleção
+        document.querySelectorAll('.option').forEach(el => {
+            el.addEventListener('click', function() {
+                const name = this.querySelector('input').name;
+                document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+                    input.parentElement.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+    }
+
+    function gradeQuiz() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        const formData = new FormData(form);
+
+        quizData.forEach((q, index) => {
+            const userAnswer = formData.get(`question-${index}`);
+            const resolutionBox = document.getElementById(`res-${index}`);
+            resolutionBox.style.display = 'block';
+
+            // Limpar estilos anteriores
+            for(let i=0; i<5; i++) {
+                const optEl = document.getElementById(`opt-${index}-${i}`);
+                if(optEl) optEl.classList.remove('correct', 'incorrect');
+            }
+
+            // Marcar a correta
+            document.getElementById(`opt-${index}-${q.answer}`).classList.add('correct');
+
+            if (userAnswer !== null) {
+                const answerIdx = parseInt(userAnswer);
+                if (answerIdx === q.answer) {
+                    score++;
+                } else {
+                    document.getElementById(`opt-${index}-${answerIdx}`).classList.add('incorrect');
+                }
+            }
+        });
+
+        // Mostrar resumo
+        const summary = document.getElementById('results-summary');
+        const scoreDisplay = document.getElementById('score-display');
+        const msgDisplay = document.getElementById('score-message');
+        
+        summary.style.display = 'block';
+        scoreDisplay.innerText = `${score} / ${quizData.length}`;
+        
+        if(score === 10) msgDisplay.innerText = "Excelente! Você domina os conceitos de hardware da CEFETMINAS.";
+        else if(score >= 7) msgDisplay.innerText = "Muito bom! Você tem uma base sólida, revise os pontos onde errou.";
+        else msgDisplay.innerText = "Continue estudando. As resoluções abaixo ajudarão a fixar o conteúdo.";
+
+        // Esconder o botão de finalizar para evitar re-clique
+        document.getElementById('finish-btn').style.display = 'none';
+        
+        // Scroll para o topo para ver o resultado
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

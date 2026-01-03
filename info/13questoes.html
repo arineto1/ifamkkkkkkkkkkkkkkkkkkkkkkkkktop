@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Segurança da Informação - FCM</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --container-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-secondary: #546e7a;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 95%;
+            padding: 40px 20px;
+            margin-bottom: 50px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .question-card {
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease;
+        }
+
+        .question-header {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f1f7ff;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            background-color: #e3f2fd;
+            border-color: var(--accent-color);
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none;
+            margin-top: 40px;
+            border-top: 3px solid var(--accent-color);
+            padding-top: 30px;
+        }
+
+        .score-box {
+            background: #eef7ff;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .resolution-card {
+            border-left: 5px solid var(--accent-color);
+            background: #fafafa;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .resolution-header {
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            display: block;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .correct-answer-indicator {
+            color: var(--success-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .user-feedback {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .user-feedback.correct { background: #d4edda; color: #155724; }
+        .user-feedback.wrong { background: #f8d7da; color: #721c24; }
+
+        .hidden { display: none; }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 10px; }
+            h1 { font-size: 1.5rem; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado de Segurança da Informação</h1>
+        <p class="subtitle">Estilo Fundação CEFETMINAS (FCM)</p>
+    </header>
+
+    <div id="quiz-form">
+        <!-- Questões serão inseridas aqui via JS -->
+    </div>
+
+    <div class="btn-container">
+        <button id="submit-btn" onclick="gradeQuiz()">Finalizar e Ver Gabarito Comentado</button>
+    </div>
+
+    <div id="results-section">
+        <div class="score-box">
+            <h2>Seu Resultado</h2>
+            <span class="score-value" id="final-score">0/10</span>
+            <p id="score-message"></p>
+        </div>
+
+        <h2 style="margin-bottom: 30px;">Resoluções Analíticas</h2>
+        <div id="resolutions-container">
+            <!-- Resoluções serão inseridas aqui via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            text: "No contexto atual da segurança cibernética, a administração pública e usuários domésticos enfrentam uma ameaça crescente que combina criptografia avançada com extorsão. Assinale a alternativa que define corretamente o programa malicioso (malware) que torna inacessíveis os dados armazenados em um equipamento, codificando-os, e exige o pagamento de um resgate (geralmente em criptomoedas) para restabelecer o acesso ao usuário.",
+            options: {
+                A: "Spyware.",
+                B: "Ransomware.",
+                C: "Rootkit.",
+                D: "Backdoor.",
+                E: "Botnet."
+            },
+            correct: "B",
+            resolution: `O Ransomware deriva da união de 'ransom' (resgate) e 'software'. Ele utiliza algoritmos de criptografia robusta (como AES-256) para tornar os dados ilegíveis e exige o pagamento em criptomoedas. <strong>Tipos comuns:</strong> Crypto Ransomware (cifra arquivos) e Locker Ransomware (bloqueia acesso ao sistema).`
+        },
+        {
+            id: 2,
+            text: "Um Analista de Tecnologia da Informação está configurando a segurança de rede de um órgão municipal. Ele precisa implementar um mecanismo que monitore e controle o tráfego de entrada e saída da rede, baseando-se em regras de segurança predefinidas (como endereços IP, portas e protocolos autorizados), agindo como uma barreira entre a rede interna segura e a internet (rede não confiável). A ferramenta correta para esta função é:",
+            options: {
+                A: "Antivírus.",
+                B: "Firewall.",
+                C: "Anti-spam.",
+                D: "Phishing."
+            },
+            correct: "B",
+            resolution: `O Firewall atua como um filtro ou 'porteiro' digital. Ele controla o fluxo de dados entre redes de diferentes níveis de confiança baseando-se em regras (IPs, portas). Diferente do Antivírus (que foca em arquivos), o Firewall foca no tráfego de rede.`
+        },
+        {
+            id: 3,
+            text: "A engenharia social é frequentemente utilizada para contornar mecanismos de segurança robustos explorando a falibilidade humana. Qual é o tipo de fraude de internet por meio da qual um golpista tenta obter dados pessoais, financeiros ou credenciais de um usuário pela utilização combinada de meios técnicos e manipulação psicológica, enviando mensagens eletrônicas (e-mails ou SMS) que parecem ser de instituições legítimas (como bancos ou órgãos governamentais)?",
+            options: {
+                A: "Phishing.",
+                B: "Denial of Service (DoS).",
+                C: "Keylogging.",
+                D: "Port Scanning.",
+                E: "Defacement."
+            },
+            correct: "A",
+            resolution: `Phishing é a técnica de 'pescaria' de dados. Utiliza iscas (e-mails falsos urgentes) para induzir o usuário a clicar em links maliciosos ou fornecer credenciais em sites falsos. É um ataque de engenharia social clássico.`
+        },
+        {
+            id: 4,
+            text: "Analise as afirmativas a seguir sobre a classificação de códigos maliciosos e assinale a alternativa que apresenta a distinção técnica correta entre Vírus e Worms (Vermes), conforme a literatura de segurança da informação adotada em concursos públicos.",
+            options: {
+                A: "Worms necessitam obrigatoriamente de um arquivo hospedeiro para se propagar, enquanto Vírus são programas autônomos.",
+                B: "Vírus replicam-se automaticamente através da rede sem intervenção do usuário, enquanto Worms dependem da execução de um arquivo infectado.",
+                C: "Worms são programas autônomos que exploram vulnerabilidades para se propagar automaticamente pelas redes, enquanto Vírus necessitam de um hospedeiro e da execução explícita pelo usuário para infectar o computador.",
+                D: "Não há diferença técnica entre eles; ambos os termos são sinônimos para qualquer software que danifique o hardware."
+            },
+            correct: "C",
+            resolution: `<strong>Vírus:</strong> Precisa de hospedeiro (arquivo) e ação humana. <strong>Worm:</strong> É autônomo (não precisa de hospedeiro) e propaga-se automaticamente explorando falhas de rede. Esta distinção é fundamental para a FCM.`
+        },
+        {
+            id: 5,
+            text: "A segurança da comunicação de dados na internet depende fundamentalmente de algoritmos de criptografia. Sobre os conceitos de criptografia simétrica e assimétrica, é correto afirmar:",
+            options: {
+                A: "A criptografia simétrica utiliza um par de chaves (pública e privada), onde a chave pública cifra e a privada decifra.",
+                B: "A criptografia assimétrica caracteriza-se pelo uso de uma chave única e secreta, compartilhada entre remetente e destinatário para cifrar e decifrar.",
+                C: "Na criptografia assimétrica, a chave privada deve ser mantida em absoluto sigilo pelo proprietário, enquanto a chave pública pode ser distribuída livremente.",
+                D: "O algoritmo RSA é um exemplo clássico de criptografia simétrica, enquanto o AES é um exemplo de criptografia assimétrica."
+            },
+            correct: "C",
+            resolution: `Criptografia Assimétrica usa um par de chaves: a pública (para cifrar/verificar) e a privada (para decifrar/assinar). A privada NUNCA é compartilhada. Exemplo: RSA. A Simétrica usa uma única chave secreta (Ex: AES).`
+        },
+        {
+            id: 6,
+            text: "Com o aumento do trabalho remoto (home office), tornou-se essencial garantir que o acesso dos colaboradores à rede interna da organização ocorra de forma segura, mesmo utilizando conexões de internet públicas. A tecnologia que permite criar um 'túnel' criptografado de comunicação, garantindo a confidencialidade e a integridade dos dados trafegados entre o dispositivo remoto e o servidor da empresa, é conhecida como:",
+            options: {
+                A: "LAN (Local Area Network).",
+                B: "VPN (Virtual Private Network).",
+                C: "FTP (File Transfer Protocol).",
+                D: "DNS (Domain Name System)."
+            },
+            correct: "B",
+            resolution: `VPN cria uma rede privada virtual sobre uma rede pública. Ela utiliza tunelamento e criptografia para garantir que o tráfego de dados entre o trabalhador remoto e a empresa não seja interceptado.`
+        },
+        {
+            id: 7,
+            text: "Existem programas espiões projetados para monitorar as atividades de um sistema. Dentre eles, destaca-se o Keylogger. Assinale a alternativa que descreve corretamente o funcionamento e o objetivo principal deste malware.",
+            options: {
+                A: "Capturar e armazenar tudo o que é digitado no teclado do usuário, visando roubar senhas e dados bancários.",
+                B: "Capturar imagens da tela do computador (screenshots) a cada clique do mouse.",
+                C: "Redirecionar o navegador do usuário para sites de comércio eletrônico falsos.",
+                D: "Criptografar o disco rígido e impedir a inicialização do sistema operacional."
+            },
+            correct: "A",
+            resolution: `Keylogger é um tipo de Spyware que registra as teclas pressionadas. O Screenlogger (citado na alternativa B) é o que captura telas. O objetivo é roubar credenciais de forma furtiva.`
+        },
+        {
+            id: 8,
+            text: "A Segurança da Informação baseia-se em princípios fundamentais, frequentemente referidos como a tríade CID (ou CIA em inglês). Assinale a alternativa que corresponde ao princípio que garante que a informação não foi alterada indevidamente, ou seja, que mantém suas características originais desde a criação até o recebimento.",
+            options: {
+                A: "Confidencialidade.",
+                B: "Disponibilidade.",
+                C: "Integridade.",
+                D: "Autenticidade.",
+                E: "Legalidade."
+            },
+            correct: "C",
+            resolution: `A <strong>Integridade</strong> foca na não alteração da informação. A <strong>Confidencialidade</strong> foca no sigilo e a <strong>Disponibilidade</strong> foca no acesso quando necessário.`
+        },
+        {
+            id: 9,
+            text: "Um tipo sofisticado de malware é projetado especificamente para esconder a existência de certos processos ou programas dos métodos normais de detecção do sistema operacional e de softwares de segurança, frequentemente operando no nível do núcleo (kernel) do sistema e garantindo privilégios de administrador ao atacante. Essa descrição refere-se ao:",
+            options: {
+                A: "Rootkit.",
+                B: "Trojan Horse.",
+                C: "Adware.",
+                D: "Screenlogger."
+            },
+            correct: "A",
+            resolution: `Rootkits focam na ocultação e manutenção de acesso. Eles alteram APIs do sistema operacional para esconder arquivos e processos maliciosos, operando muitas vezes em modo Kernel (altos privilégios).`
+        },
+        {
+            id: 10,
+            text: "Para prevenir a perda de dados decorrente de falhas de hardware, erros humanos ou ataques de ransomware, a realização de cópias de segurança (backup) é imprescindível. No sistema operacional Windows 10, o recurso nativo projetado para realizar backup automático de arquivos pessoais (como documentos, músicas, imagens, vídeos e área de trabalho) para uma unidade externa ou local de rede é denominado:",
+            options: {
+                A: "Restauração de Sistema.",
+                B: "Desfragmentador de Disco.",
+                C: "Histórico de Arquivos.",
+                D: "Windows Defender Firewall."
+            },
+            correct: "C",
+            resolution: `O <strong>Histórico de Arquivos</strong> é o recurso do Windows 8/10/11 focado em arquivos pessoais. A <strong>Restauração de Sistema</strong> (Alternativa A) foca em arquivos de configuração e sistema para reverter problemas do SO, não em arquivos de usuário.`
+        }
+    ];
+
+    function initQuiz() {
+        const quizForm = document.getElementById('quiz-form');
+        let html = '';
+
+        questions.forEach((q, index) => {
+            html += `
+                <div class="question-card" id="q-card-${q.id}">
+                    <span class="question-header">Questão ${String(index + 1).padStart(2, '0')}</span>
+                    <div class="question-text">${q.text}</div>
+                    <ul class="options-list">
+            `;
+
+            for (let letter in q.options) {
+                html += `
+                    <li class="option-item" onclick="selectOption(${q.id}, '${letter}')">
+                        <input type="radio" name="question-${q.id}" id="q${q.id}-${letter}" value="${letter}">
+                        <label for="q${q.id}-${letter}">${letter}) ${q.options[letter]}</label>
+                    </li>
+                `;
+            }
+
+            html += `
+                    </ul>
+                </div>
+            `;
+        });
+
+        quizForm.innerHTML = html;
+    }
+
+    function selectOption(qId, letter) {
+        const input = document.getElementById(`q${qId}-${letter}`);
+        input.checked = true;
+        
+        // Estilo visual de seleção
+        const options = document.querySelectorAll(`[name="question-${qId}"]`);
+        options.forEach(opt => {
+            opt.parentElement.classList.remove('selected');
+        });
+        input.parentElement.classList.add('selected');
+    }
+
+    function gradeQuiz() {
+        let score = 0;
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        resolutionsContainer.innerHTML = '';
+        
+        questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="question-${q.id}"]:checked`);
+            const userChoice = selected ? selected.value : null;
+            const isCorrect = userChoice === q.correct;
+            
+            if (isCorrect) score++;
+
+            // Construir resolução
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            
+            let feedbackHtml = '';
+            if (userChoice) {
+                feedbackHtml = `<span class="user-feedback ${isCorrect ? 'correct' : 'wrong'}">
+                    Sua resposta: ${userChoice} (${isCorrect ? 'Correto' : 'Incorreto'})
+                </span>`;
+            } else {
+                feedbackHtml = `<span class="user-feedback wrong">Você não respondeu esta questão.</span>`;
+            }
+
+            resCard.innerHTML = `
+                <span class="resolution-header">Resolução: Questão ${index + 1}</span>
+                ${feedbackHtml}
+                <span class="correct-answer-indicator">Gabarito Oficial: Alternativa ${q.correct}</span>
+                <p style="margin-top: 10px;">${q.resolution}</p>
+            `;
+            
+            resolutionsContainer.appendChild(resCard);
+        });
+
+        // Mostrar resultados
+        document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+        const msg = document.getElementById('score-message');
+        if (score === 10) msg.innerText = "Excelente! Você dominou o conteúdo.";
+        else if (score >= 7) msg.innerText = "Bom desempenho! Revise os pontos onde houve dúvida.";
+        else msg.innerText = "Continue estudando! A segurança da informação exige atenção aos detalhes técnicos.";
+
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('submit-btn').innerText = "Simulado Concluído";
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').style.opacity = "0.5";
+        document.getElementById('submit-btn').style.cursor = "default";
+        
+        // Scroll para os resultados
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

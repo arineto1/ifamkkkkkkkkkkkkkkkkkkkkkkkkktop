@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula IFAM: Hardware Multimídia e Impressão - Conteúdo Integral</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #1a202c;
+            background-color: #ffffff;
+        }
+
+        .highlight {
+            background-color: #fef3c7;
+            border-bottom: 2px solid #f6e05e;
+            font-weight: 600;
+            padding: 0 2px;
+            color: #744210;
+        }
+
+        .section-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            background: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            color: #2d3748;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:nth-child(even) { background-color: #f9fafb; }
+
+        .audio-player-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid #e2e8f0;
+            padding: 10px 0;
+        }
+
+        .critical-note {
+            border-left: 4px solid #e53e3e;
+            background-color: #fff5f5;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .step-list li {
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-12">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- Áudio Player -->
+        <div class="audio-player-container mb-8">
+            <div class="flex flex-col items-center bg-gray-50 p-4 rounded-xl border border-gray-200 shadow-sm">
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Podcast de Revisão - Clique para ouvir</span>
+                <audio controls class="w-full max-w-lg">
+                    <source src="10multimidia.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+            </div>
+        </div>
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight mb-4">Hardware: Multimídia e Impressão</h1>
+            <div class="flex justify-center gap-4 text-sm font-medium">
+                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full">Cargo: Professor EBTT</span>
+                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full">Banca: CEFETMINAS</span>
+                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full">Instituição: IFAM</span>
+            </div>
+        </header>
+
+        <!-- 1. INTRODUÇÃO E SINAIS -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="bg-gray-800 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-3">01</span>
+                Fundamentos de Sinais e Multimídia
+            </h2>
+            <p class="mb-4">Multimídia é a combinação controlada por computador de texto, gráficos, áudio e vídeo. Para o hardware processar isso, o sinal deve ser <span class="highlight">Digitalizado</span>.</p>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="font-bold text-indigo-700 mb-2">Conversão A/D (Analógico-Digital)</h3>
+                    <ul class="list-disc ml-5 space-y-2 text-sm">
+                        <li><strong>Amostragem:</strong> Coleta de valores em intervalos de tempo.</li>
+                        <li><span class="highlight">Teorema de Nyquist:</span> Taxa de amostragem mínima = 2x a frequência máxima do sinal. <span class="text-red-600 font-bold">(Cai sempre!)</span>.</li>
+                        <li><strong>Quantização:</strong> Atribuição de valores numéricos aos níveis de amplitude.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-indigo-700 mb-2">Teoria das Cores</h3>
+                    <ul class="list-disc ml-5 space-y-2 text-sm">
+                        <li><span class="highlight">RGB (Red, Green, Blue):</span> Aditivo. Luz. Usado em monitores e câmeras.</li>
+                        <li><span class="highlight">CMYK (Cyan, Magenta, Yellow, Black):</span> Subtrativo. Pigmento. Usado em impressoras.</li>
+                        <li><strong>Profundidade de Cor:</strong> Bits por pixel (bpp). 24 bits = 16,7 milhões de cores (True Color).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. MONITORES E VÍDEO -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="bg-gray-800 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-3">02</span>
+                Tecnologias de Display e Interfaces
+            </h2>
+            
+            <div class="overflow-x-auto mb-6">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tecnologia</th>
+                            <th>Características Técnicas</th>
+                            <th>Foco em Prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>LCD (CCFL vs LED)</strong></td>
+                            <td>Cristal líquido que bloqueia/passa luz traseira.</td>
+                            <td>LED é apenas o tipo de backlight, não o painel.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Painel IPS</strong></td>
+                            <td>Alinhamento horizontal dos cristais.</td>
+                            <td><span class="highlight">Melhores ângulos de visão e fidelidade de cor.</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Painel VA</strong></td>
+                            <td>Alinhamento vertical.</td>
+                            <td>Melhor contraste (pretos profundos).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>OLED</strong></td>
+                            <td>Diodos orgânicos que emitem luz própria.</td>
+                            <td>Não precisa de backlight; <span class="highlight">Contraste infinito.</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="font-bold text-indigo-700 mb-3">Interfaces de Conexão</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="p-4 border rounded-lg">
+                    <p><strong>VGA (D-Sub):</strong> Analógico. Transmite apenas vídeo.</p>
+                    <p><strong>DVI:</strong> <span class="highlight">DVI-D (Digital), DVI-A (Analógico), DVI-I (Integrado/Ambos).</span></p>
+                </div>
+                <div class="p-4 border rounded-lg">
+                    <p><strong>HDMI:</strong> Digital (Vídeo + Áudio). Versão 2.1 suporta 8K.</p>
+                    <p><strong>DisplayPort:</strong> Digital. Suporta <span class="highlight">MST (Multi-Stream)</span> para encadear monitores.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. ÁUDIO PROFISSIONAL -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="bg-gray-800 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-3">03</span>
+                Hardware de Áudio e Captura
+            </h2>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+                <div class="p-4 bg-gray-50 rounded">
+                    <p class="font-bold border-b mb-2">Conectores</p>
+                    <ul class="space-y-1">
+                        <li><strong>TRS (P10/P2):</strong> Balanceado ou Estéreo.</li>
+                        <li><strong>XLR:</strong> Profissional, 3 pinos, balanceado.</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-gray-50 rounded">
+                    <p class="font-bold border-b mb-2">Microfones</p>
+                    <ul class="space-y-1">
+                        <li><strong>Dinâmico:</strong> Robusto, dispensa energia.</li>
+                        <li><strong>Condensador:</strong> Sensível, <span class="highlight">exige Phantom Power (+48V).</span></li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-gray-50 rounded">
+                    <p class="font-bold border-b mb-2">Processamento</p>
+                    <ul class="space-y-1">
+                        <li><strong>DSP:</strong> Processador Digital de Sinal dedicado para áudio.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. IMPRESSÃO (DETALHADO) -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="bg-gray-800 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-3">04</span>
+                Tecnologias de Impressão e Escaneamento
+            </h2>
+            
+            <div class="mb-8">
+                <h3 class="font-bold text-lg text-indigo-900 mb-4 uppercase text-center">Processo de Impressão a Laser (Xerografia)</h3>
+                <div class="bg-indigo-50 p-6 rounded-xl">
+                    <ol class="step-list text-sm space-y-3">
+                        <li><span class="font-bold">1. Limpeza:</span> Remove resíduos de toner e carga do cilindro (tambor/drum).</li>
+                        <li><span class="font-bold">2. Condicionamento (Carga):</span> O rolo carregador (PCR) aplica uma <span class="highlight">carga negativa uniforme</span> no cilindro.</li>
+                        <li><span class="font-bold">3. Escrita (Exposição):</span> O laser "desenha" no cilindro, neutralizando a carga onde haverá imagem (imagem latente).</li>
+                        <li><span class="font-bold">4. Revelação:</span> O toner (carga negativa) é atraído pelas áreas neutralizadas do cilindro.</li>
+                        <li><span class="font-bold">5. Transferência:</span> O papel recebe uma carga positiva forte e <span class="highlight">"puxa" o toner</span> do cilindro para si.</li>
+                        <li><span class="font-bold">6. Fusão:</span> <span class="highlight">Calor e Pressão</span> derretem o toner no papel (etapa final de fixação).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 text-sm">
+                <div class="border p-4 rounded-lg">
+                    <h4 class="font-bold mb-2">Outras Tecnologias</h4>
+                    <ul class="space-y-2">
+                        <li><strong>Jato de Tinta Térmico:</strong> Calor cria bolha que expele tinta (HP).</li>
+                        <li><strong>Piezoelétrico:</strong> Cristal vibra para expelir tinta (Epson).</li>
+                        <li><span class="highlight">Impacto (Matricial):</span> Fitas com tinta e agulhas. Única para <span class="highlight">papel autocopiativo</span>.</li>
+                    </ul>
+                </div>
+                <div class="border p-4 rounded-lg">
+                    <h4 class="font-bold mb-2">Linguagens e Resolução</h4>
+                    <ul class="space-y-2">
+                        <li><strong>DPI (Dots Per Inch):</strong> Resolução física.</li>
+                        <li><strong>PCL:</strong> Linguagem de controle de impressora (mais comum).</li>
+                        <li><strong>PostScript:</strong> Linguagem de descrição de página (alta qualidade).</li>
+                        <li><strong>SPOOLER:</strong> Software que gerencia a fila de impressão no disco.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. DIGITALIZAÇÃO -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="bg-gray-800 text-white w-8 h-8 rounded-lg flex items-center justify-center mr-3">05</span>
+                Scanners e Sensores
+            </h2>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+                <div class="p-4 border-l-4 border-blue-500">
+                    <p class="font-bold">CCD (Charge-Coupled Device)</p>
+                    <p>Usa sistema de lentes e espelhos. Possui <span class="highlight">profundidade de campo</span> (consegue focar objetos não planos ou lombadas de livros).</p>
+                </div>
+                <div class="p-4 border-l-4 border-green-500">
+                    <p class="font-bold">CIS (Contact Image Sensor)</p>
+                    <p>Sensores em contato direto. Mais barato, fino e consome menos luz, mas <span class="highlight">não tem profundidade de campo</span>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ESTRATÉGIA CEFETMINAS -->
+        <section class="section-card bg-yellow-50 border-yellow-200">
+            <h2 class="text-2xl font-bold mb-6 text-yellow-800">Checklist de Ouro: Tendências CEFETMINAS</h2>
+            <ul class="space-y-4">
+                <li class="flex items-start">
+                    <span class="text-red-600 mr-2 font-bold">⚠️</span>
+                    <p><strong>Classificação de Periféricos:</strong> A banca ama classificar se é Entrada, Saída ou Híbrido. Ex: <span class="highlight">Multifuncional e Headset (Híbridos); Plotter e Impressora (Saída).</span></p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-red-600 mr-2 font-bold">⚠️</span>
+                    <p><strong>Memória de Impressão:</strong> Se a memória da impressora laser for insuficiente, o erro comum é a <span class="highlight">impressão de apenas meia página</span> ou erro de estouro de memória.</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-red-600 mr-2 font-bold">⚠️</span>
+                    <p><strong>DPI Óptico vs. Interpolado:</strong> O óptico é o valor real do sensor. O interpolado é criado via software (descarte em questões de precisão técnica).</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-red-600 mr-2 font-bold">⚠️</span>
+                    <p><strong>Conexões:</strong> Lembre-se que o padrão <span class="highlight">USB 3.0 (Azul)</span> e superiores permitem taxas de transferência cruciais para vídeo 4K externo.</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Botão Final -->
+        <div class="flex flex-col items-center mt-12 mb-24">
+            <p class="text-gray-500 mb-4 font-medium italic">Finalizou a leitura? Agora valide o conhecimento.</p>
+            <a href="10questoes.html" class="bg-gray-900 hover:bg-black text-white font-bold py-5 px-12 rounded-2xl shadow-2xl transition-all transform hover:-translate-y-1 flex items-center gap-3">
+                Ir para o Simulado de Questões
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <footer class="text-center text-gray-400 text-xs pb-10 border-t pt-8">
+        Material Exclusivo para Preparação EBTT - Área: Informática<br>
+        IFAM | Fundação CEFETMINAS
+    </footer>
+
+</body>
+</html>

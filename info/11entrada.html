@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Hardware (E/S) - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .container-main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+
+        .highlight-yellow {
+            background-color: #fef08a;
+            padding: 0 4px;
+            font-weight: 600;
+            border-radius: 2px;
+        }
+
+        .term-bold {
+            color: #111827;
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: #d1d5db;
+        }
+
+        .card {
+            border: 1px solid #e5e7eb;
+            background-color: #ffffff;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border-radius: 12px;
+        }
+
+        h1, h2, h3 {
+            color: #111827;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f9fafb;
+            color: #374151;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+        }
+
+        td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            vertical-align: top;
+        }
+
+        .alert-cefet {
+            border-left: 5px solid #ef4444;
+            background-color: #fff1f2;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .audio-player-container {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .btn-footer {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 4rem auto;
+            text-align: center;
+            background-color: #111827;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-footer:hover {
+            background-color: #374151;
+            transform: translateY(-2px);
+        }
+
+        .analogy-box {
+            background-color: #f0fdf4;
+            border: 1px solid #dcfce7;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-main">
+        <!-- Cabeçalho -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold tracking-tight mb-2">Hardware: Dispositivos de E/S</h1>
+            <p class="text-lg text-gray-500">Material de Revisão Intensiva - Professor de Informática IFAM</p>
+        </header>
+
+        <!-- Player de Áudio -->
+        <div class="audio-player-container">
+            <h3 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-3">Escutar aula (Podcast de Revisão)</h3>
+            <audio controls class="w-full">
+                <source src="11entrada.mp3" type="audio/mpeg">
+                Seu navegador não suporta o áudio.
+            </audio>
+            <p class="text-xs text-gray-400 mt-2">Dica: Ouça enquanto revisa os tópicos abaixo.</p>
+        </div>
+
+        <!-- Definições Iniciais -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">0. Definições Básicas (Obrigatório)</h2>
+            <p class="mb-4">Antes de avançar, não esqueça o óbvio que a CEFETMINAS cobra para eliminar candidatos desatentos:</p>
+            <ul class="space-y-2">
+                <li><span class="term-bold">Hardware:</span> A parte <span class="highlight-yellow">tangível</span> (física) do computador.</li>
+                <li><span class="term-bold">Software:</span> A parte <span class="highlight-yellow">intangível</span> (lógica/instruções).</li>
+                <li><span class="term-bold">Firmware:</span> Software de baixo nível gravado permanentemente em hardware (ex: <span class="highlight-yellow">BIOS/UEFI</span>).</li>
+            </ul>
+        </div>
+
+        <!-- Barramentos -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">1. Arquitetura e Barramentos</h2>
+            <p class="mb-4">O sistema de E/S depende da comunicação via barramentos:</p>
+            <ul class="space-y-4">
+                <li><strong>Barramento de Dados:</strong> <span class="highlight-yellow">Bidirecional</span>. É por onde a informação trafega de fato.</li>
+                <li><strong>Barramento de Endereços:</strong> <span class="highlight-yellow">Unidirecional</span>. A CPU indica para qual dispositivo ou endereço de memória quer enviar algo.</li>
+                <li><strong>Barramento de Controle:</strong> Sinais de status (leitura, escrita, interrupção).</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mt-8 mb-4">O Chipset</h3>
+            <p><strong>Ponte Norte (Northbridge):</strong> Foca em componentes de <span class="highlight-yellow">Alta Velocidade</span> (RAM, Vídeo PCIe). Geralmente integrada ao processador hoje.</p>
+            <p class="mt-2"><strong>Ponte Sul (Southbridge):</strong> Gerencia periféricos de <span class="highlight-yellow">Baixa Velocidade</span> (USB, SATA, Som, Rede, BIOS).</p>
+        </div>
+
+        <!-- Técnicas de E/S -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">2. Técnicas de Operação (Como os dados fluem)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Técnica</th>
+                        <th>Funcionamento</th>
+                        <th>Impacto na CPU</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Polling</strong> (E/S Programada)</td>
+                        <td>A CPU fica em loop perguntando ao dispositivo: "Já acabou?".</td>
+                        <td><span class="highlight-yellow">Desperdício total</span>. CPU fica presa no processo.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interrupções</strong> (IRQ)</td>
+                        <td>O periférico envia um sinal elétrico quando precisa de atenção.</td>
+                        <td><strong>Eficiente</strong>. A CPU só para o que está fazendo quando solicitada.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DMA</strong> (Direct Memory Access)</td>
+                        <td>O controlador de DMA move dados direto para a RAM sem passar pela CPU.</td>
+                        <td><span class="highlight-yellow">Máximo Desempenho</span>. A CPU apenas inicia e finaliza a tarefa.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="alert-cefet">
+                <strong>PEGADINHA DE PROVA:</strong> No DMA, ocorre o <span class="term-bold">Roubo de Ciclo</span> (Cycle Stealing). O controlador "rouba" um ciclo de barramento da CPU para acessar a memória.
+            </div>
+        </div>
+
+        <!-- Conexões -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">3. Interfaces e Conectores</h2>
+            <h3 class="font-bold mb-2">Tabela de Velocidade USB:</h3>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <li class="border p-3 rounded">USB 2.0: <span class="highlight-yellow">480 Mbps</span></li>
+                <li class="border p-3 rounded">USB 3.2 Gen 1: <span class="highlight-yellow">5 Gbps</span></li>
+                <li class="border p-3 rounded">USB 3.2 Gen 2: <span class="highlight-yellow">10 Gbps</span></li>
+                <li class="border p-3 rounded">USB 3.2 Gen 2x2: <span class="highlight-yellow">20 Gbps</span></li>
+            </ul>
+
+            <h3 class="font-bold mb-2">Destaques de Vídeo:</h3>
+            <p><strong>DisplayPort:</strong> Suporta <span class="highlight-yellow">Daisy Chaining</span> (conectar vários monitores em cascata).</p>
+            <p><strong>PS/2:</strong> <span class="highlight-yellow">Não suporta Hot-Swap</span>. Se plugar com o PC ligado, há risco de queima da porta.</p>
+        </div>
+
+        <!-- Classificação -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">4. Classificação de Dispositivos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Entrada</th>
+                        <th>Saída</th>
+                        <th>Híbridos (E/S)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Teclado, Mouse</td>
+                        <td>Monitor Comum</td>
+                        <td><span class="highlight-yellow">Monitor Touchscreen</span></td>
+                    </tr>
+                    <tr>
+                        <td>Scanner, Webcam</td>
+                        <td>Impressora, Plotter</td>
+                        <td><span class="highlight-yellow">Multifuncionais</span></td>
+                    </tr>
+                    <tr>
+                        <td>Microfone</td>
+                        <td>Caixas de Som</td>
+                        <td><span class="highlight-yellow">Headset c/ Mic</span></td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>Projetor</td>
+                        <td><span class="highlight-yellow">Modem, Placa de Rede</span></td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span class="highlight-yellow">Pen Drive, SSD, HD</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tendências e Peguinhas -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">5. Análise de Tendência (Fundação CEFETMINAS)</h2>
+            <div class="space-y-4">
+                <p>1. <span class="term-bold">Drivers:</span> São softwares que ensinam o S.O. a falar com o hardware. Frequentemente confundidos com firmware em questões maliciosas.</p>
+                <p>2. <span class="term-bold">Monitor:</span> Se a questão citar apenas "Monitor CRT" ou "Monitor LED", é <span class="highlight-yellow">Saída</span>. Se citar "Sensível ao toque", é <span class="highlight-yellow">Entrada/Saída</span>.</p>
+                <p>3. <span class="term-bold">Unidades de Armazenamento:</span> Lembre-se que HD, SSD e Pen Drive são dispositivos de <span class="highlight-yellow">E/S</span> pois lemos e escrevemos neles.</p>
+            </div>
+        </div>
+
+        <!-- Dicas de Ouro e Analogia -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">💡 Dicas de Ouro (Didática e Memorização)</h2>
+            <div class="analogy-box mb-6">
+                <strong>Analogia do Escritório:</strong> Imagine que a CPU é o chefe. 
+                <br>• <strong>Polling:</strong> O chefe para de trabalhar a cada 1 minuto para perguntar ao estagiário: "O café tá pronto?".
+                <br>• <strong>Interrupção:</strong> O chefe trabalha focado, e o estagiário bate na porta quando o café termina.
+                <br>• <strong>DMA:</strong> O chefe autoriza o estagiário a colocar os papéis direto no arquivo morto (RAM) sem precisar passar pela mesa dele.
+            </div>
+            
+            <p><strong>Destaque para a Prova:</strong></p>
+            <ul class="list-disc list-inside space-y-2 mt-2">
+                <li>Diferencie Interrupção de <span class="highlight-yellow">Hardware</span> (sinal físico) de Interrupção de <span class="highlight-yellow">Software</span> (exceções/traps).</li>
+                <li>Mencione a padronização do USB-C como tendência de convergência tecnológica.</li>
+            </ul>
+        </div>
+
+        <!-- Botão de Ação -->
+        <a href="11questoes.html" class="btn-footer">
+            PRATICAR COM QUESTÕES →
+        </a>
+
+    </div>
+
+    <footer class="pb-12 text-center text-gray-400 text-sm">
+        Material de apoio pedagógico para o concurso IFAM - EBTT.
+    </footer>
+
+</body>
+</html>

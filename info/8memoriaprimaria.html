@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Didática: Hardware de Memória - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+
+        .container-optimized {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .highlight-yellow {
+            background-color: #fef08a;
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.2rem;
+            font-weight: 600;
+        }
+
+        .highlight-important {
+            border-left: 5px solid #2563eb;
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .card-tip {
+            border: 1px solid #e2e8f0;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            background-color: #ffffff;
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            text-align: left;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        td {
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .audio-player-container {
+            background-color: #f1f5f9;
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .btn-action:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        h1 { color: #0f172a; font-weight: 800; letter-spacing: -0.025em; }
+        h2 { color: #1e293b; margin-top: 3.5rem; font-weight: 700; font-size: 1.75rem; border-left: 4px solid #cbd5e1; padding-left: 1rem; }
+        h3 { color: #334155; margin-top: 2rem; font-weight: 600; font-size: 1.25rem; }
+        
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        }
+
+        .cefet-box {
+            background-color: #fff7ed;
+            border: 1px solid #ffedd5;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 640px) {
+            .container-optimized { padding: 1.5rem 1rem; }
+            h1 { font-size: 1.875rem; }
+            h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-optimized">
+        <!-- Cabeçalho -->
+        <header class="mb-10">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2.5 py-0.5 rounded">CONCURSO IFAM</span>
+                <span class="bg-slate-100 text-slate-700 text-xs font-bold px-2.5 py-0.5 rounded">DOCENTE EBTT</span>
+            </div>
+            <h1 class="text-4xl mb-4 text-slate-900">Hardware: Memória Primária e Secundária</h1>
+            <p class="text-lg text-slate-600">Guia Técnico e Didático para o Concurso de Professor de Informática.</p>
+        </header>
+
+        <!-- Player de Áudio -->
+        <div class="audio-player-container">
+            <div class="flex items-center gap-3 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <h3 class="m-0 text-slate-800 text-base">Ouça a aula completa</h3>
+            </div>
+            <audio controls class="w-full">
+                <!-- SUBSTITUA ABAIXO PELO NOME DO SEU ARQUIVO MP3 -->
+                <source src="8memoriaprimaria.mp3" type="audio/mpeg">
+                Seu navegador não suporta o áudio.
+            </audio>
+            <p class="text-xs text-slate-500 mt-3 italic text-center">Acompanhe com o resumo escrito abaixo para fixação visual.</p>
+        </div>
+
+        <!-- Conteúdo 1 -->
+        <section>
+            <h2>1. Definição e Caraterísticas Essenciais</h2>
+            <p>A memória em um sistema computacional não é um bloco único, mas uma estrutura hierárquica organizada para equilibrar <span class="highlight-yellow">custo, velocidade e capacidade</span>.</p>
+            
+            <div class="highlight-important">
+                <strong>Conceito Chave:</strong>
+                <p>Memórias <strong>Primárias</strong> são aquelas essenciais para a execução imediata de processos pela CPU. Memórias <strong>Secundárias</strong> são destinadas ao armazenamento permanente (persistência).</p>
+            </div>
+
+            <p><strong>Pirâmide de Memória (Da mais rápida/cara para a mais lenta/barata):</strong></p>
+            <ol class="list-decimal ml-8 space-y-2 mt-4">
+                <li><strong>Registradores:</strong> Pequena quantidade dentro do chip da CPU.</li>
+                <li><strong>Cache (L1, L2, L3):</strong> Tecnologia SRAM, rápida e volátil.</li>
+                <li><strong>Memória Principal (RAM):</strong> Tecnologia DRAM, armazena processos em execução.</li>
+                <li><strong>Memória Secundária:</strong> SSD, HDD, Pendrives, Fitas Magnéticas.</li>
+            </ol>
+        </section>
+
+        <!-- Conteúdo 2 -->
+        <section>
+            <h2>2. Memória Primária: O Coração da Operação</h2>
+            
+            <h3>RAM (Random Access Memory)</h3>
+            <p>Memória de acesso aleatório, <span class="highlight-yellow">volátil</span>. Divide-se em:</p>
+            <ul class="list-disc ml-8 mb-4">
+                <li><strong>DRAM (Dinâmica):</strong> Utilizada na memória principal. Baseada em capacitores, exige o <strong>Refresh</strong> (atualização de carga) constante. É mais barata e densa.</li>
+                <li><strong>SRAM (Estática):</strong> Utilizada em Caches. Baseada em transistores (flip-flops), <span class="highlight-yellow">não precisa de refresh</span>. É muito mais rápida e cara.</li>
+            </ul>
+
+            <h3>ROM (Read-Only Memory)</h3>
+            <p>Memória de "apenas leitura" (embora versões modernas sejam regraváveis), <span class="highlight-yellow">não-volátil</span>.</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>PROM</strong></td>
+                            <td>Programável uma única vez.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EPROM</strong></td>
+                            <td>Apagável por luz ultravioleta.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EEPROM</strong></td>
+                            <td>Apagável eletricamente (base das BIOS modernas).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Flash</strong></td>
+                            <td>Evolução da EEPROM, usada em SSDs e BIOS/UEFI.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card-tip">
+                <strong>Firmware e Inicialização:</strong> No contexto de EBTT, lembre-se do trio:
+                <ul class="list-disc ml-6 mt-2">
+                    <li><strong>BIOS/UEFI:</strong> O software gravado na ROM.</li>
+                    <li><strong>POST (Power-On Self Test):</strong> O teste de hardware inicial.</li>
+                    <li><strong>Setup:</strong> Interface para configuração do hardware.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Conteúdo 3 -->
+        <section>
+            <h2>3. Memória Secundária e Armazenamento</h2>
+            <p>Destinada ao armazenamento de longo prazo. <span class="highlight-yellow">Não é acessada diretamente pela CPU</span> (os dados devem ser movidos para a RAM primeiro).</p>
+
+            <h3>Comparativo Técnico: HDD vs SSD</h3>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Recurso</th>
+                            <th>HDD (Hard Disk Drive)</th>
+                            <th>SSD (Solid State Drive)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tecnologia</strong></td>
+                            <td>Magnética (Discos e Cabeças)</td>
+                            <td>Eletrônica (Flash NAND)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vantagem</strong></td>
+                            <td>Custo por GB menor</td>
+                            <td>Velocidade (IOPS) e Silêncio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Latência</strong></td>
+                            <td>Alta (Busca mecânica)</td>
+                            <td>Mínima (Acesso elétrico)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Interface</strong></td>
+                            <td>SATA</td>
+                            <td>SATA, M.2 (NVMe - PCIe)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Conteúdo 4 -->
+        <section>
+            <h2>4. RAID: Redundância e Performance</h2>
+            <p>A Fundação CEFETMINAS adora cobrar cálculos de RAID. Memorize estas regras:</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>RAID</th>
+                            <th>Conceito</th>
+                            <th>Falha Suportada</th>
+                            <th>Capacidade Útil</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>0</strong></td>
+                            <td>Striping (Desempenho)</td>
+                            <td>Zero discos</td>
+                            <td>Total (N)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1</strong></td>
+                            <td>Mirroring (Espelhamento)</td>
+                            <td>N - 1 discos</td>
+                            <td>50% (Metade)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5</strong></td>
+                            <td>Paridade Distribuída</td>
+                            <td>1 disco</td>
+                            <td>(N - 1)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6</strong></td>
+                            <td>Dupla Paridade</td>
+                            <td>2 discos</td>
+                            <td>(N - 2)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Conteúdo 5 -->
+        <section>
+            <h2>5. Memória Virtual e Paginação</h2>
+            <p>Técnica do Sistema Operacional para simular RAM usando a Memória Secundária.</p>
+            <ul class="list-disc ml-8">
+                <li><strong>Página:</strong> Bloco de memória virtual.</li>
+                <li><strong>Moldura (Frame):</strong> Bloco de memória física (RAM).</li>
+                <li><strong>Thrashing (Hiperatividade):</strong> Ocorre quando o sistema gasta mais tempo trocando páginas (swap) do que executando processos.</li>
+            </ul>
+        </section>
+
+        <!-- Seção de Tendências -->
+        <section class="cefet-box">
+            <h2 style="margin-top: 0; border: none; padding: 0;" class="text-orange-800">🎯 Tendências CEFETMINAS e "Peguinhas"</h2>
+            <p class="mt-4">Analisei as provas anteriores de cargos EBTT. Fique atento a estes pontos:</p>
+            <div class="space-y-4 mt-2">
+                <div class="flex gap-2">
+                    <span class="font-bold text-orange-600">1.</span>
+                    <p><strong>DRAM vs SRAM:</strong> A banca troca os nomes dizendo que a SRAM precisa de refresh. Lembre-se: <span class="highlight-yellow">SRAM (Estática) = Cache = Sem Refresh.</span></p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="font-bold text-orange-600">2.</span>
+                    <p><strong>Volatilidade:</strong> Questões de múltipla escolha costumam colocar a ROM como volátil em uma das alternativas para te confundir. ROM é NÃO-volátil.</p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="font-bold text-orange-600">3.</span>
+                    <p><strong>RAID 5:</strong> Sempre cai o cálculo da capacidade. Se você tem 4 discos de 1TB em RAID 5, a capacidade é 3TB (N-1).</p>
+                </div>
+                <div class="flex gap-2">
+                    <span class="font-bold text-orange-600">4.</span>
+                    <p><strong>Acesso Direto:</strong> A CPU <span class="highlight-yellow">NUNCA</span> acessa o HD ou SSD diretamente. Tudo passa pela RAM.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rodapé Final -->
+        <footer class="text-center py-16 mt-12 border-t border-slate-100">
+            <p class="text-slate-500 mb-8">Esta aula resume o essencial para os tópicos de hardware do IFAM.</p>
+            <a href="8questoes.html" class="btn-action">
+                Ir para o Banco de Questões
+            </a>
+            <div class="mt-12 text-xs text-slate-400">
+                Professor Tutor de Informática | Material focado em EBTT / IFAM
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

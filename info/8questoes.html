@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Técnico: Hardware - CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --container-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-secondary: #636e72;
+            --accent: #0984e3;
+            --correct: #27ae60;
+            --incorrect: #d63031;
+            --border: #dfe6e9;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: #1e272e;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 90%;
+            margin-bottom: 5rem;
+        }
+
+        .question-card {
+            background: var(--container-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+        }
+
+        label {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        label:hover {
+            background-color: #f1f7ff;
+            border-color: var(--accent);
+        }
+
+        input[type="radio"] {
+            margin-right: 15px;
+            margin-top: 5px;
+            transform: scale(1.2);
+        }
+
+        .submit-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        #btn-finish {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        #btn-finish:hover {
+            background-color: #0873c4;
+            transform: translateY(-2px);
+        }
+
+        /* Results Section */
+        #results {
+            display: none;
+            margin-top: 3rem;
+            border-top: 3px solid var(--accent);
+            padding-top: 2rem;
+        }
+
+        .score-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid var(--accent);
+            margin-bottom: 3rem;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+            color: var(--accent);
+        }
+
+        .resolution {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            color: #444;
+            display: none; /* Only show after finish */
+        }
+
+        .resolution h4 {
+            margin-top: 0;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .correct-answer {
+            background-color: #e6ffed !important;
+            border-color: var(--correct) !important;
+        }
+
+        .incorrect-answer {
+            background-color: #fff5f5 !important;
+            border-color: var(--incorrect) !important;
+        }
+
+        .feedback-label {
+            font-weight: bold;
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .feedback-correct { color: var(--correct); }
+        .feedback-incorrect { color: var(--incorrect); }
+
+        @media (max-width: 600px) {
+            .container { width: 95%; }
+            .question-card { padding: 1.2rem; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado de Hardware</h1>
+    <h2>Memória Primária e Secundária • Estilo Fundação CEFETMINAS</h2>
+</header>
+
+<div class="container">
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- Questions injected via JS -->
+        </div>
+
+        <div class="submit-container">
+            <button type="button" id="btn-finish">Finalizar e Ver Resoluções</button>
+        </div>
+    </form>
+
+    <div id="results">
+        <div class="score-card">
+            <span class="score-value" id="score-text">0/10</span>
+            <p id="performance-msg"></p>
+        </div>
+        
+        <div id="detailed-resolutions">
+            <h3 style="text-align: center; margin-bottom: 2rem;">Correção e Resoluções Exaustivas</h3>
+            <!-- Cloned questions with resolutions here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            q: "No contexto dos sistemas operacionais modernos, como o Windows 10 e distribuições Linux atuais, o gerenciamento de memória é um componente crítico para o desempenho multitarefa. Quando a capacidade física da memória RAM (Random Access Memory) é exaurida devido à execução simultânea de múltiplos processos, o sistema operacional recorre a uma técnica de gerenciamento que utiliza uma área reservada no armazenamento secundário (HD ou SSD) para simular uma extensão da memória principal. Esse mecanismo permite que programas maiores que a memória física sejam executados, movendo páginas de dados menos ativas da RAM para o disco. Assinale a alternativa que denomina corretamente este recurso técnico.",
+            options: ["Memória Cache L3", "Memória Virtual", "Memória ROM", "Ramdrive", "Registradores de Deslocamento"],
+            correct: 1,
+            res: "A questão explora um dos pilares da moderna gerência de sistemas operacionais: a Memória Virtual. Ela permite que o sistema utilize o armazenamento secundário (HD/SSD) como se fosse RAM através da paginação (pagefile.sys no Windows ou partição Swap no Linux). Isso evita que o sistema trave por falta de memória física, embora o acesso ao disco seja muito mais lento que o acesso à RAM."
+        },
+        {
+            id: 2,
+            q: "A arquitetura de computadores é baseada em uma hierarquia de memória que busca equilibrar custo, capacidade e velocidade. Analise as afirmativas a seguir referentes às categorias de memória e suas características intrínsecas, conforme a literatura técnica e o padrão de cobrança da banca.<br><br>I. A Memória Principal (RAM) é classificada como volátil, o que implica a perda total dos dados armazenados mediante a interrupção do fornecimento de energia elétrica.<br>II. A Memória ROM (Read Only Memory), em sua concepção original e variantes modernas como a Flash-ROM usada no BIOS/UEFI, é não volátil.<br>III. Os dispositivos de memória secundária, como Discos Rígidos (HDD) e Unidades de Estado Sólido (SSD), possuem tempos de latência e acesso significativamente inferiores (são mais rápidos) do que a Memória Cache interna do processador.<br><br>Estão corretas as afirmativas:",
+            options: ["I, II e III.", "Apenas I e II.", "Apenas I e III.", "Apenas II e III.", "Apenas I."],
+            correct: 1,
+            res: "As afirmativas I e II estão corretas. A RAM é volátil (perde dados sem energia) e a ROM é não volátil (mantém dados para o boot). A III está incorreta porque inverte a hierarquia: a Cache é ordens de grandeza mais rápida que HDDs ou SSDs."
+        },
+        {
+            id: 3,
+            q: "A substituição de Discos Rígidos (HDD) por Unidades de Estado Sólido (SSD) representa um dos upgrades de hardware mais impactantes na computação pessoal e corporativa. Comparando-se as características técnicas de arquitetura e funcionamento dessas duas tecnologias de armazenamento secundário, é correto afirmar que:",
+            options: [
+                "A principal diferença arquitetural reside no fato de que os SSDs utilizam discos magnéticos de alta rotação, porém com leitura a laser.",
+                "Devido à ausência de partes móveis, os SSDs são imunes a falhas lógicas e possuem ciclos de escrita ilimitados.",
+                "Os SSDs utilizam células de memória flash NAND para armazenamento de dados, o que resulta em latência de acesso drasticamente reduzida e maior resistência a choques mecânicos em comparação aos HDDs.",
+                "O custo por gigabyte (GB) dos SSDs é historicamente inferior ao dos HDDs.",
+                "Ambos os dispositivos operam obrigatoriamente sob o protocolo AHCI e interface SATA."
+            ],
+            correct: 2,
+            res: "A alternativa C é a correta. SSDs usam memória flash NAND (sem partes móveis), o que os torna resistentes a choques físicos e extremamente rápidos no acesso aleatório, ao contrário dos HDDs que dependem de pratos giratórios e braços mecânicos."
+        },
+        {
+            id: 4,
+            q: "A Memória Cache atua como um intermediário crucial na redução do gargalo de desempenho existente entre a Unidade Central de Processamento (CPU) e a Memória Principal. Sobre a funcionalidade, localização e tipologia da memória cache, assinale a alternativa tecnicamente correta.",
+            options: [
+                "A memória cache é uma área reservada na memória RAM dinâmica (DRAM).",
+                "Trata-se de uma memória de alta velocidade construída com tecnologia SRAM (Static RAM), localizada física ou logicamente entre os registradores da CPU e a memória RAM.",
+                "A memória cache L1 possui capacidade de armazenamento superior à cache L3.",
+                "A função primária da memória cache é servir como backup não volátil.",
+                "A memória cache é gerenciada diretamente pelo usuário através do Painel de Controle."
+            ],
+            correct: 1,
+            res: "A Cache utiliza tecnologia SRAM (mais rápida e cara que a DRAM da RAM principal). Ela armazena dados e instruções usados com frequência para acelerar o acesso da CPU. A L1 é a menor e mais rápida, enquanto a L3 é a maior e mais lenta entre as caches."
+        },
+        {
+            id: 5,
+            q: "Assinale a alternativa que indica corretamente a quantidade de Bytes existente em 1 Kilobyte (KB), considerando a convenção binária tradicionalmente cobrada em concursos de informática e utilizada pelo gerenciamento de arquivos do Windows.",
+            options: ["1.000 Bytes", "1.024 Bytes", "2.048 Bytes", "512 Bytes", "8.192 Bytes"],
+            correct: 1,
+            res: "Na informática tradicional e no sistema Windows, os prefixos são baseados em potências de 2. Logo, 1 KB = 2^10 = 1.024 Bytes."
+        },
+        {
+            id: 6,
+            q: "Um Analista de TI precisa elucidar a distinção funcional entre 'Memória Primária' e 'Memória Secundária'. Considerando a arquitetura de Von Neumann, qual das seguintes definições é a mais precisa?",
+            options: [
+                "A Memória Primária é composta por dispositivos externos como Pendrives; a Secundária é interna.",
+                "A Memória Primária (ex: RAM) é diretamente endereçável pela CPU; a Memória Secundária (ex: HD/SSD) exige que os dados sejam copiados para a primária antes do processamento.",
+                "A Memória Primária refere-se ao armazenamento permanente; a Secundária é apenas temporária.",
+                "Ambas possuem a mesma hierarquia de acesso, diferenciando-se apenas pelo magnetismo.",
+                "A Memória Primária é não volátil e a Secundária é volátil."
+            ],
+            correct: 1,
+            res: "A Memória Primária é aquela que o processador acessa diretamente via barramento de endereços (RAM/ROM). A Memória Secundária serve para armazenamento em massa e persistente, e seus dados precisam ser carregados na RAM para que a CPU possa processá-los."
+        },
+        {
+            id: 7,
+            q: "Identifique a tecnologia de memória utilizada atualmente nas placas-mãe modernas que permite, simultaneamente, a não volatilidade e a capacidade de atualização (reprogramação) via software do BIOS/UEFI.",
+            options: ["DRAM", "SRAM", "Flash EEPROM", "Swap Memory", "Magnetic Core Memory"],
+            correct: 2,
+            res: "Flash EEPROM permite que o firmware (não volátil) seja atualizado eletricamente ('flashado') por meio de software, eliminando a necessidade de troca física do chip."
+        },
+        {
+            id: 8,
+            q: "Assinale a alternativa que apresenta a especificação de interface lógica projetada especificamente para acessar SSDs através do barramento PCI Express (PCIe), proporcionando baixa latência e paralelismo.",
+            options: ["SATA III", "NVMe", "IDE/PATA", "SCSI", "USB 2.0"],
+            correct: 1,
+            res: "O NVMe (Non-Volatile Memory express) foi desenvolvido especificamente para mídias de estado sólido, utilizando o barramento PCIe para evitar o gargalo das interfaces SATA (AHCI) desenhadas para discos mecânicos."
+        },
+        {
+            id: 9,
+            q: "Assinale a alternativa que exemplifica um dispositivo de armazenamento classificado estritamente como de **acesso sequencial**.",
+            options: ["Disco Rígido (HDD)", "Unidade de Estado Sólido (SSD)", "Fita Magnética (LTO)", "Memória Flash USB", "Disco Óptico"],
+            correct: 2,
+            res: "Diferente de HDDs ou SSDs (acesso direto/aleatório), a fita magnética exige que a mídia física percorra todos os dados anteriores para chegar a um ponto específico, sendo o exemplo clássico de acesso sequencial."
+        },
+        {
+            id: 10,
+            q: "Na estrutura interna da Unidade Central de Processamento (CPU), existem pequenas unidades de memória de altíssima velocidade e capacidade reduzida, utilizadas para armazenar operandos e resultados intermediários. Esses componentes são denominados:",
+            options: ["Registradores", "Barramentos de Dados", "Clusters", "Trilhas e Setores", "Páginas de Memória"],
+            correct: 0,
+            res: "Os Registradores estão no topo da pirâmide de memória. Estão localizados dentro da própria CPU e operam na mesma velocidade do clock do processador, sendo fundamentais para a execução de cada instrução."
+        }
+    ];
+
+    const container = document.getElementById('questions-container');
+
+    // Load Questions
+    quizData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `q-card-${index}`;
+
+        let optionsHtml = '';
+        item.options.forEach((opt, optIndex) => {
+            const letter = String.fromCharCode(65 + optIndex);
+            optionsHtml += `
+                <li class="option-item">
+                    <label for="q${index}_o${optIndex}" id="label_q${index}_o${optIndex}">
+                        <input type="radio" name="question${index}" value="${optIndex}" id="q${index}_o${optIndex}">
+                        <span><strong>${letter})</strong> ${opt}</span>
+                    </label>
+                </li>
+            `;
+        });
+
+        card.innerHTML = `
+            <span class="question-number">Questão ${index + 1}</span>
+            <div class="question-text">${item.q}</div>
+            <ul class="options">
+                ${optionsHtml}
+            </ul>
+            <div class="resolution" id="res-${index}">
+                <h4>Resolução Técnica:</h4>
+                <p>${item.res}</p>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+
+    // Submit Logic
+    document.getElementById('btn-finish').addEventListener('click', () => {
+        let score = 0;
+        const total = quizData.length;
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(`input[name="question${index}"]:checked`);
+            const resolutionBox = document.getElementById(`res-${index}`);
+            
+            // Show resolution
+            resolutionBox.style.display = 'block';
+
+            if (selected) {
+                const answer = parseInt(selected.value);
+                const labelSelected = document.getElementById(`label_q${index}_o${answer}`);
+                
+                if (answer === item.correct) {
+                    score++;
+                    labelSelected.classList.add('correct-answer');
+                    labelSelected.insertAdjacentHTML('beforeend', '<span class="feedback-label feedback-correct">✓ Correto</span>');
+                } else {
+                    labelSelected.classList.add('incorrect-answer');
+                    labelSelected.insertAdjacentHTML('beforeend', '<span class="feedback-label feedback-incorrect">✗ Incorreto</span>');
+                    
+                    // Highlight correct one anyway
+                    const labelCorrect = document.getElementById(`label_q${index}_o${item.correct}`);
+                    labelCorrect.classList.add('correct-answer');
+                }
+            } else {
+                // Not answered
+                const labelCorrect = document.getElementById(`label_q${index}_o${item.correct}`);
+                labelCorrect.classList.add('correct-answer');
+                labelCorrect.insertAdjacentHTML('beforeend', '<span class="feedback-label feedback-incorrect">(Você não respondeu esta questão)</span>');
+            }
+        });
+
+        // Display results
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('score-text').innerText = `${score} / ${total}`;
+        
+        let msg = "";
+        const perc = (score/total) * 100;
+        if(perc >= 90) msg = "Excelente desempenho! Você domina o conteúdo de hardware.";
+        else if(perc >= 70) msg = "Bom desempenho. Revise os pontos onde houve dúvida.";
+        else msg = "É recomendável revisar a hierarquia de memórias e as tecnologias de SSD.";
+        
+        document.getElementById('performance-msg').innerText = msg;
+
+        // Smooth scroll to top of results
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        
+        // Disable inputs
+        document.querySelectorAll('input[type="radio"]').forEach(el => el.disabled = true);
+        document.getElementById('btn-finish').style.display = 'none';
+    });
+</script>
+
+</body>
+</html>

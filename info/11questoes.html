@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Hardware: E/S - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --success-color: #27ae60;
+            --error-color: #d63031;
+            --border-color: #dfe6e9;
+            --card-bg: #ffffff;
+            --max-width: 800px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-weight: 700;
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem 5rem 1.5rem;
+        }
+
+        .intro-text {
+            color: #636e72;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .question-text {
+            margin-bottom: 1.5rem;
+            white-space: pre-line;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f1f2f6;
+            border-color: #b2bec3;
+        }
+
+        input[type="radio"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-color);
+        }
+
+        /* Classes para o resultado */
+        .option-label.correct {
+            border-color: var(--success-color);
+            background-color: #eafaf1;
+            font-weight: bold;
+        }
+
+        .option-label.incorrect {
+            border-color: var(--error-color);
+            background-color: #fdf2f2;
+        }
+
+        .resolution-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-color);
+            display: none;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 2rem;
+        }
+
+        #submit-btn:hover {
+            background-color: #0771c1;
+        }
+
+        #result-summary {
+            display: none;
+            background: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-text {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #b2bec3;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .question-card { padding: 1.2rem; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Simulado: Hardware (Entrada e Saída)</h1>
+        <p>Banca: Fundação CEFETMINAS</p>
+    </div>
+</header>
+
+<div class="container">
+    <div id="result-summary">
+        <h2>Resultado do Simulado</h2>
+        <div class="score-text" id="score-display">0/10</div>
+        <p id="performance-msg"></p>
+        <button onclick="location.reload()" style="background:none; border: 1px solid var(--accent-color); color: var(--accent-color); padding: 8px 15px; cursor: pointer; border-radius: 4px;">Refazer Simulado</button>
+    </div>
+
+    <div class="intro-text">
+        Este simulado contém 10 questões inéditas baseadas no perfil técnico da Fundação CEFETMINAS. Responda todas as questões e clique em "Finalizar Simulado" para ver sua nota e as resoluções detalhadas.
+    </div>
+
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- Questions will be injected here by JS -->
+        </div>
+        
+        <button type="button" id="submit-btn" onclick="showResults()">Finalizar Simulado e Ver Resoluções</button>
+    </form>
+</div>
+
+<footer>
+    &copy; 2024 - Preparatório Hardware CEFETMINAS
+</footer>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            text: "Um Técnico de Laboratório do CEFET-MG foi encarregado de realizar o inventário dos equipamentos de informática recém-adquiridos. Ao catalogar os dispositivos, ele deve classificá-los corretamente quanto ao fluxo de dados em relação à Unidade Central de Processamento (CPU).\n\nAssinale a alternativa que apresenta um dispositivo que realiza, exclusivamente, a função de entrada de dados (Input).",
+            options: [
+                "Monitor de Vídeo LCD.",
+                "Impressora Multifuncional Laser.",
+                "Leitor de Código de Barras.",
+                "Headset USB com microfone integrado.",
+                "Projetor Multimídia de curta distância."
+            ],
+            correct: 2,
+            resolution: "Gabarito: C (Leitor de Código de Barras). O Leitor de Código de Barras lê o padrão ótico e converte em números para o computador, realizando apenas a inserção de dados. O monitor e o projetor são saída, a multifuncional e o headset são híbridos."
+        },
+        {
+            id: 2,
+            text: "Em sistemas operacionais modernos como o Windows 10, a instalação de periféricos muitas vezes ocorre de forma automática (Plug and Play). No entanto, o entendimento da função do hardware é essencial para a resolução de problemas.\n\nAnalise a seguinte situação: Um usuário conecta um Monitor Touchscreen a um quiosque de autoatendimento na biblioteca do campus. Do ponto de vista da arquitetura de hardware, este dispositivo deve ser classificado como:",
+            options: [
+                "Dispositivo de Entrada, pois substitui o teclado e o mouse na interação do aluno.",
+                "Dispositivo de Saída, pois sua função primária é exibir o catálogo de livros.",
+                "Dispositivo Híbrido (Entrada e Saída), pois exibe informações visuais e captura comandos táteis simultaneamente.",
+                "Dispositivo de Processamento, visto que possui inteligência interna para interpretar os toques.",
+                "Dispositivo de Armazenamento, pois guarda em buffer as imagens exibidas na tela."
+            ],
+            correct: 2,
+            resolution: "Gabarito: C (Dispositivo Híbrido). O Monitor Touchscreen exibe dados (Saída) e captura toques através da película sensível (Entrada), caracterizando-se como dispositivo de Entrada e Saída."
+        },
+        {
+            id: 3,
+            text: "A digitalização de acervos acadêmicos é uma prioridade na modernização das secretarias. Para essa tarefa, utiliza-se um equipamento específico que varre opticamente documentos físicos e os converte em arquivos digitais (como PDF ou JPEG).\n\nO periférico descrito acima é o __________, que é classificado como um dispositivo de __________.",
+            options: [
+                "Plotter – Saída.",
+                "Scanner – Entrada.",
+                "Impressora Multifuncional – Saída.",
+                "Scanner – Entrada e Saída.",
+                "Webcam – Entrada."
+            ],
+            correct: 1,
+            resolution: "Gabarito: B (Scanner – Entrada). O scanner captura imagens e as envia para o computador. O fluxo é do mundo físico para o digital (Entrada). Diferente da multifuncional, o scanner isolado apenas realiza a digitalização."
+        },
+        {
+            id: 4,
+            text: "Sobre os dispositivos de armazenamento externo e sua relação com o subsistema de Entrada e Saída, analise as afirmativas a seguir:\n\nI. Um Pen Drive USB é considerado um dispositivo de Entrada e Saída, pois o usuário pode gravar arquivos nele (saída da CPU) e ler arquivos dele (entrada para a CPU).\nII. Um DVD-ROM (somente leitura) é considerado um dispositivo de armazenamento que funciona, nesse contexto, apenas como entrada de dados para o computador.\nIII. Um SSD externo conectado via porta USB-C realiza operações de leitura e escrita, caracterizando-o como dispositivo híbrido de E/S.",
+            options: [
+                "I, apenas.",
+                "II, apenas.",
+                "I e III, apenas.",
+                "II e III, apenas.",
+                "I, II e III."
+            ],
+            correct: 4,
+            resolution: "Gabarito: E (I, II e III). Todas estão corretas. Pen Drives e SSDs permitem fluxo bidirecional. O DVD-ROM (Read Only) permite apenas a leitura de dados para o computador, atuando como entrada nesse fluxo."
+        },
+        {
+            id: 5,
+            text: "A tecnologia de impressão evoluiu significativamente. Em ambientes corporativos do CEFET-MG, é comum o uso de impressoras que utilizam toner (pó) e um cilindro fotossensível para transferir a imagem ao papel através de cargas eletrostáticas e calor.\n\nEsse tipo de impressora é denominado __________ e é classificado, quando não possui scanner integrado, como um dispositivo de __________.",
+            options: [
+                "Jato de Tinta – Saída.",
+                "Matricial – Entrada e Saída.",
+                "Laser – Saída.",
+                "Térmica – Saída.",
+                "3D – Entrada."
+            ],
+            correct: 2,
+            resolution: "Gabarito: C (Laser – Saída). A descrição técnica (toner, cilindro, fusão) é da tecnologia Laser. Sem scanner, ela apenas produz saída impressa."
+        },
+        {
+            id: 6,
+            text: "Associe a Coluna A (Periféricos) com a Coluna B (Classificação de E/S), considerando a função padrão de cada dispositivo em um computador desktop típico.\n\nColuna A\n1. Webcam\n2. Caixas de Som\n3. Modem de Banda Larga\n\nColuna B\n( ) Dispositivo de Saída\n( ) Dispositivo de Entrada e Saída\n( ) Dispositivo de Entrada",
+            options: [
+                "2 – 3 – 1.",
+                "1 – 3 – 2.",
+                "3 – 1 – 2.",
+                "2 – 1 – 3.",
+                "1 – 2 – 3."
+            ],
+            correct: 0,
+            resolution: "Gabarito: A (2 – 3 – 1). 2 (Caixas de Som) é Saída; 3 (Modem) é Entrada e Saída; 1 (Webcam) é Entrada."
+        },
+        {
+            id: 7,
+            text: "Dispositivos apontadores são essenciais para interfaces gráficas. Embora o mouse seja o mais comum, existem alternativas ergonômicas ou específicas para certas tarefas.\n\nQual dos dispositivos abaixo é um periférico de Entrada que consiste em uma esfera fixa em uma base, a qual é girada pelos dedos do usuário para mover o cursor na tela?",
+            options: [
+                "Touchpad.",
+                "Joystick.",
+                "Trackball.",
+                "Scanner de mão.",
+                "Stylus."
+            ],
+            correct: 2,
+            resolution: "Gabarito: C (Trackball). O Trackball é um mouse estacionário onde o usuário manipula a bola diretamente. É um dispositivo de entrada pura."
+        },
+        {
+            id: 8,
+            text: "A Placa de Rede (NIC) é fundamental para a conectividade. Seja através de cabo (Ethernet) ou ondas de rádio (Wi-Fi), sua função na arquitetura de computadores é permitir a troca de informações entre hosts.\n\nPor sua natureza de operação, que envolve o envio de requisições e o recebimento de respostas, a Placa de Rede é classificada como:",
+            options: [
+                "Periférico exclusivamente de Entrada.",
+                "Periférico exclusivamente de Saída.",
+                "Periférico de Entrada e Saída.",
+                "Dispositivo de Processamento Central.",
+                "Memória Volátil."
+            ],
+            correct: 2,
+            resolution: "Gabarito: C (Periférico de Entrada e Saída). Redes exigem envio (Tx - Saída) e recebimento (Rx - Entrada) de pacotes de dados."
+        },
+        {
+            id: 9,
+            text: "Em um edital de licitação para compra de equipamentos multimídia, foi especificada a aquisição de 'Projetores Multimídia (Datashow)'. Tecnicamente, ao instalar este equipamento em uma sala de aula conectada a um computador, ele funcionará como:",
+            options: [
+                "Um dispositivo de entrada, capturando a imagem da lousa.",
+                "Um dispositivo de saída, reproduzindo a imagem gerada pelo computador em uma superfície externa.",
+                "Um dispositivo de armazenamento, gravando as aulas em sua memória interna.",
+                "Um dispositivo híbrido, pois possui controle remoto.",
+                "Um dispositivo de processamento de vídeo independente."
+            ],
+            correct: 1,
+            resolution: "Gabarito: B (Um dispositivo de saída...). O projetor recebe dados de vídeo e os materializa em luz projetada, sem retorno de dados para a CPU."
+        },
+        {
+            id: 10,
+            text: "Analise a lista de periféricos abaixo e assinale a alternativa que contém APENAS dispositivos classificados como Entrada (Input).",
+            options: [
+                "Teclado, Mouse, Monitor, Scanner.",
+                "Microfone, Webcam, Scanner, Leitor de Código de Barras.",
+                "Joystick, Impressora, Mouse, Teclado.",
+                "Monitor Touchscreen, Mesa Digitalizadora, Trackball, Webcam.",
+                "Leitor Biométrico, Plotter, Câmera Digital, Mouse."
+            ],
+            correct: 1,
+            resolution: "Gabarito: B. Todos os itens (Microfone, Webcam, Scanner e Leitor) são exclusivamente de entrada. Monitor (Saída), Impressora (Saída), Touchscreen (Híbrido) e Plotter (Saída) invalidam as outras opções."
+        }
+    ];
+
+    function renderQuestions() {
+        const container = document.getElementById('questions-container');
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <div class="question-header">
+                    <span>Questão ${index + 1}</span>
+                </div>
+                <div class="question-text">${q.text}</div>
+                <ul class="options-list">
+                    ${q.options.map((opt, optIndex) => `
+                        <li class="option-item">
+                            <label class="option-label" id="label-q${q.id}-o${optIndex}">
+                                <input type="radio" name="q${q.id}" value="${optIndex}">
+                                <span>${String.fromCharCode(65 + optIndex)}) ${opt}</span>
+                            </label>
+                        </li>
+                    `).join('')}
+                </ul>
+                <div class="resolution-box" id="res-q${q.id}">
+                    <h4>Resolução e Comentário:</h4>
+                    <p>${q.resolution}</p>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function showResults() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        
+        questions.forEach((q) => {
+            const selected = form.querySelector(`input[name="q${q.id}"]:checked`);
+            const selectedValue = selected ? parseInt(selected.value) : null;
+            
+            // Mostrar resoluções
+            document.getElementById(`res${q.id}` ? `res-q${q.id}` : '').style.display = 'block';
+
+            // Estilizar respostas
+            q.options.forEach((_, optIndex) => {
+                const label = document.getElementById(`label-q${q.id}-o${optIndex}`);
+                if (optIndex === q.correct) {
+                    label.classList.add('correct');
+                } else if (selectedValue === optIndex) {
+                    label.classList.add('incorrect');
+                }
+            });
+
+            if (selectedValue === q.correct) {
+                score++;
+            }
+            
+            // Desabilitar inputs após envio
+            form.querySelectorAll(`input[name="q${q.id}"]`).forEach(input => input.disabled = true);
+        });
+
+        // Mostrar resumo
+        const summary = document.getElementById('result-summary');
+        const scoreDisplay = document.getElementById('score-display');
+        const performanceMsg = document.getElementById('performance-msg');
+        
+        summary.style.display = 'block';
+        scoreDisplay.innerText = `${score} / ${questions.length}`;
+        
+        if (score >= 8) performanceMsg.innerText = "Excelente desempenho! Você domina o tema.";
+        else if (score >= 5) performanceMsg.innerText = "Bom desempenho, mas revise os pontos que errou.";
+        else performanceMsg.innerText = "Recomendamos ler o relatório técnico novamente e refazer o simulado.";
+
+        // Esconder botão de submeter e rolar para o topo
+        document.getElementById('submit-btn').style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Inicialização
+    window.onload = renderQuestions;
+</script>
+
+</body>
+</html>
