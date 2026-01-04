@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Estratégico: Redes de Computadores - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fef08a;
+            padding: 1px 3px;
+            font-weight: 600;
+            border-radius: 2px;
+        }
+
+        .highlight-blue {
+            color: #1e40af;
+            font-weight: 700;
+        }
+
+        .section-card {
+            border: 1px solid #e5e7eb;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            background-color: #ffffff;
+        }
+
+        .peguinha-box {
+            border-left: 4px solid #dc2626;
+            background-color: #fff1f2;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        /* Tabela responsiva sem scroll horizontal (stacking) */
+        @media (max-width: 768px) {
+            .responsive-table thead { display: none; }
+            .responsive-table tr { display: block; margin-bottom: 1rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; }
+            .responsive-table td { 
+                display: flex; 
+                justify-content: space-between; 
+                padding: 0.75rem; 
+                border-bottom: 1px solid #f3f4f6; 
+                text-align: right;
+            }
+            .responsive-table td::before { 
+                content: attr(data-label); 
+                font-weight: 700; 
+                text-align: left;
+                margin-right: 1rem;
+            }
+            .responsive-table td:last-child { border-bottom: none; }
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { background-color: #f9fafb; text-align: left; padding: 0.75rem; border: 1px solid #e5e7eb; font-size: 0.875rem; color: #4b5563; }
+        td { padding: 0.75rem; border: 1px solid #e5e7eb; font-size: 0.875rem; }
+
+        .btn-questoes {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 3rem auto;
+            text-align: center;
+            background-color: #111827;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-questoes:hover {
+            background-color: #374151;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        
+        <!-- Player de Áudio -->
+        <div class="mb-12 p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-4 flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM9 7a1 1 0 00-1 1v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2A1 1 0 009 7z"></path></svg>
+                Player de Áudio: Resumo para Memorização
+            </h3>
+            <!-- ADICIONE O NOME DO ARQUIVO MP3 NO SRC ABAIXO -->
+            <audio controls class="w-full">
+                <source src="18tiposrede.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+            <p class="text-xs text-slate-400 mt-2 italic text-center">Arquivo sugerido: aula_redes_ifam_resumo.mp3</p>
+        </div>
+
+        <header class="mb-16 border-b border-gray-100 pb-8">
+            <h1 class="text-4xl font-extrabold text-gray-900 leading-tight mb-4">Redes de Computadores: <span class="text-blue-600">O Guia Definitivo IFAM</span></h1>
+            <p class="text-xl text-gray-600">Conteúdo integral revisado para a banca Fundação CEFETMINAS.</p>
+        </header>
+
+        <!-- Seção 1: Definição e Arquitetura -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">01</span>
+                Classificação quanto à Arquitetura
+            </h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Cliente-Servidor (Client-Server)</h3>
+                    <p class="mt-2 text-gray-600">
+                        Baseada na <span class="highlight-yellow">assimetria de funções</span>. O Servidor é um host que fornece recursos ou serviços, enquanto o Cliente os requisita.
+                    </p>
+                    <ul class="list-disc ml-6 mt-2 text-gray-600">
+                        <li><strong>Servidor:</strong> Sempre ligado, IP fixo, passivo (espera requisições).</li>
+                        <li><strong>Cliente:</strong> Ativo (inicia comunicação), IP dinâmico, não fala diretamente com outros clientes.</li>
+                        <li><strong>Peguinha:</strong> <span class="highlight-yellow">Centralização = Ponto Único de Falha</span>. Se o servidor cai, a rede para.</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Ponto a Ponto (P2P - Peer-to-Peer)</h3>
+                    <p class="mt-2 text-gray-600">
+                        Os nós são <span class="highlight-yellow">Equipotentes (Peers)</span>. Cada dispositivo pode atuar como cliente e servidor simultaneamente (<span class="italic">Servent</span>).
+                    </p>
+                    <ul class="list-disc ml-6 mt-2 text-gray-600">
+                        <li><strong>Escalabilidade:</strong> <span class="highlight-blue">Auto-escalável</span>. Quanto mais nós, maior a capacidade de processamento/armazenamento.</li>
+                        <li><strong>Exemplos:</strong> BitTorrent, Skype (antigo), Blockchain.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 2: Extensão Geográfica -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">02</span>
+                Extensão Geográfica (Escopo)
+            </h2>
+            <div class="peguinha-box">
+                <strong>ALERTA BANCA:</strong> A CEFETMINAS adora cobrar a <span class="font-bold">BAN</span> e a <span class="font-bold">SAN</span> para confundir o candidato.
+            </div>
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Extensão</th>
+                        <th>Exemplo/Característica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Tipo"><strong>BAN</strong></td>
+                        <td data-label="Extensão">Corpo Humano</td>
+                        <td data-label="Exemplo">Sensores médicos, Wearables.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Tipo"><strong>PAN</strong></td>
+                        <td data-label="Extensão">~10 metros</td>
+                        <td data-label="Exemplo">Bluetooth, ZigBee, periféricos sem fio.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Tipo"><strong>LAN</strong></td>
+                        <td data-label="Extensão">Prédio/Casa</td>
+                        <td data-label="Exemplo">Rede Ethernet de um laboratório do IFAM.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Tipo"><strong>CAN</strong></td>
+                        <td data-label="Extensão">Campus</td>
+                        <td data-label="Exemplo">Conecta blocos de uma universidade.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Tipo"><strong>MAN</strong></td>
+                        <td data-label="Extensão">Cidade</td>
+                        <td data-label="Exemplo">Provedores de TV a cabo, Metro Ethernet.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Tipo"><strong>WAN</strong></td>
+                        <td data-label="Extensão">País/Mundo</td>
+                        <td data-label="Exemplo">A própria Internet.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Tipo"><strong>SAN</strong></td>
+                        <td data-label="Extensão">Servidores</td>
+                        <td data-label="Exemplo">Rede exclusiva para <span class="highlight-yellow">Storage/Discos</span>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Seção 3: Topologia -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">03</span>
+                Topologia de Rede
+            </h2>
+            <p class="mb-4">Diferencie <strong>Física</strong> (layout real dos cabos) de <strong>Lógica</strong> (fluxo dos dados).</p>
+            
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-bold border-b border-gray-200 pb-2 mb-2">Barramento (Bus)</h4>
+                    <p class="text-sm">Um único cabo compartilhado. Se houver falha no cabo central (<span class="italic">backbone</span>), toda a rede cai. <span class="highlight-yellow">Usa terminadores.</span></p>
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-bold border-b border-gray-200 pb-2 mb-2">Anel (Ring)</h4>
+                    <p class="text-sm">Unidirecional. Usa o <span class="italic">Token Passing</span>. <span class="highlight-yellow">Ponto de falha crítico:</span> se um nó falha, o anel rompe (salvo anéis duplos FDDI).</p>
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg border-2 border-blue-100">
+                    <h4 class="font-bold border-b border-gray-200 pb-2 mb-2 text-blue-700">Estrela (Star)</h4>
+                    <p class="text-sm">Mais comum hoje. Nó central (Switch). Se um host falha, a rede continua. Se o <span class="highlight-yellow">concentrador central falha</span>, a rede para.</p>
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-bold border-b border-gray-200 pb-2 mb-2">Malha (Mesh)</h4>
+                    <p class="text-sm">Totalmente conectada. Redundância máxima. <br>Fórmula de links: <span class="font-mono bg-white px-1">n(n-1)/2</span>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 4: Meios de Transmissão -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">04</span>
+                Meios de Transmissão e Fluxo
+            </h2>
+            
+            <div class="mb-8">
+                <h3 class="text-lg font-bold mb-4 text-gray-800">Direcionalidade (Modos de Transmissão)</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                        <strong>Simplex:</strong> Unidirecional (ex: TV, Rádio).
+                    </li>
+                    <li class="flex items-center">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                        <strong>Half-Duplex:</strong> Bidirecional, <span class="highlight-yellow">não simultâneo</span> (ex: Walkie-talkie, Hub).
+                    </li>
+                    <li class="flex items-center">
+                        <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                        <strong>Full-Duplex:</strong> Bidirecional e <span class="highlight-yellow">simultâneo</span> (ex: Telefone, Switch).
+                    </li>
+                </ul>
+            </div>
+
+            <h3 class="text-lg font-bold mb-4 text-gray-800">Meios Guiados (Cabeamento)</h3>
+            <div class="space-y-4">
+                <div class="p-4 border border-gray-100 rounded-lg">
+                    <p><strong>Par Trançado:</strong> <mark>UTP</mark> (sem blindagem), <mark>STP</mark> (com blindagem). <br>Cat 5e (1Gbps), Cat 6 (10Gbps curta), Cat 6a (10Gbps 100m).</p>
+                </div>
+                <div class="p-4 border border-gray-100 rounded-lg">
+                    <p><strong>Fibra Óptica:</strong> Imune a ruídos eletromagnéticos.
+                        <ul class="list-disc ml-6 mt-2 text-sm">
+                            <li><span class="font-bold">Monomodo (SMF):</span> Um só raio de luz, longa distância, caro.</li>
+                            <li><span class="font-bold">Multimodo (MMF):</span> Vários raios, distâncias curtas, mais barato (LED).</li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 5: Peguinhas Recorrentes -->
+        <section class="section-card border-red-100">
+            <h2 class="text-2xl font-bold mb-6 text-red-600 flex items-center">
+                <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+                Radar CEFETMINAS: O que derruba candidatos
+            </h2>
+            <div class="space-y-4">
+                <p class="p-3 bg-red-50 rounded border-l-4 border-red-500 text-sm">
+                    <strong>1. Topologia Estrela vs Barramento:</strong> Em uma estrela usando HUB, a topologia <strong>física</strong> é estrela, mas a <strong>lógica</strong> é barramento (pois o Hub replica para todos). Se usar Switch, a lógica também se torna estrela/ponto-a-ponto.
+                </p>
+                <p class="p-3 bg-red-50 rounded border-l-4 border-red-500 text-sm">
+                    <strong>2. Domínios:</strong> Hub compartilha 1 domínio de colisão. Switch cria 1 domínio de colisão <span class="underline">por porta</span>. Ambos mantêm apenas 1 domínio de broadcast (a menos que usem VLAN).
+                </p>
+                <p class="p-3 bg-red-50 rounded border-l-4 border-red-500 text-sm">
+                    <strong>3. SAN vs NAS:</strong> A banca pode dizer que SAN é um hardware. Falso: SAN é uma <span class="font-bold">rede</span> de armazenamento. NAS é o dispositivo ligado na rede.
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer / CTA -->
+        <footer class="mt-20">
+            <div class="text-center">
+                <p class="text-gray-500 mb-4">Material de apoio pedagógico para Concurso Público.</p>
+                <a href="18questoes.html" class="btn-questoes">
+                    RESOLVER QUESTÕES →
+                </a>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

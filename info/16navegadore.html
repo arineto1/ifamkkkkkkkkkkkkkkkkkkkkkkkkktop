@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo IFAM - Professor de Informática</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef08a;
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.2rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .important-note {
+            border-left: 5px solid #3b82f6;
+            background-color: #f8fafc;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: hidden; /* Garantindo que não haja scroll horizontal */
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Força o ajuste ao container */
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            text-align: left;
+            word-wrap: break-word; /* Quebra palavras longas */
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .audio-player-box {
+            background-color: #ffffff;
+            border: 2px solid #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: #111827;
+            font-weight: 800;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-action:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .cefet-tip {
+            background-color: #fff7ed;
+            border: 1px dashed #f97316;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0.5rem;
+        }
+
+        ul.check-list li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            display: inline-block; 
+            width: 1.5em;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Cabeçalho de Aula -->
+    <header class="text-center mb-12">
+        <span class="text-blue-600 font-bold uppercase tracking-widest text-sm">Tutor Especialista - Concurso IFAM</span>
+        <h1 class="text-4xl md:text-5xl font-extrabold mt-2 mb-4">Conceitos de Internet e Correio Eletrônico</h1>
+        <p class="text-lg text-gray-500">Módulo Teórico e Técnico - Foco na Banca Fundação CEFETMINAS</p>
+    </header>
+
+    <!-- Reprodutor de Áudio -->
+    <div class="audio-player-box">
+        <h3 class="text-lg font-bold mb-4 flex items-center">
+            <span class="mr-2">🎧</span> Play na Aula (Resumo em Áudio)
+        </h3>
+        <audio controls class="w-full">
+            <!-- NOME DO ARQUIVO MP3 ABAIXO -->
+            <source src="16navegadores.mp3" type="audio/mpeg">
+            Seu navegador não suporta o player de áudio.
+        </audio>
+        <p class="text-sm text-gray-400 mt-3 italic">Nota: Para ouvir, certifique-se de que o arquivo "aula_resumo_ifam.mp3" está na mesma pasta deste documento.</p>
+    </div>
+
+    <!-- Introdução -->
+    <section>
+        <h2 class="section-title text-2xl">1. Definições de Rede e Topologias Lógicas</h2>
+        <p>A CEFETMINAS costuma cobrar a distinção técnica entre as redes baseada no <span class="highlight">escopo de acesso</span> e não apenas na localização física.</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Termo</th>
+                        <th>Definição Técnica</th>
+                        <th>Alvo de Prova</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Internet</strong></td>
+                        <td>Rede mundial de computadores baseada na pilha de protocolos <span class="highlight">TCP/IP</span>.</td>
+                        <td>É uma rede pública e descentralizada. Não possui um "dono" único.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Intranet</strong></td>
+                        <td>Rede <span class="highlight">privada</span> baseada nos mesmos protocolos da Internet.</td>
+                        <td>Uso restrito a membros de uma organização. Pode funcionar sem internet.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Extranet</strong></td>
+                        <td>Extensão da Intranet para usuários externos autorizados.</td>
+                        <td>Acesso de parceiros, fornecedores ou clientes via <span class="highlight">VPN</span> ou login seguro.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="important-note">
+            <strong>Ponto de Acerto:</strong> O que define uma Intranet não é o conteúdo, mas o <span class="highlight">controle de acesso</span>. Ela utiliza as mesmas tecnologias (HTTP, FTP, SMTP) que a Internet, mas em ambiente restrito.
+        </div>
+    </section>
+
+    <!-- URLs e DNS -->
+    <section>
+        <h2 class="section-title text-2xl">2. Anatomia da URL e o Papel do DNS</h2>
+        <p>Entender a estrutura de um endereço é vital para questões de navegação.</p>
+        <div class="cefet-tip">
+            <strong>Exemplo:</strong> <code>https://www.ifam.edu.br/portal/index.html</code>
+        </div>
+        <ul class="space-y-2 ml-4">
+            <li><strong>Protocolo:</strong> <code>https://</code> (Seguro, porta 443).</li>
+            <li><strong>Subdomínio:</strong> <code>www</code> (World Wide Web).</li>
+            <li><strong>Domínio:</strong> <code>ifam</code>.</li>
+            <li><strong>TLD (Top Level Domain):</strong> <code>.edu.br</code> (Identifica o tipo e país).</li>
+            <li><strong>Caminho/Recurso:</strong> <code>/portal/index.html</code> (Localização do arquivo no servidor).</li>
+        </ul>
+        <p class="mt-4">O <span class="highlight">DNS (Domain Name System)</span> é o "catálogo" que resolve esses nomes em endereços IP. Sem o DNS, você teria que digitar números como <code>200.17.x.x</code> para acessar o IFAM.</p>
+    </section>
+
+    <!-- Navegadores -->
+    <section>
+        <h2 class="section-title text-2xl">3. Navegadores (Browsers) e Funcionalidades</h2>
+        <p>A banca foca na diferença entre <span class="highlight">Cache, Cookies e Histórico</span>.</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Recurso</th>
+                        <th>Função</th>
+                        <th>Impacto na Privacidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Cache</strong></td>
+                        <td>Armazena <span class="highlight">arquivos estáticos</span> (imagens, scripts) para acelerar o carregamento.</td>
+                        <td>Ocupa espaço em disco; pode exibir versões desatualizadas de sites.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cookies</strong></td>
+                        <td>Arquivos de texto que guardam <span class="highlight">preferências</span> e estados de login.</td>
+                        <td>Principal alvo de rastreamento de marketing (tracking cookies).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Favoritos</strong></td>
+                        <td>Lista de URLs salvas pelo usuário (Bookmarks).</td>
+                        <td>Pode ser sincronizado em nuvem entre diferentes dispositivos.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="font-bold text-lg mt-6">Motores de Renderização (Trend CEFETMINAS)</h3>
+        <p>Identificar qual motor cada navegador usa é uma questão comum em provas de Informática para TI:</p>
+        <ul class="list-disc ml-8">
+            <li><strong>Blink:</strong> Chrome, Edge, Opera, Brave.</li>
+            <li><strong>Gecko:</strong> Mozilla Firefox.</li>
+            <li><strong>WebKit:</strong> Safari (Apple).</li>
+        </ul>
+
+        <div class="important-note">
+            <strong>Navegação InPrivate/Incógnito:</strong> <span class="highlight">NÃO garante anonimato na rede</span>. Ela apenas não salva dados no computador local (histórico, cookies, senhas). O servidor do site e o provedor de internet continuam rastreando o acesso.
+        </div>
+    </section>
+
+    <!-- Correio Eletrônico -->
+    <section>
+        <h2 class="section-title text-2xl">4. Correio Eletrônico (E-mail)</h2>
+        <p>Para a Fundação CEFETMINAS, o foco é a tríade de protocolos e as regras de envio.</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Protocolo</th>
+                        <th>Sigla</th>
+                        <th>Direção</th>
+                        <th>Características Principais</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SMTP</strong></td>
+                        <td>Simple Mail Transfer Protocol</td>
+                        <td>Saída</td>
+                        <td>Portas <span class="highlight">587</span> ou 465. Responsável pelo envio.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>POP3</strong></td>
+                        <td>Post Office Protocol</td>
+                        <td>Entrada</td>
+                        <td>Baixa as mensagens e <span class="highlight">remove do servidor</span> (por padrão).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IMAP</strong></td>
+                        <td>Internet Message Access Protocol</td>
+                        <td>Entrada</td>
+                        <td><span class="highlight">Sincroniza</span> as mensagens. As pastas são iguais em todos os dispositivos.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="font-bold text-lg mt-6">Webmail vs. Clientes de E-mail</h3>
+        <p><strong>Webmail:</strong> Acesso via navegador (Ex: Gmail, Outlook.com). Não exige instalação de software específico.</p>
+        <p><strong>Clientes de E-mail:</strong> Softwares dedicados (Ex: Microsoft Outlook, Mozilla Thunderbird). Permitem gerenciar contas offline após o download.</p>
+
+        <h3 class="font-bold text-lg mt-6">Campos CC e CCO</h3>
+        <ul class="space-y-2">
+            <li><strong>CC (Com Cópia):</strong> Todos os destinatários sabem quem recebeu a mensagem.</li>
+            <li><strong>CCO / BCC (Com Cópia Oculta):</strong> <span class="highlight">Protege a privacidade</span>. O destinatário em CCO vê todos, mas ninguém vê o destinatário em CCO.</li>
+        </ul>
+    </section>
+
+    <!-- Tendências e Peguinhas -->
+    <section>
+        <h2 class="section-title text-2xl">5. Tendências de Cobrança e "Peguinhas"</h2>
+        <div class="cefet-tip">
+            <strong>Cuidado:</strong> A banca ama confundir <strong>Internet</strong> com <strong>Web</strong>.
+            <br>• <strong>Internet:</strong> A infraestrutura (cabos, roteadores, protocolos IP).
+            <br>• <strong>Web (WWW):</strong> Um serviço que roda "em cima" da internet.
+        </div>
+        
+        <h3 class="font-bold text-lg mt-4">Lista de Pontos Críticos para Memorizar:</h3>
+        <ul class="check-list space-y-2 ml-4">
+            <li>O protocolo <span class="highlight">FTP</span> é usado para transferência de arquivos, não para visualização de hipertexto.</li>
+            <li>O <span class="highlight">HTTPS</span> utiliza o protocolo TLS/SSL para criptografar a camada de aplicação.</li>
+            <li>O erro <span class="highlight">404</span> significa que o servidor foi encontrado, mas a página (recurso) não existe.</li>
+            <li>O arquivo <span class="highlight">robots.txt</span> é usado por sites para dizer aos buscadores (Google) o que não deve ser indexado.</li>
+            <li>Spam não é vírus; é mensagem não solicitada enviada em massa.</li>
+        </ul>
+    </section>
+
+    <!-- CTA Final -->
+    <div class="mt-12 mb-20 text-center">
+        <p class="text-gray-600 mb-6 italic">Material revisado para o concurso de Professor EBTT - IFAM.</p>
+        <a href="16questoes.html" class="btn-action shadow-lg">
+            Ir para Questões de Fixação →
+        </a>
+    </div>
+
+    <footer class="border-t border-gray-200 pt-8 text-center text-sm text-gray-400">
+        <p>© 2024 - Sistema de Estudo Intensivo IFAM - Especialista em Concursos</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Mecanismos de Busca - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-color: #636e72;
+            --correct-color: #27ae60;
+            --incorrect-color: #d63031;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--text-color);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f1f2f6;
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #e1f5fe;
+        }
+
+        /* Classes para o Resultado */
+        .option-item.correct {
+            background-color: #d4edda !important;
+            border-color: var(--correct-color) !important;
+            color: #155724;
+        }
+
+        .option-item.incorrect {
+            background-color: #f8d7da !important;
+            border-color: var(--incorrect-color) !important;
+            color: #721c24;
+        }
+
+        .resolution-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+            display: none; /* Escondido inicialmente */
+            font-size: 0.95rem;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        #submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(9, 132, 227, 0.2);
+            transition: background 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #0873c4;
+        }
+
+        #result-summary {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #e1f5fe;
+            border-radius: 8px;
+            margin-top: 40px;
+            border: 1px solid #b3e5fc;
+        }
+
+        #result-summary h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .score-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 10px; margin: 20px auto; }
+            h1 { font-size: 1.5rem; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Mecanismos de Busca</h1>
+        <p class="description">Conceitos Básicos de Internet | Estilo Fundação CEFETMINAS</p>
+    </header>
+
+    <div id="quiz-container">
+        <!-- As questões serão geradas via JavaScript -->
+    </div>
+
+    <div class="actions">
+        <button id="submit-btn" onclick="calculateScore()">Finalizar Quiz e Ver Resoluções</button>
+    </div>
+
+    <div id="result-summary">
+        <h2>Resultado Final</h2>
+        <p class="score-text">Você acertou <span id="score-value">0</span> de 10 questões.</p>
+        <p>Role para cima para conferir a resolução detalhada de cada item.</p>
+        <button onclick="window.location.reload()" style="margin-top: 15px; background: none; border: 1px solid var(--primary-color); color: var(--primary-color); padding: 8px 20px; border-radius: 20px; cursor: pointer;">Refazer Simulado</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            text: "Um Assistente Administrativo está utilizando a ferramenta de busca Google para localizar informações pertinentes a um processo licitatório. Para refinar os resultados, ele acessa a página de 'Pesquisa Avançada', acessível através das configurações do buscador. Analise as opções abaixo e assinale aquela que apresenta um critério de filtragem que NÃO está disponível nativamente na interface de Pesquisa Avançada do Google:",
+            options: [
+                "A) Restringir os resultados a páginas publicadas em um determinado idioma.",
+                "B) Filtrar os resultados por data de atualização (ex: na última semana).",
+                "C) Localizar apenas arquivos de um formato específico (ex: .pdf ou .xls).",
+                "D) Encontrar páginas que foram visitadas por um usuário específico da rede interna.",
+                "E) Restringir a pesquisa a um site ou domínio específico (ex: .gov.br)."
+            ],
+            correct: 3, // Letra D
+            resolution: "Esta questão testa o conhecimento do candidato sobre os limites da ferramenta e princípios de privacidade. O Google (público) não monitora ou disponibiliza o histórico de navegação de terceiros para o público geral por questões de privacidade e segurança."
+        },
+        {
+            id: 2,
+            text: "Um pesquisador deseja encontrar receitas de 'bolo de cenoura' na internet utilizando o buscador Google, mas deseja excluir qualquer resultado que contenha a palavra 'chocolate' na página, pois busca uma versão puramente de cenoura. Assinale a alternativa que apresenta a sintaxe exata e correta para realizar essa operação na barra de busca simples:",
+            options: [
+                "A) bolo de cenoura NOT chocolate",
+                "B) bolo de cenoura -chocolate",
+                "C) bolo de cenoura - chocolate",
+                "D) bolo de cenoura except:chocolate",
+                "E) \"bolo de cenoura\" sem \"chocolate\""
+            ],
+            correct: 1, // Letra B
+            resolution: "A regra sintática do Google exige que o sinal de menos (-) esteja imediatamente colado à palavra a ser excluída (sem espaço entre eles) e separado da palavra anterior por um espaço. O erro na C é justamente o espaço após o hífen."
+        },
+        {
+            id: 3,
+            text: "No contexto dos conceitos básicos de Internet, é fundamental distinguir as ferramentas utilizadas para acesso e recuperação da informação. Assinale a alternativa que contém apenas exemplos de Mecanismos de Busca (Search Engines):",
+            options: [
+                "A) Google, Chrome e Firefox.",
+                "B) Bing, Yahoo e Google.",
+                "C) Internet Explorer, Safari e DuckDuckGo.",
+                "D) Edge, Opera e Bing.",
+                "E) Google, Yahoo e Windows."
+            ],
+            correct: 1, // Letra B
+            resolution: "A FCM frequentemente cobra a classificação correta. Chrome, Firefox, Safari, Edge e Opera são navegadores (softwares). Bing, Yahoo e Google são buscadores (serviços web)."
+        },
+        {
+            id: 4,
+            text: "Um candidato precisa baixar o edital do concurso da Fundação CEFETMINAS. Ele sabe que o arquivo está no formato PDF e deseja restringir a busca apenas ao domínio oficial da instituição (fundacaocefetminas.org.br). Qual das seguintes strings de busca utilizaria corretamente os operadores do Google para essa finalidade?",
+            options: [
+                "A) edital site:fundacaocefetminas.org.br type:pdf",
+                "B) edital inurl:fundacaocefetminas.org.br extension:pdf",
+                "C) edital location:fundacaocefetminas.org.br file:pdf",
+                "D) edital site:fundacaocefetminas.org.br filetype:pdf",
+                "E) edital domain:fundacaocefetminas.org.br format:pdf"
+            ],
+            correct: 3, // Letra D
+            resolution: "O comando correto para domínio é 'site:' e para formato de arquivo é 'filetype:'. Note que não deve haver espaços após os dois pontos em ambos os casos."
+        },
+        {
+            id: 5,
+            text: "Analise a seguinte situação: um usuário deseja encontrar a origem de uma citação, mas não se lembra de uma das palavras da frase. A frase é \"A * é a alma do negócio\", onde o asterisco representa a palavra esquecida. Além disso, ele quer que o buscador procure pela frase exatamente nessa ordem. Qual operador deve ser utilizado em conjunto com o asterisco?",
+            options: [
+                "A) Parênteses ( )",
+                "B) Chaves { }",
+                "C) Aspas duplas \"\"",
+                "D) Colchetes [ ]",
+                "E) Sinal de porcentagem %"
+            ],
+            correct: 2, // Letra C
+            resolution: "Para frases exatas e para manter a função de 'curinga' do asterisco em uma posição específica, o uso de aspas duplas é obrigatório."
+        },
+        {
+            id: 6,
+            text: "Os mecanismos de busca modernos evoluíram para oferecer respostas diretas na própria página de resultados (SERP), sem a necessidade de clicar em links. Dentre as funcionalidades abaixo, assinale a única que NÃO é oferecida nativamente pela ferramenta de busca do Google através de comandos diretos:",
+            options: [
+                "A) Conversão de valores monetários (ex: \"100 dólares em reais\").",
+                "B) Previsão meteorológica (ex: \"tempo em Belo Horizonte\").",
+                "C) Calculadora científica (ex: \"raiz quadrada de 144\").",
+                "D) Definição de palavras (ex: \"define:pragmático\").",
+                "E) Desfragmentação remota do disco rígido do usuário."
+            ],
+            correct: 4, // Letra E
+            resolution: "O Google integra diversas ferramentas úteis, mas a desfragmentação de disco é uma tarefa de hardware e sistema operacional local. Um site não pode (e nem deve, por segurança) acessar o hardware do usuário dessa forma."
+        },
+        {
+            id: 7,
+            text: "Um analista de segurança da informação deseja encontrar páginas de login de administradores que estejam expostas na web. Para isso, ele decide buscar páginas que contenham a palavra \"admin\" especificamente no endereço (URL) da página, e não necessariamente no corpo do texto. Qual operador ele deve utilizar?",
+            options: [
+                "A) intitle:admin",
+                "B) intext:admin",
+                "C) inurl:admin",
+                "D) link:admin",
+                "E) header:admin"
+            ],
+            correct: 2, // Letra C
+            resolution: "intitle: busca no título da página; intext: no corpo do texto; inurl: busca na string do endereço URL."
+        },
+        {
+            id: 8,
+            text: "Ao realizar uma busca no Google digitando os termos cachorro gato (sem aspas e sem operadores extras), como o mecanismo de busca interpreta a relação entre as palavras?",
+            options: [
+                "A) Ele busca páginas que contenham \"cachorro\" OU \"gato\" (Lógica OR implícita).",
+                "B) Ele busca páginas que contenham necessariamente \"cachorro\" E \"gato\" (Lógica AND implícita).",
+                "C) Ele busca a frase exata \"cachorro gato\" nesta ordem.",
+                "D) Ele exclui a segunda palavra, buscando apenas \"cachorro\".",
+                "E) Ele busca apenas imagens de animais."
+            ],
+            correct: 1, // Letra B
+            resolution: "Por padrão, o Google utiliza o operador lógico AND (E). Ele entende que você quer resultados que contenham todos os termos digitados."
+        },
+        {
+            id: 9,
+            text: "Um usuário gosta muito do conteúdo do site de notícias da BBC e gostaria de descobrir outros portais de notícias que o algoritmo do Google considera similares em termos de conteúdo e público. Qual comando ele deve digitar na barra de pesquisa?",
+            options: [
+                "A) like:bbc.com",
+                "B) similar:bbc.com",
+                "C) related:bbc.com",
+                "D) match:bbc.com",
+                "E) mirror:bbc.com"
+            ],
+            correct: 2, // Letra C
+            resolution: "O operador 'related:' é usado especificamente para encontrar sites que o Google considera relacionados ou similares ao domínio informado."
+        },
+        {
+            id: 10,
+            text: "Sobre o conceito de SEO (Search Engine Optimization), frequentemente associado ao funcionamento dos mecanismos de busca, assinale a afirmativa CORRETA:",
+            options: [
+                "A) Trata-se de um serviço pago oferecido pelo Google para garantir que um site apareça sempre na primeira posição dos resultados.",
+                "B) É o conjunto de técnicas e práticas aplicadas a um site visando melhorar seu posicionamento nos resultados orgânicos (gratuitos) dos buscadores.",
+                "C) SEO refere-se exclusivamente à compra de palavras-chave no Google Ads.",
+                "D) É uma ferramenta de hardware instalada no servidor para aumentar a velocidade da internet.",
+                "E) É o nome dado aos robôs (crawlers) que indexam a internet."
+            ],
+            correct: 1, // Letra B
+            resolution: "SEO (Otimização para Mecanismos de Busca) foca no tráfego 'orgânico', ou seja, melhorar a posição natural do site sem pagar por anúncios."
+        }
+    ];
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <li class="option-item" onclick="selectOption(${index}, ${optIndex})">
+                        <input type="radio" name="q${index}" id="q${index}o${optIndex}" value="${optIndex}">
+                        <label for="q${index}o${optIndex}">${opt}</label>
+                    </li>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-text">${index + 1}. ${q.text}</span>
+                <ul class="options-list">
+                    ${optionsHtml}
+                </ul>
+                <div class="resolution-box" id="res-${index}">
+                    <h4>Resolução Analítica</h4>
+                    <p>${q.resolution}</p>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    window.selectOption = function(qIndex, optIndex) {
+        // Desmarcar outros itens visualmente
+        const card = document.getElementById(`q-card-${qIndex}`);
+        const items = card.querySelectorAll('.option-item');
+        items.forEach(item => item.classList.remove('selected'));
+        
+        // Marcar o item clicado
+        items[optIndex].classList.add('selected');
+        const radio = items[optIndex].querySelector('input');
+        radio.checked = true;
+    }
+
+    window.calculateScore = function() {
+        let score = 0;
+        let unanswered = false;
+
+        questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            
+            if (!selected) {
+                unanswered = true;
+                return;
+            }
+
+            const selectedValue = parseInt(selected.value);
+            const card = document.getElementById(`q-card-${index}`);
+            const options = card.querySelectorAll('.option-item');
+            const resolution = document.getElementById(`res-${index}`);
+
+            // Mostrar resolução
+            resolution.style.display = 'block';
+
+            if (selectedValue === q.correct) {
+                score++;
+                options[selectedValue].classList.add('correct');
+            } else {
+                options[selectedValue].classList.add('incorrect');
+                options[q.correct].classList.add('correct'); // Mostra a correta
+            }
+        });
+
+        // Exibir resumo
+        document.getElementById('score-value').innerText = score;
+        document.getElementById('result-summary').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'none';
+
+        // Scroll suave para o resultado
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    }
+
+    // Inicializar o Quiz
+    window.onload = renderQuiz;
+</script>
+
+</body>
+</html>

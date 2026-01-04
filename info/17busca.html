@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Mecanismos de Busca - IFAM / CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1a1a1a;
+            background-color: #ffffff;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem 1.25rem;
+        }
+
+        h1 {
+            color: #000000;
+            font-weight: 800;
+            border-bottom: 4px solid #f3f4f6;
+            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            color: #111827;
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 32px;
+            background-color: #10b981; /* Verde IFAM */
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+
+        h3 {
+            color: #374151;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background-color: #fde68a; /* Amarelo grifo */
+            padding: 1px 4px;
+            font-weight: 600;
+            border-radius: 2px;
+        }
+
+        .alert-box {
+            border-left: 5px solid #ef4444;
+            background-color: #fef2f2;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        /* Tabelas Totalmente Responsivas */
+        .table-wrapper {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            background: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f9fafb;
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid #e5e7eb;
+            color: #4b5563;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: top;
+        }
+
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr { border: 1px solid #e5e7eb; margin-bottom: 1rem; border-radius: 8px; }
+            td { border: none; border-bottom: 1px solid #f3f4f6; position: relative; padding-left: 50%; text-align: right; }
+            td:before {
+                content: attr(data-label);
+                position: absolute;
+                left: 15px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: 700;
+                color: #374151;
+            }
+        }
+
+        .audio-section {
+            background-color: #fafafa;
+            border: 2px dashed #d1d5db;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+        }
+
+        .btn-action {
+            display: block;
+            background-color: #059669;
+            color: white;
+            text-align: center;
+            padding: 1.25rem;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-action:hover {
+            background-color: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .code-tag {
+            background: #f1f5f9;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 600;
+            color: #dc2626;
+        }
+        
+        .cefetminas-note {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 class="text-3xl md:text-5xl">Mecanismos de Busca: Teoria e Prática (IFAM/EBTT)</h1>
+        
+        <div class="audio-section">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Player de Aula em Áudio</p>
+            <!-- INSIRA O NOME DO SEU ARQUIVO ABAIXO -->
+            <audio controls class="w-full">
+                <source src="17busca.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio HTML5.
+            </audio>
+            <p class="text-sm text-gray-500 mt-3 italic">Dica: Ouça este resumo enquanto revisa os tópicos grifados abaixo.</p>
+        </div>
+    </header>
+
+    <main>
+        <section id="definicao">
+            <h2>1. Definição e Conceitos Essenciais</h2>
+            <p>Os mecanismos de busca são sistemas de software projetados para realizar buscas de informações na <span class="highlight">World Wide Web</span>. Para a prova do IFAM, entenda que a busca não ocorre na internet "ao vivo", mas sim em um <strong>Índice</strong> previamente construído.</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Componente</th>
+                            <th>Função Técnica</th>
+                            <th>Termo de Prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Componente"><strong>Coletor</strong></td>
+                            <td data-label="Função">Visita páginas seguindo links.</td>
+                            <td data-label="Termo"><span class="highlight">Crawler</span>, Spider ou Bot.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Componente"><strong>Indexador</strong></td>
+                            <td data-label="Função">Organiza as palavras em um banco de dados.</td>
+                            <td data-label="Termo">Índice Invertido.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Componente"><strong>Interface</strong></td>
+                            <td data-label="Função">Onde o usuário digita a <span class="highlight">Query</span>.</td>
+                            <td data-label="Termo">Search Engine Query.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="camadas">
+            <h2>2. Divisões da Web e Acessibilidade</h2>
+            <p>A CEFETMINAS adora cobrar a distinção entre o que é visível e o que é oculto para os buscadores tradicionais.</p>
+            <ul class="space-y-4 mt-4">
+                <li><strong>Surface Web:</strong> Conteúdo indexável (páginas HTML públicas).</li>
+                <li><strong>Deep Web:</strong> Conteúdo <span class="highlight">não indexado</span> por buscadores comuns. Inclui bancos de dados, extratos bancários, e-mails e páginas protegidas por senhas. <span class="highlight">Não é necessariamente ilegal</span>.</li>
+                <li><strong>Dark Web:</strong> Uma pequena parte da Deep Web, acessível apenas via softwares específicos (como o Tor), focada em anonimato extremo.</li>
+            </ul>
+        </section>
+
+        <section id="google-master">
+            <h2>3. Dominando o Google (Operadores Avançados)</h2>
+            <p>O Google utiliza algoritmos de relevância (como o <strong>PageRank</strong>). Os operadores abaixo são "pontos certos" se você souber a sintaxe exata.</p>
+
+            <div class="alert-box">
+                <strong>REGRA DE OURO CEFETMINAS:</strong> Não existe espaço entre o sinal de dois pontos e o termo. 
+                <br>Exemplo Correto: <span class="code-tag">site:gov.br</span> 
+                <br>Exemplo Errado: <span class="code-tag">site: gov.br</span>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operador</th>
+                            <th>O que faz?</th>
+                            <th>Exemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Operador"><span class="code-tag">""</span> (Aspas)</td>
+                            <td data-label="Função">Busca <span class="highlight">frase exata</span> e ordem específica.</td>
+                            <td>"Professor de Informática"</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Operador"><span class="code-tag">-</span> (Hífen)</td>
+                            <td data-label="Função"><span class="highlight">Exclui</span> uma palavra do resultado.</td>
+                            <td>IFAM -concurso</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Operador"><span class="code-tag">OR</span></td>
+                            <td data-label="Função">Busca um termo <span class="highlight">OU</span> outro.</td>
+                            <td>IFAM OR IFAL</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Operador"><span class="code-tag">site:</span></td>
+                            <td>Busca apenas dentro de um domínio.</td>
+                            <td>site:edu.br informática</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Operador"><span class="code-tag">filetype:</span></td>
+                            <td>Filtra por <span class="highlight">extensão</span> de arquivo.</td>
+                            <td>filetype:pdf edital</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Operador"><span class="code-tag">related:</span></td>
+                            <td>Busca sites com conteúdo similar.</td>
+                            <td>related:bing.com</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Operador"><span class="code-tag">cache:</span></td>
+                            <td>Versão armazenada (Obs: Em desuso, mas cai em prova).</td>
+                            <td>cache:ifam.edu.br</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="outros-buscadores">
+            <h2>4. Outros Buscadores e Meta-buscadores</h2>
+            <p>Não estude apenas o Google. A banca pode citar alternativas:</p>
+            <ul class="list-disc ml-6 space-y-3">
+                <li><strong>Bing (Microsoft):</strong> Possui integração com IA (Copilot) e operadores como <span class="code-tag">ip:</span> e <span class="code-tag">language:</span>.</li>
+                <li><strong>DuckDuckGo:</strong> Foco total em <span class="highlight">privacidade</span> (não rastreia o usuário).</li>
+                <li><strong>Meta-buscadores:</strong> Não possuem banco de dados próprio. Eles enviam a consulta para vários buscadores ao mesmo tempo e agregam os resultados. Exemplo clássico: <span class="highlight">Dogpile</span>.</li>
+            </ul>
+        </section>
+
+        <section id="tendencias">
+            <h2>5. Tendências de Cobrança (CEFETMINAS)</h2>
+            <div class="cefetminas-note">
+                <h4 class="font-bold text-blue-800 mb-2">Padrão da Banca para cargos EBTT:</h4>
+                <ol class="list-decimal ml-5 space-y-2">
+                    <li><strong>Sintaxe Errada:</strong> Eles colocam <span class="code-tag">site : ifam.edu.br</span> com espaço antes dos dois pontos para te confundir.</li>
+                    <li><strong>Case Sensitivity:</strong> Operadores como <span class="code-tag">OR</span> devem ser maiúsculos. A busca comum (palavras) <span class="highlight">NÃO diferencia</span> maiúsculas de minúsculas.</li>
+                    <li><strong>Stop Words:</strong> Palavras vazias (e, de, o, a) são ignoradas pelo buscador, a menos que estejam entre <span class="highlight">aspas</span>.</li>
+                    <li><strong>Lógica Booleana:</strong> Cobram a compreensão de que o espaço entre palavras no Google funciona como um <span class="highlight">AND implícito</span>.</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="memorizacao">
+            <h2>6. Flashcard de Revisão Rápida</h2>
+            <div class="grid md:grid-cols-2 gap-4 mt-6">
+                <div class="p-4 border rounded-lg bg-gray-50">
+                    <p class="font-bold text-red-600">O que é Indexação?</p>
+                    <p class="text-sm">Processo de organizar o conteúdo coletado pelo crawler para permitir buscas ultra rápidas.</p>
+                </div>
+                <div class="p-4 border rounded-lg bg-gray-50">
+                    <p class="font-bold text-red-600">Diferença Deep vs Dark?</p>
+                    <p class="text-sm">Deep é o não indexado (legítimo ou não). Dark é o oculto intencional que exige redes como TOR.</p>
+                </div>
+                <div class="p-4 border rounded-lg bg-gray-50">
+                    <p class="font-bold text-red-600">Operador Coringa (*)</p>
+                    <p class="text-sm">Substitui uma palavra inteira. Útil para quando você esqueceu parte de uma frase.</p>
+                </div>
+                <div class="p-4 border rounded-lg bg-gray-50">
+                    <p class="font-bold text-red-600">Yahoo Search</p>
+                    <p class="text-sm">Atualmente utiliza a tecnologia de busca (indexação/ranking) do <strong>Bing</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <a href="17questoes.html" class="btn-action">
+            TESTAR CONHECIMENTOS (SIMULADO) →
+        </a>
+    </main>
+
+    <footer class="mt-20 py-8 border-t text-center text-gray-400 text-xs">
+        <p>Material elaborado para o concurso IFAM - Professor de Informática.</p>
+        <p class="mt-2">Foco: Fundação CEFETMINAS | Área: Informática Básica / Internet</p>
+    </footer>
+</div>
+
+</body>
+</html>

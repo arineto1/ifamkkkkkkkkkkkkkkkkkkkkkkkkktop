@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revisão de Elite - Professor IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fefcbf;
+            font-weight: 600;
+            padding: 0 2px;
+        }
+
+        .highlight-green {
+            background-color: #f0fff4;
+            border-bottom: 2px solid #68d391;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+
+        th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            padding: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+
+        .section-header {
+            border-left: 5px solid #2d3748;
+            padding-left: 1rem;
+            margin: 3rem 0 1.5rem 0;
+        }
+
+        .card-bizu {
+            border: 1px solid #cbd5e0;
+            border-left: 4px solid #3182ce;
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Estudo de Caso para evitar Scroll em tabelas com muito texto */
+        @media (max-width: 768px) {
+            td, th { padding: 8px; font-size: 0.8rem; }
+            .hide-mobile { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-white antialiased">
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <!-- Cabeçalho -->
+        <header class="text-center mb-12">
+            <span class="text-blue-600 font-bold tracking-widest uppercase text-sm">Concurso Professor EBTT - IFAM</span>
+            <h1 class="text-4xl font-extrabold text-gray-900 mt-2">Internet e Segurança da Informação</h1>
+            <div class="h-1 w-20 bg-blue-500 mx-auto mt-4"></div>
+        </header>
+
+        <!-- Player de Áudio -->
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-12 shadow-sm">
+            <div class="flex items-center gap-4 mb-4">
+                <div class="bg-blue-100 p-3 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg">Podcast de Revisão</h3>
+                    <p class="text-sm text-gray-500 italic">Insira o arquivo mp3 na mesma pasta com o nome abaixo</p>
+                </div>
+            </div>
+            <audio controls class="w-full">
+                <source src="14cripitografia.mp3" type="audio/mpeg">
+                Seu navegador não suporta o áudio.
+            </audio>
+        </div>
+
+        <!-- 1. Pilares Fundamentais -->
+        <div class="section-header">
+            <h2 class="text-2xl font-bold">1. Pilares de Segurança (Mnemônico DICE)</h2>
+        </div>
+        <p class="mb-4 text-gray-700">A CEFETMINAS cobra a <strong>quebra</strong> do princípio. Fique atento aos verbos.</p>
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pilar</th>
+                        <th>Definição Técnica</th>
+                        <th>Ameaça Comum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Disponibilidade</strong></td>
+                        <td>Garantia que o sistema esteja acessível quando solicitado.</td>
+                        <td>Ataque <span class="highlight-yellow">DoS / DDoS</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Integridade</strong></td>
+                        <td>Proteção contra <span class="highlight-yellow">alteração não autorizada</span>.</td>
+                        <td>Defacement (pichação de sites).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Confidencialidade</strong></td>
+                        <td>Garantia de <span class="highlight-yellow">sigilo</span>. Só quem deve ler, lê.</td>
+                        <td>Sniffing (interceptação de tráfego).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Autenticidade</strong></td>
+                        <td>Confirmação da <span class="highlight-yellow">identidade</span> de quem envia.</td>
+                        <td>IP Spoofing (mascaramento).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Não-Repúdio</strong></td>
+                        <td>Impossibilidade de negar a autoria de uma ação.</td>
+                        <td>Negar envio de e-mail assinado.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. Criptografia -->
+        <div class="section-header">
+            <h2 class="text-2xl font-bold">2. Criptografia e Funções Hash</h2>
+        </div>
+        <div class="card-bizu">
+            <strong>Diferença de Ouro:</strong> <br>
+            - <span class="highlight-green">Simétrica:</span> Uma única chave (secreta). Rápida. Problema: distribuição da chave.<br>
+            - <span class="highlight-green">Assimétrica:</span> Par de chaves (Pública e Privada). Lenta. Resolve a distribuição.
+        </div>
+        
+        <h3 class="font-bold text-lg mb-2">Assinatura Digital vs. Criptografia</h3>
+        <p class="mb-6">Para <strong>assinar</strong>, o remetente usa sua <span class="highlight-yellow">Chave Privada</span>. O destinatário confere com a <span class="highlight-yellow">Pública</span> do remetente.</p>
+
+        <!-- 3. Certificação Digital -->
+        <div class="section-header">
+            <h2 class="text-2xl font-bold">3. Certificação e ICP-Brasil</h2>
+        </div>
+        <p class="mb-4">O certificado digital liga uma pessoa a um par de chaves por meio de uma terceira parte confiável.</p>
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Entidade</th>
+                        <th>Função na Prova</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>AC-Raiz (ITI)</strong></td>
+                        <td>Primeira autoridade. Credencia as outras. <span class="font-bold text-red-600 underline">Não emite para o cidadão</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AC</strong></td>
+                        <td>Emite, renova e revoga certificados. Assina o certificado do usuário.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AR</strong></td>
+                        <td>Interface física. Confere documentos. <span class="font-bold text-red-600 underline">Não emite o certificado tecnicamente</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LCR</strong></td>
+                        <td>Lista de Certificados Revogados. Consulta obrigatória para validar.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="bg-blue-50 p-4 rounded-lg mb-8 border border-blue-100">
+            <p><strong>Lei 14.063/2020:</strong> Define as assinaturas Simples, Avançada e Qualificada. Lembre-se: a <span class="highlight-yellow">Qualificada</span> é a única que exige o padrão ICP-Brasil.</p>
+        </div>
+
+        <!-- 4. Malwares e Ataques -->
+        <div class="section-header">
+            <h2 class="text-2xl font-bold">4. Malwares e Ameaças (O Pega-Trouxa)</h2>
+        </div>
+        <ul class="space-y-4">
+            <li class="p-4 border-b">
+                <span class="font-bold text-red-700">Worm:</span> Não precisa de hospedeiro. Se replica pela rede. Consome <span class="highlight-yellow">banda/recursos</span>.
+            </li>
+            <li class="p-4 border-b">
+                <span class="font-bold text-red-700">Trojan (Cavalo de Troia):</span> Parece um presente/utilitário, mas traz uma carga maliciosa oculta. <span class="highlight-yellow">Não se replica</span> sozinho.
+            </li>
+            <li class="p-4 border-b">
+                <span class="font-bold text-red-700">Ransomware:</span> Criptografa dados e exige resgate (Bitcoin). Ataca a <span class="highlight-yellow">Disponibilidade</span>.
+            </li>
+            <li class="p-4 border-b">
+                <span class="font-bold text-red-700">Pharming:</span> Corrompe o <span class="highlight-yellow">DNS</span> (cache poison). Você digita o site certo e cai no errado.
+            </li>
+        </ul>
+
+        <!-- 5. Backup -->
+        <div class="section-header">
+            <h2 class="text-2xl font-bold">5. Backup e Recuperação</h2>
+        </div>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>O que faz?</th>
+                        <th>Bit de Arquivo (Archive)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Normal (Full)</strong></td>
+                        <td>Copia tudo.</td>
+                        <td><span class="highlight-green">Desmarca (Reseta)</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Incremental</strong></td>
+                        <td>Só o que mudou desde o último backup.</td>
+                        <td><span class="highlight-green">Desmarca (Reseta)</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Diferencial</strong></td>
+                        <td>O que mudou desde o último <span class="font-bold">Full</span>.</td>
+                        <td><span class="font-bold">Não desmarca</span>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 6. Prevenção e Redes -->
+        <div class="section-header">
+            <h2 class="text-2xl font-bold">6. Cuidados e Prevenção Técnica</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+            <div class="p-4 bg-gray-50 border rounded">
+                <h4 class="font-bold mb-2">Firewall de Pacote</h4>
+                <p class="text-sm">Analisa cabeçalhos (IP Origem/Destino, Porta). Não analisa o <span class="highlight-yellow">conteúdo</span> da mensagem (Payload).</p>
+            </div>
+            <div class="p-4 bg-gray-50 border rounded">
+                <h4 class="font-bold mb-2">VPN (Virtual Private Network)</h4>
+                <p class="text-sm">Cria um <span class="highlight-yellow">túnel</span> seguro em rede pública usando protocolos como IPsec ou SSL/TLS.</p>
+            </div>
+            <div class="p-4 bg-gray-50 border rounded">
+                <h4 class="font-bold mb-2">DMZ (Zona Desmilitarizada)</h4>
+                <p class="text-sm">Sub-rede que expõe serviços externos (Web, Email) isolando a rede interna.</p>
+            </div>
+            <div class="p-4 bg-gray-50 border rounded">
+                <h4 class="font-bold mb-2">Antivírus (Heurística)</h4>
+                <p class="text-sm">Técnica para detectar vírus baseada em <span class="highlight-yellow">comportamento</span>, não apenas em assinatura fixa.</p>
+            </div>
+        </div>
+
+        <!-- Rodapé e Ação -->
+        <div class="border-t pt-10 mt-10 text-center">
+            <p class="text-gray-500 mb-6 font-medium">Fim do Resumo Técnico. Pronto para os simulados?</p>
+            <a href="14questoes.html" class="inline-block bg-black text-white px-8 py-4 rounded-lg font-bold hover:bg-gray-800 transition-colors shadow-xl">
+                IR PARA QUESTÕES DA BANCA
+            </a>
+            <p class="mt-8 text-xs text-gray-400">Desenvolvido para estudo direcionado - Professor de Informática IFAM</p>
+        </div>
+    </div>
+
+</body>
+</html>

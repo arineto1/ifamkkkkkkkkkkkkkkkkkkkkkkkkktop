@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Internet - Estilo Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --accent-color: #2980b9;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        p.subtitle {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .question-block {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f1f7fc;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .option-item label {
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-submit {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #1c5980;
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-banner {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .resolution-card {
+            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #ccc;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .res-correct { border-left-color: var(--success-color); }
+        .res-incorrect { border-left-color: var(--error-color); }
+
+        .res-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .res-explanation {
+            font-size: 0.95rem;
+            color: #555;
+            background: #fdfdfd;
+            padding: 15px;
+            border-top: 1px solid #eee;
+            margin-top: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .status-correct { background: #d4edda; color: #155724; }
+        .status-incorrect { background: #f8d7da; color: #721c24; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado de Internet</h1>
+        <p class="subtitle">Estilo Fundação CEFETMINAS - 10 Questões de Nível Técnico/Superior</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questões serão inseridas via JavaScript para manter o HTML limpo -->
+        <div id="questions-container"></div>
+        
+        <button type="button" class="btn-submit" onclick="gradeQuiz()">Finalizar e Ver Resultados</button>
+    </form>
+
+    <div id="results-section">
+        <div class="score-banner">
+            <span id="score-text">Você acertou</span>
+            <span id="score-val" class="score-number">0 / 10</span>
+            <p id="performance-msg"></p>
+        </div>
+
+        <h2 style="color: var(--accent-color);">Resolução Detalhada</h2>
+        <div id="resolutions-container"></div>
+
+        <button type="button" class="btn-submit" style="margin-top:20px; background-color:#7f8c8d" onclick="window.location.reload()">Refazer Simulado</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            q: "No contexto da utilização de navegadores de Internet, como o Google Chrome e o Mozilla Firefox (em suas versões mais recentes e idioma Português-BR), o usuário deseja acessar uma página da Intranet de sua organização sem que o navegador armazene localmente o histórico de navegação, cookies ou dados inseridos em formulários após o fechamento da janela. Assinale a alternativa que apresenta corretamente o nome do recurso e o respectivo atalho de teclado para o navegador Mozilla Firefox:",
+            options: [
+                "Navegação Anônima; Ctrl + Shift + N",
+                "Navegação InPrivate; Ctrl + Shift + P",
+                "Navegação Privativa; Ctrl + Shift + P",
+                "Navegação Anônima; Ctrl + Shift + A",
+                "Navegação Segura; Ctrl + Alt + S"
+            ],
+            correct: 2,
+            explanation: "No Mozilla Firefox, o recurso de navegação sem rastro é chamado de 'Navegação Privativa' e o atalho correspondente é Ctrl + Shift + P. No Google Chrome, o nome é 'Navegação Anônima' (Ctrl + Shift + N)."
+        },
+        {
+            id: 2,
+            q: "A respeito dos conceitos de Internet, Intranet e Extranet, analise as afirmativas a seguir:\nI. Uma Intranet é uma rede privada que utiliza os mesmos protocolos da Internet (como TCP/IP e HTTP), mas seu acesso é restrito aos membros de uma organização.\nII. A Extranet pode ser caracterizada como uma extensão da Intranet, permitindo que usuários externos autorizados (como fornecedores e parceiros) acessem partes específicas da rede corporativa.\nIII. O uso de uma VPN (Virtual Private Network) é uma das formas seguras de permitir que um funcionário, trabalhando remotamente via Internet, acesse os recursos da Intranet da empresa.\nEstão CORRETAS as afirmativas:",
+            options: [
+                "Apenas I.",
+                "Apenas II.",
+                "Apenas I e III.",
+                "Apenas II e III.",
+                "I, II e III."
+            ],
+            correct: 4,
+            explanation: "Todas as afirmativas estão tecnicamente corretas. A Intranet usa tecnologia Web em ambiente fechado, a Extranet é a extensão segura para parceiros e a VPN é a tecnologia padrão para acesso remoto seguro."
+        },
+        {
+            id: 3,
+            q: "Analise a URL a seguir e identifique a descrição INCORRETA de seus componentes:\n'https://www.cefetminas.org.br:8080/concursos/edital.pdf'",
+            options: [
+                "'https' indica o protocolo de transferência de hipertexto com camada de segurança (criptografia).",
+                "'.br' é o domínio de topo (TLD) que identifica geograficamente o Brasil.",
+                "'8080' refere-se ao número da porta lógica utilizada para a conexão com o servidor.",
+                "'www.cefetminas.org.br' corresponde ao endereço IP fixo do servidor na rede mundial.",
+                "'/concursos/edital.pdf' indica o caminho de diretórios e o recurso (arquivo) específico a ser acessado."
+            ],
+            correct: 3,
+            explanation: "A alternativa D está INCORRETA porque 'www.cefetminas.org.br' é o Nome de Domínio (URL/Host), não o endereço IP. O IP é uma sequência numérica. O DNS traduz o nome para o IP, mas são conceitos distintos."
+        },
+        {
+            id: 4,
+            q: "A segurança da informação é um pilar essencial no uso da Internet. O tipo de fraude eletrônica caracterizada por tentativas de adquirir informações sensíveis, como senhas e dados de cartão de crédito, ao se fazer passar por uma entidade confiável (como um banco ou órgão governamental) em uma comunicação eletrônica (geralmente e-mail), é tecnicamente denominada:",
+            options: [
+                "Ransomware.",
+                "Phishing.",
+                "Sniffing.",
+                "DDoS.",
+                "Worm."
+            ],
+            correct: 1,
+            explanation: "Phishing (Pescaria) é a técnica de engenharia social para 'pescar' dados de usuários através de comunicações fraudulentas que parecem legítimas."
+        },
+        {
+            id: 5,
+            q: "No âmbito da certificação digital padrão ICP-Brasil, utilizada para garantir a autenticidade e integridade de transações eletrônicas, o Certificado Digital do tipo A1 ou A3 é composto por diversos dados públicos. Assinale a alternativa que apresenta um dado que NÃO deve estar contido publicamente no corpo do certificado digital:",
+            options: [
+                "O nome do titular.",
+                "A data de validade do certificado.",
+                "A chave pública do titular.",
+                "A chave privada do titular.",
+                "O número de série do certificado."
+            ],
+            correct: 3,
+            explanation: "A Chave Privada é o segredo do titular e NUNCA é compartilhada ou contida no certificado público. Se fosse pública, qualquer um poderia assinar documentos em nome do titular."
+        },
+        {
+            id: 6,
+            q: "Sobre a tecnologia e padrões da Web definidos pelo W3C, relacione a tecnologia à sua função principal:\n(1) HTML | (2) CSS | (3) HTTP\n( ) Responsável pela transferência dos dados entre cliente e servidor.\n( ) Responsável pela estruturação semântica do conteúdo da página.\n( ) Responsável pela definição da apresentação visual, cores e layout.",
+            options: [
+                "3, 1, 2.",
+                "1, 2, 3.",
+                "2, 1, 3.",
+                "3, 2, 1.",
+                "1, 3, 2."
+            ],
+            correct: 0,
+            explanation: "HTTP (3) é o protocolo de transferência; HTML (1) é a marcação de conteúdo/estrutura; CSS (2) é a folha de estilo para apresentação visual."
+        },
+        {
+            id: 7,
+            q: "Diferenciar 'Site' de 'Portal' é um conceito básico de organização da informação na Web. Assinale a alternativa que melhor define um Portal Corporativo ou de Internet:",
+            options: [
+                "Uma página estática contendo apenas o endereço e telefone da empresa.",
+                "Um software antivírus que protege a entrada da rede.",
+                "Um site que atua como ponto de acesso centralizado, agregando diversos serviços (e-mail, notícias, fóruns, busca) e conteúdos variados em uma única interface.",
+                "Um protocolo de rede utilizado para transferência de arquivos grandes.",
+                "Um dispositivo de hardware usado para conectar redes locais."
+            ],
+            correct: 2,
+            explanation: "Portais são caracterizados pela agregação de serviços diversos (centralização) em um único ponto de entrada para o usuário."
+        },
+        {
+            id: 8,
+            q: "Ao utilizar uma rede Wi-Fi pública e aberta (sem senha) em um aeroporto para acessar um site que não utiliza o protocolo HTTPS (apenas HTTP), o usuário está vulnerável a um tipo de ataque onde um terceiro intercepta e lê os dados trafegados. Esse ataque é conhecido como:",
+            options: [
+                "Defacement.",
+                "Sniffing.",
+                "Phishing.",
+                "Brute Force.",
+                "SQL Injection."
+            ],
+            correct: 1,
+            explanation: "Sniffing (farejar) consiste em interceptar o tráfego de dados na rede. Em conexões HTTP sem criptografia, o atacante consegue ler os dados em texto claro."
+        },
+        {
+            id: 9,
+            q: "Os cookies são pequenos arquivos de texto utilizados pelos navegadores. Sobre os cookies, é correto afirmar:",
+            options: [
+                "São vírus perigosos que apagam dados do HD do usuário.",
+                "Servem apenas para ocupar espaço em disco e devem ser sempre bloqueados.",
+                "São utilizados por sites para armazenar preferências do usuário e manter o estado da sessão (login), podendo também ser usados para rastreamento de publicidade.",
+                "São programas executáveis (.exe) que se instalam automaticamente.",
+                "São limpos automaticamente toda vez que o computador é desligado, não exigindo ação do usuário."
+            ],
+            correct: 2,
+            explanation: "Cookies são arquivos de texto inofensivos que guardam informações de estado e preferências. Eles não são vírus nem executáveis."
+        },
+        {
+            id: 10,
+            q: "Durante a navegação em uma página web, o usuário posiciona o cursor do mouse sobre uma imagem e o ponteiro muda de uma 'seta' para uma 'mão com o indicador estendido'. Ao clicar, o navegador é direcionado para outra página. O elemento que permite essa interatividade é denominado:",
+            options: [
+                "URL Relativa.",
+                "Hiperlink.",
+                "Código Fonte.",
+                "Tag HTML.",
+                "Plug-in."
+            ],
+            correct: 1,
+            explanation: "O Hiperlink é o elemento funcional da web que permite a ligação entre documentos. A mudança do cursor é o sinal visual padrão de interatividade."
+        }
+    ];
+
+    function renderQuestions() {
+        const container = document.getElementById('questions-container');
+        questions.forEach((q, qIndex) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.innerHTML = `
+                <span class="question-text">${q.id}. ${q.q.replace(/\n/g, '<br>')}</span>
+                <ul class="options-list">
+                    ${q.options.map((opt, oIndex) => `
+                        <li class="option-item">
+                            <input type="radio" name="q${qIndex}" id="q${qIndex}o${oIndex}" value="${oIndex}">
+                            <label for="q${qIndex}o${oIndex}">${String.fromCharCode(65 + oIndex)}) ${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+            container.appendChild(block);
+        });
+    }
+
+    function gradeQuiz() {
+        let score = 0;
+        const resContainer = document.getElementById('resolutions-container');
+        resContainer.innerHTML = '';
+
+        questions.forEach((q, qIndex) => {
+            const selected = document.querySelector(`input[name="q${qIndex}"]:checked`);
+            const isCorrect = selected && parseInt(selected.value) === q.correct;
+            
+            if (isCorrect) score++;
+
+            // Create Resolution Card
+            const resCard = document.createElement('div');
+            resCard.className = `resolution-card ${isCorrect ? 'res-correct' : 'res-incorrect'}`;
+            
+            const userChoiceLabel = selected ? String.fromCharCode(65 + parseInt(selected.value)) : "Nenhuma";
+            const correctLabel = String.fromCharCode(65 + q.correct);
+
+            resCard.innerHTML = `
+                <div class="status-badge ${isCorrect ? 'status-correct' : 'status-incorrect'}">
+                    ${isCorrect ? 'Acertou' : 'Errou'}
+                </div>
+                <div class="res-header">Questão ${q.id}</div>
+                <p><strong>Sua resposta:</strong> ${userChoiceLabel} | <strong>Gabarito:</strong> ${correctLabel}</p>
+                <div class="res-explanation">
+                    <strong>Resolução:</strong> ${q.explanation}
+                </div>
+            `;
+            resContainer.appendChild(resCard);
+        });
+
+        // Display Summary
+        document.getElementById('quiz-form').style.display = 'none';
+        document.getElementById('score-val').innerText = `${score} / ${questions.length}`;
+        
+        let msg = "";
+        if (score === 10) msg = "Excelente! Você dominou o conteúdo.";
+        else if (score >= 7) msg = "Bom desempenho! Continue revisando os pontos de dúvida.";
+        else if (score >= 5) msg = "Desempenho regular. Releia o material técnico e tente novamente.";
+        else msg = "Atenção: É necessário estudar mais os fundamentos antes da prova.";
+        
+        document.getElementById('performance-msg').innerText = msg;
+        document.getElementById('results-section').style.display = 'block';
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = renderQuestions;
+</script>
+
+</body>
+</html>

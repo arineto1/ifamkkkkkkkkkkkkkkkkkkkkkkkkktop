@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Hardware de Redes - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef08a;
+            padding: 0 3px;
+            border-radius: 2px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden; /* Garante que não haja scroll se possível */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            color: #374151;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.875rem;
+        }
+
+        tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .section-header {
+            border-bottom: 2px solid #3b82f6;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.25rem;
+            color: #1e3a8a;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+        }
+
+        .audio-container {
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Responsividade para tabelas em telas muito pequenas */
+        @media (max-width: 640px) {
+            td, th {
+                padding: 8px 10px;
+                font-size: 0.75rem;
+            }
+            .section-header {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800 bg-white">
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        
+        <!-- HEADER & AUDIO -->
+        <header class="mb-16">
+            <div class="mb-8">
+                <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2.5 py-0.5 rounded uppercase">Concurso IFAM 2024/2025</span>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mt-4 tracking-tight">
+                    Hardware de Redes: <span class="text-blue-600">Guia Definitivo</span>
+                </h1>
+                <p class="text-xl text-gray-600 mt-4">Tutor Especialista: Preparação para Carreira EBTT - Fundação CEFETMINAS.</p>
+            </div>
+
+            <div class="audio-container">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-600 p-2 rounded-full mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-900">Audio-Aula: Memorização Ativa</h3>
+                        <p class="text-xs text-gray-500">Ouça o resumo dos pontos chave e peguinhas da banca.</p>
+                    </div>
+                </div>
+                <!-- CAMPO PARA NOME DO ARQUIVO MP3 -->
+                <audio controls class="w-full">
+                    <source src="19componentes.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio HTML5.
+                </audio>
+            </div>
+        </header>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <article class="space-y-12">
+            
+            <!-- SEÇÃO 1: DEFINIÇÃO -->
+            <section>
+                <h2 class="section-header text-2xl">1. Definição e Hardware Essencial</h2>
+                <p class="mb-4">
+                    O hardware de rede compreende todos os componentes físicos (tangíveis) que permitem a conexão, transmissão e recepção de dados. Para a <span class="highlight">Fundação CEFETMINAS</span>, é vital distinguir entre <strong>meios de transmissão</strong> (cabos/ar) e <strong>dispositivos de interconexão</strong> (switches/roteadores).
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 class="font-bold text-blue-800 mb-2">Placa de Rede (NIC)</h4>
+                        <p class="text-sm">Contém o <span class="highlight">Endereço MAC</span> (Físico/Camada 2). Essencial para a interface entre o computador e o meio.</p>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                        <h4 class="font-bold text-blue-800 mb-2">Conectores</h4>
+                        <p class="text-sm"><strong>RJ-45</strong> (Par trançado), <strong>LC/SC/ST</strong> (Fibra Óptica) e <strong>BNC</strong> (Coaxial antigo - raramente em prova, mas lembre-se).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 2: MEIOS GUIADOS (CABOS) -->
+            <section>
+                <h2 class="section-header text-2xl">2. Cabeamento Metálico e Óptico</h2>
+                <p class="mb-6">O foco aqui são as <strong>categorias</strong> e o <strong>tipo de sinal</strong>. A banca adora confundir as distâncias máximas de transmissão.</p>
+                
+                <h3 class="text-lg font-bold mb-3 text-gray-700">Tabela de Categorias (Par Trançado - UTP/STP)</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Categoria</th>
+                                <th>Largura de Banda</th>
+                                <th>Velocidade Max.</th>
+                                <th>Notas de Prova</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold">Cat 5e</td>
+                                <td>100 MHz</td>
+                                <td>1 Gbps</td>
+                                <td>Padrão para redes <span class="highlight">Gigabit Ethernet</span> simples.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Cat 6</td>
+                                <td>250 MHz</td>
+                                <td>10 Gbps</td>
+                                <td>Suporta 10G apenas até <span class="highlight">55 metros</span>.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Cat 6a</td>
+                                <td>500 MHz</td>
+                                <td>10 Gbps</td>
+                                <td>Suporta 10G em até <span class="highlight">100 metros</span> (Augmented).</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Cat 7</td>
+                                <td>600 MHz</td>
+                                <td>10 Gbps</td>
+                                <td>Exige blindagem (STP). Não usa RJ-45 comum.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Cat 8</td>
+                                <td>2000 MHz</td>
+                                <td>40 Gbps</td>
+                                <td>Uso em <span class="highlight">Data Centers</span>. Distância curta (30m).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="text-lg font-bold mb-3 text-gray-700 mt-8">Fibra Óptica (Sinais de Luz)</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Fonte de Luz</th>
+                                <th>Distância</th>
+                                <th>Cor (Padrão)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold italic">Monomodo (SM)</td>
+                                <td>Laser</td>
+                                <td>Dezenas de Quilômetros</td>
+                                <td class="highlight">Amarela</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold italic">Multimodo (MM)</td>
+                                <td>LED / VCSEL</td>
+                                <td>Até ~550 metros</td>
+                                <td>Laranja ou Aqua</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 3: DISPOSITIVOS -->
+            <section>
+                <h2 class="section-header text-2xl">3. Dispositivos de Interconexão</h2>
+                <p class="mb-4">Este é o ponto de maior nota. Você deve saber em qual <strong>Camada do Modelo OSI</strong> o hardware opera.</p>
+                
+                <div class="space-y-4">
+                    <div class="flex border-l-4 border-gray-300 p-4 bg-gray-50">
+                        <div class="mr-4 font-bold text-xl text-gray-400">01</div>
+                        <div>
+                            <h4 class="font-bold">Repetidor / HUB</h4>
+                            <p class="text-sm">Camada 1 (Física). <span class="highlight">Broadcast total</span>. Não tem inteligência. Cria um único domínio de colisão.</p>
+                        </div>
+                    </div>
+                    <div class="flex border-l-4 border-blue-500 p-4 bg-blue-50">
+                        <div class="mr-4 font-bold text-xl text-blue-400">02</div>
+                        <div>
+                            <h4 class="font-bold">Bridge / Switch</h4>
+                            <p class="text-sm">Camada 2 (Enlace). Trabalha com <span class="highlight">Endereços MAC</span>. O Switch é um "multi-bridge". Cada porta é um domínio de colisão individual.</p>
+                        </div>
+                    </div>
+                    <div class="flex border-l-4 border-green-500 p-4 bg-green-50">
+                        <div class="mr-4 font-bold text-xl text-green-400">03</div>
+                        <div>
+                            <h4 class="font-bold">Roteador</h4>
+                            <p class="text-sm">Camada 3 (Rede). Trabalha com <span class="highlight">Endereços IP</span>. Interconecta redes diferentes e separa domínios de Broadcast.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 4: WIRELESS -->
+            <section>
+                <h2 class="section-header text-2xl">4. Hardware Wireless (IEEE 802.11)</h2>
+                <p class="mb-4">Hardware não guiado. Memorize os sufixos dos padrões.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center">
+                        <span class="w-16 font-mono text-xs font-bold bg-gray-100 p-1 mr-2">802.11b</span> 11 Mbps | 2.4 GHz (Antigo)
+                    </li>
+                    <li class="flex items-center">
+                        <span class="w-16 font-mono text-xs font-bold bg-gray-100 p-1 mr-2">802.11g</span> 54 Mbps | 2.4 GHz
+                    </li>
+                    <li class="flex items-center">
+                        <span class="w-16 font-mono text-xs font-bold bg-blue-100 p-1 mr-2 text-blue-700">802.11n</span> <span class="highlight">Wi-Fi 4</span> | 2.4 e 5 GHz | Introduziu o MIMO.
+                    </li>
+                    <li class="flex items-center">
+                        <span class="w-16 font-mono text-xs font-bold bg-blue-100 p-1 mr-2 text-blue-700">802.11ac</span> <span class="highlight">Wi-Fi 5</span> | Apenas 5 GHz | Altas velocidades.
+                    </li>
+                    <li class="flex items-center">
+                        <span class="w-16 font-mono text-xs font-bold bg-blue-100 p-1 mr-2 text-blue-700">802.11ax</span> <span class="highlight">Wi-Fi 6</span> | Alta eficiência e densidade.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- SEÇÃO 5: TENDÊNCIAS E PEGUINHAS -->
+            <section class="bg-gray-900 text-white p-8 rounded-2xl">
+                <h2 class="text-2xl font-black mb-6 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    Radar de Prova: CEFETMINAS
+                </h2>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-yellow-400 font-bold uppercase text-xs">Peguinha #01: Domínios</h4>
+                        <p class="text-gray-300 text-sm">A banca pergunta: "Qual equipamento segmenta domínios de colisão mas mantém um único domínio de broadcast?" <br><strong>Resposta: Switch.</strong></p>
+                    </div>
+                    <div>
+                        <h4 class="text-yellow-400 font-bold uppercase text-xs">Peguinha #02: Placa de Rede</h4>
+                        <p class="text-gray-300 text-sm">Eles tentam dizer que a NIC opera na Camada de Rede (3) por causa do nome. <br><strong>Erro!</strong> Ela é Camada 1 e 2 (Física e Enlace).</p>
+                    </div>
+                    <div>
+                        <h4 class="text-yellow-400 font-bold uppercase text-xs">Tendência: PoE (Power over Ethernet)</h4>
+                        <p class="text-gray-300 text-sm">Muito comum em cargos de Técnico/Professor. Hardware que envia energia pelo cabo de rede para alimentar Access Points e Câmeras IP.</p>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+
+        <!-- FOOTER / CTA -->
+        <footer class="mt-20 pt-10 border-t border-gray-100 text-center">
+            <p class="text-gray-500 text-sm mb-8 italic">"A persistência é o hardware do sucesso. O conhecimento é o software."</p>
+            <a href="19questoes.html" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-bold rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition-all shadow-xl hover:shadow-2xl">
+                Praticar com Questões Inéditas
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </footer>
+    </div>
+
+</body>
+</html>

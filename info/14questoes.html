@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Segurança da Informação - Estilo CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --success-color: #27ae60;
+            --error-color: #d63031;
+            --border-color: #dfe6e9;
+            --card-bg: #ffffff;
+            --resolution-bg: #f1f2f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #2d3436;
+            margin-bottom: 10px;
+        }
+
+        .intro {
+            font-size: 1.1rem;
+            color: #636e72;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
+        }
+
+        .option input {
+            margin-right: 15px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        /* Results Styling */
+        .option.correct {
+            border-color: var(--success-color);
+            background-color: #e8f8f0;
+        }
+
+        .option.incorrect {
+            border-color: var(--error-color);
+            background-color: #fdf2f2;
+        }
+
+        .resolution {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 4px 4px 0;
+            font-size: 0.95rem;
+        }
+
+        .resolution h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 40px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0873c4;
+        }
+
+        #result-summary {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: #dfe6e9;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 15px; }
+            h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado de Segurança da Informação</h1>
+        <p class="intro">Banca: Fundação CEFETMINAS | 10 Questões Completas</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 1 -->
+        <div class="question-card" data-correct="B">
+            <div class="question-header"><span>1.</span> Criptografia Assimétrica e Assinatura Digital</div>
+            <div class="question-text">Suponha que uma entidade R (remetente) deseja enviar uma mensagem <i>m</i> para outra entidade D (destinatário) utilizando a infraestrutura pública da internet. Para estabelecer um canal seguro de comunicação, R e D utilizam um criptossistema de chave pública (assimétrica). Considere a seguinte notação para os pares de chaves gerados por cada entidade:
+• <b>R+</b> e <b>R-</b> correspondem, respectivamente, às chaves pública e privada de R.
+• <b>D+</b> e <b>D-</b> correspondem, respectivamente, às chaves pública e privada de D.
+
+Com base nos princípios fundamentais da criptografia assimétrica e nos requisitos de confidencialidade, autenticidade e integridade, avalie as afirmativas a seguir:
+
+I. Para garantir a <b>confidencialidade</b> da mensagem <i>m</i>, assegurando que apenas D tenha acesso ao seu conteúdo, a entidade R deve cifrar <i>m</i> utilizando a chave pública de D (D+).
+II. Para garantir a <b>autenticidade</b> e o não-repúdio, provando que a mensagem partiu inequivocamente de R, a entidade R deve cifrar a mensagem (ou seu resumo criptográfico) utilizando sua própria chave privada (R-).
+III. Se R utilizar a chave D- para cifrar a mensagem, garante-se que apenas D poderá decifrá-la utilizando D+, estabelecendo um canal de sigilo absoluto.
+IV. Caso R deseje garantir simultaneamente confidencialidade e autenticidade, o procedimento correto envolve primeiro a assinatura da mensagem com R- e, subsequentemente, a cifragem do pacote resultante com D+.
+
+Estão corretas apenas as afirmativas:</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q1" value="A"> A) I e II.</label>
+                <label class="option"><input type="radio" name="q1" value="B"> B) I, II e IV.</label>
+                <label class="option"><input type="radio" name="q1" value="C"> C) II e III.</label>
+                <label class="option"><input type="radio" name="q1" value="D"> D) I, III e IV.</label>
+                <label class="option"><input type="radio" name="q1" value="E"> E) III e IV.</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>I é Verdadeira (Cifra com a pública do destino = Confidencialidade).</p>
+                <p>II é Verdadeira (Assina com a privada da origem = Autenticidade).</p>
+                <p>III é Falsa (Violação de posse de chave privada. O remetente nunca deve ter a chave privada do destino).</p>
+                <p>IV é Verdadeira (Assinar com R- depois cifrar com D+ garante ambos os pilares).</p>
+                <b>Gabarito: B</b>
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-card" data-correct="B">
+            <div class="question-header"><span>2.</span> Infraestrutura de Chaves Públicas (ICP) e Certificação Digital</div>
+            <div class="question-text">A respeito da segurança da informação e da infraestrutura de certificação digital, julgue as afirmações a seguir como verdadeiras (V) ou falsas (F).
+
+( ) O certificado digital é um registro eletrônico composto por um conjunto de dados que distingue uma entidade e associa a ela uma chave pública. A garantia dessa associação é dada pela assinatura digital de uma Autoridade Certificadora (AC) confiável.
+( ) A "Lista de Assinaturas Revogadas" (LAR) ou Certificate Revocation List (CRL) é um documento eletrônico emitido periodicamente pelas Autoridades Certificadoras (ACs) contendo os números de série dos certificados que foram invalidados antes do prazo de expiração.
+( ) A assinatura digital baseia-se no fato de que apenas o dono conhece a chave privada e que, se ela foi usada para codificar uma informação (gerar a assinatura), então apenas seu dono poderia ter feito isso; a verificação é feita com a chave pública contida no certificado.
+( ) Na estrutura da ICP-Brasil, a Autoridade de Registro (AR) tem a função técnica de gerar o par de chaves criptográficas do usuário e assinar o certificado digital, atuando como a raiz de confiança do sistema.
+
+A sequência correta, de cima para baixo, é:</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q2" value="A"> A) V, F, F, V.</label>
+                <label class="option"><input type="radio" name="q2" value="B"> B) V, V, V, F.</label>
+                <label class="option"><input type="radio" name="q2" value="C"> C) F, F, V, V.</label>
+                <label class="option"><input type="radio" name="q2" value="D"> D) F, V, F, F.</label>
+                <label class="option"><input type="radio" name="q2" value="E"> E) V, V, F, V.</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>Itens 1, 2 e 3 são definições técnicas corretas de Certificado Digital, CRL e Assinatura Digital.</p>
+                <p>O Item 4 é Falso: A AR (Autoridade de Registro) é apenas a interface para conferência de documentos. Quem assina e emite tecnicamente o certificado é a AC (Autoridade Certificadora). A raiz de confiança é o ITI (AC Raiz).</p>
+                <b>Gabarito: B</b>
+            </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card" data-correct="C">
+            <div class="question-header"><span>3.</span> Tipologia de Malwares — Ransomware</div>
+            <div class="question-text">O <i>ransomware</i> tornou-se uma das maiores ameaças à segurança da informação em ambientes corporativos e governamentais. Sobre as características técnicas e operacionais desse tipo de <i>malware</i>, assinale a alternativa CORRETA:</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q3" value="A"> A) O ransomware caracteriza-se por criar cópias falsas de arquivos do sistema operacional para confundir o usuário, sem, no entanto, impedir o acesso aos dados originais.</label>
+                <label class="option"><input type="radio" name="q3" value="B"> B) Diferentemente de vírus e worms, o ransomware não possui capacidade de infecção; ele depende exclusivamente de que o usuário baixe e execute um arquivo anexado a um e-mail.</label>
+                <label class="option"><input type="radio" name="q3" value="C"> C) A principal ação do ransomware é a criptografia dos arquivos da vítima (como documentos, planilhas e bancos de dados), tornando-os inacessíveis, seguida da exigência de pagamento de um resgate para o fornecimento da chave de decifragem.</label>
+                <label class="option"><input type="radio" name="q3" value="D"> D) O ransomware é um tipo de spyware avançado que monitora as atividades do usuário e envia relatórios de navegação para o atacante, visando o roubo de identidade bancária.</label>
+                <label class="option"><input type="radio" name="q3" value="E"> E) A melhor forma de recuperar dados sequestrados por um ransomware é reiniciar o computador em modo de segurança, o que remove automaticamente a criptografia aplicada aos arquivos.</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>A característica definidora do ransomware é o sequestro de dados via criptografia para fins de extorsão. Diferente de outros malwares, ele ataca diretamente a Disponibilidade dos dados do usuário através de um bloqueio matemático (criptografia).</p>
+                <b>Gabarito: C</b>
+            </div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card" data-correct="C">
+            <div class="question-header"><span>4.</span> Ameaças Persistentes e Mecanismos de Acesso (Backdoor)</div>
+            <div class="question-text">Um código malicioso é um programa desenvolvido para executar ações danosas e atividades maliciosas em um computador. Um dos tipos de códigos maliciosos permite o retorno de um invasor a um computador comprometido, por meio da inclusão de serviços criados ou modificados para este fim. Esse tipo de código malicioso denomina-se, corretamente:</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q4" value="A"> A) Spam.</label>
+                <label class="option"><input type="radio" name="q4" value="B"> B) Phishing.</label>
+                <label class="option"><input type="radio" name="q4" value="C"> C) Backdoor.</label>
+                <label class="option"><input type="radio" name="q4" value="D"> D) Brute force.</label>
+                <label class="option"><input type="radio" name="q4" value="E"> E) Frontdoor.</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>O conceito de Backdoor (Porta dos Fundos) refere-se à funcionalidade de garantir a persistência de um invasor em um sistema já comprometido, permitindo que ele retorne sem precisar explorar a vulnerabilidade original novamente.</p>
+                <b>Gabarito: C</b>
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card" data-correct="B">
+            <div class="question-header"><span>5.</span> Defesa de Perímetro — Firewalls e suas Limitações</div>
+            <div class="question-text">De acordo com a Cartilha de Segurança para Internet e conceitos de defesa em profundidade, analise a seguinte situação:
+Um usuário instalou um <i>Firewall Pessoal</i> em seu computador doméstico e configurou-o para bloquear todas as conexões de entrada não solicitadas. Dias depois, o usuário inseriu um <i>pendrive</i> infectado com um vírus clássico, executou um arquivo PDF malicioso contido nele e teve sua máquina comprometida.
+
+Sobre a atuação do Firewall Pessoal neste cenário, é CORRETO afirmar:</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q5" value="A"> A) O Firewall falhou, pois sua função primária é escanear todos os dispositivos de armazenamento removível (USB) assim que conectados.</label>
+                <label class="option"><input type="radio" name="q5" value="B"> B) O Firewall funcionou corretamente dentro de seu escopo, pois sua função é filtrar tráfego de rede (pacotes IP), e a infecção via pendrive não envolveu tráfego de rede no momento da execução.</label>
+                <label class="option"><input type="radio" name="q5" value="C"> C) O Firewall deveria ter bloqueado a execução do PDF, pois firewalls de aplicação modernos substituem completamente a necessidade de antivírus.</label>
+                <label class="option"><input type="radio" name="q5" value="D"> D) O Firewall Pessoal é incapaz de proteger contra acessos não autorizados vindos da Internet, servindo apenas para controlar o acesso de saída de programas locais.</label>
+                <label class="option"><input type="radio" name="q5" value="E"> E) A infecção ocorreu porque o firewall estava configurado como Stateless; se estivesse em modo Stateful, teria detectado o vírus no pendrive através da análise de estado.</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>Firewall cuida da REDE (IPs, portas). Antivírus cuida de ARQUIVOS (Pendrives, PDFs, executáveis). Como o vírus entrou por via física local e não pela rede, o firewall não tinha como atuar. Ele não falhou, apenas a ameaça estava fora do seu domínio técnico.</p>
+                <b>Gabarito: B</b>
+            </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card" data-correct="D">
+            <div class="question-header"><span>6.</span> Protocolos de Segurança — IPsec e VPN</div>
+            <div class="question-text">Segundo Kurose (2021), o IPsec é um conjunto de protocolos que provê segurança na camada de rede, sendo essencial para a implementação de VPNs (Virtual Private Networks). Sobre os protocolos componentes do IPsec (AH e ESP) e seus modos de operação, assinale a alternativa correta:</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q6" value="A"> A) O protocolo AH (Authentication Header) oferece confidencialidade através da criptografia do payload, além de autenticação de origem e integridade.</label>
+                <label class="option"><input type="radio" name="q6" value="B"> B) O protocolo ESP (Encapsulating Security Payload) provê confidencialidade, autenticação de origem e integridade, mas não protege contra ataques de repetição (replay attacks).</label>
+                <label class="option"><input type="radio" name="q6" value="C"> C) No modo Tunelamento (Tunnel Mode), o IPsec cifra apenas o payload do pacote original, mantendo o cabeçalho IP original inalterado para permitir o roteamento na internet pública.</label>
+                <label class="option"><input type="radio" name="q6" value="D"> D) O protocolo AH provê autenticação de origem e integridade dos dados, garantindo que o pacote não foi alterado, mas não oferece confidencialidade (os dados trafegam legíveis se interceptados).</label>
+                <label class="option"><input type="radio" name="q6" value="E"> E) Uma Associação de Segurança (SA) no IPsec é bidirecional por padrão; assim, ao estabelecer uma conexão VPN, apenas uma SA é criada para gerenciar o tráfego de ida e volta.</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>O AH (Authentication Header) é focado em integridade e autenticidade. Ele não cifra os dados (não provê confidencialidade). Para confidencialidade, deve-se usar o ESP (Encapsulating Security Payload). Além disso, ambos previnem replay attacks e SAs são unidirecionais.</p>
+                <b>Gabarito: D</b>
+            </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card" data-correct="C">
+            <div class="question-header"><span>7.</span> Estratégias de Backup e Recuperação de Desastres</div>
+            <div class="question-text">A política de backup de uma instituição determina a realização de cópias de segurança de acordo com o seguinte cronograma:
+• Domingo: Backup Completo (Full).
+• Segunda a Sábado: Backup Diferencial.
+
+Na quinta-feira, ocorrerá uma manutenção programada e o administrador deseja restaurar os dados para o estado mais recente possível (backup da noite de quarta-feira). Para realizar essa restauração (restore) da forma mais eficiente e correta, o administrador precisará de:</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q7" value="A"> A) Apenas o último backup Diferencial (quarta-feira), pois ele contém todos os dados.</label>
+                <label class="option"><input type="radio" name="q7" value="B"> B) O backup Completo (domingo) e todos os backups Diferenciais sequenciais (segunda, terça e quarta-feira).</label>
+                <label class="option"><input type="radio" name="q7" value="C"> C) O backup Completo (domingo) e apenas o último backup Diferencial (quarta-feira).</label>
+                <label class="option"><input type="radio" name="q7" value="D"> D) O backup Completo (domingo) e o último backup Incremental (quarta-feira).</label>
+                <label class="option"><input type="radio" name="q7" value="E"> E) Apenas o backup Completo (domingo), pois os diferenciais não podem ser usados para restauração total do sistema.</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>No backup Diferencial, cada cópia contém tudo o que mudou desde o último backup COMPLETO. Portanto, os dados de segunda e terça já estão incluídos no diferencial de quarta. O restore exige apenas o FULL + ÚLTIMO DIFERENCIAL.</p>
+                <b>Gabarito: C</b>
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card" data-correct="C">
+            <div class="question-header"><span>8.</span> Administração Web — IIS e Appcmd</div>
+            <div class="question-text">O Servidor Web IIS (Internet Information Services) da Microsoft oferece diversas ferramentas de gerenciamento. A partir da versão 7, foi introduzido um utilitário de linha de comando que permite aos administradores configurar e consultar objetos do servidor web, bem como realizar backups e restaurações das configurações do IIS via texto, sem a necessidade de interface gráfica. Assinale a alternativa que corresponde a este utilitário:</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q8" value="A"> A) IISManager.exe</label>
+                <label class="option"><input type="radio" name="q8" value="B"> B) W3wp.exe</label>
+                <label class="option"><input type="radio" name="q8" value="C"> C) Appcmd.exe</label>
+                <label class="option"><input type="radio" name="q8" value="D"> D) Inetmgr.exe</label>
+                <label class="option"><input type="radio" name="q8" value="E"> E) Regedit.exe</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>O Appcmd.exe é a ferramenta de linha de comando nativa para administração do IIS 7 e superiores. Inetmgr é a interface gráfica, e w3wp é o processo de execução dos sites.</p>
+                <b>Gabarito: C</b>
+            </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card" data-correct="C">
+            <div class="question-header"><span>9.</span> Estatísticas e Definições de Incidentes (CERT.br)</div>
+            <div class="question-text">O Centro de Estudos, Resposta e Tratamento de Incidentes de Segurança no Brasil (CERT.br) categoriza os incidentes reportados na rede brasileira. Analise a descrição a seguir e identifique a qual categoria de incidente ela pertence:
+
+"Notificações de varreduras em redes de computadores, com o intuito de identificar quais computadores estão ativos e quais serviços estão sendo disponibilizados por eles. É amplamente utilizado por atacantes para identificar potenciais alvos, pois permite associar possíveis vulnerabilidades aos serviços habilitados."</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q9" value="A"> A) DoS (Denial of Service).</label>
+                <label class="option"><input type="radio" name="q9" value="B"> B) Worm.</label>
+                <label class="option"><input type="radio" name="q9" value="C"> C) Scan.</label>
+                <label class="option"><input type="radio" name="q9" value="D"> D) Fraud.</label>
+                <label class="option"><input type="radio" name="q9" value="E"> E) Phishing.</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>Varreduras (port scanning) para descoberta de hosts ativos e portas abertas são classificadas pelo CERT.br na categoria "Scan". É a fase de reconhecimento de um ataque.</p>
+                <b>Gabarito: C</b>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" data-correct="A">
+            <div class="question-header"><span>10.</span> Princípios da Segurança (Confidencialidade, Integridade, Disponibilidade)</div>
+            <div class="question-text">Avalie as situações descritas abaixo e associe-as corretamente à quebra do princípio de segurança da informação correspondente (Confidencialidade, Integridade ou Disponibilidade):
+
+1. Um servidor web é alvo de um ataque de inundação de pacotes (SYN Flood), tornando-se inacessível aos clientes legítimos.
+2. Um atacante intercepta a comunicação entre o usuário e o banco, capturando a senha de acesso que trafegava sem criptografia.
+3. Um funcionário insatisfeito acessa o banco de dados da folha de pagamento e altera o valor de seu próprio salário antes do processamento mensal.
+
+A associação correta, na ordem 1, 2 e 3, é:</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q10" value="A"> A) Disponibilidade, Confidencialidade, Integridade.</label>
+                <label class="option"><input type="radio" name="q10" value="B"> B) Integridade, Disponibilidade, Confidencialidade.</label>
+                <label class="option"><input type="radio" name="q10" value="C"> C) Disponibilidade, Integridade, Confidencialidade.</label>
+                <label class="option"><input type="radio" name="q10" value="D"> D) Confidencialidade, Disponibilidade, Integridade.</label>
+                <label class="option"><input type="radio" name="q10" value="E"> E) Integridade, Confidencialidade, Disponibilidade.</label>
+            </div>
+            <div class="resolution">
+                <h4>Resolução Detalhada</h4>
+                <p>1. Inacessibilidade = Queda da Disponibilidade.</p>
+                <p>2. Interceptação de senha = Queda da Confidencialidade (Sigilo).</p>
+                <p>3. Alteração indevida de dados = Queda da Integridade.</p>
+                <b>Gabarito: A</b>
+            </div>
+        </div>
+
+        <div id="result-summary">
+            <h3>Resultado Final</h3>
+            <div class="score" id="final-score">0 / 10</div>
+            <p id="feedback-text">Veja abaixo a correção de cada questão.</p>
+        </div>
+
+        <button type="button" class="btn-submit" id="submit-btn">Finalizar Quiz e Ver Resoluções</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('submit-btn').addEventListener('click', function() {
+        const form = document.getElementById('quiz-form');
+        const cards = document.querySelectorAll('.question-card');
+        let score = 0;
+
+        cards.forEach((card, index) => {
+            const questionName = 'q' + (index + 1);
+            const selectedOption = form.querySelector(`input[name="${questionName}"]:checked`);
+            const correctAnswer = card.getAttribute('data-correct');
+            const resolution = card.querySelector('.resolution');
+            const options = card.querySelectorAll('.option');
+
+            // Mostrar resolução
+            resolution.style.display = 'block';
+
+            // Marcar acertos e erros
+            options.forEach(option => {
+                const radio = option.querySelector('input');
+                if (radio.value === correctAnswer) {
+                    option.classList.add('correct');
+                }
+                
+                if (selectedOption && selectedOption.value === radio.value && radio.value !== correctAnswer) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            if (selectedOption && selectedOption.value === correctAnswer) {
+                score++;
+            }
+        });
+
+        // Mostrar resumo
+        const summary = document.getElementById('result-summary');
+        const scoreDisplay = document.getElementById('final-score');
+        summary.style.display = 'block';
+        scoreDisplay.innerText = score + ' / 10';
+
+        // Rolagem suave para o topo do resultado
+        summary.scrollIntoView({ behavior: 'smooth' });
+
+        // Desativar botão após uso
+        this.disabled = true;
+        this.innerText = "Quiz Finalizado";
+        this.style.backgroundColor = "#b2bec3";
+        this.style.cursor = "default";
+        
+        // Desativar radios para não mudar resposta pós-gabarito
+        const allRadios = document.querySelectorAll('input[type="radio"]');
+        allRadios.forEach(r => r.disabled = true);
+    });
+</script>
+
+</body>
+</html>

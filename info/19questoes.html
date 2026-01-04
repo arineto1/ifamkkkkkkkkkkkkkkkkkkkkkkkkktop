@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Redes de Computadores - CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #f9fafb;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-secondary: #4b5563;
+            --primary: #2563eb;
+            --success: #059669;
+            --error: #dc2626;
+            --border: #e5e7eb;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f3f4f6;
+            border-color: var(--primary);
+        }
+
+        .option-label input {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .selected {
+            background-color: #eff6ff !important;
+            border-color: var(--primary) !important;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-bottom: 50px;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Resultados e Resoluções */
+        #results-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .score-box {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .resolution-box {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border);
+            display: none;
+        }
+
+        .resolution-title {
+            color: var(--success);
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .correct-answer-text {
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .wrong-answer-text {
+            color: var(--error);
+            font-weight: 700;
+        }
+
+        .explanation-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Redes de Computadores</h1>
+        <p class="description">Foco em Hardware - Estilo Fundação CEFETMINAS</p>
+    </header>
+
+    <div id="quiz-form">
+        <!-- Questões serão inseridas aqui via JS -->
+    </div>
+
+    <button type="button" class="btn-submit" id="btn-finish" onclick="finishQuiz()">Finalizar Quiz e Ver Resoluções</button>
+
+    <div id="results-section">
+        <div class="score-box" id="score-display">
+            <!-- Placar final -->
+        </div>
+        <div id="detailed-resolutions">
+            <!-- Resoluções detalhadas -->
+        </div>
+    </div>
+
+    <footer>
+        Desenvolvido para fins de estudo técnico - Baseado em provas CEFET-MG/FCM
+    </footer>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            question: "Um Técnico de Laboratório de Informática foi incumbido de realizar a manutenção do cabeamento estruturado de um dos laboratórios do CEFET-MG. O projeto especifica que a rede local (LAN) utiliza o padrão Gigabit Ethernet sobre cabos de par trançado Categoria 6 (CAT6). Ao selecionar o conector macho apropriado (8P8C) para as placas de rede, qual alternativa apresenta a sigla correta e sua característica visual em relação à telefonia?",
+            options: [
+                "RJ-11; possui dimensões maiores que o conector de telefonia e 8 vias de contato.",
+                "RJ-45; possui dimensões maiores que o RJ-11 e conta com 8 vias de contato metálico.",
+                "BNC; utiliza um sistema de trava tipo baioneta e é compatível com cabos coaxiais e pares trançados.",
+                "LC; é um conector óptico de fator de forma pequeno, utilizado para economizar espaço em switches.",
+                "RJ-45; possui dimensões menores que o RJ-11, mas com maior densidade de pinos para suportar dados."
+            ],
+            correct: 1,
+            resolution: "O conector padrão para Ethernet em cabos de par trançado é o RJ-45 (8P8C). Ele é fisicamente maior que o RJ-11 (usado em telefonia) para acomodar os 8 condutores. O BNC é para cabo coaxial e o LC é para fibra óptica."
+        },
+        {
+            id: 2,
+            question: "Considere uma rede local antiga composta por 10 computadores conectados a um Hub (Concentrador) central. Como essa rede é classificada simultaneamente em relação à sua topologia física e à sua topologia lógica?",
+            options: [
+                "Física em Barramento; Lógica em Estrela.",
+                "Física em Estrela; Lógica em Barramento.",
+                "Física em Anel; Lógica em Estrela.",
+                "Física em Estrela; Lógica em Anel.",
+                "Física em Malha; Lógica Ponto-a-Ponto."
+            ],
+            correct: 1,
+            resolution: "Fisicamente, os cabos irradiam de um ponto central (Hub), caracterizando uma Estrela. Logicamente, o Hub curto-circuita as portas, fazendo com que o sinal seja transmitido para todos como se estivessem em um barramento compartilhado."
+        },
+        {
+            id: 3,
+            question: "Em uma indústria com altos índices de interferência eletromagnética (motores e fornos), qual meio de transmissão garante a integridade dos dados e por quê?",
+            options: [
+                "Cabo UTP Categoria 6A, pois sua blindagem de alumínio é suficiente.",
+                "Cabo Coaxial RG-6, devido à sua malha de cobre densa.",
+                "Fibra Óptica, pois transmite dados através de luz em meio dielétrico, sendo imune a interferências (EMI).",
+                "Rede Wireless (Wi-Fi 6), pois elimina a necessidade de cabos.",
+                "Cabo STP Categoria 7, pois utiliza pares trançados individualmente blindados."
+            ],
+            correct: 2,
+            resolution: "A Fibra Óptica é composta de material dielétrico (vidro/plástico), não conduzindo eletricidade e sendo imune a campos magnéticos. Cabos metálicos, mesmo blindados, ainda podem sofrer indução em ambientes extremos."
+        },
+        {
+            id: 4,
+            question: "Para reduzir o tráfego de broadcast excessivo em uma rede plana de switches Camada 2, qual dispositivo deve ser usado para interconectar as sub-redes?",
+            options: [
+                "Hub, pois ele filtra pacotes com base no endereço MAC.",
+                "Repetidor, para regenerar o sinal entre as sub-redes.",
+                "Roteador (ou Switch Layer 3), pois opera na Camada de Rede e não encaminha broadcasts limitados por padrão.",
+                "Bridge, pois ela divide domínios de colisão e domínios de broadcast nativamente.",
+                "Access Point em modo Bridge, para conectar as redes via rádio."
+            ],
+            correct: 2,
+            resolution: "Switches L2 e Bridges dividem domínios de colisão, mas não de broadcast. Roteadores operam na Camada 3 e delimitam os domínios de broadcast, impedindo que o tráfego de descoberta inunde outros segmentos."
+        },
+        {
+            id: 5,
+            question: "Como se chama o modo de comutação de um switch que começa a retransmitir o quadro logo após ler o endereço MAC de destino, priorizando a baixa latência?",
+            options: [
+                "Store-and-Forward.",
+                "Cut-Through.",
+                "Spanning Tree.",
+                "Fragment-Free.",
+                "CSMA/CD."
+            ],
+            correct: 1,
+            resolution: "O modo Cut-Through encaminha o quadro assim que o destino é identificado, sem esperar o restante do pacote ou verificar o erro (CRC) no final, oferecendo a menor latência possível."
+        },
+        {
+            id: 6,
+            question: "Qual é a denominação técnica do identificador de 48 bits gravado na placa de rede (NIC) e em qual subcamada OSI ele é processado?",
+            options: [
+                "Endereço IP; Camada de Rede.",
+                "Endereço MAC; Subcamada LLC (Logical Link Control).",
+                "Endereço MAC; Subcamada MAC (Media Access Control) da Camada de Enlace.",
+                "Endereço de Porta; Camada de Transporte.",
+                "Endereço DNS; Camada de Aplicação."
+            ],
+            correct: 2,
+            resolution: "O endereço físico é o MAC (Media Access Control), processado na subcamada inferior da Camada de Enlace (também chamada de subcamada MAC)."
+        },
+        {
+            id: 7,
+            question: "Sobre a comparação entre Ethernet e Wi-Fi, quais afirmativas estão corretas?\nI. Ethernet é Full-Duplex; Wi-Fi é Half-Duplex.\nII. Wi-Fi utiliza CSMA/CD.\nIII. Wi-Fi tem maior risco de interferência de micro-ondas.",
+            options: [
+                "I, apenas.",
+                "I e III, apenas.",
+                "II e III, apenas.",
+                "I, II e III.",
+                "III, apenas."
+            ],
+            correct: 1,
+            resolution: "I está correta (Wi-Fi é meio compartilhado por rádio). II está errada (Wi-Fi usa CSMA/CA, pois não detecta colisões enquanto transmite). III está correta (frequência de 2.4GHz é a mesma de muitos eletrodomésticos)."
+        },
+        {
+            id: 8,
+            question: "Qual especificação mínima de cabo de cobre garante 10 Gigabits (10GBASE-T) na distância de 85 metros?",
+            options: [
+                "Categoria 5e (CAT5e).",
+                "Categoria 6 (CAT6).",
+                "Categoria 6A (CAT6A).",
+                "Categoria 3 (CAT3).",
+                "Cabo Coaxial RG-59."
+            ],
+            correct: 2,
+            resolution: "O CAT6 suporta 10Gbps apenas até 37-55 metros. Para garantir 100 metros completos em 10Gbps, a norma exige a Categoria 6A (Augmented)."
+        },
+        {
+            id: 9,
+            question: "No Windows Server 2016 (Hyper-V), qual tecnologia permite agrupar até 8 adaptadores de rede físicos suportando RDMA?",
+            options: [
+                "Switch Embedded Teaming (SET).",
+                "Link Aggregation Control Protocol (LACP).",
+                "Virtual LAN (VLAN).",
+                "Spanning Tree Protocol (STP).",
+                "Network Address Translation (NAT)."
+            ],
+            correct: 0,
+            resolution: "O SET é integrado ao Virtual Switch e permite agrupamento de hardware de alta performance (RDMA), essencial em ambientes de virtualização modernos."
+        },
+        {
+            id: 10,
+            question: "Qual componente de hardware do roteador armazena a configuração de inicialização (startup-config)?",
+            options: [
+                "RAM (Random Access Memory).",
+                "ROM (Read-Only Memory).",
+                "NVRAM (Non-Volatile RAM).",
+                "Flash Memory.",
+                "Processador (CPU)."
+            ],
+            correct: 2,
+            resolution: "A RAM armazena a configuração em execução. A NVRAM é a memória não volátil que guarda a configuração de boot (startup-config) para que não seja perdida ao desligar."
+        }
+    ];
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-form');
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+            
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <label class="option-label" id="label-${index}-${optIndex}">
+                        <input type="radio" name="question-${index}" value="${optIndex}" onchange="selectOption(${index}, ${optIndex})">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-text">${index + 1}. ${q.question}</span>
+                <div class="options-container">
+                    ${optionsHtml}
+                </div>
+                <div class="resolution-box" id="res-${index}">
+                    <div class="resolution-title">
+                        <span>💡 Resolução:</span>
+                    </div>
+                    <p id="user-feedback-${index}"></p>
+                    <div class="explanation-text">${q.resolution}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectOption(qIndex, optIndex) {
+        // Remove 'selected' class from all options of this question
+        for(let i=0; i<5; i++) {
+            const label = document.getElementById(`label-${qIndex}-${i}`);
+            if(label) label.classList.remove('selected');
+        }
+        // Add 'selected' to the current one
+        document.getElementById(`label-${qIndex}-${optIndex}`).classList.add('selected');
+    }
+
+    function finishQuiz() {
+        let score = 0;
+        let answeredAll = true;
+
+        questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+            const resBox = document.getElementById(`res-${index}`);
+            const feedback = document.getElementById(`user-feedback-${index}`);
+            
+            resBox.style.display = 'block';
+
+            if (selected) {
+                const answer = parseInt(selected.value);
+                if (answer === q.correct) {
+                    score++;
+                    feedback.innerHTML = `<span class="correct-answer-text">✔ Correto!</span> Você marcou: ${q.options[answer]}`;
+                } else {
+                    feedback.innerHTML = `<span class="wrong-answer-text">✘ Incorreto.</span> Você marcou: ${q.options[answer]} <br> <span class="correct-answer-text">A resposta correta é: ${q.options[q.correct]}</span>`;
+                }
+            } else {
+                answeredAll = false;
+                feedback.innerHTML = `<span class="wrong-answer-text">⚠ Não respondida.</span> <br> <span class="correct-answer-text">A resposta correta é: ${q.options[q.correct]}</span>`;
+            }
+
+            // Desativar inputs após finalizar
+            const inputs = document.getElementsByName(`question-${index}`);
+            inputs.forEach(input => input.disabled = true);
+        });
+
+        // Mostrar Placar
+        const scoreDisplay = document.getElementById('score-display');
+        const resultsSection = document.getElementById('results-section');
+        
+        scoreDisplay.innerHTML = `
+            <h2>Resultado Final</h2>
+            <p style="font-size: 2.5rem; margin: 10px 0;">${score} / ${questions.length}</p>
+            <p>${(score/questions.length)*100}% de aproveitamento</p>
+        `;
+        
+        resultsSection.style.display = 'block';
+        document.getElementById('btn-finish').style.display = 'none';
+
+        // Scroll suave para o resultado
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Inicialização
+    window.onload = renderQuiz;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Internet e Correio Eletrônico - Estilo CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --container-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --primary: #0984e3;
+            --success: #27ae60;
+            --error: #d63031;
+            --border: #dfe6e9;
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .wrapper {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .question-card {
+            background: var(--container-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f1f2f6;
+            border-color: var(--primary);
+        }
+
+        .option-label input {
+            margin-right: 15px;
+            margin-top: 5px;
+            transform: scale(1.2);
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #0773c5;
+        }
+
+        /* Results section styling */
+        #results-container {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .score-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .feedback-item {
+            border-top: 1px solid rgba(0,0,0,0.1);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .resolution-box {
+            background: #f8f9fa;
+            border: 1px dashed var(--text-muted);
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            border-radius: 4px;
+        }
+
+        .status-correct { color: var(--success); font-weight: bold; }
+        .status-incorrect { color: var(--error); font-weight: bold; }
+
+        .hidden { display: none; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.4rem; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <header>
+        <h1>Simulado de Informática</h1>
+        <p style="color: var(--text-muted)">Assunto: Conceitos básicos de Internet e Correio Eletrônico<br>Estilo: Fundação CEFETMINAS</p>
+    </header>
+
+    <form id="quiz-form">
+        <div id="questions-root"></div>
+        <button type="submit" class="submit-btn" id="finish-btn">Finalizar Quiz e Ver Resoluções</button>
+    </form>
+
+    <div id="results-container">
+        <div class="score-display" id="score-text"></div>
+        <div id="feedback-list"></div>
+        <button onclick="window.location.reload()" class="submit-btn" style="background-color: var(--text-muted); margin-top: 30px;">Refazer Simulado</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            text: "Na configuração de um cliente de correio eletrônico, como o Mozilla Thunderbird, um técnico precisa definir os protocolos para envio e recebimento de mensagens. O requisito do usuário é que as mensagens recebidas sejam baixadas para o computador local e, por questões de segurança e economia de espaço no servidor, sejam imediatamente excluídas da caixa postal remota. Os protocolos que devem ser configurados para envio e para esse tipo específico de recebimento são, respectivamente:",
+            options: [
+                { id: 'A', text: "IMAP e SMTP." },
+                { id: 'B', text: "SMTP e POP3." },
+                { id: 'C', text: "POP3 e IMAP." },
+                { id: 'D', text: "SMTP e HTTP." },
+                { id: 'E', text: "HTTP e FTP." }
+            ],
+            correct: 'B',
+            resolution: "A questão exige conhecimento da função (envio/recebimento) e do comportamento (sincronização/download) dos protocolos. O envio é feito via SMTP. O recebimento com exclusão no servidor após download é o comportamento clássico do POP3."
+        },
+        {
+            id: 2,
+            text: "Um usuário utiliza o navegador Google Chrome em um computador de uso público na biblioteca do CEFET-MG. Para garantir que suas atividades não deixem rastros locais, ele aciona o modo de 'Navegação Anônima' (Incognito Mode). Sobre as características desse modo, é correto afirmar que:",
+            options: [
+                { id: 'A', text: "O provedor de acesso à internet (ISP) perde a capacidade de monitorar os sites visitados pelo usuário." },
+                { id: 'B', text: "Os arquivos que forem baixados (downloads) e os favoritos criados serão excluídos automaticamente ao fechar a janela anônima." },
+                { id: 'C', text: "O navegador não salvará o histórico de navegação, cookies, dados de sites ou informações inseridas em formulários." },
+                { id: 'D', text: "O endereço IP do computador do usuário é ocultado dos servidores dos sites visitados, garantindo anonimato total na rede." },
+                { id: 'E', text: "O modo anônimo ativa automaticamente uma VPN gratuita e bloqueia a instalação de qualquer vírus ou malware." }
+            ],
+            correct: 'C',
+            resolution: "A função primária da navegação anônima é a não-persistência de dados locais (histórico, cache, cookies) após o encerramento da sessão. Ela não oculta o IP nem impede o monitoramento pelo ISP ou sites."
+        },
+        {
+            id: 3,
+            text: "Durante uma pesquisa utilizando o navegador Mozilla Firefox, um assistente administrativo fechou acidentalmente uma aba que continha informações cruciais. Para reabrir imediatamente a última aba fechada, restaurando seu conteúdo, a combinação de teclas correta a ser utilizada é:",
+            options: [
+                { id: 'A', text: "Ctrl + W" },
+                { id: 'B', text: "Ctrl + T" },
+                { id: 'C', text: "Ctrl + Shift + T" },
+                { id: 'D', text: "Alt + F4" },
+                { id: 'E', text: "Ctrl + H" }
+            ],
+            correct: 'C',
+            resolution: "Ctrl + Shift + T é o atalho universal para 'Reabrir aba fechada'. Funciona de forma sequencial para as últimas abas encerradas."
+        },
+        {
+            id: 4,
+            text: "Um pesquisador deseja encontrar documentos no formato PDF que contenham a frase exata 'Inteligência Artificial' e que estejam publicados exclusivamente no domínio oficial da instituição (cefetmg.br). A sintaxe de busca que deve ser inserida no Google para obter esse resultado preciso é:",
+            options: [
+                { id: 'A', text: '\"Inteligência Artificial\" filetype:pdf site:cefetmg.br' },
+                { id: 'B', text: "Inteligência Artificial type:pdf domain:cefetmg.br" },
+                { id: 'C', text: '\"Inteligência Artificial\" ext:pdf local:cefetmg.br' },
+                { id: 'D', text: "[Inteligência Artificial].pdf @cefetmg.br" },
+                { id: 'E', text: "Inteligência Artificial +pdf +cefetmg.br" }
+            ],
+            correct: 'A',
+            resolution: "Sintaxe correta: Aspas para frase exata, filetype: para extensão e site: para restringir ao domínio. Os outros operadores (domain, local, colchetes) não são padrões do Google para estas funções."
+        },
+        {
+            id: 5,
+            text: "No contexto de correio eletrônico e navegação na internet, os softwares são classificados de acordo com sua função primária. Assinale a alternativa que apresenta, respectivamente, um exemplo de Navegador (Browser) e um exemplo de Cliente de E-mail (MUA) instalado:",
+            options: [
+                { id: 'A', text: "Google Chrome e Gmail." },
+                { id: 'B', text: "Microsoft Edge e Mozilla Thunderbird." },
+                { id: 'C', text: "Mozilla Firefox e Google Drive." },
+                { id: 'D', text: "Internet Explorer e Outlook.com." },
+                { id: 'E', text: "Outlook Express e Mozilla Firefox." }
+            ],
+            correct: 'B',
+            resolution: "Microsoft Edge é um navegador. Mozilla Thunderbird é um cliente de e-mail (MUA) que é instalado localmente. Gmail e Outlook.com são serviços de Webmail acessados via navegador."
+        },
+        {
+            id: 6,
+            text: "O Sr. JC recebe uma mensagem de e-mail com o logotipo de uma instituição bancária, informando sobre uma suposta atualização cadastral obrigatória sob pena de bloqueio de conta. A mensagem contém um link que redireciona para uma página falsa, visualmente idêntica à do banco, solicitando a digitação de senha e token. Essa técnica de ataque, baseada em engenharia social para roubo de credenciais, é denominada:",
+            options: [
+                { id: 'A', text: "Ransomware." },
+                { id: 'B', text: "DDoS." },
+                { id: 'C', text: "Phishing." },
+                { id: 'D', text: "Sniffing." },
+                { id: 'E', text: "Defacement." }
+            ],
+            correct: 'C',
+            resolution: "Phishing é a prática de 'pescar' dados sensíveis enganando o usuário por meio de comunicações fraudulentas que parecem legítimas."
+        },
+        {
+            id: 7,
+            text: "Um coordenador de curso precisa enviar um aviso para 40 alunos. Para respeitar a privacidade dos estudantes e evitar que cada um tenha acesso ao endereço de e-mail dos demais colegas da lista, o coordenador deve inserir os endereços dos alunos no campo:",
+            options: [
+                { id: 'A', text: "Cc (Com Cópia)." },
+                { id: 'B', text: "Para (To)." },
+                { id: 'C', text: "Assunto (Subject)." },
+                { id: 'D', text: "Cco (Cópia Oculta)." },
+                { id: 'E', text: "Anexo." }
+            ],
+            correct: 'D',
+            resolution: "O campo Cco (Cópia Oculta) ou Bcc (Blind Carbon Copy) oculta os endereços dos destinatários para os demais membros da lista de envio."
+        },
+        {
+            id: 8,
+            text: "Baseando-se nos conceitos fundamentais da Web e nas definições de endereçamento de recursos, analise a relação entre URI (Uniform Resource Identifier) e URL (Uniform Resource Locator). Assinale a afirmativa tecnicamente correta:",
+            options: [
+                { id: 'A', text: "URI e URL são sinônimos exatos e podem ser usados de forma intercambiável em qualquer contexto técnico." },
+                { id: 'B', text: "Toda URL é uma URI, pois a URL é um tipo específico de identificador que também fornece a localização do recurso." },
+                { id: 'C', text: "A URI é utilizada apenas para recursos offline, enquanto a URL é exclusiva da Internet." },
+                { id: 'D', text: "O termo URL tornou-se obsoleto e foi completamente substituído pelo termo URI na especificação HTTP/1.1." },
+                { id: 'E', text: "Uma URL nunca pode conter o protocolo de acesso (como http ou ftp), diferentemente da URI." }
+            ],
+            correct: 'B',
+            resolution: "URI é o conceito amplo de identificador. URL é uma aplicação específica de URI que identifica e localiza. Logo, toda URL é uma URI."
+        },
+        {
+            id: 9,
+            text: "A computação em nuvem permite o uso de softwares diretamente através da internet, sem a necessidade de instalação local. Quando um usuário utiliza o Google Docs ou o Office 365 Online para editar um texto no navegador, ele está utilizando um serviço classificado no modelo:",
+            options: [
+                { id: 'A', text: "IaaS (Infraestrutura como Serviço)." },
+                { id: 'B', text: "PaaS (Plataforma como Serviço)." },
+                { id: 'C', text: "SaaS (Software como Serviço)." },
+                { id: 'D', text: "VPN (Rede Privada Virtual)." },
+                { id: 'E', text: "IoT (Internet das Coisas)." }
+            ],
+            correct: 'C',
+            resolution: "SaaS (Software as a Service) é o modelo onde o usuário consome a aplicação final via web sem gerenciar hardware ou infraestrutura."
+        },
+        {
+            id: 10,
+            text: "Para permitir que funcionários acessem a Intranet da instituição de forma segura a partir de suas casas (home office), trafegando dados confidenciais através da infraestrutura pública da Internet, recomenda-se a utilização de uma tecnologia que cria um túnel criptografado. Assinale a alternativa que apresenta essa tecnologia e um protocolo de segurança frequentemente associado a ela:",
+            options: [
+                { id: 'A', text: "DNS e HTML." },
+                { id: 'B', text: "VPN e IPsec." },
+                { id: 'C', text: "Firewall e FTP." },
+                { id: 'D', text: "Proxy e Telnet." },
+                { id: 'E', text: "Phishing e SMTP." }
+            ],
+            correct: 'B',
+            resolution: "VPN (Virtual Private Network) cria o túnel seguro. O IPsec é o protocolo padrão de criptografia e segurança para essas redes privadas virtuais."
+        }
+    ];
+
+    const questionsRoot = document.getElementById('questions-root');
+    const quizForm = document.getElementById('quiz-form');
+    const resultsContainer = document.getElementById('results-container');
+    const feedbackList = document.getElementById('feedback-list');
+    const scoreText = document.getElementById('score-text');
+
+    // Render questions
+    questions.forEach((q, index) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.innerHTML = `
+            <span class="question-text">Questão ${index + 1}: ${q.text}</span>
+            <ul class="options-list">
+                ${q.options.map(opt => `
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q${q.id}" value="${opt.id}" required>
+                            <span>${opt.id}) ${opt.text}</span>
+                        </label>
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+        questionsRoot.appendChild(card);
+    });
+
+    quizForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let score = 0;
+        const formData = new FormData(quizForm);
+        feedbackList.innerHTML = '';
+
+        questions.forEach(q => {
+            const userAnswer = formData.get(`q${q.id}`);
+            const isCorrect = userAnswer === q.correct;
+            if(isCorrect) score++;
+
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.className = 'feedback-item';
+            feedbackDiv.innerHTML = `
+                <p><strong>Questão ${q.id}:</strong> <span class="${isCorrect ? 'status-correct' : 'status-incorrect'}">
+                    ${isCorrect ? 'Acertou!' : 'Errou!'} (Sua resposta: ${userAnswer} | Gabarito: ${q.correct})
+                </span></p>
+                <div class="resolution-box">
+                    <strong>Resolução e Gabarito:</strong> ${q.resolution}
+                </div>
+            `;
+            feedbackList.appendChild(feedbackDiv);
+        });
+
+        scoreText.innerText = `Você acertou ${score} de ${questions.length} questões (${(score/questions.length)*100}%)`;
+        
+        quizForm.classList.add('hidden');
+        resultsContainer.style.display = 'block';
+        window.scrollTo(0, 0);
+    });
+</script>
+
+</body>
+</html>
