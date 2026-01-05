@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Redes LAN e Wireless - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef08a; /* Amarelo suave para grifo */
+            color: #000;
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.2rem;
+            font-weight: 600;
+        }
+
+        .important-note {
+            border-left: 5px solid #2563eb;
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .cefet-trap {
+            border-left: 5px solid #dc2626;
+            background-color: #fef2f2;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fdfdfd;
+        }
+
+        .audio-player-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 2.5rem;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+
+        h1 { color: #1e293b; font-size: 2.25rem; font-weight: 800; margin-bottom: 1rem; }
+        h2 { color: #1e293b; font-size: 1.75rem; font-weight: 700; margin-top: 3rem; margin-bottom: 1rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.5rem; }
+        h3 { color: #334155; font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; }
+
+        .btn-footer {
+            display: block;
+            background-color: #1e293b;
+            color: white;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: 700;
+            text-decoration: none;
+            margin: 4rem 0;
+            transition: transform 0.2s;
+        }
+
+        .btn-footer:hover {
+            transform: translateY(-2px);
+            background-color: #0f172a;
+        }
+
+        /* Responsive Table fix without horizontal scroll where possible */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-6 py-10">
+
+    <!-- Audio Player -->
+    <div class="audio-player-card">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+                <h4 class="font-bold text-slate-800">🎧 Resumo em Áudio</h4>
+                <p class="text-xs text-slate-500">Ouça os pontos chave enquanto revisa o texto.</p>
+            </div>
+            <audio controls class="w-full md:w-2/3">
+                <source src="22wireless.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </audio>
+        </div>
+    </div>
+
+    <header class="text-center mb-16">
+        <span class="text-blue-600 font-bold tracking-widest uppercase text-sm">Concurso IFAM - EBTT</span>
+        <h1>Redes de Computadores: LAN e Wireless</h1>
+        <p class="text-slate-500 text-lg">Guia Definitivo de Teoria e Foco na Fundação <span class="font-bold">CEFETMINAS</span></p>
+    </header>
+
+    <main>
+        <!-- SEÇÃO 1: DEFINIÇÕES -->
+        <section>
+            <h2>1. Definições Essenciais e Modelos de Referência</h2>
+            <p>Uma <span class="highlight">LAN (Local Area Network)</span> é caracterizada por sua abrangência geográfica restrita (um prédio, campus ou residência) e altas taxas de transmissão com baixas taxas de erro.</p>
+            
+            <div class="important-note">
+                <strong>Modelos OSI vs TCP/IP:</strong> A CEFETMINAS costuma cobrar a correspondência entre as camadas.
+                <ul class="list-disc ml-6 mt-2">
+                    <li><strong>OSI (7 camadas):</strong> Física, Enlace, Rede, Transporte, Sessão, Apresentação e Aplicação.</li>
+                    <li><strong>TCP/IP Original (4 camadas):</strong> Host-Rede (ou Interface), Internet, Transporte e Aplicação.</li>
+                    <li><strong>TCP/IP Atual (5 camadas):</strong> Física, Enlace, Rede, Transporte e Aplicação.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 2: ENDEREÇAMENTO -->
+        <section>
+            <h2>2. Endereçamento IPv4 e Configuração</h2>
+            <p>A configuração básica de um host exige: <span class="highlight">Endereço IP, Máscara de Sub-rede e Gateway Padrão</span>. Sem o Gateway, o host só comunica-se na rede local.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Classe</th>
+                            <th>Faixa do 1º Octeto</th>
+                            <th>Máscara Padrão</th>
+                            <th>IPs Privados (RFC 1918)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A</strong></td>
+                            <td>1 – 126</td>
+                            <td>255.0.0.0 (/8)</td>
+                            <td>10.0.0.0 a 10.255.255.255</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B</strong></td>
+                            <td>128 – 191</td>
+                            <td>255.255.0.0 (/16)</td>
+                            <td>172.16.0.0 a 172.31.255.255</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C</strong></td>
+                            <td>192 – 223</td>
+                            <td>255.255.255.0 (/24)</td>
+                            <td>192.168.0.0 a 192.168.255.255</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cefet-trap">
+                <strong>Peguinha recorrente:</strong> O endereço <span class="highlight">127.0.0.1</span> é o loopback. Ele nunca é atribuído a uma interface física e o tráfego não sai para o cabo. Outro ponto é o <span class="highlight">APIPA (169.254.x.x)</span>: se o computador não acha o servidor DHCP, ele se auto-atribui esse IP.
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: DIAGNÓSTICO -->
+        <section>
+            <h2>3. Ferramentas de Linha de Comando</h2>
+            <p>Para configurar e testar redes locais, o administrador deve dominar os comandos em ambos os sistemas operacionais.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Função</th>
+                            <th>Windows</th>
+                            <th>Linux (Moderno)</th>
+                            <th>Detalhe para Prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Verificar IP</td>
+                            <td><code>ipconfig /all</code></td>
+                            <td><code>ip addr</code> ou <code>ifconfig</code></td>
+                            <td>O <code>/all</code> no Windows mostra o MAC.</td>
+                        </tr>
+                        <tr>
+                            <td>Limpar Cache DNS</td>
+                            <td><code>ipconfig /flushdns</code></td>
+                            <td>Varia (Systemd)</td>
+                            <td>Cai muito em questões de suporte.</td>
+                        </tr>
+                        <tr>
+                            <td>Testar Rota</td>
+                            <td><code>tracert -d</code></td>
+                            <td><code>traceroute</code></td>
+                            <td>O <code>-d</code> evita a resolução de nomes.</td>
+                        </tr>
+                        <tr>
+                            <td>Tabela ARP</td>
+                            <td><code>arp -a</code></td>
+                            <td><code>ip neighbor</code> ou <code>arp</code></td>
+                            <td>Mapeia IP para MAC.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 4: WIRELESS -->
+        <section>
+            <h2>4. Redes Wireless (IEEE 802.11)</h2>
+            <p>Configurar uma rede wireless envolve escolher o <span class="highlight">Canal</span> (para evitar interferência), o <span class="highlight">SSID</span> (nome da rede) e o <span class="highlight">Modo de Segurança</span>.</p>
+
+            <h3>Padrões Principais</h3>
+            <ul class="list-disc ml-6 space-y-2">
+                <li><strong>802.11b:</strong> 11 Mbps, 2.4 GHz.</li>
+                <li><strong>802.11g:</strong> 54 Mbps, 2.4 GHz.</li>
+                <li><strong>802.11n (Wi-Fi 4):</strong> 600 Mbps, 2.4/5 GHz. Introduziu o <span class="highlight">MIMO</span>.</li>
+                <li><strong>802.11ac (Wi-Fi 5):</strong> Gbps, apenas 5 GHz. Introduziu o <span class="highlight">MU-MIMO</span>.</li>
+                <li><strong>802.11ax (Wi-Fi 6):</strong> Foco em eficiência e densidade (OFDMA).</li>
+            </ul>
+
+            <div class="important-note">
+                <strong>Segurança Wireless:</strong>
+                <ol class="list-decimal ml-6 mt-2">
+                    <li><strong>WEP:</strong> Inseguro (Criptografia RC4).</li>
+                    <li><strong>WPA:</strong> Melhoria paliativa com TKIP.</li>
+                    <li><strong>WPA2:</strong> Utiliza <span class="highlight">AES (CCMP)</span>. É o padrão de mercado.</li>
+                    <li><strong>WPA3:</strong> Proteção contra ataques de dicionário e <span class="highlight">Forward Secrecy</span> através do SAE.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 5: DISPOSITIVOS -->
+        <section>
+            <h2>5. Dispositivos de Interconexão</h2>
+            <ul class="list-disc ml-6 space-y-4">
+                <li><strong>Hub (Camada 1):</strong> Dispositivo "burro". Broadcast para todas as portas. Um único domínio de colisão.</li>
+                <li><strong>Switch (Camada 2):</strong> Analisa o endereço MAC. Cada porta é um <span class="highlight">domínio de colisão</span> separado.</li>
+                <li><strong>Switch L3 / Roteador (Camada 3):</strong> Encaminhamento baseado em pacotes IP. Separam <span class="highlight">domínios de broadcast</span>.</li>
+            </ul>
+        </section>
+
+        <!-- SEÇÃO 6: ANALISE CEFET -->
+        <section>
+            <h2>6. Análise de Tendências CEFETMINAS</h2>
+            <p>A banca para o IFAM costuma cobrar questões práticas de administração.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <div class="p-4 border border-slate-200 rounded-lg">
+                    <h4 class="font-bold text-red-600">O que cai:</h4>
+                    <ul class="list-disc ml-5 text-sm">
+                        <li>Cálculo simples de sub-rede (/24, /25, /26).</li>
+                        <li>Diferença entre Switches e Hubs.</li>
+                        <li>Configuração de VLANs (IEEE 802.1Q).</li>
+                        <li>Protocolos de suporte: DHCP (UDP 67/68) e DNS (UDP/TCP 53).</li>
+                    </ul>
+                </div>
+                <div class="p-4 border border-slate-200 rounded-lg">
+                    <h4 class="font-bold text-blue-600">Peguinhas:</h4>
+                    <ul class="list-disc ml-5 text-sm">
+                        <li>Confundir CSMA/CD (Ethernet) com CSMA/CA (Wireless).</li>
+                        <li>Afirmar que o Switch separa domínios de broadcast (Só separa se houver VLAN).</li>
+                        <li>Trocar portas TCP por UDP em protocolos de infraestrutura.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <a href="22questoes.html" class="btn-footer">
+            Finalizou a leitura? Ir para o Simulado de Fixação →
+        </a>
+    </main>
+
+    <footer class="text-center text-slate-400 text-sm border-t border-slate-100 pt-8 mb-10">
+        © Tutor IA - Preparação de Elite IFAM
+    </footer>
+
+</body>
+</html>

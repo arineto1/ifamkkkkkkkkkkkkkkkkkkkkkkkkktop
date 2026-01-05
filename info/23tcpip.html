@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinamento Intensivo IFAM - Redes TCP/IP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1e293b;
+            background-color: #ffffff;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef08a;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Tabelas sem scroll horizontal e responsivas */
+        .table-wrapper {
+            width: 100%;
+            margin: 1.5rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            color: #334155;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .important-box {
+            border-left: 5px solid #3b82f6;
+            background-color: #eff6ff;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .trap-box {
+            border-left: 5px solid #ef4444;
+            background-color: #fef2f2;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        h2 {
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            margin-top: 40px !important;
+            color: #0f172a;
+        }
+
+        @media (max-width: 640px) {
+            th, td {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <!-- Cabeçalho -->
+        <header class="text-center mb-12">
+            <span class="text-blue-600 font-bold tracking-widest uppercase text-sm">Concurso Professor EBTT - IFAM</span>
+            <h1 class="text-4xl font-extrabold text-slate-900 mt-2 mb-4">Redes de Computadores: TCP/IP</h1>
+            <p class="text-lg text-slate-600">Conteúdo Teórico Integral e Análise de Banca (CEFETMINAS)</p>
+        </header>
+
+        <!-- Player de Áudio Principal -->
+        <section class="mb-12 p-6 border-2 border-dashed border-slate-200 rounded-2xl bg-slate-50">
+            <div class="flex flex-col items-center">
+                <h3 class="font-bold text-slate-700 mb-4 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.983 5.983 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.983 3.983 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd" />
+                    </svg>
+                    Resumo em Áudio (Revisão Rápida)
+                </h3>
+                <!-- ESPAÇO PARA O NOME DO ARQUIVO: Substitua 'audio_aula_completa.mp3' -->
+                <audio controls class="w-full max-w-md">
+                    <source src="23tcpip.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o áudio.
+                </audio>
+                <p class="text-xs text-slate-400 mt-3 font-medium">Arquivo sugerido: <strong>audio_aula_completa.mp3</strong></p>
+            </div>
+        </section>
+
+        <!-- Início do Conteúdo -->
+        <article class="prose prose-slate max-w-none">
+            
+            <h2 class="text-2xl font-bold">1. Definição e Arquitetura TCP/IP</h2>
+            <p>A arquitetura TCP/IP (Transmission Control Protocol/Internet Protocol) é o conjunto de protocolos que define como os dados devem ser formatados, endereçados, transmitidos, roteados e recebidos. Diferente do modelo OSI, que é um modelo de referência conceitual, o <span class="highlight">TCP/IP é um modelo prático</span> (de implementação).</p>
+            
+            <div class="important-box">
+                <strong>Ponto de Prova:</strong> O modelo original (DoD - Department of Defense) possui <strong>4 camadas</strong>. O modelo acadêmico atualizado possui <strong>5 camadas</strong>. A CEFETMINAS costuma cobrar a distinção entre as camadas de <strong>Acesso à Rede</strong> (4 camadas) versus <strong>Enlace/Física</strong> (5 camadas).
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Camada (5 Cam.)</th>
+                            <th>PDU (Unidade)</th>
+                            <th>Principais Protocolos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Aplicação</strong></td>
+                            <td>Dados</td>
+                            <td>HTTP, DNS, SMTP, FTP, SNMP, SSH</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Transporte</strong></td>
+                            <td>Segmento (TCP) / Datagrama (UDP)</td>
+                            <td><span class="highlight">TCP</span>, <span class="highlight">UDP</span>, SCTP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rede (Internet)</strong></td>
+                            <td>Pacote / Datagrama IP</td>
+                            <td>IP (v4/v6), ICMP, ARP, RARP, IGMP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enlace</strong></td>
+                            <td>Quadro (Frame)</td>
+                            <td>Ethernet, PPP, Wi-Fi (802.11)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Física</strong></td>
+                            <td>Bits</td>
+                            <td>Sinais elétricos, ópticos, rádio</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="text-2xl font-bold">2. Camada de Transporte: Confiabilidade vs. Velocidade</h2>
+            <p>Esta camada é responsável pela comunicação fim-a-fim. O foco aqui é o <strong>multiplexação</strong> através de <strong>Portas</strong>.</p>
+            
+            <ul class="space-y-4">
+                <li>
+                    <strong>TCP (Transmission Control Protocol):</strong> 
+                    Orientado à conexão, confiável, garante a entrega e a ordem. Utiliza o <span class="highlight">Three-way Handshake</span> (SYN → SYN+ACK → ACK). 
+                    <strong>Controle de Fluxo:</strong> Usa Janela Deslizante. 
+                    <strong>Controle de Congestionamento:</strong> Slow Start e Congestion Avoidance.
+                </li>
+                <li>
+                    <strong>UDP (User Datagram Protocol):</strong> 
+                    Não orientado à conexão, não confiável ("Melhor Esforço"). Sem confirmação de entrega. Baixa latência. Ideal para <span class="highlight">VoIP, Streaming e DNS</span>.
+                </li>
+            </ul>
+
+            <h2 class="text-2xl font-bold">3. Endereçamento e Camada de Rede</h2>
+            <p>O <strong>IP (Internet Protocol)</strong> é o coração desta camada. Ele é responsável pelo endereçamento lógico e roteamento.</p>
+            
+            <h3 class="text-xl font-semibold mt-6">IPv4 (32 bits)</h3>
+            <p>Dividido em classes (A, B, C, D, E) ou via <span class="highlight">CIDR</span> (ex: /24).</p>
+            <ul class="list-disc pl-6 mb-4">
+                <li><strong>Privados (RFC 1918):</strong> 10.x.x.x | 172.16.x.x - 172.31.x.x | 192.168.x.x</li>
+                <li><strong>Loopback:</strong> 127.0.0.1</li>
+                <li><strong>APIPA:</strong> 169.254.x.x (Atribuído quando o DHCP falha).</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold mt-6">IPv6 (128 bits)</h3>
+            <p>Escrito em hexadecimal. <span class="highlight">Não possui Broadcast</span> (usa Anycast e Multicast).</p>
+            <div class="important-box">
+                <strong>Memorize para a FCM:</strong> O cabeçalho IPv6 é fixo (40 bytes) para agilizar o processamento nos roteadores. A fragmentação é feita apenas pelo <strong>emissor</strong>, nunca pelos roteadores intermediários.
+            </div>
+
+            <h2 class="text-2xl font-bold">4. Protocolos Auxiliares Essenciais</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Protocolo</th>
+                            <th>Função Crítica para a Prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>ICMP</strong></td>
+                            <td>Mensagens de erro e controle (Ping/Traceroute). Opera na Camada de Rede.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ARP</strong></td>
+                            <td>Resolve <strong>IP → MAC</strong>. Mapeia endereço lógico em físico.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DHCP</strong></td>
+                            <td>Alocação dinâmica de IPs. Usa portas <strong>67 (Servidor)</strong> e <strong>68 (Cliente)</strong>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DNS</strong></td>
+                            <td>Resolução de nomes. Usa porta <strong>53 (UDP/TCP)</strong>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SNMP</strong></td>
+                            <td>Gerenciamento de rede. Porta 161 (Agente) e 162 (Trap).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="text-2xl font-bold">5. Roteamento: RIP, OSPF e BGP</h2>
+            <p>Roteamento é a escolha do melhor caminho para o pacote.</p>
+            <ul class="space-y-2">
+                <li><strong>Interior (IGP):</strong> Dentro de um Sistema Autônomo (AS).
+                    <ul class="pl-6 list-square">
+                        <li><strong>RIP:</strong> Vetor de distância. Métrica: <span class="highlight">Saltos</span> (Máx 15).</li>
+                        <li><strong>OSPF:</strong> Estado de Enlace. Métrica: <span class="highlight">Custo</span> (Banda). Algoritmo Dijkstra.</li>
+                    </ul>
+                </li>
+                <li><strong>Exterior (EGP):</strong> Entre Sistemas Autônomos.
+                    <ul class="pl-6">
+                        <li><strong>BGP:</strong> Vetor de Caminho. Protocolo da Internet mundial.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h2 class="text-2xl font-bold">6. Tendências e "Peguinhas" CEFETMINAS</h2>
+            <p>A Fundação CEFETMINAS, em provas para Professor EBTT, costuma ser técnica e detalhista.</p>
+            
+            <div class="trap-box">
+                <h4 class="font-bold text-red-700">Checklist de Pegadinhas:</h4>
+                <ul class="list-disc pl-5 mt-2 space-y-2">
+                    <li><strong>Protocolo de Gerenciamento:</strong> A banca ama confundir SNMP (Gerência) com SMTP (E-mail).</li>
+                    <li><strong>Flags TCP:</strong> Lembre-se que o <strong>RST</strong> (Reset) aborta uma conexão, enquanto o <strong>FIN</strong> termina uma conexão normal.</li>
+                    <li><strong>Camadas:</strong> Afirmar que o HTTP roda sobre UDP. <span class="highlight">Falso</span> (Apenas HTTP/3 usa QUIC/UDP).</li>
+                    <li><strong>Endereço MAC:</strong> 48 bits (6 bytes). Escrito em hexadecimal. Camada 2.</li>
+                    <li><strong>NAT:</strong> Serve para economizar IPs públicos, traduzindo IPs privados em um ou mais IPs públicos.</li>
+                </ul>
+            </div>
+
+            <h2 class="text-2xl font-bold">7. Resumo para Memorização (Flash-Points)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                <div class="p-4 border rounded-lg bg-slate-50">
+                    <p class="text-sm font-bold text-blue-800">PORTAS ESSENCIAIS</p>
+                    <p class="text-xs">SSH: 22 | Telnet: 23 | SMTP: 25 | HTTP: 80 | HTTPS: 443 | RDP: 3389 | IMAP: 143 | POP3: 110</p>
+                </div>
+                <div class="p-4 border rounded-lg bg-slate-50">
+                    <p class="text-sm font-bold text-blue-800">PADRÕES IEEE</p>
+                    <p class="text-xs">Ethernet: 802.3 | Wi-Fi: 802.11 | Bluetooth: 802.15 | VLAN: 802.1Q | STP: 802.1D</p>
+                </div>
+            </div>
+
+        </article>
+
+        <!-- Ação Final -->
+        <footer class="mt-16 pt-8 border-t border-slate-200 text-center">
+            <p class="text-slate-500 mb-6 font-medium">Estudo concluído? Teste seus conhecimentos agora!</p>
+            <a href="23questoes.html" class="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-200 active:scale-95">
+                Abrir Banco de Questões
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+            <p class="mt-8 text-slate-400 text-xs italic">Tutor IA: Focado na Aprovação IFAM 2025</p>
+        </footer>
+    </div>
+
+</body>
+</html>

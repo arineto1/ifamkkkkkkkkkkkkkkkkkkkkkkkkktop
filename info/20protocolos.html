@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo: Redes de Computadores - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #1a202c;
+            background-color: #ffffff;
+        }
+
+        .highlight {
+            background-color: #fef3c7;
+            padding: 0 4px;
+            border-radius: 2px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .section-title {
+            color: #1e40af;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .important-note {
+            border-left: 4px solid #ef4444;
+            background-color: #fff1f2;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            margin: 1.5rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f8fafc;
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #e2e8f0;
+            color: #475569;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .btn-link {
+            display: inline-block;
+            background-color: #1e293b;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-link:hover {
+            background-color: #334155;
+            transform: translateY(-1px);
+        }
+
+        /* Estilo para listas de memorização */
+        .memo-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .memo-list li::before {
+            content: "•";
+            color: #3b82f6;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            table { font-size: 0.8rem; }
+            th, td { padding: 8px; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="max-w-4xl mx-auto px-4 py-10">
+        
+        <!-- Header & Audio -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight mb-4">Redes de Computadores e Protocolos</h1>
+            <p class="text-slate-500 text-lg mb-8">Guia Definitivo de Revisão - Professor de Informática IFAM</p>
+            
+            <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl shadow-sm inline-block w-full max-w-2xl">
+                <span class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Player de Aula</span>
+                <audio controls class="w-full">
+                    <!-- Substitua o nome do arquivo abaixo -->
+                    <source src="20protocolos.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                </audio>
+                <p class="text-xs text-slate-400 mt-3 italic">Dica: Ouça enquanto acompanha os grifos em amarelo.</p>
+            </div>
+        </header>
+
+        <article class="prose prose-slate max-w-none">
+            
+            <!-- Definição e Conceitos -->
+            <h2 class="section-title">1. Definição e Características Essenciais</h2>
+            <p>Redes de computadores são sistemas de objetos interconectados que compartilham recursos e informações. Para o IFAM/CEFETMINAS, foque na classificação por abrangência geográfica:</p>
+            <ul class="memo-list">
+                <li><strong>PAN (Personal):</strong> Bluetooth, alcance de poucos metros.</li>
+                <li><strong>LAN (Local):</strong> Escritórios, casas. <span class="highlight">Alta taxa de transmissão e baixas taxas de erro.</span></li>
+                <li><strong>MAN (Metropolitana):</strong> Abrange uma cidade (ex: rede de TV a cabo).</li>
+                <li><strong>WAN (Wide):</strong> Países ou continentes. <span class="highlight">A Internet é a maior WAN existente.</span></li>
+            </ul>
+
+            <div class="important-note">
+                <strong>Conceito Chave:</strong> <span class="highlight">Comutação de Pacotes</span> (Internet) vs <span class="highlight">Comutação de Circuitos</span> (Telefonia). Na comutação de pacotes, não há caminho dedicado; os dados são fragmentados e podem seguir rotas diferentes.
+            </div>
+
+            <!-- Arquiteturas -->
+            <h2 class="section-title">2. Modelos OSI e TCP/IP (O Coração da Prova)</h2>
+            <p>A CEFETMINAS cobra a função de cada camada e a associação de protocolos.</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Camada OSI</th>
+                            <th>PDU (Unidade)</th>
+                            <th>Função Principal</th>
+                            <th>Protocolos Exemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>7. Aplicação</td>
+                            <td>Dados</td>
+                            <td>Interface com usuário</td>
+                            <td>HTTP, DNS, SMTP, SNMP</td>
+                        </tr>
+                        <tr>
+                            <td>6. Apresentação</td>
+                            <td>Dados</td>
+                            <td>Criptografia e Compressão</td>
+                            <td>SSL, TLS, ASCII</td>
+                        </tr>
+                        <tr>
+                            <td>5. Sessão</td>
+                            <td>Dados</td>
+                            <td>Gerência de diálogo</td>
+                            <td>NetBIOS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Transporte</strong></td>
+                            <td>Segmento/Datagrama</td>
+                            <td>Entrega <span class="highlight">ponta-a-ponta</span></td>
+                            <td>TCP, UDP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Rede</strong></td>
+                            <td>Pacote</td>
+                            <td><span class="highlight">Roteamento</span> e Endereçamento</td>
+                            <td>IP, ICMP, ARP, OSPF</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Enlace</strong></td>
+                            <td>Quadro (Frame)</td>
+                            <td>Controle de acesso ao meio</td>
+                            <td>Ethernet, PPP, Switches L2</td>
+                        </tr>
+                        <tr>
+                            <td>1. Física</td>
+                            <td>Bit</td>
+                            <td>Transmissão de sinais</td>
+                            <td>Cabos, Hubs, Repetidores</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Camada de Transporte -->
+            <h2 class="section-title">3. Camada de Transporte: TCP vs UDP</h2>
+            <p>Diferença fundamental para questões de múltipla escolha:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 border border-slate-200 rounded-lg">
+                    <p class="font-bold text-blue-700">TCP (Transmission Control Protocol)</p>
+                    <ul class="text-sm mt-2">
+                        <li>Orientado à conexão (<span class="highlight">3-way Handshake</span>).</li>
+                        <li>Controle de fluxo e erro.</li>
+                        <li>Garante a entrega e a ordem.</li>
+                        <li>Full-duplex.</li>
+                    </ul>
+                </div>
+                <div class="p-4 border border-slate-200 rounded-lg">
+                    <p class="font-bold text-slate-700">UDP (User Datagram Protocol)</p>
+                    <ul class="text-sm mt-2">
+                        <li>Não orientado à conexão.</li>
+                        <li><span class="highlight">Sem garantia</span> de entrega.</li>
+                        <li>Baixo overhead (rápido).</li>
+                        <li>Ideal para Voz sobre IP (VoIP) e DNS.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Camada de Rede -->
+            <h2 class="section-title">4. Camada de Rede e Endereçamento</h2>
+            <p>O foco aqui é <strong>IPv4, IPv6 e Sub-redes</strong>.</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Recurso</th>
+                            <th>IPv4</th>
+                            <th>IPv6</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tamanho</td>
+                            <td>32 bits (4 octetos)</td>
+                            <td><span class="highlight">128 bits</span> (16 octetos)</td>
+                        </tr>
+                        <tr>
+                            <td>Representação</td>
+                            <td>Decimal (192.168.1.1)</td>
+                            <td>Hexadecimal (2001:db8::1)</td>
+                        </tr>
+                        <tr>
+                            <td>Broadcast</td>
+                            <td>Existente</td>
+                            <td><span class="highlight">Substituído por Multicast</span></td>
+                        </tr>
+                        <tr>
+                            <td>Segurança</td>
+                            <td>Opcional (IPSec)</td>
+                            <td><span class="highlight">Nativo (IPSec obrigatório)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="mt-4"><strong>Máscaras e CIDR:</strong> Lembre-se que o CIDR (ex: /24) indica quantos bits são da rede. <span class="highlight">/24 = 255.255.255.0</span>. Para calcular hosts: <code class="bg-slate-100 px-1">2^n - 2</code> (onde n é o número de bits de host).</p>
+
+            <!-- Protocolos de Aplicação -->
+            <h2 class="section-title">5. Protocolos de Aplicação e Portas</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Protocolo</th>
+                            <th>Porta Padrão</th>
+                            <th>Função Crítica para Prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>DNS</strong></td>
+                            <td>53</td>
+                            <td>Resolução de nomes. Usa UDP (consultas) e TCP (transferência de zona).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HTTP / HTTPS</strong></td>
+                            <td>80 / 443</td>
+                            <td>HTTPS usa SSL/TLS para cifrar o HTTP.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DHCP</strong></td>
+                            <td>67 (S) / 68 (C)</td>
+                            <td>Configuração dinâmica de IPs (<span class="highlight">DORA</span>: Discover, Offer, Request, Ack).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SNMP</strong></td>
+                            <td>161 / 162</td>
+                            <td>Gerenciamento de redes (Agentes e Gerentes).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SMTP / POP3 / IMAP</strong></td>
+                            <td>25 (ou 587) / 110 / 143</td>
+                            <td>SMTP envia; POP3 e IMAP recebem (IMAP mantém sincronia no servidor).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Meios Físicos -->
+            <h2 class="section-title">6. Meios de Transmissão e Camada Física</h2>
+            <ul class="memo-list">
+                <li><strong>Par Trançado (UTP/STP):</strong> Cat5e (1Gbps), Cat6 (10Gbps). Conector RJ-45.</li>
+                <li><strong>Fibra Óptica:</strong> <span class="highlight">Monomodo</span> (longas distâncias, laser) vs <span class="highlight">Multimodo</span> (curtas distâncias, LED). Imune a interferências eletromagnéticas.</li>
+                <li><strong>Wireless (802.11):</strong> <span class="highlight">802.11ac (Wi-Fi 5)</span> opera apenas em 5GHz; <span class="highlight">802.11ax (Wi-Fi 6)</span> opera em 2.4 e 5GHz.</li>
+            </ul>
+
+            <!-- Análise CEFETMINAS -->
+            <h2 class="section-title">7. Análise FCM: Tendências e "Peguinhas"</h2>
+            <div class="important-note" style="border-left-color: #f59e0b; background-color: #fffbeb;">
+                <p><strong>Peguinha 1:</strong> A banca adora confundir <strong>Hub</strong> (camada 1, broadcast) com <strong>Switch</strong> (camada 2, unicast através da tabela MAC).</p>
+                <p class="mt-2"><strong>Peguinha 2:</strong> <strong>Protocolo ARP:</strong> Ele não roteia. Ele apenas descobre o endereço físico (MAC) a partir de um IP conhecido dentro da mesma rede local.</p>
+                <p class="mt-2"><strong>Tendência EBTT:</strong> Questões técnicas que pedem para identificar a porta correta de protocolos de e-mail ou a diferença entre o IPv6 e IPv4 quanto à fragmentação (No IPv6, roteadores não fragmentam!).</p>
+            </div>
+
+            <!-- Conclusão e Botão -->
+            <div class="mt-16 border-t pt-8 text-center">
+                <p class="text-slate-600 mb-6">Conteúdo revisado conforme o edital IFAM. Pronto para os exercícios?</p>
+                <a href="20questoes.html" class="btn-link shadow-xl">
+                    Acessar Banco de Questões
+                </a>
+            </div>
+
+        </article>
+
+        <footer class="mt-20 text-center text-slate-400 text-xs border-t pt-8">
+            Documento Gerado para Estudos - Professor de Informática IFAM
+        </footer>
+    </div>
+
+</body>
+</html>

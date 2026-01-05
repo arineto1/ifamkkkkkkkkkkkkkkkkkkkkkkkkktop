@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Redes de Computadores (CEFETMINAS)</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --primary-color: #2980b9;
+            --secondary-color: #ecf0f1;
+            --accent-color: #27ae60;
+            --error-color: #c0392b;
+            --border-color: #dcdde1;
+            --max-width: 800px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--secondary-color);
+            padding: 2rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        header p {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+
+        .container {
+            width: 90%;
+            max-width: var(--max-width);
+            padding-bottom: 5rem;
+        }
+
+        .question-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: block;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .question-text {
+            margin-bottom: 1.5rem;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            padding: 0.8rem;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-item:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .option-item input {
+            margin-top: 0.4rem;
+            margin-right: 1rem;
+            cursor: pointer;
+        }
+
+        .option-label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        button:hover {
+            background-color: #1a5276;
+            transform: translateY(-2px);
+        }
+
+        #results-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .score-box {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .resolution-box {
+            background-color: #f9f9f9;
+            border-left: 5px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .correct-answer-indicator {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .wrong-answer-indicator {
+            color: var(--error-color);
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4rem; }
+            .question-card { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado: Infraestrutura de Redes</h1>
+    <p>Meios de Transmissão e Topologias - Estilo Fundação CEFETMINAS</p>
+</header>
+
+<div class="container">
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- As questões serão injetadas via JavaScript -->
+        </div>
+
+        <div class="controls">
+            <button type="button" id="submit-btn" onclick="processQuiz()">Finalizar e Ver Gabarito</button>
+        </div>
+    </form>
+
+    <div id="results-section">
+        <div class="score-box">
+            <span>Você acertou</span>
+            <span class="score-value" id="score-text">0 / 10</span>
+            <span id="score-percentage">0%</span>
+        </div>
+
+        <h2 style="color: var(--primary-color);">Resoluções Comentadas</h2>
+        <div id="resolutions-container">
+            <!-- As resoluções serão injetadas aqui -->
+        </div>
+        
+        <div class="controls">
+            <button type="button" onclick="window.location.reload()">Refazer Simulado</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            title: "Questão 1",
+            text: "Uma instituição federal de ensino deseja interligar seus cinco principais data centers distribuídos em um campus universitário. A exigência da diretoria de TI é que a rede possua a máxima tolerância a falhas possível: a ruptura de qualquer cabo individual ou a falha de qualquer porta de rede não deve isolar nenhum data center dos demais, garantindo sempre um caminho alternativo imediato. Qual topologia física deve ser especificada no projeto para atender estritamente a esse requisito de redundância máxima, e qual é a consequência direta dessa escolha em termos de escalabilidade física?",
+            options: [
+                "A) Topologia em Estrela; a consequência é a dependência crítica do switch central, que se torna um ponto único de falha.",
+                "B) Topologia em Anel Duplo (FDDI); a consequência é a complexidade do protocolo de token, embora use menos cabos que a malha.",
+                "C) Topologia em Malha Total (Full Mesh); a consequência é o alto custo e complexidade de cabeamento, pois o número de enlaces cresce quadraticamente em relação ao número de nós.",
+                "D) Topologia em Barramento; a consequência é a facilidade de instalação, mas com baixa tolerância a falhas nos terminadores.",
+                "E) Topologia em Árvore; a consequência é a hierarquização do tráfego, facilitando a gestão mas mantendo pontos de falha nos nós raízes."
+            ],
+            correct: 2, // Index C
+            resolution: "**Alternativa C (Malha Total / Full Mesh)**<br>O requisito chave é 'máxima tolerância a falhas'. A topologia em Malha Total conecta cada nó a todos os outros. Se o link A-B cai, existem múltiplos caminhos alternativos. O número de links cresce pela fórmula N(N-1)/2, o que torna o custo elevado (consequência citada)."
+        },
+        {
+            id: 2,
+            title: "Questão 2",
+            text: "O setor de engenharia de uma operadora de telecomunicações está projetando um link óptico metropolitano (MAN) para conectar duas centrais a uma distância de 35 km, sem o uso de repetidores ou amplificadores intermediários. O link deve suportar taxas de transmissão de 40 Gbps. Considerando as características físicas das fibras ópticas, qual tipo de fibra e qual fenômeno físico associado justificam a escolha correta para este cenário?",
+            options: [
+                "A) Fibra Multimodo; devido ao seu núcleo mais largo, que facilita a injeção de luz por LEDs de alta potência, superando a atenuação em longas distâncias.",
+                "B) Fibra Monomodo; devido ao seu núcleo estreito que permite apenas um modo de propagação, eliminando virtualmente a dispersão modal e permitindo alcances quilométricos.",
+                "C) Fibra Multimodo; pois a dispersão cromática é anulada pelo uso de lasers VCSEL, permitindo alcançar até 50 km.",
+                "D) Fibra Monomodo; pois é o único meio que utiliza reflexão interna total, fenômeno que não ocorre nas fibras multimodo.",
+                "E) Fibra de Índice Gradual; pois o índice de refração variável corrige totalmente a atenuação do sinal, tornando o alcance infinito."
+            ],
+            correct: 1, // Index B
+            resolution: "**Alternativa B (Fibra Monomodo)**<br>Para 35km a 40Gbps, apenas a fibra Monomodo (SMF) é viável. Seu núcleo fino (~9 µm) elimina a **Dispersão Modal** (típica da multimodo), permitindo que o sinal percorra grandes distâncias sem deformação significativa."
+        },
+        {
+            id: 3,
+            title: "Questão 3",
+            text: "Analise as afirmativas abaixo referentes às especificações técnicas dos padrões de redes sem fio (Wi-Fi) estabelecidos pelo IEEE:<br><br>I. O padrão IEEE 802.11ac (Wi-Fi 5) foi projetado para operar exclusivamente na frequência de 5 GHz para transmissão de dados de alta velocidade.<br>II. O padrão IEEE 802.11ax (Wi-Fi 6) introduziu a operação na faixa de frequência de 6 GHz, abandonando o suporte às frequências de 2.4 GHz e 5 GHz.<br>III. O padrão IEEE 802.11n (Wi-Fi 4) trouxe a inovação da operação Dual Band, podendo funcionar tanto em 2.4 GHz quanto em 5 GHz.<br><br>Estão CORRETAS as afirmativas:",
+            options: [
+                "A) I e II, apenas.",
+                "B) I e III, apenas.",
+                "C) II e III, apenas.",
+                "D) I, II e III.",
+                "E) III, apenas."
+            ],
+            correct: 1, // Index B
+            resolution: "**Alternativa B (I e III)**<br>I está correta (802.11ac é exclusivo 5GHz para dados rápidos). III está correta (802.11n introduziu o Dual Band). II está incorreta pois o Wi-Fi 6 opera em 2.4 e 5GHz; a versão para 6GHz é especificamente o **Wi-Fi 6E**."
+        },
+        {
+            id: 4,
+            title: "Questão 4",
+            text: "Um técnico de laboratório do CEFET-MG foi incumbido de certificar o cabeamento de uma nova sala de servidores. O projeto exige suporte nativo a 10 Gigabit Ethernet (10GBASE-T) em toda a extensão do cabeamento horizontal, que pode chegar a 95 metros de distância do patch panel até a tomada. De acordo com as normas TIA/EIA, qual é a categoria mínima de cabo de par trançado (UTP/STP) que garante essa performance nessa distância específica?",
+            options: [
+                "A) Categoria 5e.",
+                "B) Categoria 6.",
+                "C) Categoria 6a.",
+                "D) Categoria 3.",
+                "E) Cabo Coaxial RG-6."
+            ],
+            correct: 2, // Index C
+            resolution: "**Alternativa C (Categoria 6a)**<br>A Cat 6 suporta 10Gbps apenas até 55 metros. Para garantir 10Gbps na distância total de 100 metros (95m de link + margem), a norma exige **Cat 6a** (Augmented)."
+        },
+        {
+            id: 5,
+            title: "Questão 5",
+            text: "Em um laboratório de informática legado, os computadores estão conectados fisicamente a um equipamento central através de cabos de par trançado individuais. No entanto, observando o tráfego de rede com um sniffer, um analista percebe que quando o Computador A envia um pacote para o Computador B, o Computador C também recebe esse sinal eletricamente, e ocorrem colisões frequentes que ativam o algoritmo de backoff do CSMA/CD. Assinale a alternativa que classifica corretamente a topologia física e a topologia lógica desta rede, bem como identifica o equipamento central provável.",
+            options: [
+                "A) Física: Estrela | Lógica: Estrela | Equipamento: Switch.",
+                "B) Física: Barramento | Lógica: Barramento | Equipamento: Cabo Coaxial.",
+                "C) Física: Estrela | Lógica: Barramento | Equipamento: Hub.",
+                "D) Física: Anel | Lógica: Ponto-a-Ponto | Equipamento: MAU (Multistation Access Unit).",
+                "E) Física: Malha | Lógica: Broadcast | Equipamento: Roteador."
+            ],
+            correct: 2, // Index C
+            resolution: "**Alternativa C (Física: Estrela | Lógica: Barramento | Hub)**<br>A conexão física via cabos individuais para um centro é uma estrela. Contudo, se todos ouvem todos e há colisões, a lógica é de barramento compartilhado, característica típica de um **Hub**."
+        },
+        {
+            id: 6,
+            title: "Questão 6",
+            text: "Durante a manutenção de um sistema industrial antigo, um técnico se depara com uma rede configurada em topologia física de barramento utilizando cabo coaxial fino (10Base2). Ele observa que a rede está instável e com muitos erros de CRC. Ao verificar as extremidades do cabo principal, ele nota a ausência de um componente essencial. Que componente é este, qual é sua impedância elétrica padrão para este tipo de rede e qual é a sua função física?",
+            options: [
+                "A) Conector T; 75 Ohms; derivar o sinal para a placa de rede.",
+                "B) Terminador Resistivo; 50 Ohms; absorver o sinal para evitar reflexão (onda estacionária).",
+                "C) Transceptor Vampiro; 100 Ohms; perfurar o isolamento para contato elétrico.",
+                "D) Balun; 50 Ohms; converter o sinal balanceado em não balanceado.",
+                "E) Repetidor; 75 Ohms; amplificar o sinal para o próximo segmento."
+            ],
+            correct: 1, // Index B
+            resolution: "**Alternativa B (Terminador Resistivo; 50 Ohms)**<br>No barramento coaxial (10Base2), a falta do terminador causa a reflexão do sinal (eco), gerando erros de CRC. A impedância correta para dados Ethernet é 50 Ohms."
+        },
+        {
+            id: 7,
+            title: "Questão 7",
+            text: "Em uma questão discursiva sobre a modernização de redes, um candidato afirmou que 'as redes Wi-Fi modernas (Wi-Fi 6) devem substituir completamente o cabeamento estruturado em ambientes corporativos críticos, pois as ondas de rádio viajam na velocidade da luz, proporcionando latência menor que os cabos de cobre'. Sob o ponto de vista técnico estrito, essa afirmação está INCORRETA principalmente porque:",
+            options: [
+                "A) As ondas de rádio viajam mais lentamente que os elétrons no cobre.",
+                "B) O Wi-Fi opera em modo Half-Duplex (meio compartilhado) e utiliza mecanismos de arbitragem de acesso (CSMA/CA) que introduzem jitter e latência de processamento, enquanto o cabo comutado é Full-Duplex e determinístico.",
+                "C) O Wi-Fi não suporta larguras de banda superiores a 54 Mbps, sendo insuficiente para corporações.",
+                "D) A criptografia WPA3 introduz um atraso de segundos em cada pacote, inviabilizando o uso em tempo real.",
+                "E) Os cabos de cobre são imunes à latência devido ao efeito pelicular (skin effect)."
+            ],
+            correct: 1, // Index B
+            resolution: "**Alternativa B (Half-Duplex e Arbitragem)**<br>O Wi-Fi é Half-Duplex (transmite ou recebe) e usa CSMA/CA (espera antes de falar), o que gera latência variável. Redes cabeadas com Switch são Full-Duplex (transmite e recebe simultaneamente) e dedicadas, sendo muito mais eficientes."
+        },
+        {
+            id: 8,
+            title: "Questão 8",
+            text: "Sobre as características operacionais da topologia em Anel (como em redes Token Ring ou FDDI), analise as assertivas e marque a alternativa correta:",
+            options: [
+                "A) É uma topologia inerentemente robusta, pois se um computador queimar, o anel se fecha automaticamente sem necessidade de hardware adicional.",
+                "B) Utiliza o protocolo CSMA/CD para detecção de colisões, semelhante ao Ethernet.",
+                "C) Oferece acesso determinístico ao meio: o uso de um token garante que cada estação terá a oportunidade de transmitir em um intervalo de tempo previsível, eliminando colisões físicas.",
+                "D) O fluxo de dados é bidirecional simultâneo em um anel simples, permitindo que os dados escolham o caminho mais curto.",
+                "E) Exige o uso de um switch central para gerenciar a passagem do bastão."
+            ],
+            correct: 2, // Index C
+            resolution: "**Alternativa C (Determinismo)**<br>A grande vantagem do Anel (Token Ring) era o determinismo. O 'token' garante que apenas um transmita por vez, eliminando colisões e permitindo prever o tempo de acesso ao meio."
+        },
+        {
+            id: 9,
+            title: "Questão 9",
+            text: "A padronização de conectores é vital para a interoperabilidade. Qual dos seguintes conectores de fibra óptica é classificado como SFF (Small Form Factor), possui sistema de trava tipo 'push-pull' (clique) e é o padrão de mercado para interfaces transceptoras SFP/SFP+ em switches modernos?",
+            options: [
+                "A) ST (Straight Tip).",
+                "B) SC (Subscriber Connector).",
+                "C) LC (Lucent Connector).",
+                "D) FC (Ferrule Connector).",
+                "E) MT-RJ."
+            ],
+            correct: 2, // Index C
+            resolution: "**Alternativa C (LC)**<br>O conector LC é o padrão Small Form Factor (metade do tamanho do SC) com trava push-pull, amplamente utilizado em transceptores SFP em switches modernos de alta densidade."
+        },
+        {
+            id: 10,
+            title: "Questão 10",
+            text: "Em cabos de par trançado UTP (Unshielded Twisted Pair), não há blindagem física para bloquear a interferência eletromagnética entre os pares internos do mesmo cabo. Qual característica construtiva é a principal responsável por mitigar o efeito da diafonia (Crosstalk) entre os pares adjacentes (ex: par azul interferindo no par laranja)?",
+            options: [
+                "A) A espessura da capa externa de PVC.",
+                "B) O uso de um separador plástico central (spline) apenas.",
+                "C) A utilização de taxas de trançamento (passos de torção) diferentes para cada par, evitando que os condutores fiquem paralelos por longas distâncias.",
+                "D) A injeção de um sinal de ruído branco para cancelamento ativo.",
+                "E) O uso de fios de bitola mais grossa (22 AWG ao invés de 24 AWG)."
+            ],
+            correct: 2, // Index C
+            resolution: "**Alternativa C (Passos de Torção Diferentes)**<br>Ao usar diferentes taxas de torção para cada par, o fabricante garante que os fios não fiquem paralelos por muito tempo, o que minimiza a indução magnética e o crosstalk."
+        }
+    ];
+
+    function loadQuiz() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <div class="option-item" onclick="selectOption(${index}, ${optIndex})">
+                        <input type="radio" name="question${index}" id="q${index}o${optIndex}" value="${optIndex}">
+                        <label class="option-label" for="q${index}o${optIndex}">${opt}</label>
+                    </div>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-header">${q.title}</span>
+                <div class="question-text">${q.text}</div>
+                <div class="options-list">${optionsHtml}</div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectOption(qIdx, optIdx) {
+        document.getElementById(`q${qIdx}o${optIdx}`).checked = true;
+    }
+
+    function processQuiz() {
+        let score = 0;
+        const total = quizData.length;
+        const resContainer = document.getElementById('resolutions-container');
+        resContainer.innerHTML = '';
+
+        // Validar se todas foram respondidas
+        for(let i=0; i<total; i++) {
+            const selected = document.querySelector(`input[name="question${i}"]:checked`);
+            if(!selected) {
+                alert("Por favor, responda todas as questões antes de finalizar.");
+                return;
+            }
+        }
+
+        // Calcular e gerar resoluções
+        quizData.forEach((q, i) => {
+            const selected = parseInt(document.querySelector(`input[name="question${i}"]:checked`).value);
+            const isCorrect = selected === q.correct;
+            
+            if(isCorrect) score++;
+
+            const resDiv = document.createElement('div');
+            resDiv.className = 'question-card';
+            resDiv.innerHTML = `
+                <span class="question-header">${q.title}</span>
+                <div class="question-text">${q.text}</div>
+                <p><strong>Sua resposta:</strong> ${q.options[selected]} 
+                    ${isCorrect ? '<span class="correct-answer-indicator">(Correto!)</span>' : '<span class="wrong-answer-indicator">(Incorreto)</span>'}
+                </p>
+                ${!isCorrect ? `<p class="correct-answer-indicator">Resposta Correta: ${q.options[q.correct]}</p>` : ''}
+                <div class="resolution-box">
+                    <strong>Resolução:</strong><br>
+                    ${q.resolution}
+                </div>
+            `;
+            resContainer.appendChild(resDiv);
+        });
+
+        // Exibir resultados
+        document.getElementById('quiz-form').style.display = 'none';
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('score-text').innerText = `${score} / ${total}`;
+        document.getElementById('score-percentage').innerText = `${(score/total)*100}% de aproveitamento`;
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = loadQuiz;
+</script>
+
+</body>
+</html>

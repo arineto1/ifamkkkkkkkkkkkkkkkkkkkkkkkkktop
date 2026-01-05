@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Roteamento - Fundação CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #f9fafb;
+            --text-color: #1f2937;
+            --card-bg: #ffffff;
+            --accent-color: #2563eb;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .question-text {
+            font-family: 'Merriweather', serif;
+            font-size: 1.125rem;
+        }
+
+        .option-label {
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 2px solid #e5e7eb;
+        }
+
+        .option-label:hover {
+            background-color: #f3f4f6;
+            border-color: #d1d5db;
+        }
+
+        input[type="radio"]:checked + .option-content {
+            border-color: var(--accent-color);
+            background-color: #eff6ff;
+        }
+
+        .resolution-box {
+            display: none;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .correct { color: #059669; font-weight: bold; }
+        .incorrect { color: #dc2626; font-weight: bold; }
+        
+        #results-section {
+            display: none;
+        }
+
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body class="py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+        <header class="mb-12 border-b pb-6">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Simulado: Redes de Computadores</h1>
+            <p class="text-gray-600">Tópico: Roteamento e Protocolos | Estilo: Fundação CEFETMINAS</p>
+        </header>
+
+        <form id="quiz-form">
+            <!-- As questões serão inseridas aqui via JavaScript -->
+            <div id="questions-container"></div>
+
+            <div class="mt-12 mb-24 no-print">
+                <button type="submit" id="submit-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg shadow-lg transition duration-200 text-lg">
+                    Finalizar Quiz e Ver Resultados
+                </button>
+            </div>
+        </form>
+
+        <!-- Seção de Resultados -->
+        <section id="results-section" class="bg-white p-8 rounded-xl shadow-xl mb-12 border border-blue-100">
+            <h2 class="text-2xl font-bold mb-4 text-blue-900">Resultado do Desempenho</h2>
+            <div class="flex items-center space-x-4 mb-6">
+                <div id="score-circle" class="text-4xl font-black text-blue-600 bg-blue-50 w-24 h-24 rounded-full flex items-center justify-center border-4 border-blue-200">
+                    0/10
+                </div>
+                <div>
+                    <p id="score-text" class="text-lg text-gray-700"></p>
+                    <p class="text-sm text-gray-500">Confira abaixo as resoluções detalhadas de cada questão.</p>
+                </div>
+            </div>
+            <button onclick="window.location.reload()" class="text-blue-600 font-semibold hover:underline">Refazer Simulado</button>
+        </section>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                question: "O BGP (Border Gateway Protocol) é o protocolo de roteamento padrão utilizado para a interconexão de Sistemas Autônomos (AS) na Internet. Em relação às suas características operacionais e mecanismos de prevenção de loops, analise as afirmativas a seguir:\n\nI. O BGP utiliza o protocolo de transporte UDP na porta 179 para garantir a entrega rápida de atualizações de roteamento, priorizando a velocidade sobre a confiabilidade.\nII. O atributo AS-PATH é fundamental para a lógica de vetor de caminho do BGP; se um roteador recebe um anúncio de rota que contém seu próprio número de AS na lista AS-PATH, ele descarta o anúncio para evitar loops.\nIII. Diferente dos protocolos de estado de enlace que mantêm um mapa topológico completo, o BGP baseia suas decisões em políticas e atributos de caminho trocados entre peers configurados manualmente.\nIV. O estabelecimento de sessões eBGP (External BGP) geralmente requer que os roteadores sejam diretamente conectados, enquanto sessões iBGP (Internal BGP) podem ser estabelecidas entre roteadores não adjacentes, desde que haja conectividade IP entre eles.\n\nEstão corretas as afirmativas:",
+                options: {
+                    A: "I e II, apenas.",
+                    B: "II, III e IV, apenas.",
+                    C: "I, III e IV, apenas.",
+                    D: "I, II, III e IV.",
+                    E: "II e III, apenas."
+                },
+                answer: "B",
+                resolution: "I (Falso): O BGP utiliza TCP (porta 179) e não UDP. A confiabilidade do TCP é essencial para transportar as grandes tabelas de roteamento da Internet. II (Verdadeiro): O mecanismo primário de prevenção de loops do BGP é verificar o atributo AS-PATH. III (Verdadeiro): BGP é um protocolo de vetor de caminho e baseado em políticas. IV (Verdadeiro): Sessões eBGP têm TTL=1 por padrão, enquanto iBGP pode atravessar múltiplos saltos."
+            },
+            {
+                id: 2,
+                question: "Um administrador de rede foi chamado para resolver um problema de conectividade entre a Matriz e a Filial de uma empresa. O diagrama da rede mostra que o Roteador da Matriz (R1) está conectado ao Roteador da Filial (R2) através de um link serial.\n• Rede da Filial (Destino): 192.168.50.0/24.\n• IP da interface Serial de R1: 200.1.1.1/30.\n• IP da interface Serial de R2: 200.1.1.2/30.\n\nAo analisar a tabela de roteamento de R1, o administrador percebeu a ausência de uma rota para a filial. Para configurar uma rota estática correta no Roteador R1, quais valores devem ser utilizados para os parâmetros Destination Network, Subnet Mask e Next Hop Address, respectivamente?",
+                options: {
+                    A: "192.168.50.0; 255.255.255.0; 200.1.1.1",
+                    B: "192.168.50.1; 255.255.255.255; 200.1.1.2",
+                    C: "192.168.50.0; 255.255.255.0; 200.1.1.2",
+                    D: "200.1.1.0; 255.255.255.252; 192.168.50.1",
+                    E: "0.0.0.0; 0.0.0.0; 200.1.1.1"
+                },
+                answer: "C",
+                resolution: "A rota estática deve apontar para a Rede de Destino (192.168.50.0) com a Máscara correta (/24 = 255.255.255.0). O Next Hop deve ser o endereço IP do roteador vizinho (R2) na rede conectada, que é 200.1.1.2."
+            },
+            {
+                id: 3,
+                question: "As redes de computadores são formadas pela interconexão de diversos dispositivos de hardware, cada um com funções específicas no modelo de referência OSI. Associe os dispositivos listados abaixo às suas respectivas definições funcionais:\n\n1. Roteador\n2. Switch (L2)\n3. Gateway\n\n( ) Dispositivo que opera na camada de Enlace, utiliza endereços MAC para encaminhamento e cria múltiplos domínios de colisão, preservando a largura de banda.\n( ) Dispositivo que atua na camada de Rede, utiliza endereços lógicos (IP) para interconectar redes distintas e determinar o melhor caminho através da análise de métricas.\n( ) Dispositivo que atua como ponto de conversão entre protocolos de redes díspares ou como ponto de saída padrão de uma rede local para uma rede pública (Internet).",
+                options: {
+                    A: "2, 1, 3.",
+                    B: "1, 2, 3.",
+                    C: "3, 1, 2.",
+                    D: "2, 3, 1.",
+                    E: "1, 3, 2."
+                },
+                answer: "A",
+                resolution: "(2) Switch: Camada de Enlace, endereços MAC, microsegmentação. (1) Roteador: Camada de Rede, endereços IP. (3) Gateway: Ponto de conversão ou saída padrão."
+            },
+            {
+                id: 4,
+                question: "O protocolo OSPF (Open Shortest Path First) é amplamente utilizado em redes corporativas devido à sua robustez e escalabilidade. Sobre o funcionamento deste protocolo, assinale a alternativa INCORRETA:",
+                options: {
+                    A: "O OSPF é um protocolo de estado de enlace (Link State) que utiliza o algoritmo de Dijkstra (SPF) para calcular a árvore de caminhos mais curtos livre de loops.",
+                    B: "Para garantir a escalabilidade, o OSPF utiliza uma hierarquia de dois níveis, onde a Área 0 (Backbone) atua como o núcleo transitivo para conectar as demais áreas regulares.",
+                    C: "Em redes multiacesso como Ethernet, o OSPF elege um Roteador Designado (DR) e um Roteador Designado de Backup (BDR) para minimizar a quantidade de adjacências e o tráfego de inundação de LSAs.",
+                    D: "O OSPF utiliza o protocolo de transporte UDP na porta 520 para enviar suas atualizações, o que garante compatibilidade com o protocolo RIP legado.",
+                    E: "Os roteadores OSPF trocam pacotes Hello periodicamente para descobrir vizinhos e monitorar a saúde das adjacências estabelecidas."
+                },
+                answer: "D",
+                resolution: "O OSPF não utiliza UDP nem a porta 520 (que pertence ao RIP). O OSPF roda diretamente sobre o protocolo IP (número de protocolo 89)."
+            },
+            {
+                id: 5,
+                question: "Considere a seguinte definição técnica:\n\n\"Trata-se de uma opção de roteamento do protocolo IP (v4) que permite ao remetente de um datagrama especificar a lista de roteadores que o pacote deve visitar em seu caminho até o destino, substituindo a decisão de roteamento padrão salto-a-salto dos roteadores intermediários.\"\n\nEsta definição refere-se ao conceito de:",
+                options: {
+                    A: "Policy-Based Routing (PBR).",
+                    B: "Roteamento Estático.",
+                    C: "Source Routing (Roteamento na origem).",
+                    D: "Roteamento por Vetor de Caminho.",
+                    E: "Multiprotocol Label Switching (MPLS)."
+                },
+                answer: "C",
+                resolution: "A definição descreve o Source Routing (Roteamento na fonte), permitindo que o emissor dite o caminho explicitamente."
+            },
+            {
+                id: 6,
+                question: "No contexto dos algoritmos de roteamento dinâmico, o problema da \"contagem ao infinito\" (count-to-infinity) é uma vulnerabilidade clássica associada a protocolos de Vetor de Distância, como o RIP. Qual dos seguintes mecanismos é utilizado especificamente para mitigar este problema, impedindo que um roteador anuncie uma rota de volta para o vizinho que a originou?",
+                options: {
+                    A: "Link State Advertisement (LSA).",
+                    B: "Algoritmo de Dijkstra.",
+                    C: "Three-Way Handshake.",
+                    D: "Split Horizon.",
+                    E: "Keepalive Timer."
+                },
+                answer: "D",
+                resolution: "Split Horizon é a técnica que impede o envio de informações de roteamento de volta na direção de onde vieram, prevenindo loops de dois nós."
+            },
+            {
+                id: 7,
+                question: "Uma tabela de roteamento pode ser populada de três maneiras principais: redes diretamente conectadas, rotas estáticas e protocolos de roteamento dinâmico. Quando um roteador aprende múltiplos caminhos para a mesma rede de destino (mesmo prefixo e máscara) através de fontes diferentes (ex: via OSPF e via Rota Estática), qual critério é utilizado para determinar qual rota será instalada na tabela de roteamento ativa?",
+                options: {
+                    A: "A métrica do protocolo (menor custo vence).",
+                    B: "A Distância Administrativa (menor valor vence).",
+                    C: "O tempo de atividade da rota (rota mais antiga vence).",
+                    D: "A largura de banda da interface (maior banda vence).",
+                    E: "O endereço IP do próximo salto (menor IP vence)."
+                },
+                answer: "B",
+                resolution: "Quando o mesmo destino é aprendido por fontes diferentes, o roteador usa a Distância Administrativa (AD). A métrica só é usada para desempatar rotas aprendidas pelo mesmo protocolo."
+            },
+            {
+                id: 8,
+                question: "Analise a seguinte entrada de uma tabela de roteamento de um roteador Cisco:\n\nR 172.16.1.0/24 [120/2] via 192.168.10.2, 00:00:12, FastEthernet0/0\n\nCom base nesta entrada, é correto afirmar que:",
+                options: {
+                    A: "A rota foi aprendida através do protocolo OSPF, indicado pela letra 'R'.",
+                    B: "A Distância Administrativa da rota é 2 e a métrica é 120.",
+                    C: "O protocolo RIP originou esta rota, a Distância Administrativa é 120 e o destino está a 2 saltos de distância.",
+                    D: "O roteador 192.168.10.2 é o destino final do pacote.",
+                    E: "Esta é uma rota estática com métrica 2."
+                },
+                answer: "C",
+                resolution: "R = RIP. [120/2] -> 120 é a Distância Administrativa e 2 é a métrica (saltos no RIP)."
+            },
+            {
+                id: 9,
+                question: "Em relação aos problemas comuns de infraestrutura de rede e roteamento, analise as afirmativas:\n\nI. A falta de conectividade entre duas sub-redes distintas pode ser causada pela ausência de um gateway padrão configurado nos hosts ou por uma tabela de roteamento incompleta no roteador intermediário.\nII. O comando ping utiliza o protocolo ICMP para testar a alcançabilidade, mas o sucesso do ping não garante que a rota de volta (return path) siga o mesmo caminho da rota de ida (forward path), devido à natureza do roteamento assimétrico.\nIII. Um endereço IP de loopback (ex: 127.0.0.1) é utilizado para testar a pilha de protocolos TCP/IP local, não gerando tráfego na rede física.\n\nEstão corretas as afirmativas:",
+                options: {
+                    A: "I, apenas.",
+                    B: "I e II, apenas.",
+                    C: "II e III, apenas.",
+                    D: "I, II e III."
+                },
+                answer: "D",
+                resolution: "I: Causas clássicas de falha. II: Roteamento assimétrico é comum na Internet. III: Loopback é interno ao host (stack TCP/IP)."
+            },
+            {
+                id: 10,
+                question: "O LSA (Link State Advertisement) é a unidade fundamental de informação no protocolo OSPF. Qual tipo de LSA é gerado por um ASBR (Autonomous System Boundary Router) para descrever rotas para destinos externos ao Sistema Autônomo OSPF (como rotas para a Internet ou redistribuídas de outros protocolos)?",
+                options: {
+                    A: "LSA Tipo 1 (Router LSA).",
+                    B: "LSA Tipo 2 (Network LSA).",
+                    C: "LSA Tipo 3 (Summary LSA).",
+                    D: "LSA Tipo 4 (ASBR Summary LSA).",
+                    E: "LSA Tipo 5 (External LSA)."
+                },
+                answer: "E",
+                resolution: "LSA Tipo 5 (External LSA) é gerado pelo ASBR para anunciar redes externas ao domínio OSPF."
+            }
+        ];
+
+        const container = document.getElementById('questions-container');
+
+        // Renderizar questões
+        quizData.forEach((q, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = "mb-12 bg-white p-6 sm:p-8 rounded-xl shadow-sm border border-gray-100 question-card";
+            qDiv.id = `q-card-${q.id}`;
+
+            let optionsHtml = '';
+            for (const [key, value] of Object.entries(q.options)) {
+                optionsHtml += `
+                    <label class="option-label block relative mb-3 rounded-lg overflow-hidden">
+                        <input type="radio" name="q${q.id}" value="${key}" class="hidden peer" required>
+                        <div class="option-content p-4 peer-checked:bg-blue-50 peer-checked:border-blue-500 border-2 border-transparent rounded-lg flex items-start space-x-3">
+                            <span class="font-bold text-blue-600">${key})</span>
+                            <span class="text-gray-700">${value}</span>
+                        </div>
+                    </label>
+                `;
+            }
+
+            qDiv.innerHTML = `
+                <div class="flex items-center space-x-2 mb-4">
+                    <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-bold">Questão ${index + 1}</span>
+                </div>
+                <div class="question-text text-gray-800 mb-6 whitespace-pre-line">${q.question}</div>
+                <div class="options-container space-y-2">
+                    ${optionsHtml}
+                </div>
+                <div id="res-${q.id}" class="resolution-box mt-6 p-4 bg-gray-50 rounded-lg text-sm text-gray-700">
+                    <p class="font-bold mb-2 text-gray-900">Resolução:</p>
+                    <p>${q.resolution}</p>
+                    <p class="mt-2"><strong>Gabarito Oficial: <span class="text-blue-600">${q.answer}</span></strong></p>
+                </div>
+            `;
+            container.appendChild(qDiv);
+        });
+
+        // Lógica de Submissão
+        document.getElementById('quiz-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let score = 0;
+            const formData = new FormData(this);
+
+            quizData.forEach(q => {
+                const userAnswer = formData.get(`q${q.id}`);
+                const resBox = document.getElementById(`res-${q.id}`);
+                const qCard = document.getElementById(`q-card-${q.id}`);
+                
+                // Mostrar resoluções
+                resBox.style.display = 'block';
+
+                if (userAnswer === q.answer) {
+                    score++;
+                    qCard.classList.add('border-green-200', 'bg-green-50');
+                } else {
+                    qCard.classList.add('border-red-100', 'bg-red-50');
+                }
+
+                // Desabilitar inputs
+                const inputs = qCard.querySelectorAll('input');
+                inputs.forEach(i => i.disabled = true);
+            });
+
+            // Exibir resultados
+            const resultsSection = document.getElementById('results-section');
+            resultsSection.style.display = 'block';
+            document.getElementById('score-circle').innerText = `${score}/10`;
+            
+            let message = "";
+            if (score === 10) message = "Desempenho Perfeito! Você dominou o conteúdo.";
+            else if (score >= 7) message = "Ótimo desempenho! Continue revisando os pontos de dúvida.";
+            else if (score >= 5) message = "Desempenho regular. Sugerimos focar mais nos protocolos BGP e OSPF.";
+            else message = "Atenção: Revise os fundamentos de roteamento estático e dinâmico.";
+            
+            document.getElementById('score-text').innerText = message;
+            
+            // Scroll para o topo dos resultados
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Ocultar botão de envio
+            document.getElementById('submit-btn').style.display = 'none';
+        });
+    </script>
+</body>
+</html>

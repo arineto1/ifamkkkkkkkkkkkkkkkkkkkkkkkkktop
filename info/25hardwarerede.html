@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Técnica IFAM - Hardware de Redes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Merriweather', serif;
+            color: #111827;
+        }
+
+        .grifado {
+            background-color: #fef3c7;
+            padding: 0 2px;
+            font-weight: 600;
+            border-bottom: 1px solid #f59e0b;
+        }
+
+        .container-aula {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Impede o scroll horizontal */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            word-wrap: break-word; /* Força quebra de texto nas células */
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f9fafb;
+            color: #374151;
+            font-weight: 700;
+        }
+
+        .box-alerta {
+            border: 1px solid #e5e7eb;
+            border-left: 5px solid #ef4444;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background-color: #fffafb;
+        }
+
+        .audio-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .btn-navegacao {
+            display: inline-block;
+            background-color: #111827;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+            margin-top: 2rem;
+        }
+
+        .btn-navegacao:hover {
+            background-color: #374151;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 640px) {
+            .container-aula { padding: 1rem; }
+            th, td { font-size: 0.8rem; padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-aula">
+        <!-- Áudio e Introdução -->
+        <header class="text-center mb-12">
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">Hardware de Redes: Tipos e Aplicações</h1>
+            <p class="text-xl text-gray-500 mb-8">Conteúdo Integral para o Concurso IFAM - Professor EBTT</p>
+            
+            <div class="audio-section text-left">
+                <p class="text-sm font-bold uppercase tracking-wider text-blue-600 mb-2">🎧 Resumo em Áudio</p>
+                <!-- ESPAÇO PARA O NOME DO ARQUIVO MP3 ABAIXO -->
+                <audio controls class="w-full">
+                    <source src="25hardwarerede.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o player de áudio.
+                </audio>
+            </div>
+        </header>
+
+        <!-- Seção 1 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">1. Definição e Dispositivos de Acesso</h2>
+            <p class="mb-4">
+                O hardware de rede compreende os componentes físicos necessários para a comunicação, processamento e encaminhamento de dados. Para a <span class="grifado">Fundação CEFETMINAS</span>, é vital distinguir entre dispositivos que operam em diferentes camadas do modelo OSI.
+            </p>
+            
+            <h3 class="text-xl font-semibold mt-6 mb-3">Placa de Interface de Rede (NIC)</h3>
+            <p>É o hardware que permite ao computador conectar-se à rede. Possui um endereço físico único chamado <span class="grifado">MAC Address (48 bits/6 bytes)</span>, gravado em ROM. 
+            <br><em>Ponto de Prova:</em> O MAC opera na Subcamada MAC da Camada de Enlace (L2).</p>
+        </section>
+
+        <!-- Seção 2 - Tabela Comparativa (Sem Scroll) -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">2. Comparativo de Hardware de Interconexão</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Hardware</th>
+                            <th style="width: 20%;">Camada OSI</th>
+                            <th style="width: 55%;">Características Essenciais</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Hub</strong></td>
+                            <td>Física (1)</td>
+                            <td>Burro; faz <span class="grifado">broadcasting/flooding</span>; domínio de colisão único.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ponte (Bridge)</strong></td>
+                            <td>Enlace (2)</td>
+                            <td>Conecta segmentos; <span class="grifado">filtra quadros via software</span>; reduz colisões.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Switch</strong></td>
+                            <td>Enlace (2)</td>
+                            <td>Inteligente; <span class="grifado">segmentação via hardware (ASIC)</span>; Full-Duplex.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Roteador</strong></td>
+                            <td>Rede (3)</td>
+                            <td>Interconecta redes; <span class="grifado">bloqueia broadcast</span>; usa endereços IP.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 3 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">3. Switches e Modos de Operação (Aprofundado)</h2>
+            <p class="mb-4">O Switch opera criando conexões temporárias ponto a ponto. Os principais métodos de comutação que caem em prova são:</p>
+            <ul class="space-y-4 list-disc pl-5">
+                <li><strong>Store-and-Forward:</strong> O switch recebe o quadro <span class="grifado">inteiro</span> e verifica o erro (CRC) antes de enviar. Alta confiabilidade, maior latência.</li>
+                <li><strong>Cut-Through:</strong> Encaminha assim que lê o <span class="grifado">endereço de destino</span>. Mínima latência, mas propaga erros.</li>
+                <li><strong>Fragment-Free:</strong> Lê os primeiros <span class="grifado">64 bytes</span> (janela de colisão) antes de encaminhar. Equilíbrio entre os dois anteriores.</li>
+            </ul>
+        </section>
+
+        <!-- Seção 4 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">4. Domínios de Colisão vs. Broadcast</h2>
+            <p class="mb-6">Entender essa contagem é o que garante 1 ou 2 questões na Fundação CEFETMINAS:</p>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="p-4 border rounded-lg">
+                    <h4 class="font-bold text-red-600">Domínio de Colisão</h4>
+                    <p class="text-sm">Área onde pacotes podem colidir. <br><span class="grifado">Hub = 1 único domínio</span> para todas as portas. <br><span class="grifado">Switch = Cada porta</span> é um domínio individual.</p>
+                </div>
+                <div class="p-4 border rounded-lg">
+                    <h4 class="font-bold text-blue-600">Domínio de Broadcast</h4>
+                    <p class="text-sm">Área onde um pacote de difusão é entregue. <br>Hubs e Switches <span class="grifado">não dividem broadcast</span> (exceto via VLAN). Apenas <span class="grifado">Roteadores</span> delimitam o broadcast.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 5 -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">5. Gateways e Dispositivos Especiais</h2>
+            <p class="mb-4">
+                Um <strong>Gateway</strong> (Porta de Ligação) é frequentemente confundido apenas com roteador. No entanto, tecnicamente, ele pode operar em <span class="grifado">todas as camadas do modelo OSI</span> (do nível de transporte até aplicação).
+            </p>
+            <p>Sua função primordial é a <span class="grifado">conversão de protocolos</span>. Exemplo: Conectar uma rede IP a uma rede legada SNA ou traduzir entre formatos de e-mail distintos.</p>
+        </section>
+
+        <!-- Seção 6 - Peguinhas -->
+        <section class="mb-12">
+            <div class="box-alerta">
+                <h2 class="text-xl font-bold text-red-700 mb-4">⚠️ Tendências e "Peguinhas" CEFETMINAS</h2>
+                <ul class="space-y-3">
+                    <li>🔹 <strong>Switches L3:</strong> A banca pode chamá-los de roteadores de alta performance. Eles roteiam pacotes, mas sua base de encaminhamento é hardware (ASIC).</li>
+                    <li>🔹 <strong>Transceptores (Transceivers):</strong> Podem aparecer como "conversores de mídia". Lembre-se que eles operam na <strong>Camada 1</strong>.</li>
+                    <li>🔹 <strong>VLANs:</strong> São a única forma de um Switch de Enlace (L2) criar múltiplos domínios de broadcast.</li>
+                    <li>🔹 <strong>Modem:</strong> Faz Modulação/Demodulação. Diferente do Roteador, ele não toma decisões de endereçamento IP para redes locais por si só (embora aparelhos modernos sejam "combos").</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Navegação Final -->
+        <footer class="text-center py-10 border-t">
+            <p class="text-gray-600 mb-4">Fim do conteúdo teórico. Pronto para testar seus conhecimentos?</p>
+            <a href="25questoes.html" class="btn-navegacao">
+                ACESSAR BANCO DE QUESTÕES →
+            </a>
+            <p class="mt-8 text-xs text-gray-400">© 2025 Preparatório IFAM - Material de Estudo Dirigido</p>
+        </footer>
+    </div>
+
+</body>
+</html>

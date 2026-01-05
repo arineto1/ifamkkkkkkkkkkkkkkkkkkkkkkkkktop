@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado de Redes - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --container-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #546e7a;
+            --primary: #2563eb;
+            --success: #16a34a;
+            --error: #dc2626;
+            --border: #e2e8f0;
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 90%;
+            padding: 40px 20px;
+            margin: 20px auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .quiz-info {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .question-card {
+            background: var(--container-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f8fafc;
+            border-color: var(--primary);
+        }
+
+        .option-label input {
+            margin-right: 15px;
+            margin-top: 6px;
+        }
+
+        /* Classes para o resultado */
+        .option-label.correct {
+            background-color: #f0fdf4;
+            border-color: var(--success);
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .option-label.incorrect {
+            background-color: #fef2f2;
+            border-color: var(--error);
+            color: var(--error);
+        }
+
+        .resolution-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .submit-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        #results-summary {
+            display: none;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .score-text {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 10px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Redes de Computadores</h1>
+        <div class="quiz-info">
+            Banca: Estilo Fundação CEFETMINAS | Assunto: Protocolos de Rede
+        </div>
+    </header>
+
+    <div id="results-summary">
+        <h2>Resultado Final</h2>
+        <div class="score-text" id="score-display">0/10</div>
+        <p id="score-message">Confira abaixo as resoluções detalhadas de cada questão.</p>
+    </div>
+
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- As questões serão inseridas aqui pelo JavaScript -->
+        </div>
+
+        <div class="submit-container">
+            <button type="button" id="submit-btn" class="btn">Finalizar Simulado e Ver Resoluções</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "A arquitetura de redes de computadores é frequentemente descrita por meio de modelos de referência que padronizam a comunicação entre sistemas heterogêneos. Considerando a interação entre camadas e o encapsulamento de dados, assinale a alternativa que descreve corretamente a função da Camada de Transporte no modelo OSI e identifica o protocolo da suíte TCP/IP que oferece confiabilidade, controle de fluxo e ordenação.",
+            options: [
+                "A Camada de Transporte realiza o roteamento lógico de pacotes entre redes distintas; o protocolo UDP é responsável pela entrega confiável.",
+                "A Camada de Transporte é responsável pela entrega processo-a-processo (fim-a-fim) da mensagem inteira; o protocolo TCP implementa o handshake de três vias para garantir a conexão e a integridade dos dados.",
+                "A Camada de Transporte define as características elétricas e mecânicas do meio físico; o protocolo IP garante a entrega ordenada dos dados.",
+                "A Camada de Transporte gerencia o diálogo e a sincronização entre aplicações; o protocolo ICMP é utilizado para o transporte confiável de arquivos.",
+                "A Camada de Transporte converte os formatos de dados para garantir a interoperabilidade (sintaxe); o protocolo ARP é responsável pela conexão confiável."
+            ],
+            correct: 1,
+            resolution: "A Camada de Transporte (Camada 4 do Modelo OSI) é responsável pela comunicação lógica entre processos de aplicação (fim-a-fim). O TCP é o principal protocolo orientado à conexão que oferece garantias de entrega, ordenação e controle de fluxo através do mecanismo de handshake de três vias (SYN, SYN-ACK, ACK)."
+        },
+        {
+            id: 2,
+            question: "Analise as afirmativas referentes aos protocolos SMTP, POP3 e IMAP:\nI. O SMTP é um protocolo do tipo push utilizado primariamente para o envio de e-mails.\nII. O POP3 opera na porta 110 e caracteriza-se pelo modelo 'baixe e apague'.\nIII. O IMAP permite o gerenciamento de caixas postais diretamente no servidor, mantendo o estado sincronizado.\nIV. O SMTP utiliza a porta 143 para comunicação segura entre servidores.",
+            options: [
+                "I, II e III, apenas.",
+                "I e II, apenas.",
+                "III e IV, apenas.",
+                "I, III e IV, apenas.",
+                "I, II, III e IV."
+            ],
+            correct: 0,
+            resolution: "As afirmativas I, II e III estão corretas. A IV está incorreta pois a porta 143 é do protocolo IMAP. O SMTP utiliza tradicionalmente a porta 25 (servidor-servidor) ou 587 (cliente-servidor)."
+        },
+        {
+            id: 3,
+            question: "Sobre o DNS (Domain Name System) e o DHCP (Dynamic Host Configuration Protocol), assinale a alternativa correta que descreve seus mecanismos de operação e transporte.",
+            options: [
+                "O DNS opera exclusivamente sobre o protocolo TCP na porta 53.",
+                "O DHCP utiliza o protocolo TCP nas portas 67 e 68.",
+                "O DNS utiliza primariamente o protocolo UDP na porta 53 para consultas padrão, recorrendo ao TCP para transferências de zona; o DHCP opera sobre UDP nas portas 67 (servidor) e 68 (cliente).",
+                "O servidor DHCP envia uma mensagem DHCPOFFER em broadcast utilizando IPsec.",
+                "O DNS é um protocolo plano, sem hierarquia, operando na porta 80."
+            ],
+            correct: 2,
+            resolution: "O DNS utiliza UDP/53 para rapidez em consultas comuns e TCP/53 para transferências de zona ou respostas grandes. O DHCP utiliza UDP nas portas 67 (servidor) e 68 (cliente) para permitir a configuração inicial de rede quando o host ainda não possui IP."
+        },
+        {
+            id: 4,
+            question: "Em relação aos mecanismos criptográficos subjacentes que viabilizam o HTTPS, é tecnicamente correto afirmar que:",
+            options: [
+                "O HTTPS utiliza o protocolo SSH na porta 22 para criar um túnel seguro.",
+                "O protocolo SSL é a tecnologia mais atual e recomendada, substituindo o TLS.",
+                "O HTTPS opera na porta 443 e utiliza o protocolo TLS para prover confidencialidade e integridade, usando criptografia assimétrica para troca de chaves e simétrica para dados.",
+                "A segurança do HTTPS baseia-se exclusivamente em algoritmos de hash como MD5.",
+                "O HTTPS requer que tanto cliente quanto servidor possuam IPs fixos e públicos."
+            ],
+            correct: 2,
+            resolution: "O HTTPS utiliza TLS (sucessor do SSL) na porta 443. Ele utiliza um sistema híbrido: criptografia assimétrica para autenticar e trocar chaves de forma segura, e criptografia simétrica para a transmissão volumosa de dados, garantindo performance e segurança."
+        },
+        {
+            id: 5,
+            question: "Compare o SSH com o Telnet e o FTP, e assinale a alternativa correta.",
+            options: [
+                "O Telnet transmite todos os dados em texto claro (porta 23), enquanto o SSH criptografa toda a sessão (porta 22).",
+                "O FTP é um protocolo seguro por padrão, isolando credenciais do tráfego de arquivos.",
+                "O SSH utiliza a porta 443 para mascarar seu tráfego como tráfego web.",
+                "O Telnet foi atualizado na versão 2.0 para suportar criptografia AES nativa.",
+                "Tanto o SSH quanto o Telnet utilizam o protocolo UDP para minimizar latência."
+            ],
+            correct: 0,
+            resolution: "O Telnet é um protocolo legado inseguro que envia dados (incluindo senhas) sem criptografia. O SSH foi criado para substituir o Telnet, provendo um canal seguro criptografado para administração remota na porta 22."
+        },
+        {
+            id: 6,
+            question: "Sobre as características técnicas do cabeçalho e endereçamento do IPv6, comparado ao IPv4, assinale a opção correta.",
+            options: [
+                "O IPv6 utiliza endereços de 64 bits em notação decimal pontuada.",
+                "O cabeçalho IPv6 foi simplificado para 40 bytes fixos, removeu o checksum de cabeçalho e utiliza endereços de 128 bits em hexadecimal.",
+                "O IPv6 introduziu o conceito de broadcast em larga escala.",
+                "O endereçamento IPv6 elimina máscaras de sub-rede, utilizando classes fixas (A, B, C).",
+                "O protocolo ARP foi mantido inalterado no IPv6."
+            ],
+            correct: 1,
+            resolution: "O IPv6 possui endereços de 128 bits. Seu cabeçalho é de tamanho fixo (40 bytes) para facilitar o processamento por roteadores. O checksum foi removido por ser redundante (já existe na camada 2 e 4) e o broadcast foi substituído por multicast."
+        },
+        {
+            id: 7,
+            question: "Sobre os modos de operação e protocolos do IPsec (AH, ESP, Túnel/Transporte), analise as afirmações.",
+            options: [
+                "Apenas a afirmação sobre AH (integridade sem confidencialidade) está correta.",
+                "Apenas a afirmação sobre ESP (pode prover confidencialidade e integridade) está correta.",
+                "Apenas I e III estão corretas.",
+                "Apenas II e III estão corretas.",
+                "Todas as afirmações (I, II e III) estão corretas."
+            ],
+            correct: 4,
+            resolution: "Todas estão corretas: AH foca em autenticação/integridade; ESP provê criptografia; Modo Túnel protege o pacote inteiro (ideal para VPNs matriz-filial) e o Modo Transporte protege apenas o payload."
+        },
+        {
+            id: 8,
+            question: "Assinale a alternativa que descreve corretamente o funcionamento do mecanismo de 'Janela Deslizante' (Sliding Window) e do estabelecimento de conexão TCP.",
+            options: [
+                "A Janela Deslizante é usada para fragmentar pacotes IP maiores que o MTU.",
+                "O estabelecimento ocorre via 'Three-Way Handshake' (SYN, SYN-ACK, ACK); a Janela Deslizante permite enviar múltiplos segmentos sem esperar ACK individual imediato.",
+                "O TCP não estabelece conexão prévia, enviando dados assim que solicitados.",
+                "O Three-Way Handshake (ACK, SYN, FIN) é usado para encerrar a conexão.",
+                "A Janela Deslizante tem tamanho fixo de 64 KB e não pode ser alterada."
+            ],
+            correct: 1,
+            resolution: "O TCP é orientado a conexão via Handshake de 3 vias. A Janela Deslizante é um mecanismo de controle de fluxo que permite o envio de um lote de dados antes de exigir uma confirmação, otimizando o uso da largura de banda."
+        },
+        {
+            id: 9,
+            question: "Sobre os padrões de segurança em redes sem fio (WEP, WPA e WPA2), é correto afirmar:",
+            options: [
+                "O WEP é o padrão mais seguro atualmente.",
+                "O WPA2 introduziu o uso mandatório do algoritmo AES com CCMP, corrigindo falhas do TKIP (WPA) e RC4 (WEP).",
+                "O WPA utiliza o algoritmo AES, mas falha ao não implementar rotação de chaves.",
+                "O WPA2 Enterprise requer apenas uma senha compartilhada (PSK).",
+                "O padrão 802.11i define que o WEP deve ser usado com WPA2."
+            ],
+            correct: 1,
+            resolution: "O WPA2 é a implementação do padrão 802.11i, utilizando criptografia forte AES-CCMP. O WEP é considerado totalmente inseguro hoje por usar chaves estáticas e falhas no algoritmo RC4."
+        },
+        {
+            id: 10,
+            question: "Sobre o protocolo FTP (File Transfer Protocol) e seus modos de operação, assinale a alternativa correta.",
+            options: [
+                "O FTP utiliza uma única conexão TCP na porta 21 para comandos e dados.",
+                "No modo Passivo, o cliente inicia ambas as conexões (controle e dados) para o servidor, facilitando o uso através de firewalls e NAT.",
+                "O FTP opera sobre UDP para maximizar a velocidade.",
+                "O modo Ativo é o mais recomendado atualmente para segurança.",
+                "O protocolo TFTP é uma versão aprimorada do FTP com criptografia."
+            ],
+            correct: 1,
+            resolution: "O FTP usa duas conexões: porta 21 (controle) e porta 20/dinâmica (dados). O Modo Passivo é o padrão moderno pois o cliente solicita a conexão de dados para o servidor, evitando bloqueios em firewalls locais do lado do cliente."
+        }
+    ];
+
+    const questionsContainer = document.getElementById('questions-container');
+    const submitBtn = document.getElementById('submit-btn');
+    const resultsSummary = document.getElementById('results-summary');
+    const scoreDisplay = document.getElementById('score-display');
+
+    // Inicializar Questões
+    function initQuiz() {
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <li class="option-item">
+                        <label class="option-label" id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}">
+                            <span>${String.fromCharCode(65 + optIndex)}) ${opt}</span>
+                        </label>
+                    </li>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-text">Questão ${index + 1}</span>
+                <p>${q.question.replace(/\n/g, '<br>')}</p>
+                <ul class="options-list">
+                    ${optionsHtml}
+                </ul>
+                <div class="resolution-box" id="res-${index}">
+                    <h4>Resolução Comentada</h4>
+                    <p>${q.resolution}</p>
+                </div>
+            `;
+            questionsContainer.appendChild(card);
+        });
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        const formData = new FormData(form);
+
+        quizData.forEach((q, index) => {
+            const userAnswer = formData.get(`q${index}`);
+            const resolutionBox = document.getElementById(`res-${index}`);
+            
+            // Mostrar resolução
+            resolutionBox.style.display = 'block';
+
+            // Marcar correta
+            const correctLabel = document.getElementById(`label-${index}-${q.correct}`);
+            correctLabel.classList.add('correct');
+
+            if (userAnswer !== null) {
+                const userIndex = parseInt(userAnswer);
+                if (userIndex === q.correct) {
+                    score++;
+                } else {
+                    // Marcar erro do usuário
+                    const incorrectLabel = document.getElementById(`label-${index}-${userIndex}`);
+                    incorrectLabel.classList.add('incorrect');
+                }
+            }
+
+            // Desabilitar inputs após correção
+            const inputs = document.getElementsByName(`q${index}`);
+            inputs.forEach(input => input.disabled = true);
+        });
+
+        // Exibir Resumo
+        scoreDisplay.textContent = `${score} / ${quizData.length}`;
+        resultsSummary.style.display = 'block';
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Simulado Corrigido";
+        
+        // Rolar para o topo do resultado
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    submitBtn.addEventListener('click', checkAnswers);
+
+    // Iniciar
+    initQuiz();
+</script>
+
+</body>
+</html>

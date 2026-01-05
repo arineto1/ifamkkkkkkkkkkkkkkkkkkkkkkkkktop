@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterClass IFAM: Roteamento de Redes</title>
+    <style>
+        :root {
+            --bg-body: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #4a4a4a;
+            --accent: #2563eb;
+            --highlight: #fef08a; /* Amarelo suave para grifos */
+            --border: #e5e7eb;
+            --card-bg: #f9fafb;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 2px solid var(--border);
+        }
+
+        h1 { margin: 0; font-size: 2.2rem; color: #000; }
+        .subtitle { color: var(--text-muted); font-size: 1.1rem; margin-top: 10px; }
+
+        /* Audio Player Section */
+        .audio-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        .audio-section p { margin: 0 0 10px 0; font-weight: 600; font-size: 0.9rem; }
+        audio { width: 100%; }
+
+        /* Content Sections */
+        section { margin-bottom: 50px; }
+        h2 { 
+            font-size: 1.8rem; 
+            border-left: 5px solid var(--accent); 
+            padding-left: 15px; 
+            margin-bottom: 25px;
+            color: #111;
+        }
+        h3 { font-size: 1.4rem; color: var(--accent); margin-top: 30px; }
+
+        /* Tables - Zero Horizontal Scroll */
+        .table-container {
+            width: 100%;
+            margin: 20px 0;
+            overflow-x: hidden;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            table-layout: fixed; /* Crucial para evitar scroll */
+        }
+        th, td {
+            border: 1px solid var(--border);
+            padding: 12px 8px;
+            text-align: left;
+            word-wrap: break-word; /* Quebra texto longo */
+        }
+        th { background: #f3f4f6; font-weight: 700; }
+
+        /* Highlights */
+        mark {
+            background-color: var(--highlight);
+            color: inherit;
+            padding: 0 2px;
+            font-weight: 600;
+        }
+        .important-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Lists */
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+
+        /* Buttons */
+        .nav-footer {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+        }
+        .btn {
+            background-color: var(--accent);
+            color: white;
+            padding: 18px 35px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: opacity 0.2s;
+            display: inline-block;
+        }
+        .btn:hover { opacity: 0.9; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6rem; }
+            table { font-size: 0.75rem; }
+            th, td { padding: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Roteamento de Redes: Foco IFAM</h1>
+        <p class="subtitle">Estratégias de Aprovação - Banca Fundação CEFETMINAS</p>
+    </header>
+
+    <div class="audio-section">
+        <p>🎧 Resumo em Áudio (Clique para ouvir)</p>
+        <!-- Nome do arquivo MP3 para edição rápida -->
+        <audio controls>
+            <source src="24roteamento.mp3" type="audio/mpeg">
+            Seu navegador não suporta o áudio.
+        </audio>
+    </div>
+
+    <section>
+        <h2>1. Diferença Crucial: Routing vs Forwarding</h2>
+        <p>Para a CEFETMINAS, você não pode confundir os planos de operação do roteador:</p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Conceito</th>
+                        <th>Plano (Plane)</th>
+                        <th>Função Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Roteamento</strong></td>
+                        <td><mark>Controle (Control)</mark></td>
+                        <td>Determinar a rota de ponta a ponta (Algoritmos/Tabelas).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Encaminhamento</strong></td>
+                        <td><mark>Dados (Data)</mark></td>
+                        <td>Mover o pacote da interface de entrada para a de saída.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>2. Tipos de Algoritmos e Protocolos</h2>
+        <h3>A. Vetor de Distância (Distance Vector)</h3>
+        <ul>
+            <li><strong>Lógica:</strong> Conhece a rede pelo "boato" dos vizinhos. Envia a tabela inteira periodicamente.</li>
+            <li><strong>Exemplo:</strong> <mark>RIP (v1 e v2)</mark>.</li>
+            <li><strong>Problema:</strong> Convergência lenta e risco de Loops (resolvido com <em>Split Horizon</em> e <em>Route Poisoning</em>).</li>
+        </ul>
+
+        <h3>B. Estado de Enlace (Link State)</h3>
+        <ul>
+            <li><strong>Lógica:</strong> Cada nó tem o mapa completo da topologia. Usa o algoritmo <mark>Dijkstra (SPF)</mark>.</li>
+            <li><strong>Exemplo:</strong> <mark>OSPF e IS-IS</mark>.</li>
+            <li><strong>Vantagem:</strong> Convergência rápida e visão global da rede.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Detalhamento OSPF (Altíssima Incidência)</h2>
+        <p>O OSPF é um protocolo hierárquico baseado em <strong>Áreas</strong>. A <mark>Área 0 (Backbone)</mark> é obrigatória.</p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Termo</th>
+                        <th>Definição Acadêmica/Prova</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Router ID</strong></td>
+                        <td>Maior IP de interface Loopback (ou manual).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DR / BDR</strong></td>
+                        <td>Eleitos em redes multiacesso (Ethernet) para reduzir adjacências.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LSA Tipo 1</strong></td>
+                        <td>Router LSA: Gerado por todos dentro da área.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LSA Tipo 2</strong></td>
+                        <td>Network LSA: Gerado pelo <mark>DR</mark>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LSA Tipo 3</strong></td>
+                        <td>Summary LSA: Gerado pelo <mark>ABR</mark> (conecta áreas).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>4. Tabelas de Memorização Rápida</h2>
+        
+        <h3>Distâncias Administrativas (Padrão Cisco)</h3>
+        <p><em>Regra: Quanto menor o valor, mais confiável é a rota.</em></p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Origem da Rota</th>
+                        <th>Valor AD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Interface Conectada</td>
+                        <td><mark>0</mark></td>
+                    </tr>
+                    <tr>
+                        <td>Rota Estática</td>
+                        <td><mark>1</mark></td>
+                    </tr>
+                    <tr>
+                        <td>EIGRP</td>
+                        <td>90</td>
+                    </tr>
+                    <tr>
+                        <td>OSPF</td>
+                        <td>110</td>
+                    </tr>
+                    <tr>
+                        <td>RIP</td>
+                        <td>120</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Timers do RIPv2</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timer</th>
+                        <th>Valor</th>
+                        <th>O que faz?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Update</td>
+                        <td>30s</td>
+                        <td>Envio periódico da tabela.</td>
+                    </tr>
+                    <tr>
+                        <td>Invalid</td>
+                        <td>180s</td>
+                        <td>Marca a rota como 16 (infinito).</td>
+                    </tr>
+                    <tr>
+                        <td>Flush</td>
+                        <td>240s</td>
+                        <td>Remove a rota da tabela definitivamente.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>5. BGP (O Protocolo da Internet)</h2>
+        <ul>
+            <li>Protocolo de <mark>Vetor de Caminho (Path Vector)</mark>.</li>
+            <li>Roda sobre o protocolo <mark>TCP (Porta 179)</mark>.</li>
+            <li>Utiliza <mark>Sistemas Autônomos (AS)</mark> para identificar redes.</li>
+            <li><strong>Atributos:</strong> AS-PATH (evita loops), Next-hop, Local Preference, MED.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>6. Tendências CEFETMINAS & "Peguinhas"</h2>
+        <div class="important-box">
+            <strong>Checklist de Prova:</strong>
+            <ul>
+                <li><strong>SDN:</strong> A banca ama cobrar a separação entre plano de controle e dados via <mark>OpenFlow</mark>.</li>
+                <li><strong>IPv6:</strong> Lembre-se que o OSPF para IPv6 é a versão <mark>OSPFv3</mark> e o RIP é o <mark>RIPng</mark>.</li>
+                <li><strong>ICMP:</strong> Frequentemente associado ao roteamento para mensagens de "Destino Inalcançável" ou "Tempo Excedido" (TTL=0).</li>
+                <li><strong>Métrica:</strong> RIP usa saltos (hop); OSPF usa custo (banda); BGP usa atributos de política.</li>
+            </ul>
+        </div>
+    </section>
+
+    <div class="nav-footer">
+        <a href="24questoes.html" class="btn">Testar Conhecimentos com Questões →</a>
+    </div>
+</div>
+
+</body>
+</html>

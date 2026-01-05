@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Hardware de Redes - Estilo CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --container-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #576574;
+            --primary: #2980b9;
+            --secondary: #341f97;
+            --success: #27ae60;
+            --error: #e74c3c;
+            --border: #dcdde1;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--secondary);
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        .question {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-left: 5px solid var(--border);
+            background: #fafafa;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .question.active-border {
+            border-left-color: var(--primary);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background-color: #f1f2f6;
+            border-color: var(--primary);
+        }
+
+        .option input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option.selected {
+            background-color: #e3f2fd;
+            border-color: var(--primary);
+            font-weight: 500;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 30px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--secondary);
+        }
+
+        #results-section {
+            display: none;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid var(--border);
+        }
+
+        .score-board {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .resolution {
+            background: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            border-top: 4px solid var(--success);
+        }
+
+        .resolution h4 {
+            margin-top: 0;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+        }
+
+        .resolution-content {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            white-space: pre-line;
+        }
+
+        .correct-ans {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .wrong-ans {
+            color: var(--error);
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+
+        .indicator {
+            margin-left: auto;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px;
+            }
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Simulado: Infraestrutura de Redes e Hardware</h1>
+    <p style="text-align: center; color: var(--text-muted);">Estilo Banca Fundação CEFETMINAS</p>
+
+    <form id="quiz-form">
+        <!-- Questão 1 -->
+        <div class="question" id="q1-container">
+            <span class="question-text">Questão 1: Em um projeto de infraestrutura de rede para um campus universitário... Assinale a alternativa que apresenta corretamente o hardware que atende a esses requisitos e a sua função primordial no controle de colisão.</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q1" value="A"> A) Hub (Concentrador) – Replica o sinal elétrico para todas as portas, criando múltiplos domínios de colisão.</label>
+                <label class="option"><input type="radio" name="q1" value="B"> B) Roteador (Router) – Realiza o roteamento de pacotes na Camada 3, mas não suporta a criação de VLANs em interfaces físicas únicas.</label>
+                <label class="option"><input type="radio" name="q1" value="C"> C) Switch Gerenciável (Comutador) – Microsegmenta a rede, criando um domínio de colisão dedicado por porta e permitindo a configuração de múltiplas VLANs.</label>
+                <label class="option"><input type="radio" name="q1" value="D"> D) Bridge (Ponte) – Conecta dois segmentos de rede distintos, mas opera exclusivamente por software.</label>
+                <label class="option"><input type="radio" name="q1" value="E"> E) Repetidor (Repeater) – Regenera o sinal digital, permitindo a extensão do alcance físico da rede.</label>
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question" id="q2-container">
+            <span class="question-text">Questão 2: O equipamento descrito e um exemplo de protocolo que ele utiliza para trocar informações de topologia com outros dispositivos da mesma categoria são, respectivamente:</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q2" value="A"> A) Switch L2 e STP (Spanning Tree Protocol).</label>
+                <label class="option"><input type="radio" name="q2" value="B"> B) Roteador e OSPF (Open Shortest Path First).</label>
+                <label class="option"><input type="radio" name="q2" value="C"> C) Firewall e NAT (Network Address Translation).</label>
+                <label class="option"><input type="radio" name="q2" value="D"> D) Access Point e WPA2 (Wi-Fi Protected Access 2).</label>
+                <label class="option"><input type="radio" name="q2" value="E"> E) Gateway de Aplicação e HTTP (Hypertext Transfer Protocol).</label>
+            </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question" id="q3-container">
+            <span class="question-text">Questão 3: Sobre o hardware Access Point e esse processo de conversão de quadros 802.11 para 802.3, é correto afirmar:</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q3" value="A"> A) O AP atua como um repetidor de sinal da camada física, apenas amplificando as ondas de rádio.</label>
+                <label class="option"><input type="radio" name="q3" value="B"> B) O AP utiliza o campo "Address 4" para encapsular o quadro Ethernet inteiro.</label>
+                <label class="option"><input type="radio" name="q3" value="C"> C) O AP remove o cabeçalho 802.11 e cria um novo cabeçalho 802.3 com apenas dois endereços antes de encaminhar o quadro.</label>
+                <label class="option"><input type="radio" name="q3" value="D"> D) O AP funciona como um Roteador NAT, trocando o IP de origem da estação sem fio.</label>
+                <label class="option"><input type="radio" name="q3" value="E"> E) O AP encapsula os dados em células ATM para garantir a qualidade de serviço.</label>
+            </div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question" id="q4-container">
+            <span class="question-text">Questão 4: Sobre os hardwares e meios ópticos de transmissão, assinale a alternativa que apresenta a correlação técnica correta.</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q4" value="A"> A) Fibra Multimodo (MMF) – Fonte LED/VCSEL – Aplicações de curta distância devido à dispersão modal.</label>
+                <label class="option"><input type="radio" name="q4" value="B"> B) Fibra Monomodo (SMF) – Fonte LED – Aplicações de curta distância.</label>
+                <label class="option"><input type="radio" name="q4" value="C"> C) Fibra Multimodo (MMF) – Fonte Laser de alta potência – Aplicações de longa distância.</label>
+                <label class="option"><input type="radio" name="q4" value="D"> D) Fibra Monomodo (SMF) – Fonte Incandescente – Aplicações industriais.</label>
+                <label class="option"><input type="radio" name="q4" value="E"> E) Cabo Coaxial – Fonte de Radiofrequência – Substituto direto da fibra óptica.</label>
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question" id="q5-container">
+            <span class="question-text">Questão 5: Qual funcionalidade de hardware/software de um Firewall é projetada especificamente para mitigar ataques do tipo SYN Flood?</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q5" value="A"> A) DHCP Snooping.</label>
+                <label class="option"><input type="radio" name="q5" value="B"> B) Port Security.</label>
+                <label class="option"><input type="radio" name="q5" value="C"> C) SYN Proxy / TCP Intercept.</label>
+                <label class="option"><input type="radio" name="q5" value="D"> D) WPA3-Personal.</label>
+                <label class="option"><input type="radio" name="q5" value="E"> E) Spanning Tree BPDU Guard.</label>
+            </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question" id="q6-container">
+            <span class="question-text">Questão 6: Compare o funcionamento de um Hub com um Switch e assinale a alternativa que descreve corretamente a diferença no tratamento do domínio de colisão.</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q6" value="A"> A) O Hub isola o domínio de colisão em cada porta e opera em Full-Duplex.</label>
+                <label class="option"><input type="radio" name="q6" value="B"> B) Ambos isolam domínios de colisão, diferindo apenas na velocidade de processamento.</label>
+                <label class="option"><input type="radio" name="q6" value="C"> C) O Hub define um único domínio de colisão compartilhado e opera em Half-Duplex, enquanto o Switch cria um domínio dedicado por porta.</label>
+                <label class="option"><input type="radio" name="q6" value="D"> D) O Hub utiliza endereçamento MAC para filtrar o tráfego, enquanto o Switch envia todos os quadros para todas as portas.</label>
+                <label class="option"><input type="radio" name="q6" value="E"> E) O Switch converte sinais elétricos em ópticos, enquanto o Hub trabalha apenas com sinais analógicos.</label>
+            </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question" id="q7-container">
+            <span class="question-text">Questão 7: Considerando a arquitetura de redes TCP/IP e o papel da Placa de Interface de Rede (NIC), analise as afirmativas (CRC, MAC 48 bits, Offloading).</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q7" value="A"> A) Apenas I.</label>
+                <label class="option"><input type="radio" name="q7" value="B"> B) Apenas II.</label>
+                <label class="option"><input type="radio" name="q7" value="C"> C) Apenas I e III.</label>
+                <label class="option"><input type="radio" name="q7" value="D"> D) Apenas II e III.</label>
+                <label class="option"><input type="radio" name="q7" value="E"> E) I, II e III.</label>
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question" id="q8-container">
+            <span class="question-text">Questão 8: Identifique o hardware passivo que possui terminais do tipo IDC em sua parte posterior e portas RJ-45 fêmea em sua parte frontal.</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q8" value="A"> A) Modem.</label>
+                <label class="option"><input type="radio" name="q8" value="B"> B) Patch Panel.</label>
+                <label class="option"><input type="radio" name="q8" value="C"> C) Transceiver GBIC.</label>
+                <label class="option"><input type="radio" name="q8" value="D"> D) Bloco M10.</label>
+                <label class="option"><input type="radio" name="q8" value="E"> E) Keystones soltos.</label>
+            </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question" id="q9-container">
+            <span class="question-text">Questão 9: Assinale a alternativa que contém APENAS informações que podem ser fornecidas por um servidor DHCP a uma estação de trabalho.</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q9" value="A"> A) Endereço IP, Máscara de Sub-rede, MAC destino, Tabela BGP.</label>
+                <label class="option"><input type="radio" name="q9" value="B"> B) Endereço IP, Máscara de Sub-rede, Gateway Padrão, Endereços de Servidores DNS.</label>
+                <label class="option"><input type="radio" name="q9" value="C"> C) Endereço IP, Chave Privada RSA, Certificado SSL, Porta do Switch.</label>
+                <label class="option"><input type="radio" name="q9" value="D"> D) Endereço MAC Virtual, VLAN Tag, Spanning Tree, Senha de Root.</label>
+                <label class="option"><input type="radio" name="q9" value="E"> E) Endereço IP Público, ASN, Rotas Estáticas de Backbone, Chave WPA2.</label>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question" id="q10-container">
+            <span class="question-text">Questão 10: No contexto do IPsec em modo túnel, qual é a função do cabeçalho ESP (Encapsulating Security Payload) processado pelo hardware?</span>
+            <div class="options">
+                <label class="option"><input type="radio" name="q10" value="A"> A) Apenas autenticar a origem do pacote, sem criptografar os dados.</label>
+                <label class="option"><input type="radio" name="q10" value="B"> B) Compactar os dados para economizar largura de banda.</label>
+                <label class="option"><input type="radio" name="q10" value="C"> C) Prover confidencialidade (criptografia) e autenticidade ao pacote IP original encapsulado.</label>
+                <label class="option"><input type="radio" name="q10" value="D"> D) Realizar a tradução de endereços (NAT).</label>
+                <label class="option"><input type="radio" name="q10" value="E"> E) Estabelecer a prioridade de serviço (QoS).</label>
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Finalizar Simulado e Ver Resoluções</button>
+    </form>
+
+    <!-- Seção de Resultados -->
+    <div id="results-section">
+        <div class="score-board">
+            <h2>Resultado</h2>
+            <div class="score-number" id="score-display">0/10</div>
+            <p id="score-message"></p>
+        </div>
+
+        <div id="resolutions-container">
+            <!-- Gerado via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const answers = {
+        q1: "C", q2: "B", q3: "C", q4: "A", q5: "C",
+        q6: "C", q7: "E", q8: "B", q9: "B", q10: "C"
+    };
+
+    const resolutions = {
+        q1: "**Gabarito: C (Switch Gerenciável)**\nOs Switches operam na Camada 2 (Enlace) e possuem inteligência baseada em hardware (ASICs) para realizar a microsegmentação da rede, criando domínios de colisão dedicados por porta. Além disso, switches gerenciáveis suportam o padrão IEEE 802.1Q para criação de VLANs.",
+        q2: "**Gabarito: B (Roteador e OSPF)**\nO roteador opera na Camada 3 e utiliza protocolos de roteamento dinâmico como o OSPF (Link-State) para trocar informações de topologia. Ele também é responsável pelo decremento do TTL e reescrita de cabeçalhos de enlace em cada salto.",
+        q3: "**Gabarito: C (Remoção e recriação de cabeçalhos)**\nO Access Point atua como uma ponte (bridge) entre o meio sem fio (802.11) e o cabeado (802.3). Ele precisa remover o cabeçalho complexo do Wi-Fi e criar um quadro Ethernet simplificado para o tráfego seguir na rede cabeada.",
+        q4: "**Gabarito: A (MMF - LED/VCSEL - Curta Distância)**\nA fibra multimodo (MMF) possui núcleo mais espesso, permitindo múltiplos modos de luz, o que causa dispersão modal e limita a distância. É ideal para LANs e utiliza fontes de luz mais baratas como LEDs ou VCSELs.",
+        q5: "**Gabarito: C (SYN Proxy / TCP Intercept)**\nO recurso de SYN Proxy no firewall atua como um intermediário no handshake TCP. Ele valida a conexão respondendo ao SYN antes de passar a requisição ao servidor real, mitigando o esgotamento de recursos por pacotes falsos.",
+        q6: "**Gabarito: C (Domínio compartilhado vs Domínio dedicado)**\nO Hub é um repetidor de Camada 1 que compartilha o meio físico (único domínio de colisão/Half-Duplex). O Switch é um comutador de Camada 2 que isola as colisões por porta, permitindo o modo Full-Duplex.",
+        q7: "**Gabarito: E (I, II e III)**\nTodas as alternativas estão corretas: NICs modernas verificam erros via CRC, possuem endereços MAC de 48 bits (com OUI do fabricante) e realizam Offloading (como TSO) para aliviar o processamento da CPU.",
+        q8: "**Gabarito: B (Patch Panel)**\nO Patch Panel é um hardware passivo fundamental no cabeamento estruturado. Na traseira, os fios sólidos são fixados via IDC. Na frente, portas RJ-45 permitem manobras rápidas com patch cords flexíveis.",
+        q9: "**Gabarito: B (IP, Máscara, Gateway, DNS)**\nO DHCP entrega os parâmetros básicos da pilha IP: Endereço, Máscara de Sub-rede, Gateway Padrão e Servidores DNS. Ele não lida com criptografia Wi-Fi, senhas de sistema ou roteamento BGP.",
+        q10: "**Gabarito: C (Confidencialidade e Autenticidade)**\nO protocolo ESP (Encapsulating Security Payload) do IPsec é responsável por cifrar o pacote (provendo confidencialidade) e adicionar um hash de integridade (provendo autenticidade). No modo túnel, ele encapsula o pacote IP original inteiro."
+    };
+
+    // Estilização de seleção
+    document.querySelectorAll('.option').forEach(opt => {
+        opt.addEventListener('click', function() {
+            const name = this.querySelector('input').name;
+            document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+                input.parentElement.classList.remove('selected');
+            });
+            this.classList.add('selected');
+        });
+    });
+
+    function submitQuiz() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        const container = document.getElementById('resolutions-container');
+        container.innerHTML = '';
+
+        for (let i = 1; i <= 10; i++) {
+            const qName = 'q' + i;
+            const selected = form.querySelector(`input[name="${qName}"]:checked`);
+            const val = selected ? selected.value : null;
+            
+            const qDiv = document.getElementById(`${qName}-container`);
+            qDiv.classList.remove('active-border');
+
+            const isCorrect = val === answers[qName];
+            if (isCorrect) score++;
+
+            // Construir bloco de resolução
+            const resBox = document.createElement('div');
+            resBox.className = 'resolution';
+            resBox.style.borderTopColor = isCorrect ? 'var(--success)' : 'var(--error)';
+            
+            resBox.innerHTML = `
+                <h4>Questão ${i}: ${isCorrect ? '✅ Acertou' : '❌ Errou'}</h4>
+                <p>Sua resposta: <span class="${isCorrect ? 'correct-ans' : 'wrong-ans'}">${val || 'Não respondida'}</span></p>
+                <p>Gabarito Oficial: <span class="correct-ans">${answers[qName]}</span></p>
+                <div class="resolution-content"><strong>Análise:</strong><br>${resolutions[qName]}</div>
+            `;
+            container.appendChild(resBox);
+        }
+
+        // Mostrar Resultados
+        document.getElementById('score-display').innerText = `${score}/10`;
+        const msg = score >= 7 ? "Excelente desempenho!" : (score >= 5 ? "Bom resultado, mas revise os pontos errados." : "Precisa estudar mais estes conceitos.");
+        document.getElementById('score-message').innerText = msg;
+        document.getElementById('results-section').style.display = 'block';
+
+        // Scroll suave para o resultado
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        
+        // Desativar inputs
+        form.querySelectorAll('input').forEach(input => input.disabled = true);
+        form.querySelector('button').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

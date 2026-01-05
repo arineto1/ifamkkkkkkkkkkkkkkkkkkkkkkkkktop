@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Técnico: Redes TCP/IP - FCM</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --container-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --accent-color: #0984e3;
+            --correct-color: #27ae60;
+            --wrong-color: #d63031;
+            --border-color: #dfe6e9;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.65;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+
+        .question-card {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fff;
+        }
+
+        label:hover {
+            background-color: #f8faff;
+            border-color: var(--accent-color);
+        }
+
+        input[type="radio"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-color);
+        }
+
+        .btn-submit {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+
+        #results-section {
+            display: none;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 3px solid var(--accent-color);
+        }
+
+        .score-box {
+            text-align: center;
+            padding: 30px;
+            background: #f1f2f6;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .resolutions-title {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text-main);
+        }
+
+        .resolution-item {
+            background: #fff;
+            padding: 20px;
+            border-left: 5px solid var(--accent-color);
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .resolution-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        .correct-answer-label {
+            color: var(--correct-color);
+            font-weight: bold;
+        }
+
+        .wrong-answer-label {
+            color: var(--wrong-color);
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Especializado: Redes de Computadores</h1>
+        <p class="description">Perfil Fundação CEFETMINAS | 10 Questões sobre Arquitetura TCP/IP</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 01 -->
+        <div class="question-card">
+            <span class="question-text">01. Considerando a arquitetura em camadas e as críticas comparativas entre os modelos OSI e TCP/IP, analise as assertivas abaixo e assinale a alternativa que reflete corretamente a estrutura desses protocolos.</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q1" value="A"> A) O modelo TCP/IP diferencia-se do modelo OSI por possuir uma camada de Sessão independente.</label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="B"> B) No modelo TCP/IP, a camada de Host/Rede é explicitamente padronizada pelos protocolos da IETF.</label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="C"> C) A camada de Transporte tem como função primordial prover uma comunicação fim a fim (end-to-end).</label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="D"> D) O modelo OSI obteve maior sucesso prático que o TCP/IP devido à sua simplicidade.</label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="E"> E) A camada de Aplicação do modelo TCP/IP corresponde funcionalmente apenas à camada de Aplicação do modelo OSI.</label></div>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-card">
+            <span class="question-text">02. Assinale a alternativa que apresenta um endereço IP tecnicamente INVÁLIDO para atribuição em uma interface de rede.</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q2" value="A"> A) 172.16.0.1</label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="B"> B) 10.255.255.254</label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="C"> C) 192.168.256.20</label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="D"> D) 200.100.50.25</label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="E"> E) 127.0.0.1</label></div>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-card">
+            <span class="question-text">03. Sobre a arquitetura de servidores Web (Apache), avalie as afirmativas: (I) Opera como daemon escutando portas específicas; (II) Configuração clássica via httpd.conf, srm.conf e access.conf; (III) Imune a ataques DoS; (IV) URL contém protocolo, host, porta, diretório e arquivo.</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q3" value="A"> A) V, V, F, V</label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="B"> B) F, V, F, V</label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="C"> C) V, F, V, F</label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="D"> D) V, V, V, V</label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="E"> E) F, F, F, V</label></div>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-card">
+            <span class="question-text">04. Sobre ferramentas de diagnóstico (ping, ifconfig, nslookup, traceroute), estão corretas as afirmativas: (I) ping usa ICMP; (II) ifconfig mostra IP/MAC; (III) nslookup testa integridade de cabos físicos; (IV) traceroute usa campo TTL.</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q4" value="A"> A) I e III, apenas.</label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="B"> B) II e III, apenas.</label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="C"> C) I, II e IV, apenas.</label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="D"> D) I, III e IV, apenas.</label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="E"> E) I, II, III e IV.</label></div>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-card">
+            <span class="question-text">05. Segundo a taxonomia do CERT.br, o termo SCAN refere-se a:</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q5" value="A"> A) Esquema fraudulento financeiro (engenharia social).</label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="B"> B) Notificações de varreduras para identificar computadores e serviços ativos.</label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="C"> C) Código malicioso autopropagável.</label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="D"> D) Ataque coordenado para esgotar largura de banda.</label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="E"> E) Interceptação não autorizada de tráfego local.</label></div>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-card">
+            <span class="question-text">06. No protocolo SIP, para estabelecer uma sessão, o agente de Alice envia uma mensagem inicial contendo o método:</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q6" value="A"> A) HELLO</label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="B"> B) INVITE</label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="C"> C) CONNECT</label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="D"> D) REGISTER</label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="E"> E) SETUP</label></div>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-card">
+            <span class="question-text">07. Qual a sequência correta de protocolos gerada para enviar uma consulta DNS padrão?</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q7" value="A"> A) Mensagem DNS direta em quadro Ethernet.</label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="B"> B) Consulta DNS em segmento TCP -> Pacote IP -> Quadro de enlace.</label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="C"> C) Consulta DNS em segmento UDP -> Datagrama IP -> Quadro de enlace.</label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="D"> D) HTTP intercepta a requisição e encapsula como GET.</label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="E"> E) Processada pelo ARP em broadcast.</label></div>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-card">
+            <span class="question-text">08. Sobre o protocolo POP3 (RFC 1939), é correto afirmar que:</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q8" value="A"> A) É o padrão para envio entre servidores (MTA).</label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="B"> B) Mantém mensagens no servidor para sincronização múltipla.</label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="C"> C) Transfere mensagens do servidor para o cliente local e as remove (download-and-delete).</label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="D"> D) Utiliza UDP para maximizar velocidade de anexos.</label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="E"> E) Permite pesquisa de conteúdo no servidor sem download.</label></div>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-card">
+            <span class="question-text">09. Comparando os protocolos TCP e UDP, assinale a alternativa correta:</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q9" value="A"> A) O UDP é orientado a conexão com handshake.</label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="B"> B) O TCP é não confiável e sem conexão.</label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="C"> C) O TCP oferece entrega confiável, sequenciamento e retransmissão; o UDP é "melhor esforço".</label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="D"> D) Ambos usam janelas deslizantes para controle de congestionamento.</label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="E"> E) O cabeçalho UDP é maior e mais complexo que o do TCP.</label></div>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card">
+            <span class="question-text">10. Assinale a opção que NÃO é formalmente classificada como uma topologia de rede física/lógica clássica:</span>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q10" value="A"> A) Barramento (Bus)</label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="B"> B) Estrela (Star)</label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="C"> C) Anel (Ring)</label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="D"> D) Árvore (Tree)</label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="E"> E) Nuvem (Cloud)</label></div>
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="gradeQuiz()">Finalizar e Ver Resoluções</button>
+    </form>
+
+    <section id="results-section">
+        <div class="score-box">
+            <span class="score-value" id="score-text">0 / 10</span>
+            <p id="congratulations"></p>
+        </div>
+
+        <h2 class="resolutions-title">Gabarito e Resoluções Comentadas</h2>
+        <div id="resolutions-container"></div>
+    </section>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 'q1',
+            correct: 'C',
+            title: 'Questão 01 - Modelos de Referência',
+            explanation: 'A camada de Transporte fornece comunicação lógica fim a fim (end-to-end), isolando as camadas superiores dos detalhes da rede. O TCP/IP não possui camadas de Sessão/Apresentação independentes (integradas à Aplicação) e sua camada de Acesso à Rede não é rigidamente padronizada pela IETF.'
+        },
+        {
+            id: 'q2',
+            correct: 'C',
+            title: 'Questão 02 - Endereçamento IPv4',
+            explanation: 'No IPv4, cada octeto é composto por 8 bits, permitindo valores de 0 a 255. O endereço 192.168.256.20 é inválido porque o terceiro octeto (256) excede o limite matemático de 255.'
+        },
+        {
+            id: 'q3',
+            correct: 'A',
+            title: 'Questão 03 - Servidores Web (Apache)',
+            explanation: 'As afirmativas I, II e IV são verdadeiras. A III é falsa pois nenhum software é imune a ataques DoS ou vulnerabilidades, mesmo sendo código aberto.'
+        },
+        {
+            id: 'q4',
+            correct: 'C',
+            title: 'Questão 04 - Diagnóstico de Redes',
+            explanation: 'Ping usa ICMP (I), ifconfig mostra IP/MAC (II) e traceroute manipula o TTL (IV). O nslookup é para consultas DNS, não para testar integridade física de cabos (III).'
+        },
+        {
+            id: 'q5',
+            correct: 'B',
+            title: 'Questão 05 - Segurança (CERT.br)',
+            explanation: 'Segundo o CERT.br, SCAN é a varredura em redes para identificar hosts ativos e serviços/portas abertas, geralmente preliminar a um ataque.'
+        },
+        {
+            id: 'q6',
+            correct: 'B',
+            title: 'Questão 06 - Protocolo SIP (VoIP)',
+            explanation: 'O método INVITE é utilizado no protocolo SIP para iniciar uma sessão de comunicação. O REGISTER é para localização e o SETUP pertence ao modelo H.323.'
+        },
+        {
+            id: 'q7',
+            correct: 'C',
+            title: 'Questão 07 - Encapsulamento DNS',
+            explanation: 'A consulta DNS padrão usa UDP na camada de transporte (porta 53) para velocidade, sendo encapsulada em pacotes IP e depois em quadros de enlace.'
+        },
+        {
+            id: 'q8',
+            correct: 'C',
+            title: 'Questão 08 - Correio Eletrônico (POP3)',
+            explanation: 'O POP3 é um protocolo de acesso que, por padrão, remove as mensagens do servidor após o download (download-and-delete). O IMAP é que mantém a sincronização remota.'
+        },
+        {
+            id: 'q9',
+            correct: 'C',
+            title: 'Questão 09 - Transporte: TCP vs UDP',
+            explanation: 'O TCP é orientado a conexão e confiável (sequenciamento, retransmissão). O UDP é sem conexão e não confiável (melhor esforço), possuindo cabeçalho muito mais simples.'
+        },
+        {
+            id: 'q10',
+            correct: 'E',
+            title: 'Questão 10 - Topologias de Rede',
+            explanation: 'Barramento, Estrela, Anel e Árvore são topologias estruturais. "Nuvem" é uma abstração para redes WAN ou modelos de serviço, não uma classificação de topologia física clássica.'
+        }
+    ];
+
+    function gradeQuiz() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        resolutionsContainer.innerHTML = '';
+
+        quizData.forEach((item, index) => {
+            const userAnswer = form[item.id].value;
+            const isCorrect = userAnswer === item.correct;
+            
+            if (isCorrect) score++;
+
+            // Create resolution card
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-item';
+            
+            let userFeedback = '';
+            if (userAnswer === '') {
+                userFeedback = '<span class="wrong-answer-label">Não respondida</span>';
+            } else if (isCorrect) {
+                userFeedback = `<span class="correct-answer-label">Sua resposta: ${userAnswer} (Correta)</span>`;
+            } else {
+                userFeedback = `<span class="wrong-answer-label">Sua resposta: ${userAnswer}</span> | <span class="correct-answer-label">Gabarito: ${item.correct}</span>`;
+            }
+
+            resCard.innerHTML = `
+                <span class="resolution-header">${item.title}</span>
+                <div class="feedback">${userFeedback}</div>
+                <p style="margin-top:10px"><strong>Resolução:</strong> ${item.explanation}</p>
+            `;
+            resolutionsContainer.appendChild(resCard);
+        });
+
+        // Update score UI
+        document.getElementById('score-text').innerText = `${score} / 10`;
+        const congrats = document.getElementById('congratulations');
+        if (score >= 7) congrats.innerText = "Excelente desempenho! Você domina os fundamentos do TCP/IP.";
+        else if (score >= 5) congrats.innerText = "Bom trabalho. Revise as resoluções para fixar os conceitos.";
+        else congrats.innerText = "Continue estudando. Analise as resoluções abaixo para entender os erros.";
+
+        // Show results
+        document.getElementById('results-section').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('results-section').offsetTop - 20, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
