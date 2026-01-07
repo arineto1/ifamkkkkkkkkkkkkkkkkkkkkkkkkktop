@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo - Lógica de Programação - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef08a; /* Amarelo grifa-texto */
+            padding: 1px 3px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .section-card {
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border: 1px solid #edf2f7;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Garante que a tabela tenha corpo, mas o container lida com o scroll se necessário */
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .audio-player-container {
+            position: sticky;
+            top: 1rem;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #1e293b;
+            font-weight: 700;
+            border-left: 5px solid #334155;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .pro-tip {
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .warning-box {
+            background-color: #fff1f2;
+            border-left: 4px solid #e11d48;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- Header & Audio Player -->
+        <header class="mb-12">
+            <div class="audio-player-container p-4 rounded-xl mb-8">
+                <label class="block text-xs font-bold text-slate-500 uppercase mb-2 tracking-widest">Player de Revisão em Áudio</label>
+                <audio controls class="w-full">
+                    <source src="30algoritmos.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+                <p class="text-[10px] text-slate-400 mt-2">Dica: Ouça em 1.5x para revisão rápida.</p>
+            </div>
+
+            <div class="text-center">
+                <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">Lógica de Programação</h1>
+                <p class="text-lg text-slate-600">Guia Definitivo para Professor de Informática - IFAM</p>
+                <div class="mt-4 flex justify-center gap-2">
+                    <span class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-bold">BANCA: FCM (CEFETMINAS)</span>
+                    <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">CARGO: EBTT</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Seção 1: Algoritmos -->
+        <section class="section-card">
+            <h2 class="text-2xl">1. Conceito e Características de Algoritmos</h2>
+            <p class="mb-4">Um algoritmo é uma sequência finita de passos bem definidos que visam a solução de um problema. A banca FCM cobra as 5 propriedades de Donald Knuth:</p>
+            <ul class="space-y-3">
+                <li>✅ <strong>Finitude:</strong> Deve sempre terminar após um número finito de passos.</li>
+                <li>✅ <strong>Definição (Determinismo):</strong> Cada passo deve ser preciso e <span class="highlight">sem ambiguidades</span>.</li>
+                <li>✅ <strong>Entrada:</strong> Pode ter <span class="highlight">zero ou mais</span> entradas.</li>
+                <li>✅ <strong>Saída:</strong> Deve ter <span class="highlight">uma ou mais</span> saídas (resultados).</li>
+                <li>✅ <strong>Efetividade:</strong> As operações devem ser básicas o suficiente para serem realizadas (viabilidade).</li>
+            </ul>
+
+            <h3 class="font-bold mt-6 mb-2 text-slate-700">Formas de Representação:</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Vantagem</th>
+                            <th>Desvantagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Descrição Narrativa</strong></td>
+                            <td>Usa língua nativa (Português).</td>
+                            <td>Muita ambiguidade e imprecisão.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fluxograma</strong></td>
+                            <td>Visão gráfica do fluxo de dados.</td>
+                            <td>Difícil manutenção em algoritmos grandes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pseudocódigo</strong></td>
+                            <td>Quase uma linguagem (Portugol).</td>
+                            <td>Exige conhecimento de regras sintáticas.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 2: Dados e Operadores -->
+        <section class="section-card">
+            <h2 class="text-2xl">2. Tipos de Dados e Variáveis</h2>
+            <p>Os tipos primitivos fundamentais que você encontrará no Visualg ou C (comuns na prova):</p>
+            <ul class="list-disc ml-6 mt-2 mb-6">
+                <li><strong>Inteiro:</strong> Números sem casas decimais (-10, 0, 42).</li>
+                <li><strong>Real:</strong> Números com ponto flutuante (3.14, -0.5).</li>
+                <li><strong>Caractere/Literal:</strong> Letras ou frases entre aspas ("IFAM", 'A').</li>
+                <li><strong>Lógico:</strong> Valores booleanos (Verdadeiro ou Falso).</li>
+            </ul>
+
+            <h3 class="font-bold text-slate-700 mb-2">Hierarquia de Execução (Precedência):</h3>
+            <div class="pro-tip">
+                <strong>Ordem Obrigatória:</strong> 
+                Aritméticos (<code>^</code> → <code>* / div mod</code> → <code>+ -</code>) ➔ 
+                Relacionais (<code>= < > <= >= <></code>) ➔ 
+                Lógicos (<code>NÃO</code> ➔ <code>E</code> ➔ <code>OU</code>).
+            </div>
+        </section>
+
+        <!-- Seção 3: Estruturas de Controle -->
+        <section class="section-card">
+            <h2 class="text-2xl">3. Estruturas de Controle de Fluxo</h2>
+            <p class="mb-4">Aqui residem 40% das questões de lógica. Foque na diferença de comportamento dos laços.</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Estrutura</th>
+                            <th>Lógica</th>
+                            <th>Foco da Banca</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>SE..ENTÃO..SENÃO</strong></td>
+                            <td>Condicional Composta</td>
+                            <td>O <code>senão</code> é opcional e só executa se o <code>se</code> for Falso.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ESCOLHA..CASO</strong></td>
+                            <td>Seleção Múltipla</td>
+                            <td>Ideal para valores discretos (não serve para faixas como <code>x > 10</code>).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ENQUANTO..FAÇA</strong></td>
+                            <td>Laço de Pré-teste</td>
+                            <td><span class="highlight">Pode executar ZERO vezes</span> se a condição inicial for falsa.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REPITA..ATÉ</strong></td>
+                            <td>Laço de Pós-teste</td>
+                            <td>Executa <span class="highlight">pelo menos uma vez</span>. No Visualg, encerra quando a condição é VERDADEIRA.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PARA..DE..ATÉ</strong></td>
+                            <td>Laço Contado</td>
+                            <td>Usado quando se sabe o número exato de repetições.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 4: Modularização -->
+        <section class="section-card">
+            <h2 class="text-2xl">4. Modularização e Escopo</h2>
+            <p class="mb-4">Dividir para conquistar. Diferencie Função de Procedimento:</p>
+            <ul class="space-y-4">
+                <li class="p-3 bg-slate-50 rounded">
+                    <strong>Função:</strong> <span class="highlight">Sempre retorna um valor</span> para quem a chamou. Usada em expressões.
+                </li>
+                <li class="p-3 bg-slate-50 rounded">
+                    <strong>Procedimento (Sub-rotina):</strong> Apenas executa um bloco de código, <span class="highlight">não retorna valor</span> explicitamente.
+                </li>
+            </ul>
+
+            <h3 class="font-bold mt-6 mb-2">Passagem de Parâmetros:</h3>
+            <ul class="list-disc ml-6">
+                <li><strong>Por Valor:</strong> Cria uma cópia. Alterar dentro do módulo <span class="highlight">não afeta</span> a variável original.</li>
+                <li><strong>Por Referência:</strong> Passa o endereço (ponteiro). Alterar dentro do módulo <span class="highlight">muda o valor original</span>.</li>
+            </ul>
+        </section>
+
+        <!-- Seção 5: Complexidade -->
+        <section class="section-card">
+            <h2 class="text-2xl">5. Complexidade e Recursividade</h2>
+            <p class="mb-4">A FCM cobra a eficiência básica. Decore a tabela de Big-O para algoritmos clássicos:</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Algoritmo</th>
+                            <th>Complexidade</th>
+                            <th>Classificação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Busca Sequencial</td>
+                            <td>$O(n)$</td>
+                            <td>Linear</td>
+                        </tr>
+                        <tr>
+                            <td>Busca Binária</td>
+                            <td>$O(\log n)$</td>
+                            <td>Logarítmica (Vetor Ordenado)</td>
+                        </tr>
+                        <tr>
+                            <td>Bubble Sort / Selection Sort</td>
+                            <td>$O(n^2)$</td>
+                            <td>Quadrática (Lento)</td>
+                        </tr>
+                        <tr>
+                            <td>Merge Sort / Quick Sort (médio)</td>
+                            <td>$O(n \log n)$</td>
+                            <td>Linear-Logarítmica (Rápido)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="warning-box">
+                <strong>Atenção Recursividade:</strong> Um algoritmo recursivo chama a si mesmo. Para não travar (loop infinito), ele <strong>precisa</strong> de um <span class="highlight">Caso Base</span> (condição de parada).
+            </div>
+        </section>
+
+        <!-- Seção Final: Peguinhas -->
+        <section class="section-card border-slate-900 border-2">
+            <h2 class="text-2xl text-slate-900">⚠️ Peguinhas Recorrentes (CEFETMINAS)</h2>
+            <div class="space-y-4 text-sm">
+                <p>🚩 <strong>Curto-Circuito:</strong> Se você tem <code>(A e B)</code> e A é falso, a linguagem nem olha o B. Se B fosse uma função com erro, o erro não aconteceria.</p>
+                <p>🚩 <strong>Divisões:</strong> Fique atento se o resultado deve ser Inteiro ou Real. No Visualg, <code>5 / 2</code> dá 2.5, mas <code>5 \ 2</code> (barra invertida) dá 2.</p>
+                <p>🚩 <strong>Limites de Laço:</strong> No <code>Para i de 1 ate 10</code>, após o fim do laço, em muitas linguagens o <code>i</code> termina valendo <code>11</code>.</p>
+                <p>🚩 <strong>Recursividade vs Iteração:</strong> Algoritmos recursivos costumam gastar mais memória (pilha de execução) do que os iterativos (laços).</p>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <footer class="text-center mt-16 mb-20">
+            <a href="30questoes.html" class="inline-block bg-slate-900 text-white px-10 py-4 rounded-lg font-bold text-lg hover:bg-slate-800 transition-all shadow-xl hover:-translate-y-1">
+                Praticar com Questões Reais da FCM →
+            </a>
+            <p class="mt-6 text-slate-400 text-sm">© 2024 • Preparatório IFAM • Professor de Informática</p>
+        </footer>
+
+    </div>
+
+    <!-- MathJax para fórmulas Big-O -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

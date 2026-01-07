@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado DHCP - Estilo Fundação CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        .serif {
+            font-family: 'Merriweather', serif;
+        }
+        .question-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.2s ease;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 2px solid #f1f5f9;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 0.75rem;
+            transition: all 0.2s ease;
+        }
+        .option-label:hover {
+            background-color: #f1f5f9;
+        }
+        input[type="radio"]:checked + .option-text {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        input[type="radio"]:checked + .option-label {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+        .code-block {
+            background: #1e293b;
+            color: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        .resolution {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            border-radius: 4px;
+        }
+        .correct { border-color: #22c55e !important; background-color: #f0fdf4 !important; }
+        .incorrect { border-color: #ef4444 !important; background-color: #fef2f2 !important; }
+        
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body class="max-w-4xl mx-auto p-6 md:py-12">
+
+    <header class="mb-12 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Simulado: Redes de Computadores</h1>
+        <p class="text-lg text-slate-600 font-medium">Assunto: Dynamic Host Configuration Protocol (DHCP)</p>
+        <div class="mt-4 inline-block px-4 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold uppercase tracking-wider">
+            Foco: Estilo Fundação CEFETMINAS
+        </div>
+    </header>
+
+    <form id="quizForm">
+        <!-- Questão 1 -->
+        <div class="question-card" id="q1">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 01</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                O protocolo DHCP foi desenvolvido para automatizar a configuração de hosts em redes TCP/IP. Considerando a arquitetura de transporte utilizada por este protocolo e as portas padrão designadas pela IANA, assinale a alternativa correta:
+            </p>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q1" value="A" class="mr-3">
+                    <span>A) O DHCP utiliza o protocolo TCP na porta 80 para o servidor e porta 1024 para o cliente.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="B" class="mr-3">
+                    <span>B) A comunicação ocorre sobre o protocolo UDP, utilizando a porta 67 no servidor e a porta 68 no cliente.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="C" class="mr-3">
+                    <span>C) O protocolo opera exclusivamente sobre ICMP, utilizando mensagens de Router Advertisement.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="D" class="mr-3">
+                    <span>D) O DHCP utiliza portas dinâmicas acima de 49152 para o cliente e a porta fixa 53 para o servidor.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="E" class="mr-3">
+                    <span>E) O servidor DHCP utiliza a porta 68 para escutar requisições, enquanto o cliente escuta na porta 67.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q1">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: B.</strong> O DHCP é fundamentado no UDP (User Datagram Protocol). A porta 67 (UDP) é utilizada pelo Servidor para escutar requisições, enquanto a porta 68 (UDP) é utilizada pelo Cliente para receber as respostas.</p>
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-card" id="q2">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 02</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                A obtenção de um endereço IP via DHCP segue um fluxo de mensagens referido pelo acrônimo DORA. A sequência cronológica correta das mensagens trocadas é:
+            </p>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q2" value="A" class="mr-3">
+                    <span>A) DHCPREQUEST → DHCPACK → DHCPDISCOVER → DHCPOFFER.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="B" class="mr-3">
+                    <span>B) DHCPDISCOVER → DHCPOFFER → DHCPREQUEST → DHCPACK.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="C" class="mr-3">
+                    <span>C) DHCPOFFER → DHCPDISCOVER → DHCPACK → DHCPREQUEST.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="D" class="mr-3">
+                    <span>D) DHCPDISCOVER → DHCPREQUEST → DHCPOFFER → DHCPACK.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q2" value="E" class="mr-3">
+                    <span>E) DHCPHELLO → DHCPWELCOME → DHCPREQUEST → DHCPACK.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q2">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: B.</strong> DORA significa: **D**iscover (cliente descobre servidor), **O**ffer (servidor oferece IP), **R**equest (cliente solicita IP formalmente) e **A**ck (servidor confirma concessão).</p>
+            </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card" id="q3">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 03</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                Analise o trecho de configuração do arquivo <code>/etc/dhcp/dhcpd.conf</code> e assinale a alternativa correta:
+            </p>
+            <div class="code-block">
+authoritative;
+default-lease-time 600;
+max-lease-time 7200;
+subnet 192.168.10.0 netmask 255.255.255.0 {
+  range 192.168.10.100 192.168.10.200;
+}</div>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q3" value="A" class="mr-3">
+                    <span>A) A diretiva range define 101 IPs reservados estaticamente para servidores.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="B" class="mr-3">
+                    <span>B) O parâmetro max-lease-time 7200 força todos os clientes a desconectarem após 2 horas sem renovação.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="C" class="mr-3">
+                    <span>C) A opção default-lease-time 600 define um tempo de concessão de 10 minutos caso o cliente não especifique um.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="D" class="mr-3">
+                    <span>D) A diretiva authoritative impede que o servidor responda a requisições DHCPNAK.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="E" class="mr-3">
+                    <span>E) A configuração está incompleta e não funcionará sem definir o MAC address do servidor.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q3">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: C.</strong> A diretiva `default-lease-time` define o tempo padrão (em segundos) que um endereço IP é emprestado ao cliente quando este não solicita um tempo específico.</p>
+            </div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card" id="q4">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 04</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                Para atender VLANs com 55 hosts, 2500 hosts e 1000 hosts, com a maior eficiência de endereçamento possível, quais máscaras (CIDR) devem ser usadas?
+            </p>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q4" value="A" class="mr-3">
+                    <span>A) Administrativa: /26; Alunos: /20; Visitantes: /22.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q4" value="B" class="mr-3">
+                    <span>B) Administrativa: /27; Alunos: /21; Visitantes: /22.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q4" value="C" class="mr-3">
+                    <span>C) Administrativa: /26; Alunos: /21; Visitantes: /23.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q4" value="D" class="mr-3">
+                    <span>D) Administrativa: /25; Alunos: /19; Visitantes: /21.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q4" value="E" class="mr-3">
+                    <span>E) Administrativa: /26; Alunos: /22; Visitantes: /24.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q4">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: A.</strong> 55 hosts precisam de /26 (62 hosts); 2500 hosts precisam de /20 (4094 hosts, pois /21 só dá 2046); 1000 hosts precisam de /22 (1022 hosts).</p>
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card" id="q5">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 05</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                Qual recurso deve ser habilitado nos switches de acesso para mitigar o problema de "Rogue DHCP Server" (servidor não autorizado)?
+            </p>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q5" value="A" class="mr-3">
+                    <span>A) Spanning Tree Protocol (STP) com BPDU Guard.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q5" value="B" class="mr-3">
+                    <span>B) DHCP Snooping.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q5" value="C" class="mr-3">
+                    <span>C) Dynamic ARP Inspection (DAI) isolado.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q5" value="D" class="mr-3">
+                    <span>D) Port Security com limitação de MAC.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q5" value="E" class="mr-3">
+                    <span>E) VLAN Trunking Protocol (VTP) Pruning.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q5">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: B.</strong> O DHCP Snooping cria portas confiáveis (Trusted) para o servidor legítimo e portas não confiáveis (Untrusted) para usuários, bloqueando respostas DHCP de portas não confiáveis.</p>
+            </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card" id="q6">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 06</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                Sabendo que roteadores não encaminham broadcasts por padrão, qual configuração é indispensável para que clientes em uma VLAN remota obtenham IP de um servidor central?
+            </p>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q6" value="A" class="mr-3">
+                    <span>A) Configurar uma rota estática apontando para o servidor.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q6" value="B" class="mr-3">
+                    <span>B) Habilitar o protocolo RIPv2 para propagar broadcasts.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q6" value="C" class="mr-3">
+                    <span>C) Configurar um Agente de Retransmissão DHCP (DHCP Relay Agent).</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q6" value="D" class="mr-3">
+                    <span>D) Conectar fisicamente o servidor a todas as VLANs simultaneamente.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q6" value="E" class="mr-3">
+                    <span>E) Alterar o MTU da interface para permitir Jumbo Frames.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q6">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: C.</strong> O Relay Agent (ou IP Helper) recebe o broadcast do cliente, converte para unicast e envia ao servidor central, preenchendo o campo `giaddr` com o IP do gateway.</p>
+            </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card" id="q7">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 07</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                Uma estação possui o IP 169.254.10.55 e máscara 255.255.0.0. Qual o diagnóstico correto?
+            </p>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q7" value="A" class="mr-3">
+                    <span>A) Recebeu uma configuração válida de rede Classe B e está apta a navegar.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="B" class="mr-3">
+                    <span>B) O serviço DHCP da estação está desativado.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="C" class="mr-3">
+                    <span>C) O computador falhou em contatar um servidor DHCP e atribuiu a si mesmo um endereço APIPA.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="D" class="mr-3">
+                    <span>D) Ocorreu um conflito de endereço IP e o servidor designou um endereço de quarentena.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="E" class="mr-3">
+                    <span>E) A estação está configurada para usar IPv6 exclusivamente.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q7">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: C.</strong> A faixa 169.254.0.0/16 é o APIPA. É um recurso do SO para quando o DHCP falha, permitindo comunicação apenas no segmento local.</p>
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card" id="q8">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 08</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                Conforme a RFC 2132, assinale a correlação correta entre o código da opção DHCP e sua função:
+            </p>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q8" value="A" class="mr-3">
+                    <span>A) Option 3: Servidores DNS; Option 6: Gateway Padrão.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="B" class="mr-3">
+                    <span>B) Option 1: Máscara; Option 3: Roteador (Gateway); Option 6: DNS.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="C" class="mr-3">
+                    <span>C) Option 15: Servidor NTP; Option 42: Nome de Domínio.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="D" class="mr-3">
+                    <span>D) Option 51: MAC do Cliente; Option 53: Máscara.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="E" class="mr-3">
+                    <span>E) Option 66: IP do Servidor; Option 67: Arquivo de Boot.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q8">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: B.</strong> Esta é a configuração base de qualquer rede: Máscara (1), Gateway (3) e DNS (6).</p>
+            </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card" id="q9">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 09</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                Sobre a alocação dinâmica de endereços em redes IPv6, analise:
+                <br>I. O SLAAC permite que o host gere seu próprio endereço via Router Advertisement.
+                <br>II. O DHCPv6 Stateless é consultado apenas para informações adicionais (DNS).
+                <br>III. Servidores DHCPv4 podem atribuir endereços IPv6 via escopo Classe E.
+            </p>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q9" value="A" class="mr-3">
+                    <span>A) Apenas I está correta.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="B" class="mr-3">
+                    <span>B) Apenas II está correta.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="C" class="mr-3">
+                    <span>C) Apenas I e II estão corretas.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="D" class="mr-3">
+                    <span>D) Apenas I e III estão corretas.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="E" class="mr-3">
+                    <span>E) I, II e III estão corretas.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q9">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: C.</strong> I e II são verdadeiras. A III é falsa pois DHCPv4 e DHCPv6 são protocolos distintos e incompatíveis entre si.</p>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10">
+            <span class="text-sm font-bold text-blue-600 uppercase">Questão 10</span>
+            <p class="mt-2 text-lg font-medium text-slate-800">
+                Qual sequência de comandos força o descarte do IP atual e solicita um novo no Windows?
+            </p>
+            <div class="mt-6 space-y-3">
+                <label class="option-label">
+                    <input type="radio" name="q10" value="A" class="mr-3">
+                    <span>A) ipconfig /flushdns seguido de /registerdns.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q10" value="B" class="mr-3">
+                    <span>B) netsh interface ip reset seguido de reboot.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q10" value="C" class="mr-3">
+                    <span>C) ipconfig /release seguido de ipconfig /renew.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q10" value="D" class="mr-3">
+                    <span>D) route -f seguido de ping.</span>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q10" value="E" class="mr-3">
+                    <span>E) ipconfig /displaydns seguido de /all.</span>
+                </label>
+            </div>
+            <div class="resolution" id="res-q10">
+                <h4 class="font-bold text-blue-800 mb-2">Resolução:</h4>
+                <p><strong>Gabarito: C.</strong> `/release` libera o endereço IP devolvendo-o ao pool do servidor. `/renew` solicita uma nova concessão.</p>
+            </div>
+        </div>
+
+        <div class="text-center pb-20 no-print">
+            <button type="button" onclick="gradeQuiz()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95">
+                Finalizar Simulado e Ver Resoluções
+            </button>
+        </div>
+    </form>
+
+    <!-- Resultados -->
+    <section id="resultSection" class="hidden mb-20 p-8 bg-white border-2 border-slate-200 rounded-2xl shadow-xl animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <h2 class="text-3xl font-bold text-slate-900 mb-2">Resultado Final</h2>
+        <div class="flex items-center gap-4 mb-8">
+            <div id="scoreDisplay" class="text-5xl font-black text-blue-600">0/10</div>
+            <div class="h-12 w-px bg-slate-200"></div>
+            <div id="performanceText" class="text-lg text-slate-600 font-medium">Você concluiu o simulado.</div>
+        </div>
+        <p class="text-slate-600 mb-6 italic">As resoluções detalhadas foram desbloqueadas abaixo de cada questão acima para sua revisão.</p>
+        <button onclick="window.location.reload()" class="text-blue-600 font-semibold hover:underline">Tentar novamente</button>
+    </section>
+
+    <footer class="text-center text-slate-400 text-sm py-8 border-t border-slate-100">
+        Simulado de Redes - DHCP | Desenvolvido para fins educacionais.
+    </footer>
+
+    <script>
+        const answers = {
+            q1: 'B',
+            q2: 'B',
+            q3: 'C',
+            q4: 'A',
+            q5: 'B',
+            q6: 'C',
+            q7: 'C',
+            q8: 'B',
+            q9: 'C',
+            q10: 'C'
+        };
+
+        function gradeQuiz() {
+            const form = document.getElementById('quizForm');
+            const formData = new FormData(form);
+            let score = 0;
+            const total = 10;
+
+            for (let i = 1; i <= total; i++) {
+                const questionKey = 'q' + i;
+                const userAnswer = formData.get(questionKey);
+                const correctAnswer = answers[questionKey];
+                const card = document.getElementById(questionKey);
+                const resolution = document.getElementById('res-' + questionKey);
+
+                // Mostrar resoluções
+                resolution.style.display = 'block';
+
+                if (userAnswer === correctAnswer) {
+                    score++;
+                    card.classList.add('correct');
+                } else {
+                    card.classList.add('incorrect');
+                }
+            }
+
+            // Exibir pontuação
+            document.getElementById('scoreDisplay').innerText = score + '/' + total;
+            document.getElementById('resultSection').classList.remove('hidden');
+            
+            let message = "";
+            if(score === 10) message = "Desempenho Excelente! Gabaritou.";
+            else if(score >= 7) message = "Muito bom desempenho! Revise os pontos de dúvida.";
+            else message = "Continue estudando. Revise as resoluções detalhadas.";
+            
+            document.getElementById('performanceText').innerText = message;
+
+            // Scroll suave para o resultado
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            
+            // Desabilitar rádio buttons
+            const inputs = form.querySelectorAll('input');
+            inputs.forEach(input => input.disabled = true);
+        }
+    </script>
+</body>
+</html>

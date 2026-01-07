@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Lógica de Programação e Algoritmos - Perfil FCM</title>
+    <!-- MathJax para renderizar fórmulas LaTeX -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #fdfdfb;
+            --text-color: #1a1a1a;
+            --accent-color: #2563eb;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --success: #16a34a;
+            --error: #dc2626;
+            --secondary-text: #4b5563;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Segoe UI', Georgia, serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .subtitle {
+            color: var(--secondary-text);
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', monospace;
+            font-size: 0.95rem;
+            border-left: 4px solid var(--accent-color);
+            margin: 20px 0;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f8fafc;
+            border-color: var(--accent-color);
+        }
+
+        .option-label input {
+            margin-top: 6px;
+            margin-right: 15px;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Resultados */
+        #results-section {
+            display: none;
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 4px solid var(--accent-color);
+        }
+
+        .score-banner {
+            text-align: center;
+            background: #eff6ff;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .resolution-card {
+            border-left: 4px solid var(--border-color);
+            padding-left: 25px;
+            margin-bottom: 50px;
+        }
+
+        .resolution-card.correct { border-left-color: var(--success); }
+        .resolution-card.incorrect { border-left-color: var(--error); }
+
+        .res-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-right: 10px;
+        }
+
+        .status-correct { background: #dcfce7; color: var(--success); }
+        .status-incorrect { background: #fee2e2; color: var(--error); }
+
+        .explanation-text {
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--secondary-text);
+        }
+
+        .correct-answer-highlight {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        table th, table td {
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th { background: #f9fafb; }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 15px; }
+            h1 { font-size: 1.7rem; }
+            .question-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Técnica: Algoritmos</h1>
+        <p class="subtitle">Perfil de Prova: Fundação CEFETMINAS (FCM)</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 01 -->
+        <div class="question-card">
+            <span class="question-number">Questão 01</span>
+            <div class="question-text">
+                Considere um algoritmo recursivo <code>XPTO</code> cuja complexidade de tempo \(T(n)\) para uma entrada de tamanho \(n\) é descrita pela relação de recorrência:
+                <p>\[T(n) = 2T(n-1) + 1\]</p>
+                com o caso base \(T(0) = 0\). Assinale a alternativa que descreve corretamente a ordem de complexidade assintótica (Big O) desse algoritmo.
+            </div>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q0" value="A"> A) \(O(n^2)\), crescimento quadrático.</label>
+                <label class="option-label"><input type="radio" name="q0" value="B"> B) \(O(n \log n)\), crescimento linearítmico.</label>
+                <label class="option-label"><input type="radio" name="q0" value="C"> C) \(O(2^n)\), crescimento exponencial.</label>
+                <label class="option-label"><input type="radio" name="q0" value="D"> D) \(O(n)\), crescimento linear.</label>
+                <label class="option-label"><input type="radio" name="q0" value="E"> E) \(O(\log n)\), crescimento logarítmico.</label>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-card">
+            <span class="question-number">Questão 02</span>
+            <div class="question-text">
+                Analise as afirmações a seguir referentes à aplicação do Algoritmo de Dijkstra para encontrar o caminho mínimo em grafos ponderados:
+                <br><br>
+                I. O algoritmo garante a solução ótima para grafos com ciclos de peso total negativo.<br>
+                II. A complexidade pode ser otimizada para \(O(V \log V + A)\) utilizando-se um Heap de Fibonacci.<br>
+                III. Se utilizarmos um vetor simples para a fila de prioridade, a complexidade torna-se \(O(V^2)\), preferível para grafos densos.
+            </div>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q1" value="A"> A) Apenas I.</label>
+                <label class="option-label"><input type="radio" name="q1" value="B"> B) Apenas II.</label>
+                <label class="option-label"><input type="radio" name="q1" value="C"> C) Apenas I e III.</label>
+                <label class="option-label"><input type="radio" name="q1" value="D"> D) Apenas II e III.</label>
+                <label class="option-label"><input type="radio" name="q1" value="E"> E) I, II e III.</label>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-card">
+            <span class="question-number">Questão 03</span>
+            <div class="question-text">Considere o trecho de código abaixo em C:</div>
+            <pre>
+int a = 0;
+int b = 10;
+int c = 5;
+if (a != 0 && (b = 20) > 10) {
+    c = 1;
+} else {
+    if (a == 0 || (b = 30) > 10) {
+        c = 2;
+    }
+}
+printf("%d %d", b, c);</pre>
+            <div class="question-text">Qual será a saída impressa pelo programa?</div>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q2" value="A"> A) 10 2</label>
+                <label class="option-label"><input type="radio" name="q2" value="B"> B) 20 1</label>
+                <label class="option-label"><input type="radio" name="q2" value="C"> C) 30 2</label>
+                <label class="option-label"><input type="radio" name="q2" value="D"> D) 20 2</label>
+                <label class="option-label"><input type="radio" name="q2" value="E"> E) 30 1</label>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-card">
+            <span class="question-number">Questão 04</span>
+            <div class="question-text">Considerando o custo computacional e estabilidade, qual algoritmo apresenta o melhor desempenho de pior caso adaptativo para um vetor "quase ordenado", operando em tempo próximo a \(O(n)\)?</div>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q3" value="A"> A) Quick Sort</label>
+                <label class="option-label"><input type="radio" name="q3" value="B"> B) Merge Sort</label>
+                <label class="option-label"><input type="radio" name="q3" value="C"> C) Insertion Sort</label>
+                <label class="option-label"><input type="radio" name="q3" value="D"> D) Selection Sort</label>
+                <label class="option-label"><input type="radio" name="q3" value="E) Heap Sort"> E) Heap Sort</label>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-card">
+            <span class="question-number">Questão 05</span>
+            <div class="question-text">Analise o pseudocódigo abaixo:</div>
+            <pre>
+X <- 10; Y <- 20
+P1 <- &X; P2 <- &Y
+*P1 <- *P2 + 5
+P2 <- P1
+*P2 <- 50
+Escreva(X, Y)</pre>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q4" value="A"> A) 25 e 20</label>
+                <label class="option-label"><input type="radio" name="q4" value="B"> B) 50 e 20</label>
+                <label class="option-label"><input type="radio" name="q4" value="C"> C) 10 e 50</label>
+                <label class="option-label"><input type="radio" name="q4" value="D"> D) 50 e 50</label>
+                <label class="option-label"><input type="radio" name="q4" value="E"> E) 25 e 50</label>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-card">
+            <span class="question-number">Questão 06</span>
+            <div class="question-text">Sobre os conceitos de <i>l-value</i> e <i>r-value</i>, assinale a alternativa INCORRETA:</div>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q5" value="A"> A) Um l-value refere-se a uma expressão que persiste, possuindo um endereço identificável.</label>
+                <label class="option-label"><input type="radio" name="q5" value="B"> B) Em x = y + 1, x atua como l-value e y + 1 como r-value.</label>
+                <label class="option-label"><input type="radio" name="q5" value="C"> C) Um r-value é um valor temporário que não necessariamente ocupa um endereço acessível.</label>
+                <label class="option-label"><input type="radio" name="q5" value="D"> D) Literais numéricos, como 42, podem atuar como l-values pois são constantes na memória.</label>
+                <label class="option-label"><input type="radio" name="q5" value="E"> E) O identificador de um array pode decair para um ponteiro (r-value) em expressões.</label>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-card">
+            <span class="question-number">Questão 07</span>
+            <div class="question-text">
+                Utilizando o algoritmo <b>SJF Preemptivo</b> (SRTF), qual o tempo de espera de <b>P1</b>?
+                <table>
+                    <tr><th>Processo</th><th>Chegada</th><th>Burst Time</th></tr>
+                    <tr><td>P1</td><td>0</td><td>8</td></tr>
+                    <tr><td>P2</td><td>1</td><td>4</td></tr>
+                    <tr><td>P3</td><td>2</td><td>9</td></tr>
+                    <tr><td>P4</td><td>3</td><td>5</td></tr>
+                </table>
+            </div>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q6" value="A"> A) 0</label>
+                <label class="option-label"><input type="radio" name="q6" value="B"> B) 4</label>
+                <label class="option-label"><input type="radio" name="q6" value="C"> C) 9</label>
+                <label class="option-label"><input type="radio" name="q6" value="D"> D) 10</label>
+                <label class="option-label"><input type="radio" name="q6" value="E"> E) 12</label>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-card">
+            <span class="question-number">Questão 08</span>
+            <div class="question-text">Qual o valor retornado pela chamada <code>G(4)</code>?</div>
+            <pre>
+Função G(n)
+   Se n <= 0 então Retorne 0
+   Senão Se n % 2 == 0 então Retorne G(n - 1) + n
+   Senão Retorne G(n - 2) + 1</pre>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q7" value="A"> A) 6</label>
+                <label class="option-label"><input type="radio" name="q7" value="B"> B) 7</label>
+                <label class="option-label"><input type="radio" name="q7" value="C"> C) 8</label>
+                <label class="option-label"><input type="radio" name="q7" value="D"> D) 9</label>
+                <label class="option-label"><input type="radio" name="q7" value="E"> E) 10</label>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-card">
+            <span class="question-number">Questão 09</span>
+            <div class="question-text">Qual alternativa contém a tradução lógica correta de <code>PARA K de 1 ATÉ 10 PASSO 2</code> para um laço <code>ENQUANTO</code>?</div>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q8" value="A"> A) K <- 1; ENQUANTO K <= 10 FAÇA { ESCREVA(K); K <- K + 2 }</label>
+                <label class="option-label"><input type="radio" name="q8" value="B"> B) K <- 1; ENQUANTO K < 10 FAÇA { K <- K + 2; ESCREVA(K) }</label>
+                <label class="option-label"><input type="radio" name="q8" value="C"> C) K <- 0; ENQUANTO K <= 10 FAÇA { K <- K + 2; ESCREVA(K) }</label>
+                <label class="option-label"><input type="radio" name="q8" value="D"> D) K <- 1; REPITA { ESCREVA(K); K <- K + 2 } ATÉ K > 10</label>
+                <label class="option-label"><input type="radio" name="q8" value="E"> E) K <- 1; ENQUANTO K <= 10 FAÇA { ESCREVA(K); K <- K + 1 }</label>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card">
+            <span class="question-number">Questão 10</span>
+            <div class="question-text">
+                Se as entradas forem \(A=1\) e \(B=1\), qual será o valor de \(S\)?
+                <p>\[S = \overline{(A \cdot B)} + (A \oplus B)\]</p>
+            </div>
+            <div class="options-list">
+                <label class="option-label"><input type="radio" name="q9" value="A"> A) 0 (Falso)</label>
+                <label class="option-label"><input type="radio" name="q9" value="B"> B) 1 (Verdadeiro)</label>
+                <label class="option-label"><input type="radio" name="q9" value="C"> C) Alta Impedância</label>
+                <label class="option-label"><input type="radio" name="q9" value="D"> D) Indeterminado</label>
+                <label class="option-label"><input type="radio" name="q9" value="E"> E) Oscilante</label>
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="gradeQuiz()">Finalizar e Ver Resoluções</button>
+    </form>
+
+    <!-- Seção de Resultados -->
+    <div id="results-section">
+        <div class="score-banner">
+            <span class="subtitle">Seu Desempenho</span>
+            <span id="final-score" class="score-number">0 / 10</span>
+            <p id="feedback-text"></p>
+        </div>
+
+        <h2>Resoluções Detalhadas</h2>
+        <div id="resolutions-container">
+            <!-- Inserido via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            correct: "C",
+            explanation: "<b>Resolução:</b> O algoritmo segue a recorrência \(T(n) = 2T(n-1) + 1\). Pelo método da expansão, vemos que o trabalho duplica a cada nível da árvore de recursão, resultando no somatório de uma PG: \(T(n) = 2^n - 1\). Em notação Big O, descartamos constantes, resultando em \(O(2^n)\), um crescimento exponencial."
+        },
+        {
+            correct: "D",
+            explanation: "<b>Resolução:</b> O item I está incorreto porque Dijkstra não funciona com pesos negativos. O item II está correto (Heap de Fibonacci otimiza para \(O(V \log V + A)\)). O item III está correto pois em grafos densos (\(A \approx V^2\)), a implementação com vetor \(O(V^2)\) evita o overhead do logaritmo do heap binário."
+        },
+        {
+            correct: "A",
+            explanation: "<b>Resolução:</b> No primeiro <code>if</code>, como <code>a != 0</code> é falso, ocorre o <b>curto-circuito</b> e <code>(b = 20)</code> não é executado. No <code>else</code>, <code>a == 0</code> é verdadeiro, logo ocorre curto-circuito no <code>||</code> e <code>(b = 30)</code> não é executado. Resultado: <code>b</code> continua 10 e <code>c</code> vira 2."
+        },
+        {
+            correct: "C",
+            explanation: "<b>Resolução:</b> O Insertion Sort é o algoritmo 'adaptativo' por excelência. Em vetores quase ordenados, ele realiza pouquíssimas trocas, atingindo complexidade próxima a \(O(n)\), sendo superior a algoritmos como Quick ou Merge para este caso específico."
+        },
+        {
+            correct: "B",
+            explanation: "<b>Resolução:</b> 1. <code>X=10, Y=20</code>. 2. <code>*P1 = 20 + 5 = 25</code> (X vira 25). 3. <code>P2 = P1</code> (P2 agora aponta para X). 4. <code>*P2 = 50</code> (X vira 50). Y nunca foi alterado após a inicialização. Logo, X=50 e Y=20."
+        },
+        {
+            correct: "D",
+            explanation: "<b>Resolução:</b> A alternativa D está incorreta. Literais numéricos (como 42) são <b>r-values</b> puros. Eles representam valores temporários e não possuem um endereço de memória que possa ser alvo de uma atribuição (não se pode fazer <code>42 = x</code>)."
+        },
+        {
+            correct: "C",
+            explanation: "<b>Resolução:</b> P1 inicia em t=0 e roda por 1ms. É interrompido por P2 (que é menor). P2 roda de t=1 a t=5. Em t=5, P4(5ms) é menor que P1(7ms restantes). P4 roda de t=5 a t=10. P1 só retoma em t=10. Tempo de espera = (Início t=10) - (Chegada t=0) - (Processado 1ms) = 9ms."
+        },
+        {
+            correct: "A",
+            explanation: "<b>Resolução:</b> G(4) é par: <code>G(3) + 4</code>. G(3) é ímpar: <code>G(1) + 1</code>. G(1) é ímpar: <code>G(-1) + 1</code>. G(-1) retorna 0. Somando: G(1)=1, G(3)=2, G(4)=2+4=6."
+        },
+        {
+            correct: "A",
+            explanation: "<b>Resolução:</b> A estrutura correta exige inicialização antes do laço, teste da condição no início e incremento <b>ao final</b> do bloco de instruções, garantindo que o valor de K seja atualizado após cada execução do <code>ESCREVA</code>."
+        },
+        {
+            correct: "A",
+            explanation: "<b>Resolução:</b> Para A=1, B=1: 1. \(\overline{(1 \cdot 1)} = \overline{1} = 0\). 2. \((1 \oplus 1) = 0\) (XOR de iguais é zero). 3. \(S = 0 + 0 = 0\). O resultado é Falso."
+        }
+    ];
+
+    function gradeQuiz() {
+        const form = document.getElementById('quiz-form');
+        const resultsSection = document.getElementById('results-section');
+        const resContainer = document.getElementById('resolutions-container');
+        const scoreDisplay = document.getElementById('final-score');
+        const feedbackDisplay = document.getElementById('feedback-text');
+        
+        let score = 0;
+        resContainer.innerHTML = '';
+
+        questions.forEach((q, index) => {
+            const selected = form.querySelector(`input[name="q${index}"]:checked`);
+            const isCorrect = selected && selected.value === q.correct;
+            if (isCorrect) score++;
+
+            const card = document.createElement('div');
+            card.className = `resolution-card ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            card.innerHTML = `
+                <div class="res-header">
+                    <span class="status-badge ${isCorrect ? 'status-correct' : 'status-incorrect'}">
+                        ${isCorrect ? 'Acertou' : 'Errou'}
+                    </span>
+                    <strong>Questão ${index + 1}</strong>
+                </div>
+                <div class="explanation-text">
+                    <p>Sua resposta: <b>${selected ? selected.value : 'Nenhuma'}</b> | Gabarito: <b class="correct-answer-highlight">${q.correct}</b></p>
+                    ${q.explanation}
+                </div>
+            `;
+            resContainer.appendChild(card);
+        });
+
+        scoreDisplay.innerText = `${score} / 10`;
+        feedbackDisplay.innerText = score >= 7 ? "Excelente desempenho! Você está dominando a lógica da banca." : "Bom esforço. Revise os pontos de complexidade e curto-circuito.";
+        
+        resultsSection.style.display = 'block';
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

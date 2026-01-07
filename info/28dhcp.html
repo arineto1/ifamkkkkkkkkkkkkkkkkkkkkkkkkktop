@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass DHCP - Professor IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+        .highlight {
+            background-color: #fef08a; /* Amarelo suave para grifos */
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        .section-title {
+            border-left: 5px solid #2563eb;
+            padding-left: 15px;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+        .info-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            color: #334155;
+        }
+        .banca-alert {
+            background-color: #fff7ed;
+            border: 1px solid #fdba74;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .banca-alert strong {
+            color: #c2410c;
+        }
+        @media (max-width: 640px) {
+            th, td {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-4 py-8">
+
+    <!-- Header & Audio -->
+    <header class="text-center mb-12">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-2">DHCP: Guia Definitivo para IFAM</h1>
+        <p class="text-lg text-gray-600">Foco Total: Carreira EBTT - Banca Fundação CEFETMINAS</p>
+        
+        <div class="mt-8 p-6 bg-gray-50 rounded-2xl border border-gray-200 inline-block w-full max-w-lg">
+            <span class="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">🎧 Resumo em Áudio</span>
+            <audio controls class="w-full">
+                <!-- Espaço para o nome do arquivo mp3 -->
+                <source src="28dhcp.mp3" type="audio/mpeg">
+                Seu navegador não suporta o player de áudio.
+            </audio>
+        </div>
+    </header>
+
+    <!-- 1. Introdução e Características -->
+    <section>
+        <h2 class="section-title">1. Definição e Características Essenciais</h2>
+        <div class="info-card">
+            <p>O <strong>Dynamic Host Configuration Protocol (DHCP)</strong> é o sucessor do BOOTP. Sua função primária é a <span class="highlight">atribuição dinâmica de endereços IP</span> e parâmetros de rede.</p>
+            <ul class="list-disc ml-6 mt-4 space-y-2">
+                <li><strong>Camada:</strong> Aplicação (Modelo OSI/TCP-IP).</li>
+                <li><strong>Protocolo de Transporte:</strong> <span class="highlight">UDP</span>.</li>
+                <li><strong>Arquitetura:</strong> Cliente-Servidor.</li>
+                <li><strong>Portas:</strong> <span class="highlight">67 (Servidor)</span> e <span class="highlight">68 (Cliente)</span>.</li>
+                <li><strong>Persistência:</strong> Armazena as atribuições em um banco de dados de "Leases" (concessões).</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 2. Métodos de Alocação -->
+    <section>
+        <h2 class="section-title">2. Métodos de Alocação de Endereços</h2>
+        <div class="info-card">
+            <p class="mb-4">Diferente do que muitos pensam, o DHCP não faz apenas alocação dinâmica. Existem três tipos que caem em prova:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição Técnica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Alocação Dinâmica</strong></td>
+                        <td>O servidor atribui um IP por um <span class="highlight">tempo limitado (Lease Time)</span>. O IP retorna ao pool após o uso.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alocação Automática</strong></td>
+                        <td>O DHCP atribui um IP permanente ao cliente no primeiro contato.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alocação Estática (Reserva)</strong></td>
+                        <td>O administrador mapeia um <span class="highlight">Endereço MAC específico</span> para um IP fixo no servidor.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 3. Funcionamento DORA -->
+    <section>
+        <h2 class="section-title">3. O Processo de Quatro Etapas (D.O.R.A.)</h2>
+        <div class="info-card">
+            <p class="mb-4">Memorize a ordem e os tipos de transmissão:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ordem</th>
+                        <th>Mensagem</th>
+                        <th>Tipo de Transmissão</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>DHCPDISCOVER</strong></td>
+                        <td><span class="highlight">Broadcast</span></td>
+                        <td>Cliente busca servidores ativos.</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>DHCPOFFER</strong></td>
+                        <td>Unicast ou Broadcast</td>
+                        <td>Servidor oferece configuração (IP, Máscara, GW).</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>DHCPREQUEST</strong></td>
+                        <td><span class="highlight">Broadcast</span></td>
+                        <td>Cliente aceita a oferta (avisa todos os servidores).</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>DHCPACK</strong></td>
+                        <td>Unicast ou Broadcast</td>
+                        <td>Servidor confirma e finaliza a concessão.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="banca-alert">
+                <strong>💡 PEGUINHA CEFETMINAS:</strong> O <em>DHCPREQUEST</em> é enviado em <strong>Broadcast</strong> não porque o cliente não sabe o IP do servidor, mas para que outros servidores que enviaram ofertas saibam que o cliente já escolheu um e liberem seus endereços reservados.
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. DHCP Relay Agent -->
+    <section>
+        <h2 class="section-title">4. Agente de Relay (RFC 1542)</h2>
+        <div class="info-card">
+            <p>Roteadores não encaminham pacotes de Broadcast. Para o DHCP funcionar em múltiplas sub-redes:</p>
+            <ul class="list-disc ml-6 mt-3 space-y-2">
+                <li>O roteador deve estar configurado como <span class="highlight">DHCP Relay Agent</span>.</li>
+                <li>Ele converte o Broadcast do cliente em um <strong>Unicast</strong> direcionado ao Servidor DHCP.</li>
+                <li>Campo <strong>GIADDR</strong> (Gateway IP Address): O Relay preenche este campo no cabeçalho DHCP com seu próprio IP para que o servidor saiba de qual sub-rede deve retirar o IP para o cliente.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 5. DHCPv6 (Diferenças Críticas) -->
+    <section>
+        <h2 class="section-title">5. DHCPv6 vs DHCP IPv4</h2>
+        <div class="info-card">
+            <p class="mb-4">O DHCPv6 possui mudanças radicais que a CEFETMINAS adora explorar em cargos de nível superior:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Característica</th>
+                        <th>DHCP IPv4</th>
+                        <th>DHCPv6 (IPv6)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Portas UDP</td>
+                        <td>67 (S) / 68 (C)</td>
+                        <td><span class="highlight">547 (S) / 546 (C)</span></td>
+                    </tr>
+                    <tr>
+                        <td>Processo Principal</td>
+                        <td>DORA</td>
+                        <td><span class="highlight">SARR</span> (Solicit, Advertise, Request, Reply)</td>
+                    </tr>
+                    <tr>
+                        <td>Default Gateway</td>
+                        <td>Enviado pelo DHCP</td>
+                        <td><span class="highlight text-red-600">NÃO enviado pelo DHCP</span> (Enviado pelo ICMPv6 RA)</td>
+                    </tr>
+                    <tr>
+                        <td>Endereços</td>
+                        <td>Broadcast</td>
+                        <td><span class="highlight">Multicast (ff02::1:2)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 6. Segurança e Termos Técnicos -->
+    <section>
+        <h2 class="section-title">6. Segurança e Definições de Fronteira</h2>
+        <div class="info-card">
+            <ul class="space-y-4">
+                <li>
+                    <strong>DHCP Snooping:</strong> Recurso de segurança de Switch L2. Define portas "Confiáveis" (Trusted) onde o servidor pode estar. Evita ataques de <span class="highlight">Rogue DHCP</span> (servidor falso).
+                </li>
+                <li>
+                    <strong>DHCP Starvation:</strong> Ataque de negação de serviço onde o invasor esgota todo o pool de IPs do servidor usando MACs forjados.
+                </li>
+                <li>
+                    <strong>Option 82 (Relay Agent Information):</strong> Adiciona informações sobre o circuito/porta física do switch de onde partiu a requisição.
+                </li>
+                <li>
+                    <strong>APIPA (Automatic Private IP Addressing):</strong> Endereços <span class="highlight">169.254.0.0/16</span>. Se o cliente não encontra um servidor DHCP, ele se auto-atribui esse IP. Útil para diagnóstico: "Se tem APIPA, o problema é o DHCP ou o cabo".
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 7. Tendências CEFETMINAS -->
+    <section class="mb-12">
+        <h2 class="section-title">7. Análise de Tendência: CEFETMINAS / EBTT</h2>
+        <div class="banca-alert border-red-500 bg-red-50">
+            <h4 class="font-bold text-red-800 mb-2">Checklist de Revisão Pré-Prova:</h4>
+            <ol class="list-decimal ml-6 space-y-2 text-red-900">
+                <li><strong>Estados de Renovação:</strong> Lembre que o cliente tenta renovar em <span class="highlight">T1 (50%)</span> via Unicast e em <span class="highlight">T2 (87.5%)</span> via Broadcast.</li>
+                <li><strong>Protocolo de Transporte:</strong> Jamais marque TCP. O DHCP precisa ser rápido e leve (UDP).</li>
+                <li><strong>Camada OSI:</strong> Aplicação. Muitas bancas tentam confundir com Rede por causa do "IP".</li>
+                <li><strong>DHCPv6 Stateless vs Stateful:</strong> Stateless usa apenas para parâmetros adicionais (DNS). Stateful gerencia os IPs.</li>
+                <li><strong>Campo GIADDR:</strong> Fundamental para entender como o servidor sabe de qual sub-rede o cliente faz parte quando há um roteador no meio.</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- Botão de Questões -->
+    <div class="text-center mt-12 pb-20">
+        <a href="28questoes.html" class="inline-block bg-blue-700 hover:bg-blue-800 text-white font-bold py-5 px-10 rounded-xl shadow-xl transition-all transform hover:-translate-y-1">
+            🚀 Ir para Questões de Fixação (Página de Testes)
+        </a>
+        <p class="text-gray-400 text-xs mt-4">Documento preparado para fins de estudo intensivo - IFAM 2024/2025</p>
+    </div>
+
+</body>
+</html>

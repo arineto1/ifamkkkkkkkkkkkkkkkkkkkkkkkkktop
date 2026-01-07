@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Redes - Foco IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .important-highlight {
+            background-color: #fef3c7;
+            font-weight: 600;
+            padding: 0 2px;
+            border-bottom: 2px solid #f6e05e;
+        }
+
+        /* Ajuste de Tabelas para não ter scroll horizontal e ser legível */
+        .responsive-table-wrapper {
+            width: 100%;
+            margin: 1.5rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 700;
+            text-align: left;
+            padding: 12px 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .pro-tip {
+            border-left: 5px solid #10b981;
+            background-color: #f0fdf4;
+            padding: 1.25rem;
+            margin: 2rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .section-card {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        code {
+            background-color: #f1f5f9;
+            color: #ef4444;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Container Principal -->
+    <div class="max-w-5xl mx-auto px-4 md:px-10 py-10">
+        
+        <!-- Player de Áudio -->
+        <header class="mb-12 p-8 border-2 border-gray-100 rounded-3xl shadow-sm text-center bg-slate-50">
+            <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Podcast de Revisão Técnica</h3>
+            <audio controls class="w-full max-w-2xl mx-auto mb-4">
+                <!-- ESPAÇO PARA O NOME DO ARQUIVO MP3 ABAIXO -->
+                <source src="29gerenciamento.mp3" type="audio/mpeg">
+                Seu navegador não suporta o áudio.
+            </audio>
+            <p class="text-sm text-slate-500 italic">Ouça os pontos principais enquanto acompanha o texto abaixo.</p>
+        </header>
+
+        <!-- Título e Introdução -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-4">Gerenciamento de Redes</h1>
+            <p class="text-xl text-slate-600">Guia Definitivo para Professor de Informática - IFAM / CEFETMINAS</p>
+        </div>
+
+        <!-- 1. Conceitos Fundamentais -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="mr-3 text-blue-600">01.</span> Conceitos e Arquitetura
+            </h2>
+            <p class="mb-4">O gerenciamento de redes consiste no monitoramento, análise e controle de recursos para garantir a disponibilidade e qualidade dos serviços.</p>
+            
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="p-5 border border-slate-200 rounded-xl">
+                    <h4 class="font-bold text-blue-700 mb-2">Entidades de Gerência</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><strong>Gerente (NMS):</strong> Estação central que executa o software de gerência.</li>
+                        <li><strong>Agente:</strong> Software que reside no dispositivo gerenciado (Roteador, Switch, Server).</li>
+                        <li><strong>Dispositivo Gerenciado:</strong> O hardware físico monitorado.</li>
+                    </ul>
+                </div>
+                <div class="p-5 border border-slate-200 rounded-xl">
+                    <h4 class="font-bold text-blue-700 mb-2">Protocolos e Bases</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><strong>SMI:</strong> Define a sintaxe e as regras de como os dados são estruturados.</li>
+                        <li><strong>MIB:</strong> O "banco de dados" virtual que contém os objetos gerenciados.</li>
+                        <li><strong>SNMP:</strong> O protocolo de comunicação para troca de informações.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Modelo FCAPS -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="mr-3 text-blue-600">02.</span> Áreas Funcionais (FCAPS - ISO)
+            </h2>
+            <p class="mb-4 italic text-sm text-slate-500 text-center">Essencial para prova: A CEFETMINAS adora cobrar a distinção entre Performance e Falha.</p>
+            
+            <div class="responsive-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Área</th>
+                            <th>Foco Principal</th>
+                            <th>Exemplos de Atividades</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>F (Fault)</strong></td>
+                            <td><span class="important-highlight">Correção e Isolamento</span></td>
+                            <td>Detecção de erros, logs de falhas, testes de loopback, reparos imediatos.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C (Configuration)</strong></td>
+                            <td><span class="important-highlight">Inventário e Controle</span></td>
+                            <td>Configuração de parâmetros, backup de firmware, registro de versões de HW/SW.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>A (Accounting)</strong></td>
+                            <td><span class="important-highlight">Tarifação e Custos</span></td>
+                            <td>Cálculo de utilização por departamento, gestão de cotas de tráfego.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>P (Performance)</strong></td>
+                            <td><span class="important-highlight">Vazão e Eficiência</span></td>
+                            <td>Coleta de estatísticas (throughput, latência), <span class="important-highlight">Planejamento de Capacidade</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>S (Security)</strong></td>
+                            <td><span class="important-highlight">Proteção de Ativos</span></td>
+                            <td>Controle de acesso, gerenciamento de chaves, logs de auditoria de segurança.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. SNMP Detalhado -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="mr-3 text-blue-600">03.</span> Protocolo SNMP (v1, v2c, v3)
+            </h2>
+            <p class="mb-4 text-slate-700">O SNMP opera na camada de Aplicação e utiliza <span class="important-highlight">UDP</span> como protocolo de transporte.</p>
+
+            <div class="pro-tip">
+                <strong>Portas Críticas:</strong> 
+                <br>• <strong>161 UDP:</strong> Requisições do Gerente para o Agente (Get/Set).
+                <br>• <strong>162 UDP:</strong> Notificações do Agente para o Gerente (<span class="important-highlight">Trap/Inform</span>).
+            </div>
+
+            <h3 class="text-lg font-bold mb-4">Comparações de Versões</h3>
+            <div class="responsive-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Versão</th>
+                            <th>Destaques</th>
+                            <th>Segurança</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>SNMPv1</strong></td>
+                            <td>Comando <code>Trap</code>, contadores 32 bits.</td>
+                            <td>Inexistente (Community String em texto claro).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SNMPv2c</strong></td>
+                            <td>Comandos <code>GetBulk</code> e <code>Inform</code> (Trap com confirmação).</td>
+                            <td>Baseada em Comunidade (Insegura).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SNMPv3</strong></td>
+                            <td>Modularidade, suporte a grandes redes.</td>
+                            <td><span class="important-highlight">USM (Segurança) e VACM (Controle de Acesso)</span>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-lg font-bold mt-8 mb-4">Níveis de Segurança SNMPv3</h3>
+            <ul class="space-y-3">
+                <li>🟢 <strong>noAuthNoPriv:</strong> Sem autenticação e sem criptografia.</li>
+                <li>🟡 <strong>authNoPriv:</strong> Autenticação (MD5 ou SHA) mas sem criptografia dos dados.</li>
+                <li>🔴 <strong>authPriv:</strong> <span class="important-highlight">Autenticação + Criptografia (DES/AES)</span>. Privacidade total.</li>
+            </ul>
+        </section>
+
+        <!-- 4. SMI, MIB e OID -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="mr-3 text-blue-600">04.</span> SMI, MIB e OID
+            </h2>
+            <p class="mb-6">A gerência SNMP é baseada em uma estrutura de árvore hierárquica.</p>
+            
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                <p class="mb-4"><strong>OID (Object Identifier):</strong> Sequência numérica que identifica um objeto na MIB.</p>
+                <div class="flex items-center justify-center p-4 bg-white border border-slate-200 rounded-lg font-mono text-blue-600">
+                    .iso(1).org(3).dod(6).internet(1).mgmt(2).mib-2(1)
+                </div>
+                <p class="mt-4 text-sm text-slate-600">A MIB-2 é o padrão para gerência de dispositivos TCP/IP comuns (interfaces, IP, ICMP, TCP, UDP).</p>
+            </div>
+        </section>
+
+        <!-- 5. RMON, Syslog e NetFlow -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="mr-3 text-blue-600">05.</span> RMON, Syslog e NetFlow
+            </h2>
+            
+            <h3 class="text-lg font-bold mb-3">RMON (Remote Monitoring)</h3>
+            <p class="mb-4">Extensão da MIB que permite monitoramento offline e redução de tráfego de gerência.</p>
+            <ul class="list-disc ml-6 mb-6 space-y-1">
+                <li><strong>RMON1:</strong> Monitora Camada 2 (MAC, colisões, erros de CRC).</li>
+                <li><strong>RMON2:</strong> Monitora Camada 3 a 7 (Protocolos IP, Aplicações).</li>
+            </ul>
+
+            <h3 class="text-lg font-bold mb-3">Níveis do Syslog (RFC 5424)</h3>
+            <p class="text-sm mb-2 italic">Atenção: Quanto menor o número, maior a gravidade.</p>
+            <div class="responsive-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nível</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0</td><td><span class="text-red-600 font-bold">Emergency</span></td><td>Sistema inutilizável.</td></tr>
+                        <tr><td>1</td><td><strong>Alert</strong></td><td>Ação imediata necessária.</td></tr>
+                        <tr><td>2</td><td><strong>Critical</strong></td><td>Condições críticas.</td></tr>
+                        <tr><td>3</td><td><strong>Error</strong></td><td>Condições de erro.</td></tr>
+                        <tr><td>4</td><td><strong>Warning</strong></td><td>Avisos.</td></tr>
+                        <tr><td>5</td><td><strong>Notice</strong></td><td>Normal, mas significativo.</td></tr>
+                        <tr><td>6</td><td><strong>Informational</strong></td><td>Mensagens informativas.</td></tr>
+                        <tr><td>7</td><td><strong>Debug</strong></td><td>Mensagens de depuração.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl">
+                <h3 class="font-bold text-blue-800 mb-2">NetFlow vs SNMP</h3>
+                <p class="text-sm">Enquanto o <strong>SNMP</strong> foca no estado do dispositivo (CPU, RAM, Status da Porta), o <strong>NetFlow</strong> (Cisco) foca no <span class="important-highlight">fluxo de tráfego</span> (quem, para onde, quando e quanto).</p>
+            </div>
+        </section>
+
+        <!-- 6. Tendências CEFETMINAS -->
+        <section class="mb-20">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="mr-3 text-red-600">06.</span> Checklist Anti-Peguinha
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="flex items-start p-4 bg-white border border-slate-100 rounded-xl shadow-sm">
+                    <span class="text-red-500 font-bold mr-3">✖</span>
+                    <p class="text-sm">Afirmar que SNMP usa TCP. <strong>Falso.</strong> Usa UDP (161/162).</p>
+                </div>
+                <div class="flex items-start p-4 bg-white border border-slate-100 rounded-xl shadow-sm">
+                    <span class="text-red-500 font-bold mr-3">✖</span>
+                    <p class="text-sm">Confundir Get (Pull) com Trap (Push). <strong>Cuidado.</strong></p>
+                </div>
+                <div class="flex items-start p-4 bg-white border border-slate-100 rounded-xl shadow-sm">
+                    <span class="text-red-500 font-bold mr-3">✖</span>
+                    <p class="text-sm">Dizer que SNMPv2 é seguro. <strong>Falso.</strong> Apenas o v3 é seguro.</p>
+                </div>
+                <div class="flex items-start p-4 bg-white border border-slate-100 rounded-xl shadow-sm">
+                    <span class="text-red-500 font-bold mr-3">✖</span>
+                    <p class="text-sm">Backup de roteador em 'Segurança'. <strong>Não.</strong> É Configuração.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / CTA -->
+        <footer class="text-center pb-20 border-t border-gray-100 pt-10">
+            <p class="text-slate-400 text-sm mb-8">Fim da aula teórica. Pronto para o próximo passo?</p>
+            <a href="29questoes.html" class="inline-block bg-slate-900 text-white px-10 py-5 rounded-2xl font-bold text-lg hover:bg-slate-800 transition-all transform hover:-translate-y-1 shadow-xl">
+                Resolver Questões do IFAM →
+            </a>
+        </footer>
+
+    </div>
+
+</body>
+</html>
