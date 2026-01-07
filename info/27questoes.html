@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado DNS - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --accent-color: #2980b9;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 850px;
+            width: 90%;
+            margin-bottom: 4rem;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background-color: #f0f7ff;
+            border-color: var(--accent-color);
+        }
+
+        .option input {
+            margin-right: 1rem;
+            cursor: pointer;
+        }
+
+        .option.selected {
+            background-color: #e1f0ff;
+            border-color: var(--accent-color);
+        }
+
+        /* Result Classes */
+        .option.correct {
+            background-color: #d4edda !important;
+            border-color: var(--success-color) !important;
+        }
+
+        .option.wrong {
+            background-color: #f8d7da !important;
+            border-color: var(--error-color) !important;
+        }
+
+        .btn-finish {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-finish:hover {
+            background-color: #1c5985;
+            transform: translateY(-2px);
+        }
+
+        .result-section {
+            display: none;
+            background-color: #fff;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .score-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .resolution-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .resolution-title {
+            color: var(--success-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .resolution-content {
+            font-size: 0.95rem;
+            color: #555;
+            text-align: justify;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .question-card { padding: 1rem; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado: DNS (Domain Name System)</h1>
+    <p>Fundação CEFETMINAS - Redes de Computadores</p>
+</header>
+
+<div class="container">
+    <div id="quiz-container">
+        <!-- Questions will be injected here -->
+    </div>
+
+    <button id="finish-btn" class="btn-finish">Finalizar Simulado</button>
+
+    <div id="result-box" class="result-section">
+        <div class="score-text" id="score-display"></div>
+        <p>Confira abaixo as resoluções detalhadas de cada questão.</p>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "Questão 1: O protocolo DNS (Domain Name System) é fundamental para a operação da Internet... Considerando a arquitetura TCP/IP e os padrões definidos pelas RFCs pertinentes, assinale a alternativa que descreve corretamente a porta padrão e o comportamento dos protocolos de transporte utilizados pelo serviço DNS:",
+            options: [
+                "A) O DNS opera exclusivamente sobre o protocolo TCP na porta 80, garantindo a confiabilidade total na entrega dos pacotes.",
+                "B) Utiliza a porta 53 tanto para UDP quanto para TCP. O UDP é o padrão para consultas de resolução de nomes, enquanto o TCP é obrigatório para transferências de zona e respostas que excedem o limite UDP.",
+                "C) Emprega o protocolo UDP na porta 67 para requisições de clientes e o protocolo TCP na porta 68.",
+                "D) Utiliza o protocolo IP diretamente, sem encapsulamento na camada de transporte, operando na porta lógica 5353.",
+                "E) Baseia-se primariamente no protocolo TCP na porta 53 para todas as operações, utilizando UDP apenas como fallback."
+            ],
+            correct: 1,
+            resolution: "Gabarito: B. O DNS utiliza a porta 53. UDP é preferido para consultas rápidas por causa do baixo overhead. O TCP é exigido para transferências de zona (AXFR/IXFR) e quando a resposta é truncada (bit TC) por exceder o tamanho do datagrama UDP."
+        },
+        {
+            id: 2,
+            question: "Questão 2: Um Administrador de Redes está configurando o arquivo de zona... Assinale a alternativa que apresenta a combinação correta de registros de recursos (RR) para atender a essa demanda:",
+            options: [
+                "A) Um registro MX apontando para 200.10.10.5; um registro A para www e um registro AAAA para www.",
+                "B) Um registro MX apontando para mail.cefet-lab.edu.br; um registro A mapeando mail para 200.10.10.5; registros A e AAAA para o host www.",
+                "C) Um registro CNAME apontando o domínio raiz para 200.10.10.5; registros MX para o servidor www e um registro PTR.",
+                "D) Um registro SOA contendo o IP do servidor de e-mail; um registro NS para o host mail e registros CNAME.",
+                "E) Um registro TXT definindo a política de e-mail; um registro MX apontando diretamente para o IPv4 e um registro A para o IPv6."
+            ],
+            correct: 1,
+            resolution: "Gabarito: B. Registros MX devem apontar para um FQDN (nome), não para um IP. Por isso, aponta-se o MX para 'mail' e cria-se um registro A para resolver o IP desse 'mail'. Registros A (IPv4) e AAAA (IPv6) são usados para o host www."
+        },
+        {
+            id: 3,
+            question: "Questão 3: Qual é o caminho absoluto do arquivo de configuração responsável por armazenar os endereços dos servidores de nomes (nameservers) e o domínio de busca padrão (search domain) em sistemas Linux?",
+            options: [
+                "A) /etc/hosts",
+                "B) /etc/network/interfaces",
+                "C) /etc/resolv.conf",
+                "D) /etc/bind/named.conf",
+                "E) /etc/nsswitch.conf"
+            ],
+            correct: 2,
+            resolution: "Gabarito: C. O arquivo /etc/resolv.conf é o local padrão onde o sistema operacional busca os IPs dos servidores DNS que devem ser consultados pelo resolver da biblioteca C."
+        },
+        {
+            id: 4,
+            question: "Questão 4: Qual a sintaxe correta do comando 'dig' para obter diretamente os registros que indicam os servidores de e-mail responsáveis pelo domínio exemplo.edu.br, exibindo apenas a resposta processada?",
+            options: [
+                "A) dig exemplo.edu.br NS",
+                "B) dig exemplo.edu.br MX +short",
+                "C) dig -x exemplo.edu.br",
+                "D) dig exemplo.edu.br SOA",
+                "E) dig exemplo.edu.br AAAA"
+            ],
+            correct: 1,
+            resolution: "Gabarito: B. O registro MX é o responsável pelo e-mail. A flag '+short' remove o cabeçalho e as estatísticas, deixando apenas o valor do registro solicitado."
+        },
+        {
+            id: 5,
+            question: "Questão 5: Analise os parâmetros encontrados tipicamente em um registro SOA (Start of Authority)... Estão corretas as definições para os parâmetros:",
+            options: [
+                "A) Apenas I.",
+                "B) Apenas II.",
+                "C) Apenas I e II.",
+                "D) Apenas III.",
+                "E) I, II e III."
+            ],
+            correct: 2,
+            resolution: "Gabarito: C. O Serial Number (I) é o controle de versão da zona. O Refresh Time (II) é o tempo que o secundário aguarda para checar o primário. 'Default Gateway' (III) não faz parte do DNS, é um parâmetro de roteamento da camada de rede."
+        },
+        {
+            id: 6,
+            question: "Questão 6: Para o endereço IPv4 192.168.50.10, em qual zona de domínio especial o registro PTR correspondente deve ser criado e qual seria a estrutura correta?",
+            options: [
+                "A) Zona in-addr.arpa; nome 10.50.168.192.in-addr.arpa.",
+                "B) Zona ip6.arpa; nome 192.168.50.10.ip6.arpa.",
+                "C) Zona reverse.dns; nome 10.50.168.192.reverse.dns.",
+                "D) Zona arpa.net; nome 192.168.50.10.arpa.net.",
+                "E) Zona ptr.zone; nome 10.50.168.192.ptr."
+            ],
+            correct: 0,
+            resolution: "Gabarito: A. No DNS reverso IPv4, os octetos são invertidos e concatenados ao sufixo 'in-addr.arpa'. Assim, 192.168.50.10 torna-se 10.50.168.192.in-addr.arpa."
+        },
+        {
+            id: 7,
+            question: "Questão 7: Um servidor DNS Recursivo recebe uma consulta para www.site.com.br sem cache. Qual é a primeira entidade externa que este servidor recursivo deve consultar no processo iterativo padrão?",
+            options: [
+                "A) O Servidor de Nomes Autoritativo do domínio site.com.br.",
+                "B) O Servidor de Nomes do Provedor de Acesso (ISP).",
+                "C) Um dos Servidores Raiz (Root Servers) da Internet.",
+                "D) O Servidor de Topo (TLD) responsável pelo .br.",
+                "E) O Servidor WINS local da rede."
+            ],
+            correct: 2,
+            resolution: "Gabarito: C. Na ausência de cache, o processo começa do topo da hierarquia. O servidor recursivo consulta um dos 13 servidores raiz para descobrir quem responde pelo TLD (.br)."
+        },
+        {
+            id: 8,
+            question: "Questão 8: Qual tipo de registro DNS deve ser utilizado para associar www.empresa.edu.br ao nome server01.hosting.com, permitindo atualizações automáticas de IP caso o provedor mude?",
+            options: [
+                "A) A",
+                "B) CNAME",
+                "C) TXT",
+                "D) NS",
+                "E) PTR"
+            ],
+            correct: 1,
+            resolution: "Gabarito: B. O registro CNAME (Canonical Name) cria um apelido de um nome para outro nome. Se o IP do servidor de destino mudar, a empresa não precisa alterar nada em sua zona, pois o registro aponta para o nome do host do provedor."
+        },
+        {
+            id: 9,
+            question: "Questão 9: Sobre o DNSSEC (Domain Name System Security Extensions), é CORRETO afirmar que seu principal objetivo é:",
+            options: [
+                "A) Criptografar todo o tráfego de consultas DNS entre o cliente e o servidor.",
+                "B) Garantir a autenticidade da origem e a integridade dos dados através de assinaturas criptográficas digitais.",
+                "C) Substituir o protocolo UDP pelo TCP em todas as transações.",
+                "D) Ocultar o endereço IP dos servidores autoritativos.",
+                "E) Bloquear automaticamente o acesso a domínios listados em blacklists."
+            ],
+            correct: 1,
+            resolution: "Gabarito: B. O DNSSEC adiciona assinaturas digitais aos registros para que o cliente possa verificar se a resposta veio de uma fonte legítima e não foi alterada no caminho (integridade/autenticidade). Ele não provê criptografia (confidencialidade)."
+        },
+        {
+            id: 10,
+            question: "Questão 10: Se um administrador adicionar a entrada '127.0.0.1 www.google.com' no arquivo /etc/hosts de uma estação Linux, o que ocorrerá quando um usuário tentar acessar o site via navegador?",
+            options: [
+                "A) O navegador acessará o site real do Google, pois o DNS externo tem prioridade.",
+                "B) O sistema operacional ignorará o arquivo /etc/hosts por questões de segurança.",
+                "C) O acesso será direcionado para a própria máquina local (loopback), ignorando o IP real do Google.",
+                "D) O sistema realizará um balanceamento de carga entre o IP local e o IP real.",
+                "E) O arquivo /etc/hosts será automaticamente sobrescrito pelo cliente DHCP."
+            ],
+            correct: 2,
+            resolution: "Gabarito: C. Por padrão (via /etc/nsswitch.conf), sistemas Linux consultam arquivos locais ('files') antes do DNS. Assim, a entrada no /etc/hosts 'sequestra' a resolução para o localhost."
+        }
+    ];
+
+    const container = document.getElementById('quiz-container');
+    const finishBtn = document.getElementById('finish-btn');
+    const resultBox = document.getElementById('result-box');
+    const scoreDisplay = document.getElementById('score-display');
+
+    // Initialize Quiz
+    function initQuiz() {
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            const qText = document.createElement('div');
+            qText.className = 'question-text';
+            qText.innerText = q.question;
+            card.appendChild(qText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options-container';
+
+            q.options.forEach((opt, optIndex) => {
+                const label = document.createElement('label');
+                label.className = 'option';
+                label.id = `label-${index}-${optIndex}`;
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `question-${index}`;
+                input.value = optIndex;
+                
+                input.onchange = () => {
+                    // Remove selection style from siblings
+                    const siblings = optionsDiv.querySelectorAll('.option');
+                    siblings.forEach(s => s.classList.remove('selected'));
+                    label.classList.add('selected');
+                };
+
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(opt));
+                optionsDiv.appendChild(label);
+            });
+
+            card.appendChild(optionsDiv);
+
+            // Resolution Div (Hidden initially)
+            const resDiv = document.createElement('div');
+            resDiv.className = 'resolution-box';
+            resDiv.id = `res-${index}`;
+            resDiv.innerHTML = `
+                <span class="resolution-title">Resolução:</span>
+                <div class="resolution-content">${q.resolution}</div>
+            `;
+            card.appendChild(resDiv);
+
+            container.appendChild(card);
+        });
+    }
+
+    function calculateResults() {
+        let score = 0;
+        
+        quizData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+            const selectedValue = selected ? parseInt(selected.value) : null;
+            
+            // Show resolutions
+            document.getElementById(`res-${index}`).style.display = 'block';
+
+            // Mark correct and wrong
+            q.options.forEach((_, optIndex) => {
+                const label = document.getElementById(`label-${index}-${optIndex}`);
+                if (optIndex === q.correct) {
+                    label.classList.add('correct');
+                } else if (selectedValue === optIndex && selectedValue !== q.correct) {
+                    label.classList.add('wrong');
+                }
+                
+                // Disable inputs
+                label.querySelector('input').disabled = true;
+                label.style.cursor = 'default';
+            });
+
+            if (selectedValue === q.correct) {
+                score++;
+            }
+        });
+
+        // Display summary
+        scoreDisplay.innerText = `Você acertou ${score} de ${quizData.length} questões!`;
+        resultBox.style.display = 'block';
+        finishBtn.classList.add('hidden');
+        
+        // Scroll to results
+        window.scrollTo({ top: resultBox.offsetTop - 100, behavior: 'smooth' });
+    }
+
+    finishBtn.addEventListener('click', calculateResults);
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

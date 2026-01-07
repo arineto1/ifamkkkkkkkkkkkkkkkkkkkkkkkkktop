@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula DNS - Preparatório IFAM (CEFETMINAS)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #ffffff;
+        }
+
+        .highlight {
+            background-color: #fef08a; /* Amarelo suave para destaque */
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: hidden; /* Garantindo que não haja scroll horizontal */
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f9fafb;
+            font-weight: 700;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+
+        .audio-player-container {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            background: #fff;
+        }
+
+        .section-title {
+            border-left: 4px solid #2563eb;
+            padding-left: 1rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .btn-action:hover {
+            background-color: #1d4ed8;
+        }
+
+        .mnemonic {
+            background-color: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 1rem;
+            font-style: italic;
+            margin: 1rem 0;
+        }
+
+        /* Ajuste para tabelas em telas pequenas para evitar scroll */
+        @media (max-width: 640px) {
+            table { font-size: 0.8rem; }
+            th, td { padding: 8px; }
+        }
+    </style>
+</head>
+<body class="max-w-4xl mx-auto p-6 md:p-12">
+
+    <header class="mb-10">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">Resumo de Elite: DNS para Concurso IFAM</h1>
+        <p class="text-gray-600 mb-6">Material focado na banca <strong>CEFETMINAS</strong> para o cargo de Professor EBTT.</p>
+        
+        <div class="audio-player-container">
+            <p class="text-sm font-semibold mb-2 text-blue-600 uppercase tracking-wider">🎧 Ouça o Resumo em Áudio</p>
+            <!-- Espaço para definir o nome do arquivo MP3 -->
+            <audio controls class="w-full">
+                <source src="27dns.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+            <p class="text-xs text-gray-400 mt-2 italic">* Certifique-se de que o arquivo "resumo_audio_dns.mp3" esteja na mesma pasta desta página.</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- SEÇÃO 1 -->
+        <h2 class="section-title">1. O "Cheat Sheet" da Arquitetura DNS</h2>
+        <p class="mb-4 text-gray-700">Dados numéricos e definições críticas para questões de "Verdadeiro ou Falso".</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parâmetro</th>
+                        <th>Valor/Definição Crítica para a Prova</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Porta/Protocolo</strong></td>
+                        <td><span class="highlight">Porta 53</span> (UDP e TCP). UDP para consultas padrão; <span class="highlight">TCP para Transferência de Zona (AXFR)</span> e respostas > 512 bytes.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estrutura</strong></td>
+                        <td>Banco de dados <span class="highlight">hierárquico e distribuído</span>. Estrutura de árvore invertida.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Raiz (Root)</strong></td>
+                        <td>Representada por ponto "<code>.</code>". Existem <span class="highlight">13 clusters</span> de servidores raiz (A até M).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tamanho FQDN</strong></td>
+                        <td>Máximo <span class="highlight">255 bytes</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tamanho Label</strong></td>
+                        <td>Máximo <span class="highlight">63 bytes</span> (entre pontos).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Case Sensitive?</strong></td>
+                        <td><span class="highlight">NÃO</span>. O DNS ignora maiúsculas/minúsculas.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Zona vs. Domínio</strong></td>
+                        <td>Domínio: Subárvore completa. <span class="highlight">Zona: Área administrativa delegada</span> (arquivo físico).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SEÇÃO 2 -->
+        <h2 class="section-title">2. Tipos de Consulta: A Regra de Ouro</h2>
+        <p class="mb-2">A banca cobra a distinção de quem faz o trabalho pesado:</p>
+        
+        <ul class="space-y-4 mb-6">
+            <li>
+                <strong>1. Consulta Recursiva:</strong> O Cliente (Stub Resolver) diz ao Servidor: <em>"Se vire, eu quero a resposta final (ou erro)."</em>
+                <br><span class="text-sm text-gray-600">Ocorre entre: PC do Usuário &rarr; Servidor DNS Local. Flag: <span class="highlight">RD (Recursion Desired) = 1</span>.</span>
+            </li>
+            <li>
+                <strong>2. Consulta Iterativa:</strong> O Servidor diz ao Cliente: <em>"Não sei a resposta exata, mas sei quem pode saber. Aqui está o endereço dele (Referral)."</em>
+                <br><span class="text-sm text-gray-600">Ocorre entre: DNS Local &rarr; Raiz &rarr; TLD &rarr; Autoritativo.</span>
+            </li>
+        </ul>
+
+        <div class="mnemonic">
+            <strong>Mnemônico para a prova:</strong> O Cliente é <span class="highlight">"preguiçoso" (pede recursão)</span>, o Servidor Local é <span class="highlight">"trabalhador" (faz iterações)</span>.
+        </div>
+
+        <!-- SEÇÃO 3 -->
+        <h2 class="section-title">3. Registros de Recursos (RR)</h2>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Função e Detalhes Técnicos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>A / AAAA</strong></td>
+                        <td>Nome para IPv4 / Nome para <span class="highlight">IPv6 (128 bits)</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CNAME</strong></td>
+                        <td>Apelido (Alias). <span class="highlight">Proibido na Raiz da Zona (Apex)</span>. Aponta para outro nome, nunca IP.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MX</strong></td>
+                        <td>Mail Exchange. Possui <span class="highlight">Prioridade (Menor nº = Maior Prioridade)</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NS</strong></td>
+                        <td>Indica os servidores DNS autoritativos para a zona.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PTR</strong></td>
+                        <td>IP para Nome (<span class="highlight">Reverso</span>). Usado em zonas in-addr.arpa.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TXT</strong></td>
+                        <td>Texto livre. Fundamental para <span class="highlight">SPF e DKIM (Antispam)</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SRV</strong></td>
+                        <td>Localização de serviço (ex: LDAP, VoIP). Define porta e prioridade.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="font-bold text-lg mt-6 mb-2">O Registro SOA (Start of Authority)</h3>
+        <p class="mb-4">Obrigatório em toda zona. Define parâmetros de replicação. Campos essenciais:</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+            <div class="border p-3 rounded"><strong>Serial:</strong> Versão (YYYYMMDDnn).</div>
+            <div class="border p-3 rounded"><strong>Refresh/Retry:</strong> Tempos de atualização.</div>
+            <div class="border p-3 rounded"><strong>Expire:</strong> Tempo limite da zona secundária.</div>
+            <div class="border p-3 rounded bg-blue-50"><strong>Minimum TTL:</strong> Hoje define o <span class="highlight">TTL de Cache Negativo</span>.</div>
+        </div>
+
+        <!-- SEÇÃO 4 -->
+        <h2 class="section-title">4. Comandos e Diagnóstico</h2>
+        <div class="bg-gray-50 p-6 rounded-lg space-y-3 border border-gray-200">
+            <p><strong>dig (Domain Information Groper):</strong> Padrão atual para diagnósticos.</p>
+            <ul class="list-disc ml-6 space-y-1 text-sm">
+                <li><code>dig +short</code>: Resposta simplificada (só o IP).</li>
+                <li><span class="highlight"><code>dig +trace</code></span>: Mostra o caminho completo da raiz ao autoritativo.</li>
+                <li><code>dig AXFR</code>: Tenta transferência de zona completa.</li>
+                <li><code>dig -x</code>: Realiza consulta reversa.</li>
+            </ul>
+        </div>
+
+        <!-- SEÇÃO 5 -->
+        <h2 class="section-title">5. Segurança e Tendências</h2>
+        <div class="space-y-6">
+            <div>
+                <h4 class="font-semibold text-blue-700">DNSSEC</h4>
+                <p class="text-sm">Garante <span class="highlight">Integridade e Autenticação</span> (não criptografa dados). Registros chave: RRSIG, DNSKEY, DS e NSEC/NSEC3 (prova de inexistência).</p>
+            </div>
+            <div>
+                <h4 class="font-semibold text-blue-700">Privacidade (DoT e DoH)</h4>
+                <p class="text-sm"><strong>DoT:</strong> Porta <span class="highlight">853</span> (mais fácil de bloquear).<br><strong>DoH:</strong> Porta <span class="highlight">443</span> (trafega como HTTPS comum).</p>
+            </div>
+            <div class="bg-red-50 p-4 border-l-4 border-red-500 rounded">
+                <strong>Atenção ao Peguinha: Glue Records (Registros de Cola)</strong>
+                <p class="text-sm mt-1">Resolvem a dependência circular quando o nameserver está dentro do próprio domínio. O registro A é colocado na <span class="highlight">Zona Pai</span>.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-16 mb-20 text-center border-t pt-10">
+        <p class="text-gray-500 mb-6">Pronto para testar seus conhecimentos?</p>
+        <a href="27questoes.html" class="btn-action">
+            Ir para Banco de Questões (IFAM) &rarr;
+        </a>
+    </footer>
+
+</body>
+</html>

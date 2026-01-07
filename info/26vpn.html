@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula IFAM: Redes, Firewall, Proxy e VPN</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax para fórmulas matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background-color: #ffffff;
+        }
+        .highlight {
+            background-color: #fef08a; /* Amarelo suave para grifo */
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+        .term-definition {
+            border-left: 4px solid #e2e8f0;
+            padding-left: 1rem;
+            margin-left: 0.5rem;
+        }
+        /* Garantir que tabelas não scrollam horizontalmente em telas pequenas */
+        @media (max-width: 640px) {
+            table {
+                font-size: 0.8rem;
+            }
+            th, td {
+                padding: 0.5rem 0.25rem !important;
+            }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8 max-w-4xl mx-auto">
+
+    <!-- Header & Audio Player -->
+    <header class="mb-12 border-b border-slate-100 pb-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+            Resumo de Elite: Redes e Segurança
+        </h1>
+        <p class="text-slate-500 mb-6">Foco exclusivo no concurso IFAM (Banca CEFETMINAS)</p>
+        
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <p class="text-sm font-semibold text-slate-700 mb-2">Ouça o Resumo em Áudio:</p>
+            <!-- Espaço para o nome do arquivo MP3 -->
+            <audio controls class="w-full">
+                <source src="26vpn.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </div>
+    </header>
+
+    <main class="space-y-12">
+        
+        <!-- Seção 1: Firewall -->
+        <section>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-slate-900 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">1</span>
+                O "Cheat Sheet" do Perímetro de Segurança
+            </h2>
+            
+            <h3 class="text-xl font-semibold mb-4 text-slate-700">Firewall: A Tabela da Verdade</h3>
+            <div class="overflow-x-hidden border border-slate-200 rounded-lg">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-50 border-b border-slate-200">
+                            <th class="p-3 font-semibold">Tipo</th>
+                            <th class="p-3 font-semibold">Camada OSI</th>
+                            <th class="p-3 font-semibold">Palavras-Chave</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        <tr>
+                            <td class="p-3 font-bold">Stateless</td>
+                            <td class="p-3">3 e 4</td>
+                            <td class="p-3"><span class="highlight">Estático</span>, Rápido, Filtro de Pacotes, IP Origem/Destino.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">Stateful</td>
+                            <td class="p-3">3, 4 e 5</td>
+                            <td class="p-3"><span class="highlight">Tabela de Estados</span>, Handshake, Memória de Conexão.</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold">NGFW/DPI</td>
+                            <td class="p-3">7</td>
+                            <td class="p-3"><span class="highlight">Inspeção Profunda (Payload)</span>, Contexto, Usuário/Aplicação.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="mt-6 space-y-4">
+                <p class="term-definition">
+                    <span class="font-bold">Dica de Prova:</span> O Firewall <span class="highlight">Stateful</span> monitora o <em>Three-Way Handshake</em> (SYN, SYN-ACK, ACK). Ele só permite a entrada se houver uma solicitação interna correspondente.
+                </p>
+                <p class="term-definition">
+                    <span class="font-bold">Atenção:</span> Ativar DPI (Deep Packet Inspection) <span class="highlight text-red-600">reduz o processamento (throughput)</span> do hardware.
+                </p>
+            </div>
+        </section>
+
+        <!-- Seção: Proxy -->
+        <section>
+            <h3 class="text-xl font-semibold mb-4 text-slate-700">Proxy: Quem Protege Quem?</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 border border-slate-200 rounded-lg">
+                    <h4 class="font-bold mb-2">Forward Proxy</h4>
+                    <p class="text-sm">Protege o <span class="highlight">Cliente</span>. Funções de cache, filtro de URL e anonimato do usuário interno para a web.</p>
+                </div>
+                <div class="p-4 border border-slate-200 rounded-lg">
+                    <h4 class="font-bold mb-2">Reverse Proxy</h4>
+                    <p class="text-sm">Protege o <span class="highlight">Servidor</span>. Faz balanceamento de carga e <span class="highlight">SSL Offloading</span> (desonera o servidor web da criptografia).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 2: Topologias -->
+        <section>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-slate-900 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">2</span>
+                Topologias e Arquiteturas
+            </h2>
+            <div class="space-y-4">
+                <div class="bg-slate-50 p-5 rounded-lg border-l-4 border-slate-400">
+                    <p class="font-bold mb-1">Bastion Host</p>
+                    <p>Computador exposto ao ataque. Regra de ouro: <span class="highlight">Hardening</span> (apenas serviços essenciais rodando, desabilitar o resto).</p>
+                </div>
+                <div class="bg-slate-50 p-5 rounded-lg border-l-4 border-slate-400">
+                    <p class="font-bold mb-1">DMZ (Screened Subnet)</p>
+                    <p>Zona tampão. <span class="font-bold">O que fica:</span> Servidores Web, DNS Externo, Proxy Reverso. <span class="font-bold text-red-600">O que NUNCA fica:</span> Bancos de dados e AD.</p>
+                    <p class="text-sm mt-2 font-semibold">Regra de Fluxo: A DMZ nunca inicia conexão com a rede interna.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 3: VPN e IPsec -->
+        <section>
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                <span class="bg-slate-900 text-white w-8 h-8 rounded-full flex items-center justify-center mr-3 text-sm">3</span>
+                VPN e IPsec: Portas e Protocolos
+            </h2>
+            
+            <div class="grid sm:grid-cols-3 gap-4 mb-6 text-center">
+                <div class="p-3 border border-slate-200 rounded bg-white">
+                    <p class="text-xs uppercase text-slate-500 font-bold">UDP 500</p>
+                    <p class="font-bold">Protocolo IKE</p>
+                </div>
+                <div class="p-3 border border-slate-200 rounded bg-white">
+                    <p class="text-xs uppercase text-slate-500 font-bold">UDP 4500</p>
+                    <p class="font-bold">NAT-Traversal</p>
+                </div>
+                <div class="p-3 border border-slate-200 rounded bg-white">
+                    <p class="text-xs uppercase text-slate-500 font-bold">TCP 443</p>
+                    <p class="font-bold">SSL VPN</p>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <p><strong>Protocolos IPsec:</strong></p>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><span class="font-bold">AH (Authentication Header):</span> Apenas autentica/integridade. <span class="highlight">NÃO criptografa</span> (texto claro).</li>
+                    <li><span class="font-bold">ESP (Encapsulating Security Payload):</span> <span class="highlight">CRIPTOGRAFA (Confidencialidade)</span> e Autentica.</li>
+                </ul>
+                <p class="mt-4"><strong>Modos:</strong></p>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><span class="font-bold">Transporte:</span> Cifra apenas o payload (uso host-a-host).</li>
+                    <li><span class="font-bold">Túnel:</span> Cifra <span class="highlight">TUDO (cabeçalho + payload)</span> e cria novo cabeçalho (uso Site-to-Site).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Seção 4: Pegadinhas CEFETMINAS -->
+        <section class="bg-slate-50 p-6 rounded-2xl border border-slate-200">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">"Pegadinhas" Recorrentes da Banca</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <h4 class="font-bold text-slate-700">A Matemática do Dimensionamento</h4>
+                    <p class="text-sm mb-2 italic">Exemplo: Recurso consome 25% da CPU. Qual a capacidade real?</p>
+                    <div class="bg-white p-4 rounded border border-slate-100 text-center">
+                        $$CapacidadeNecessaria = \frac{DemandaTotal}{0,75}$$
+                    </div>
+                    <p class="text-sm mt-2">Dica: Divida pelo fator de eficiência, nunca subtraia apenas a porcentagem da demanda bruta.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-white rounded border border-slate-100">
+                        <p class="font-bold text-red-600 mb-1">Cuidado!</p>
+                        <p class="text-sm">Firewall não é Antivírus de Host. Ele controla acesso e fluxo, não remove vírus de discos rígidos.</p>
+                    </div>
+                    <div class="p-4 bg-white rounded border border-slate-100">
+                        <p class="font-bold text-red-600 mb-1">Porta 80 vs 443</p>
+                        <p class="text-sm">Configurar SSL na porta 80 é erro grave de configuração na visão da CEFETMINAS.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 5: Analogias -->
+        <section class="pb-12">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">Analogias para a Didática</h2>
+            <div class="grid gap-4">
+                <p>🏠 <span class="font-bold">Firewall:</span> Portaria de prédio (O <em>Stateful</em> lembra quem saiu).</p>
+                <p>🚚 <span class="font-bold">VPN:</span> Carro-Forte (Trafega na rua pública, mas o conteúdo é invisível).</p>
+                <p>📑 <span class="font-bold">Proxy:</span> Secretário(a) (Filtra o que chega ao chefe e anota recados repetidos).</p>
+            </div>
+        </section>
+
+        <!-- Navegação -->
+        <div class="pt-8 border-t border-slate-200 flex justify-center">
+            <a href="26questoes.html" class="bg-slate-900 hover:bg-slate-800 text-white font-bold py-4 px-10 rounded-full transition-all shadow-lg active:scale-95">
+                Ir para Questões de Treinamento
+            </a>
+        </div>
+    </main>
+
+    <footer class="mt-20 text-center text-slate-400 text-xs pb-10">
+        Material de Revisão - Professor de Informática IFAM
+    </footer>
+
+</body>
+</html>

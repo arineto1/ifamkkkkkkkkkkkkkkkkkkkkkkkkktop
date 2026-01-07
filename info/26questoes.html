@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Redes de Computadores - CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --primary-color: #34495e;
+            --accent-color: #2980b9;
+            --border-color: #e0e0e0;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+            --max-width: 850px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            opacity: 0.8;
+            font-size: 1rem;
+        }
+
+        main {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem 5rem;
+        }
+
+        .question-container {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .question-header {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1rem;
+        }
+
+        .question-text {
+            margin-bottom: 1.5rem;
+            white-space: pre-wrap;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .option-item label {
+            display: block;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item label:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        /* Highlight selection */
+        .option-item input[type="radio"]:checked + span {
+            font-weight: bold;
+        }
+
+        .option-item.selected label {
+            background-color: #ebf5fb;
+            border-color: var(--accent-color);
+        }
+
+        /* Result Styles */
+        #result-summary {
+            display: none;
+            background: #fff;
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .score-box {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .resolution-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #f4f7f6;
+            border-radius: 6px;
+            border-top: 3px solid var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 3rem auto;
+            padding: 1.2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c3e50;
+        }
+
+        .correct-answer { background-color: #d4edda !important; border-color: #c3e6cb !important; }
+        .wrong-answer { background-color: #f8d7da !important; border-color: #f5c6cb !important; }
+
+        code {
+            background: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        pre {
+            background: #f8f9fa;
+            padding: 1rem;
+            overflow-x: auto;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            border: 1px solid #eee;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.4rem; }
+            .question-container { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado: Redes de Computadores</h1>
+    <p>Firewall, Proxy e VPN • Estilo Fundação CEFETMINAS</p>
+</header>
+
+<main>
+    <div id="result-summary">
+        <h2>Resultado Final</h2>
+        <div class="score-box" id="score-text">0 / 10</div>
+        <p id="performance-msg"></p>
+        <p>As resoluções detalhadas estão disponíveis abaixo de cada questão.</p>
+    </div>
+
+    <form id="quiz-form">
+        <!-- Question 1 -->
+        <div class="question-container" data-q="1">
+            <div class="question-header">Questão 01 - VPN e Protocolos</div>
+            <div class="question-text">Segundo Kurose e Ross (2021), o protocolo IPsec é amplamente utilizado para a implementação de Redes Privadas Virtuais (VPNs) operando na camada de rede. Sobre a arquitetura e os componentes do IPsec, analise as afirmativas a seguir:
+
+I. O protocolo AH (Authentication Header) foi projetado para prover confidencialidade, criptografando todo o payload do pacote IP, tornando-o ilegível para terceiros.
+II. No modo túnel, o datagrama IP original inteiro é encapsulado dentro de um novo datagrama IP; isso permite que os endereços IP da rede interna (privada) fiquem ocultos durante o tráfego pela rede pública.
+III. O protocolo ESP (Encapsulating Security Payload) pode prover confidencialidade, autenticação de origem e integridade da mensagem, sendo mais abrangente que o AH em termos de serviços de segurança.
+
+Estão corretas as afirmativas:</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q1" value="A"> <span>A) I, apenas.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="B"> <span>B) II, apenas.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="C"> <span>C) I e III, apenas.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="D"> <span>D) II e III, apenas.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q1" value="E"> <span>E) I, II e III.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-1">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: D (II e III, apenas)</strong></p>
+                <p>O protocolo AH provê autenticação e integridade, mas NÃO provê confidencialidade (não criptografa os dados). O Modo Túnel encapsula todo o pacote original, escondendo IPs internos. O ESP é mais completo que o AH por oferecer criptografia.</p>
+            </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="question-container" data-q="2">
+            <div class="question-header">Questão 02 - Servidores Web e Nginx</div>
+            <div class="question-text">Um Analista de TI do CEFET-MG precisa configurar um servidor para atuar na borda da rede, recebendo requisições HTTPS da Internet e distribuindo-as para um cluster de servidores de aplicação internos que não possuem IP público. O servidor de borda também será responsável por armazenar os certificados digitais e descriptografar o tráfego antes de repassá-lo internamente (SSL Offloading).
+Essa configuração descreve corretamente a implementação de um:</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q2" value="A"> <span>A) Proxy Direto (Forward Proxy) com cache transparente.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="B"> <span>B) Firewall Stateless de Camada 3.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="C"> <span>C) Proxy Reverso (Reverse Proxy).</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="D"> <span>D) Servidor DNS Autoritativo.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q2" value="E"> <span>E) IDS (Sistema de Detecção de Intrusão) passivo.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-2">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C (Proxy Reverso)</strong></p>
+                <p>O Proxy Reverso fica entre a Internet e os servidores internos, protegendo o backend e realizando funções como balanceamento de carga e terminação SSL.</p>
+            </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="question-container" data-q="3">
+            <div class="question-header">Questão 03 - Tipos de Firewall</div>
+            <div class="question-text">Relacione os tipos de firewall listados na Coluna 1 com suas respectivas características operacionais descritas na Coluna 2.
+
+<strong>Coluna 1</strong>
+1. Filtro de Pacotes (Stateless)
+2. Firewall de Inspeção de Estado (Stateful)
+3. Gateway de Aplicação (Proxy Firewall)
+
+<strong>Coluna 2</strong>
+( ) Analisa o tráfego na Camada 7, atuando como intermediário da conexão e permitindo inspeção profunda do conteúdo da aplicação.
+( ) Toma decisões de filtragem baseadas isoladamente nos cabeçalhos de cada pacote (IP/Porta), sem manter registro do histórico das conexões.
+( ) Mantém uma tabela dinâmica de conexões (State Table) para rastrear o estado das sessões (NEW, ESTABLISHED, RELATED) e tomar decisões contextuais.
+
+A sequência correta, de cima para baixo, é:</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q3" value="A"> <span>A) 3 – 1 – 2.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="B"> <span>B) 1 – 2 – 3.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="C"> <span>C) 2 – 3 – 1.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="D"> <span>D) 3 – 2 – 1.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q3" value="E"> <span>E) 1 – 3 – 2.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-3">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: A (3 – 1 – 2)</strong></p>
+                <p>Gateway de Aplicação trabalha na Camada 7 (3). O Filtro Stateless não mantém histórico (1). O Stateful usa tabela de estados (2).</p>
+            </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="question-container" data-q="4">
+            <div class="question-header">Questão 04 - Linux iptables</div>
+            <div class="question-text">Um técnico está auditando a segurança de um servidor Linux e executa o comando <code>iptables -L -n -v</code>. Ele observa que a política padrão (default policy) da cadeia <code>INPUT</code> está configurada como <code>ACCEPT</code> e não existem regras adicionais cadastradas.
+Com base nos princípios de segurança de redes (hardening) e no funcionamento do Netfilter, qual é a implicação dessa configuração e qual seria a ação corretiva recomendada?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q4" value="A"> <span>A) O servidor está seguro, pois a política ACCEPT garante que apenas pacotes autorizados entrem.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="B"> <span>B) O servidor está vulnerável, pois aceita todo o tráfego de entrada por padrão. Ação: Alterar para DROP e permitir apenas o necessário.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="C"> <span>C) A política ACCEPT bloqueia todo o tráfego, isolando o servidor.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="D"> <span>D) O comando listado apaga as regras de firewall.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q4" value="E"> <span>E) A cadeia INPUT controla apenas o tráfego de saída.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-4">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: B</strong></p>
+                <p>A política ACCEPT sem regras adicionais é perigosa ("Allow All"). A boa prática de segurança exige "Default Drop", bloqueando tudo por padrão e permitindo apenas o que for estritamente necessário.</p>
+            </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="question-container" data-q="5">
+            <div class="question-header">Questão 05 - Defesa em Profundidade</div>
+            <div class="question-text">Considere um cenário onde uma organização utiliza uma VPN IPsec configurada corretamente para conectar funcionários em Home Office à rede corporativa. Um funcionário, conectado via VPN, faz o download de um arquivo infectado com Ransomware de um servidor de arquivos interno da empresa para seu computador pessoal.
+Assinale a alternativa correta sobre a atuação das ferramentas de segurança neste cenário:</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q5" value="A"> <span>A) O túnel VPN neutraliza automaticamente o código malicioso.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="B"> <span>B) O Firewall de borda bloqueará o arquivo, pois inspeciona tráfego criptografado por VPN.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="C"> <span>C) A VPN garante a confidencialidade e integridade, mas não inspeciona malwares; o arquivo chegará infectado.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="D"> <span>D) O protocolo IPsec possui um antivírus nativo embutido no cabeçalho ESP.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q5" value="E"> <span>E) O uso de VPN elimina a necessidade de software antivírus no ponto final.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-5">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A VPN protege o transporte (criptografia), mas não analisa o conteúdo em busca de vírus. Se o arquivo estiver infectado na origem, ele chegará infectado ao destino através do túnel seguro.</p>
+            </div>
+        </div>
+
+        <!-- Question 6 -->
+        <div class="question-container" data-q="6">
+            <div class="question-header">Questão 06 - DMZ Architecture</div>
+            <div class="question-text">Em uma arquitetura de rede segura utilizando o conceito de Zona Desmilitarizada (DMZ), onde devem ser posicionados os servidores que oferecem serviços públicos (como Web Server e Email) e qual deve ser a política de acesso da DMZ para a Rede Interna (LAN)?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q6" value="A"> <span>A) Posicionados na LAN. Política: A DMZ deve ter acesso total à LAN.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="B"> <span>B) Posicionados na DMZ. Política: O tráfego originado na DMZ para a LAN deve ser bloqueado por padrão.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="C"> <span>C) Posicionados na DMZ. Política: A DMZ deve ter acesso irrestrito à LAN.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="D"> <span>D) Posicionados na Internet pública, sem firewall.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q6" value="E"> <span>E) Posicionados na LAN. Política: O firewall deve bloquear todo o tráfego da Internet.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-6">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: B</strong></p>
+                <p>Servidores públicos ficam na DMZ. A política de segurança fundamental é que a DMZ não deve poder iniciar conexões para a rede interna (LAN), para evitar que um invasor "salte" para o resto da empresa se o servidor web for comprometido.</p>
+            </div>
+        </div>
+
+        <!-- Question 7 -->
+        <div class="question-container" data-q="7">
+            <div class="question-header">Questão 07 - Nginx Configuração</div>
+            <div class="question-text">Analise o seguinte trecho de configuração de um servidor Nginx atuando como Proxy Reverso:
+
+<pre>location /app_rh {
+    proxy_pass http://192.168.10.5:8080;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+}</pre>
+
+Sobre as diretivas apresentadas, é CORRETO afirmar:</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q7" value="A"> <span>A) A diretiva proxy_pass indica que o Nginx servirá arquivos estáticos locais.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="B"> <span>B) A diretiva X-Real-IP é usada para mascarar o IP do cliente por segurança.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="C"> <span>C) O Nginx está configurado para encaminhar requisições de /app_rh para o servidor interno 192.168.10.5:8080.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="D"> <span>D) Esta configuração transforma o Nginx em um servidor DNS.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q7" value="E"> <span>E) O bloco location bloqueia o acesso ao recurso /app_rh.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-7">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A diretiva <code>proxy_pass</code> define o destino do encaminhamento. O Nginx recebe a requisição no caminho especificado e a repassa para o servidor de backend indicado pelo IP e porta.</p>
+            </div>
+        </div>
+
+        <!-- Question 8 -->
+        <div class="question-container" data-q="8">
+            <div class="question-header">Questão 08 - Conceitos Gerais</div>
+            <div class="question-text">Firewalls, Proxies e VPNs são ferramentas complementares. Sobre suas funções típicas, assinale a alternativa que apresenta uma afirmação INCORRETA:</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q8" value="A"> <span>A) Uma VPN pode ser usada para interligar duas redes locais geograficamente distantes.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="B"> <span>B) Um Proxy de Cache pode reduzir o consumo de largura de banda armazenando conteúdos web.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="C"> <span>C) Um Firewall Stateless é a ferramenta mais eficaz para bloquear ataques de SQL Injection em requisições HTTP legítimas.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="D"> <span>D) O uso de NAT em firewalls ajuda a ocultar o endereçamento IP da rede interna.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q8" value="E"> <span>E) Proxies Reversos podem ser utilizados para balanceamento de carga entre múltiplos servidores.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-8">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C (A Incorreta)</strong></p>
+                <p>Um Firewall Stateless opera apenas nas camadas de rede e transporte (IP e Portas). O ataque SQL Injection ocorre na camada de aplicação (conteúdo). O Stateless não consegue "ler" o conteúdo para identificar o ataque.</p>
+            </div>
+        </div>
+
+        <!-- Question 9 -->
+        <div class="question-container" data-q="9">
+            <div class="question-header">Questão 09 - VPN IPsec Modos</div>
+            <div class="question-text">Em qual modo de operação do IPsec o cabeçalho IP original é mantido intacto e apenas a carga útil (payload) é criptografada, sendo tipicamente utilizado para comunicação segura fim-a-fim entre dois hosts?</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q9" value="A"> <span>A) Modo Túnel.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="B"> <span>B) Modo Transporte.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="C"> <span>C) Modo Ponte (Bridge).</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="D"> <span>D) Modo Promíscuo.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q9" value="E"> <span>E) Modo Gateway.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-9">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: B (Modo Transporte)</strong></p>
+                <p>O Modo Transporte mantém o cabeçalho IP original e protege apenas o payload. É usado para comunicação direta entre hosts que já possuem IPs roteáveis.</p>
+            </div>
+        </div>
+
+        <!-- Question 10 -->
+        <div class="question-container" data-q="10">
+            <div class="question-header">Questão 10 - Associações de Segurança</div>
+            <div class="question-text">Sobre o conceito de Associação de Segurança (SA - Security Association) no contexto do protocolo IPsec, é correto afirmar que:</div>
+            <div class="options-list">
+                <div class="option-item"><label><input type="radio" name="q10" value="A"> <span>A) Uma única SA é suficiente para garantir a segurança bidirecional entre dois pares VPN.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="B"> <span>B) A SA é um protocolo de camada 7 responsável pela interface gráfica da VPN.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="C"> <span>C) As SAs são unidirecionais (simplex); portanto, são necessárias no mínimo duas SAs para um canal bidirecional.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="D"> <span>D) A SA é negociada exclusivamente pelo protocolo HTTPS.</span></label></div>
+                <div class="option-item"><label><input type="radio" name="q10" value="E"> <span>E) A SA define apenas o algoritmo de compressão.</span></label></div>
+            </div>
+            <div class="resolution-box" id="res-10">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C</strong></p>
+                <p>No IPsec, as associações de segurança são unidirecionais. Para haver comunicação de ida e volta, o sistema precisa estabelecer duas SAs distintas (uma para cada sentido).</p>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submit-btn">Finalizar e Ver Gabarito</button>
+    </form>
+</main>
+
+<script>
+    const answers = {
+        q1: 'D',
+        q2: 'C',
+        q3: 'A',
+        q4: 'B',
+        q5: 'C',
+        q6: 'B',
+        q7: 'C',
+        q8: 'C',
+        q9: 'B',
+        q10: 'C'
+    };
+
+    document.getElementById('quiz-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let score = 0;
+        const total = 10;
+        const form = e.target;
+
+        // Reset visual styles
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer', 'wrong-answer');
+        });
+
+        for (let i = 1; i <= total; i++) {
+            const questionName = 'q' + i;
+            const selected = form.querySelector(`input[name="${questionName}"]:checked`);
+            const correctAnswer = answers[questionName];
+            
+            // Show resolutions
+            document.getElementById('res-' + i).style.display = 'block';
+
+            // Highlight answers
+            const options = form.querySelectorAll(`input[name="${questionName}"]`);
+            options.forEach(opt => {
+                const parent = opt.parentElement.parentElement;
+                if (opt.value === correctAnswer) {
+                    parent.classList.add('correct-answer');
+                }
+                if (selected && selected.value === opt.value && selected.value !== correctAnswer) {
+                    parent.classList.add('wrong-answer');
+                }
+            });
+
+            if (selected && selected.value === correctAnswer) {
+                score++;
+            }
+        }
+
+        // Show Summary
+        const summary = document.getElementById('result-summary');
+        const scoreText = document.getElementById('score-text');
+        const msg = document.getElementById('performance-msg');
+        
+        summary.style.display = 'block';
+        scoreText.textContent = `${score} / ${total}`;
+        
+        if (score === total) {
+            msg.textContent = "Excelente! Você dominou o conteúdo.";
+        } else if (score >= 7) {
+            msg.textContent = "Muito bom! Você tem uma base sólida.";
+        } else {
+            msg.textContent = "Continue estudando os conceitos de segurança de rede.";
+        }
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Disable submit button
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').textContent = "Simulado Finalizado";
+        document.getElementById('submit-btn').style.opacity = "0.5";
+        document.getElementById('submit-btn').style.cursor = "not-allowed";
+    });
+
+    // Add visual feedback on selection
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const name = this.name;
+            document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                r.parentElement.parentElement.classList.remove('selected');
+            });
+            if (this.checked) {
+                this.parentElement.parentElement.classList.add('selected');
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
