@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Lógica de Programação - CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #f9f9fb;
+            --text-color: #1f2937;
+            --accent-color: #2563eb;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --code-bg: #f3f4f6;
+            --success-color: #059669;
+            --error-color: #dc2626;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 90%;
+            margin-bottom: 5rem;
+        }
+
+        h1 { margin: 0; font-size: 1.8rem; color: var(--accent-color); }
+        p.subtitle { color: #6b7280; margin-top: 0.5rem; }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .theme-tag {
+            font-size: 0.8rem;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        pre {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #d1d5db;
+            margin: 1.5rem 0;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f0f7ff;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            background-color: #eff6ff;
+            border-color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #1d4ed8;
+        }
+
+        #results-section {
+            display: none;
+            margin-top: 3rem;
+        }
+
+        .score-box {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .resolution-card {
+            background: #f8fafc;
+            border-left: 5px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .correct-feedback { color: var(--success-color); font-weight: bold; }
+        .wrong-feedback { color: var(--error-color); font-weight: bold; }
+
+        .hidden { display: none; }
+
+        @media (max-width: 600px) {
+            .container { width: 95%; }
+            .question-card { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado de Lógica de Programação</h1>
+    <p class="subtitle">Padrão Fundação CEFETMINAS | Portugol e Pseudocódigo</p>
+</header>
+
+<div class="container">
+    <form id="quiz-form">
+        <!-- Questão 1 -->
+        <div class="question-card" id="q1">
+            <div class="question-header">
+                Questão 01 <span class="theme-tag">Aritmética e Precedência</span>
+            </div>
+            <p>Analise o algoritmo abaixo, desenvolvido na sintaxe padrão do Portugol (VisualG). O objetivo do código é realizar operações mistas entre números inteiros e reais, testando o comportamento dos operadores <code>div</code>, <code>mod</code> e <code>/</code>.</p>
+            <pre>
+Algoritmo "Calculo_Misto_Precedencia"
+Var
+   A, B, Aux : Inteiro
+   X, Y : Real
+Inicio
+   A <- 7
+   B <- 3
+   Aux <- (A + B) * 2
+   A <- Aux div B
+   X <- (Aux / B) + 0.5
+   Y <- (Aux mod B) + X
+   Se (Y > 10.0) Entao
+      B <- B + 2
+   FimSe
+   A <- A + B
+   Escreva("A=", A, " Y=", Y)
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q1" value="A"> A) A=9 Y=7.16</label>
+                <label class="option-item"><input type="radio" name="q1" value="B"> B) A=8 Y=9.16</label>
+                <label class="option-item"><input type="radio" name="q1" value="C"> C) A=9 Y=9.16</label>
+                <label class="option-item"><input type="radio" name="q1" value="D"> D) A=11 Y=10.5</label>
+                <label class="option-item"><input type="radio" name="q1" value="E"> E) A=8 Y=7.16</label>
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-card" id="q2">
+            <div class="question-header">
+                Questão 02 <span class="theme-tag">Condicionais Aninhadas</span>
+            </div>
+            <p>O trecho de código a seguir avalia a concessão de um benefício com base em idade e tempo de serviço.</p>
+            <pre>
+Algoritmo "Analise_Beneficio"
+Var
+   Idade, TempoServico : Inteiro
+   Direito, Especial : Logico
+   Bonus : Inteiro
+Inicio
+   Idade <- 55
+   TempoServico <- 28
+   Bonus <- 0
+   Direito <- Falso
+   Especial <- Falso
+
+   Se ((Idade >= 60) OU (TempoServico >= 30)) Entao
+      Direito <- Verdadeiro
+   Senao
+      Se ((Idade >= 50) E (TempoServico >= 25)) Entao
+         Especial <- Verdadeiro
+      FimSe
+   FimSe
+
+   Se (Direito) Entao
+      Bonus <- 1000
+   Senao
+      Se (Especial E (NAO Direito)) Entao
+         Bonus <- 500
+         Se (TempoServico > 27) Entao
+             Bonus <- Bonus + 200
+         FimSe
+      Senao
+         Bonus <- 100
+      FimSe
+   FimSe
+   Escreva(Bonus)
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q2" value="A"> A) 1000</label>
+                <label class="option-item"><input type="radio" name="q2" value="B"> B) 500</label>
+                <label class="option-item"><input type="radio" name="q2" value="C"> C) 700</label>
+                <label class="option-item"><input type="radio" name="q2" value="D"> D) 100</label>
+                <label class="option-item"><input type="radio" name="q2" value="E"> E) 1200</label>
+            </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card" id="q3">
+            <div class="question-header">
+                Questão 03 <span class="theme-tag">Laço Enquanto Dinâmico</span>
+            </div>
+            <pre>
+Algoritmo "Loop_Dinâmico"
+Var
+   Cont, Valor : Inteiro
+Inicio
+   Cont <- 1
+   Valor <- 0
+   Enquanto (Cont <= 10) Faca
+      Valor <- Valor + Cont
+      Se (Cont mod 3 = 0) Entao
+         Cont <- Cont + 2
+         Valor <- Valor - 1
+      Senao
+         Cont <- Cont + 1
+      FimSe
+      Escreva(Cont, "-")
+   FimEnquanto
+   Escreva("FIM")
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q3" value="A"> A) 2-3-5-6-8-9-11-FIM</label>
+                <label class="option-item"><input type="radio" name="q3" value="B"> B) 2-3-6-7-8-11-FIM</label>
+                <label class="option-item"><input type="radio" name="q3" value="C"> C) 2-3-5-6-8-9-10-FIM</label>
+                <label class="option-item"><input type="radio" name="q3" value="D"> D) 2-3-5-7-8-10-12-FIM</label>
+                <label class="option-item"><input type="radio" name="q3" value="E"> E) 1-2-4-5-7-8-10-FIM</label>
+            </div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card" id="q4">
+            <div class="question-header">
+                Questão 04 <span class="theme-tag">Laços Aninhados</span>
+            </div>
+            <pre>
+Algoritmo "Processamento_Aninhado"
+Var
+   X, Y, Z : Inteiro
+Inicio
+   X <- 1
+   Z <- 0
+   Enquanto (X < 4) Faca
+      Para Y de X ate 3 Faca
+         Se (X = Y) Entao
+            Z <- Z + Y
+         Senao
+            Z <- Z + 1
+         FimSe
+      FimPara
+      X <- X + 1
+   FimEnquanto
+   Escreva(Z)
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q4" value="A"> A) 6</label>
+                <label class="option-item"><input type="radio" name="q4" value="B"> B) 8</label>
+                <label class="option-item"><input type="radio" name="q4" value="C"> C) 9</label>
+                <label class="option-item"><input type="radio" name="q4" value="D"> D) 10</label>
+                <label class="option-item"><input type="radio" name="q4" value="E"> E) 12</label>
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card" id="q5">
+            <div class="question-header">
+                Questão 05 <span class="theme-tag">Repita... Ate</span>
+            </div>
+            <pre>
+Algoritmo "Validacao_Repita"
+Var
+   Num, Soma, Tentativas : Inteiro
+Inicio
+   Num <- 2
+   Soma <- 0
+   Tentativas <- 0
+   Repita
+      Soma <- Soma + Num
+      Num <- Num * 2
+      Tentativas <- Tentativas + 1
+   Ate (Soma > 15) OU (Tentativas >= 5)
+   Escreva("Soma: ", Soma, " Tentativas: ", Tentativas)
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q5" value="A"> A) Soma: 14 Tentativas: 3</label>
+                <label class="option-item"><input type="radio" name="q5" value="B"> B) Soma: 30 Tentativas: 4</label>
+                <label class="option-item"><input type="radio" name="q5" value="C"> C) Soma: 30 Tentativas: 3</label>
+                <label class="option-item"><input type="radio" name="q5" value="D"> D) Soma: 14 Tentativas: 4</label>
+                <label class="option-item"><input type="radio" name="q5" value="E"> E) Soma: 62 Tentativas: 5</label>
+            </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card" id="q6">
+            <div class="question-header">
+                Questão 06 <span class="theme-tag">Vetores e Índices</span>
+            </div>
+            <pre>
+Algoritmo "Vetor_Acumulativo"
+Var
+   V : Vetor[1..6] de Inteiro
+   K : Inteiro
+Inicio
+   Para K de 1 ate 6 Faca
+      Se (K mod 2 = 0) Entao
+         V[K] <- K
+      Senao
+         V[K] <- 0
+      FimSe
+   FimPara
+   Para K de 2 ate 5 Faca
+      V[K] <- V[K-1] + V[K] + V[K+1]
+   FimPara
+   Escreva(V[4])
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q6" value="A"> A) 4</label>
+                <label class="option-item"><input type="radio" name="q6" value="B"> B) 6</label>
+                <label class="option-item"><input type="radio" name="q6" value="C"> C) 10</label>
+                <label class="option-item"><input type="radio" name="q6" value="D"> D) 12</label>
+                <label class="option-item"><input type="radio" name="q6" value="E"> E) 16</label>
+            </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card" id="q7">
+            <div class="question-header">
+                Questão 07 <span class="theme-tag">Matrizes e Diagonais</span>
+            </div>
+            <pre>
+Algoritmo "Matriz_X"
+Var
+   M : Vetor[1..3, 1..3] de Inteiro
+   L, C, Res : Inteiro
+Inicio
+   Res <- 0
+   Para L de 1 ate 3 Faca
+      Para C de 1 ate 3 Faca
+         M[L,C] <- L + C
+         Se (L = C) Entao
+            Res <- Res + M[L,C]
+         FimSe
+         Se (L + C = 4) Entao
+            Res <- Res - M[L,C]
+         FimSe
+      FimPara
+   FimPara
+   Escreva(Res)
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q7" value="A"> A) 0</label>
+                <label class="option-item"><input type="radio" name="q7" value="B"> B) 4</label>
+                <label class="option-item"><input type="radio" name="q7" value="C"> C) -4</label>
+                <label class="option-item"><input type="radio" name="q7" value="D"> D) 6</label>
+                <label class="option-item"><input type="radio" name="q7" value="E"> E) 12</label>
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card" id="q8">
+            <div class="question-header">
+                Questão 08 <span class="theme-tag">Parâmetros por Referência</span>
+            </div>
+            <pre>
+Algoritmo "Escopo_Referencia"
+Var
+   X, Y : Inteiro
+   Procedimento Calcular(Var A : Inteiro; B : Inteiro)
+   Inicio
+      A <- A + B
+      B <- A + 5
+      A <- A + 1
+   FimProcedimento
+Inicio
+   X <- 10
+   Y <- 5
+   Calcular(X, Y)
+   Escreva(X, " - ", Y)
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q8" value="A"> A) 10 - 5</label>
+                <label class="option-item"><input type="radio" name="q8" value="B"> B) 16 - 5</label>
+                <label class="option-item"><input type="radio" name="q8" value="C"> C) 16 - 20</label>
+                <label class="option-item"><input type="radio" name="q8" value="D"> D) 15 - 5</label>
+                <label class="option-item"><input type="radio" name="q8" value="E"> E) 15 - 10</label>
+            </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card" id="q9">
+            <div class="question-header">
+                Questão 09 <span class="theme-tag">Lógica de Troca (Bubble)</span>
+            </div>
+            <pre>
+Algoritmo "Troca_Logica"
+Var
+   V : Vetor[1..4] de Inteiro
+   i, aux : Inteiro
+Inicio
+   V[1] <- 10; V[2] <- 5; V[3] <- 8; V[4] <- 3
+   Para i de 1 ate 3 Faca
+      Se (V[i] > V[i+1]) Entao
+         aux <- V[i]
+         V[i] <- V[i+1]
+         V[i+1] <- aux
+      FimSe
+   FimPara
+   Escreva(V[1], V[2], V[3], V[4])
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q9" value="A"> A) 3 5 8 10</label>
+                <label class="option-item"><input type="radio" name="q9" value="B"> B) 5 8 3 10</label>
+                <label class="option-item"><input type="radio" name="q9" value="C"> C) 5 10 3 8</label>
+                <label class="option-item"><input type="radio" name="q9" value="D"> D) 5 8 10 3</label>
+                <label class="option-item"><input type="radio" name="q9" value="E"> E) 10 5 8 3</label>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10">
+            <div class="question-header">
+                Questão 10 <span class="theme-tag">Séries Numéricas</span>
+            </div>
+            <pre>
+Algoritmo "Serie_Iterativa"
+Var
+   A, B, Prox, N, i : Inteiro
+Inicio
+   N <- 5; A <- 1; B <- 1
+   Para i de 3 ate N Faca
+      Prox <- A + B + i
+      A <- B
+      B <- Prox
+   FimPara
+   Escreva(B)
+FimAlgoritmo</pre>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q10" value="A"> A) 5</label>
+                <label class="option-item"><input type="radio" name="q10" value="B"> B) 10</label>
+                <label class="option-item"><input type="radio" name="q10" value="C"> C) 13</label>
+                <label class="option-item"><input type="radio" name="q10" value="D"> D) 20</label>
+                <label class="option-item"><input type="radio" name="q10" value="E"> E) 25</label>
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Finalizar Simulado e Ver Resoluções</button>
+    </form>
+
+    <div id="results-section">
+        <div class="score-box">
+            <h2>Resultado do Simulado</h2>
+            <div class="score-number" id="score-display">0 / 10</div>
+            <p id="score-message"></p>
+        </div>
+
+        <h2 style="border-bottom: 2px solid var(--accent-color); padding-bottom: 10px;">Resoluções Detalhadas</h2>
+        
+        <div id="resolutions-container">
+            <!-- Resolutions will be injected here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const answers = {
+        q1: 'C', q2: 'C', q3: 'A', q4: 'C', q5: 'B',
+        q6: 'C', q7: 'A', q8: 'B', q9: 'B', q10: 'D'
+    };
+
+    const resolutionData = {
+        q1: "Matematicamente, Aux = 20. A = 20 div 3 = 6. X = (20/3)+0.5 = 7.16. Y = (20 mod 3) + 7.16 = 2 + 7.16 = 9.16. Como Y não é > 10, B permanece 3. A final = 6 + 3 = 9. Resultado: A=9, Y=9.16.",
+        q2: "Idade 55 e Tempo 28 não dão Direito, mas dão Especial (Idade>=50 E Tempo>=25). No cálculo do bônus: Especial E (NAO Direito) é verdadeiro. Bônus inicia em 500. Como TempoServico (28) > 27, soma-se 200. Total = 700.",
+        q3: "O laço imprime o valor de Cont após o processamento. Quando Cont é múltiplo de 3, ele pula +2 e subtrai 1 do Valor. A sequência exata de saltos gera: 2-3-5-6-8-9-11-FIM.",
+        q4: "Ciclo X=1: Y vai 1 a 3 (Z=1+1+1=3). Ciclo X=2: Y vai 2 a 3 (Z=3+2+1=6). Ciclo X=3: Y vai 3 a 3 (Z=6+3=9). X=4 sai do laço. Final Z=9.",
+        q5: "O laço Repita para assim que a condição for verdadeira. Iteração 1: Soma=2. Iteração 2: Soma=6. Iteração 3: Soma=14, Tent=3. Iteração 4: Soma=30, Tent=4. Como 30 > 15, o laço para. Resultado: Soma 30, Tentativas 4.",
+        q6: "Fase 1: V=[0, 2, 0, 4, 0, 6]. Fase 2: K=2 -> V[2]=0+2+0=2. K=3 -> V[3]=2+0+4=6. K=4 -> V[4]=6+4+0=10. O valor de V[4] final é 10.",
+        q7: "Os elementos da Diagonal Principal são somados e os da Secundária subtraídos. O elemento central (2,2) é somado por ser da principal e subtraído por ser da secundária (efeito nulo). A soma total resulta em 0.",
+        q8: "X é passado por referência (Var A) e Y por valor (B). Dentro: A = 10+5=15 (X vira 15). B = 15+5=20 (local). A = 15+1=16 (X vira 16). Y permanece 5. Saída: 16 - 5.",
+        q9: "O algoritmo executa apenas UMA passagem do Bubble Sort. O maior valor (10) 'flutua' até a última posição. A sequência após as trocas de i=1, 2 e 3 é: 5, 8, 3, 10.",
+        q10: "Termo 3 (i=3): 1 + 1 + 3 = 5. Termo 4 (i=4): 1 + 5 + 4 = 10. Termo 5 (i=5): 5 + 10 + 5 = 20. Resultado final B = 20."
+    };
+
+    function submitQuiz() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        const resultsSection = document.getElementById('results-section');
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        resolutionsContainer.innerHTML = '';
+
+        for (let i = 1; i <= 10; i++) {
+            const questionKey = 'q' + i;
+            const selected = form.elements[questionKey].value;
+            const isCorrect = selected === answers[questionKey];
+            
+            if (isCorrect) score++;
+
+            // Create resolution card
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            resCard.innerHTML = `
+                <h3>Questão ${i}</h3>
+                <p class="${isCorrect ? 'correct-feedback' : 'wrong-feedback'}">
+                    Sua resposta: ${selected || 'Nenhuma'} | Gabarito: ${answers[questionKey]}
+                </p>
+                <p><strong>Explicação:</strong> ${resolutionData[questionKey]}</p>
+            `;
+            resolutionsContainer.appendChild(resCard);
+
+            // Highlight in the question list
+            const questionDiv = document.getElementById(questionKey);
+            questionDiv.style.borderColor = isCorrect ? 'var(--success-color)' : 'var(--error-color)';
+        }
+
+        // Display Score
+        document.getElementById('score-display').innerText = `${score} / 10`;
+        const msg = score >= 7 ? "Excelente desempenho!" : score >= 5 ? "Bom trabalho, continue praticando." : "Recomendamos revisar os conceitos básicos.";
+        document.getElementById('score-message').innerText = msg;
+
+        // Show Results
+        resultsSection.style.display = 'block';
+        
+        // Scroll to results
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Add visual feedback on click
+    document.querySelectorAll('.option-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const radio = this.querySelector('input');
+            const name = radio.name;
+            document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                r.parentElement.classList.remove('selected');
+            });
+            this.classList.add('selected');
+        });
+    });
+</script>
+
+</body>
+</html>

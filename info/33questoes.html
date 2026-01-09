@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Técnico: Lógica de Programação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .question-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+
+        .option-label {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f1f5f9;
+        }
+
+        input[type="radio"]:checked + .option-content {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+
+        .resolution-box {
+            border-left: 4px solid #3b82f6;
+            background-color: #f8fafc;
+        }
+
+        pre {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-size: 0.875rem;
+            margin: 1rem 0;
+        }
+
+        .correct-bg { background-color: #dcfce7; border-color: #22c55e; }
+        .wrong-bg { background-color: #fee2e2; border-color: #ef4444; }
+        
+        #results-section { display: none; }
+    </style>
+</head>
+<body class="py-8 px-4">
+
+    <div class="max-w-4xl mx-auto">
+        <!-- Header -->
+        <header class="mb-12 text-center">
+            <h1 class="text-3xl font-bold text-slate-900 mb-4">Simulado Técnico Especializado</h1>
+            <p class="text-slate-600">Foco: Lógica de Programação e Tipos de Dados (Estilo Fundação CEFETMINAS)</p>
+            <div class="mt-6 flex justify-center gap-4 text-sm">
+                <span class="bg-slate-200 px-3 py-1 rounded-full">10 Questões</span>
+                <span class="bg-slate-200 px-3 py-1 rounded-full">Múltipla Escolha</span>
+            </div>
+        </header>
+
+        <!-- Quiz Form -->
+        <form id="quiz-form">
+            <div id="questions-container" class="space-y-8">
+                <!-- As questões serão injetadas aqui via JS -->
+            </div>
+
+            <div class="mt-12 flex justify-center">
+                <button type="submit" id="submit-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-lg shadow-lg transition-transform active:scale-95">
+                    Finalizar Quiz e Ver Resultados
+                </button>
+            </div>
+        </form>
+
+        <!-- Results Section -->
+        <section id="results-section" class="mt-16 border-t pt-12">
+            <div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200 mb-12">
+                <h2 class="text-2xl font-bold mb-6 text-center">Resultado Final</h2>
+                <div class="flex justify-center items-center gap-8">
+                    <div class="text-center">
+                        <span id="score-display" class="text-6xl font-black text-blue-600">0</span>
+                        <span class="text-2xl font-bold text-slate-400">/ 10</span>
+                        <p class="text-slate-500 mt-2 uppercase tracking-widest text-sm">Acertos</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold mb-8 text-slate-800">Gabarito Comentado e Resoluções</h3>
+            <div id="feedback-container" class="space-y-12">
+                <!-- Feedback detalhado aqui -->
+            </div>
+
+            <div class="mt-12 text-center">
+                <button onclick="window.location.reload()" class="text-blue-600 font-semibold hover:underline">
+                    Tentar Novamente
+                </button>
+            </div>
+        </section>
+
+        <footer class="mt-20 text-center text-slate-400 text-sm pb-10">
+            Simulado Gerado para Estudo Técnico - Lógica de Programação
+        </footer>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                question: "Na arquitetura de computadores e no design de linguagens de programação como Java e C#, a definição precisa dos limites de armazenamento de variáveis é crucial para a otimização de memória e prevenção de erros de overflow. Considerando a especificação da Java Virtual Machine (JVM), assinale a alternativa que apresenta a correlação CORRETA e exata entre o tipo de dado primitivo e sua largura de bit, bem como seu intervalo de representação.",
+                options: [
+                    "O tipo byte é armazenado em 8 bits, com sinal, permitindo valores no intervalo de -128 a 127.",
+                    "O tipo char em Java é um inteiro de 8 bits sem sinal (unsigned), compatível com a tabela ASCII estendida, variando de 0 a 255.",
+                    "O tipo int é a unidade padrão de processamento inteiro, ocupando 64 bits em sistemas operacionais de 64 bits, garantindo endereçamento estendido de memória.",
+                    "O tipo short possui 32 bits de largura, sendo idêntico ao int em capacidade, mas reservado semanticamente para inteiros curtos em bancos de dados.",
+                    "O tipo long ocupa 128 bits, sendo necessário para cálculos científicos de alta precisão que excedem a capacidade do processador matemático padrão."
+                ],
+                correct: 0,
+                resolution: "A questão aborda a definição fundamental de Tipos Primitivos na linguagem Java. Diferentemente de C e C++, Java define tamanhos fixos. O tipo byte ocupa 8 bits e utiliza Complemento de Dois, resultando no intervalo de -128 a 127. O erro da B é que char tem 16 bits (Unicode). Na C, int tem sempre 32 bits em Java. Na D, short tem 16 bits. Na E, long tem 64 bits."
+            },
+            {
+                id: 2,
+                question: "Sobre as características, limitações e conversões de tipos de ponto flutuante (float e double) no padrão IEEE 754, analise as afirmativas:\nI. O float destina 23 bits para mantissa, 8 para expoente e 1 para sinal.\nII. Literais decimais em Java (ex: 10.5) são nativamente double.\nIII. Conversão de double para int é considerada 'promoção de tipo' automática.\nIV. Problemas de precisão ocorrem pois números como 0.1 resultam em dízimas periódicas binárias.",
+                options: [
+                    "I e III, apenas.",
+                    "II e IV, apenas.",
+                    "I, II e IV, apenas.",
+                    "II, III e IV, apenas.",
+                    "I, II, III e IV."
+                ],
+                correct: 2,
+                resolution: "I está correta (definição 32 bits IEEE 754). II está correta (literais de ponto flutuante são double por padrão). III está INCORRETA: converter double para int é 'Narrowing' (estreitamento) e exige cast explícito por haver perda de dados. IV está correta: a base 2 não representa exatamente potências de 10 como 0.1."
+            },
+            {
+                id: 3,
+                question: "Considere valor_a = 10 e valor_b = '20'. Em Python, o resultado de valor_a + valor_b gera um erro, enquanto em JavaScript o resultado é '1020'. Assinale a alternativa que justifica tecnicamente esse comportamento.",
+                options: [
+                    "Em Python, ocorrerá a impressão de 30 devido à sua tipagem dinâmica que converte strings numéricas automaticamente.",
+                    "Em Python, ocorrerá um erro do tipo TypeError, pois a linguagem possui tipagem forte. Em JavaScript, será impresso 1020 devido à tipagem fraca que favorece a concatenação.",
+                    "Ambas as linguagens imprimirão 1020, pois priorizam a manipulação de texto em operações ambíguas.",
+                    "Em Python será impresso 1020 e em JavaScript será impresso 30.",
+                    "Em Python o código resultará em NULL, enquanto em JavaScript resultará em NaN."
+                ],
+                correct: 1,
+                resolution: "Python tem tipagem dinâmica (não declara tipo) mas FORTE (não mistura tipos em operações sem conversão explícita). JavaScript tem tipagem dinâmica e FRACA (faz coerção implícita, transformando o número em string para concatenar com o operador +)."
+            },
+            {
+                id: 4,
+                question: "Considerando uma arquitetura de 32 bits e o conceito de memory padding (alinhamento de memória) em Linguagem C para a struct: {int matricula; char turma; double nota_final;}. É correto afirmar:",
+                options: [
+                    "O tamanho total será a soma exata 4 + 1 + 8 = 13 bytes.",
+                    "Campos de uma struct só podem ser acessados sequencialmente.",
+                    "É impossível criar um vetor do tipo struct Aluno.",
+                    "Devido ao alinhamento, o compilador pode inserir bytes de preenchimento (padding) entre turma e nota_final, tornando o tamanho total maior que 13 bytes.",
+                    "A declaração cria automaticamente uma instância na memória Heap."
+                ],
+                correct: 3,
+                resolution: "O alinhamento de memória busca otimizar o acesso da CPU. Um 'double' (8 bytes) deve começar em um endereço múltiplo de 8. Como 'char' ocupa apenas 1 byte após o int, o compilador insere bytes vazios (padding) para que a nota_final comece no endereço alinhado correto."
+            },
+            {
+                id: 5,
+                question: "Analise o pseudocódigo: A=5, B=10, C=0. Resultado <- (A > B) AND ((A / C) > 1). Considerando a 'Avaliação de Curto-Circuito', qual a conclusão correta?",
+                options: [
+                    "Ocorrerá um erro de divisão por zero (Runtime Error) imediatamente.",
+                    "A expressão retornará FALSO sem gerar erro. Como o primeiro termo (5 > 10) é falso e o operador é AND, o sistema não avalia o segundo termo.",
+                    "O operador AND tem menor precedência que a divisão, causando o erro fatal antes da comparação.",
+                    "O resultado será INDEFINIDO ou NULL.",
+                    "A avaliação de curto-circuito só se aplica ao operador OR."
+                ],
+                correct: 1,
+                resolution: "No operador AND, se o primeiro termo é FALSO, o resultado total será obrigatoriamente FALSO. Compiladores modernos usam o curto-circuito: eles nem tentam calcular a segunda parte, o que evita o erro de divisão por zero neste caso."
+            },
+            {
+                id: 6,
+                question: "Sobre a relação entre tipos de dados, ponteiros (C) e referências (Java), assinale a alternativa INCORRETA.",
+                options: [
+                    "Em C, um ponteiro void * pode conter o endereço de qualquer tipo, mas exige casting para ser desreferenciado.",
+                    "A aritmética de ponteiros em C leva em conta o tamanho do tipo. ptr + 1 em um int* pula 4 bytes.",
+                    "Em Java, tipos primitivos ficam na Stack e objetos ficam na Heap.",
+                    "Null Pointer Exception ocorre ao tentar acessar valores através de ponteiros/referências que apontam para 0x0.",
+                    "Em Java, é possível realizar aritmética de endereços nas referências de objetos para acessar atributos privados."
+                ],
+                correct: 4,
+                resolution: "Alternativa E está incorreta porque Java NÃO permite aritmética de ponteiros. Essa é uma restrição de segurança da JVM para impedir que programadores acessem áreas de memória arbitrárias ou burlem o encapsulamento de objetos."
+            },
+            {
+                id: 7,
+                question: "Qual a implicação do uso de tipos de dados imutáveis (como String em Java) ao concatenar um texto 10.000 vezes em um laço?",
+                options: [
+                    "Tipos imutáveis são mais rápidos para concatenação massiva.",
+                    "Gerará 10.000 novos objetos na memória Heap, causando alto consumo de recursos, sendo recomendado o uso de StringBuilder.",
+                    "Strings imutáveis em Java são armazenadas na Stack, prevenindo estouro de pilha.",
+                    "Não há diferença de desempenho devido a otimizações automáticas da JVM.",
+                    "Em C, a concatenação é automática e segura, redimensionando o vetor dinamicamente."
+                ],
+                correct: 1,
+                resolution: "Por serem imutáveis, cada 'concatenação' cria uma nova String e descarta a anterior. Em um loop de 10 mil vezes, isso sobrecarrega o Garbage Collector e a memória. O StringBuilder usa um buffer mutável, sendo muito mais eficiente."
+            },
+            {
+                id: 8,
+                question: "Analise: int a = 300; char c = a; printf('%d', c); (Considere char 8 bits e int 32 bits). Qual o fenômeno ocorrido?",
+                options: [
+                    "O valor impresso será 300.",
+                    "O valor impresso será 44, pois 300 excede o limite de 8 bits (300 mod 256 = 44).",
+                    "O compilador emitirá um erro fatal impedindo a compilação.",
+                    "O valor será 255, devido ao truncamento por saturação.",
+                    "O valor impresso será 127."
+                ],
+                correct: 1,
+                resolution: "Ao atribuir 300 (que precisa de mais de 8 bits) a um char (8 bits), ocorre o truncamento dos bits superiores. Binariamente, apenas os 8 bits menos significativos restam. 300 em binário é 100101100. Pegando os últimos 8 bits (00101100), temos o valor 44."
+            },
+            {
+                id: 9,
+                question: "Sobre Vetores (Arrays) e Listas Encadeadas, qual das afirmações é verdadeira?",
+                options: [
+                    "Vetores exigem homogeneidade e ocupam posições contíguas de memória, permitindo cálculo direto de endereço.",
+                    "Listas Encadeadas são mais eficientes que vetores para acesso aleatório.",
+                    "Inserção no meio de um vetor estático é uma operação de custo O(1).",
+                    "Vetores dinâmicos como ArrayList funcionam internamente como listas encadeadas.",
+                    "É impossível implementar uma pilha utilizando vetores."
+                ],
+                correct: 0,
+                resolution: "Vetores são blocos contínuos. Isso permite que o computador acesse o elemento 'i' instantaneamente (O(1)) calculando: endereço_base + (i * tamanho_do_tipo). Listas são espalhadas e exigem percurso sequencial (O(N))."
+            },
+            {
+                id: 10,
+                question: "Sobre Escopo e Tempo de Vida: I. Local (Stack/Destruída após função); II. Global (Data Segment/Persiste todo programa); III. Static Local (Mantém valor entre chamadas, mas escopo restrito). Estão CORRETAS:",
+                options: [
+                    "I, apenas.",
+                    "II, apenas.",
+                    "I e III, apenas.",
+                    "II e III, apenas.",
+                    "I, II e III."
+                ],
+                correct: 4,
+                resolution: "Todas as afirmações estão corretas. A variável static dentro de uma função é um híbrido: ela vive durante todo o programa (como uma global), mas só é visível dentro da função onde foi criada (escopo local)."
+            }
+        ];
+
+        const container = document.getElementById('questions-container');
+        const quizForm = document.getElementById('quiz-form');
+        const resultsSection = document.getElementById('results-section');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const scoreDisplay = document.getElementById('score-display');
+
+        // Renderiza as questões
+        function renderQuestions() {
+            quizData.forEach((q, index) => {
+                const questionHtml = `
+                    <div class="question-card p-6 rounded-xl" id="q-card-${index}">
+                        <p class="font-bold text-lg mb-4 text-slate-800">
+                            ${index + 1}. ${q.question.replace(/\n/g, '<br>')}
+                        </p>
+                        <div class="space-y-3">
+                            ${q.options.map((opt, optIndex) => `
+                                <label class="option-label flex items-start p-3 border rounded-lg border-slate-200">
+                                    <input type="radio" name="q${index}" value="${optIndex}" class="mt-1 mr-3" required>
+                                    <span class="option-content text-slate-700">${String.fromCharCode(65 + optIndex)}) ${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += questionHtml;
+            });
+        }
+
+        // Processa o resultado
+        quizForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(quizForm);
+            let score = 0;
+            feedbackContainer.innerHTML = '';
+
+            quizData.forEach((q, index) => {
+                const userAnswer = parseInt(formData.get(`q${index}`));
+                const isCorrect = userAnswer === q.correct;
+                if (isCorrect) score++;
+
+                const feedbackHtml = `
+                    <div class="p-6 rounded-xl border ${isCorrect ? 'border-green-200' : 'border-red-200'}">
+                        <div class="flex items-center gap-2 mb-4">
+                            <span class="px-3 py-1 rounded text-white font-bold ${isCorrect ? 'bg-green-500' : 'bg-red-500'}">
+                                QUESTÃO ${index + 1}: ${isCorrect ? 'ACERTOU' : 'ERROU'}
+                            </span>
+                        </div>
+                        <p class="font-bold mb-4">${q.question.replace(/\n/g, '<br>')}</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-6">
+                            <div class="p-3 bg-slate-100 rounded">
+                                <span class="block font-bold text-slate-500 uppercase text-xs mb-1">Sua Resposta:</span>
+                                ${userAnswer !== null ? q.options[userAnswer] : 'Não respondida'}
+                            </div>
+                            <div class="p-3 bg-blue-50 rounded">
+                                <span class="block font-bold text-blue-500 uppercase text-xs mb-1">Resposta Correta:</span>
+                                ${q.options[q.correct]}
+                            </div>
+                        </div>
+                        <div class="resolution-box p-4 rounded bg-slate-50 border-l-4 border-blue-500">
+                            <h4 class="font-bold text-blue-700 mb-2">Resolução e Fundamentação:</h4>
+                            <p class="text-slate-700 leading-relaxed">${q.resolution}</p>
+                        </div>
+                    </div>
+                `;
+                feedbackContainer.innerHTML += feedbackHtml;
+            });
+
+            scoreDisplay.textContent = score;
+            resultsSection.style.display = 'block';
+            window.scrollTo({ top: resultsSection.offsetTop - 50, behavior: 'smooth' });
+            
+            // Desabilita o botão de envio
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('submit-btn').classList.add('opacity-50', 'cursor-not-allowed');
+        });
+
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

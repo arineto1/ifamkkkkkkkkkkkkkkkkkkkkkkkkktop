@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado de Lógica de Programação - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --container-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-secondary: #546e7a;
+            --primary-color: #2980b9;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+            --border-color: #e0e6ed;
+            --code-bg: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        h1 { font-size: 1.8rem; color: var(--primary-color); }
+        p.intro { color: var(--text-secondary); font-size: 1rem; }
+
+        .question-card {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-header {
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .question-text {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-left: 4px solid var(--primary-color);
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, border 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f0f7ff;
+            border-color: var(--primary-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            background-color: #e3f2fd;
+            border-color: var(--primary-color);
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        #submit-btn:hover {
+            background-color: #1f6391;
+        }
+
+        #result-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background-color: #f9fcff;
+        }
+
+        .score-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score-circle {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .resolution-card {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .resolution-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .correct-ans { color: var(--correct-color); }
+        .incorrect-ans { color: var(--incorrect-color); }
+
+        .resolution-body {
+            font-size: 0.95rem;
+            color: #444;
+            border-top: 1px dashed #ccc;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: #eee;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado de Lógica de Programação</h1>
+        <p class="intro">Estilo Fundação CEFETMINAS - Linear, Estruturada e Modular</p>
+    </header>
+
+    <div id="quiz-form">
+        <div id="questions-container"></div>
+        <button type="button" id="submit-btn" onclick="calculateScore()">Finalizar Simulado</button>
+    </div>
+
+    <div id="result-section">
+        <div class="score-box">
+            <h2>Resultado</h2>
+            <div id="score-display" class="score-circle">0/10</div>
+            <p id="score-message"></p>
+        </div>
+        <div id="resolutions-container"></div>
+        <button type="button" id="retry-btn" onclick="location.reload()" style="background: #7f8c8d; width: 100%; border: none; padding: 12px; color: white; border-radius: 6px; cursor: pointer;">Tentar Novamente</button>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            title: "Questão 01: Lógica Linear e Expressões Aritméticas",
+            text: "Considere o trecho de algoritmo abaixo, descrito em pseudocódigo. As variáveis são todas do tipo inteiro.",
+            code: "Var\n   A, B, C, R : Inteiro\nInicio\n   A <- 10\n   B <- 3\n   C <- 2\n   R <- (A + B * C) MOD 4\n   A <- A - B\n   B <- B ^ C  // Exponenciação\n   C <- R + A * 2\n   Escreva(A, B, C, R)\nFim",
+            options: ["A) 7, 6, 14, 0", "B) 7, 9, 14, 0", "C) 7, 9, 16, 2", "D) 13, 9, 14, 0", "E) 7, 9, 14, 4"],
+            answer: 1, // B
+            resolution: "<b>Passo 1:</b> A=10, B=3, C=2. <br><b>Passo 2:</b> R = (10 + 3 * 2) MOD 4 => (10 + 6) MOD 4 => 16 MOD 4 = 0. <br><b>Passo 3:</b> A = 10 - 3 = 7. <br><b>Passo 4:</b> B = 3 ^ 2 = 9. <br><b>Passo 5:</b> C = 0 + 7 * 2 = 14. <br><b>Saída:</b> 7, 9, 14, 0."
+        },
+        {
+            id: 2,
+            title: "Questão 02: Condicionais e Operadores Lógicos (Python)",
+            text: "Analise o código Python a seguir. Atente-se à indentação e aos operadores lógicos.",
+            code: "x = 5\ny = 10\nz = False\n\nif (x > 3) and (y % x == 0):\n    z = True\n    if x + y > 15:\n        y = y - 5\n    else:\n        y = y + 5\n        x = x * 2\n\nif z and (y > 10):\n    print(f'{x}-{y}-A')\nelif z or (x > 8):\n    print(f'{x}-{y}-B')\nelse:\n    print(f'{x}-{y}-C')",
+            options: ["A) 5-10-A", "B) 10-15-B", "C) 5-15-A", "D) 10-15-A", "E) 10-15-B"],
+            answer: 3, // D
+            resolution: "<b>Primeiro IF:</b> (5 > 3) AND (10 % 5 == 0) é True. Z vira True. <br><b>IF Interno:</b> (5 + 10 > 15) é 15 > 15 (Falso). Entra no ELSE interno: y=15, x=10. <br><b>Segundo IF:</b> Z é True E (15 > 10) é True. Imprime 10-15-A."
+        },
+        {
+            id: 3,
+            title: "Questão 03: Laços de Repetição e Acumuladores (Java)",
+            text: "O valor impresso pela variável cont ao final da execução será:",
+            code: "int a = 0;\nint b = 1;\nint cont = 0;\nwhile (a < 20) {\n    if (a % 2 != 0) {\n        cont += a;\n    }\n    int temp = a + b;\n    a = b;\n    b = temp;\n}\nSystem.out.println(cont);",
+            options: ["A) 10", "B) 44", "C) 23", "D) 18", "E) 24"],
+            answer: 2, // C
+            resolution: "Simula a sequência de Fibonacci: 0, 1, 1, 2, 3, 5, 8, 13, 21. <br>O loop soma os ímpares menores que 20: 1 + 1 + 3 + 5 + 13 = 23."
+        },
+        {
+            id: 4,
+            title: "Questão 04: Lógica Modular - Recursividade",
+            text: "Qual o valor retornado pela chamada recursiva(5)?",
+            code: "Função recursiva(n: inteiro) : inteiro\nInicio\n    Se n <= 1 Então\n        Retorne n\n    Senão\n        Se (n MOD 2 == 0) Então\n            Retorne recursiva(n - 1) + n\n        Senão\n            Retorne recursiva(n - 2) * n\n        Fim_Se\n    Fim_Se\nFim",
+            options: ["A) 15", "B) 20", "C) 35", "D) 25", "E) 30"],
+            answer: 0, // A
+            resolution: "recursiva(5) -> ímpares: 5 * recursiva(3) <br>recursiva(3) -> ímpares: 3 * recursiva(1) <br>recursiva(1) -> 1. <br>Total: 5 * 3 * 1 = 15."
+        },
+        {
+            id: 5,
+            title: "Questão 05: Escopo e Shadowing (C/C++)",
+            text: "O seguinte programa em C é executado. Qual a saída gerada?",
+            code: "int global = 5;\n\nvoid funcao(int x) {\n    int global = 10; // Variável local\n    global = global + x;\n    printf(\"%d \", global);\n}\n\nint main() {\n    funcao(global);\n    printf(\"%d\", global);\n    return 0;\n}",
+            options: ["A) 15 5", "B) 15 15", "C) 10 5", "D) 10 10", "E) 5 5"],
+            answer: 0, // A
+            resolution: "A função cria uma variável local 'global' que esconde a externa. Local vira 10 + 5 = 15. Ao sair da função, a local morre e a global original continua sendo 5. Saída: 15 5."
+        },
+        {
+            id: 6,
+            title: "Questão 06: Estruturas de Dados e Listas (Python)",
+            text: "Considere a manipulação de listas, pilhas e filas no código abaixo:",
+            code: "lista = [10, 20, 30, 40, 50]\npilha = []\nfila = []\n\nfor i in range(len(lista)):\n    if i % 2 == 0: # 0, 2, 4\n        pilha.append(lista[i])\n    else: # 1, 3\n        fila.append(lista[i])\n\nwhile len(pilha) > 0:\n    val = pilha.pop()\n    fila.append(val)\n\nprint(fila)",
+            options: ["A) [20, 40, 10, 30, 50]", "B) [20, 40, 50, 30, 10]", "C) [10, 30, 50, 20, 40]", "D) [50, 30, 10, 20, 40]", "E) [10, 20, 30, 40, 50]"],
+            answer: 1, // B
+            resolution: "Pilha recebe índices pares: [10, 30, 50]. Fila recebe ímpares: [20, 40]. Ao desempilhar, os itens da pilha entram na fila na ordem inversa: [20, 40, 50, 30, 10]."
+        },
+        {
+            id: 7,
+            title: "Questão 07: Lógica OO e Referências (Java)",
+            text: "O resultado impresso pelo código Java abaixo é:",
+            code: "class Caixa { int valor; }\npublic class Teste {\n    public static void alterar(Caixa c, int v) {\n        c.valor = v;\n        v = 0;\n    }\n    public static void main(String[] args) {\n        Caixa c1 = new Caixa();\n        c1.valor = 10;\n        int x = 50;\n        alterar(c1, x);\n        System.out.println(c1.valor + \" \" + x);\n    }\n}",
+            options: ["A) 10 50", "B) 50 0", "C) 50 50", "D) 10 0", "E) 0 50"],
+            answer: 2, // C
+            resolution: "O objeto c1 é passado por referência (seu conteúdo muda para 50). O inteiro x é passado por valor (sua cópia vira 0, mas x continua 50 no main). Resultado: 50 50."
+        },
+        {
+            id: 8,
+            title: "Questão 08: Bash Script e Lógica de Sistemas",
+            text: "Analise o script shell abaixo:",
+            code: "#!/bin/bash\nVAR=10\n[ $VAR -gt 5 ] && VAR=$((VAR+5)) || VAR=$((VAR-5))\n[ $VAR -eq 15 ] && echo \"Igual\"\necho $VAR",
+            options: ["A) Igual 15", "B) 15", "C) Igual 10", "D) Igual", "E) 10"],
+            answer: 0, // A
+            resolution: "10 > 5 é verdade, então VAR=10+5=15. Como o bloco && teve sucesso, o || é ignorado. 15 == 15 é verdade, imprime 'Igual'. Depois imprime 15."
+        },
+        {
+            id: 9,
+            title: "Questão 09: Vetores e Strings",
+            text: "A string S contém 'BRASIL'. Após o algoritmo abaixo, qual o resultado?",
+            code: "Para i de 0 até Tamanho(S)-1 faça\n   Se (i MOD 2 == 0) Então\n       S[i] <- '*'\n   Fim_Se\nFim_Para\nEscreva(S)",
+            options: ["A) B*A*I*", "B) *R*S*L", "C) BR*SIL", "D) *RASIL", "E) ******"],
+            answer: 1, // B
+            resolution: "Substitui caracteres nos índices 0, 2, 4. B(0), A(2), I(4) viram '*'. Resultado: *R*S*L."
+        },
+        {
+            id: 10,
+            title: "Questão 10: Integração de Lógicas",
+            text: "Quantos números serão impressos e qual o último número?",
+            code: "1. X = 5\n2. Enquanto X > 0:\n3.    Se X é par: X = X / 2\n4.    Senão: X = X - 1\n5.    Imprima X",
+            options: ["A) 3 números, último 0", "B) 4 números, último 0", "C) 3 números, último 1", "D) 4 números, último 1", "E) Loop Infinito"],
+            answer: 1, // B
+            resolution: "Passos: (5-1=4), imprime 4. (4/2=2), imprime 2. (2/2=1), imprime 1. (1-1=0), imprime 0. Total 4 números, fim em 0."
+        }
+    ];
+
+    function loadQuiz() {
+        const container = document.getElementById('questions-container');
+        questions.forEach((q, index) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.innerHTML = `
+                <div class="question-header">
+                    <span>${q.title}</span>
+                </div>
+                <div class="question-text">${q.text}</div>
+                ${q.code ? `<pre>${q.code}</pre>` : ''}
+                <ul class="options-list">
+                    ${q.options.map((opt, optIndex) => `
+                        <li class="option-item" onclick="selectOption(${index}, ${optIndex})">
+                            <input type="radio" name="q${index}" id="q${index}o${optIndex}" value="${optIndex}">
+                            <label for="q${index}o${optIndex}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function selectOption(qIdx, oIdx) {
+        const options = document.querySelectorAll(`input[name="q${qIdx}"]`);
+        options[oIdx].checked = true;
+        
+        // Visual feedback
+        const items = document.querySelectorAll(`.question-card:nth-child(${qIdx + 1}) .option-item`);
+        items.forEach(item => item.classList.remove('selected'));
+        items[oIdx].classList.add('selected');
+    }
+
+    function calculateScore() {
+        let score = 0;
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        resolutionsContainer.innerHTML = '<h3>Resoluções Detalhadas</h3>';
+
+        questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const selectedValue = selected ? parseInt(selected.value) : -1;
+            const isCorrect = selectedValue === q.answer;
+
+            if (isCorrect) score++;
+
+            // Add Resolution
+            const resDiv = document.createElement('div');
+            resDiv.className = 'resolution-card';
+            resDiv.innerHTML = `
+                <div class="resolution-header">
+                    <span>${q.title}</span>
+                    <span class="${isCorrect ? 'correct-ans' : 'incorrect-ans'}">
+                        ${isCorrect ? '✓ Acertou' : '✗ Errou'}
+                    </span>
+                </div>
+                <div>Sua resposta: ${selectedValue !== -1 ? q.options[selectedValue] : 'Não respondida'}</div>
+                <div class="correct-ans">Gabarito: ${q.options[q.answer]}</div>
+                <div class="resolution-body">
+                    <strong>Explicação:</strong><br>
+                    ${q.resolution}
+                </div>
+            `;
+            resolutionsContainer.appendChild(resDiv);
+        });
+
+        document.getElementById('quiz-form').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
+        document.getElementById('score-display').innerText = `${score} / ${questions.length}`;
+        
+        const msg = score >= 7 ? "Excelente desempenho! Você está pronto para a banca." : "Bom esforço. Revise as resoluções para fixar os conceitos.";
+        document.getElementById('score-message').innerText = msg;
+        
+        window.scrollTo(0, 0);
+    }
+
+    window.onload = loadQuiz;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo IFAM - Lógica e Tipos de Dados</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #111827;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fef08a;
+            font-weight: 600;
+            padding: 0 2px;
+        }
+
+        .highlight-blue {
+            background-color: #dbeafe;
+            color: #1e40af;
+            font-weight: 600;
+            padding: 0 4px;
+            border-radius: 4px;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f9fafb;
+            border-bottom: 2px solid #e5e7eb;
+            padding: 12px 16px;
+            text-align: left;
+            color: #374151;
+        }
+
+        td {
+            border-bottom: 1px solid #f3f4f6;
+            padding: 12px 16px;
+            vertical-align: top;
+        }
+
+        .section-card {
+            border: 1px solid #f3f4f6;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            background: #ffffff;
+        }
+
+        .alert-box {
+            border-left: 4px solid #ef4444;
+            background-color: #fef2f2;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .memo-badge {
+            display: inline-block;
+            background-color: #111827;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .audio-player-container {
+            position: sticky;
+            top: 1rem;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2rem;
+            background-color: #111827;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            background-color: #374151;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-900 bg-white pb-20">
+
+    <!-- Header & Audio Player -->
+    <header class="max-w-4xl mx-auto px-4 pt-8">
+        <div class="audio-player-container p-4 rounded-xl mb-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-xl font-bold">Resumo: Lógica e Tipos de Dados</h1>
+                    <p class="text-xs text-gray-500 italic">Professor de Informática - IFAM</p>
+                </div>
+                <div class="flex-1 max-w-md">
+                    <audio controls class="w-full h-10">
+                        <!-- ESPAÇO PARA O NOME DO ARQUIVO MP3 -->
+                        <source src="33tiposdados.mp3" type="audio/mpeg">
+                        Seu navegador não suporta áudio.
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4">
+        
+        <!-- INTRODUÇÃO -->
+        <section class="section-card">
+            <span class="memo-badge text-blue-400">Definição</span>
+            <h2 class="text-2xl font-bold mb-4">1. Tipos de Dados: A Base do Edital</h2>
+            <p>Os tipos de dados definem o conjunto de valores que uma variável pode assumir e as operações que podem ser realizadas sobre ela. Para a CEFETMINAS, o foco não é apenas o nome do tipo, mas sua <span class="highlight-yellow">representação interna</span> e <span class="highlight-yellow">comportamento em memória</span>.</p>
+        </section>
+
+        <!-- TIPOS PRIMITIVOS -->
+        <section class="section-card">
+            <span class="memo-badge">Técnico</span>
+            <h2 class="text-2xl font-bold mb-4">2. Tipos Primitivos e Representação Binária</h2>
+            <p class="mb-4">Diferente de concursos de nível médio, o IFAM exige conhecimento de <span class="italic text-gray-600">Representação de Dados</span>:</p>
+            
+            <div class="space-y-4">
+                <div class="p-4 border rounded-lg">
+                    <h3 class="font-bold text-lg">Inteiros (int)</h3>
+                    <ul class="list-disc ml-5 text-sm space-y-1">
+                        <li>Representados em <span class="highlight-yellow">Complemento de Dois</span> para permitir números negativos.</li>
+                        <li><strong>C/C++:</strong> Tamanho fixo (geralmente 32-bit). Exemplo: -2.147.483.648 a 2.147.483.647.</li>
+                        <li><strong>Python 3:</strong> <span class="highlight-blue">Precisão Arbitrária</span>. Aumenta conforme a necessidade até o limite da RAM.</li>
+                    </ul>
+                </div>
+
+                <div class="p-4 border rounded-lg">
+                    <h3 class="font-bold text-lg">Reais/Ponto Flutuante (float/double)</h3>
+                    <ul class="list-disc ml-5 text-sm space-y-1">
+                        <li>Padrão <span class="highlight-yellow">IEEE 754</span>.</li>
+                        <li>Dividido em: <strong>Sinal | Expoente | Mantissa</strong>.</li>
+                        <li><strong>Cuidado:</strong> Erros de arredondamento em binário (0.1 + 0.2 ≠ 0.3).</li>
+                    </ul>
+                </div>
+
+                <div class="p-4 border rounded-lg">
+                    <h3 class="font-bold text-lg">Booleano (bool)</h3>
+                    <ul class="list-disc ml-5 text-sm space-y-1">
+                        <li>Em C (legado): 0 é falso, <span class="highlight-yellow">qualquer outra coisa é verdadeiro</span>.</li>
+                        <li>Em Python: Subclasse de int (True == 1, False == 0).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SISTEMAS DE TIPAGEM -->
+        <section class="section-card">
+            <span class="memo-badge">Peguinha de Prova</span>
+            <h2 class="text-2xl font-bold mb-4">3. Sistemas de Tipagem (Comparativo)</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Conceito</th>
+                            <th>O que significa?</th>
+                            <th>Exemplo de Linguagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tipagem Estática</strong></td>
+                            <td>O tipo é verificado em <span class="highlight-blue">tempo de compilação</span>.</td>
+                            <td>C, C++, Java</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tipagem Dinâmica</strong></td>
+                            <td>O tipo é verificado em <span class="highlight-blue">tempo de execução</span> (Runtime).</td>
+                            <td>Python, JavaScript</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tipagem Forte</strong></td>
+                            <td>A linguagem <span class="highlight-yellow">não permite</span> misturar tipos sem conversão explícita.</td>
+                            <td>Python (ex: 1 + "2" gera erro)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tipagem Fraca</strong></td>
+                            <td>Realiza conversões implícitas (coerção).</td>
+                            <td>C (ex: somar char com int)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ESTRUTURAS COMPOSTAS -->
+        <section class="section-card">
+            <span class="memo-badge">Estrutura</span>
+            <h2 class="text-2xl font-bold mb-4">4. Tipos Compostos e Abstração</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <h3 class="font-bold border-b pb-1">Homogêneos (Arrays)</h3>
+                    <p class="text-sm">Elementos do <span class="highlight-yellow">mesmo tipo</span>. Acesso via índice $O(1)$.</p>
+                    <p class="text-xs text-gray-500">Em C, o nome do array é um ponteiro para o primeiro elemento.</p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="font-bold border-b pb-1">Heterogêneos (Structs)</h3>
+                    <p class="text-sm">Elementos de <span class="highlight-yellow">tipos diferentes</span> (Registros).</p>
+                    <p class="text-xs text-gray-500">Em Python, usamos Dicionários ou Classes para esse fim.</p>
+                </div>
+            </div>
+
+            <div class="alert-box">
+                <p class="text-sm font-bold">⚠️ ALERTA CEFETMINAS:</p>
+                <p class="text-sm">A banca adora cobrar <span class="font-bold">Imutabilidade</span>. Lembre-se: em Python, <strong>Strings e Tuplas são imutáveis</strong>. Listas e Dicionários são mutáveis.</p>
+            </div>
+        </section>
+
+        <!-- ALOCAÇÃO DE MEMÓRIA -->
+        <section class="section-card">
+            <span class="memo-badge">Avançado</span>
+            <h2 class="text-2xl font-bold mb-4">5. Alocação de Memória: Stack vs Heap</h2>
+            <p class="mb-4">Fundamental para questões sobre ciclo de vida de variáveis:</p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Pilha (Stack)</th>
+                            <th>Monte (Heap)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gerenciamento</strong></td>
+                            <td>Automático (Escopo)</td>
+                            <td>Manual (C) / GC (Python)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Velocidade</strong></td>
+                            <td>Muito rápida</td>
+                            <td>Lenta (Fragmentação)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Uso Típico</strong></td>
+                            <td>Variáveis locais e chamadas de função</td>
+                            <td>Alocação dinâmica (malloc/new)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- CHECK-LIST DE REVISÃO -->
+        <section class="section-card bg-gray-50">
+            <h2 class="text-xl font-bold mb-6 text-center">🎯 Check-list de Acerto (Véspera)</h2>
+            <ul class="space-y-4">
+                <li class="flex items-start gap-3">
+                    <span class="text-green-600 font-bold">✓</span>
+                    <span><strong>Precedência:</strong> Unários > Aritméticos > Relacionais > Lógicos (<span class="highlight-yellow">not > and > or</span>).</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-green-600 font-bold">✓</span>
+                    <span><strong>Escopo:</strong> Variáveis globais vs Locais (Cuidado com shadowing em Python).</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-green-600 font-bold">✓</span>
+                    <span><strong>Ponteiros (C):</strong> <code>*p</code> acessa o valor, <code>&v</code> acessa o endereço. Aritmética de ponteiros depende do tamanho do tipo.</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="text-green-600 font-bold">✓</span>
+                    <span><strong>Conversão:</strong> <em>Upcasting</em> (int para float) é implícito; <em>Downcasting</em> exige cast explícito para evitar perda de dados.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- BOTÃO FINAL -->
+        <div class="flex flex-col items-center mt-12 gap-4">
+            <a href="33questoes.html" class="btn-action shadow-xl">
+                Praticar com Questões →
+            </a>
+            <p class="text-gray-400 text-xs italic">Material focado no Concurso IFAM - Cargo: EBTT Informática</p>
+        </div>
+
+    </main>
+
+</body>
+</html>

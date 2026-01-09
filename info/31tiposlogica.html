@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo: Lógica de Programação - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fefcbf;
+            padding: 1px 3px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .section-box {
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid #2b6cb0;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+            background-color: #ffffff;
+        }
+
+        h1, h2, h3 {
+            color: #2d3748;
+            letter-spacing: -0.02em;
+        }
+
+        .audio-container {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            table-layout: fixed; /* Garante que a tabela não transborde */
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+            word-wrap: break-word; /* Quebra palavras longas se necessário */
+        }
+
+        th {
+            background-color: #edf2f7;
+            font-weight: 700;
+            color: #2c5282;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+
+        .btn-footer {
+            display: inline-block;
+            background-color: #2d3748;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-footer:hover {
+            background-color: #1a202c;
+            transform: translateY(-2px);
+        }
+
+        .tag-banca {
+            background-color: #ebf8ff;
+            color: #2b6cb0;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <header class="text-center mb-12">
+        <span class="tag-banca">Fundação CEFETMINAS</span>
+        <h1 class="text-4xl font-extrabold mt-2 mb-4">Lógica de Programação para o IFAM</h1>
+        <p class="text-xl text-gray-600">Aula Didática: Resolução de Problemas, Estruturas e Modularização</p>
+    </header>
+
+    <!-- Player de Áudio -->
+    <div class="audio-container">
+        <label class="block text-sm font-bold text-gray-700 mb-2">🎧 ESCUTAR RESUMO EM ÁUDIO:</label>
+        <audio controls class="w-full">
+            <source src="31tiposlogica.mp3" type="audio/mpeg">
+            Seu navegador não suporta áudio.
+        </audio>
+        <p class="text-xs text-gray-500 mt-2 italic">* Certifique-se de que o arquivo MP3 está na mesma pasta desta página.</p>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main>
+
+        <!-- Seção 1: Definições e Tipos de Lógica -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold mb-4">1. Definições e Tipos de Lógica</h2>
+            <p class="mb-4">Para a CEFETMINAS, a lógica de programação é a técnica de encadear pensamentos para atingir um objetivo. Ela se divide em três paradigmas históricos e funcionais:</p>
+            
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-blue-700">A. Lógica Linear:</strong> Fluxo contínuo sem desvios. É o modelo mais simples, onde as instruções são executadas em uma <span class="highlight">sequência única e rígida</span>. Ideal para problemas triviais, mas ineficiente para sistemas complexos.
+                </li>
+                <li>
+                    <strong class="text-blue-700">B. Lógica Estruturada:</strong> Baseada no Teorema de Böhm-Jacopini, afirma que qualquer algoritmo pode ser escrito usando apenas <span class="highlight">sequência, seleção e repetição</span>. Elimina o comando <code>GOTO</code>, promovendo legibilidade.
+                </li>
+                <li>
+                    <strong class="text-blue-700">C. Lógica Modular:</strong> Aplica a estratégia de <span class="highlight">Dividir para Conquistar</span>. O programa é decomposto em pequenos módulos (funções/procedimentos) que realizam tarefas específicas, facilitando o teste e a manutenção.
+                </li>
+            </ul>
+        </section>
+
+        <!-- Seção 2: Fundamentos para a Prova -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold mb-4">2. Fundamentos de Dados e Operadores</h2>
+            <p>Conceitos básicos que a banca adora cobrar em questões de "análise de código":</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Elemento</th>
+                        <th>Definição de Prova</th>
+                        <th>Observação Crucial</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Variável</strong></td>
+                        <td>Espaço na memória que pode alterar seu valor.</td>
+                        <td>Deve ter nome (identificador) e tipo.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Constante</strong></td>
+                        <td>Valor fixo durante toda a execução.</td>
+                        <td>Exemplo: <code>const float PI = 3.14;</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tipos Primitivos</strong></td>
+                        <td>Inteiro, Real, Caractere, Booleano.</td>
+                        <td>Em C, o booleano é 0 (falso) ou ≠ 0 (verdadeiro).</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="text-xl font-bold mt-6 mb-2">Operadores Lógicos e Aritméticos</h3>
+            <p class="mb-4">Atenção à <span class="highlight">Precedência de Operadores</span>:</p>
+            <ol class="list-decimal ml-6 space-y-2">
+                <li>Parênteses <code>()</code></li>
+                <li>Incremento/Decremento <code>++</code> <code>--</code></li>
+                <li>Multiplicação/Divisão/Módulo <code>*</code> <code>/</code> <code>%</code></li>
+                <li>Soma/Subtração <code>+</code> <code>-</code></li>
+                <li>Relacionais <code>></code> <code><</code> <code>==</code></li>
+                <li>Lógicos <code>&&</code> (E) depois <code>||</code> (OU)</li>
+            </ol>
+        </section>
+
+        <!-- Seção 3: Estruturas de Controle -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold mb-4">3. Estruturas de Controle de Fluxo</h2>
+            <p class="mb-4">O coração da lógica estruturada. A banca CEFETMINAS costuma colocar códigos para você prever o resultado.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 border rounded bg-gray-50">
+                    <h4 class="font-bold text-blue-800">Seleção</h4>
+                    <ul class="text-sm list-disc ml-4">
+                        <li><strong>Simples:</strong> <code>if</code></li>
+                        <li><strong>Composta:</strong> <code>if-else</code></li>
+                        <li><strong>Múltipla:</strong> <code>switch-case</code> (Exige o <span class="highlight">break</span>).</li>
+                    </ul>
+                </div>
+                <div class="p-4 border rounded bg-gray-50">
+                    <h4 class="font-bold text-blue-800">Repetição (Laços)</h4>
+                    <ul class="text-sm list-disc ml-4">
+                        <li><strong>Enquanto (while):</strong> Testa a condição <span class="highlight">antes</span> de executar.</li>
+                        <li><strong>Faça-Enquanto (do-while):</strong> Executa ao menos <span class="highlight">uma vez</span>.</li>
+                        <li><strong>Para (for):</strong> Ideal para iterações contáveis.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 4: Modularização e Escopo -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold mb-4">4. Modularização: Funções e Parâmetros</h2>
+            <p class="mb-4">Essencial para cargos de Professor: entender como o programa se comunica internamente.</p>
+            
+            <ul class="space-y-4">
+                <li>
+                    <strong>Escopo de Variáveis:</strong> 
+                    <span class="highlight">Locais</span> (existem apenas dentro da função) vs <span class="highlight">Globais</span> (acessíveis por todo o programa). Cuidado: variáveis globais são geralmente desaconselhadas mas caem em prova.
+                </li>
+                <li>
+                    <strong>Passagem por Valor:</strong> A função recebe uma cópia. Alterações lá dentro <span class="highlight">não afetam</span> a variável original.
+                </li>
+                <li>
+                    <strong>Passagem por Referência:</strong> A função recebe o endereço (ponteiro). Alterações <span class="highlight">afetam diretamente</span> a variável original.
+                </li>
+                <li>
+                    <strong>Recursividade:</strong> Quando uma função chama a si mesma. Elementos obrigatórios: <span class="highlight">Caso Base</span> (parada) e <span class="highlight">Chamada Recursiva</span>.
+                </li>
+            </ul>
+        </section>
+
+        <!-- Seção 5: Análise Estratégica CEFETMINAS -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold mb-4">5. Análise de Tendências CEFETMINAS (EBTT)</h2>
+            <p class="mb-4 text-red-700 font-bold italic">"Onde os candidatos costumam escorregar:"</p>
+            
+            <div class="space-y-4">
+                <div class="p-4 bg-yellow-50 border border-yellow-200 rounded">
+                    <strong>Peguinha 1: O Operador de Atribuição no IF</strong><br>
+                    A banca coloca <code>if (x = 5)</code> em vez de <code>if (x == 5)</code>. Em C, isso atribui 5 a x, e como 5 é diferente de zero, a condição será <span class="highlight">sempre verdadeira</span>.
+                </div>
+                <div class="p-4 bg-yellow-50 border border-yellow-200 rounded">
+                    <strong>Peguinha 2: Divisão de Inteiros</strong><br>
+                    Se o código faz <code>int a = 5/2;</code> o resultado é <span class="highlight">2</span> e não 2.5. A banca adora usar isso em cálculos de médias.
+                </div>
+                <div class="p-4 bg-yellow-50 border border-yellow-200 rounded">
+                    <strong>Peguinha 3: Curto-Circuito Lógico</strong><br>
+                    Em <code>(A && B)</code>, se A for falso, B <span class="highlight">não é avaliado</span>. Se B fosse uma função que incrementa uma variável, essa variável não mudaria!
+                </div>
+            </div>
+        </section>
+
+        <!-- Checklist de Encerramento -->
+        <section class="section-box border-green-500">
+            <h2 class="text-2xl font-bold mb-4 text-green-800">6. Checklist para o Dia da Prova</h2>
+            <ul class="space-y-2">
+                <li>✅ Verifique se os vetores começam em 0 (Linguagem C) ou 1 (Portugol/Algumas questões).</li>
+                <li>✅ Conte as iterações dos laços com calma (cuidado com o "menor" vs "menor ou igual").</li>
+                <li>✅ No <code>switch</code>, procure pelo <code>break</code>. Se não tiver, "escorrega" para o próximo case.</li>
+                <li>✅ Lembre-se: Variável estática (<code>static</code>) mantém o valor entre chamadas de função.</li>
+            </ul>
+        </section>
+
+        <!-- Botão de Questões -->
+        <div class="text-center mt-12 mb-20">
+            <p class="mb-4 text-gray-500 font-medium">Pronto para testar seus conhecimentos?</p>
+            <a href="31questoes.html" class="btn-footer">
+                VAMOS PARA AS QUESTÕES →
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-gray-400 text-sm pb-10">
+        &copy; 2024 - Guia de Estudos Especializado IFAM - Professor de Informática.
+    </footer>
+
+</body>
+</html>

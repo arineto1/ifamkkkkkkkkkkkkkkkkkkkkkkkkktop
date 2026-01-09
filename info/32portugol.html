@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo: Lógica e Pseudocódigo - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fef08a;
+            font-weight: 600;
+            padding: 1px 3px;
+            border-radius: 2px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Garante que a tabela não esmague o texto em mobile */
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            background-color: #f9fafb;
+            color: #374151;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.025em;
+        }
+
+        .exam-tip {
+            border-left: 5px solid #10b981;
+            background-color: #ecfdf5;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .section-title {
+            color: #111827;
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 0.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            font-weight: 800;
+        }
+
+        pre {
+            background-color: #f8fafc;
+            padding: 1.25rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-family: 'ui-monospace', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+            font-size: 0.9rem;
+            color: #334155;
+            overflow-x: auto;
+        }
+
+        .audio-player-card {
+            background: #ffffff;
+            border: 2px solid #f3f4f6;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+        }
+    </style>
+</head>
+<body class="p-5 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Reprodutor de Áudio -->
+    <div class="audio-player-card text-center">
+        <h3 class="text-sm font-bold uppercase tracking-widest text-gray-500 mb-3">Revisão em Áudio</h3>
+        <audio controls class="w-full max-w-md mx-auto">
+            <source src="32portugol.mp3" type="audio/mpeg">
+            Seu navegador não suporta áudio.
+        </audio>
+        <p class="text-xs text-gray-400 mt-2 italic">Arquivo sugerido: RESUMO_LOGICA_PORTUGOL_IFAM.mp3</p>
+    </div>
+
+    <header class="mb-12">
+        <h1 class="text-4xl font-black text-gray-900 leading-tight">Lógica de Programação: Português Estruturado e Pseudocódigo</h1>
+        <p class="text-xl text-gray-500 mt-2">Tutor Especialista: Foco em Professor de Informática IFAM (Banca CEFETMINAS)</p>
+    </header>
+
+    <!-- 1. DEFINIÇÃO E CARACTERÍSTICAS -->
+    <section>
+        <h2 class="text-2xl section-title">1. Definição e Características Essenciais</h2>
+        <p class="mb-4">
+            O <strong>Português Estruturado</strong> (também conhecido como Portugol ou Pseudocódigo) é uma forma simplificada de descrever algoritmos usando uma linguagem próxima ao idioma natural (Português), mas com a <span class="highlight-yellow">rigidez estrutural</span> das linguagens de programação.
+        </p>
+        <ul class="list-disc ml-6 space-y-2">
+            <li><strong>Independência de Hardware:</strong> O foco é a lógica, não a máquina.</li>
+            <li><strong>Ponte para Linguagens Reais:</strong> Facilita a transição para C, Java ou Python.</li>
+            <li><strong>Linguagem Não Compilável:</strong> Na prática, é usada para documentação e ensino, embora existam interpretadores como o <strong>VisualG</strong>.</li>
+            <li><strong>Finitude:</strong> Todo algoritmo em pseudocódigo deve ter um fim claro.</li>
+        </ul>
+    </section>
+
+    <!-- 2. ESTRUTURA BÁSICA -->
+    <section>
+        <h2 class="text-2xl section-title">2. Estrutura Padrão de um Algoritmo</h2>
+        <p class="mb-4">Um algoritmo bem estruturado na visão da CEFETMINAS segue esta ordem obrigatória:</p>
+        <pre>
+algoritmo "Nome_do_Algoritmo"
+// Seção de Declaração de Variáveis (Global)
+var
+   nome_variavel : tipo_de_dado
+inicio
+   // Seção de Comandos (Corpo do Algoritmo)
+   escreva("Olá Mundo")
+fimalgoritmo</pre>
+    </section>
+
+    <!-- 3. TIPOS DE DADOS E VARIÁVEIS -->
+    <section>
+        <h2 class="text-2xl section-title">3. Definições Básicas para a Prova</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Conceito</th>
+                        <th>Definição Técnica</th>
+                        <th>Observação para Prova</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Identificadores</strong></td>
+                        <td>Nomes de variáveis/funções.</td>
+                        <td><span class="highlight-yellow">Devem começar com letra</span>, não podem ter espaços ou caracteres especiais (exceto underline).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Inteiro</strong></td>
+                        <td>Valores numéricos inteiros.</td>
+                        <td>Ocupam menos memória que reais. Ex: <code>-10, 0, 42</code>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Real</strong></td>
+                        <td>Números com ponto flutuante.</td>
+                        <td>Representam frações. Ex: <code>1.75</code>. Atenção ao ponto (.).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cadeia / Caractere</strong></td>
+                        <td>Conjunto de caracteres (strings).</td>
+                        <td>Sempre delimitados por <span class="highlight-yellow">aspas duplas (" ")</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lógico</strong></td>
+                        <td>Valores Booleanos.</td>
+                        <td>Armazenam apenas <code>VERDADEIRO</code> ou <code>FALSO</code>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 4. OPERADORES E PRECEDÊNCIA -->
+    <section>
+        <h2 class="text-2xl section-title">4. Operadores: O "Coração" das Questões Objetivas</h2>
+        <div class="exam-tip">
+            <strong>⚠️ ALERTA DE PRECEDÊNCIA:</strong> Em expressões complexas, a ordem é: <br>
+            1. Parênteses <code>()</code> | 2. Aritméticos | 3. Relacionais | 4. Lógicos (<code>NAO</code> > <code>E</code> > <code>OU</code>).
+        </div>
+        
+        <h3 class="font-bold text-lg mb-2">Operadores Aritméticos Específicos:</h3>
+        <ul class="list-none space-y-2 mb-6">
+            <li><code>/</code> : Divisão Real (ex: 5 / 2 = 2.5)</li>
+            <li><code>div</code> ou <code>\</code> : <span class="highlight-yellow">Divisão Inteira</span> (ex: 5 div 2 = 2)</li>
+            <li><code>mod</code> ou <code>%</code> : <span class="highlight-yellow">Resto da Divisão</span> (ex: 5 mod 2 = 1)</li>
+        </ul>
+    </section>
+
+    <!-- 5. ESTRUTURAS DE CONTROLE -->
+    <section>
+        <h2 class="text-2xl section-title">5. Estruturas de Controle de Fluxo</h2>
+        
+        <div class="mb-6">
+            <h3 class="font-bold text-gray-800">5.1 Condicionais</h3>
+            <p><strong>SE-ENTÃO-SENÃO:</strong> Desvio condicional simples ou composto.</p>
+            <p><strong>ESCOLHA-CASO:</strong> Seleção múltipla. <span class="highlight-yellow">Importante:</span> Geralmente não aceita tipos reais ou lógicos na expressão de teste.</p>
+        </div>
+
+        <div class="mb-6">
+            <h3 class="font-bold text-gray-800">5.2 Repetição (Laços)</h3>
+            <ul class="space-y-4">
+                <li>
+                    <strong>ENQUANTO...FAÇA:</strong> Teste no início. Pode ser executado zero vezes.
+                </li>
+                <li class="p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                    <strong>REPITA...ATÉ:</strong> <span class="highlight-yellow">Teste no fim.</span> Executa ao menos uma vez. 
+                    <strong>Peguinha:</strong> A repetição continua enquanto a condição for Falsa e <span class="font-bold">PARA quando a condição for Verdadeira</span>.
+                </li>
+                <li>
+                    <strong>PARA...DE...ATÉ...FAÇA:</strong> Número de repetições definido. Usa uma variável de controle.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 6. ESTRUTURAS DE DADOS -->
+    <section>
+        <h2 class="text-2xl section-title">6. Estruturas de Dados Homogêneas</h2>
+        <p class="mb-2"><strong>Vetores (1D):</strong> Array unidimensional indexado. <span class="highlight-yellow">Atenção ao índice inicial (0 ou 1)</span> no enunciado.</p>
+        <p class="mb-4"><strong>Matrizes (2D):</strong> Array bidimensional (linhas e colunas). Ex: <code>M[linha, coluna]</code>.</p>
+    </section>
+
+    <!-- 7. MODULARIZAÇÃO -->
+    <section>
+        <h2 class="text-2xl section-title">7. Subprogramas: Procedimentos e Funções</h2>
+        <p class="mb-4">A CEFETMINAS cobra a diferença de escopo e retorno:</p>
+        <ul class="list-disc ml-6 space-y-2">
+            <li><strong>Função:</strong> Sempre <span class="highlight-yellow">retorna um valor</span> ao ponto de chamada.</li>
+            <li><strong>Procedimento:</strong> Apenas executa um bloco de código (sem retorno).</li>
+            <li><strong>Escopo Global:</strong> Variável acessível em todo o algoritmo.</li>
+            <li><strong>Escopo Local:</strong> Variável acessível apenas dentro do subprograma.</li>
+        </ul>
+    </section>
+
+    <!-- 8. TENDÊNCIAS CEFETMINAS -->
+    <section class="mt-12 p-8 bg-slate-50 border-2 border-slate-200 rounded-2xl">
+        <h2 class="text-2xl font-black text-slate-900 mb-6 uppercase tracking-tighter">🎯 Tendências e "Peguinhas" da CEFETMINAS</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                <h4 class="font-bold text-red-600 mb-2">O Peguinha do REPITA-ATÉ</h4>
+                <p class="text-sm">A maioria dos laços (While/For) roda enquanto a condição é Verdadeira. No <strong>REPITA-ATÉ</strong> do Portugol acadêmico, ele sai quando a condição é <strong>Verdadeira</strong>. Se a prova pedir o número de iterações, cuidado aqui!</p>
+            </div>
+            
+            <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                <h4 class="font-bold text-blue-600 mb-2">Divisão de Inteiros</h4>
+                <p class="text-sm">A banca pode colocar <code>X <- 5 / 2</code>. Se X for do tipo <strong>Inteiro</strong>, o algoritmo pode gerar erro de tipagem ou truncar o valor para 2. Leia atentamente a declaração de <code>var</code>.</p>
+            </div>
+
+            <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                <h4 class="font-bold text-green-600 mb-2">Precedência Lógica</h4>
+                <p class="text-sm">Muitos candidatos resolvem o <code>OU</code> antes do <code>E</code>. Lembre-se: O <strong>E (conjunção)</strong> tem prioridade sobre o <strong>OU (disjunção)</strong>.</p>
+            </div>
+
+            <div class="p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                <h4 class="font-bold text-purple-600 mb-2">Passagem de Parâmetros</h4>
+                <p class="text-sm">Se houver a palavra <strong>var</strong> na declaração do parâmetro do procedimento (ex: <code>proc(var x: int)</code>), a alteração de X lá dentro <span class="highlight-yellow">muda o valor original</span> na chamada (Referência).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Botão Final -->
+    <div class="mt-16 mb-20 text-center">
+        <a href="32questoes.html" class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white bg-gray-900 rounded-full hover:bg-gray-800 transition-all transform hover:scale-105 shadow-xl">
+            <span>Praticar com Questões</span>
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </a>
+        <p class="text-gray-400 text-xs mt-4 uppercase tracking-widest">Prepare-se para o IFAM com foco total na Fundação CEFETMINAS</p>
+    </div>
+
+</body>
+</html>
