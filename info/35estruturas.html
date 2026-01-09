@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo - Lógica de Programação (IFAM)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+        .highlight {
+            background-color: #fef3c7;
+            font-weight: 600;
+            padding: 1px 3px;
+            border-radius: 2px;
+            color: #92400e;
+        }
+        .important-block {
+            border-left: 4px solid #3b82f6;
+            background-color: #eff6ff;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 10px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8fafc;
+            color: #475569;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+        .container-main {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+        pre {
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border: 1px solid #e2e8f0;
+            color: #334155;
+            overflow-x: auto;
+        }
+        h2 {
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: #0f172a;
+            font-weight: 800;
+            font-size: 1.75rem;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            margin-top: 1.5rem;
+            color: #334155;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-main">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <span class="text-blue-600 font-bold tracking-widest uppercase text-sm">Concurso Professor EBTT - IFAM</span>
+            <h1 class="text-4xl font-extrabold text-slate-900 mt-2">Lógica de Programação: Estruturas de Controle</h1>
+            <p class="text-slate-500 mt-4 text-lg">Guia Definitivo de Revisão e Memorização (Banca CEFETMINAS)</p>
+            
+            <!-- Audio Player -->
+            <div class="mt-10 p-6 bg-slate-50 rounded-xl border border-slate-200 text-left">
+                <div class="flex items-center mb-4">
+                    <span class="bg-blue-100 text-blue-700 p-2 rounded-lg mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                        </svg>
+                    </span>
+                    <div>
+                        <h4 class="font-bold text-slate-800">Resumo em Áudio</h4>
+                        <p class="text-xs text-slate-500 uppercase tracking-tight">Ouça os pontos principais enquanto revisa</p>
+                    </div>
+                </div>
+                <audio controls class="w-full">
+                    <source src="35estruturas.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                </audio>
+                <p class="text-[10px] text-slate-400 mt-2 italic text-center">Substitua "aula_logica_ifam.mp3" pelo nome do seu arquivo.</p>
+            </div>
+        </header>
+
+        <!-- Seção 1: Definições e Fundamentos -->
+        <section>
+            <h2>1. Fundamentos e Definições Essenciais</h2>
+            <p>A CEFETMINAS costuma cobrar a base teórica de algoritmos. Lembre-se:</p>
+            <ul class="list-disc ml-6 space-y-2 mt-4">
+                <li><strong>Algoritmo:</strong> Caminho lógico finito e inequívoco para solução de um problema.</li>
+                <li><span class="highlight">Programação Estruturada:</span> Baseada no teorema de Bohm e Jacopini. Defende que qualquer lógica pode ser expressa por 3 estruturas: <strong>Sequencial, Decisão e Repetição</strong>.</li>
+                <li><strong>Tipos de Dados Básicos:</strong> 
+                    <span class="italic">Inteiro</span> (números sem fração), 
+                    <span class="italic">Real/Ponto Flutuante</span> (com decimais), 
+                    <span class="italic">Caractere</span> (letras/símbolos), 
+                    <span class="italic">Lógico/Booleano</span> (Verdadeiro ou Falso).
+                </li>
+            </ul>
+
+            <h3>Operadores Lógicos e Aritméticos</h3>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operação</th>
+                            <th>Símbolo (C/Java)</th>
+                            <th>Peguinha da Prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Módulo (Resto)</strong></td>
+                            <td>%</td>
+                            <td>Utilizado para checar paridade (x % 2 == 0 é par).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Igualdade</strong></td>
+                            <td>==</td>
+                            <td>A banca troca por "=" (atribuição) para te enganar.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Negação</strong></td>
+                            <td>! (NOT)</td>
+                            <td>Inverte o valor lógico. !Verdadeiro = Falso.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 2: Estruturas de Seleção -->
+        <section>
+            <h2>2. Estruturas de Seleção (Decisão)</h2>
+            <p>Controlam o fluxo baseando-se em uma condição booleana.</p>
+            
+            <h3 class="mt-6">Seleção Simples e Composta</h3>
+            <p>O bloco <strong>IF-ELSE</strong>. Se a condição for verdadeira, executa o primeiro bloco; caso contrário, o segundo (se existir).</p>
+            
+            <div class="important-block">
+                <strong>🚨 Ponto de Atenção: O "Else" Órfão</strong>
+                <p class="text-sm mt-2">Em linguagens como C e Java, o <span class="highlight">else sempre se associa ao IF mais próximo</span> que ainda não possui um else associado, independentemente da indentação (a menos que existam chaves).</p>
+            </div>
+
+            <h3>Seleção Múltipla (Switch/Case)</h3>
+            <ul class="list-disc ml-6 space-y-2">
+                <li>Ideal para testar <strong>uma única variável</strong> contra múltiplos valores constantes.</li>
+                <li><span class="highlight">O comando break:</span> É obrigatório para interromper a execução. Sem ele, ocorre o efeito <em>"fall-through"</em> (executa todos os cases abaixo).</li>
+                <li><strong>Default:</strong> O bloco executado se nenhuma opção for atendida.</li>
+            </ul>
+        </section>
+
+        <!-- Seção 3: Estruturas de Repetição -->
+        <section>
+            <h2>3. Estruturas de Repetição (Laços)</h2>
+            <p>Essenciais para automação de tarefas. A CEFETMINAS adora testar o <span class="highlight">Teste de Mesa</span> aqui.</p>
+
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Estrutura</th>
+                            <th>Tipo de Teste</th>
+                            <th>Característica Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>While (Enquanto)</strong></td>
+                            <td>Pré-teste</td>
+                            <td>A condição é validada <strong>antes</strong> da execução. Pode rodar 0 vezes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Do-While (Faça-Enquanto)</strong></td>
+                            <td>Pós-teste</td>
+                            <td>A condição é validada <strong>depois</strong>. Garante ao menos 1 execução.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>For (Para)</strong></td>
+                            <td>Controle Variável</td>
+                            <td>Ideal quando se sabe o número de repetições antecipadamente.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-red-600">O "Peguinha" do Ponto e Vírgula</h3>
+            <pre>while (x < 10); // Note o ";" aqui!
+{
+   x++;
+}</pre>
+            <p class="text-sm mt-2">Se houver um <strong>;</strong> logo após o parêntese do <code>while</code>, o corpo do loop é vazio. Se <code>x < 10</code> for verdadeiro, o programa entrará em <span class="highlight">Loop Infinito</span> ali mesmo.</p>
+        </section>
+
+        <!-- Seção 4: Curto-Circuito Lógico -->
+        <section>
+            <h2>4. Curto-Circuito Lógico</h2>
+            <p>Mecanismo de otimização dos compiladores que cai com frequência em cargos EBTT:</p>
+            <ul class="list-disc ml-6 space-y-4">
+                <li><strong>Operador AND (&&):</strong> Se a primeira expressão for <span class="highlight">FALSA</span>, a segunda <strong>não é avaliada</strong>, pois o resultado final será falso de qualquer forma.</li>
+                <li><strong>Operador OR (||):</strong> Se a primeira expressão for <span class="highlight">VERDADEIRA</span>, a segunda <strong>não é avaliada</strong>, pois o resultado já é garantido como verdadeiro.</li>
+            </ul>
+        </section>
+
+        <!-- Seção 5: Tendências CEFETMINAS -->
+        <section class="bg-slate-50 p-8 rounded-2xl border border-slate-200 mt-12">
+            <h2 class="mt-0 border-none">🎯 Radar CEFETMINAS: O que focar?</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-bold text-blue-800 mb-2">1. Teste de Mesa</h4>
+                    <p class="text-sm">A banca fornece um trecho de código (geralmente em C ou Java) e pede o valor final de uma variável. <strong>Cuidado com incrementos (i++ vs ++i).</strong></p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-bold text-blue-800 mb-2">2. Sintaxe Python</h4>
+                    <p class="text-sm">Fique atento à indentação. Em Python, não existem chaves; o que define o bloco é o <strong>espaçamento</strong>.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-bold text-blue-800 mb-2">3. Recursividade</h4>
+                    <p class="text-sm">Embora não seja "estrutura básica", costuma aparecer ligada a loops. Lembre-se que toda recursão precisa de um <strong>Caso Base</strong>.</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 class="font-bold text-blue-800 mb-2">4. Operador Ternário</h4>
+                    <p class="text-sm"><code>(condicao) ? valor_se_verdadeiro : valor_se_falso;</code>. Aparece muito para economizar espaço na questão.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer / CTA -->
+        <footer class="mt-20 text-center border-t pt-10 pb-20">
+            <p class="text-slate-500 mb-6">Fim do conteúdo teórico. Pronto para testar seus conhecimentos?</p>
+            <a href="35questoes.html" class="inline-flex items-center justify-center bg-slate-900 text-white font-bold py-4 px-12 rounded-full hover:bg-blue-600 transition-all shadow-xl hover:shadow-blue-200 group">
+                PRATICAR COM QUESTÕES
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+            <p class="mt-10 text-xs text-slate-400 uppercase tracking-widest">IFAM - Informática - 2024</p>
+        </footer>
+    </div>
+
+</body>
+</html>

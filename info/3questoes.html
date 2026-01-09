@@ -3,56 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado Técnico: Hardware e Drivers de Dispositivos</title>
+    <title>Simulado Técnico: Hardware e Drivers</title>
     <style>
         :root {
-            --bg-color: #fcfcfc;
-            --text-color: #2d3436;
-            --primary-color: #0984e3;
-            --secondary-color: #636e72;
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --primary-color: #34495e;
+            --accent-color: #2980b9;
             --correct-color: #27ae60;
-            --wrong-color: #d63031;
-            --border-color: #dfe6e9;
+            --incorrect-color: #c0392b;
             --card-bg: #ffffff;
-            --max-width: 850px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --border-color: #e0e0e0;
         }
 
         body {
-            font-family: 'Segoe UI', Georgia, serif;
             background-color: var(--bg-color);
             color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             line-height: 1.7;
-            padding: 40px 20px;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
-            max-width: var(--max-width);
-            margin: 0 auto 50px auto;
+            width: 100%;
+            max-width: 900px;
+            padding: 40px 20px;
             text-align: center;
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 20px;
+            margin-bottom: 40px;
         }
 
         header h1 {
-            font-size: 2.2rem;
+            font-size: 2rem;
+            color: var(--primary-color);
             margin-bottom: 10px;
-            color: #1a1a1a;
         }
 
         header p {
-            color: var(--secondary-color);
-            font-style: italic;
+            font-size: 1.1rem;
+            color: #666;
         }
 
         main {
-            max-width: var(--max-width);
-            margin: 0 auto;
+            width: 100%;
+            max-width: 850px;
+            padding: 0 20px 60px 20px;
+            box-sizing: border-box;
         }
 
         .question-card {
@@ -60,117 +60,131 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            margin-bottom: 40px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 15px;
         }
 
         .question-text {
             font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            display: block;
+            margin-bottom: 25px;
+            font-weight: 500;
         }
 
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        .options-list {
+            list-style: none;
+            padding: 0;
         }
 
-        .option-label {
+        .option-item {
+            margin-bottom: 12px;
             display: flex;
             align-items: flex-start;
             padding: 12px 15px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            cursor: pointer;
             transition: all 0.2s ease;
+            cursor: pointer;
         }
 
-        .option-label:hover {
-            background-color: #f1f2f6;
-            border-color: var(--primary-color);
+        .option-item:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
         }
 
-        .option-label input {
+        .option-item input {
             margin-right: 15px;
             margin-top: 6px;
+            transform: scale(1.2);
         }
 
-        .option-label.selected {
-            background-color: #e3f2fd;
-            border-color: var(--primary-color);
-        }
-
-        /* Results Styles */
-        .feedback-section {
-            display: none;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .result-status {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-
-        .status-correct { color: var(--correct-color); }
-        .status-wrong { color: var(--wrong-color); }
-
-        .explanation-box {
-            background-color: #f8f9fa;
-            border-left: 4px solid var(--primary-color);
-            padding: 15px;
-            font-size: 0.95rem;
-            color: #444;
-        }
-
-        .btn-submit {
-            display: block;
+        .option-item label {
+            cursor: pointer;
             width: 100%;
-            max-width: 300px;
-            margin: 40px auto;
-            padding: 15px 25px;
+        }
+
+        /* Classes para o feedback pós-correção */
+        .option-item.correct {
+            background-color: #d4edda !important;
+            border-color: var(--correct-color) !important;
+            color: #155724;
+        }
+
+        .option-item.incorrect {
+            background-color: #f8d7da !important;
+            border-color: var(--incorrect-color) !important;
+            color: #721c24;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #submit-btn {
             background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 6px;
+            padding: 15px 40px;
             font-size: 1.1rem;
-            font-weight: bold;
+            border-radius: 30px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: transform 0.2s, background-color 0.2s;
+            font-weight: bold;
         }
 
-        .btn-submit:hover {
-            background-color: #0771c1;
+        #submit-btn:hover {
+            background-color: #2c3e50;
+            transform: translateY(-2px);
         }
 
-        .score-banner {
+        #results-container {
             display: none;
-            text-align: center;
-            background: #2d3436;
-            color: white;
+            margin-top: 40px;
             padding: 30px;
+            background: #f1f4f8;
             border-radius: 8px;
-            margin-bottom: 40px;
-        }
-
-        .score-banner h2 {
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        footer {
             text-align: center;
-            margin-top: 60px;
-            color: var(--secondary-color);
-            font-size: 0.9rem;
+        }
+
+        #results-summary {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .resolution-box {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+            font-size: 0.95rem;
+            color: #444;
+            background-color: #fcfcfc;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .highlight-ans {
+            font-weight: bold;
+            color: var(--correct-color);
         }
 
         @media (max-width: 600px) {
-            body { padding: 20px 15px; }
+            header h1 { font-size: 1.5rem; }
             .question-card { padding: 20px; }
         }
     </style>
@@ -178,260 +192,249 @@
 <body>
 
 <header>
-    <h1>Simulado: Drivers de Dispositivos</h1>
-    <p>Perfil: Fundação CEFETMINAS | Cargo: Professor EBTT Informática</p>
+    <h1>Simulado: Hardware e Drivers de Dispositivo</h1>
+    <p>Estilo: Fundação CEFETMINAS | 10 Questões Técnicas</p>
 </header>
 
-<main id="quiz-container">
-    <div id="score-banner" class="score-banner">
-        <h2>Pontuação Final: <span id="final-score">0</span>/10</h2>
-        <p id="score-message"></p>
+<main id="quiz-form">
+    <div id="questions-container">
+        <!-- Questões serão geradas via JS -->
     </div>
 
-    <div id="questions-list">
-        <!-- Questions injected here -->
+    <div class="btn-container">
+        <button id="submit-btn" onclick="checkAnswers()">Finalizar Simulado</button>
     </div>
 
-    <button id="submit-quiz" class="btn-submit">Finalizar Simulado</button>
+    <div id="results-container">
+        <div id="results-summary"></div>
+        <p>Role para baixo para conferir a correção e resolução de cada questão.</p>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" style="background:none; border: 1px solid #333; padding: 5px 15px; border-radius: 15px; cursor:pointer;">Voltar ao topo</button>
+    </div>
 </main>
 
-<footer>
-    <p>© Simulado de Alto Nível - Preparação para Institutos Federais</p>
-</footer>
-
 <script>
-    const quizData = [
+    const questionsData = [
         {
             id: 1,
-            question: "QUESTÃO 01: Andrew S. Tanenbaum estabelece uma distinção fundamental na arquitetura de drivers baseada na granularidade de acesso. No Linux, essa distinção se manifesta na categorização entre dispositivos de bloco (block devices) e dispositivos de caractere (character devices). Analise as assertivas:\n\nI. A principal característica do dispositivo de bloco é suportar operações de busca (seek) aleatória.\nII. Interfaces de rede, embora transmitam sequencialmente, possuem categoria própria no Linux (não são estritamente dispositivos de caractere em /dev).\nIII. Drivers de bloco utilizam obrigatoriamente o cache de páginas do kernel, enquanto drivers de caractere interagem diretamente com o espaço de usuário ou buffers simples.",
+            text: "Em sistemas operacionais modernos baseados na arquitetura de anéis de proteção (Protection Rings) da plataforma x86, a estabilidade do sistema depende intrinsecamente do isolamento entre o código de aplicação e o código de controle de hardware. Considere um cenário em que um driver de vídeo mal escrito tenta acessar um endereço de memória inválido. Analise as afirmativas:\n\nI. A maioria dos drivers de dispositivos de alto desempenho opera no 'Anel 0' (Kernel Mode). Uma violação de acesso resulta em uma parada total do sistema (BSOD ou Kernel Panic).\nII. O 'Modo Usuário' (User Mode / Anel 3) oferece um ambiente isolado. Drivers executados aqui (UMDF) sofrem penalidades de desempenho devido à alternância de contexto.\nIII. Em arquiteturas de microkernel, a maioria dos drivers reside no kernel para velocidade, enquanto em monolíticas busca-se mover os drivers para o usuário para estabilidade.",
             options: [
-                "A) Apenas a assertiva I é tecnicamente verdadeira.",
-                "B) As assertivas I e II são verdadeiras.",
-                "C) As assertivas I e III são verdadeiras.",
-                "D) Apenas a assertiva III é verdadeira.",
-                "E) As assertivas I, II e III são verdadeiras."
+                "Apenas I.",
+                "Apenas I e II.",
+                "Apenas II e III.",
+                "Apenas I e III.",
+                "I, II e III."
             ],
-            correct: 4,
-            explanation: "<b>Justificativa:</b> Conforme Tanenbaum e a arquitetura do Kernel Linux, dispositivos de bloco são endereçáveis e permitem seek aleatório (I). Interfaces de rede são uma exceção tratada via subsistema de sockets e não possuem arquivos em /dev (II). O subsistema de bloco é otimizado pelo buffer/page cache, enquanto o de caractere costuma ser direto ou com filas simples (III)."
+            correct: 1, // B
+            resolution: "I está Correta: Drivers no Anel 0 têm acesso total e falhas derrubam o kernel. II está Correta: O modo usuário isola falhas mas gera custo de performance (Context Switching). III está Incorreta: É o inverso; microkernels buscam isolar drivers no usuário para estabilidade, enquanto monolíticos os mantêm no kernel para velocidade."
         },
         {
             id: 2,
-            question: "QUESTÃO 02: Considere um cenário onde um driver de disco causa 'congelamentos' momentâneos da CPU durante operações intensas. Com base na teoria de barramentos e DMA, qual explica tecnicamente o fenômeno?",
+            text: "Mecanismo que permite que um subsistema de hardware (como placa de som ou SATA) assuma o controle do barramento para realizar operações de leitura e escrita diretamente na memória RAM, sem intervenção ativa da CPU durante a transferência:",
             options: [
-                "A) O driver configurou o modo Cycle Stealing, forçando wait states a cada byte.",
-                "B) O dispositivo opera em modo Burst (Rajada), detendo o controle exclusivo do barramento e impedindo a CPU de acessar a RAM.",
-                "C) Ocorreu um conflito de interrupções causado pelo modo Transparent DMA.",
-                "D) O driver falhou em alocar buffers contíguos, saturando a arbitragem a cada página de 4KB.",
-                "E) O mecanismo de Bus Mastering foi desativado, revertendo para PIO."
+                "Interrupt Request (IRQ) Dedicado.",
+                "Direct Memory Access (DMA).",
+                "Polling de Alta Frequência.",
+                "Hyper-Transport Tunneling.",
+                "Memory-Mapped Input/Output (MMIO)."
             ],
-            correct: 1,
-            explanation: "<b>Justificativa:</b> No modo Burst, o controlador de DMA detém o barramento até completar a transferência. Se a CPU precisar buscar uma instrução na memória (cache miss) ou ler dados durante esse período, ela ficará travada (wait state) até que o DMA libere o barramento."
+            correct: 1, // B
+            resolution: "O DMA permite transferir dados entre periféricos e memória RAM de forma autônoma, notificando a CPU via IRQ apenas ao final do processo, liberando o processador para outras tarefas."
         },
         {
             id: 3,
-            question: "QUESTÃO 03: No desenvolvimento de drivers, o tratamento de interrupções é dividido em Top Half e Bottom Half. Qual alternativa descreve corretamente a distribuição de responsabilidades?",
+            text: "Sobre o processo de identificação e instalação de drivers em ambiente Windows, assinale a alternativa INCORRETA:",
             options: [
-                "A) O Top Half realiza a cópia e processa cabeçalhos TCP/IP; o Bottom Half notifica a aplicação.",
-                "B) O Top Half reconhece a interrupção (ACK) e agenda o Bottom Half; o Bottom Half processa os dados com interrupções habilitadas.",
-                "C) O Top Half pode dormir (sleep) e o Bottom Half é atômico.",
-                "D) A distinção é exclusiva para sistemas multiprocessados (SMP).",
-                "E) O uso de Workqueues é obrigatório para o Top Half."
+                "O driver de barramento detecta o novo dispositivo e obtém o Hardware ID.",
+                "O sistema utiliza o Hardware ID para localizar o arquivo .INF no Driver Store.",
+                "Se o driver específico não for encontrado, o Windows tenta carregar um Class Driver genérico.",
+                "O arquivo .INF é opcional em instalações modernas, pois o sistema pode baixar e compilar o código fonte do driver da nuvem.",
+                "O Gerenciador PnP pode rebalancear recursos do sistema para acomodar novos dispositivos."
             ],
-            correct: 1,
-            explanation: "<b>Justificativa:</b> O Top Half deve ser o mais rápido possível (ACK ao hardware) para evitar perda de novas interrupções. O processamento pesado (Bottom Half) é feito depois, permitindo que novas interrupções ocorram durante sua execução."
+            correct: 3, // D
+            resolution: "A alternativa D está INCORRETA porque o arquivo .INF nunca é opcional. Ele contém as instruções de instalação essenciais. O Windows não baixa 'código fonte' para compilar; ele baixa binários (.sys) pré-compilados e scripts de configuração (.inf)."
         },
         {
             id: 4,
-            question: "QUESTÃO 04: A arquitetura Windows NT implementa uma camada entre o kernel e o hardware para garantir portabilidade. Qual é essa camada?",
+            text: "Sobre o gerenciamento de drivers no Linux, avalie:\n\nI. Adota arquitetura de Kernel Monolítico Modular, permitindo carregar funcionalidades (.ko) sem reiniciar.\nII. O comando modprobe é superior ao insmod pois resolve automaticamente as dependências do módulo.\nIII. No diretório /dev, dispositivos de Bloco permitem acesso aleatório (ex: sda) e de Caractere operam como fluxos sequenciais (ex: tty).",
             options: [
-                "A) Camada de Compatibilidade de Driver (DCL).",
-                "B) Executive Services.",
-                "C) Microkernel.",
-                "D) Hardware Abstraction Layer (HAL).",
-                "E) I/O Manager."
+                "Todas as afirmativas são verdadeiras.",
+                "Apenas I e II são verdadeiras.",
+                "Apenas II e III são verdadeiras.",
+                "Apenas I e III são verdadeiras.",
+                "Apenas I é verdadeira."
             ],
-            correct: 3,
-            explanation: "<b>Justificativa:</b> A HAL (Hardware Abstraction Layer) isola o Kernel de detalhes específicos do chipset da placa-mãe, como controladores de interrupção e temporizadores, provendo uma API uniforme."
+            correct: 0, // A
+            resolution: "I. Correto: Linux é monolítico modular. II. Correto: modprobe consulta o arquivo de dependências. III. Correto: Dispositivos de bloco (armazenamento) vs caractere (seriais/terminais) é a distinção padrão Unix/Linux."
         },
         {
             id: 5,
-            question: "QUESTÃO 05: Considere um driver que mantém uma variável global para contar bytes. Se não for reentrante, qual a consequência mais provável em alta carga?",
+            text: "Preencha as lacunas: 'A assinatura de drivers utiliza criptografia ____ para garantir autenticidade. O desenvolvedor utiliza sua chave ____ para assinar. O sistema utiliza a chave ____ da Autoridade Certificadora para validar. No Windows x64 moderno, drivers não assinados resultam em ____.'",
             options: [
-                "A) Deadlock imediato por bloqueio de barramento.",
-                "B) Condição de Corrida (Race Condition); solução envolve Spinlocks ou Mutexes.",
-                "C) O sistema impedirá o carregamento do módulo.",
-                "D) A reentrância é garantida automaticamente pelo escalonador.",
-                "E) O problema afeta apenas drivers de bloco."
+                "simétrica / pública / privada / permissão com aviso.",
+                "assimétrica / privada / pública / bloqueio.",
+                "de bloco / privada / privada / isolamento em sandbox.",
+                "assimétrica / pública / privada / execução em modo de compatibilidade.",
+                "de hash / mestra / de sessão / bloqueio."
             ],
-            correct: 1,
-            explanation: "<b>Justificativa:</b> Variáveis globais acessadas por múltiplos fluxos de execução (ou interrupções) sem proteção sofrem de Race Conditions. Spinlocks são usados em contextos atômicos e Mutexes quando o driver pode dormir."
+            correct: 1, // B
+            resolution: "Assinatura digital usa criptografia assimétrica. Assina-se com a chave PRIVADA e valida-se com a PÚBLICA. No Windows x64, a imposição de assinatura de código de kernel (KMCS) bloqueia o carregamento se a assinatura falhar."
         },
         {
             id: 6,
-            question: "QUESTÃO 06: Qual a principal vantagem do Double Buffering em relação ao buffering simples?",
+            text: "Qual inovação do modelo WDDM (Windows Display Driver Model) aumentou drasticamente a estabilidade gráfica?",
             options: [
-                "A) Elimina a necessidade de interrupções de hardware.",
-                "B) Permite que a transferência para um buffer ocorra simultaneamente ao processamento do outro buffer pela CPU.",
-                "C) Reduz a latência inicial pela metade.",
-                "D) Serve primariamente como backup em caso de corrupção de dados.",
-                "E) Permite acesso direto à memória virtual do usuário sem cópias."
+                "Moveu a renderização para a CPU (Software Rasterization).",
+                "Introduziu o TDR (Timeout Detection and Recovery) para reiniciar o driver sem resetar o PC.",
+                "Exigiu que drivers fossem escritos em Java para evitar vazamentos de memória.",
+                "Permitiu acesso exclusivo e direto de cada app aos registradores da GPU.",
+                "Removeu o suporte a múltiplos monitores para simplificar a pilha."
             ],
-            correct: 1,
-            explanation: "<b>Justificativa:</b> O Double Buffering permite o paralelismo real: enquanto o hardware preenche um buffer, a CPU processa o outro que já foi preenchido anteriormente."
+            correct: 1, // B
+            resolution: "O TDR permite que o Windows detecte se a GPU parou de responder e reinicie apenas o subsistema gráfico, evitando a 'tela azul' causada por travamentos de drivers de vídeo."
         },
         {
             id: 7,
-            question: "QUESTÃO 07: Em qual camada do subsistema de E/S reside a função de 'Nomeação Independente de Dispositivo'?",
+            text: "Sobre o processo de carga de drivers USB e o uso de Drivers de Classe, é correto afirmar:",
             options: [
-                "A) Na camada de Hardware.",
-                "B) No próprio Driver de Dispositivo.",
-                "C) No Software de E/S Independente de Dispositivo.",
-                "D) Nas bibliotecas de Espaço de Usuário.",
-                "E) No Tratador de Interrupções."
+                "Sem driver específico VID/PID, o dispositivo é desativado eletricamente.",
+                "Drivers de Classe permitem que dispositivos padrão (HID, Mass Storage) funcionem sem software do fabricante.",
+                "O carregamento do driver ocorre no firmware do dispositivo periférico.",
+                "Drivers USB operam exclusivamente em Polling, consumindo 100% da CPU.",
+                "O VID/PID é enviado para o dispositivo USB para programar seu chip."
             ],
-            correct: 2,
-            explanation: "<b>Justificativa:</b> De acordo com a arquitetura de camadas de Tanenbaum, a nomeação uniforme e o mapeamento de nomes simbólicos para drivers específicos são tarefas do software independente de dispositivo."
+            correct: 1, // B
+            resolution: "O sistema operacional possui drivers genéricos para classes padronizadas pelo USB-IF. Isso permite que teclados, mouses e pendrives funcionem em 'Plug and Play' universal."
         },
         {
             id: 8,
-            question: "QUESTÃO 08: Na E/S Mapeada em Memória, qual o desafio crítico relacionado ao cache da CPU?",
+            text: "Sobre drivers de sistema de arquivos (FSD) e drivers de filtro de armazenamento:",
             options: [
-                "A) O cache pode armazenar valores antigos dos registradores; a solução é marcar as páginas como 'uncacheable'.",
-                "B) Consome ciclos do controlador de DMA.",
-                "C) Cria vulnerabilidades onde qualquer usuário pode escrever na memória de vídeo.",
-                "D) É incompatível com sistemas de memória virtual.",
-                "E) A memória RAM é volátil, registradores não."
+                "FSDs (como ntfs.sys) traduzem solicitações de arquivos em solicitações de blocos lógicos (LBA).",
+                "Drivers de antivírus devem ser posicionados na base da pilha, abaixo da controladora física.",
+                "O driver de disco (disk.sys) gerencia permissões ACL e estruturas de pastas.",
+                "Drivers de armazenamento não utilizam buffer ou cache na RAM por segurança.",
+                "Em RAID via software, o driver de sistema de arquivos desaparece."
             ],
-            correct: 0,
-            explanation: "<b>Justificativa:</b> Registradores de hardware mudam independentemente da CPU. Se a CPU ler do cache, verá o valor antigo. Desativar o cache para essas páginas garante que a CPU sempre acesse o hardware real."
+            correct: 0, // A
+            resolution: "O FSD atua como camada de abstração entre a lógica de arquivos (pastas/nomes) e a lógica de blocos (setores no disco) compreendida pelo hardware."
         },
         {
             id: 9,
-            question: "QUESTÃO 09: Qual syscall é projetada para operações de controle 'fora de banda' (como ejetar mídia ou definir volume)?",
+            text: "Tecnicamente, o que significa o Código 10 ('This device cannot start') no Gerenciador de Dispositivos?",
             options: [
-                "A) fcntl.",
-                "B) mmap.",
-                "C) ioctl (Input/Output Control).",
-                "D) sysfs.",
-                "E) socket."
+                "Dispositivo desabilitado administrativamente via GPO.",
+                "O driver foi carregado, mas a rotina de início (IRP_MN_START_DEVICE) falhou.",
+                "O hardware está fisicamente desconectado ou sem energia.",
+                "A data do sistema está incorreta, invalidando o certificado.",
+                "Conflito de IRQ exigindo troca para porta PS/2."
             ],
-            correct: 2,
-            explanation: "<b>Justificativa:</b> O 'ioctl' é o mecanismo universal no UNIX para enviar comandos que não se encaixam no fluxo tradicional de leitura e escrita de bytes."
+            correct: 1, // B
+            resolution: "O Código 10 ocorre quando o driver é carregado com sucesso, mas falha em se comunicar ou inicializar o hardware conforme solicitado pelo Gerenciador PnP."
         },
         {
             id: 10,
-            question: "QUESTÃO 10: Qual a implicação da abstração LBA (Logical Block Addressing) para os algoritmos de escalonamento de disco?",
+            text: "Ao acionar a função 'Reverter Driver' (Roll Back Driver) no Windows, qual ação o sistema executa?",
             options: [
-                "A) Não precisa mais de ordenação, pois o acesso é uniforme.",
-                "B) O SO assume que LBAs adjacentes são fisicamente próximos, mantendo a eficácia de algoritmos como SCAN.",
-                "C) Impede o uso de algoritmos no nível do SO.",
-                "D) O driver deve remapear manualmente para CHS antes de enviar.",
-                "E) É usada apenas em SSDs."
+                "Restaura o sistema operacional para o último Ponto de Restauração.",
+                "Desinstala o driver atual e reinstala a versão anterior mantida no Driver Store.",
+                "Baixa a versão mais recente do site do fabricante.",
+                "Força o dispositivo a operar em modo VGA Genérico.",
+                "Exclui o arquivo .SYS para forçar uma nova detecção do zero."
             ],
-            correct: 1,
-            explanation: "<b>Justificativa:</b> Mesmo sem saber a geometria física exata (Cilindro/Cabeça/Setor), o LBA mantém uma correlação espacial. O SO ordena as requisições para minimizar o movimento do braço mecânico baseando-se na proximidade dos números de bloco."
+            correct: 1, // B
+            resolution: "O Windows mantém cópias de versões anteriores de drivers no FileRepository (Driver Store). Reverter remove o atual e ativa o binário e configurações da versão imediatamente anterior."
         }
     ];
 
-    const listElement = document.getElementById('questions-list');
-    const submitBtn = document.getElementById('submit-quiz');
-    const scoreBanner = document.getElementById('score-banner');
-    const finalScoreTxt = document.getElementById('final-score');
-    const scoreMessageTxt = document.getElementById('score-message');
-
-    function renderQuiz() {
-        quizData.forEach((q, qIndex) => {
+    function renderQuestions() {
+        const container = document.getElementById('questions-container');
+        questionsData.forEach((q, index) => {
             const card = document.createElement('div');
             card.className = 'question-card';
-            card.id = `q-card-${qIndex}`;
+            card.id = `q-card-${index}`;
 
-            const qText = document.createElement('span');
-            qText.className = 'question-text';
-            qText.innerText = q.question;
-            card.appendChild(qText);
-
-            const optionsDiv = document.createElement('div');
-            optionsDiv.className = 'options-container';
-
-            q.options.forEach((opt, oIndex) => {
-                const label = document.createElement('label');
-                label.className = 'option-label';
-                label.innerHTML = `<input type="radio" name="question-${qIndex}" value="${oIndex}"> ${opt}`;
-                
-                label.addEventListener('click', () => {
-                    document.querySelectorAll(`[name="question-${qIndex}"]`).forEach(input => {
-                        input.parentElement.classList.remove('selected');
-                    });
-                    label.classList.add('selected');
-                });
-
-                optionsDiv.appendChild(label);
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                const letter = String.fromCharCode(65 + optIndex); // A, B, C...
+                optionsHtml += `
+                    <li class="option-item" id="q${index}-opt${optIndex}" onclick="selectOption(${index}, ${optIndex})">
+                        <input type="radio" name="question-${index}" value="${optIndex}" id="q${index}-input-${optIndex}">
+                        <label for="q${index}-input-${optIndex}"><strong>${letter})</strong> ${opt}</label>
+                    </li>
+                `;
             });
 
-            card.appendChild(optionsDiv);
-
-            // Hidden feedback section
-            const feedback = document.createElement('div');
-            feedback.className = 'feedback-section';
-            feedback.id = `feedback-${qIndex}`;
-            feedback.innerHTML = `
-                <div class="result-status" id="status-${qIndex}"></div>
-                <div class="explanation-box">${q.explanation}</div>
+            card.innerHTML = `
+                <span class="question-number">Questão ${index + 1}</span>
+                <div class="question-text">${q.text.replace(/\n/g, '<br>')}</div>
+                <ul class="options-list">
+                    ${optionsHtml}
+                </ul>
+                <div class="resolution-box" id="res-${index}">
+                    <h4>Resolução e Comentário:</h4>
+                    <p><span class="highlight-ans">Resposta Correta: ${String.fromCharCode(65 + q.correct)}</span></p>
+                    <p>${q.resolution}</p>
+                </div>
             `;
-            card.appendChild(feedback);
-
-            listElement.appendChild(card);
+            container.appendChild(card);
         });
     }
 
-    function evaluateQuiz() {
+    function selectOption(qIndex, optIndex) {
+        document.getElementById(`q${qIndex}-input-${optIndex}`).checked = true;
+    }
+
+    function checkAnswers() {
         let score = 0;
-        let unanswered = false;
+        let answeredCount = 0;
 
-        quizData.forEach((q, qIndex) => {
-            const selected = document.querySelector(`input[name="question-${qIndex}"]:checked`);
-            const feedback = document.getElementById(`feedback-${qIndex}`);
-            const status = document.getElementById(`status-${qIndex}`);
-            
-            if (!selected) {
-                unanswered = true;
-            }
+        questionsData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+            const resolutionBox = document.getElementById(`res-${index}`);
+            resolutionBox.style.display = 'block';
 
-            const isCorrect = selected && parseInt(selected.value) === q.correct;
-            
-            if (isCorrect) score++;
+            if (selected) {
+                answeredCount++;
+                const selectedVal = parseInt(selected.value);
+                
+                // Marcar a correta sempre
+                document.getElementById(`q${index}-opt${q.correct}`).classList.add('correct');
 
-            // Reveal feedback
-            feedback.style.display = 'block';
-            if (isCorrect) {
-                status.innerText = "✓ Resposta Correta";
-                status.className = "result-status status-correct";
+                if (selectedVal === q.correct) {
+                    score++;
+                } else {
+                    // Marcar a errada selecionada
+                    document.getElementById(`q${index}-opt${selectedVal}`).classList.add('incorrect');
+                }
             } else {
-                status.innerText = `✗ Resposta Incorreta (Gabarito: ${q.options[q.correct].substring(0,2)})`;
-                status.className = "result-status status-wrong";
+                // Se não respondeu, destaca a correta de qualquer forma
+                document.getElementById(`q${index}-opt${q.correct}`).classList.add('correct');
             }
-
-            // Disable all inputs
-            document.querySelectorAll(`input[name="question-${qIndex}"]`).forEach(input => {
-                input.disabled = true;
-            });
         });
 
-        // Show overall score
-        scoreBanner.style.display = 'block';
-        finalScoreTxt.innerText = score;
+        // Mostrar resumo
+        const resultsContainer = document.getElementById('results-container');
+        const summary = document.getElementById('results-summary');
+        resultsContainer.style.display = 'block';
+        summary.innerHTML = `Você acertou ${score} de ${questionsData.length} questões!`;
         
-        if (score >= 8) scoreMessageTxt.innerText = "Excelente desempenho! Nível de aprovação para concursos EBTT.";
-        else if (score >= 6) scoreMessageTxt.innerText = "Bom desempenho, mas revise os pontos onde houve dúvida.";
-        else scoreMessageTxt.innerText = "Continue estudando. A bibliografia de Tanenbaum e Stallings é essencial para esta banca.";
+        if(score === 10) summary.style.color = 'var(--correct-color)';
+        else if(score >= 7) summary.style.color = 'orange';
+        else summary.style.color = 'var(--incorrect-color)';
 
-        submitBtn.style.display = 'none';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Desativar botão e inputs para evitar reenvio
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').style.opacity = '0.5';
+        document.getElementById('submit-btn').innerText = 'Simulado Concluído';
+        const allInputs = document.querySelectorAll('input[type="radio"]');
+        allInputs.forEach(input => input.disabled = true);
+
+        // Scroll suave para o resultado
+        resultsContainer.scrollIntoView({ behavior: 'smooth' });
     }
 
-    submitBtn.addEventListener('click', evaluateQuiz);
-
-    window.onload = renderQuiz;
+    // Inicializar questões ao carregar
+    window.onload = renderQuestions;
 </script>
 
 </body>

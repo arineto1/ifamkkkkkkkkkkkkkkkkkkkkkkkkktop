@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo de Alta Performance - Lógica IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef3c7;
+            padding: 1px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #92400e;
+        }
+
+        .term-definition {
+            font-weight: 700;
+            color: #2b6cb0;
+        }
+
+        .cefet-trap {
+            border-left: 4px solid #e53e3e;
+            background-color: #fff5f5;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .theory-block {
+            border-left: 4px solid #3182ce;
+            background-color: #ebf8ff;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            table-layout: auto;
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #475569;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            background-color: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #c53030;
+        }
+
+        .audio-player {
+            background: #ffffff;
+            border: 2px solid #edf2f7;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background-color: #1a202c;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px 0 rgba(0,0,0,0.15);
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(0,0,0,0.2);
+            background-color: #000000;
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background-color: #3182ce;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Cabeçalho de Identificação -->
+    <header class="mb-12 border-b pb-8">
+        <div class="flex items-center space-x-2 text-blue-600 font-bold text-sm mb-2 uppercase tracking-widest">
+            <span>Concurso Professor IFAM</span>
+            <span>•</span>
+            <span>Banca FCM</span>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
+            Lógica de Programação: <br><span class="text-blue-600">Variáveis, Operadores e Expressões</span>
+        </h1>
+        <p class="text-xl text-gray-500 mt-4">Resumo Técnico e Estratégico para Prova Objetiva.</p>
+    </header>
+
+    <!-- Player de Áudio -->
+    <div class="audio-player">
+        <div class="flex items-center mb-4">
+            <div class="bg-blue-100 p-2 rounded-full mr-3">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-10-8a3 3 0 013-3h4a3 3 0 013 3m-10 0v1a3 3 0 003 3h4a3 3 0 003-3v-1m-10 1a3 3 0 003 3h4a3 3 0 003-3"></path></svg>
+            </div>
+            <h3 class="font-bold text-lg">Revisão em Áudio</h3>
+        </div>
+        <audio controls class="w-full">
+            <source src="34operadores.mp3" type="audio/mpeg">
+            Seu navegador não suporta o áudio.
+        </audio>
+        <p class="text-xs text-gray-400 mt-3 text-center italic">Arquivo: aula_logica_ifam.mp3 (Certifique-se que o arquivo está na mesma pasta)</p>
+    </div>
+
+    <!-- Introdução e Definição -->
+    <section class="mb-16">
+        <h2 class="section-title text-2xl font-bold text-slate-800">1. Definição e Características Essenciais</h2>
+        <p class="mb-4">A Lógica de Programação é a aplicação da <span class="highlight">Lógica Matemática</span> na construção de algoritmos. Para a FCM, entenda que um programa é uma sequência finita de instruções que manipulam dados através de expressões.</p>
+        
+        <div class="theory-block">
+            <p><span class="term-definition">Algoritmo:</span> Conjunto de passos não ambíguos e finitos. Para concursos de Informática, a atenção deve estar na <span class="highlight">Eficiência</span> (complexidade) e na <span class="highlight">Determinidade</span> (mesma entrada sempre gera mesma saída).</p>
+        </div>
+    </section>
+
+    <!-- Variáveis -->
+    <section class="mb-16">
+        <h2 class="section-title text-2xl font-bold text-slate-800">2. Variáveis: O Coração dos Dados</h2>
+        <p class="mb-4">Espaços nomeados na memória RAM. Características cobradas:</p>
+        
+        <ul class="list-disc ml-6 space-y-3 mb-6">
+            <li><span class="term-definition">Identificador:</span> Deve começar com letra ou underscore (<code>_</code>). Em Java/C, <span class="highlight">Case-Sensitive</span> (<code>Idade != idade</code>).</li>
+            <li><span class="term-definition">Tipagem Estática:</span> O tipo é definido na compilação (Java, C, C++).</li>
+            <li><span class="term-definition">Tipagem Dinâmica:</span> O tipo é definido em tempo de execução (Python, JS).</li>
+        </ul>
+
+        <div class="cefet-trap">
+            <h4 class="font-bold text-red-700 mb-1">Peguinha da Banca: L-Value vs R-Value</h4>
+            <p class="text-sm">A FCM costuma cobrar se uma expressão pode receber atribuição. <br>
+            - <span class="font-bold">L-Value:</span> Endereço fixo (variável). Ex: <code>x = 10;</code> (Correto).<br>
+            - <span class="font-bold">R-Value:</span> Valor temporário. Ex: <code>(x + 5) = 20;</code> (<span class="text-red-600 font-bold underline">ERRO!</span> Não se atribui a um resultado de soma).</p>
+        </div>
+
+        <h3 class="text-xl font-bold mt-8 mb-4">Ciclo de Vida e Escopo</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Escopo</th>
+                    <th>Visibilidade</th>
+                    <th>Tempo de Vida</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Local</strong></td>
+                    <td>Apenas dentro da função/bloco.</td>
+                    <td>Criada na chamada, destruída no retorno.</td>
+                </tr>
+                <tr>
+                    <td><strong>Global</strong></td>
+                    <td>Todo o programa/arquivo.</td>
+                    <td>Enquanto o programa rodar.</td>
+                </tr>
+                <tr>
+                    <td><strong>Estática (static)</strong></td>
+                    <td>Local à função.</td>
+                    <td><span class="highlight">Persiste entre chamadas</span> da função.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Operadores -->
+    <section class="mb-16">
+        <h2 class="section-title text-2xl font-bold text-slate-800">3. Operadores e a Tabela de Precedência</h2>
+        <p class="mb-6">O "divisor de águas" em provas de nível superior. A FCM exige precisão na ordem de execução.</p>
+
+        <h3 class="font-bold text-lg mb-2">Operadores Bitwise (Pouco estudados, muito cobrados)</h3>
+        <p class="text-sm mb-4">Esses operadores trabalham bit a bit. Frequentemente aparecem em questões de "Qual o resultado da execução?".</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="border p-3 rounded bg-gray-50"><code>&</code> (AND): 1 se ambos forem 1.</div>
+            <div class="border p-3 rounded bg-gray-50"><code>|</code> (OR): 1 se um for 1.</div>
+            <div class="border p-3 rounded bg-gray-50"><code>^</code> (XOR): 1 se forem diferentes.</div>
+            <div class="border p-3 rounded bg-gray-50"><code>~</code> (NOT): Inverte os bits.</div>
+            <div class="border p-3 rounded bg-gray-50"><code><<</code> (Left Shift): Multiplica por 2.</div>
+            <div class="border p-3 rounded bg-gray-50"><code>>></code> (Right Shift): Divide por 2.</div>
+        </div>
+
+        <h3 class="font-bold text-lg mb-2 text-blue-700">Tabela de Precedência Definitiva (Ordem de Execução)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Prioridade</th>
+                    <th>Operador</th>
+                    <th>Descrição</th>
+                    <th>Associação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1ª (Alta)</td>
+                    <td><code>() [] .</code></td>
+                    <td>Parênteses, colchetes e acesso.</td>
+                    <td>Esq &rarr; Dir</td>
+                </tr>
+                <tr>
+                    <td>2ª</td>
+                    <td><code>++ -- ! ~ (tipo)</code></td>
+                    <td>Unários, Negação e Cast.</td>
+                    <td><strong>Dir &rarr; Esq</strong></td>
+                </tr>
+                <tr>
+                    <td>3ª</td>
+                    <td><code>* / %</code></td>
+                    <td>Multiplicação, Divisão e Módulo.</td>
+                    <td>Esq &rarr; Dir</td>
+                </tr>
+                <tr>
+                    <td>4ª</td>
+                    <td><code>+ -</code></td>
+                    <td>Adição e Subtração.</td>
+                    <td>Esq &rarr; Dir</td>
+                </tr>
+                <tr>
+                    <td>5ª</td>
+                    <td><code><< >></code></td>
+                    <td>Deslocamento de Bits.</td>
+                    <td>Esq &rarr; Dir</td>
+                </tr>
+                <tr>
+                    <td>6ª</td>
+                    <td><code>< <= > >=</code></td>
+                    <td>Relacionais (Comparação).</td>
+                    <td>Esq &rarr; Dir</td>
+                </tr>
+                <tr>
+                    <td>7ª</td>
+                    <td><code>== !=</code></td>
+                    <td>Igualdade e Diferença.</td>
+                    <td>Esq &rarr; Dir</td>
+                </tr>
+                <tr>
+                    <td>8ª</td>
+                    <td><code>&&</code></td>
+                    <td>E Lógico (Curto-circuito).</td>
+                    <td>Esq &rarr; Dir</td>
+                </tr>
+                <tr>
+                    <td>9ª</td>
+                    <td><code>||</code></td>
+                    <td>OU Lógico (Curto-circuito).</td>
+                    <td>Esq &rarr; Dir</td>
+                </tr>
+                <tr>
+                    <td>10ª (Baixa)</td>
+                    <td><code>= += *= ...</code></td>
+                    <td>Atribuições.</td>
+                    <td><strong>Dir &rarr; Esq</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Expressões e Tendências -->
+    <section class="mb-16">
+        <h2 class="section-title text-2xl font-bold text-slate-800">4. Análise de Tendências e "Peguinhas" CEFETMINAS</h2>
+        
+        <div class="space-y-8">
+            <div>
+                <h3 class="font-bold text-lg text-slate-700 mb-2 underline">A. Curto-Circuito (Short-Circuit Evaluation)</h3>
+                <p>Em Java e C, se a primeira parte de um <code>&&</code> for <span class="highlight">FALSA</span>, a segunda parte <span class="font-bold">sequer é testada</span>. <br>
+                <strong>Exemplo de Prova:</strong> <code>if (a == 0 && (b/a > 1))</code>. Se <code>a</code> for 0, o programa <span class="highlight">NÃO dá erro de divisão por zero</span>, pois o segundo termo é ignorado.</p>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-lg text-slate-700 mb-2 underline">B. O Ponto e Vírgula Fantasma</h3>
+                <p>Observe atentamente o final das linhas de controle:</p>
+                <div class="bg-gray-100 p-4 rounded-lg">
+                    <code>for (int i=0; i < 10; i++)<span class="text-red-600 font-bold">;</span></code><br>
+                    <code>{ printf("%d", i); }</code>
+                </div>
+                <p class="mt-2 text-sm">O <code>;</code> finaliza o loop. O bloco abaixo será executado apenas <span class="font-bold">UMA VEZ</span> com o valor final de <code>i</code>.</p>
+            </div>
+
+            <div>
+                <h3 class="font-bold text-lg text-slate-700 mb-2 underline">C. Promoção de Tipos e Divisão</h3>
+                <p>Para a banca, <code>float x = 5 / 2;</code> resulta em <span class="highlight">2.0</span> e não 2.5. <br>
+                Isso ocorre porque a operação entre dois inteiros ocorre primeiro (resultado 2) e depois é promovida para float.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resumo Final Comparativo -->
+    <section class="mb-16">
+        <h2 class="section-title text-2xl font-bold text-slate-800">5. Diferenças Cruciais EBTT: C vs Java</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Recurso</th>
+                    <th>Linguagem C</th>
+                    <th>Linguagem Java</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>boolean</strong></td>
+                    <td>Não existe tipo nativo puro (usa-se <code>int</code>).</td>
+                    <td>Tipo <code>boolean</code> obrigatório em <code>if/while</code>.</td>
+                </tr>
+                <tr>
+                    <td><strong>Iniciação</strong></td>
+                    <td>Variáveis locais contêm <span class="highlight">lixo de memória</span>.</td>
+                    <td>Variáveis locais <span class="highlight">EXIGEM</span> inicialização.</td>
+                </tr>
+                <tr>
+                    <td><strong>Ponteiros</strong></td>
+                    <td>Acesso direto à memória (<code>&</code>, <code>*</code>).</td>
+                    <td>Referências ocultas (Manipulação indireta).</td>
+                </tr>
+                <tr>
+                    <td><strong>Switch</strong></td>
+                    <td>Aceita apenas integrais (<code>int</code>, <code>char</code>).</td>
+                    <td>Aceita <code>int</code>, <code>char</code>, <code>String</code> e <code>Enums</code>.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="mt-20 pt-10 border-t border-gray-200 text-center">
+        <p class="text-gray-500 mb-8">Fim do conteúdo de Lógica. Pronto para validar o conhecimento?</p>
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
+            <a href="34questoes.html" class="btn-action">
+                Ir para Banco de Questões FCM
+            </a>
+            <button onclick="window.print()" class="text-sm text-blue-600 font-semibold hover:underline">
+                Imprimir Resumo (PDF)
+            </button>
+        </div>
+        <p class="mt-12 text-xs text-gray-400">Desenvolvido para Preparação de Elite - Professor de Informática IFAM.</p>
+    </footer>
+
+</body>
+</html>

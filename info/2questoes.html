@@ -3,80 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado EBTT - Hardware: Memórias</title>
+    <title>Simulado de Hardware: Tipos de Memória - FCM</title>
     <style>
         :root {
             --bg-color: #fcfcfc;
             --text-color: #2d3436;
-            --accent-color: #0984e3;
+            --primary-color: #0984e3;
+            --success-color: #27ae60;
+            --error-color: #d63031;
+            --card-bg: #ffffff;
             --border-color: #dfe6e9;
-            --correct-color: #27ae60;
-            --incorrect-color: #c0392b;
-            --shadow: 0 4px 6px rgba(0,0,0,0.05);
-            --max-width: 850px;
+            --highlight-bg: #f1f2f6;
         }
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            line-height: 1.7;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        header {
-            width: 100%;
-            background-color: #fff;
-            border-bottom: 1px solid var(--border-color);
-            padding: 2rem 1rem;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            color: #1e272e;
-        }
-
-        header p {
-            margin: 0.5rem 0 0;
-            color: #636e72;
-            font-size: 1rem;
         }
 
         .container {
-            max-width: var(--max-width);
-            width: 90%;
-            margin-bottom: 5rem;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #1e272e;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #636e72;
         }
 
         .question-card {
-            background: #fff;
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
         }
 
         .question-header {
-            font-weight: bold;
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-            display: block;
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
         }
 
         .question-text {
-            font-size: 1.15rem;
-            margin-bottom: 1.5rem;
-            color: #2d3436;
+            margin-bottom: 20px;
+            white-space: pre-line;
         }
 
         .options-list {
@@ -85,402 +77,377 @@
         }
 
         .option-item {
-            margin-bottom: 0.8rem;
+            margin-bottom: 12px;
         }
 
-        .option-label {
+        label {
             display: flex;
             align-items: center;
-            padding: 1rem;
+            padding: 15px;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .option-label:hover {
-            background-color: #f1f2f6;
-            border-color: var(--accent-color);
+        label:hover {
+            background-color: var(--highlight-bg);
         }
 
-        .option-label input {
-            margin-right: 1rem;
+        input[type="radio"] {
+            margin-right: 15px;
             transform: scale(1.2);
         }
 
-        /* Classes para o resultado */
-        .option-label.correct {
-            background-color: #eafaf1;
-            border-color: var(--correct-color);
-            color: var(--correct-color);
-            font-weight: bold;
-        }
-
-        .option-label.incorrect {
-            background-color: #fdedec;
-            border-color: var(--incorrect-color);
-            color: var(--incorrect-color);
-        }
-
-        .submit-area {
-            text-align: center;
-            margin: 3rem 0;
-        }
-
-        #btn-submit {
-            background-color: var(--accent-color);
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 1rem 3rem;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
-        }
-
-        #btn-submit:hover {
-            background-color: #0873c4;
-            transform: translateY(-2px);
-        }
-
-        #results-panel {
-            display: none;
-            background: #fff;
-            border: 2px solid var(--accent-color);
             border-radius: 8px;
-            padding: 2rem;
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .score-box {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        .resolutions-section {
-            display: none;
-            margin-top: 3rem;
-            border-top: 2px solid var(--border-color);
-            padding-top: 2rem;
-        }
-
-        .resolution-item {
-            background: #fff;
-            border-left: 5px solid var(--accent-color);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border-radius: 4px;
-            box-shadow: var(--shadow);
-        }
-
-        .resolution-title {
-            font-weight: bold;
             font-size: 1.2rem;
-            margin-bottom: 1rem;
-            display: block;
-            color: #1e272e;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
+        .btn-submit:hover {
+            background-color: #0773c5;
         }
 
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 0.8rem;
-            text-align: left;
+        /* Results Styles */
+        #results-section {
+            display: none;
+            margin-top: 40px;
+            border-top: 3px solid var(--primary-color);
+            padding-top: 40px;
         }
 
-        th {
+        .score-banner {
+            text-align: center;
+            background: var(--highlight-bg);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .score-val {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .resolution-box {
+            margin-top: 20px;
+            padding: 20px;
             background-color: #f8f9fa;
+            border-left: 5px solid var(--primary-color);
+            font-size: 0.95rem;
+            display: none; /* Shown only after submission */
         }
 
-        pre {
-            background: #f1f2f6;
-            padding: 1rem;
+        .correct-answer {
+            background-color: #e8f8f0 !important;
+            border-color: var(--success-color) !important;
+        }
+
+        .wrong-answer {
+            background-color: #fff5f5 !important;
+            border-color: var(--error-color) !important;
+        }
+
+        .feedback-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            padding: 4px 8px;
             border-radius: 4px;
-            overflow-x: auto;
-            font-family: monospace;
-        }
-
-        code {
-            font-family: 'Courier New', Courier, monospace;
-            background: #f1f2f6;
-            padding: 0.2rem 0.4rem;
-            border-radius: 3px;
+            background: #eee;
+            margin-right: 5px;
         }
 
         @media (max-width: 600px) {
-            .container { width: 95%; }
-            .question-card { padding: 1.2rem; }
-            header h1 { font-size: 1.4rem; }
+            .container { padding: 20px 15px; }
+            h1 { font-size: 1.6rem; }
+            .question-card { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Simulado EBTT: Hardware e Memórias</h1>
-    <p>Foco: Estilo Fundação CEFETMINAS / FCM</p>
-</header>
-
 <div class="container">
-    <div id="quiz-form">
-        <!-- As questões serão inseridas via JS para manter o HTML limpo -->
-        <div id="questions-container"></div>
+    <header>
+        <h1>Simulado de Hardware</h1>
+        <p class="subtitle">Foco: Fundação CEFETMINAS (FCM) — Tipos de Memória</p>
+    </header>
 
-        <div class="submit-area">
-            <button id="btn-submit" onclick="gradeQuiz()">Finalizar e Ver Resoluções</button>
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- Questions will be injected here via JavaScript -->
         </div>
-    </div>
 
-    <div id="results-panel">
-        <div class="score-box" id="score-text"></div>
-        <p>Confira abaixo a resolução detalhada de cada item.</p>
-    </div>
+        <button type="button" class="btn-submit" onclick="gradeQuiz()">Finalizar e Ver Resultados</button>
+    </form>
 
-    <div id="resolutions" class="resolutions-section">
-        <h2 style="text-align: center; margin-bottom: 2rem;">Resolução Comentada</h2>
-        <div id="resolutions-container"></div>
-    </div>
+    <section id="results-section">
+        <div class="score-banner">
+            <h2>Resultado Final</h2>
+            <div class="score-val" id="score-display">0/10</div>
+            <p id="score-text">Você concluiu o simulado!</p>
+            <button class="btn-submit" style="width: auto; padding: 10px 30px; margin: 20px auto 0;" onclick="window.location.reload()">Refazer Simulado</button>
+        </div>
+
+        <div id="review-container">
+            <!-- Review items will be injected here -->
+        </div>
+    </section>
 </div>
 
 <script>
     const questions = [
         {
             id: 1,
-            text: "A hierarquia de memória é projetada para mitigar o gargalo de Von Neumann, explorando o comportamento de acesso a dados dos programas... analise as afirmativas abaixo sobre os princípios de localidade e o funcionamento da memória cache:<br><br>I. A Localidade Temporal refere-se à tendência de um programa referenciar novamente, em um curto espaço de tempo, os mesmos endereços de memória recentemente acessados...<br>II. A Localidade Espacial dita que, se um item de memória é referenciado, é altamente provável que itens com endereços fisicamente contíguos sejam referenciados em breve...<br>III. Em uma organização de cache totalmente associativa, um bloco da memória principal pode ser colocado em qualquer linha da cache... eliminando os conflitos de mapeamento...<br>IV. A política de escrita Write-Back atualiza a memória principal simultaneamente à atualização da cache...<br>V. O Tempo Médio de Acesso à Memória (AMAT) é calculado pela somatória do tempo de acesso da cache com o produto da taxa de falha pela penalidade de falha...",
-            options: {
-                A: "I, II e IV.",
-                B: "I, II, III e V.",
-                C: "II, III e IV.",
-                D: "I, III e V.",
-                E: "II, IV e V."
-            },
-            correct: "B",
-            resolution: "<b>Gabarito: B.</b> Os itens I, II, III e V estão corretos. O erro do item IV é a inversão das definições: Write-Back atualiza apenas a cache (usa dirty bit), enquanto Write-Through atualiza cache e RAM simultaneamente."
+            tag: "Navegação Windows / Hardware",
+            title: "(FCM - Simulado Baseado em IFB/2023)",
+            text: "Um técnico administrativo precisa verificar se o computador do setor possui os requisitos mínimos para instalar um novo software de edição gráfica. As especificações exigem saber a quantidade de memória RAM instalada e a frequência do processador. Utilizando o sistema operacional Microsoft Windows 10 em sua configuração padrão, a sequência de ações mais direta e correta para visualizar tais informações, através da interface gráfica, é:",
+            options: [
+                "Clicar no botão Iniciar > Configurações > Atualização e Segurança > Informações do Sistema.",
+                "Pressionar as teclas Windows + R, digitar \"cmd\" e pressionar Enter.",
+                "Clicar com o botão direito do mouse no botão Iniciar e selecionar a opção \"Sistema\".",
+                "Abrir o Explorador de Arquivos, clicar na aba \"Exibir\" e selecionar \"Painel de Visualização\".",
+                "Clicar no botão Iniciar, selecionar \"Acessórios do Windows\" e clicar em \"Informações do Hardware\"."
+            ],
+            answer: 2, // C
+            resolution: "No Windows 10 e 11, clicar com o botão direito no Menu Iniciar abre um menu de contexto avançado (menu \"WinX\"), onde a opção \"Sistema\" leva diretamente à janela \"Sobre\", que exibe o processador e a RAM instalada. As outras opções estão incorretas em seus caminhos ou ferramentas."
         },
         {
             id: 2,
-            text: "I. As memórias do tipo DRAM são universalmente adotadas para compor a memória principal devido à sua alta densidade e menor custo...<br><br>PORQUE<br><br>II. A célula de memória DRAM armazena a informação na forma de carga elétrica em um capacitor microscópico que perde a carga em milissegundos, exigindo operações de refresh.",
-            options: {
-                A: "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
-                B: "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
-                C: "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
-                D: "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
-                E: "As asserções I e II são falsas."
-            },
-            correct: "A",
-            resolution: "<b>Gabarito: A.</b> A estrutura física simples da DRAM (1 capacitor) permite o baixo custo e alta densidade (Asserção I), e essa mesma estrutura capacitiva gera a necessidade de refresh (Asserção II)."
+            tag: "Hierarquia de Memória",
+            title: "(FCM - Simulado Baseado em IFAM/2022)",
+            text: "A arquitetura de memória de um computador moderno é organizada em uma hierarquia que busca equilibrar custo, capacidade e desempenho. Analise as assertivas abaixo sobre os componentes dessa hierarquia:\n\nI. A memória Cache é constituída tipicamente por tecnologia SRAM (Static RAM), sendo mais rápida que a memória principal, porém de custo por bit mais elevado.\nII. A memória RAM (Random Access Memory) é classificada como memória não volátil, mantendo seus dados armazenados mesmo após o desligamento do computador, o que permite a hibernação do sistema.\nIII. Os Registradores estão localizados no topo da pirâmide hierárquica, possuindo o menor tempo de acesso possível, pois encontram-se integrados diretamente à Unidade Central de Processamento (CPU).\n\nEstá(ão) CORRETA(S) apenas a(s) assertiva(s):",
+            options: [
+                "I.",
+                "II.",
+                "I e III.",
+                "II e III.",
+                "I, II e III."
+            ],
+            answer: 2, // C
+            resolution: "Item I está correto (Cache = SRAM). Item II está incorreto pois a RAM é VOLÁTIL (perde dados sem energia). Item III está correto (Registradores no topo da CPU)."
         },
         {
             id: 3,
-            text: "Sistema de 32 bits, página de 4 KB (2^12 bytes). Endereço Virtual gerado: 0x000030A4. Tabela de Página aponta que VPN 0x00003 mapeia para PFN 0x000CC (Validade=1). Qual o endereço físico?",
-            options: {
-                A: "Ocorre uma Falta de Página (Page Fault).",
-                B: "O endereço físico calculado é 0x00CC0A4.",
-                C: "O endereço físico calculado é 0x000CC3A4.",
-                D: "O endereço físico resultante é 0x00CC00A4.",
-                E: "Ocorre uma violação de acesso (Segmentation Fault)."
-            },
-            correct: "B",
-            resolution: "<b>Gabarito: B.</b> O endereço virtual 0x000030A4 tem VPN 0x00003 e Offset 0x0A4. Substituindo o VPN pelo PFN (0x000CC) e concatenando com o offset, temos 0x00CC0A4."
+            tag: "Armazenamento",
+            title: "(FCM - Simulado Baseado em Câmara de Viçosa)",
+            text: "No contexto de dispositivos de armazenamento secundário (memória de massa), a substituição de Discos Rígidos (HDDs) por Unidades de Estado Sólido (SSDs) tem se tornado padrão para aumento de desempenho. Sobre as tecnologias de comunicação utilizadas por esses dispositivos, é correto afirmar que o protocolo NVMe (Non-Volatile Memory express) foi desenvolvido para superar as limitações da interface SATA, utilizando diretamente o barramento:",
+            options: [
+                "USB 3.0.",
+                "PCI Express (PCIe).",
+                "AGP.",
+                "Ethernet.",
+                "ISA."
+            ],
+            answer: 1, // B
+            resolution: "O padrão NVMe foi criado especificamente para memórias Flash, utilizando as linhas (lanes) do barramento PCI Express (PCIe) para comunicação direta com a CPU, superando o limite de 600MB/s do padrão SATA."
         },
         {
             id: 4,
-            text: "Associe as memórias: ( ) Células em série, alta densidade, usada em SSDs. ( ) Acesso aleatório, execução direta (XIP), usada para Firmwares. ( ) Apagamento elétrico por byte, alto custo. ( ) Requer luz UV para apagamento.",
-            options: {
-                A: "4, 3, 2, 1.",
-                B: "3, 4, 2, 1.",
-                C: "4, 1, 2, 3.",
-                D: "1, 2, 4, 3.",
-                E: "3, 2, 1, 4."
-            },
-            correct: "A",
-            resolution: "<b>Gabarito: A.</b> 4 (Flash NAND), 3 (Flash NOR), 2 (EEPROM), 1 (EPROM)."
+            tag: "Memória ROM / Firmware",
+            title: "(FCM - Simulado / Memória ROM e Firmware)",
+            text: "Um computador, ao ser ligado, executa automaticamente um software básico armazenado em um chip de memória na placa-mãe. Esse software realiza o teste inicial de hardware (POST) e inicia o carregamento do Sistema Operacional. Historicamente chamado de BIOS, e em sistemas modernos de UEFI, esse programa reside em uma memória do tipo:",
+            options: [
+                "RAM Volátil.",
+                "Cache L2.",
+                "ROM (ou Flash-ROM) Não Volátil.",
+                "Memória Virtual (Swap).",
+                "Registrador de Deslocamento."
+            ],
+            answer: 2, // C
+            resolution: "O BIOS/UEFI deve persistir sem energia para permitir o boot. Logo, deve ser Não Volátil. A memória apropriada é a ROM ou Flash-ROM (tipo de EEPROM)."
         },
         {
             id: 5,
-            text: "Sobre SSDs: I. TRIM notifica páginas inválidas. II. Amplificação de Escrita (WA) ocorre pela movimentação de dados em blocos. III. Over-provisioning reserva espaço para manutenção. IV. QLC oferece maior durabilidade que SLC.",
-            options: {
-                A: "I e II, apenas.",
-                B: "II e IV, apenas.",
-                C: "I, II e III, apenas.",
-                D: "III e IV, apenas.",
-                E: "I, II, III e IV."
-            },
-            correct: "C",
-            resolution: "<b>Gabarito: C.</b> QLC armazena 4 bits por célula e é a tecnologia MENOS durável. SLC (1 bit) é a mais durável. Os itens I, II e III descrevem corretamente o funcionamento do SSD."
+            tag: "Memória Virtual",
+            title: "(FCM - Simulado / Memória Virtual)",
+            text: "Em sistemas operacionais como Windows e Linux, quando a quantidade de memória RAM física disponível se esgota devido à execução de múltiplos programas pesados, o sistema utiliza uma técnica para simular mais memória, movendo dados temporariamente para o disco rígido (HD ou SSD). Essa técnica e o arquivo/partição associado no Windows são, respectivamente:",
+            options: [
+                "Memória Cache e hiberfil.sys.",
+                "Memória Virtual e pagefile.sys.",
+                "Memória Estendida e swap.sys.",
+                "Memória Expandida e config.sys.",
+                "Memória Bufferizada e temp.tmp."
+            ],
+            answer: 1, // B
+            resolution: "A técnica é chamada Memória Virtual. No Windows, o arquivo padrão oculto na raiz é o pagefile.sys. O hiberfil.sys é para hibernação e swap é o termo comum no Linux."
         },
         {
             id: 6,
-            text: "DDR5 introduziu mudanças significativas na arquitetura do módulo DIMM. Um módulo DDR5 padrão implementa:",
-            options: {
-                A: "Um barramento único de 128 bits.",
-                B: "Dois sub-canais independentes de 32 bits.",
-                C: "Quatro canais de 16 bits.",
-                D: "A manutenção do barramento de 64 bits com sinalização diferencial total.",
-                E: "Integração do IMC no PCB do módulo."
-            },
-            correct: "B",
-            resolution: "<b>Gabarito: B.</b> A DDR5 divide o barramento de 64 bits em dois canais independentes de 32 bits para melhorar a eficiência de concorrência de acesso."
+            tag: "Tecnologias de Memória",
+            title: "(FCM - Simulado / Tipos de Memória)",
+            text: "Associe a Coluna 1 (Tipo de Memória) com a Coluna 2 (Característica Principal):\n\nColuna 1: 1. DRAM | 2. SRAM | 3. EPROM | 4. Flash\nColuna 2:\n( ) Tecnologia base da memória Cache, não requer refresh.\n( ) Tecnologia base da memória RAM principal, requer refresh constante.\n( ) Tipo de ROM que pode ser apagada eletricamente e é usada em SSDs e Pen Drives.\n( ) Tipo de ROM antiga que necessitava de luz ultravioleta para ser apagada.\n\nA sequência correta, de cima para baixo, é:",
+            options: [
+                "2, 1, 4, 3.",
+                "1, 2, 3, 4.",
+                "2, 1, 3, 4.",
+                "4, 1, 2, 3.",
+                "1, 4, 2, 3."
+            ],
+            answer: 0, // A
+            resolution: "SRAM (2) é a cache. DRAM (1) requer refresh. Flash (4) é EEPROM usada em SSDs. EPROM (3) usava luz UV para apagar."
         },
         {
             id: 7,
-            text: "No protocolo MESI de coerência de cache, o estado Modified (M) significa:",
-            options: {
-                A: "Linha presente apenas nesta cache e igual à RAM.",
-                B: "Linha presente em múltiplas caches e igual à RAM.",
-                C: "Linha presente apenas nesta cache, modificada (suja) em relação à RAM.",
-                D: "Linha inválida.",
-                E: "Linha carregada especulativamente."
-            },
-            correct: "C",
-            resolution: "<b>Gabarito: C.</b> Modified (M) indica que o dado é exclusivo daquela cache e foi alterado, estando diferente da memória principal."
+            tag: "Redes / Cache",
+            title: "(FCM - Simulado / Redes e Cache)",
+            text: "Em um ambiente corporativo com centenas de computadores acessando a Internet, o administrador de rede deseja reduzir o consumo de banda larga e acelerar o acesso a websites institucionais frequentemente visitados. Para isso, ele configura um servidor que armazena localmente cópias das páginas web solicitadas. Quando um segundo usuário solicita a mesma página, o servidor entrega a cópia local em vez de baixá-la novamente da Internet. Esse serviço é denominado:",
+            options: [
+                "Servidor DNS.",
+                "Servidor DHCP.",
+                "Servidor Proxy com Cache (Web Cache).",
+                "Servidor FTP.",
+                "Firewall de Borda."
+            ],
+            answer: 2, // C
+            resolution: "O servidor Proxy atua como intermediário e o Web Cache guarda as cópias das requisições para economizar tráfego e acelerar a entrega."
         },
         {
             id: 8,
-            text: "Processador Big-Endian armazena 0xAABBCCDD no endereço 0x1000. Qual o conteúdo no endereço 0x1002?",
-            options: {
-                A: "0xAA",
-                B: "0xBB",
-                C: "0xCC",
-                D: "0xDD",
-                E: "0x00"
-            },
-            correct: "C",
-            resolution: "<b>Gabarito: C.</b> Em Big-Endian, o MSB (AA) vai no endereço base. 1000=AA, 1001=BB, 1002=CC, 1003=DD."
+            tag: "Conversão de Unidades",
+            title: "(FCM - Simulado / Hardware - Unidades)",
+            text: "Considere um computador que possui 16 GB de memória RAM instalada. Um técnico deseja saber a capacidade equivalente em Megabytes (MB) e em bits, considerando a definição binária padrão onde 1 GB = 1024 MB. Assinale a alternativa que apresenta os valores corretos de conversão exata para MB:",
+            options: [
+                "16.000 MB.",
+                "1.600 MB.",
+                "16.384 MB.",
+                "8.192 MB.",
+                "32.000 MB."
+            ],
+            answer: 2, // C
+            resolution: "Em sistemas binários de TI, 1 GB = 1024 MB. Portanto, 16 * 1024 = 16.384 MB."
         },
         {
             id: 9,
-            text: "Sobre Memória ECC (SEC-DED):",
-            options: {
-                A: "Requer bits de paridade que dobram a largura do barramento.",
-                B: "Detecta e corrige erro de bit único automaticamente sem interromper o processo.",
-                C: "Corrige erros de até 4 bits adjacentes.",
-                D: "Implementada exclusivamente via Software no S.O.",
-                E: "Equivalente à paridade simples."
-            },
-            correct: "B",
-            resolution: "<b>Gabarito: B.</b> O SEC-DED (Single Error Correction, Double Error Detection) corrige automaticamente 1 bit e detecta 2 bits. Requer suporte em hardware."
+            tag: "Arquitetura Interna",
+            title: "(FCM - Simulado / Arquitetura Interna)",
+            text: "Para que a CPU possa processar dados, estes devem percorrer um caminho físico na placa-mãe chamado de barramento (bus). O subconjunto do barramento responsável por indicar onde (em qual endereço de memória) a leitura ou escrita deve ocorrer é chamado de:",
+            options: [
+                "Barramento de Dados (Data Bus).",
+                "Barramento de Endereços (Address Bus).",
+                "Barramento de Controle (Control Bus).",
+                "Barramento USB.",
+                "Barramento SATA."
+            ],
+            answer: 1, // B
+            resolution: "O Barramento de Endereços determina 'onde' a informação está na memória. O de Dados leva o 'o quê' (valor) e o de Controle diz 'o que fazer' (ler/gravar)."
         },
         {
             id: 10,
-            text: "RAID 6 com 6 discos de 4 TB. Qual a capacidade útil e tolerância?",
-            options: {
-                A: "24 TB, sem paridade.",
-                B: "16 TB, suporta falha de até 2 discos.",
-                C: "12 TB, suporta falha de até 3 discos.",
-                D: "Performance de escrita superior ao RAID 10.",
-                E: "Perda total se o segundo disco falhar antes do rebuild."
-            },
-            correct: "B",
-            resolution: "<b>Gabarito: B.</b> RAID 6 usa dupla paridade (n-2). Logo (6-2)*4 = 16 TB úteis, suportando a quebra de até 2 discos."
+            tag: "Diagnóstico / Manutenção",
+            title: "(FCM - Simulado / Manutenção de Hardware)",
+            text: "Um usuário relata que seu computador está \"lento\" e que a luz de atividade do disco rígido (LED do HD) fica acesa ininterruptamente, mesmo quando ele não está salvando arquivos. O técnico suspeita que a memória RAM é insuficiente para as tarefas abertas, causando uso excessivo de paginação (thrashing). A solução de hardware mais eficaz e definitiva para resolver este gargalo específico é:",
+            options: [
+                "Aumentar o tamanho do arquivo de paginação no disco.",
+                "Substituir o processador por um com clock mais alto.",
+                "Adicionar mais módulos de memória RAM física.",
+                "Desfragmentar o disco rígido.",
+                "Limpar o cache do navegador de internet."
+            ],
+            answer: 2, // C
+            resolution: "O sintoma de 'thrashing' (LED do disco piscando por paginação) indica falta de RAM. Aumentar o arquivo de paginação (A) não resolve a lentidão física do disco; a solução real é adicionar RAM física para reduzir a dependência do disco."
         }
     ];
 
-    function initQuiz() {
-        const container = document.getElementById('questions-container');
-        const resContainer = document.getElementById('resolutions-container');
+    const container = document.getElementById('questions-container');
 
-        questions.forEach((q, index) => {
-            // Renderizar Questão
-            const qDiv = document.createElement('div');
-            qDiv.className = 'question-card';
-            qDiv.id = `q-card-${q.id}`;
-            
-            let optionsHtml = '';
-            for (let opt in q.options) {
-                optionsHtml += `
-                    <div class="option-item">
-                        <label class="option-label" for="q${q.id}${opt}" id="label-q${q.id}${opt}">
-                            <input type="radio" name="question${q.id}" value="${opt}" id="q${q.id}${opt}">
-                            ${opt}) ${q.options[opt]}
-                        </label>
-                    </div>
-                `;
-            }
-
-            qDiv.innerHTML = `
-                <span class="question-header">Questão ${index + 1}</span>
-                <div class="question-text">${q.text}</div>
-                <div class="options-list">${optionsHtml}</div>
+    // Load Questions
+    questions.forEach((q, index) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `q-card-${index}`;
+        
+        let optionsHtml = '';
+        q.options.forEach((opt, optIndex) => {
+            const letter = String.fromCharCode(65 + optIndex);
+            optionsHtml += `
+                <li class="option-item">
+                    <label for="q${index}-o${optIndex}" id="label-q${index}-o${optIndex}">
+                        <input type="radio" name="question${index}" value="${optIndex}" id="q${index}-o${optIndex}">
+                        <span><strong>${letter})</strong> ${opt}</span>
+                    </label>
+                </li>
             `;
-            container.appendChild(qDiv);
-
-            // Renderizar Resolução (inicialmente oculta)
-            const rDiv = document.createElement('div');
-            rDiv.className = 'resolution-item';
-            rDiv.innerHTML = `
-                <span class="resolution-title">Questão ${index + 1}: Análise</span>
-                <p>${q.resolution}</p>
-            `;
-            resContainer.appendChild(rDiv);
         });
-    }
+
+        card.innerHTML = `
+            <div class="question-header">
+                <span class="tag">${q.tag}</span>
+                <span>Questão ${q.id}</span>
+            </div>
+            <div class="subtitle" style="margin-bottom:10px;">${q.title}</div>
+            <div class="question-text">${q.text}</div>
+            <ul class="options-list">
+                ${optionsHtml}
+            </ul>
+            <div class="resolution-box" id="res-${index}">
+                <span class="feedback-label" id="feedback-text-${index}"></span>
+                <strong>Resolução:</strong> ${q.resolution}
+            </div>
+        `;
+        container.appendChild(card);
+    });
 
     function gradeQuiz() {
         let score = 0;
-        let answeredAll = true;
-
-        questions.forEach(q => {
-            const selected = document.querySelector(`input[name="question${q.id}"]:checked`);
-            if (!selected) {
-                answeredAll = false;
-            }
-        });
-
-        if (!answeredAll) {
-            if(!confirm("Você deixou questões em branco. Deseja finalizar assim mesmo?")) return;
-        }
-
-        // Processar respostas
-        questions.forEach(q => {
-            const selected = document.querySelector(`input[name="question${q.id}"]:checked`);
-            const correctLabel = document.getElementById(`label-q${q.id}${q.correct}`);
+        const form = document.getElementById('quiz-form');
+        
+        questions.forEach((q, index) => {
+            const selected = form.querySelector(`input[name="question${index}"]:checked`);
+            const resolutionBox = document.getElementById(`res-${index}`);
+            const feedbackText = document.getElementById(`feedback-text-${index}`);
             
-            // Marcar a correta
-            correctLabel.classList.add('correct');
-
+            resolutionBox.style.display = 'block';
+            
             if (selected) {
-                if (selected.value === q.correct) {
+                const userChoice = parseInt(selected.value);
+                
+                // Highlight correct answer
+                document.getElementById(`label-q${index}-o${q.answer}`).classList.add('correct-answer');
+                
+                if (userChoice === q.answer) {
                     score++;
+                    feedbackText.innerText = "✓ Você acertou!";
+                    feedbackText.style.color = "var(--success-color)";
                 } else {
-                    // Marcar a incorreta selecionada
-                    const wrongLabel = document.getElementById(`label-q${q.id}${selected.value}`);
-                    wrongLabel.classList.add('incorrect');
+                    document.getElementById(`label-q${index}-o${userChoice}`).classList.add('wrong-answer');
+                    feedbackText.innerText = "✗ Você errou.";
+                    feedbackText.style.color = "var(--error-color)";
                 }
+            } else {
+                // Not answered
+                document.getElementById(`label-q${index}-o${q.answer}`).classList.add('correct-answer');
+                feedbackText.innerText = "⚠ Não respondida.";
+                feedbackText.style.color = "#e67e22";
             }
-            
-            // Desabilitar inputs
-            const inputs = document.querySelectorAll(`input[name="question${q.id}"]`);
-            inputs.forEach(i => i.disabled = true);
         });
 
-        // Mostrar Painel de Resultados
-        const resultsPanel = document.getElementById('results-panel');
-        const scoreText = document.getElementById('score-text');
-        const resolutions = document.getElementById('resolutions');
-
-        resultsPanel.style.display = 'block';
-        scoreText.innerText = `Você acertou ${score} de ${questions.length} questões!`;
-        scoreText.style.color = score >= 7 ? 'var(--correct-color)' : 'var(--incorrect-color)';
+        // Show Results Section
+        document.getElementById('score-display').innerText = `${score} / ${questions.length}`;
+        document.getElementById('results-section').style.display = 'block';
         
-        resolutions.style.display = 'block';
+        // Hide submit button
+        document.querySelector('.btn-submit').style.display = 'none';
 
-        // Scroll suave para o resultado
-        resultsPanel.scrollIntoView({ behavior: 'smooth' });
-        
-        // Esconder botão
-        document.getElementById('btn-submit').style.display = 'none';
+        // Scroll to results
+        window.scrollTo({ top: document.getElementById('results-section').offsetTop - 50, behavior: 'smooth' });
     }
-
-    window.onload = initQuiz;
 </script>
 
 </body>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Lógica de Programação - Fundação CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcfcfc;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+        .code-block {
+            font-family: 'Fira Code', monospace;
+            background-color: #f1f3f5;
+            padding: 1.25rem;
+            border-radius: 8px;
+            border-left: 4px solid #ced4da;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .question-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+        }
+        .option-label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+            transition: background 0.2s;
+        }
+        .option-label:hover {
+            background-color: #f8f9fa;
+        }
+        input[type="radio"]:checked + .option-text {
+            font-weight: 600;
+        }
+        input[type="radio"]:checked + .option-label {
+            border-color: #4dabf7;
+            background-color: #e7f5ff;
+        }
+        .resolution-box {
+            display: none;
+            background-color: #fff9db;
+            border: 1px solid #ffe066;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        .correct { border-color: #40c057 !important; background-color: #ebfbee !important; }
+        .incorrect { border-color: #fa5252 !important; background-color: #fff5f5 !important; }
+        #results-header { display: none; }
+    </style>
+</head>
+<body class="py-10 px-4 md:px-0">
+    <div class="max-w-3xl mx-auto">
+        <header class="mb-12 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Simulado: Lógica de Programação</h1>
+            <p class="text-lg text-gray-600">Estilo Fundação CEFETMINAS - Estruturas de Controle</p>
+            <div class="h-1 w-20 bg-blue-500 mx-auto mt-6"></div>
+        </header>
+
+        <div id="quiz-container">
+            <!-- As questões serão inseridas aqui pelo JS -->
+        </div>
+
+        <div id="results-header" class="bg-blue-50 border border-blue-200 p-8 rounded-xl mb-8 text-center">
+            <h2 class="text-2xl font-bold text-blue-900 mb-2">Resultado Final</h2>
+            <p id="score-text" class="text-4xl font-extrabold text-blue-600 mb-4">0 / 10</p>
+            <p class="text-gray-700">Confira abaixo as resoluções detalhadas para cada questão.</p>
+        </div>
+
+        <div class="flex justify-center mt-8 mb-20">
+            <button id="submit-btn" onclick="submitQuiz()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-full shadow-lg transition-transform active:scale-95">
+                Finalizar Quiz e Ver Resoluções
+            </button>
+            <button id="reset-btn" onclick="location.reload()" class="hidden bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-10 rounded-full ml-4">
+                Refazer Quiz
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                q: "A Teoria da Programação Estruturada fundamenta-se na premissa de que qualquer algoritmo pode ser expresso através da combinação de três estruturas básicas de controle. Em provas da Fundação CEFETMINAS, a nomenclatura técnica é rigorosamente cobrada. Assinale a alternativa que apresenta corretamente estas três estruturas.",
+                options: [
+                    "Sequencial, Recursiva e Orientada a Objetos.",
+                    "Decisão, Repetição e Ponteiros.",
+                    "Sequência, Seleção (Decisão) e Repetição (Iteração).",
+                    "Início, Processamento e Fim.",
+                    "Entrada, Algoritmo e Saída."
+                ],
+                correct: 2,
+                resolution: "A teoria fundamental da Computação estabelece: 1. Sequência (ordem natural); 2. Seleção (desvios condicionais como o 'Se'); 3. Repetição (iterações como 'Enquanto' e 'Para'). A alternativa C usa a terminologia exata encontrada na bibliografia clássica e nos editais da FCM."
+            },
+            {
+                id: 2,
+                q: "Analise o trecho de código abaixo, escrito na sintaxe do VisuAlg 3.0:",
+                code: "Var\n   A, B, C : Inteiro\nInicio\n   A <- 13\n   B <- 4\n   \n   SE (A MOD B = 1) ENTAO\n      C <- A + B\n   SENAO\n      SE (A DIV B = 3) ENTAO\n         C <- A * B\n      SENAO\n         C <- 0\n      FIMSE\n   FIMSE\n   \n   ESCREVA(C)\nFimalgoritmo",
+                options: ["17", "52", "0", "13", "4"],
+                correct: 0,
+                resolution: "Teste de Mesa: A=13, B=4. 13 MOD 4 resulta em resto 1. Como a condição (1=1) é verdadeira, o programa executa C <- A + B (13+4 = 17) e ignora todo o bloco SENAO."
+            },
+            {
+                id: 3,
+                q: "Observe o algoritmo a seguir:",
+                code: "Var\n   Cont, X : Inteiro\nInicio\n   X <- 1\n   Cont <- 0\n   \n   ENQUANTO (Cont < 4) FACA\n      X <- X * 2\n      Cont <- Cont + 1\n   FIMENQUANTO\n   \n   ESCREVA(X)\nFimalgoritmo",
+                options: ["4", "8", "16", "32", "1"],
+                correct: 2,
+                resolution: "O laço executa 4 vezes: 1) X=2, Cont=1; 2) X=4, Cont=2; 3) X=8, Cont=3; 4) X=16, Cont=4. No próximo teste, (4 < 4) é falso, encerrando o loop com X valendo 16."
+            },
+            {
+                id: 4,
+                q: "Considere as variáveis inteiras A = 10, B = 20 e C = 5. Analise a expressão lógica abaixo utilizada em uma estrutura condicional: ((A > C) E (B < A)) OU (NAO(C = 5))",
+                options: ["VERDADEIRO", "FALSO", "NULO", "10", "Indeterminado"],
+                correct: 1,
+                resolution: "Avaliação: (10 > 5) é V; (20 < 10) é F. Logo (V E F) é F. Do outro lado, (5 = 5) é V, e NAO(V) é F. Finalmente, (F OU F) resulta em FALSO."
+            },
+            {
+                id: 5,
+                q: "O algoritmo abaixo percorre um vetor de 5 posições (VET = [2, 3, 6, 7, 10]).",
+                code: "Var\n   VET : Vetor[1..5] de Inteiro\n   I, SOMA : Inteiro\nInicio\n   SOMA <- 0\n   PARA I de 1 ATE 5 FACA\n      SE (VET[I] MOD 2 = 0) ENTAO\n         SOMA <- SOMA + VET[I]\n      FIMSE\n   FIMPARA\n   ESCREVA(SOMA)\nFimalgoritmo",
+                options: ["28", "10", "18", "12", "15"],
+                correct: 2,
+                resolution: "O algoritmo soma apenas os valores pares do vetor: 2 + 6 + 10 = 18. Os ímpares (3 e 7) são ignorados pela condição SE (MOD 2 = 0)."
+            },
+            {
+                id: 6,
+                q: "Sobre a estrutura de controle de seleção múltipla ESCOLHA... CASO (ou SWITCH... CASE), assinale a afirmativa INCORRETA de acordo com a lógica de programação estruturada padrão cobrada pela Fundação CEFETMINAS.",
+                options: [
+                    "É ideal para testar uma única variável contra valores constantes inteiros ou caracteres.",
+                    "Pode substituir elegantemente uma longa cadeia de SE... SENÃO... SE quando as comparações são de igualdade.",
+                    "Permite testar intervalos complexos diretamente nos casos, como CASO > 10 e < 20, em todas as linguagens de programação padrão.",
+                    "Geralmente possui uma cláusula padrão (OUTROCASO ou DEFAULT) para tratar valores não previstos.",
+                    "Torna o código mais legível quando há muitas opções discretas de menu."
+                ],
+                correct: 2,
+                resolution: "A alternativa C está incorreta porque, na lógica clássica e em linguagens como C e o VisuAlg, o ESCOLHA testa apenas igualdade de valores constantes. Intervalos lógicos complexos exigem o uso de SE/IF."
+            },
+            {
+                id: 7,
+                q: "Em um sistema de validação de senha, deseja-se que o usuário digite a senha pelo menos uma vez antes que a verificação seja feita. Qual estrutura de repetição é a mais adequada para garantir que o bloco de leitura da senha seja executado no mínimo uma vez?",
+                options: ["ENQUANTO (WHILE)", "PARA (FOR)", "SE (IF)", "REPITA... ATÉ (DO... WHILE)", "ESCOLHA (SWITCH)"],
+                correct: 3,
+                resolution: "O REPITA... ATÉ (ou Do... While) realiza o teste lógico ao final do bloco, garantindo que as instruções internas rodem pelo menos uma vez antes da primeira verificação."
+            },
+            {
+                id: 8,
+                q: "Analise o seguinte laço ENQUANTO:",
+                code: "X <- 0\nENQUANTO (X <> 9) FACA\n   ESCREVA(X)\n   X <- X + 2\nFIMENQUANTO",
+                options: [
+                    "Imprimirá os números de 0 a 9 e parará.",
+                    "Entrará em um loop infinito.",
+                    "Imprimirá apenas números ímpares.",
+                    "Gerará um erro de compilação na linha 2.",
+                    "Parará quando X for maior que 9."
+                ],
+                correct: 1,
+                resolution: "X começa em 0 e aumenta de 2 em 2 (0, 2, 4, 6, 8, 10...). Como X 'pula' o valor 9, a condição (X diferente de 9) será sempre verdadeira, causando um loop infinito."
+            },
+            {
+                id: 9,
+                q: "Considere o trecho abaixo e defina os valores finais de A e B:",
+                code: "A <- 0\nB <- 1\nPARA I de 1 ATE 3 FACA\n   A <- A + I\n   B <- B * I\nFIMPARA\nESCREVA(A, \" e \", B)",
+                options: ["3 e 3", "6 e 6", "5 e 6", "6 e 2", "4 e 5"],
+                correct: 1,
+                resolution: "Rodada 1 (I=1): A=1, B=1. Rodada 2 (I=2): A=3, B=2. Rodada 3 (I=3): A=6, B=6. A é um acumulador de soma (1+2+3) e B um acumulador de produto/fatorial (1*2*3)."
+            },
+            {
+                id: 10,
+                q: "Qual o valor de RES ao final deste algoritmo?",
+                code: "X <- 5\nY <- 10\nSE (X > 0) ENTAO\n   SE (Y < 5) ENTAO\n      RES <- 1\n   SENAO\n      RES <- 2\n   FIMSE\nSENAO\n   RES <- 3\nFIMSE",
+                options: ["1", "2", "3", "0", "5"],
+                correct: 1,
+                resolution: "X=5 (X>0 é verdade). Entra no primeiro SE. Lá dentro, Y=10 (Y<5 é falso). O fluxo cai no SENAO interno, definindo RES como 2."
+            }
+        ];
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            quizData.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question-card mb-8 p-6 rounded-xl shadow-sm';
+                qDiv.id = `q-card-${index}`;
+
+                let html = `
+                    <div class="flex items-start mb-4">
+                        <span class="bg-gray-100 text-gray-700 font-bold px-3 py-1 rounded-lg mr-4">Q${index + 1}</span>
+                        <h3 class="text-lg font-semibold text-gray-800">${item.q}</h3>
+                    </div>
+                `;
+
+                if (item.code) {
+                    html += `<div class="code-block">${item.code}</div>`;
+                }
+
+                html += `<div class="mt-4 space-y-2">`;
+                item.options.forEach((opt, optIndex) => {
+                    const letter = String.fromCharCode(65 + optIndex);
+                    html += `
+                        <label class="option-label" id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="hidden">
+                            <span class="mr-3 font-bold text-blue-500">${letter})</span>
+                            <span class="option-text text-gray-700">${opt}</span>
+                        </label>
+                    `;
+                });
+                html += `</div>`;
+
+                html += `
+                    <div id="res-${index}" class="resolution-box">
+                        <p class="font-bold text-yellow-800 mb-2">Resolução Forense:</p>
+                        <p class="text-yellow-900">${item.resolution}</p>
+                    </div>
+                `;
+
+                qDiv.innerHTML = html;
+                container.appendChild(qDiv);
+            });
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            const total = quizData.length;
+
+            quizData.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const resolutionBox = document.getElementById(`res-${index}`);
+                const card = document.getElementById(`q-card-${index}`);
+                
+                resolutionBox.style.display = 'block';
+
+                if (selected) {
+                    const val = parseInt(selected.value);
+                    const label = document.getElementById(`label-${index}-${val}`);
+                    
+                    if (val === item.correct) {
+                        score++;
+                        label.classList.add('correct');
+                    } else {
+                        label.classList.add('incorrect');
+                        // Destacar a correta também para estudo
+                        document.getElementById(`label-${index}-${item.correct}`).classList.add('correct');
+                    }
+                } else {
+                    // Se não marcou nada, apenas mostra a correta
+                    document.getElementById(`label-${index}-${item.correct}`).classList.add('correct');
+                }
+            });
+
+            // Atualizar UI
+            document.getElementById('results-header').style.display = 'block';
+            document.getElementById('score-text').innerText = `${score} / ${total}`;
+            document.getElementById('submit-btn').classList.add('hidden');
+            document.getElementById('reset-btn').classList.remove('hidden');
+
+            // Scroll suave para o topo do resultado
+            document.getElementById('results-header').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Desativar inputs para evitar mudar após correção
+            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+        }
+
+        window.onload = renderQuiz;
+    </script>
+</body>
+</html>

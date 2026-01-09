@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Lógica de Programação - Estilo CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --success-color: #27ae60;
+            --error-color: #d63031;
+            --highlight-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--secondary-bg);
+            border-bottom: 2px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            font-size: 1rem;
+            color: #636e72;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 95%;
+            margin-bottom: 5rem;
+        }
+
+        .question-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .code-block {
+            background-color: #2d3436;
+            color: #dfe6e9;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            white-space: pre;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: var(--highlight-bg);
+            border-color: var(--primary-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            border-color: var(--primary-color);
+            background-color: #e3f2fd;
+        }
+
+        .resolution {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #f1f2f6;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 4px 4px 0;
+            font-size: 0.95rem;
+        }
+
+        .resolution h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        #submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: block;
+            margin: 2rem auto;
+        }
+
+        #submit-btn:hover {
+            background-color: #0773c5;
+        }
+
+        #result-section {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--secondary-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .score-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .correct { color: var(--success-color) !important; font-weight: bold; }
+        .wrong { color: var(--error-color) !important; font-weight: bold; }
+        .correct-bg { background-color: #e8f5e9 !important; border-color: var(--success-color) !important; }
+        .wrong-bg { background-color: #ffebee !important; border-color: var(--error-color) !important; }
+
+        @media (max-width: 600px) {
+            .question-card { padding: 1rem; }
+            header h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Quiz: Lógica de Programação</h1>
+    <p>Simulado estilo Fundação CEFETMINAS (FCM)</p>
+</header>
+
+<div class="container" id="quiz-container">
+    <!-- Questão 01 -->
+    <div class="question-card" data-q="0">
+        <span class="question-header">Questão 01: Tipagem e Inferência em Python</span>
+        <p>Considere o comportamento da linguagem Python (versão 3.x) em relação à tipagem dinâmica e à manipulação de variáveis. Analise o seguinte trecho de código:</p>
+        <div class="code-block">var_a = 10
+var_b = "5"
+var_c = 2.5
+
+# Expressão 1
+resultado_1 = var_a * 2 + int(var_b)
+
+# Expressão 2
+resultado_2 = (var_a > 5) and (var_c < 3.0) or (var_b == 5)
+
+# Expressão 3
+var_d = [1, 2, 3]
+var_e = var_d
+var_e.append(4)</div>
+        <p>Com base na execução desse script, assinale a alternativa <strong>CORRETA</strong>:</p>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q0" value="A"> A) O valor de resultado_1 será a string "205", pois o Python prioriza a concatenação.</label>
+            <label class="option-item"><input type="radio" name="q0" value="B"> B) A variável resultado_2 armazenará o valor booleano True devido ao curto-circuito.</label>
+            <label class="option-item"><input type="radio" name="q0" value="C"> C) A lista var_d permanecerá [1, 2, 3], pois a atribuição cria uma cópia independente.</label>
+            <label class="option-item"><input type="radio" name="q0" value="D"> D) Ocorrerá um erro de tipo (TypeError) na execução da Expressão 1.</label>
+            <label class="option-item"><input type="radio" name="q0" value="E"> E) A variável resultado_1 será 25 (inteiro), e a variável var_d conterá [1, 2, 3, 4].</label>
+        </div>
+        <div class="resolution" id="res-0">
+            <h4>Resolução</h4>
+            Em Python, listas são objetos mutáveis e a atribuição <code>var_e = var_d</code> cria uma nova referência para o mesmo objeto na memória. Portanto, <code>var_e.append(4)</code> altera a lista que ambas as variáveis apontam. <code>resultado_1</code> é 25 pois <code>(10 * 2) + 5 = 25</code>.
+        </div>
+    </div>
+
+    <!-- Questão 02 -->
+    <div class="question-card" data-q="1">
+        <span class="question-header">Questão 02: Precedência de Operadores em C</span>
+        <p>Analise o programa a seguir na linguagem C:</p>
+        <div class="code-block">int main() {
+    int x = 5;
+    int y = 2;
+    int z;
+    z = (x++ * 2) + (--y % 2);
+    printf("X=%d, Y=%d, Z=%d", x, y, z);
+    return 0;
+}</div>
+        <p>Assinale a alternativa que apresenta a saída exata produzida pela execução deste código:</p>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q1" value="A"> A) X=6, Y=1, Z=11</label>
+            <label class="option-item"><input type="radio" name="q1" value="B"> B) X=5, Y=1, Z=10</label>
+            <label class="option-item"><input type="radio" name="q1" value="C"> C) X=6, Y=1, Z=10</label>
+            <label class="option-item"><input type="radio" name="q1" value="D"> D) X=5, Y=2, Z=11</label>
+            <label class="option-item"><input type="radio" name="q1" value="E"> E) X=6, Y=1, Z=12</label>
+        </div>
+        <div class="resolution" id="res-1">
+            <h4>Resolução</h4>
+            1. <code>x++</code> usa 5 e depois x vira 6. (5 * 2 = 10).<br>
+            2. <code>--y</code> reduz y para 1 e usa 1. (1 % 2 = 1).<br>
+            3. <code>z = 10 + 1 = 11</code>.<br>
+            Resultado final: X=6, Y=1, Z=11.
+        </div>
+    </div>
+
+    <!-- Questão 03 -->
+    <div class="question-card" data-q="2">
+        <span class="question-header">Questão 03: Estruturas Condicionais em Shell Script</span>
+        <div class="code-block">#!/bin/bash
+VALOR=15
+LIMITE=10
+STATUS="INATIVO"
+
+if [ $VALOR -gt $LIMITE ] && [ $STATUS != "ATIVO" ]; then
+    VALOR=$((VALOR + 5))
+fi
+echo "Valor Final: $VALOR"</div>
+        <p>Qual será o resultado impresso no terminal?</p>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q2" value="A"> A) Condição A satisfeita / Valor Final: 20</label>
+            <label class="option-item"><input type="radio" name="q2" value="B"> B) Condição B satisfeita / Valor Final: 15</label>
+            <label class="option-item"><input type="radio" name="q2" value="C"> C) Condição A satisfeita / Valor Final: 15</label>
+            <label class="option-item"><input type="radio" name="q2" value="D"> D) Erro de sintaxe.</label>
+            <label class="option-item"><input type="radio" name="q2" value="E"> E) Nenhuma condição / Valor Final: 15</label>
+        </div>
+        <div class="resolution" id="res-2">
+            <h4>Resolução</h4>
+            A condição <code>$VALOR -gt $LIMITE</code> (15 > 10) é verdadeira. A condição <code>$STATUS != "ATIVO"</code> ("INATIVO" != "ATIVO") também é verdadeira. O bloco incrementa VALOR para 20.
+        </div>
+    </div>
+
+    <!-- Questão 04 -->
+    <div class="question-card" data-q="3">
+        <span class="question-header">Questão 04: Avaliação de Expressões Lógicas (Visualg)</span>
+        <p>Valores: <code>A <- 3</code>, <code>B <- 7</code>, <code>C <- 4</code>.</p>
+        <p>Expressão: <code>((A + C) > B) OU ((B MOD 2) = 1) E NAO (A > C)</code></p>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q3" value="A"> A) Falso</label>
+            <label class="option-item"><input type="radio" name="q3" value="B"> B) Verdadeiro</label>
+            <label class="option-item"><input type="radio" name="q3" value="C"> C) Erro de Sintaxe</label>
+            <label class="option-item"><input type="radio" name="q3" value="D"> D) Nulo</label>
+            <label class="option-item"><input type="radio" name="q3" value="E"> E) Indeterminado</label>
+        </div>
+        <div class="resolution" id="res-3">
+            <h4>Resolução</h4>
+            1. (3+4) > 7 -> 7 > 7 é Falso.<br>
+            2. (7 MOD 2) = 1 -> 1 = 1 é Verdadeiro.<br>
+            3. 3 > 4 é Falso -> NAO(Falso) é Verdadeiro.<br>
+            4. Falso OU (Verdadeiro E Verdadeiro) -> Falso OU Verdadeiro = Verdadeiro.
+        </div>
+    </div>
+
+    <!-- Questão 05 -->
+    <div class="question-card" data-q="4">
+        <span class="question-header">Questão 05: Manipulação de Strings (Python)</span>
+        <div class="code-block">texto = "CEFET-MG-2026"
+parte_1 = texto[-4:]
+parte_2 = texto[0:5]
+parte_3 = texto[6:8]
+resultado = parte_2 + "_" + parte_3 + "_" + parte_1[::-1]</div>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q4" value="A"> A) CEFET_MG_6202</label>
+            <label class="option-item"><input type="radio" name="q4" value="B"> B) CEFET_MG_2026</label>
+            <label class="option-item"><input type="radio" name="q4" value="C"> C) CEFET_MG_6202-</label>
+            <label class="option-item"><input type="radio" name="q4" value="D"> D) CEFET-MG-2026</label>
+            <label class="option-item"><input type="radio" name="q4" value="E"> E) MG-2026_CEFET</label>
+        </div>
+        <div class="resolution" id="res-4">
+            <h4>Resolução</h4>
+            parte_1 = "2026"; parte_2 = "CEFET"; parte_3 = "MG".<br>
+            parte_1[::-1] inverte "2026" para "6202".<br>
+            Concatenação: CEFET + _ + MG + _ + 6202.
+        </div>
+    </div>
+
+    <!-- Questão 06 -->
+    <div class="question-card" data-q="5">
+        <span class="question-header">Questão 06: Lógica Proposicional</span>
+        <p>"Se o usuário é administrador E a senha é forte, então o acesso é liberado." Qual a negação lógica?</p>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q5" value="A"> A) Se o usuário não é administrador ou a senha não é forte...</label>
+            <label class="option-item"><input type="radio" name="q5" value="B"> B) O usuário é administrador e a senha é forte, e o acesso não é liberado.</label>
+            <label class="option-item"><input type="radio" name="q5" value="C"> C) O usuário não é administrador e a senha é forte...</label>
+            <label class="option-item"><input type="radio" name="q5" value="D"> D) Se o acesso não é liberado...</label>
+            <label class="option-item"><input type="radio" name="q5" value="E"> E) O acesso é liberado, mas o usuário não é administrador.</label>
+        </div>
+        <div class="resolution" id="res-5">
+            <h4>Resolução</h4>
+            A negação de P -> Q é P e não Q. Mantém-se o antecedente ("Usuário admin e senha forte") e nega-se o consequente ("Acesso NÃO liberado").
+        </div>
+    </div>
+
+    <!-- Questão 07 -->
+    <div class="question-card" data-q="6">
+        <span class="question-header">Questão 07: Algoritmos de Ordenação</span>
+        <p>Vetor inicial: [5, 2, 4, 6, 1]. Uma única passada comparando V[i] com V[i-1] se V[i] < V[i-1].</p>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q6" value="A"> A) [2, 4, 5, 6, 1]</label>
+            <label class="option-item"><input type="radio" name="q6" value="B"> B) [1, 2, 4, 5, 6]</label>
+            <label class="option-item"><input type="radio" name="q6" value="C"> C) [2, 5, 4, 6, 1]</label>
+            <label class="option-item"><input type="radio" name="q6" value="D"> D) [5, 2, 4, 1, 6]</label>
+            <label class="option-item"><input type="radio" name="q6" value="E"> E) [2, 4, 5, 1, 6]</label>
+        </div>
+        <div class="resolution" id="res-6">
+            <h4>Resolução</h4>
+            Passada única:<br>
+            i=1: 2<5? Sim -> [2,5,4,6,1]<br>
+            i=2: 4<5? Sim -> [2,4,5,6,1]<br>
+            i=3: 6<5? Não.<br>
+            i=4: 1<6? Sim -> [2,4,5,1,6]
+        </div>
+    </div>
+
+    <!-- Questão 08 -->
+    <div class="question-card" data-q="7">
+        <span class="question-header">Questão 08: Avaliação de Curto-Circuito</span>
+        <div class="code-block">int a = 0; int b = 10; int c = 0;
+if (a != 0 && (b = b + 5) > 10) { c = 1; } 
+else { c = 2; }
+printf("%d %d", b, c);</div>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q7" value="A"> A) 15 1</label>
+            <label class="option-item"><input type="radio" name="q7" value="B"> B) 15 2</label>
+            <label class="option-item"><input type="radio" name="q7" value="C) C) 10 1</label>
+            <label class="option-item"><input type="radio" name="q7" value="D"> D) 10 2</label>
+            <label class="option-item"><input type="radio" name="q7" value="E"> E) 10 0</label>
+        </div>
+        <div class="resolution" id="res-7">
+            <h4>Resolução</h4>
+            Como <code>a != 0</code> é falso, o operador <code>&&</code> interrompe a avaliação (curto-circuito). A atribuição <code>b = b + 5</code> nunca é executada. b continua 10. O bloco else define c=2.
+        </div>
+    </div>
+
+    <!-- Questão 09 -->
+    <div class="question-card" data-q="8">
+        <span class="question-header">Questão 09: Recursividade</span>
+        <div class="code-block">Função Calc(n)
+   Se n <= 1 Então Retorne 1
+   Senão Retorne n + Calc(n - 2)
+FimFunção</div>
+        <p>Qual o valor de <code>Calc(6)</code>?</p>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q8" value="A"> A) 10</label>
+            <label class="option-item"><input type="radio" name="q8" value="B"> B) 12</label>
+            <label class="option-item"><input type="radio" name="q8" value="C"> C) 13</label>
+            <label class="option-item"><input type="radio" name="q8" value="D"> D) 9</label>
+            <label class="option-item"><input type="radio" name="q8" value="E"> E) 15</label>
+        </div>
+        <div class="resolution" id="res-8">
+            <h4>Resolução</h4>
+            Calc(6) = 6 + Calc(4)<br>
+            Calc(4) = 4 + Calc(2)<br>
+            Calc(2) = 2 + Calc(0)<br>
+            Calc(0) = 1<br>
+            Resultado: 6 + 4 + 2 + 1 = 13.
+        </div>
+    </div>
+
+    <!-- Questão 10 -->
+    <div class="question-card" data-q="9">
+        <span class="question-header">Questão 10: Estruturas de Repetição</span>
+        <div class="code-block">X <- 1; Soma <- 0
+Enquanto X < 5 Faça
+   Soma <- Soma + X
+   X <- X * 2
+FimEnquanto</div>
+        <div class="options">
+            <label class="option-item"><input type="radio" name="q9" value="A"> A) 7</label>
+            <label class="option-item"><input type="radio" name="q9" value="B"> B) 15</label>
+            <label class="option-item"><input type="radio" name="q9" value="C"> C) 3</label>
+            <label class="option-item"><input type="radio" name="q9" value="D"> D) 6</label>
+            <label class="option-item"><input type="radio" name="q9" value="E"> E) 4</label>
+        </div>
+        <div class="resolution" id="res-9">
+            <h4>Resolução</h4>
+            1. X=1: Soma=1, X=2.<br>
+            2. X=2: Soma=3, X=4.<br>
+            3. X=4: Soma=7, X=8.<br>
+            Encerrado. Soma final: 7.
+        </div>
+    </div>
+
+    <div id="result-section">
+        <p class="score-text">Você acertou <span id="score-val">0</span> de 10 questões!</p>
+        <p id="feedback-text"></p>
+    </div>
+
+    <button id="submit-btn" onclick="checkAnswers()">Finalizar Quiz e Ver Resoluções</button>
+</div>
+
+<script>
+    const correctAnswers = ['E', 'A', 'A', 'B', 'A', 'B', 'E', 'D', 'C', 'A'];
+
+    // Visual effect for selection
+    document.querySelectorAll('.option-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const radio = this.querySelector('input');
+            const name = radio.getAttribute('name');
+            document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                r.parentElement.classList.remove('selected');
+            });
+            this.classList.add('selected');
+        });
+    });
+
+    function checkAnswers() {
+        let score = 0;
+        const total = correctAnswers.length;
+
+        for (let i = 0; i < total; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            const card = document.querySelector(`.question-card[data-q="${i}"]`);
+            const resolution = document.getElementById(`res-${i}`);
+            
+            // Show resolution
+            resolution.style.display = 'block';
+
+            if (selected) {
+                if (selected.value === correctAnswers[i]) {
+                    score++;
+                    selected.parentElement.classList.add('correct-bg');
+                } else {
+                    selected.parentElement.classList.add('wrong-bg');
+                    // Highlight correct one
+                    const correctOption = document.querySelector(`input[name="q${i}"][value="${correctAnswers[i]}"]`);
+                    correctOption.parentElement.classList.add('correct-bg');
+                }
+            } else {
+                // Highlight correct one if nothing selected
+                const correctOption = document.querySelector(`input[name="q${i}"][value="${correctAnswers[i]}"]`);
+                correctOption.parentElement.classList.add('correct-bg');
+            }
+        }
+
+        // Show results
+        const resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+        document.getElementById('score-val').innerText = score;
+        
+        const feedback = document.getElementById('feedback-text');
+        if (score >= 7) feedback.innerText = "Excelente desempenho! Você domina os fundamentos.";
+        else if (score >= 5) feedback.innerText = "Bom trabalho, mas revise os pontos onde houve erro.";
+        else feedback.innerText = "Continue estudando. A prática de rastreamento de código ajudará bastante.";
+
+        // Scroll to results
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+        
+        // Disable inputs after submission
+        document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+        document.getElementById('submit-btn').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

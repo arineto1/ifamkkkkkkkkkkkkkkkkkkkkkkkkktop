@@ -3,71 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado de Hardware - Professor EBTT - FCM</title>
+    <title>Simulado Técnico: Hardware e Periféricos - CEFETMINAS</title>
     <style>
         :root {
-            --bg-color: #fdfdfd;
-            --container-bg: #ffffff;
-            --text-main: #2c3e50;
-            --text-muted: #546e7a;
-            --accent: #2980b9;
-            --correct: #27ae60;
-            --incorrect: #c0392b;
-            --border: #e0e0e0;
-            --resolution-bg: #f8f9fa;
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --border-color: #dfe6e9;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --card-bg: #ffffff;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
+            color: var(--text-color);
+            font-family: var(--font-main);
+            line-height: 1.7;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
-            justify-content: center;
-        }
-
-        .quiz-container {
-            max-width: 850px;
-            width: 100%;
-            background: var(--container-bg);
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px solid var(--accent);
-            padding-bottom: 20px;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 20px;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 30px;
         }
 
         header h1 {
-            font-size: 1.8rem;
-            margin: 0;
-            color: var(--accent);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #000;
         }
 
         header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-top: 10px;
+            color: #636e72;
+            font-size: 1.1rem;
         }
 
-        .question-block {
-            margin-bottom: 50px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid var(--border);
+        main {
+            width: 100%;
+            max-width: 800px;
+            padding: 0 20px 100px 20px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            padding: 30px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .question-meta {
+            font-weight: bold;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
         }
 
         .question-text {
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
+            font-weight: 500;
             margin-bottom: 20px;
-            display: block;
         }
 
         .options-list {
@@ -77,365 +85,342 @@
 
         .option-item {
             margin-bottom: 12px;
-            padding: 12px 15px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        }
+
+        .option-label {
             display: flex;
             align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
         }
 
-        .option-item:hover {
-            background-color: #f1f7fc;
-            border-color: var(--accent);
+        .option-label:hover {
+            background-color: #f1f2f6;
         }
 
-        .option-item input {
+        .option-label input {
             margin-right: 15px;
             transform: scale(1.2);
-            cursor: pointer;
         }
 
-        .option-item.selected {
-            border-color: var(--accent);
-            background-color: #e3f2fd;
+        /* Classes para o resultado */
+        .option-label.correct {
+            background-color: #d1f2eb !important;
+            border-color: var(--success-color);
+            color: #0e6251;
         }
 
-        /* Classes de Correção */
-        .option-item.correct {
-            background-color: #d4edda !important;
-            border-color: var(--correct) !important;
-            color: #155724;
-        }
-
-        .option-item.wrong {
-            background-color: #f8d7da !important;
-            border-color: var(--incorrect) !important;
-            color: #721c24;
+        .option-label.incorrect {
+            background-color: #fadbd8 !important;
+            border-color: var(--error-color);
+            color: #78281f;
         }
 
         .resolution-box {
             display: none;
-            margin-top: 20px;
+            margin-top: 25px;
             padding: 20px;
-            background-color: var(--resolution-bg);
-            border-left: 5px solid var(--accent);
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
             border-radius: 4px;
             font-size: 0.95rem;
         }
 
         .resolution-box h4 {
             margin-top: 0;
-            color: var(--accent);
-            font-size: 1rem;
-            text-transform: uppercase;
+            color: var(--accent-color);
         }
 
-        #submit-btn {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            background-color: var(--accent);
+        .action-area {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--accent-color);
             color: white;
             border: none;
-            border-radius: 6px;
+            padding: 15px 40px;
             font-size: 1.1rem;
             font-weight: bold;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background 0.3s;
-            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
+            transition: background 0.2s, transform 0.2s;
         }
 
-        #submit-btn:hover {
-            background-color: #1a5276;
+        .btn-submit:hover {
+            background-color: #0771c1;
+            transform: translateY(-2px);
         }
 
         #results-summary {
             display: none;
-            text-align: center;
-            padding: 30px;
-            margin-bottom: 30px;
-            background: #e3f2fd;
+            background-color: #2d3436;
+            color: white;
+            padding: 40px;
             border-radius: 8px;
-            border: 1px solid var(--accent);
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        #results-summary h2 {
-            margin: 0;
-            color: var(--accent);
-        }
-
-        .score-box {
-            font-size: 2.5rem;
+        .score-circle {
+            font-size: 3rem;
             font-weight: bold;
-            margin: 10px 0;
+            margin: 20px 0;
         }
 
         @media (max-width: 600px) {
-            .quiz-container {
-                padding: 20px;
-            }
-            header h1 {
-                font-size: 1.4rem;
-            }
+            header h1 { font-size: 1.8rem; }
+            .question-card { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
     <header>
-        <h1>Simulado de Hardware: Conceitos, Componentes e Periféricos</h1>
-        <p>Perfil da Banca: Fundação CEFETMINAS | Cargo: Professor de Informática EBTT</p>
+        <h1>Simulado Técnico de Hardware</h1>
+        <p>Banca: Fundação CEFETMINAS (FCM) | Nível: Superior/Técnico</p>
     </header>
 
-    <div id="results-summary">
-        <h2>Resultado do Simulado</h2>
-        <div class="score-box" id="score-display">0/10</div>
-        <p id="feedback-text">Confira as resoluções detalhadas abaixo para consolidar seu aprendizado.</p>
-    </div>
+    <main>
+        <div id="quiz-container">
+            <!-- As questões serão injetadas via JavaScript -->
+        </div>
 
-    <form id="quiz-form">
-        <!-- Questões serão injetadas via JavaScript -->
-        <div id="questions-wrapper"></div>
-        
-        <button type="button" id="submit-btn" onclick="calculateResults()">Finalizar e Ver Resoluções</button>
-    </form>
-</div>
+        <div id="results-summary">
+            <h2>Resultado Final</h2>
+            <div class="score-circle" id="score-display">0/10</div>
+            <p id="performance-feedback"></p>
+            <button class="btn-submit" onclick="window.location.reload()" style="background: transparent; border: 2px solid white; margin-top: 20px;">Refazer Simulado</button>
+        </div>
 
-<script>
-    const questions = [
-        {
-            id: 1,
-            text: "Questão 01 - O pipelining é uma técnica de implementação fundamental para o aumento de desempenho em processadores modernos, permitindo a sobreposição temporal das fases de execução das instruções. Considere um processador com um pipeline de 5 estágios: Busca (IF), Decodificação (ID), Execução (EX), Memória (MEM) e Escrita (WB). A respeito dos hazards (conflitos) que podem degradar o desempenho ideal deste pipeline, analise as afirmativas a seguir:\n\nI. O conflito estrutural (structural hazard) ocorre quando o hardware não possui recursos suficientes para suportar todas as combinações possíveis de instruções simultâneas, como a tentativa de buscar uma instrução na memória e acessar um dado (Load/Store) no mesmo ciclo, em uma arquitetura de memória unificada (Von Neumann puro sem caches separadas).\nII. O forwarding (ou bypassing) é uma técnica de hardware utilizada para mitigar conflitos de dados (data hazards) do tipo RAW (Read After Write), permitindo que um dado calculado na ULA seja utilizado pela instrução seguinte antes mesmo de ser escrito no banco de registradores.\nIII. Os conflitos de controle (control hazards), decorrentes de instruções de desvio (branches), são resolvidos exclusivamente através da inserção de instruções NOP (No Operation) pelo compilador, não havendo mecanismos de hardware capazes de prever o fluxo de execução.\n\nEstão CORRETAS as afirmativas:",
-            options: [
-                "Apenas I.",
-                "Apenas II.",
-                "Apenas I e II.",
-                "Apenas II e III.",
-                "I, II e III."
-            ],
-            answer: 2, // Letra C (Index 2)
-            resolution: "Gabarito: C. A afirmativa I está correta ao descrever o hazard estrutural. A II está correta ao descrever o forwarding como mecanismo de mitigação de hazards de dados. A III está incorreta porque o hardware possui mecanismos de Predição de Desvio (Branch Prediction), não sendo uma tarefa exclusiva do compilador."
-        },
-        {
-            id: 2,
-            text: "Questão 02 - A hierarquia de memória explora o princípio da localidade para oferecer ao sistema uma memória que parece ter a velocidade da cache e o tamanho do disco. Sobre as tecnologias empregadas nessa hierarquia, assinale a alternativa INCORRETA:",
-            options: [
-                "As memórias Cache (L1, L2, L3) são tipicamente construídas com tecnologia SRAM (Static RAM), que não requer circuitos de refresh periódicos.",
-                "A Memória Principal é geralmente composta por módulos de DRAM (Dynamic RAM), onde cada bit é armazenado em um capacitor controlado por um transistor.",
-                "Em um mapeamento de cache associativo por conjunto (Set-Associative), um bloco da memória principal pode ser armazenado em qualquer linha de um conjunto específico.",
-                "O princípio da localidade espacial justifica a transferência de blocos (linhas de cache) inteiros da memória principal para a cache.",
-                "A memória Cache L1 é invariavelmente mais lenta que a Cache L2, pois sofre maior interferência eletromagnética devido à proximidade com o núcleo."
-            ],
-            answer: 4, // Letra E
-            resolution: "Gabarito: E (Incorreta). A L1 é a memória mais rápida da hierarquia de cache, operando na mesma frequência do núcleo do processador. A justificativa de interferência eletromagnética é tecnicamente descabida."
-        },
-        {
-            id: 3,
-            text: "Questão 03 - Um laboratório do IF necessita de um servidor que suporte a falha simultânea de até 2 discos rígidos sem perda de dados, mantendo o maior espaço de armazenamento útil possível com 4 discos de 4 TB cada. Qual configuração de RAID deve ser adotada?",
-            options: [
-                "RAID 0.",
-                "RAID 1 (utilizando os 4 discos como um único espelho).",
-                "RAID 5.",
-                "RAID 6.",
-                "RAID 10 (1+0)."
-            ],
-            answer: 3, // Letra D
-            resolution: "Gabarito: D. O RAID 6 utiliza dupla paridade distribuída e garante a integridade dos dados mesmo com a falha de quaisquer 2 discos simultâneos. O RAID 10 pode falhar se dois discos do mesmo espelho quebrarem."
-        },
-        {
-            id: 4,
-            text: "Questão 04 - Sobre a comparação entre SSDs SATA e SSDs NVMe, assinale a alternativa correta:",
-            options: [
-                "O protocolo AHCI foi otimizado para memórias Flash, permitindo filas de até 64 mil comandos.",
-                "O formato M.2 é exclusivo para drives NVMe; portanto, todo SSD M.2 trafega dados via PCI Express.",
-                "O protocolo NVMe foi projetado para operar sobre o barramento PCI Express, eliminando gargalos legados do AHCI e reduzindo a latência.",
-                "SSDs NVMe Gen4 não são retrocompatíveis com slots M.2 PCIe 3.0.",
-                "A vantagem do SSD SATA sobre o NVMe reside na sua capacidade de realizar Garbage Collection em hardware."
-            ],
-            answer: 2, // Letra C
-            resolution: "Gabarito: C. NVMe foi desenhado para memória não volátil de alta velocidade sobre o barramento PCIe, suportando múltiplas filas de comandos, ao contrário do AHCI (SATA) que foi criado para HDDs."
-        },
-        {
-            id: 5,
-            text: "Questão 05 - Nos sistemas modernos baseados em processadores Intel Core e AMD Ryzen, observa-se que:",
-            options: [
-                "A Ponte Norte (Northbridge) foi integrada ao processador, incorporando o controlador de memória e linhas PCIe para vídeo.",
-                "A Ponte Sul (Southbridge) assumiu o controle da memória RAM DDR4/DDR5 para liberar o processador.",
-                "O barramento FSB (Front Side Bus) teve sua frequência triplicada para suportar a comunicação com a Ponte Norte dedicada.",
-                "O BIOS foi completamente removido, sendo substituído por um microcontrolador que carrega o SO da nuvem.",
-                "Os slots PCI Express são gerenciados exclusivamente pelo PCH, sem conexão direta com o processador."
-            ],
-            answer: 0, // Letra A
-            resolution: "Gabarito: A. A arquitetura moderna integrou as funções da Ponte Norte (controlador de memória e PCIe principal) no die do processador (System on Chip ou Uncore), deixando apenas o PCH (antiga Ponte Sul) na placa-mãe."
-        },
-        {
-            id: 6,
-            text: "Questão 06 - Uma característica distintiva dos módulos DDR5 em relação aos seus antecessores (DDR3/DDR4) é:",
-            options: [
-                "A mudança da tensão de operação para 1.5V para sustentar altas frequências.",
-                "A integração do circuito de gerenciamento de energia (PMIC) no próprio módulo de memória (DIMM).",
-                "A redução da latência CAS (CL) para valores nominais inferiores a 10 ciclos.",
-                "A utilização de um único canal de dados de 128 bits por módulo.",
-                "A incompatibilidade lógica com códigos de correção de erro (ECC), removida para consumidores finais."
-            ],
-            answer: 1, // Letra B
-            resolution: "Gabarito: B. Na DDR5, a regulação de tensão saiu da placa-mãe e foi para o módulo (DIMM) através do chip PMIC, garantindo maior eficiência energética e estabilidade de sinal."
-        },
-        {
-            id: 7,
-            text: "Questão 07 - Assinale a alternativa que ordena corretamente as etapas do ciclo de impressão a laser (eletrofotográfico):",
-            options: [
-                "Revelação -> Carregamento -> Exposição -> Fusão -> Transferência.",
-                "Carregamento -> Exposição -> Revelação -> Transferência -> Fusão.",
-                "Exposição -> Carregamento -> Transferência -> Revelação -> Fusão.",
-                "Limpeza -> Fusão -> Exposição -> Revelação -> Transferência.",
-                "Carregamento -> Revelação -> Exposição -> Fusão -> Transferência."
-            ],
-            answer: 1, // Letra B
-            resolution: "Gabarito: B. A sequência lógica é: Carregamento (carga no cilindro), Exposição (laser cria imagem latente), Revelação (toner adere à imagem), Transferência (toner vai para o papel) e Fusão (calor fixa o toner)."
-        },
-        {
-            id: 8,
-            text: "Questão 08 - Se aplicarmos os sinais A=1 e B=1 em uma porta NAND, qual será a saída? E qual o valor hexadecimal de 11011011?",
-            options: [
-                "Saída 0; Hex DB.",
-                "Saída 1; Hex DB.",
-                "Saída 0; Hex CB.",
-                "Saída 1; Hex DA.",
-                "Saída 0; Hex EB."
-            ],
-            answer: 0, // Letra A
-            resolution: "Gabarito: A. NAND(1,1) resulta em NOT(AND(1,1)) = NOT(1) = 0. O binário 1101 (13 em decimal) é D e 1011 (11 em decimal) é B. Logo, DB."
-        },
-        {
-            id: 9,
-            text: "Questão 09 - Sobre as características de largura de banda e codificação do PCI Express (PCIe), é correto afirmar:",
-            options: [
-                "É um barramento paralelo de 16 pinos para dados.",
-                "É um barramento compartilhado, onde a banda é dividida entre todos os dispositivos.",
-                "O PCIe 4.0 oferece aproximadamente 2 GB/s por lane, resultando em cerca de 64 GB/s bidirecional para um slot x16.",
-                "Dispositivos PCIe x1 não podem fisicamente ser instalados em slots PCIe x16.",
-                "A codificação 8b/10b é utilizada em todas as versões do PCIe até a 5.0."
-            ],
-            answer: 2, // Letra C
-            resolution: "Gabarito: C. PCIe 4.0 tem vazão de 2GB/s por lane. Um slot x16 provê 32GB/s em cada direção (total 64GB/s bidirecional). As versões 3.0+ usam codificação 128b/130b."
-        },
-        {
-            id: 10,
-            text: "Questão 10 - Diferentemente do esquema MBR (Master Boot Record), a Tabela de Partição GUID (GPT) utilizada pelo UEFI:",
-            options: [
-                "Limita o tamanho do disco a 2 TB, mas permite infinitas partições.",
-                "Armazena cópias de segurança do cabeçalho da tabela de partição no final do disco, aumentando a resiliência.",
-                "Elimina a necessidade de uma partição de sistema EFI (ESP).",
-                "É incompatível com sistemas operacionais Windows de 64 bits.",
-                "Utiliza endereçamento de 32 bits para os setores lógicos."
-            ],
-            answer: 1, // Letra B
-            resolution: "Gabarito: B. O GPT oferece redundância ao replicar o cabeçalho e a tabela de partição no final da unidade física, permitindo recuperação em caso de corrupção do setor inicial."
+        <div class="action-area" id="action-area">
+            <button class="btn-submit" id="submit-btn" onclick="checkAnswers()">Concluir e Ver Resoluções</button>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                tema: "Arquitetura de Armazenamento e Interfaces de Comunicação",
+                question: "A evolução dos dispositivos de armazenamento não volátil transitou das tecnologias magnéticas (HDD) para o estado sólido (SSD), exigindo uma reformulação das interfaces de comunicação para eliminar gargalos de desempenho. Considere um cenário de atualização de infraestrutura no qual se busca maximizar a taxa de transferência de dados e reduzir a latência em estações de trabalho de alto desempenho. Ao comparar as tecnologias de interface para conexão de SSDs, o protocolo projetado especificamente para explorar o paralelismo das memórias flash, comunicando-se diretamente através do barramento PCIe e superando as limitações da fila de comando única do padrão AHCI, é:",
+                options: [
+                    "SATA III (Serial ATA), que atinge o limite teórico de 600 MB/s.",
+                    "SAS (Serial Attached SCSI), focado exclusivamente em servidores legados.",
+                    "NVMe (Non-Volatile Memory express).",
+                    "IDE (Integrated Drive Electronics) com suporte a UDMA.",
+                    "eSATA (External Serial ATA) para conexões internas de baixa latência."
+                ],
+                correct: 2,
+                resolution: "NVMe é o protocolo de comunicação projetado do zero para SSDs conectados via barramento PCIe. Ele suporta até 65.535 filas de comandos (paralelismo), superando drasticamente a fila única do padrão AHCI usado em interfaces SATA."
+            },
+            {
+                id: 2,
+                tema: "Gerenciamento de Memória e Sistema Operacional",
+                question: "Nos sistemas operacionais modernos, como o Windows 10 e 11, a interação entre o software de sistema e o hardware de memória é crítica para a estabilidade. Quando a capacidade física da Memória de Acesso Aleatório (RAM) é totalmente ocupada pelas aplicações em execução, o sistema operacional recorre a uma técnica que utiliza uma porção do dispositivo de armazenamento secundário (HD ou SSD) para simular memória adicional. Essa extensão lógica, gerenciada pelo Memory Manager (MMU) através de paginação, é tecnicamente denominada:",
+                options: [
+                    "Memória Cache L4.",
+                    "Memória Virtual.",
+                    "Memória ROM (Read-Only Memory).",
+                    "Memória Flash.",
+                    "Registradores de Deslocamento."
+                ],
+                correct: 1,
+                resolution: "A Memória Virtual é a técnica que permite ao SO utilizar o armazenamento secundário como extensão da RAM física via paginação (swap)."
+            },
+            {
+                id: 3,
+                tema: "Periféricos e Classificação de Entrada/Saída",
+                question: "A classificação correta dos periféricos quanto ao fluxo de dados é recorrente em provas da banca FCM. Analise o funcionamento técnico dos dispositivos abaixo e assinale a alternativa que apresenta corretamente a categorização baseada na direção predominante do fluxo de informações entre o usuário e a Unidade Central de Processamento (CPU):",
+                options: [
+                    "O scanner de mesa é um dispositivo híbrido (entrada e saída), pois captura a imagem e exibe a luz de varredura simultaneamente.",
+                    "A impressora matricial é um dispositivo de entrada, pois envia informações de status de papel para o computador.",
+                    "O monitor touchscreen capacitivo é classificado como um periférico de entrada e saída (híbrido), pois exibe dados processados (saída) e captura coordenadas de toque (entrada) através de alterações no campo eletrostático.",
+                    "O microfone é um dispositivo de saída, convertendo sinais digitais em ondas sonoras analógicas.",
+                    "O mouse óptico é um dispositivo de saída, pois emite luz LED ou Laser para rastrear o movimento."
+                ],
+                correct: 2,
+                resolution: "O monitor touchscreen é híbrido (I/O) porque exibe imagens (saída) e captura toques (entrada)."
+            },
+            {
+                id: 4,
+                tema: "Arquitetura de Processadores (Pipeline)",
+                question: "A eficiência de uma CPU não depende apenas de sua frequência de clock, mas da arquitetura interna de execução de instruções. Em arquiteturas modernas, utiliza-se uma técnica que divide o ciclo de instrução (busca, decodificação, execução, acesso à memória, escrita) em múltiplos estágios. A arquitetura que aprofunda essa divisão em um número elevado de estágios menores (frequentemente acima de 10 ou 20 estágios), permitindo que o processador opere a frequências mais altas e gerencie múltiplas instruções em diferentes fases de conclusão simultaneamente, é denominada:",
+                options: [
+                    "Arquitetura Monolítica CISC.",
+                    "Processamento Vetorial Escalar.",
+                    "Superpipeline.",
+                    "Overclocking Dinâmico.",
+                    "Arquitetura de Von Neumann pura."
+                ],
+                correct: 2,
+                resolution: "Superpipeline é a técnica de subdividir o pipeline em estágios muito granulares para permitir clocks mais elevados e maior paralelismo de instrução."
+            },
+            {
+                id: 5,
+                tema: "Dispositivos Portáteis e Conectividade USB",
+                question: "Considere a seguinte descrição técnica de um dispositivo de hardware frequentemente abordado em questões de segurança e operação básica: 'Trata-se de um dispositivo de armazenamento de massa baseado em memória NAND Flash não volátil, do tipo Plug-and-Play (PnP). Sua interface de conexão padrão é o barramento serial universal (USB), dispensando, na maioria dos sistemas operacionais modernos, a instalação manual de drivers proprietários. Possui capacidade de armazenamento variável (Gigabytes a Terabytes) e é reconhecido pelo sistema operacional como 'Disco Removível', permitindo a execução de sistemas de arquivos como FAT32, exFAT ou NTFS.' A descrição refere-se ao:",
+                options: [
+                    "Disco Óptico Blu-ray.",
+                    "Pen Drive (Unidade Flash USB).",
+                    "Cartão de Memória SD conectado via barramento PCI.",
+                    "Módulo de Memória RAM DDR4.",
+                    "Disco Rígido IDE (PATA)."
+                ],
+                correct: 1,
+                resolution: "O Pen Drive utiliza memória Flash NAND, conexão USB e é Plug-and-Play, sendo classificado pelo SO como disco removível."
+            },
+            {
+                id: 6,
+                tema: "Infraestrutura de Redes e Hardware de Comutação",
+                question: "Em um ambiente corporativo projetado para alta segurança e segmentação de tráfego, utiliza-se um switch gerenciável para criar Redes Locais Virtuais (VLANs). O objetivo é isolar logicamente os departamentos de 'Finanças' e 'Desenvolvimento' que compartilham a mesma infraestrutura física de cabeamento. Considerando os conceitos de hardware de redes e o modelo OSI, para permitir a comunicação controlada entre essas duas VLANs distintas, é imprescindível a utilização de um equipamento que opere na:",
+                options: [
+                    "Camada 1 (Física), como um Hub repetidor.",
+                    "Camada 2 (Enlace), utilizando apenas o switch L2 sem recursos de roteamento.",
+                    "Camada 3 (Rede), como um Roteador ou um Switch Layer 3 (Multilayer).",
+                    "Camada de Sessão, através de um Gateway de aplicação.",
+                    "Camada Física, utilizando cabos de fibra óptica monomodo."
+                ],
+                correct: 2,
+                resolution: "Para comunicar redes logicamente separadas (VLANs), é necessário o roteamento, que ocorre na Camada 3 do modelo OSI."
+            },
+            {
+                id: 7,
+                tema: "Hardware de Entrada - Teclados e Padrões",
+                question: "O teclado é o periférico de entrada primário para inserção de dados alfanuméricos. No Brasil, o padrão técnico regulamentado pela ABNT (Associação Brasileira de Normas Técnicas) para teclados físicos, que se diferencia por incluir fisicamente a tecla 'Ç' (cê-cedilha) e possuir um layout específico para acentuação (como a tecla de acento agudo e crase separadas), é identificado tecnicamente nas configurações de hardware e sistema operacional como:",
+                options: [
+                    "Inglês Internacional (US-International).",
+                    "ABNT2.",
+                    "Dvorak Brasileiro.",
+                    "QWERTY Portugal.",
+                    "ANSI Padrão."
+                ],
+                correct: 1,
+                resolution: "O padrão brasileiro oficial é o ABNT2, que possui a tecla 'Ç' e a tecla AltGr."
+            },
+            {
+                id: 8,
+                tema: "Gerenciamento de Hardware no Windows",
+                question: "Um técnico de laboratório precisa diagnosticar uma falha em uma placa de captura de vídeo recém-instalada. O sistema operacional reconhece a presença do hardware, mas o dispositivo não funciona corretamente. Para verificar o 'status' do dispositivo, identificar códigos de erro (como o Código 10 ou Código 43), verificar conflitos de IRQ (Interrupção de Hardware) e atualizar ou reverter o driver controlador, a ferramenta de sistema (snap-in do MMC) correta a ser acessada no Windows é:",
+                options: [
+                    "Windows Defender Firewall.",
+                    "Ferramenta de Diagnóstico de Memória do Windows.",
+                    "Gerenciador de Dispositivos (devmgmt.msc).",
+                    "Monitor de Recursos.",
+                    "Agendador de Tarefas."
+                ],
+                correct: 2,
+                resolution: "O Gerenciador de Dispositivos é a ferramenta central do Windows para gerenciar o hardware e seus respectivos drivers."
+            },
+            {
+                id: 9,
+                tema: "Tecnologias de Rede Sem Fio (Wireless)",
+                question: "Os padrões da família IEEE 802.11 definem as especificações para redes locais sem fio (WLAN). A evolução desses padrões buscou aumentar a taxa de transferência (throughput) e a eficiência espectral. Dentre os padrões listados, aquele que introduziu o suporte exclusivo à operação na faixa de frequência de 5 GHz para atingir taxas de gigabits por segundo (Gbps), utilizando modulação 256-QAM e canais de até 160 MHz, é o:",
+                options: [
+                    "IEEE 802.11b.",
+                    "IEEE 802.11g.",
+                    "IEEE 802.11n (Wi-Fi 4).",
+                    "IEEE 802.11ac (Wi-Fi 5).",
+                    "IEEE 802.11 legacy."
+                ],
+                correct: 3,
+                resolution: "O padrão 802.11ac (Wi-Fi 5) opera exclusivamente na faixa de 5 GHz para entregar velocidades acima de 1 Gbps."
+            },
+            {
+                id: 10,
+                tema: "Hierarquia de Memória e Inicialização (Boot)",
+                question: "A arquitetura de um computador baseia-se em uma hierarquia de memória para equilibrar custo, capacidade e desempenho. Analise as afirmativas sobre os componentes dessa hierarquia e o processo de inicialização:\nI. A memória Cache (L1, L2, L3) é construída com tecnologia SRAM (Static RAM), sendo mais rápida e cara que a memória principal (DRAM).\nII. O BIOS (Basic Input/Output System) é um firmware armazenado em memória não volátil na placa-mãe, responsável pela execução do POST (Power-On Self Test).\nIII. A memória RAM é classificada como não volátil, mantendo os dados mesmo após o desligamento da energia elétrica.",
+                options: [
+                    "Apenas I.",
+                    "Apenas II.",
+                    "Apenas I e II.",
+                    "Apenas II e III.",
+                    "I, II e III."
+                ],
+                correct: 2,
+                resolution: "As afirmativas I e II são corretas. A III está errada porque a RAM é volátil (perde dados sem energia)."
+            }
+        ];
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = quizData.map((q, idx) => `
+                <div class="question-card" id="q-card-${idx}">
+                    <div class="question-meta">Questão ${idx + 1} | ${q.tema}</div>
+                    <div class="question-text">${q.question.replace(/\n/g, '<br>')}</div>
+                    <ul class="options-list">
+                        ${q.options.map((opt, optIdx) => `
+                            <li class="option-item">
+                                <label class="option-label" id="label-${idx}-${optIdx}">
+                                    <input type="radio" name="q${idx}" value="${optIdx}">
+                                    <span>${String.fromCharCode(65 + optIdx)}) ${opt}</span>
+                                </label>
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <div class="resolution-box" id="res-${idx}">
+                        <h4>Resolução Analítica:</h4>
+                        <p>${q.resolution}</p>
+                    </div>
+                </div>
+            `).join('');
         }
-    ];
 
-    function loadQuestions() {
-        const wrapper = document.getElementById('questions-wrapper');
-        questions.forEach((q, index) => {
-            const qDiv = document.createElement('div');
-            qDiv.className = 'question-block';
-            qDiv.id = `q-block-${index}`;
+        function checkAnswers() {
+            let score = 0;
+            const total = quizData.length;
 
-            const qLabel = document.createElement('span');
-            qLabel.className = 'question-text';
-            qLabel.innerText = q.text;
-            qDiv.appendChild(qLabel);
-
-            const optionsUl = document.createElement('ul');
-            optionsUl.className = 'options-list';
-
-            q.options.forEach((opt, optIndex) => {
-                const li = document.createElement('li');
-                li.className = 'option-item';
-                li.onclick = () => selectOption(index, optIndex);
+            quizData.forEach((q, idx) => {
+                const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+                const resolutionBox = document.getElementById(`res-${idx}`);
                 
-                const radio = document.createElement('input');
-                radio.type = 'radio';
-                radio.name = `q${index}`;
-                radio.id = `q${index}-opt${optIndex}`;
-                radio.value = optIndex;
+                // Mostrar a resolução
+                resolutionBox.style.display = 'block';
 
-                const textNode = document.createTextNode(opt);
-                
-                li.appendChild(radio);
-                li.appendChild(textNode);
-                optionsUl.appendChild(li);
+                if (selected) {
+                    const answerIdx = parseInt(selected.value);
+                    if (answerIdx === q.correct) {
+                        score++;
+                        document.getElementById(`label-${idx}-${answerIdx}`).classList.add('correct');
+                    } else {
+                        document.getElementById(`label-${idx}-${answerIdx}`).classList.add('incorrect');
+                        document.getElementById(`label-${idx}-${q.correct}`).classList.add('correct');
+                    }
+                } else {
+                    // Se não respondeu, destaca a correta
+                    document.getElementById(`label-${idx}-${q.correct}`).classList.add('correct');
+                }
             });
 
-            qDiv.appendChild(optionsUl);
+            // Mostrar resumo
+            const summary = document.getElementById('results-summary');
+            const scoreDisplay = document.getElementById('score-display');
+            const feedback = document.getElementById('performance-feedback');
+            const actionArea = document.getElementById('action-area');
 
-            const resDiv = document.createElement('div');
-            resDiv.className = 'resolution-box';
-            resDiv.id = `res-${index}`;
-            resDiv.innerHTML = `<h4>Resolução Comentada</h4><p>${q.resolution}</p>`;
-            qDiv.appendChild(resDiv);
+            summary.style.display = 'block';
+            actionArea.style.display = 'none';
+            scoreDisplay.innerText = `${score}/${total}`;
 
-            wrapper.appendChild(qDiv);
-        });
-    }
-
-    function selectOption(qIdx, optIdx) {
-        const block = document.getElementById(`q-block-${qIdx}`);
-        const options = block.querySelectorAll('.option-item');
-        options.forEach(opt => opt.classList.remove('selected'));
-        options[optIdx].classList.add('selected');
-        options[optIdx].querySelector('input').checked = true;
-    }
-
-    function calculateResults() {
-        let score = 0;
-        const form = document.getElementById('quiz-form');
-
-        questions.forEach((q, index) => {
-            const selected = form.querySelector(`input[name="q${index}"]:checked`);
-            const block = document.getElementById(`q-block-${index}`);
-            const options = block.querySelectorAll('.option-item');
-            const resolution = document.getElementById(`res-${index}`);
-
-            // Mostrar resolução
-            resolution.style.display = 'block';
-
-            if (selected) {
-                const val = parseInt(selected.value);
-                if (val === q.answer) {
-                    score++;
-                    options[val].classList.add('correct');
-                } else {
-                    options[val].classList.add('wrong');
-                    options[q.answer].classList.add('correct');
-                }
+            if (score === total) {
+                feedback.innerText = "Desempenho Excelente! Você dominou todos os conceitos.";
+            } else if (score >= 7) {
+                feedback.innerText = "Bom desempenho! Revise as questões que errou para consolidar o conhecimento.";
             } else {
-                // Se não respondeu, destaca a correta
-                options[q.answer].classList.add('correct');
+                feedback.innerText = "Continue estudando. Analise as resoluções detalhadas abaixo para entender os conceitos de hardware.";
             }
-        });
 
-        // Exibir Resumo
-        const summary = document.getElementById('results-summary');
-        const scoreDisplay = document.getElementById('score-display');
-        summary.style.display = 'block';
-        scoreDisplay.innerText = `${score} / ${questions.length}`;
-        
-        // Scroll para o topo
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Scroll suave para o topo do resultado
+            summary.scrollIntoView({ behavior: 'smooth' });
+        }
 
-        // Desativar interações
-        const allOptions = document.querySelectorAll('.option-item');
-        allOptions.forEach(opt => opt.style.pointerEvents = 'none');
-        document.getElementById('submit-btn').style.display = 'none';
-    }
-
-    window.onload = loadQuestions;
-</script>
-
+        // Inicializar
+        window.onload = renderQuiz;
+    </script>
 </body>
 </html>

@@ -3,459 +3,446 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado EBTT: Hardware - Fundação CEFETMINAS</title>
+    <title>Quiz Técnico: Hardware e Barramentos - CEFETMINAS</title>
     <style>
         :root {
-            --bg-color: #f8fafc;
-            --container-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --accent: #2563eb;
-            --success: #16a34a;
-            --error: #dc2626;
-            --border: #e2e8f0;
-            --resolution-bg: #f1f5f9;
+            --bg-color: #f8f9fa;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --correct-color: #27ae60;
+            --incorrect-color: #d63031;
+            --border-color: #dfe6e9;
+            --card-bg: #ffffff;
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-main);
+            color: var(--text-color);
+            font-family: var(--font-family);
             line-height: 1.6;
             margin: 0;
             padding: 0;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
+            width: 100%;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 1rem;
             text-align: center;
-            margin-bottom: 50px;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 20px;
+            margin-bottom: 2rem;
         }
 
-        header h1 {
-            font-size: 2rem;
-            color: var(--text-main);
-            margin-bottom: 10px;
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--accent-color);
         }
 
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
+        .container {
+            max-width: 850px;
+            width: 95%;
+            margin-bottom: 4rem;
+        }
+
+        .intro-text {
+            background: #e1f5fe;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent-color);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
         }
 
         .question-card {
-            background: var(--container-bg);
-            border: 1px solid var(--border);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            transition: transform 0.2s;
-        }
-
-        .question-header {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .tag {
-            background: var(--accent);
-            color: white;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
         }
 
         .question-text {
-            margin-bottom: 20px;
-            white-space: pre-wrap;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            display: block;
         }
 
         .options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 0.8rem;
         }
 
         .option-label {
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 15px;
-            border: 1px solid var(--border);
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
             cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
+            transition: all 0.2s;
         }
 
         .option-label:hover {
-            background-color: #f8fafc;
-            border-color: var(--accent);
+            background-color: #f1f2f6;
+            border-color: var(--accent-color);
         }
 
         .option-label input {
-            margin-top: 5px;
+            margin-right: 1rem;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
 
-        .resolution-box {
-            margin-top: 25px;
-            padding: 20px;
-            background-color: var(--resolution-bg);
-            border-left: 4px solid var(--accent);
-            border-radius: 4px;
-            display: none;
-            font-size: 0.95rem;
-        }
-
-        .correct-answer {
-            color: var(--success);
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .status-correct {
-            border-color: var(--success) !important;
-            background-color: #f0fdf4 !important;
-        }
-
-        .status-incorrect {
-            border-color: var(--error) !important;
-            background-color: #fef2f2 !important;
-        }
-
-        #btn-submit {
+        .btn-submit {
             display: block;
             width: 100%;
-            max-width: 300px;
-            margin: 40px auto;
-            padding: 15px 30px;
-            background-color: var(--accent);
+            padding: 1.2rem;
+            background-color: var(--accent-color);
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: bold;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: background 0.3s;
+            margin-top: 1rem;
         }
 
-        #btn-submit:hover {
-            opacity: 0.9;
+        .btn-submit:hover {
+            background-color: #0773c5;
         }
 
-        #result-panel {
+        /* Result Styles */
+        #results-container {
             display: none;
-            background: var(--text-main);
-            color: white;
-            padding: 30px;
+            margin-top: 2rem;
+        }
+
+        .score-board {
+            background: var(--card-bg);
+            border: 2px solid var(--accent-color);
             border-radius: 12px;
+            padding: 2rem;
             text-align: center;
-            margin-bottom: 40px;
-            position: sticky;
-            top: 20px;
-            z-index: 100;
+            margin-bottom: 2rem;
         }
 
         .score-value {
             font-size: 3rem;
-            font-weight: 800;
+            font-weight: bold;
+            color: var(--accent-color);
             display: block;
         }
 
-        .math-symbol {
-            font-family: "Cambria Math", "Times New Roman", serif;
-            font-style: italic;
+        .resolution-box {
+            display: none; /* Hidden until submit */
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #fdfdfd;
+            border-top: 2px solid var(--border-color);
+            font-size: 0.95rem;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .status-correct {
+            background-color: #e6fffa !important;
+            border-color: var(--correct-color) !important;
+            color: var(--correct-color);
+            font-weight: bold;
+        }
+
+        .status-incorrect {
+            background-color: #fff5f5 !important;
+            border-color: var(--incorrect-color) !important;
+            color: var(--incorrect-color);
+            font-weight: bold;
+        }
+
+        .correct-answer-indicator {
+            color: var(--correct-color);
+            font-weight: bold;
+            margin-top: 0.5rem;
+            display: block;
         }
 
         @media (max-width: 600px) {
-            .container { padding: 10px; }
-            .question-card { padding: 20px; }
+            .question-card {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+        }
+
+        .print-btn {
+            background: none;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 1rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <h1>Simulado Técnico Especializado: Hardware</h1>
-            <p>Carreira EBTT | Foco: Fundação CEFETMINAS</p>
-        </header>
+<header>
+    <h1>Simulado Hardware: Barramentos, Padrões e Interfaces</h1>
+    <p>Foco: Fundação CEFETMINAS</p>
+</header>
 
-        <div id="result-panel">
-            <span>Seu Resultado:</span>
-            <span class="score-value" id="score-text">0/10</span>
-            <p id="feedback-text"></p>
-            <button onclick="window.location.reload()" style="background: white; color: black; border: none; padding: 5px 15px; border-radius: 4px; cursor: pointer; margin-top: 10px;">Reiniciar Simulado</button>
-        </div>
-
-        <form id="quiz-form">
-            <!-- Question 1 -->
-            <div class="question-card" data-correct="B">
-                <div class="question-header"><span class="tag">Questão 01</span> Arbitragem de Barramento</div>
-                <div class="question-text">A arbitragem de barramento é um mecanismo crítico em arquiteturas de computadores onde múltiplos módulos atuam como "mestres" (bus masters). Analise as afirmativas:
-
-I. Na arbitragem centralizada do tipo Daisy Chain, a linha de controle Bus Grant (BG) é encadeada fisicamente em série. A prioridade é determinada pela proximidade elétrica.
-II. O método de Polling substitui a linha de Bus Grant por um conjunto de linhas de endereço de votação. Introduz uma latência variável.
-III. Na arbitragem por Solicitação Independente, cada mestre possui um par dedicado de linhas (BR e BG). Permite prioridade dinâmica.
-IV. O barramento PCI clássico utiliza um esquema de arbitragem distribuída baseado em detecção de colisão (similar ao CSMA/CD).
-
-Estão CORRETAS as afirmativas:</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q1" value="A"> A) I e II, apenas.</label>
-                    <label class="option-label"><input type="radio" name="q1" value="B"> B) I, II e III, apenas.</label>
-                    <label class="option-label"><input type="radio" name="q1" value="C"> C) II e IV, apenas.</label>
-                    <label class="option-label"><input type="radio" name="q1" value="D"> D) I, III e IV, apenas.</label>
-                    <label class="option-label"><input type="radio" name="q1" value="E"> E) III e IV, apenas.</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: B</span>
-                    <strong>Resolução:</strong> O item IV está incorreto porque o PCI clássico utiliza arbitragem <strong>centralizada</strong> (no chipset/southbridge) com sinais REQ# e GNT# dedicados por slot, e não detecção de colisão distribuída. Os itens I, II e III descrevem fielmente os métodos clássicos de Stallings e Tanenbaum.
-                </div>
-            </div>
-
-            <!-- Question 2 -->
-            <div class="question-card" data-correct="E">
-                <div class="question-header"><span class="tag">Questão 02</span> PCIe e Largura de Banda</div>
-                <div class="question-text">Sobre a evolução do barramento PCI Express (PCIe) e suas técnicas de codificação, analise as proposições:
-
-A) No PCIe 2.0, a taxa é 5.0 GT/s com codificação 8b/10b (20% overhead), resultando em 2 GB/s para link x4.
-B) No PCIe 3.0, introduziu-se a codificação 128b/130b (eficiência ~98,5%), permitindo ~1 GB/s por pista.
-C) A transição para 128b/130b mitigou problemas de integridade de sinal em materiais FR4 ao não exigir dobro de frequência.
-D) Um dispositivo PCIe 4.0 operará a 8.0 GT/s em slot 3.0 via Link Training.
-E) Todas as proposições acima estão tecnicamente corretas.</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q2" value="A"> A) Apenas A e B são verdadeiras.</label>
-                    <label class="option-label"><input type="radio" name="q2" value="B"> B) Apenas B e C são verdadeiras.</label>
-                    <label class="option-label"><input type="radio" name="q2" value="C"> C) Apenas A, B e D são verdadeiras.</label>
-                    <label class="option-label"><input type="radio" name="q2" value="D"> D) Apenas C e D são verdadeiras.</label>
-                    <label class="option-label"><input type="radio" name="q2" value="E"> E) A alternativa E é a correta.</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: E</span>
-                    <strong>Resolução:</strong> Todas as afirmações são precisas. O PCIe 2.0 (5 GT/s * 0.8 / 8 bits = 500 MB/s per lane). O PCIe 3.0 (8 GT/s * 128/130 / 8 bits ≈ 985 MB/s). A retrocompatibilidade e a justificativa física da frequência de Nyquist em placas FR4 estão de acordo com o padrão PCI-SIG.
-                </div>
-            </div>
-
-            <!-- Question 3 -->
-            <div class="question-card" data-correct="B">
-                <div class="question-header"><span class="tag">Questão 03</span> Padrões USB</div>
-                <div class="question-text">Sobre as gerações do padrão USB e suas especificações, assinale a alternativa INCORRETA:</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q3" value="A"> A) USB 3.0 foi renomeado sucessivamente para USB 3.1 Gen 1 e USB 3.2 Gen 1 (SuperSpeed USB).</label>
-                    <label class="option-label"><input type="radio" name="q3" value="B"> B) O USB 3.1 Gen 2 (10 Gbps) utiliza a codificação 128b/130b para reduzir o overhead.</label>
-                    <label class="option-label"><input type="radio" name="q3" value="C"> C) O USB 3.2 Gen 2x2 utiliza duas pistas de 10 Gbps e requer obrigatoriamente conector Tipo-C.</label>
-                    <label class="option-label"><input type="radio" name="q3" value="D"> D) O USB4 versão 1.0 baseia-se no Thunderbolt 3 e utiliza codificação 64b/66b.</label>
-                    <label class="option-label"><input type="radio" name="q3" value="E"> E) O conector USB 3.0 Tipo-A possui 9 pinos (4 herdados do 2.0 e 5 para SuperSpeed).</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: B</span>
-                    <strong>Resolução:</strong> "Peguinha" clássico. O USB 3.1 Gen 2 utiliza a codificação <strong>128b/132b</strong> (4 bits de overhead no cabeçalho), e não a 128b/130b usada pelo PCIe 3.0. Essa diferença de 2 bits garante maior robustez em cabos externos.
-                </div>
-            </div>
-
-            <!-- Question 4 -->
-            <div class="question-card" data-correct="A">
-                <div class="question-header"><span class="tag">Questão 04</span> M.2 e Protocolos</div>
-                <div class="question-text">Sobre os soquetes e chaves (keys) do padrão M.2 (NGFF), assinale a alternativa CORRETA:</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q4" value="A"> A) Um slot com "Key M" (pinos 59-66) suporta PCIe x4 e SATA, sendo o padrão para SSDs NVMe de alto desempenho.</label>
-                    <label class="option-label"><input type="radio" name="q4" value="B"> B) Um slot com "Key B" é exclusivo para conexões SATA e fisicamente incompatível com sinalização PCIe.</label>
-                    <label class="option-label"><input type="radio" name="q4" value="C"> C) O protocolo NVMe utiliza uma arquitetura de fila única com profundidade de 32, idêntica ao SATA III.</label>
-                    <label class="option-label"><input type="radio" name="q4" value="D"> D) A "Key E" é comumente utilizada para SSDs de armazenamento secundário em Ultrabooks.</label>
-                    <label class="option-label"><input type="radio" name="q4" value="E"> E) Um SSD M.2 com conector "B+M Key" opera necessariamente em velocidade PCIe 4.0 x4.</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: A</span>
-                    <strong>Resolução:</strong> A Key M permite 4 lanes PCIe. A alternativa B está errada pois a Key B suporta PCIe x2. A C está errada (NVMe tem 64k filas). A D está errada (Key E é para WiFi/BT). A E está errada (B+M é limitado a x2 por falta de pinos).
-                </div>
-            </div>
-
-            <!-- Question 5 -->
-            <div class="question-card" data-correct="E">
-                <div class="question-header"><span class="tag">Questão 05</span> Arquitetura DDR5</div>
-                <div class="question-text">Sobre a arquitetura DDR5 (Double Data Rate 5), analise:
-
-I. O Prefetch foi aumentado para 16n, o dobro do DDR4.
-II. Um módulo DIMM DDR5 opera com dois subcanais independentes de 32 bits (mais ECC).
-III. A regulação de tensão foi movida para o módulo através do PMIC, com tensão padrão de 1.1V.
-
-Quais afirmativas estão CORRETAS?</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q5" value="A"> A) Apenas I.</label>
-                    <label class="option-label"><input type="radio" name="q5" value="B"> B) Apenas II.</label>
-                    <label class="option-label"><input type="radio" name="q5" value="C"> C) Apenas I e III.</label>
-                    <label class="option-label"><input type="radio" name="q5" value="D"> D) Apenas II e III.</label>
-                    <label class="option-label"><input type="radio" name="q5" value="E"> E) I, II e III.</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: E</span>
-                    <strong>Resolução:</strong> Todas as afirmações descrevem as mudanças principais do padrão JEDEC para DDR5 visando maior largura de banda e eficiência energética.
-                </div>
-            </div>
-
-            <!-- Question 6 -->
-            <div class="question-card" data-correct="B">
-                <div class="question-header"><span class="tag">Questão 06</span> RS-232</div>
-                <div class="question-text">Sobre o padrão RS-232C e níveis lógicos, assinale a alternativa CORRETA:</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q6" value="A"> A) RS-232 utiliza lógica positiva (1 = +5V, 0 = 0V).</label>
-                    <label class="option-label"><input type="radio" name="q6" value="B"> B) RS-232 utiliza lógica negativa: "1" (Mark) entre -3V e -15V, e "0" (Space) entre +3V e +15V.</label>
-                    <label class="option-label"><input type="radio" name="q6" value="C"> C) Conexão RS-232 e TTL pode ser feita fio-a-fio sem conversores.</label>
-                    <label class="option-label"><input type="radio" name="q6" value="D"> D) A zona de transição situa-se entre 0V e +2V.</label>
-                    <label class="option-label"><input type="radio" name="q6" value="E"> E) RS-232 é um barramento diferencial para até 1200 metros.</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: B</span>
-                    <strong>Resolução:</strong> O RS-232 é caracterizado por tensões bipolares e lógica invertida. Tensões negativas representam o 1 lógico. A alternativa E refere-se ao RS-485.
-                </div>
-            </div>
-
-            <!-- Question 7 -->
-            <div class="question-card" data-correct="E">
-                <div class="question-header"><span class="tag">Questão 07</span> IEEE 1284 (Paralela)</div>
-                <div class="question-text">Qual modo do IEEE 1284 utiliza DMA, buffer FIFO e compressão RLE via hardware para impressoras e scanners?</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q7" value="A"> A) SPP - Modo Compatibilidade.</label>
-                    <label class="option-label"><input type="radio" name="q7" value="B"> B) Nibble Mode.</label>
-                    <label class="option-label"><input type="radio" name="q7" value="C"> C) Byte Mode.</label>
-                    <label class="option-label"><input type="radio" name="q7" value="D"> D) EPP (Enhanced Parallel Port).</label>
-                    <label class="option-label"><input type="radio" name="q7" value="E"> E) ECP (Extended Capabilities Port).</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: E</span>
-                    <strong>Resolução:</strong> O modo ECP foi projetado por Microsoft e HP justamente para alta performance com suporte a compressão RLE e DMA, diferenciando-se do EPP que é focado em periféricos de armazenamento.
-                </div>
-            </div>
-
-            <!-- Question 8 -->
-            <div class="question-card" data-correct="B">
-                <div class="question-header"><span class="tag">Questão 08</span> Chipsets e DMI</div>
-                <div class="question-text">Sobre a transição de arquiteturas Intel e o barramento DMI, assinale a CORRETA:</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q8" value="A"> A) O PCH absorveu o controlador de memória (IMC) em sistemas atuais.</label>
-                    <label class="option-label"><input type="radio" name="q8" value="B"> B) O DMI 3.0 conecta CPU ao PCH com 8 GT/s por pista, totalizando ~3.93 GB/s em link x4.</label>
-                    <label class="option-label"><input type="radio" name="q8" value="C"> C) O Northbridge gerenciava Mouse e Teclado, enquanto o Southbridge cuidava da RAM.</label>
-                    <label class="option-label"><input type="radio" name="q8" value="D"> D) O DMI é um barramento paralelo síncrono de 64 bits a 133 MHz.</label>
-                    <label class="option-label"><input type="radio" name="q8" value="E"> E) O termo "Uncore" refere-se à parte do PCH responsável pelo boot seguro.</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: B</span>
-                    <strong>Resolução:</strong> O DMI 3.0 utiliza a física do PCIe 3.0 x4 para interligar a CPU ao PCH. A alternativa A está errada (o IMC está na CPU). C inverteu as funções. E está errada (Uncore é na CPU).
-                </div>
-            </div>
-
-            <!-- Question 9 -->
-            <div class="question-card" data-correct="A">
-                <div class="question-header"><span class="tag">Questão 09</span> FireWire e Thunderbolt</div>
-                <div class="question-text">Em relação a FireWire e Thunderbolt, é CORRETO afirmar:</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q9" value="A"> A) O IEEE 1394b (FireWire 800) suporta Daisy Chain e comunicação Peer-to-Peer sem intervenção da CPU.</label>
-                    <label class="option-label"><input type="radio" name="q9" value="B"> B) O Thunderbolt 3 garante 40 Gbps para dados PCIe sem reserva para vídeo.</label>
-                    <label class="option-label"><input type="radio" name="q9" value="C"> C) O Thunderbolt 4 dobra a velocidade do TB3 para 80 Gbps.</label>
-                    <label class="option-label"><input type="radio" name="q9" value="D"> D) O Thunderbolt 3 utiliza Mini DisplayPort, e o TB4 migrou para USB-C.</label>
-                    <label class="option-label"><input type="radio" name="q9" value="E"> E) O FireWire 400 é eletricamente compatível com USB 2.0 via adaptador passivo.</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: A</span>
-                    <strong>Resolução:</strong> A grande vantagem histórica do FireWire era o DMA direto e P2P. O TB4 mantém os 40 Gbps do TB3. O TB3 já usava USB-C.
-                </div>
-            </div>
-
-            <!-- Question 10 -->
-            <div class="question-card" data-correct="B">
-                <div class="question-header"><span class="tag">Questão 10</span> JTAG (IEEE 1149.1)</div>
-                <div class="question-text">O conjunto de sinais OBRIGATÓRIOS da Porta de Acesso de Teste (TAP) do padrão JTAG é:</div>
-                <div class="options">
-                    <label class="option-label"><input type="radio" name="q10" value="A"> A) VCC, GND, TX, RX, RTS, CTS.</label>
-                    <label class="option-label"><input type="radio" name="q10" value="B"> B) TCK (Clock), TMS (Mode Select), TDI (Data In), TDO (Data Out).</label>
-                    <label class="option-label"><input type="radio" name="q10" value="C"> C) TCK, TDI, TDO, TRST, ENABLE.</label>
-                    <label class="option-label"><input type="radio" name="q10" value="D"> D) CLK, MOSI, MISO, SS.</label>
-                    <label class="option-label"><input type="radio" name="q10" value="E"> E) D+, D-, VBUS, ID, GND.</label>
-                </div>
-                <div class="resolution-box">
-                    <span class="correct-answer">Alternativa Correta: B</span>
-                    <strong>Resolução:</strong> TRST (Reset) é opcional. Os quatro sinais obrigatórios são TCK, TMS, TDI e TDO.
-                </div>
-            </div>
-
-            <button type="button" id="btn-submit">Finalizar e Ver Resoluções</button>
-        </form>
+<div class="container">
+    <div class="intro-text">
+        Selecione uma alternativa para cada uma das 10 questões abaixo. Ao final, clique em "Finalizar Quiz" para ver sua pontuação e as resoluções detalhadas.
     </div>
 
-    <script>
-        document.getElementById('btn-submit').addEventListener('click', function() {
-            const form = document.getElementById('quiz-form');
-            const questions = document.querySelectorAll('.question-card');
-            let score = 0;
-            let answeredAll = true;
+    <form id="quiz-form">
+        <!-- Questões serão inseridas via JavaScript -->
+        <div id="questions-list"></div>
 
-            questions.forEach((q, index) => {
-                const qNum = index + 1;
-                const selected = form.querySelector(`input[name="q${qNum}"]:checked`);
-                const correctValue = q.getAttribute('data-correct');
-                const resolution = q.querySelector('.resolution-box');
-                const options = q.querySelectorAll('.option-label');
+        <button type="button" id="submit-btn" class="btn-submit">Finalizar Quiz e Ver Resoluções</button>
+    </form>
 
-                // Revelar resolução
-                resolution.style.display = 'block';
+    <div id="results-container">
+        <div class="score-board">
+            <h2>Resultado do Simulado</h2>
+            <span id="score-text" class="score-value">0 / 10</span>
+            <p id="feedback-text"></p>
+            <button class="print-btn" onclick="window.print()">Salvar / Imprimir Resoluções</button>
+        </div>
+    </div>
+</div>
 
-                if (selected) {
-                    if (selected.value === correctValue) {
-                        score++;
-                        selected.parentElement.classList.add('status-correct');
-                    } else {
-                        selected.parentElement.classList.add('status-incorrect');
-                        // Destacar a correta também
-                        options.forEach(opt => {
-                            if (opt.querySelector('input').value === correctValue) {
-                                opt.style.borderColor = 'var(--success)';
-                                opt.style.borderWidth = '2px';
-                            }
-                        });
-                    }
-                } else {
-                    answeredAll = false;
-                }
-                
-                // Desabilitar inputs
-                q.querySelectorAll('input').forEach(i => i.disabled = true);
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "(Fundação CEFETMINAS) A evolução da arquitetura de computadores foi marcada pela transição de barramentos paralelos para tecnologias seriais de alta frequência, visando superar limitações de sincronismo e interferência eletromagnética. Dentre as tecnologias de barramento de expansão listadas abaixo, assinale a alternativa que apresenta aquela que utiliza transmissão de dados serial ponto a ponto (lanes), opera em modo full-duplex e substituiu, na maioria das aplicações de alto desempenho, os antigos padrões PCI e AGP nas placas-mãe modernas.",
+            options: ["ISA (Industry Standard Architecture).", "IDE (Integrated Drive Electronics).", "PCI Express (PCIe).", "SCSI (Small Computer System Interface).", "VESA Local Bus (VLB)."],
+            correct: 2,
+            resolution: "A questão aborda a transição dos paradigmas de comunicação paralela para a serial. O PCI Express (PCIe) organiza a comunicação em pares diferenciais chamados 'lanes', permitindo comunicação Full-Duplex e eliminando problemas como Clock Skew e Crosstalk, típicos dos barramentos paralelos como PCI e AGP."
+        },
+        {
+            id: 2,
+            question: "(Fundação CEFETMINAS) O chipset é um componente vital na placa-mãe, historicamente dividido em dois chips principais: a Ponte Norte (Northbridge) e a Ponte Sul (Southbridge). Com a evolução da arquitetura de processadores, muitas funções foram integradas diretamente ao processador. Considerando a arquitetura clássica e suas evoluções, assinale a alternativa que descreve corretamente a função histórica e atual dos componentes que desempenham o papel da Ponte Sul.",
+            options: [
+                "Realizar a comunicação direta e de altíssima velocidade com a memória RAM e a placa de vídeo.",
+                "Atuar como um hub de entrada e saída (I/O) de menor velocidade, gerenciando interfaces como USB, SATA, áudio, rede e slots de expansão legados.",
+                "Executar o processamento lógico-aritmético das instruções enviadas pelo kernel do sistema operacional.",
+                "Gerenciar exclusivamente a tensão elétrica fornecida ao processador através do módulo VRM.",
+                "Armazenar o firmware da BIOS/UEFI em memória volátil de alta velocidade para execução imediata."
+            ],
+            correct: 1,
+            resolution: "A Ponte Sul (Southbridge) gerencia componentes de 'baixa' velocidade (I/O), como USB, SATA, Áudio e Rede. Enquanto a Ponte Norte lidava com RAM e Vídeo (hoje integrados na CPU), a Ponte Sul permanece como o atual Chipset (PCH) para gerenciar periféricos."
+        },
+        {
+            id: 3,
+            question: "(Fundação CEFETMINAS) A interface USB (Universal Serial Bus) revolucionou a conectividade de periféricos. No entanto, a nomenclatura de suas versões sofreu diversas alterações. Sobre as especificações técnicas, taxas de transferência teóricas máximas e padrões físicos, assinale a alternativa INCORRETA.",
+            options: [
+                "O padrão USB 1.1 (Full Speed) suporta taxas de até 12 Mbps.",
+                "O padrão USB 2.0 (High Speed) elevou a taxa máxima teórica para 480 Mbps.",
+                "O padrão USB 3.0 (atualmente USB 3.2 Gen 1) introduziu o SuperSpeed de até 5 Gbps.",
+                "O conector USB Tipo-C é exclusivo para o padrão USB 3.2 e superiores, não possuindo retrocompatibilidade elétrica ou física com controladores USB 2.0.",
+                "O padrão USB4 pode alcançar taxas de até 40 Gbps e utiliza obrigatoriamente o conector físico Tipo-C."
+            ],
+            correct: 3,
+            resolution: "A alternativa D está incorreta pois o Tipo-C é apenas um formato físico de conector. É perfeitamente possível ter conectores Tipo-C operando em velocidades de USB 2.0 (muito comum em cabos de carga de smartphones), e ele possui retrocompatibilidade total via adaptadores ou pinagem específica."
+        },
+        {
+            id: 4,
+            question: "(Fundação CEFETMINAS) Para o armazenamento de dados, o protocolo NVMe (Non-Volatile Memory Express) é considerado superior ao protocolo AHCI utilizado em conexões SATA para SSDs. Qual é a principal característica técnica que confere ao NVMe vantagem de desempenho sobre o SATA III?",
+            options: [
+                "O uso direto das vias do barramento PCI Express para comunicação com a CPU, reduzindo a latência e aumentando a largura de banda.",
+                "A utilização de cabos flat de 80 vias que permitem a transmissão paralela de 16 bits simultâneos.",
+                "A dependência exclusiva do chipset Ponte Sul para gerenciar todas as interrupções de hardware.",
+                "A compatibilidade nativa com discos rígidos mecânicos (HDDs) de 5400 RPM.",
+                "A capacidade de operar sem drivers no sistema operacional, comportando-se como uma memória RAM volátil."
+            ],
+            correct: 0,
+            resolution: "O NVMe utiliza as vias PCIe, eliminando o limite de 600MB/s do SATA III. Além disso, suporta 64.000 filas de comandos (contra 1 do AHCI), permitindo acesso paralelo massivo aos chips de flash."
+        },
+        {
+            id: 5,
+            question: "(Fundação CEFETMINAS) Analise as afirmações abaixo sobre RAID: I. O RAID 0 divide os dados para aumentar desempenho, mas sem redundância; II. O RAID 1 espelha os dados para alta redundância, com eficiência de 50% de espaço; III. O RAID 5 requer no mínimo 3 discos e utiliza paridade distribuída. Estão corretas:",
+            options: ["Apenas I.", "Apenas II.", "Apenas I e III.", "Apenas II e III.", "I, II e III."],
+            correct: 4,
+            resolution: "Todas estão corretas. RAID 0 foca em performance (Striping), RAID 1 em segurança (Mirroring) e RAID 5 equilibra ambos usando paridade distribuída entre no mínimo 3 discos."
+        },
+        {
+            id: 6,
+            question: "(Fundação CEFETMINAS) Qual interface digital foi projetada para substituir VGA e DVI, transmitindo vídeo HD não comprimido e áudio multicanal, além de possuir proteção HDCP?",
+            options: ["RGB (Componente).", "HDMI (High-Definition Multimedia Interface).", "S-Video.", "VGA (Video Graphics Array).", "LPT1 (Line Print Terminal)."],
+            correct: 1,
+            resolution: "O HDMI unificou a transmissão de vídeo digital e áudio multicanal em um único cabo, incluindo o protocolo HDCP de proteção contra cópia pirata, tornando-se o padrão para TVs e monitores modernos."
+        },
+        {
+            id: 7,
+            question: "(Fundação CEFETMINAS) Assinale a alternativa que melhor define o funcionamento técnico do recurso 'Plug and Play' (PnP).",
+            options: [
+                "Capacidade de trocar o dispositivo fisicamente enquanto o computador está ligado (Hot Swap).",
+                "O sistema operacional, em conjunto com a BIOS/UEFI, reconhece o dispositivo, aloca automaticamente recursos (IRQs, endereços E/S) e carrega drivers.",
+                "Permite que o processador execute instruções de 64 bits em barramentos legados de 32 bits.",
+                "Tecnologia que permite o funcionamento de periféricos sem a necessidade de energia elétrica.",
+                "Padrão exclusivo de barramentos ISA que exige a configuração manual de jumpers."
+            ],
+            correct: 1,
+            resolution: "O PnP elimina a necessidade de configurar jumpers manuais (comum na era ISA). O sistema 'enumera' o dispositivo via ID e aloca automaticamente os recursos de hardware necessários para o funcionamento."
+        },
+        {
+            id: 8,
+            question: "(Fundação CEFETMINAS) Assinale a alternativa correta sobre as características técnicas das memórias DDR (Double Data Rate).",
+            options: [
+                "Módulos DDR3 podem ser fisicamente instalados em slots DDR4 devido à pinagem idêntica.",
+                "A tecnologia DDR permite a transferência de dados duas vezes por ciclo de clock (borda de subida e descida).",
+                "O padrão DDR4 introduziu o conceito de memória não volátil.",
+                "Memórias DDR2 operam com voltagens superiores às memórias DDR1.",
+                "O barramento de endereços das memórias DDR5 é puramente serial."
+            ],
+            correct: 1,
+            resolution: "DDR significa Double Data Rate exatamente porque realiza duas transferências por ciclo de clock. As gerações são fisicamente incompatíveis devido ao 'notch' (entalhe) e as voltagens tendem a diminuir a cada nova geração."
+        },
+        {
+            id: 9,
+            question: "(Fundação CEFETMINAS) Sobre a arquitetura PCIe e suas 'lanes' (vias), é correto afirmar:",
+            options: [
+                "Um slot x16 possui exatamente 16 pinos de conexão física.",
+                "Uma placa de expansão PCIe x1 pode ser instalada fisicamente e funcionar em um slot PCIe x16.",
+                "A taxa de transferência de uma via PCIe 3.0 é idêntica à de uma via PCIe 4.0.",
+                "O PCIe é um barramento estritamente paralelo e síncrono.",
+                "Slots PCIe x1 são dedicados exclusivamente para placas de som."
+            ],
+            correct: 1,
+            resolution: "O PCIe é extremamente flexível. Uma placa 'menor' (x1) funciona perfeitamente em um slot 'maior' (x16). O protocolo é serial e a velocidade por lane dobra a cada geração."
+        },
+        {
+            id: 10,
+            question: "(Fundação CEFETMINAS) A respeito da interface SATA, analise as taxas teóricas máximas das revisões I, II e III e assinale a correta.",
+            options: [
+                "SATA I: 1.5 Gb/s; SATA II: 3.0 Gb/s; SATA III: 6.0 Gb/s.",
+                "SATA I: 133 MB/s; SATA II: 266 MB/s; SATA III: 533 MB/s.",
+                "SATA I: 480 Mb/s; SATA II: 5.0 Gb/s; SATA III: 10 Gb/s.",
+                "SATA I: 1.0 Gb/s; SATA II: 2.0 Gb/s; SATA III: 4.0 Gb/s.",
+                "SATA I: 3.0 Gb/s; SATA II: 6.0 Gb/s; SATA III: 12.0 Gb/s."
+            ],
+            correct: 0,
+            resolution: "O padrão SATA escalou dobrando a velocidade a cada versão: 1.5Gbps (~150MB/s), 3.0Gbps (~300MB/s) e 6.0Gbps (~600MB/s). Atualmente, a evolução de performance de armazenamento migrou para o PCIe (NVMe)."
+        }
+    ];
+
+    const questionsList = document.getElementById('questions-list');
+    const submitBtn = document.getElementById('submit-btn');
+    const resultsContainer = document.getElementById('results-container');
+    const scoreText = document.getElementById('score-text');
+    const feedbackText = document.getElementById('feedback-text');
+
+    // Renderizar questões
+    function renderQuiz() {
+        quizData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            let optionsHtml = '';
+            item.options.forEach((opt, optIndex) => {
+                const letter = String.fromCharCode(65 + optIndex);
+                optionsHtml += `
+                    <label class="option-label" id="label-${index}-${optIndex}">
+                        <input type="radio" name="question-${index}" value="${optIndex}">
+                        <span><strong>${letter})</strong> ${opt}</span>
+                    </label>
+                `;
             });
 
-            // Painel de Resultado
-            const panel = document.getElementById('result-panel');
-            const scoreText = document.getElementById('score-text');
-            const feedback = document.getElementById('feedback-text');
-            
-            panel.style.display = 'block';
-            scoreText.innerText = `${score}/10`;
-            
-            if(score >= 8) {
-                feedback.innerText = "Excelente! Você está no nível de aprovação para EBTT.";
-                panel.style.background = "#065f46";
-            } else if (score >= 6) {
-                feedback.innerText = "Bom desempenho. Revise os pontos de codificação e padrões seriais.";
-                panel.style.background = "#1e3a8a";
-            } else {
-                feedback.innerText = "Atenção: A banca CEFETMINAS exige precisão em detalhes técnicos. Reforce a bibliografia.";
-                panel.style.background = "#991b1b";
-            }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            this.style.display = 'none';
+            card.innerHTML = `
+                <span class="question-text">Questão ${index + 1}: ${item.question}</span>
+                <div class="options">
+                    ${optionsHtml}
+                </div>
+                <div class="resolution-box" id="res-${index}">
+                    <h4>Resolução Analítica:</h4>
+                    <p>${item.resolution}</p>
+                </div>
+            `;
+            questionsList.appendChild(card);
         });
-    </script>
+    }
+
+    // Processar resultado
+    function checkResults() {
+        let score = 0;
+        let answeredAll = true;
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+            const resolutionBox = document.getElementById(`res-${index}`);
+            const card = document.getElementById(`q-card-${index}`);
+            
+            // Mostrar resolução
+            resolutionBox.style.display = 'block';
+
+            if (selected) {
+                const answer = parseInt(selected.value);
+                const selectedLabel = document.getElementById(`label-${index}-${answer}`);
+                
+                if (answer === item.correct) {
+                    score++;
+                    selectedLabel.classList.add('status-correct');
+                } else {
+                    selectedLabel.classList.add('status-incorrect');
+                    // Mostrar qual era a correta
+                    const correctLabel = document.getElementById(`label-${index}-${item.correct}`);
+                    correctLabel.classList.add('status-correct');
+                }
+            } else {
+                answeredAll = false;
+                // Marcar a correta mesmo que não tenha respondido
+                const correctLabel = document.getElementById(`label-${index}-${item.correct}`);
+                correctLabel.classList.add('status-correct');
+            }
+        });
+
+        // Mostrar Placar
+        resultsContainer.style.display = 'block';
+        scoreText.innerText = `${score} / ${quizData.length}`;
+        
+        if (score === 10) {
+            feedbackText.innerText = "Excelente! Você dominou o conteúdo de hardware da CEFETMINAS.";
+        } else if (score >= 7) {
+            feedbackText.innerText = "Muito bom! Você tem uma base sólida, mas revise as questões que errou.";
+        } else {
+            feedbackText.innerText = "Continue estudando. Analise as resoluções abaixo para entender os conceitos.";
+        }
+
+        // Desabilitar inputs e botão
+        document.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+        submitBtn.style.display = 'none';
+
+        // Scroll suave para o resultado
+        resultsContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    submitBtn.addEventListener('click', checkResults);
+
+    window.onload = renderQuiz;
+</script>
+
 </body>
 </html>

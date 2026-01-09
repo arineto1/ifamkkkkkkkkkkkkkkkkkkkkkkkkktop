@@ -3,473 +3,464 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado Hardware - Professor EBTT</title>
+    <title>Simulado Técnico: Hardware e Armazenamento</title>
     <style>
         :root {
-            --bg-color: #f8f9fa;
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --accent-color: #34495e;
+            --correct-color: #27ae60;
+            --wrong-color: #c0392b;
+            --border-color: #e0e0e0;
             --card-bg: #ffffff;
-            --text-primary: #2d3436;
-            --text-secondary: #636e72;
-            --accent-color: #0984e3;
-            --success: #27ae60;
-            --error: #d63031;
-            --border-color: #dfe6e9;
-            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --max-width: 850px;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: var(--font-main);
-            line-height: 1.6;
-            padding: 2rem 1rem;
-        }
-
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
+            color: var(--text-color);
+            font-family: 'Segoe UI', Georgia, serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
+            width: 100%;
+            max-width: var(--max-width);
+            padding: 40px 20px;
             text-align: center;
-            margin-bottom: 3rem;
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 1.5rem;
+            margin-bottom: 40px;
         }
 
-        header h1 {
-            font-size: 1.8rem;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
+        h1 {
+            font-size: 2.2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
         }
 
-        header p {
-            color: var(--text-secondary);
+        .meta-info {
             font-style: italic;
+            color: #7f8c8d;
+        }
+
+        main {
+            width: 100%;
+            max-width: var(--max-width);
+            padding: 0 20px;
+            box-sizing: border-box;
         }
 
         .question-card {
             background: var(--card-bg);
+            padding: 30px;
+            margin-bottom: 50px;
             border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            border-left: 5px solid var(--accent-color);
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border: 1px solid var(--border-color);
-            transition: transform 0.2s;
         }
 
         .question-text {
             font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
             display: block;
         }
 
-        .options-list {
-            list-style: none;
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
         }
 
-        .option-item {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: flex-start;
-            cursor: pointer;
-            padding: 0.8rem;
-            border-radius: 6px;
-            border: 1px solid transparent;
-            transition: all 0.2s;
-        }
-
-        .option-item:hover {
-            background-color: #f1f2f6;
-        }
-
-        .option-item input {
-            margin-top: 0.4rem;
-            margin-right: 1rem;
-            cursor: pointer;
-        }
-
-        .option-label {
-            cursor: pointer;
-            flex: 1;
-        }
-
-        /* Classes para o resultado */
-        .option-item.correct {
-            background-color: #e8f5e9;
-            border-color: var(--success);
-        }
-
-        .option-item.wrong {
-            background-color: #ffebee;
-            border-color: var(--error);
-        }
-
-        .resolution-box {
-            margin-top: 1.5rem;
-            padding: 1.5rem;
-            background-color: #f0f7ff;
-            border-left: 4px solid var(--accent-color);
-            display: none;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
             font-size: 0.95rem;
         }
 
-        .resolution-box h4 {
-            margin-bottom: 0.5rem;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+        table, th, td {
+            border: 1px solid var(--border-color);
         }
 
-        #submit-btn {
-            display: block;
-            width: 100%;
-            padding: 1.2rem;
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background-color: #f1f4f6;
+            border-color: #bdc3c7;
+        }
+
+        .option input {
+            margin-right: 15px;
+            margin-top: 6px;
+            cursor: pointer;
+        }
+
+        .option-text {
+            flex: 1;
+        }
+
+        .submit-container {
+            text-align: center;
+            padding: 40px 0 80px 0;
+        }
+
+        button {
             background-color: var(--accent-color);
             color: white;
             border: none;
-            border-radius: 8px;
+            padding: 15px 40px;
             font-size: 1.1rem;
-            font-weight: bold;
+            border-radius: 30px;
             cursor: pointer;
-            transition: background 0.3s;
-            margin-bottom: 4rem;
+            transition: transform 0.2s, background-color 0.2s;
+            font-weight: bold;
         }
 
-        #submit-btn:hover {
-            background-color: #0873c4;
+        button:hover {
+            background-color: #2c3e50;
+            transform: translateY(-2px);
         }
 
-        #result-summary {
+        #results {
             display: none;
-            text-align: center;
-            padding: 2rem;
-            background: var(--card-bg);
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .score-banner {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 30px;
             border-radius: 8px;
-            margin-bottom: 2rem;
-            border: 2px solid var(--accent-color);
-        }
-
-        .score-display {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--accent-color);
-        }
-
-        .feedback-msg {
-            font-size: 1.2rem;
-            margin-top: 0.5rem;
-        }
-
-        footer {
             text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            margin-bottom: 2rem;
+            margin-bottom: 40px;
         }
 
-        /* Estilo para fórmulas/códigos inline */
-        code {
-            background: #eee;
-            padding: 2px 4px;
-            border-radius: 4px;
-            font-family: 'Courier New', Courier, monospace;
+        .score-banner h2 {
+            margin: 0;
+            font-size: 2rem;
         }
+
+        .resolution-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border: 1px dashed var(--border-color);
+            display: none;
+        }
+
+        .correct-answer-label {
+            color: var(--correct-color);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .wrong-answer-label {
+            color: var(--wrong-color);
+            font-weight: bold;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .status-correct { background: #d4edda; color: #155724; }
+        .status-wrong { background: #f8d7da; color: #721c24; }
 
         @media (max-width: 600px) {
-            .question-card {
-                padding: 1rem;
-            }
+            h1 { font-size: 1.6rem; }
+            .question-card { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>Simulado Técnico: Hardware e Armazenamento</h1>
-        <p>Perfil: Carreira EBTT | Banca: Fundação CEFETMINAS</p>
-    </header>
+<header>
+    <h1>Simulado de Hardware</h1>
+    <p class="meta-info">Padrão Fundação CEFETMINAS • 10 Questões • Armazenamento e Placas</p>
+</header>
 
-    <div id="result-summary">
-        <div>Seu desempenho:</div>
-        <div class="score-display" id="final-score">0 / 10</div>
-        <div class="feedback-msg" id="feedback-msg"></div>
-    </div>
-
+<main>
     <form id="quiz-form">
-        <div id="questions-container">
-            <!-- As questões serão inseridas via JavaScript -->
+        <!-- Questão 1 -->
+        <div class="question-card" id="q1-card">
+            <span class="question-text">Questão 1: A evolução dos dispositivos de armazenamento de dados alterou significativamente a arquitetura de desempenho dos computadores pessoais e servidores... Considere um cenário em que um Técnico precisa justificar a aquisição de equipamentos para um servidor de banco de dados que exige altíssima taxa de IOPS e baixa latência. Analise as afirmativas:</span>
+            
+            <p>I. O desempenho de um HDD é fisicamente limitado por dois fatores mecânicos: o tempo de busca (seek time) e a latência rotacional.<br>
+            II. A fragmentação de arquivos afeta de maneira crítica os SSDs, exigindo movimentos mecânicos internos nos transistores de porta flutuante.<br>
+            III. A interface NVMe foi desenvolvida especificamente para SSDs via barramento PCIe para superar as limitações da interface SATA.<br>
+            IV. A tecnologia Flash NAND é um tipo de memória volátil; portanto, SSDs perdem todos os dados em corte de energia.</p>
+
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q1" value="A"> <span class="option-text">A) I e III.</span></label>
+                <label class="option"><input type="radio" name="q1" value="B"> <span class="option-text">B) I, II e IV.</span></label>
+                <label class="option"><input type="radio" name="q1" value="C"> <span class="option-text">C) II e III.</span></label>
+                <label class="option"><input type="radio" name="q1" value="D"> <span class="option-text">D) I, III e IV.</span></label>
+                <label class="option"><input type="radio" name="q1" value="E"> <span class="option-text">E) III e IV.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q1"></div>
         </div>
 
-        <button type="button" id="submit-btn" onclick="checkAnswers()">Finalizar e Ver Resoluções</button>
+        <!-- Questão 2 -->
+        <div class="question-card" id="q2-card">
+            <span class="question-text">Questão 2: A placa-mãe atua como o backbone de conectividade. Com base na tabela de barramentos PCIe e considerando um SSD NVMe Gen4 x4 (7.000 MB/s) instalado em um slot PCIe 3.0 x4:</span>
+            
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Versão</th><th>Taxa por Linha (Lane)</th><th>Codificação</th></tr></thead>
+                    <tbody>
+                        <tr><td>PCIe 3.0</td><td>~1 GB/s (985 MB/s)</td><td>128b/130b</td></tr>
+                        <tr><td>PCIe 4.0</td><td>~2 GB/s (1.97 GB/s)</td><td>128b/130b</td></tr>
+                        <tr><td>PCIe 5.0</td><td>~4 GB/s (3.94 GB/s)</td><td>128b/130b</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q2" value="A"> <span class="option-text">A) O SSD não será reconhecido pela incompatibilidade física da pinagem.</span></label>
+                <label class="option"><input type="radio" name="q2" value="B"> <span class="option-text">B) O sistema operará normalmente, mas a velocidade será limitada ao teto do PCIe 3.0 x4 (~3.500 MB/s).</span></label>
+                <label class="option"><input type="radio" name="q2" value="C"> <span class="option-text">C) O Chipset fará um overclock automático no barramento para atingir os 7.000 MB/s.</span></label>
+                <label class="option"><input type="radio" name="q2" value="D"> <span class="option-text">D) Funcionará apenas com jumper de compatibilidade no modo "Legacy NVMe".</span></label>
+                <label class="option"><input type="radio" name="q2" value="E"> <span class="option-text">E) A velocidade de 7.000 MB/s será mantida pois o NVMe ignora as limitações do Chipset.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q2"></div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card" id="q3-card">
+            <span class="question-text">Questão 3: Sobre as características da memória RAM e tecnologia Dual Channel:</span>
+            <p>I. A tecnologia Dual Channel permite dobrar a largura de banda teórica de comunicação, passando de 64 bits para 128 bits simultâneos.<br>
+            **PORQUE**<br>
+            II. O padrão DDR permite realizar duas transferências por ciclo de clock, o que combinado com acesso a dois pentes idênticos em canais distintos maximiza a taxa.</p>
+
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q3" value="A"> <span class="option-text">A) As asserções I e II são verdadeiras, e a II é uma justificativa correta da I.</span></label>
+                <label class="option"><input type="radio" name="q3" value="B"> <span class="option-text">B) Ambas são verdadeiras, mas a II não justifica a I.</span></label>
+                <label class="option"><input type="radio" name="q3" value="C"> <span class="option-text">C) I é verdadeira e II é falsa.</span></label>
+                <label class="option"><input type="radio" name="q3" value="D"> <span class="option-text">D) I é falsa e II é verdadeira.</span></label>
+                <label class="option"><input type="radio" name="q3" value="E"> <span class="option-text">E) Ambas são falsas.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q3"></div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card" id="q4-card">
+            <span class="question-text">Questão 4: Um computador liga mas não apresenta imagem, emitindo a sequência: 1 bipe longo seguido de 3 bipes curtos. Qual a provável falha?</span>
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q4" value="A"> <span class="option-text">A) Erro de DRAM (Memória RAM).</span></label>
+                <label class="option"><input type="radio" name="q4" value="B"> <span class="option-text">B) Erro de CPU (Processador).</span></label>
+                <label class="option"><input type="radio" name="q4" value="C"> <span class="option-text">C) Erro de Vídeo (Placa de vídeo/VRAM).</span></label>
+                <label class="option"><input type="radio" name="q4" value="D"> <span class="option-text">D) Erro de Fonte de Alimentação.</span></label>
+                <label class="option"><input type="radio" name="q4" value="E"> <span class="option-text">E) Erro de Teclado.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q4"></div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card" id="q5-card">
+            <span class="question-text">Questão 5: Em arquiteturas modernas, o que é gerenciado DIRETAMENTE pelo Processador (CPU), sem passar pelo PCH?</span>
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q5" value="A"> <span class="option-text">A) Portas USB 2.0, Áudio Onboard e BIOS.</span></label>
+                <label class="option"><input type="radio" name="q5" value="B"> <span class="option-text">B) Slot principal para Placa de Vídeo (PCIe x16), canais de Memória RAM e slots M.2 primários.</span></label>
+                <label class="option"><input type="radio" name="q5" value="C"> <span class="option-text">C) Portas SATA III, Rede Ethernet e slots PCI legados.</span></label>
+                <label class="option"><input type="radio" name="q5" value="D"> <span class="option-text">D) Todas as portas USB e conexões SATA.</span></label>
+                <label class="option"><input type="radio" name="q5" value="E) O controle de energia (VRM) e o teclado PS/2.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q5"></div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card" id="q6-card">
+            <span class="question-text">Questão 6: Sobre mídias ópticas e magnéticas:</span>
+            <p>I. O Blu-ray Disc possui maior capacidade que o DVD por usar laser azul-violeta (405 nm), permitindo dados menores e mais próximos.<br>
+            II. Mídias RW utilizam liga metálica de mudança de fase (cristalino/amorfo) para regravação.<br>
+            III. Fitas Magnéticas (LTO) são obsoletas e foram totalmente substituídas por nuvem em ambientes corporativos.</p>
+
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q6" value="A"> <span class="option-text">A) Apenas I.</span></label>
+                <label class="option"><input type="radio" name="q6" value="B"> <span class="option-text">B) Apenas II.</span></label>
+                <label class="option"><input type="radio" name="q6" value="C"> <span class="option-text">C) Apenas I e II.</span></label>
+                <label class="option"><input type="radio" name="q6" value="D"> <span class="option-text">D) Apenas II e III.</span></label>
+                <label class="option"><input type="radio" name="q6" value="E"> <span class="option-text">E) I, II e III.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q6"></div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card" id="q7-card">
+            <span class="question-text">Questão 7: Sobre conectores de fontes ATX modernas, assinale a INCORRETA:</span>
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q7" value="A"> <span class="option-text">A) O conector de 24 pinos fornece as tensões básicas (+3.3V, +5V, +12V, etc).</span></label>
+                <label class="option"><input type="radio" name="q7" value="B"> <span class="option-text">B) O EPS12V (4+4) é dedicado à alimentação exclusiva do processador.</span></label>
+                <label class="option"><input type="radio" name="q7" value="C"> <span class="option-text">C) O conector PCIe de 6 ou 8 pinos fornece energia suplementar a placas de vídeo.</span></label>
+                <label class="option"><input type="radio" name="q7" value="D"> <span class="option-text">D) O SATA Power substituiu o Molex, fornecendo linhas de 3.3V, 5V e 12V.</span></label>
+                <label class="option"><input type="radio" name="q7" value="E"> <span class="option-text">E) O EPS12V da CPU e o PCIe da GPU são eletricamente idênticos e intercambiáveis.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q7"></div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card" id="q8-card">
+            <span class="question-text">Questão 8: Sobre as diferenças entre MBR (Master Boot Record) e GPT (GUID Partition Table):</span>
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q8" value="A"> <span class="option-text">A) MBR suporta até 10 Zettabytes; GPT é limitado a 2 Terabytes.</span></label>
+                <label class="option"><input type="radio" name="q8" value="B"> <span class="option-text">B) GPT exige obrigatoriamente modo "Legacy BIOS".</span></label>
+                <label class="option"><input type="radio" name="q8" value="C"> <span class="option-text">C) MBR permite apenas 4 partições primárias; GPT suporta até 128 partições no Windows e dispensa partição estendida.</span></label>
+                <label class="option"><input type="radio" name="q8" value="D"> <span class="option-text">D) UEFI armazena bootloader exclusivamente no setor 0, igual ao MBR.</span></label>
+                <label class="option"><input type="radio" name="q8" value="E"> <span class="option-text">E) A conversão de MBR para GPT causa perda total de dados obrigatoriamente.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q8"></div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card" id="q9-card">
+            <span class="question-text">Questão 9: Sobre padrões USB e Thunderbolt:</span>
+            <p>I. O USB-C define apenas o formato físico; o protocolo subjacente pode ser até USB 2.0.<br>
+            II. Thunderbolt 3 e 4 utilizam conector USB-C e encapsulam o protocolo PCIe para eGPUs.<br>
+            III. O padrão USB 3.0 foi renomeado para USB 3.2 Gen 1 e o USB 3.1 para USB 3.2 Gen 2.</p>
+
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q9" value="A"> <span class="option-text">A) Apenas I.</span></label>
+                <label class="option"><input type="radio" name="q9" value="B"> <span class="option-text">B) Apenas III.</span></label>
+                <label class="option"><input type="radio" name="q9" value="C"> <span class="option-text">C) Apenas I e II.</span></label>
+                <label class="option"><input type="radio" name="q9" value="D"> <span class="option-text">D) Apenas II e III.</span></label>
+                <label class="option"><input type="radio" name="q9" value="E"> <span class="option-text">E) I, II e III.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q9"></div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10-card">
+            <span class="question-text">Questão 10: Associe os tipos de memória ROM:</span>
+            <p>1. EPROM | 2. EEPROM | 3. Flash ROM</p>
+            <p>( ) Apagamento via luz ultravioleta (janela de quartzo).<br>
+            ( ) Apagamento elétrico byte a byte, lenta.<br>
+            ( ) Apagamento e gravação em blocos, padrão para BIOS/UEFI moderno.</p>
+
+            <div class="options-container">
+                <label class="option"><input type="radio" name="q10" value="A"> <span class="option-text">A) 1, 2, 3.</span></label>
+                <label class="option"><input type="radio" name="q10" value="B"> <span class="option-text">B) 3, 2, 1.</span></label>
+                <label class="option"><input type="radio" name="q10" value="C"> <span class="option-text">C) 1, 3, 2.</span></label>
+                <label class="option"><input type="radio" name="q10" value="D"> <span class="option-text">D) 2, 1, 3.</span></label>
+                <label class="option"><input type="radio" name="q10" value="E"> <span class="option-text">E) 3, 1, 2.</span></label>
+            </div>
+            <div class="resolution-box" id="res-q10"></div>
+        </div>
+
+        <div class="submit-container">
+            <button type="button" onclick="calculateResults()">Finalizar Quiz e Ver Resoluções</button>
+        </div>
     </form>
 
-    <footer>
-        Desenvolvido para fins de estudo - Analista de Concursos de Alto Nível
-    </footer>
-</div>
+    <section id="results">
+        <div class="score-banner">
+            <h2 id="score-text">Você acertou 0 de 10</h2>
+            <p>Role para baixo para conferir as explicações detalhadas.</p>
+        </div>
+    </section>
+</main>
 
 <script>
-    const questions = [
-        {
-            id: 1,
-            q: "1. A arquitetura de armazenamento em servidores de alto desempenho passou por uma mudança de paradigma com o protocolo NVMe. Considerando as especificações técnicas da NVM Express Organization e as diferenças entre AHCI e NVMe, analise as afirmativas:\n\nI. O AHCI apresenta gargalo em sistemas multicore por ter fila única com profundidade de 32 comandos, exigindo locking de CPU.\nII. O NVMe suporta até 65.535 filas de I/O, onde cada fila pode conter até 64.000 comandos, permitindo operação lockless.\nIII. A latência de software stack do driver NVMe é reduzida para aprox. 2,8 µs contra 6,0 µs do AHCI.\nIV. Dispositivos NVMe garantem compatibilidade retroativa nativa com comandos SCSI.",
-            options: [
-                "I e II.",
-                "I, II e III.",
-                "II e IV.",
-                "III e IV.",
-                "I, II e IV."
-            ],
-            correct: 1, // Letra B (Índice 1)
-            resolution: "Os itens I, II e III estão corretos. O NVMe foi desenhado para paralelismo (64k filas). O item IV está incorreto pois o NVMe possui seu próprio conjunto de comandos e não utiliza o conjunto de comandos SCSI nativamente."
-        },
-        {
-            id: 2,
-            q: "2. Sobre as gerações do padrão PCIe (3.0, 4.0 e 5.0), assinale a alternativa tecnicamente CORRETA:",
-            options: [
-                "A transição do 3.0 para o 4.0 manteve o clock e mudou apenas a codificação de 8b/10b para 128b/130b.",
-                "O padrão PCIe 5.0 opera com 32 GT/s por lane. Um slot x16 oferece largura de banda bidirecional teórica de aprox. 128 GB/s.",
-                "O PCIe 5.0 abandonou a topologia ponto-a-ponto em favor de uma topologia de barramento compartilhado.",
-                "A codificação 128b/130b insere bits de paridade que reduzem a eficiência em comparação com o 8b/10b.",
-                "Um dispositivo PCIe 4.0 conectado a um slot PCIe 3.0 operará na velocidade Gen 4 via overclock automático do Root Complex."
-            ],
-            correct: 1, // Letra B
-            resolution: "A largura de banda do PCIe 5.0 x16 é de aproximadamente 64 GB/s em cada direção, totalizando 128 GB/s bidirecionais. A codificação 128b/130b é usada desde a Gen 3 para reduzir o overhead de 20% para 1.5%."
-        },
-        {
-            id: 3,
-            q: "3. Assinale a alternativa que apresenta a ordenação CORRETA das tecnologias NAND Flash, da maior durabilidade (ciclos P/E) para a menor durabilidade:",
-            options: [
-                "QLC > TLC > MLC > SLC",
-                "SLC > MLC > TLC > QLC",
-                "MLC > SLC > QLC > TLC",
-                "TLC > QLC > SLC > MLC",
-                "SLC > QLC > TLC > MLC"
-            ],
-            correct: 1, // Letra B
-            resolution: "Quanto menos bits por célula, maior a margem de erro permitida e menor o desgaste do óxido de tunelamento. Ordem: SLC (1 bit) > MLC (2 bits) > TLC (3 bits) > QLC (4 bits)."
-        },
-        {
-            id: 4,
-            q: "4. Considere um sistema com SSD A (Pistas CPU), SSD B (PCH) e SSD C (PCH) via DMI 4.0 x8. Em carga máxima simultânea, qual o comportamento esperado?",
-            options: [
-                "O sistema operará sem gargalos, pois o DMI 4.0 x8 fornece 16 GB/s, suficiente para os SSDs B e C.",
-                "O SSD A operará em velocidade máxima, mas os SSDs B e C terão seu desempenho agregado limitado pela largura de banda da interface DMI.",
-                "O processador ativará Bifurcation dinâmico para realocar pistas da GPU para o Chipset.",
-                "A arquitetura DMI utiliza compressão LZ4 para dobrar virtualmente a largura de banda.",
-                "O protocolo NVMe desativa automaticamente o SSD C para priorizar o SSD B."
-            ],
-            correct: 1, // Letra B
-            resolution: "O SSD A tem conexão direta com a CPU. Já o SSD B e C compartilham o link DMI entre o Chipset e a CPU. Como cada SSD Gen4 x4 pode chegar a ~7.5GB/s, dois deles somam 15GB/s, quase saturando os 16GB/s teóricos do DMI, criando contenção se houver outros tráfegos (USB, Rede, etc)."
-        },
-        {
-            id: 5,
-            q: "5. Sobre a matemática e o funcionamento lógico do RAID 6, é CORRETO afirmar:",
-            options: [
-                "Utiliza paridade tripla via XOR, permitindo falha de 3 discos.",
-                "A proteção contra falha dupla é obtida via paridade 'P' (XOR) e 'Q' (Campos de Galois/Reed-Solomon), gerando maior penalidade de escrita.",
-                "Diferente do RAID 5, o RAID 6 utiliza dois discos físicos dedicados exclusivamente para paridade.",
-                "A capacidade útil é dada por (N-1) x C, igual ao RAID 5.",
-                "O RAID 6 elimina a necessidade de cache com bateria por garantir atomicidade das escritas."
-            ],
-            correct: 1, // Letra B
-            resolution: "O RAID 6 suporta a perda de 2 discos. Ele usa duas paridades distintas (P e Q). O cálculo da paridade Q exige álgebra de campos finitos, sendo computacionalmente mais caro que o simples XOR da paridade P."
-        },
-        {
-            id: 6,
-            q: "6. Sobre as especificações físicas e elétricas dos conectores M.2 Key B e Key M, analise:\nI. Key M suporta até 4 pistas PCIe e é predominante em NVMe de alta performance.\nII. Key B suporta até 2 pistas PCIe e interface SATA.\nIII. Um SSD 'Key B+M' pode ser inserido em ambos, mas sua performance NVMe estará limitada a 2 pistas (x2).",
-            options: [
-                "Apenas I.",
-                "Apenas II.",
-                "Apenas I e III.",
-                "Apenas II e III.",
-                "I, II e III."
-            ],
-            correct: 4, // Letra E
-            resolution: "Todas as afirmativas estão corretas. A 'chave' física define a pinagem e, consequentemente, o número máximo de lanes PCIe suportadas."
-        },
-        {
-            id: 7,
-            q: "7. Assinale a alternativa que descreve corretamente a relação técnica entre SAS e SATA nas camadas física e de protocolo:",
-            options: [
-                "Controladoras SAS suportam discos SATA via STP, mas o inverso não é verdadeiro por impedimento físico e de protocolo.",
-                "O SAS utiliza 14 pinos para transmissão paralela e o SATA 7 pinos para serial.",
-                "Drives SATA modernos implementaram Multipath I/O nativo via eSATAp, igualando ao SAS.",
-                "O protocolo SAS limita o cabeamento a 1 metro, idêntico ao SATA.",
-                "O SAS utiliza voltagens menores (200mV) que o SATA (500mV)."
-            ],
-            correct: 0, // Letra A
-            resolution: "O conector SAS é desenhado para aceitar SATA (Backwards compatibility), mas o conector SATA possui uma barreira física (key) que impede o encaixe de um disco SAS. Além disso, o SAS utiliza o protocolo SCSI, que controladoras SATA não entendem."
-        },
-        {
-            id: 8,
-            q: "8. Sobre as especificações das gerações LTO-8 e LTO-9 (Fitas Magnéticas), assinale a correta:",
-            options: [
-                "O LTO-9 mantém a compatibilidade de leitura N-2 (lê LTO-7).",
-                "Unidades LTO-8 não leem LTO-6, mas introduziram o formato 'Type M' que permite 9 TB em mídias LTO-7.",
-                "A capacidade nativa de um cartucho LTO-9 é de 45 TB.",
-                "Drives LTO-9 abandonaram interfaces SAS em favor de Thunderbolt 4.",
-                "A compatibilidade de escrita do LTO-9 é restrita apenas a mídias LTO-9."
-            ],
-            correct: 1, // Letra B
-            resolution: "A partir do LTO-8, a regra de compatibilidade mudou (N-1 apenas). O LTO-8 não lê LTO-6. O recurso Type M (M8) permite usar mídias LTO-7 com densidade aumentada em drives LTO-8."
-        },
-        {
-            id: 9,
-            q: "9. Qual é o principal benefício técnico arquitetural do Zoned Namespaces (ZNS) no NVMe 2.0?",
-            options: [
-                "Permite executar código arbitrário do usuário no controlador (Computational Storage).",
-                "Elimina Garbage Collection interno agressivo e reduz a Write Amplification ao impor escritas sequenciais em zonas.",
-                "Virtualiza o SSD como um disco rígido magnético SMR para compatibilidade com Windows 7.",
-                "Segmenta o SSD em zonas de segurança criptográfica AES-256 independentes.",
-                "Permite acesso simultâneo via PCIe, SAS e SATA no mesmo dispositivo físico."
-            ],
-            correct: 1, // Letra B
-            resolution: "O ZNS alinha o software à física da NAND Flash. Ao forçar escritas sequenciais, o controlador não precisa mover dados constantemente para liberar blocos (Garbage Collection), reduzindo o desgaste e aumentando o throughput."
-        },
-        {
-            id: 10,
-            q: "10. Para que VMs processem pacotes de rede com latência próxima à nativa em uma NIC 10GbE, qual tecnologia deve ser usada?",
-            options: [
-                "PCIe Bifurcation (x4x4x4x4).",
-                "Intel RST (Rapid Storage Technology).",
-                "SR-IOV (Single Root I/O Virtualization).",
-                "NVMe-oF (NVMe over Fabrics).",
-                "Jumbo Frames com MTU 9000."
-            ],
-            correct: 2, // Letra C
-            resolution: "O SR-IOV permite que uma placa física crie 'Funções Virtuais' (VFs) que são entregues diretamente à VM. A VM acessa o hardware diretamente via DMA (através da IOMMU), ignorando o overhead do switch virtual do Hypervisor."
-        }
-    ];
+    const correctAnswers = {
+        q1: 'A', q2: 'B', q3: 'A', q4: 'C', q5: 'B',
+        q6: 'C', q7: 'E', q8: 'C', q9: 'E', q10: 'A'
+    };
 
-    function renderQuestions() {
-        const container = document.getElementById('questions-container');
-        questions.forEach((q, qIndex) => {
-            const card = document.createElement('div');
-            card.className = 'question-card';
-            card.id = `q-card-${qIndex}`;
+    const resolutions = {
+        q1: "<b>Gabarito: A (I e III)</b>. II está incorreta porque SSDs não têm movimentos mecânicos. IV está incorreta porque Flash NAND é NÃO VOLÁTIL.",
+        q2: "<b>Gabarito: B</b>. O PCIe é retrocompatível. O dispositivo Gen4 funcionará no slot Gen3, mas limitado à largura de banda deste (aprox. 3.500 MB/s para x4).",
+        q3: "<b>Gabarito: A</b>. O Dual Channel de fato dobra a largura de banda (64 para 128 bits) e a tecnologia DDR (Double Data Rate) é o que permite as duas transferências por ciclo, justificando o ganho.",
+        q4: "<b>Gabarito: C</b>. 1 bipe longo e 3 curtos é o código padrão para falha no subsistema de vídeo (Placa de vídeo ou VRAM).",
+        q5: "<b>Gabarito: B</b>. Em arquiteturas modernas, o controlador de memória e as linhas PCIe principais (GPU/NVMe) foram movidos da Ponte Norte para dentro da CPU.",
+        q6: "<b>Gabarito: C (I e II)</b>. III está incorreta: Fitas LTO continuam sendo amplamente usadas para backup de longo prazo devido ao baixo custo e segurança offline.",
+        q7: "<b>Gabarito: E</b>. EPS12V (CPU) e PCIe (GPU) têm pinagens e polaridades diferentes. Tentar trocá-los causa curto-circuito.",
+        q8: "<b>Gabarito: C</b>. MBR limita-se a 2.2TB e 4 partições primárias. GPT suporta discos imensos e 128 partições nativas.",
+        q9: "<b>Gabarito: E</b>. Todas estão corretas. O USB-IF renomeou retroativamente as versões 3.0 e 3.1 para a nomenclatura 3.2 Gen 1 e Gen 2.",
+        q10: "<b>Gabarito: A (1, 2, 3)</b>. EPROM = UV; EEPROM = Elétrica byte a byte; Flash = Elétrica em blocos (rápida)."
+    };
 
-            const qText = document.createElement('span');
-            qText.className = 'question-text';
-            qText.innerText = q.q;
-            card.appendChild(qText);
-
-            const optionsList = document.createElement('ul');
-            optionsList.className = 'options-list';
-
-            q.options.forEach((opt, optIndex) => {
-                const li = document.createElement('li');
-                li.className = 'option-item';
-                li.id = `opt-${qIndex}-${optIndex}`;
-
-                const input = document.createElement('input');
-                input.type = 'radio';
-                input.name = `q${qIndex}`;
-                input.id = `q${qIndex}o${optIndex}`;
-                input.value = optIndex;
-
-                const label = document.createElement('label');
-                label.className = 'option-label';
-                label.htmlFor = `q${qIndex}o${optIndex}`;
-                label.innerText = opt;
-
-                li.appendChild(input);
-                li.appendChild(label);
-                optionsList.appendChild(li);
-
-                // Clique na linha toda seleciona o rádio
-                li.addEventListener('click', () => {
-                    input.checked = true;
-                });
-            });
-
-            card.appendChild(optionsList);
-
-            // Box de Resolução (escondido)
-            const resBox = document.createElement('div');
-            resBox.className = 'resolution-box';
-            resBox.id = `res-${qIndex}`;
-            resBox.innerHTML = `<h4>Resolução Comentada</h4><p>${q.resolution}</p>`;
-            card.appendChild(resBox);
-
-            container.appendChild(card);
-        });
-    }
-
-    function checkAnswers() {
+    function calculateResults() {
         let score = 0;
         const form = document.getElementById('quiz-form');
-        
-        questions.forEach((q, qIndex) => {
-            const selected = form.querySelector(`input[name="q${qIndex}"]:checked`);
-            const resolutionBox = document.getElementById(`res-${qIndex}`);
+        const resultsDiv = document.getElementById('results');
+        const scoreText = document.getElementById('score-text');
+
+        for (let i = 1; i <= 10; i++) {
+            const qName = 'q' + i;
+            const selected = form.elements[qName].value;
+            const card = document.getElementById(qName + '-card');
+            const resBox = document.getElementById('res-q1' + (i == 10 ? '0' : i)); // Ajuste de id para q10
             
-            // Mostrar resolução
-            resolutionBox.style.display = 'block';
+            // Re-selecionando o box correto para cada questão
+            const actualResBox = document.getElementById('res-q' + i);
+            actualResBox.style.display = 'block';
+            actualResBox.innerHTML = '';
 
-            // Marcar correto e errado
-            q.options.forEach((opt, optIndex) => {
-                const item = document.getElementById(`opt-${qIndex}-${optIndex}`);
-                if (optIndex === q.correct) {
-                    item.classList.add('correct');
-                }
-            });
+            const status = document.createElement('span');
+            status.className = 'status-badge';
 
-            if (selected) {
-                const answerIndex = parseInt(selected.value);
-                if (answerIndex === q.correct) {
-                    score++;
-                } else {
-                    document.getElementById(`opt-${qIndex}-${answerIndex}`).classList.add('wrong');
-                }
+            if (selected === correctAnswers[qName]) {
+                score++;
+                status.innerText = "Correta";
+                status.classList.add('status-correct');
+            } else {
+                status.innerText = "Incorreta";
+                status.classList.add('status-wrong');
+                const yourAns = document.createElement('p');
+                yourAns.className = 'wrong-answer-label';
+                yourAns.innerText = "Sua resposta: " + (selected || "Nenhuma");
+                actualResBox.appendChild(yourAns);
             }
-        });
 
-        // Mostrar resumo
-        const summary = document.getElementById('result-summary');
-        const scoreDisplay = document.getElementById('final-score');
-        const feedback = document.getElementById('feedback-msg');
-        
-        summary.style.display = 'block';
-        scoreDisplay.innerText = `${score} / ${questions.length}`;
-        
-        if (score >= 8) {
-            feedback.innerText = "Excelente! Você tem um domínio sólido sobre Hardware e Armazenamento.";
-            feedback.style.color = "var(--success)";
-        } else if (score >= 5) {
-            feedback.innerText = "Bom desempenho. Revise os pontos onde houve dúvida para garantir a aprovação.";
-            feedback.style.color = "var(--accent-color)";
-        } else {
-            feedback.innerText = "Continue estudando. Os temas de barramento e protocolos NVMe/SAS são recorrentes na CEFETMINAS.";
-            feedback.style.color = "var(--error)";
+            const expl = document.createElement('div');
+            expl.innerHTML = `<span class="correct-answer-label">Gabarito: ${correctAnswers[qName]}</span>` + resolutions[qName];
+            
+            actualResBox.prepend(status);
+            actualResBox.appendChild(expl);
+            
+            // Scroll para o topo dos resultados
+            resultsDiv.style.display = 'block';
+            scoreText.innerText = `Você acertou ${score} de 10`;
+            window.scrollTo({ top: resultsDiv.offsetTop - 50, behavior: 'smooth' });
         }
-
-        // Desativar rádio buttons
-        const allInputs = form.querySelectorAll('input');
-        allInputs.forEach(input => input.disabled = true);
-        
-        // Mudar botão
-        const btn = document.getElementById('submit-btn');
-        btn.innerText = "Simulado Concluído";
-        btn.disabled = true;
-        btn.style.backgroundColor = "#ccc";
-
-        // Scroll para o topo para ver o resultado
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    // Inicializar
-    window.onload = renderQuestions;
 </script>
 
 </body>
