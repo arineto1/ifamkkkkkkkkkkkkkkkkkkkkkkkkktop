@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Mestra: Arquitetura de Software - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fefcbf;
+            font-weight: 600;
+            padding: 0 2px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Garante legibilidade sem espremer demais */
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f7fafc;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .alert-box {
+            border-left: 4px solid #3182ce;
+            background-color: #ebf8ff;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .trap-box {
+            border-left: 4px solid #e53e3e;
+            background-color: #fff5f5;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        h1, h2, h3 {
+            color: #1a202c;
+            letter-spacing: -0.025em;
+        }
+
+        .audio-card {
+            background: #ffffff;
+            border: 2px solid #edf2f7;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased text-slate-800">
+
+    <div class="max-w-4xl mx-auto px-6 py-12">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <span class="text-blue-600 font-bold tracking-widest uppercase text-xs">Tutor Especialista IFAM</span>
+            <h1 class="text-4xl font-extrabold mt-2 mb-4">Lógica e Padrões de Arquitetura de Software</h1>
+            <div class="h-1 w-20 bg-blue-600 mx-auto"></div>
+        </header>
+
+        <!-- Player de Áudio -->
+        <section class="mb-12">
+            <div class="audio-card">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 p-2 rounded-full mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                        </svg>
+                    </div>
+                    <h2 class="font-bold text-lg">Resumo em Áudio para Memorização</h2>
+                </div>
+                <audio controls class="w-full">
+                    <source src="39arquitetura.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+                <p class="text-xs text-slate-400 mt-3 italic text-center">Substitua o arquivo fonte no código para ativar o áudio.</p>
+            </div>
+        </section>
+
+        <!-- Seção 1: Definições Essenciais -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold border-b-2 border-slate-100 pb-2 mb-6 text-blue-800">1. Definição e Diferenciação Técnica</h2>
+            <p class="mb-4">Para a banca CEFETMINAS, a arquitetura de software não é apenas "desenhar caixinhas". É a estrutura do sistema, que compreende <span class="highlight-yellow">componentes de software, propriedades externas e relacionamentos</span>.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                <div class="p-4 border border-slate-200 rounded-lg">
+                    <h3 class="font-bold text-slate-700 mb-2">Arquitetura (O "O QUE")</h3>
+                    <ul class="text-sm space-y-2">
+                        <li>• Decisões de alto nível.</li>
+                        <li>• Foco em <span class="font-semibold">Requisitos Não-Funcionais</span> (Desempenho, Segurança).</li>
+                        <li>• Difícil de mudar após implementada.</li>
+                    </ul>
+                </div>
+                <div class="p-4 border border-slate-200 rounded-lg">
+                    <h3 class="font-bold text-slate-700 mb-2">Projeto/Design (O "COMO")</h3>
+                    <ul class="text-sm space-y-2">
+                        <li>• Decisões de baixo nível.</li>
+                        <li>• Foco em <span class="font-semibold">Lógica de Programação</span> e classes.</li>
+                        <li>• Modularidade e detalhes de algoritmos.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="font-bold text-slate-700 mb-2">Atributos de Qualidade (Filtros de Decisão):</p>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li><span class="font-semibold">Desempenho:</span> Poucas comunicações entre subsistemas.</li>
+                <li><span class="font-semibold">Segurança:</span> Estrutura em camadas (proteção do núcleo).</li>
+                <li><span class="font-semibold">Disponibilidade:</span> Componentes redundantes.</li>
+                <li><span class="font-semibold">Manutenibilidade:</span> Componentes pequenos e independentes.</li>
+            </ul>
+        </section>
+
+        <!-- Seção 2: Padrões Arquiteturais -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold border-b-2 border-slate-100 pb-2 mb-6 text-blue-800">2. Padrões de Arquitetura (O Coração da Prova)</h2>
+            
+            <div class="space-y-8">
+                <!-- Padrão em Camadas -->
+                <div>
+                    <h3 class="text-xl font-bold text-blue-700">A. Arquitetura em Camadas (Layered)</h3>
+                    <p class="text-sm mb-2 text-slate-600 italic">"Organiza o sistema em camadas, onde cada uma provê serviços para a camada superior."</p>
+                    <div class="bg-slate-50 p-4 rounded">
+                        <p><strong>Vantagem:</strong> <span class="highlight-yellow">Separação de responsabilidades</span>. Permite evoluir uma camada sem afetar as outras.</p>
+                        <p><strong>Desvantagem:</strong> Desempenho prejudicado pelo "salto" entre camadas.</p>
+                    </div>
+                </div>
+
+                <!-- Repositório -->
+                <div>
+                    <h3 class="text-xl font-bold text-blue-700">B. Repositório (Repository)</h3>
+                    <p class="text-sm mb-2 text-slate-600 italic">"Subcomponentes interagem através de um banco de dados central."</p>
+                    <div class="bg-slate-50 p-4 rounded">
+                        <p><strong>Vantagem:</strong> Eficiente para <span class="highlight-yellow">grandes volumes de dados</span>.</p>
+                        <p><strong>Desvantagem:</strong> O repositório central é um <span class="font-bold text-red-600">ponto único de falha</span>.</p>
+                    </div>
+                </div>
+
+                <!-- Cliente-Servidor -->
+                <div>
+                    <h3 class="text-xl font-bold text-blue-700">C. Cliente-Servidor</h3>
+                    <p class="text-sm mb-2 text-slate-600 italic">"Distribui dados e processamento em uma rede de processadores."</p>
+                    <div class="bg-slate-50 p-4 rounded">
+                        <p><strong>Termo de Prova:</strong> <span class="highlight-yellow">Escalabilidade</span> facilitada pela adição de novos servidores.</p>
+                    </div>
+                </div>
+
+                <!-- Dutos e Filtros -->
+                <div>
+                    <h3 class="text-xl font-bold text-blue-700">D. Dutos e Filtros (Pipe and Filter)</h3>
+                    <p class="text-sm mb-2 text-slate-600 italic">"Cada componente (filtro) transforma dados e os envia pelo duto."</p>
+                    <div class="bg-slate-50 p-4 rounded">
+                        <p><strong>Atenção:</strong> Comum em sistemas de <span class="highlight-yellow">processamento em lote (Batch)</span>. Não indicado para sistemas interativos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção 3: Tabela de Memorização -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold border-b-2 border-slate-100 pb-2 mb-6 text-blue-800">3. Tabela Comparativa (Resumo de 2 Páginas)</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Padrão</th>
+                            <th>Uso Ideal</th>
+                            <th>Gatilho de Prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">MVC</td>
+                            <td>Interfaces Web/Mobile</td>
+                            <td><span class="highlight-yellow">Separação de visualização e lógica</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Camadas</td>
+                            <td>Sistemas Empresariais</td>
+                            <td><span class="highlight-yellow">Incrementalismo e Segurança</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Microsserviços</td>
+                            <td>Sistemas Escaláveis</td>
+                            <td><span class="highlight-yellow">Desdobramento independente</span></td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Broker</td>
+                            <td>Sistemas Distribuídos</td>
+                            <td><span class="highlight-yellow">Desacoplamento via intermediário</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 4: Tendências CEFETMINAS -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold border-b-2 border-slate-100 pb-2 mb-6 text-red-700">4. Análise de "Peguinhas" da Banca</h2>
+            
+            <div class="trap-box">
+                <h3 class="font-bold text-red-800 mb-2">⚠️ O Trap da Modificabilidade</h3>
+                <p>A banca costuma dizer que o padrão **Pipe and Filter** é o melhor para modificabilidade em tempo real. **FALSO**. O melhor para modificabilidade de interface é o **MVC**, e para modificabilidade estrutural são as **Camadas**.</p>
+            </div>
+
+            <div class="alert-box">
+                <h3 class="font-bold text-blue-800 mb-2">💡 Tendência EBTT (Professor de Informática)</h3>
+                <p>A CEFETMINAS ama a bibliografia de **Ian Sommerville**. Nas questões de Lógica de Programação aplicada a Arquitetura, eles cobram o conceito de <span class="font-bold italic underline">Coesão e Acoplamento</span> como métricas da arquitetura.</p>
+                <ul class="mt-3 space-y-1 text-sm">
+                    <li>🎯 <strong>Coesão:</strong> Interna ao módulo (Deve ser ALTA).</li>
+                    <li>🎯 <strong>Acoplamento:</strong> Entre módulos (Deve ser BAIXO).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Rodapé e Botão -->
+        <footer class="mt-16 text-center border-t border-slate-100 pt-8">
+            <p class="text-slate-500 text-sm mb-6">Foco total no IFAM. A aprovação é uma questão de repetição e estratégia.</p>
+            <a href="39questoes.html" class="inline-block bg-slate-900 text-white font-bold py-4 px-12 rounded-full hover:bg-black transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+                📝 PRATICAR COM QUESTÕES
+            </a>
+        </footer>
+    </div>
+
+</body>
+</html>

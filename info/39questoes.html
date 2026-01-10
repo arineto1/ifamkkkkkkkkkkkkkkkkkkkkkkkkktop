@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Lógica e Arquitetura de Software</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --success-color: #27ae60;
+            --error-color: #d63031;
+            --border-color: #dfe6e9;
+            --card-bg: #ffffff;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #1e272e;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #636e72;
+            font-size: 1.1rem;
+        }
+
+        .quiz-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .question-header {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            color: #1e272e;
+        }
+
+        .scenario-box {
+            background: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background-color: #f1f2f6;
+            border-color: var(--accent-color);
+        }
+
+        .option input {
+            margin-right: 15px;
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 15px 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #0873c4;
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none;
+            margin-top: 50px;
+            border-top: 3px solid var(--accent-color);
+            padding-top: 40px;
+        }
+
+        .score-card {
+            text-align: center;
+            background: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .score-val {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .resolution-item {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .status-correct { color: var(--success-color); font-weight: bold; }
+        .status-wrong { color: var(--error-color); font-weight: bold; }
+
+        .resolution-content {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .resolution-content h4 {
+            margin-bottom: 10px;
+            color: #2d3436;
+        }
+
+        .resolution-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .resolution-content th, .resolution-content td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .resolution-content th { background-color: #f9f9f9; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 20px 10px; }
+            h1 { font-size: 1.5rem; }
+            .quiz-item { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Lógica e Arquitetura</h1>
+        <p class="description">Perfil Fundação CEFETMINAS - 10 Questões Técnicas</p>
+    </header>
+
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- Questions will be injected here -->
+        </div>
+        <button type="submit" class="btn-submit">Finalizar e Ver Resoluções</button>
+    </form>
+
+    <div id="results-section">
+        <div class="score-card">
+            <h2>Seu Desempenho</h2>
+            <span id="score-display" class="score-val">0/10</span>
+            <p id="score-message"></p>
+        </div>
+
+        <div id="resolutions-container">
+            <h3>Gabarito Comentado</h3>
+            <!-- Resolutions will be injected here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "No desenvolvimento de sistemas complexos, a separação de responsabilidades é um princípio fundamental... No padrão MVC, considerando a lógica de um sistema de vendas online:",
+            subtext: "I. A lógica de captura do evento é responsabilidade da View, mas o processamento é delegado ao Controller.<br>II. O Controller deve executar diretamente as regras de negócio complexas.<br>III. O Model deve encapsular o estado e as regras, sendo agnóstico em relação à interface.",
+            options: [
+                "A) Apenas a afirmativa I está correta.",
+                "B) Apenas a afirmativa III está correta.",
+                "C) Apenas as afirmativas I e III estão corretas.",
+                "D) Apenas as afirmativas II e III estão corretas.",
+                "E) Todas as afirmativas estão corretas."
+            ],
+            correct: 2,
+            resolution: "<h4>Análise Profunda do Padrão MVC</h4>A afirmativa II está incorreta porque o Controller não deve executar regras de negócio; ele deve delegá-las ao Model. O Controller atua apenas como um orquestrador. As afirmativas I e III seguem a definição clássica de separação de interesses."
+        },
+        {
+            id: 2,
+            question: "Sobre a lógica de dependência e fluxo de chamadas em uma arquitetura de camadas estrita (Strict Layering) versus relaxada (Relaxed Layering):",
+            subtext: "1. Na estrita, a Apresentação pode invocar a Persistência diretamente.<br>2. O DIP é aplicado para que módulos de alto nível não dependam de baixo nível.<br>3. O acoplamento tende a ser unidirecional, facilitando testes com Mocks.",
+            options: [
+                "A) Apenas 1.",
+                "B) Apenas 2.",
+                "C) Apenas 3.",
+                "D) Apenas 2 e 3.",
+                "E) 1, 2 e 3."
+            ],
+            correct: 3,
+            resolution: "<h4>Análise da Arquitetura em Camadas</h4>O item 1 está incorreto pois na arquitetura estrita, uma camada só pode chamar a camada imediatamente inferior (Apresentação -> Negócio). Chamar a Persistência diretamente caracteriza a arquitetura relaxada. Os itens 2 e 3 descrevem corretamente princípios modernos de desacoplamento."
+        },
+        {
+            id: 3,
+            question: "Assinale a sequência que classifica corretamente as características como SOA ou Microsserviços (Micro):",
+            subtext: "() Barramento de Serviços (ESB)<br>() Governança Descentralizada<br>() Granularidade Fina<br>() Taxonomia de Serviços",
+            options: [
+                "A) SOA – Micro – Micro – SOA",
+                "B) Micro – SOA – SOA – Micro",
+                "C) SOA – SOA – Micro – Micro",
+                "D) Micro – Micro – SOA – SOA",
+                "E) SOA – Micro – SOA – Micro"
+            ],
+            correct: 0,
+            resolution: "<h4>SOA vs. Microsserviços</h4>O ESB e a Taxonomia rígida de serviços são marcas registradas do SOA clássico. Já a governança descentralizada e a granularidade fina são pilares da arquitetura de microsserviços."
+        },
+        {
+            id: 4,
+            question: "Sobre os estilos arquiteturais REST (Representational State Transfer) e o protocolo SOAP (Simple Object Access Protocol):",
+            subtext: "I. REST fundamenta-se em recursos identificáveis por URIs e é stateless.<br>II. SOAP define um padrão de envelope XML e suporta transações distribuídas.<br>III. No REST, PUT é idempotente, diferentemente do POST típico.",
+            options: [
+                "A) Apenas I.",
+                "B) Apenas II.",
+                "C) Apenas I e III.",
+                "D) Apenas II e III.",
+                "E) I, II e III."
+            ],
+            correct: 4,
+            resolution: "<h4>Protocolos de Integração</h4>Todas as afirmativas são verdadeiras. O REST foca em simplicidade e recursos via HTTP. O SOAP é um protocolo robusto com padrões WS-* para segurança e transações. A idempotência do PUT é um conceito fundamental da especificação HTTP utilizada no REST."
+        },
+        {
+            id: 5,
+            question: "Considerando o Teorema CAP e padrões de consistência em sistemas distribuídos:",
+            options: [
+                "A) Para garantir alta disponibilidade (A) e tolerância a partição (P), o arquiteto deve adotar Consistência Eventual.",
+                "B) O uso de Two-Phase Commit (2PC) é a solução recomendada para microsserviços modernos.",
+                "C) O padrão Database per Service impede qualquer tipo de integridade de dados.",
+                "D) É possível satisfazer C, A e P simultaneamente em redes instáveis.",
+                "E) A consistência eventual é incompatível com sistemas financeiros."
+            ],
+            correct: 0,
+            resolution: "<h4>Teorema CAP</h4>Segundo o teorema, em caso de partição de rede (P), deve-se escolher entre Consistência (C) ou Disponibilidade (A). Sistemas de larga escala geralmente escolhem AP, garantindo a disponibilidade através da consistência eventual."
+        },
+        {
+            id: 6,
+            question: "Qual padrão interrompe chamadas ao serviço falho após um limite de erros, e tenta retomá-las gradualmente após um tempo de espera?",
+            options: [
+                "A) API Gateway",
+                "B) Service Discovery",
+                "C) Circuit Breaker",
+                "D) Load Balancer",
+                "E) Reverse Proxy"
+            ],
+            correct: 2,
+            resolution: "<h4>Padrão Circuit Breaker</h4>Assim como um disjuntor elétrico, este padrão evita falhas em cascata ao 'abrir o circuito' quando detecta que um serviço dependente está instável, protegendo o sistema chamador."
+        },
+        {
+            id: 7,
+            question: "O padrão de 'callback HTTP definido pelo usuário', onde um sistema notifica outro via POST assim que um evento ocorre, é conhecido como:",
+            options: [
+                "A) Web Socket",
+                "B) Webhook",
+                "C) Long Polling",
+                "D) Remote Procedure Call (RPC)",
+                "E) SOAP Binding"
+            ],
+            correct: 1,
+            resolution: "<h4>Lógica de Webhooks</h4>Webhooks são a forma mais eficiente de comunicação assíncrona baseada em eventos entre servidores (push model), eliminando a necessidade de consultas periódicas (polling)."
+        },
+        {
+            id: 8,
+            question: "Framework organizado em uma matriz bidimensional que cruza interrogativas (O Que, Como, Onde...) com perspectivas de stakeholders (Dono, Designer...):",
+            options: [
+                "A) TOGAF",
+                "B) RUP",
+                "C) CMMI",
+                "D) Framework de Zachman",
+                "E) PMBOK"
+            ],
+            correct: 3,
+            resolution: "<h4>Framework de Zachman</h4>É considerado uma ontologia ou 'tabela periódica' da arquitetura corporativa, focando na classificação de artefatos sob diferentes pontos de vista."
+        },
+        {
+            id: 9,
+            question: "Associe os padrões: (1) Garantir instância única global. (2) Interface simplificada para subsistema complexo.",
+            options: [
+                "A) Prototype e Adapter",
+                "B) Singleton e Facade",
+                "C) Builder e Proxy",
+                "D) Singleton e Composite",
+                "E) Factory Method e Decorator"
+            ],
+            correct: 1,
+            resolution: "<h4>Padrões GoF</h4>O Singleton restringe a instanciação de uma classe a um único objeto. O Facade fornece uma interface única e simplificada para um conjunto de interfaces complexas em um subsistema."
+        },
+        {
+            id: 10,
+            question: "O padrão que propõe a criação de camadas de backend separadas e específicas para cada tipo de interface de usuário (Mobile, Web, etc) é:",
+            options: [
+                "A) Backend for Frontend (BFF)",
+                "B) Model-View-ViewModel (MVVM)",
+                "C) Peer-to-Peer (P2P)",
+                "D) Event Sourcing",
+                "E) CQRS"
+            ],
+            correct: 0,
+            resolution: "<h4>Padrão BFF</h4>O BFF permite que cada interface tenha um ponto de entrada otimizado, evitando o envio de dados desnecessários e reduzindo a latência para dispositivos mobile ou web específicos."
+        }
+    ];
+
+    function initQuiz() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'quiz-item';
+            
+            let html = `
+                <span class="question-header">Questão ${index + 1}</span>
+                <p class="question-text">${q.question}</p>
+                ${q.subtext ? `<div class="scenario-box">${q.subtext}</div>` : ''}
+                <div class="options-list">
+            `;
+
+            q.options.forEach((opt, optIndex) => {
+                html += `
+                    <label class="option">
+                        <input type="radio" name="q${index}" value="${optIndex}" required>
+                        <span>${opt}</span>
+                    </label>
+                `;
+            });
+
+            html += `</div>`;
+            questionDiv.innerHTML = html;
+            container.appendChild(questionDiv);
+        });
+    }
+
+    document.getElementById('quiz-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let score = 0;
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        resolutionsContainer.innerHTML = '<h3>Gabarito Comentado</h3>';
+
+        quizData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const isCorrect = selected && parseInt(selected.value) === q.correct;
+            if (isCorrect) score++;
+
+            const resDiv = document.createElement('div');
+            resDiv.className = 'resolution-item';
+            resDiv.innerHTML = `
+                <p><strong>Questão ${index + 1}:</strong> 
+                <span class="${isCorrect ? 'status-correct' : 'status-wrong'}">
+                    ${isCorrect ? 'Acertou' : 'Errou'}
+                </span></p>
+                <p>Resposta correta: <strong>${q.options[q.correct]}</strong></p>
+                <div class="resolution-content">
+                    ${q.resolution}
+                </div>
+            `;
+            resolutionsContainer.appendChild(resDiv);
+        });
+
+        document.getElementById('score-display').innerText = `${score}/10`;
+        const msg = score >= 7 ? "Excelente desempenho!" : (score >= 5 ? "Bom trabalho, continue revisando." : "Recomendamos focar mais na base teórica.");
+        document.getElementById('score-message').innerText = msg;
+        
+        document.getElementById('results-section').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('results-section').offsetTop - 50, behavior: 'smooth' });
+        
+        // Disable form
+        const inputs = document.querySelectorAll('input[type="radio"]');
+        inputs.forEach(i => i.disabled = true);
+        document.querySelector('.btn-submit').style.display = 'none';
+    });
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

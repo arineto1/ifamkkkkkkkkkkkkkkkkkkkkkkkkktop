@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Lógica de Programação - Sub-rotinas</title>
+    <style>
+        :root {
+            --bg-color: #f9f7f2; /* Tom off-white para não cansar a vista */
+            --text-color: #2d3436;
+            --primary-color: #2980b9;
+            --accent-color: #d35400;
+            --code-bg: #f1f2f6;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f1f9ff;
+            border-color: var(--primary-color);
+        }
+
+        .option-label input {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .option-label.selected {
+            background-color: #e3f2fd;
+            border-color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        #submit-btn:hover {
+            background-color: #1c5980;
+        }
+
+        #results-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .score-display {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .resolution-card {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+        }
+
+        .correct-ans { color: var(--success-color); font-weight: bold; }
+        .wrong-ans { color: var(--error-color); font-weight: bold; }
+
+        .tag-banca {
+            background: #eee;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <span class="tag-banca">Fundação CEFETMINAS - Simulado</span>
+            <h1>Lógica de Programação: Sub-rotinas</h1>
+            <p>Responda as 10 questões abaixo para testar seus conhecimentos.</p>
+        </header>
+
+        <form id="quiz-form">
+            <div id="questions-container">
+                <!-- As questões serão inseridas aqui via JS -->
+            </div>
+            <button type="button" id="submit-btn" onclick="calculateScore()">Finalizar Quiz e Ver Resoluções</button>
+        </form>
+
+        <div id="results-section">
+            <div class="score-display" id="score-text"></div>
+            <div id="resolutions-container">
+                <!-- Resoluções detalhadas aqui -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                text: "Considere o algoritmo abaixo, expresso em uma sintaxe estruturada genérica (Portugol):",
+                code: `VARIAVEIS GLOBAIS
+  A, B : INTEIRO
+
+PROCEDIMENTO Manipula(X : INTEIRO, REF Y : INTEIRO)
+VARIAVEIS LOCAIS
+  A : INTEIRO
+INICIO
+  A <- 10
+  X <- X + A
+  Y <- Y + X
+  B <- B + Y
+FIM_PROCEDIMENTO
+
+INICIO_ALGORITMO
+  A <- 2
+  B <- 5
+  Manipula(A, B)
+  ESCREVA(A, " - ", B)
+FIM_ALGORITMO`,
+                options: ["2 - 22", "10 - 22", "2 - 17", "12 - 17", "2 - 5"],
+                answer: 0, // Indice A
+                resolution: "A variável global A mantém seu valor 2, pois foi sombreada pela local A dentro do procedimento. A variável B resulta em 22 seguindo a lógica aritmética sequencial (5 original + 17 calculado em Y)."
+            },
+            {
+                id: 2,
+                text: "Analise o código Java a seguir e determine o resultado impresso:",
+                code: `public class TesteReferencia {
+    public static void processar(int[] arr, String texto) {
+        arr[0] = 99;
+        texto = texto.concat(" Processado");
+        arr = new int[]{1, 2, 3};
+        arr[0] = 50;
+    }
+
+    public static void main(String[] args) {
+        int[] numeros = {10, 20};
+        String status = "Inicio";
+        
+        processar(numeros, status);
+        
+        System.out.println(numeros[0] + " | " + status);
+    }
+}`,
+                options: ["10 | Inicio", "99 | Inicio Processado", "50 | Inicio", "99 | Inicio", "50 | Inicio Processado"],
+                answer: 3, // D
+                resolution: "O array é passado por referência (sharing), logo a alteração arr[0]=99 é visível. A String é imutável, então o concat cria um novo objeto que não altera a variável original do main. A nova atribuição 'new int[]' quebra a ligação da variável local com o array original."
+            },
+            {
+                id: 3,
+                text: "Analise o comportamento de objetos mutáveis como argumentos padrão em Python:",
+                code: `def acumular(valor, lista_buffer=[]):
+    lista_buffer.append(valor)
+    return sum(lista_buffer)
+
+res1 = acumular(10)
+res2 = acumular(5, [1, 2])
+res3 = acumular(20)
+
+print(f"{res1}:{res2}:{res3}")`,
+                options: ["10:8:20", "10:8:30", "10:18:20", "10:8:10", "10:18:30"],
+                answer: 1, // B
+                resolution: "Argumentos padrão mutáveis em Python são inicializados uma única vez. A primeira e a terceira chamadas compartilham a mesma lista_buffer. A segunda chamada usa uma nova lista passada explicitamente."
+            },
+            {
+                id: 4,
+                text: "Qual será o valor retornado pela chamada F(6) na função recursiva abaixo?",
+                code: `FUNÇÃO F(N : INTEIRO) : INTEIRO
+INICIO
+  SE N < 3 ENTÃO
+    RETORNE N
+  SENÃO
+    RETORNE F(N-1) + F(N-3)
+  FIM_SE
+FIM_FUNÇÃO`,
+                options: ["6", "9", "7", "15", "8"],
+                answer: 2, // C (ajustado para 7 conforme documento)
+                resolution: "Trace: F(3)=F(2)+F(0)=2+0=2. F(4)=F(3)+F(1)=2+1=3. F(5)=F(4)+F(2)=3+2=5. F(6)=F(5)+F(3)=5+2=7."
+            },
+            {
+                id: 5,
+                text: "Qual a saída produzida pelo programa em C abaixo?",
+                code: `#include <stdio.h>
+int a = 10;
+
+void funcao1() {
+    int a = 20;
+    printf("%d ", a);
+}
+
+void funcao2() {
+    printf("%d ", a);
+}
+
+int main() {
+    int a = 30;
+    funcao1();
+    funcao2();
+    printf("%d", a);
+    return 0;
+}`,
+                options: ["20 10 30", "20 20 20", "30 30 30", "20 30 30", "10 10 30"],
+                answer: 0, // A
+                resolution: "Função1 imprime sua local (20). Função2 não tem local, logo imprime a global (10). Main imprime sua local (30). C usa escopo estático."
+            },
+            {
+                id: 6,
+                text: "Identifique a lógica algorítmica de ordenação implementada abaixo:",
+                code: `PROCEDIMENTO Misterio(VET, N)
+  PARA i DE 0 ATÉ N-1 FAÇA
+    menor_idx <- i
+    PARA j DE i+1 ATÉ N FAÇA
+      SE VET[j] < VET[menor_idx] ENTÃO
+        menor_idx <- j
+      FIM_SE
+    FIM_PARA
+    SE menor_idx != i ENTÃO
+      Troca(VET[i], VET[menor_idx])
+    FIM_SE
+  FIM_PARA
+FIM_PROCEDIMENTO`,
+                options: ["Bubble Sort", "Insertion Sort", "Selection Sort", "Quick Sort", "Merge Sort"],
+                answer: 2, // C
+                resolution: "O algoritmo busca o menor elemento no restante do vetor e o coloca na posição 'i'. Esta é a definição do Selection Sort."
+            },
+            {
+                id: 7,
+                text: "Analise o trecho Python abaixo e indique o resultado:",
+                code: `nums = [1, 2, 3, 4, 5]
+resultado = list(filter(lambda x: x % 2 == 0, map(lambda x: x * 3, nums)))
+print(resultado)`,
+                options: ["[6, 12]", "[3, 6, 9, 12, 15]", "[2, 4]", "[6, 9, 12]", "[]"],
+                answer: 0, // A
+                resolution: "O map multiplica por 3: [3, 6, 9, 12, 15]. O filter seleciona os pares desse resultado: [6, 12]."
+            },
+            {
+                id: 8,
+                text: "Após a execução, a matriz 3x3 conterá o valor 1 em quais posições?",
+                code: `PROCEDIMENTO Preenche(Matriz)
+  PARA i DE 0 ATÉ 2 FAÇA
+    PARA j DE 0 ATÉ 2 FAÇA
+      SE i + j == 2 ENTÃO
+        Matriz[i][j] <- 1
+      SENÃO
+        Matriz[i][j] <- 0
+      FIM_SE
+    FIM_PARA
+  FIM_PARA
+FIM_PROCEDIMENTO`,
+                options: ["Na diagonal principal.", "Na diagonal secundária.", "Na primeira linha.", "Na última coluna.", "Em toda a matriz."],
+                answer: 1, // B
+                resolution: "A condição i+j == N-1 define a diagonal secundária de uma matriz quadrada."
+            },
+            {
+                id: 9,
+                text: "Se a 'Linha X' fosse descomentada no código Java abaixo, o que aconteceria?",
+                code: `public class Calculadora {
+    public int somar(int a, int b) { return a + b; }
+    public double somar(double a, double b) { return a + b; }
+    public int somar(int a, int b, int c) { return a + b + c; }
+    
+    // public double somar(int a, int b) { return (double) a + b; } // Linha X
+}`,
+                options: ["Compilaria normalmente.", "Erro de compilação: método duplicado (assinatura igual).", "Erro de compilação: conflito com o método de 3 parâmetros.", "Compilaria, mas daria erro em runtime.", "O método substituiria o primeiro (Override)."],
+                answer: 1, // B
+                resolution: "Em Java, a assinatura do método é composta pelo nome e tipos de parâmetros. O tipo de retorno não diferencia métodos na sobrecarga."
+            },
+            {
+                id: 10,
+                text: "Considere o uso de variáveis estáticas em C:",
+                code: `#include <stdio.h>
+
+int contador() {
+    static int c = 1;
+    c = c + 1;
+    return c;
+}
+
+int main() {
+    int i;
+    for(i = 0; i < 3; i++) {
+        printf("%d ", contador());
+    }
+    return 0;
+}`,
+                options: ["1 1 1", "2 2 2", "2 3 4", "1 2 3", "Erro de compilação."],
+                answer: 2, // C
+                resolution: "A variável static preserva seu valor entre chamadas. Inicia em 1, na primeira chamada vira 2, na segunda 3 e na terceira 4."
+            }
+        ];
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-${index}`;
+                
+                let optionsHtml = '';
+                q.options.forEach((opt, optIdx) => {
+                    const letters = ['A', 'B', 'C', 'D', 'E'];
+                    optionsHtml += `
+                        <label class="option-label" id="label-${index}-${optIdx}">
+                            <input type="radio" name="q${index}" value="${optIdx}" onclick="selectOption(${index}, ${optIdx})">
+                            ${letters[optIdx]}) ${opt}
+                        </label>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="question-text">Questão ${index + 1}</div>
+                    <p>${q.text}</p>
+                    <pre>${q.code}</pre>
+                    <div class="options-group">
+                        ${optionsHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function selectOption(qIdx, optIdx) {
+            // Remove selection de todos na mesma questão
+            for(let i=0; i<5; i++) {
+                const lbl = document.getElementById(`label-${qIdx}-${i}`);
+                if(lbl) lbl.classList.remove('selected');
+            }
+            // Adiciona na selecionada
+            document.getElementById(`label-${qIdx}-${optIdx}`).classList.add('selected');
+        }
+
+        function calculateScore() {
+            let score = 0;
+            const form = document.getElementById('quiz-form');
+            const resContainer = document.getElementById('resolutions-container');
+            resContainer.innerHTML = '<h3>Resoluções Comentadas:</h3>';
+
+            questions.forEach((q, index) => {
+                const selected = form.querySelector(`input[name="q${index}"]:checked`);
+                const userAnswer = selected ? parseInt(selected.value) : -1;
+                const isCorrect = userAnswer === q.answer;
+                
+                if (isCorrect) score++;
+
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                const statusClass = isCorrect ? 'correct-ans' : 'wrong-ans';
+                const statusText = isCorrect ? 'Correto!' : 'Incorreto.';
+
+                const resCard = document.createElement('div');
+                resCard.className = 'resolution-card';
+                resCard.innerHTML = `
+                    <p><strong>Questão ${index + 1}:</strong> <span class="${statusClass}">${statusText}</span></p>
+                    <p>Sua resposta: ${userAnswer !== -1 ? letters[userAnswer] : 'Nenhuma'}</p>
+                    <p>Gabarito: <strong>${letters[q.answer]}</strong></p>
+                    <p><em>Resolução:</em> ${q.resolution}</p>
+                `;
+                resContainer.appendChild(resCard);
+                
+                // Highlight no card original
+                const originalCard = document.getElementById(`q-card-${index}`);
+                originalCard.style.borderLeft = `8px solid ${isCorrect ? 'var(--success-color)' : 'var(--error-color)'}`;
+            });
+
+            document.getElementById('score-text').innerHTML = `Você acertou ${score} de ${questions.length} questões (${(score/questions.length)*100}%)`;
+            document.getElementById('results-section').style.display = 'block';
+            document.getElementById('submit-btn').style.display = 'none';
+
+            window.scrollTo({ top: document.getElementById('results-section').offsetTop - 20, behavior: 'smooth' });
+        }
+
+        // Inicializar
+        window.onload = renderQuestions;
+    </script>
+</body>
+</html>

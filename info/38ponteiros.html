@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor IFAM: Ponteiros e Parâmetros</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fff9c4;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .highlight-blue {
+            background-color: #e3f2fd;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .section-title {
+            border-left: 6px solid #1a202c;
+            padding-left: 1rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+        }
+
+        .info-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            background: #fafafa;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+        }
+
+        /* Prevenção de scroll horizontal */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 768px) {
+            .table-container table {
+                min-width: 600px;
+            }
+        }
+
+        .audio-player-box {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid #edf2f7;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .code-snippet {
+            font-family: 'Fira Code', 'Courier New', monospace;
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            display: block;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+
+        .banca-alert {
+            background-color: #fff5f5;
+            border: 1px solid #feb2b2;
+            color: #c53030;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- REPRODUTOR DE ÁUDIO FIXO -->
+    <div class="audio-player-box shadow-sm">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+            <span class="text-xs font-bold text-gray-400 uppercase mb-2 md:mb-0">Resumo em Áudio</span>
+            <audio controls class="h-10 w-full md:w-2/3">
+                <source src="38ponteiros.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </source>
+            </audio>
+        </div>
+    </div>
+
+    <main class="max-w-4xl mx-auto px-6 pb-24">
+        
+        <header class="text-left py-8 border-b-2 border-gray-100 mb-12">
+            <h1 class="text-4xl font-extrabold text-gray-900 leading-tight">Lógica de Programação: Ponteiros e Parâmetros</h1>
+            <p class="text-xl text-gray-500 mt-4">Módulo de Revisão Intensiva - Edital IFAM (Professor EBTT)</p>
+            <div class="mt-4 flex gap-4 text-sm font-medium text-gray-400">
+                <span>📚 Banca: CEFETMINAS</span>
+                <span>🔥 Foco: Prova Objetiva</span>
+            </div>
+        </header>
+
+        <!-- 1. DEFINIÇÃO E CARACTERÍSTICAS -->
+        <section>
+            <h2 class="section-title text-2xl">1. Definições Essenciais</h2>
+            <p class="mb-4">
+                Em provas de informática para Institutos Federais, o tema "Ponteiros" é o divisor de águas entre o candidato básico e o especialista. 
+                Ponteiros são variáveis cujo valor é um <span class="highlight-yellow">endereço de memória</span> que aponta para outra variável.
+            </p>
+            
+            <div class="info-card">
+                <h3 class="font-bold mb-2">Características Fundamentais:</h3>
+                <ul class="list-disc ml-6 space-y-2">
+                    <li><strong>Tipagem:</strong> O tipo do ponteiro (ex: <code>int *</code>) indica o tamanho do dado para o qual ele aponta, o que é crucial para a <span class="highlight-blue">aritmética de ponteiros</span>.</li>
+                    <li><strong>Operador de Indireção (*):</strong> Permite acessar o valor armazenado no endereço contido no ponteiro.</li>
+                    <li><strong>Operador de Endereço (&):</strong> Retorna o endereço de memória de uma variável comum.</li>
+                    <li><strong>Valor Especial NULL:</strong> Indica que o ponteiro não aponta para nenhum lugar válido (endereço 0).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2. ARITMÉTICA E TABELA DE OPERADORES -->
+        <section>
+            <h2 class="section-title text-2xl">2. Operadores e Aritmética</h2>
+            <p class="mb-4">A CEFETMINAS adora cobrar o cálculo do endereço resultante após operações de incremento.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operador</th>
+                            <th>Ação na Memória</th>
+                            <th>Uso Típico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>&x</code></td>
+                            <td>Extrai o endereço da variável x</td>
+                            <td>Passagem por "referência"</td>
+                        </tr>
+                        <tr>
+                            <td><code>*p</code></td>
+                            <td>Acessa o conteúdo do endereço p</td>
+                            <td>Leitura/Escrita indireta</td>
+                        </tr>
+                        <tr>
+                            <td><code>p->m</code></td>
+                            <td>Acessa membro 'm' de uma struct</td>
+                            <td>Atalho para <code>(*p).m</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>p + n</code></td>
+                            <td>Avança n posições na memória</td>
+                            <td>Pecorre arrays/vetores</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r">
+                <p class="text-sm"><strong>Exemplo de Aritmética:</strong> Se <code>int *p</code> está no endereço 1000, <code>p + 1</code> resultará em <span class="highlight-blue">1004</span> (considerando int de 4 bytes), e não 1001.</p>
+            </div>
+        </section>
+
+        <!-- 3. PARÂMETROS E PASSAGEM -->
+        <section>
+            <h2 class="section-title text-2xl">3. Utilização em Parâmetros</h2>
+            <p class="mb-4">A compreensão da passagem de parâmetros define se você entende o escopo das variáveis.</p>
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="info-card">
+                    <h4 class="font-bold text-blue-600">Por Valor (Padrão)</h4>
+                    <p class="text-sm">A função recebe uma <span class="highlight-yellow">cópia</span> dos dados. Alterações locais não afetam a variável original na função chamadora.</p>
+                </div>
+                <div class="info-card">
+                    <h4 class="font-bold text-green-600">Por Referência (Ponteiro)</h4>
+                    <p class="text-sm">A função recebe o <span class="highlight-yellow">endereço</span>. Através da derreferência, a função altera diretamente a memória original.</p>
+                </div>
+            </div>
+
+            <div class="mt-6">
+                <h4 class="font-bold italic">Ponteiros para Funções (Tendência EBTT):</h4>
+                <p class="text-sm mt-2">Permitem que funções sejam passadas como argumentos de outras funções. Útil para implementação de <i>callbacks</i> e algoritmos genéricos (como <code>qsort</code> em C).</p>
+                <code class="code-snippet">void (*funcao_ptr)(int); // Declaração de ponteiro para função</code>
+            </div>
+        </section>
+
+        <!-- 4. TENDÊNCIAS CEFETMINAS -->
+        <section>
+            <h2 class="section-title text-2xl">4. Tendências de Cobrança CEFETMINAS</h2>
+            <div class="banca-alert">
+                <h3 class="font-bold text-lg mb-2">🚨 O que a banca mais cobra:</h3>
+                <ul class="list-disc ml-6 space-y-3 font-medium">
+                    <li>Diferenciação entre <strong>const int *p</strong> (conteúdo constante) e <strong>int * const p</strong> (endereço constante).</li>
+                    <li>O fenômeno do <strong>Array Decay</strong>: quando um vetor é passado para uma função, ele "decai" para um ponteiro comum, perdendo a informação de tamanho total via <code>sizeof</code>.</li>
+                    <li>Uso de ponteiros em <strong>Alocação Dinâmica</strong> (funções <code>malloc</code>, <code>calloc</code>, <code>realloc</code> e <code>free</code>).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. PEGUINHAS RECORRENTES -->
+        <section>
+            <h2 class="section-title text-2xl">5. "Peguinhas" Mortais para Lembrar</h2>
+            
+            <div class="space-y-6">
+                <div class="p-5 border-b border-gray-100">
+                    <h4 class="text-lg font-bold text-red-700">Peguinha 1: O "tamanho" do ponteiro</h4>
+                    <p>Muitas questões sugerem que um ponteiro para <code>double</code> é maior que um para <code>char</code>. <strong>FALSO!</strong> Em uma arquitetura X bits, <span class="highlight-yellow">todos os ponteiros têm o mesmo tamanho</span> (ex: 8 bytes em 64-bits), independentemente do tipo apontado.</p>
+                </div>
+
+                <div class="p-5 border-b border-gray-100">
+                    <h4 class="text-lg font-bold text-red-700">Peguinha 2: Precedência de Operadores</h4>
+                    <p>Qual a diferença entre <code>*p++</code> e <code>(*p)++</code>?</p>
+                    <ul class="list-disc ml-6 mt-2 text-sm">
+                        <li><code>*p++</code>: Incrementa o <strong>endereço</strong> (ponteiro), mas devolve o valor antigo.</li>
+                        <li><code>(*p)++</code>: Incrementa o <strong>valor</strong> armazenado no endereço atual.</li>
+                    </ul>
+                </div>
+
+                <div class="p-5 border-b border-gray-100">
+                    <h4 class="text-lg font-bold text-red-700">Peguinha 3: Retorno de Endereço Local</h4>
+                    <p>Jamais retorne o endereço de uma variável declarada dentro da função (local). Ao fim da função, a memória é liberada e o ponteiro resultante torna-se um <span class="highlight-yellow">ponteiro pendente (dangling pointer)</span>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. ALOCAÇÃO DINÂMICA -->
+        <section>
+            <h2 class="section-title text-2xl">6. Alocação de Memória</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Função</th>
+                            <th>Objetivo Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>malloc(size)</code></td>
+                            <td>Aloca 'size' bytes. Conteúdo é <span class="highlight-blue">lixo de memória</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>calloc(n, size)</code></td>
+                            <td>Aloca n elementos e <span class="highlight-blue">zera toda a memória</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>free(ptr)</code></td>
+                            <td>Libera a memória na <strong>Heap</strong>. Evita <i>Memory Leak</i>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- BOTÃO FINAL -->
+        <footer class="mt-16 text-center border-t border-gray-200 pt-12">
+            <p class="text-gray-400 text-sm mb-6">Fim do Resumo Técnico • Preparação IFAM 2024</p>
+            <a href="38questoes.html" class="inline-block bg-gray-900 text-white px-10 py-5 rounded-xl font-bold hover:bg-gray-700 transition-all shadow-lg hover:shadow-xl active:scale-95">
+                PULSAR PARA PRATICAR QUESTÕES →
+            </a>
+        </footer>
+
+    </main>
+
+    <script>
+        // Script simples para feedback visual no player se necessário
+        const audio = document.querySelector('audio');
+        audio.addEventListener('play', () => {
+            console.log('Estudando por áudio...');
+        });
+    </script>
+</body>
+</html>

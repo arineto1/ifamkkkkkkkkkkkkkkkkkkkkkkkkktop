@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Parâmetros e Ponteiros (Banca FCM)</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --accent-color: #34495e;
+            --correct-color: #27ae60;
+            --wrong-color: #c0392b;
+            --border-color: #e0e0e0;
+            --code-bg: #f4f4f4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        header {
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: #666;
+            font-style: italic;
+        }
+
+        .question {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .question-header {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .question-num {
+            background: var(--accent-color);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        .context {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            color: #555;
+            padding-left: 10px;
+            border-left: 3px solid #ddd;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            margin: 15px 0;
+            border: 1px solid #eee;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .option {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background-color: #f9f9f9;
+            border-color: #bdc3c7;
+        }
+
+        .option input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option.selected {
+            background-color: #ebf5fb;
+            border-color: #3498db;
+        }
+
+        .resolution {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 2px solid var(--accent-color);
+            font-size: 0.95rem;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .resolution h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .result-box {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #fff;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .result-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 40px 0;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c3e50;
+        }
+
+        /* Classes de Correção */
+        .is-correct {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+        }
+
+        .is-wrong {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 10px; margin: 10px auto; }
+            header h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Simulado Técnico de Programação</h1>
+            <p>FCM / CEFET-MG: Parâmetros e Ponteiros</p>
+        </header>
+
+        <div id="result-summary" class="result-box">
+            <span>Você concluiu o simulado!</span>
+            <span class="result-score" id="score-text">0/10</span>
+            <p id="result-feedback"></p>
+        </div>
+
+        <form id="quiz-form">
+            <!-- Questão 01 -->
+            <div class="question" id="q1">
+                <div class="question-header"><span class="question-num">01</span><span>Aritmética de Ponteiros e Aliasing</span></div>
+                <div class="context">Em sistemas embarcados desenvolvidos para o Departamento de Engenharia Elétrica, a manipulação direta de endereços de memória é frequente para controle de registradores de hardware.</div>
+                <p>Considere o seguinte programa escrito na linguagem C (arquitetura 32 bits):</p>
+                <pre>
+#include &lt;stdio.h&gt;
+
+void manipular_sensores() {
+    int leituras[] = {100, 200, 300, 400, 500};
+    int *ptr1 = leituras;
+    int *ptr2 = &leituras[4];
+    int **pptr = &ptr1;
+    
+    *ptr1 = *ptr2 - 50;
+    ptr1 = ptr1 + 2;
+    *ptr1 = **pptr + 10;
+    
+    printf("%d, %d, %d", leituras[0], leituras[2], *ptr2);
+}
+                </pre>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q1" value="A"> A) 450, 310, 500</label>
+                    <label class="option"><input type="radio" name="q1" value="B"> B) 350, 360, 500</label>
+                    <label class="option"><input type="radio" name="q1" value="C"> C) 450, 460, 400</label>
+                    <label class="option"><input type="radio" name="q1" value="D"> D) 450, 410, 500</label>
+                    <label class="option"><input type="radio" name="q1" value="E"> E) 100, 310, 500</label>
+                </div>
+                <div class="resolution" id="res1">
+                    <h4>Resolução Analítica:</h4>
+                    1. <b>*ptr1 = *ptr2 - 50:</b> ptr2 aponta para o último elemento (500). 500 - 50 = 450. leituras[0] vira 450.<br>
+                    2. <b>ptr1 = ptr1 + 2:</b> ptr1 agora aponta para leituras[2] (valor 300).<br>
+                    3. <b>*ptr1 = **pptr + 10:</b> pptr aponta para ptr1, que aponta para leituras[2]. **pptr é 300. 300 + 10 = 310. leituras[2] vira 310.<br>
+                    <b>Saída:</b> 450, 310, 500.
+                </div>
+            </div>
+
+            <!-- Questão 02 -->
+            <div class="question" id="q2">
+                <div class="question-header"><span class="question-num">02</span><span>Passagem por Valor vs. Referência</span></div>
+                <div class="context">A Fundação CEFETMINAS frequentemente aborda a distinção entre passagem por valor e a simulação de passagem por referência em C.</div>
+                <pre>
+void processa_pacote(int *id, int status) {
+    *id = *id + 10;
+    status = status * 2;
+    id = &status;
+    *id = *id + 5;
+}
+
+int main() {
+    int identificador = 10;
+    int estado_atual = 1;
+    processa_pacote(&identificador, estado_atual);
+    printf("ID: %d | Status: %d", identificador, estado_atual);
+    return 0;
+}
+                </pre>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q2" value="A"> A) ID: 20 | Status: 1</label>
+                    <label class="option"><input type="radio" name="q2" value="B"> B) ID: 25 | Status: 2</label>
+                    <label class="option"><input type="radio" name="q2" value="C"> C) ID: 20 | Status: 7</label>
+                    <label class="option"><input type="radio" name="q2" value="D"> D) ID: 15 | Status: 1</label>
+                    <label class="option"><input type="radio" name="q2" value="E"> E) ID: 25 | Status: 7</label>
+                </div>
+                <div class="resolution" id="res2">
+                    <h4>Resolução Analítica:</h4>
+                    <b>identificador:</b> Passado por ponteiro. *id + 10 altera a original para 20. A linha `id = &status` desvia o ponteiro local da função, então o +5 posterior afeta apenas a variável local `status`.<br>
+                    <b>estado_atual:</b> Passado por valor. Alterações dentro da função não afetam o main.
+                </div>
+            </div>
+
+            <!-- Questão 03 -->
+            <div class="question" id="q3">
+                <div class="question-header"><span class="question-num">03</span><span>Ponteiros para Ponteiros</span></div>
+                <pre>
+int a = 10, b = 20, c = 30;
+int *p1 = &a, *p2 = &b, *p3 = &c;
+int **pp1 = &p1, **pp2 = &p2;
+
+*pp1 = p2; 
+**pp1 = *p3 + a;
+p2 = &b;       
+*pp2 = p1;     
+**pp2 = **pp1 + c; 
+                </pre>
+                <p>Ao final da execução, quais são os valores das variáveis a, b e c?</p>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q3" value="A"> A) a=10, b=80, c=30</label>
+                    <label class="option"><input type="radio" name="q3" value="B"> B) a=40, b=70, c=30</label>
+                    <label class="option"><input type="radio" name="q3" value="C"> C) a=10, b=70, c=30</label>
+                    <label class="option"><input type="radio" name="q3" value="D"> D) a=10, b=20, c=30</label>
+                    <label class="option"><input type="radio" name="q3" value="E"> E) a=40, b=40, c=30</label>
+                </div>
+                <div class="resolution" id="res3">
+                    <h4>Resolução Analítica:</h4>
+                    1. <b>*pp1 = p2:</b> p1 passa a apontar para b.<br>
+                    2. <b>**pp1 = *p3 + a:</b> b recebe (30 + 10) = 40.<br>
+                    3. <b>*pp2 = p1:</b> p2 já aponta para b, continua.<br>
+                    4. <b>**pp2 = **pp1 + c:</b> b recebe (40 + 30) = 70.
+                </div>
+            </div>
+
+            <!-- Questão 04 -->
+            <div class="question" id="q4">
+                <div class="question-header"><span class="question-num">04</span><span>Strings e Tabela ASCII</span></div>
+                <pre>
+void decriptar(char *s, int deslocamento) {
+    char *ptr = s;
+    while(*ptr != '\0') {
+        if(*ptr >= 'd' && *ptr <= 'z') {
+            *ptr = *ptr - deslocamento;
+        }
+        ptr++;
+    }
+}
+// Chamada: decriptar("gkqh", 3);
+                </pre>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q4" value="A"> A) dhne</label>
+                    <label class="option"><input type="radio" name="q4" value="B"> B) djnk</label>
+                    <label class="option"><input type="radio" name="q4" value="C"> C) dind</label>
+                    <label class="option"><input type="radio" name="q4" value="D"> D) gkqh</label>
+                    <label class="option"><input type="radio" name="q4" value="E"> E) erro de execução</label>
+                </div>
+                <div class="resolution" id="res4">
+                    <h4>Resolução Analítica:</h4>
+                    Subtraindo 3 de cada caractere: 'g'-3='d', 'k'-3='h', 'q'-3='n', 'h'-3='e'. Resultado: <b>dhne</b>.
+                </div>
+            </div>
+
+            <!-- Questão 05 -->
+            <div class="question" id="q5">
+                <div class="question-header"><span class="question-num">05</span><span>Casting de Ponteiros</span></div>
+                <p>Considere base 1000, int = 4 bytes e char = 1 byte.</p>
+                <pre>
+int vetor[] = {1, 2, 3, 4, 5};
+int *p = vetor;
+printf("%ld %ld", (long)(p + 1), (long)((char*)p + 1));
+                </pre>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q5" value="A"> A) 1004 1004</label>
+                    <label class="option"><input type="radio" name="q5" value="B"> B) 1001 1001</label>
+                    <label class="option"><input type="radio" name="q5" value="C"> C) 1004 1001</label>
+                    <label class="option"><input type="radio" name="q5" value="D"> D) 1001 1004</label>
+                    <label class="option"><input type="radio" name="q5" value="E"> E) 1004 1000</label>
+                </div>
+                <div class="resolution" id="res5">
+                    <h4>Resolução Analítica:</h4>
+                    1. <b>(p+1):</b> Aritmética de int* soma 4 bytes. 1000 + 4 = 1004.<br>
+                    2. <b>((char*)p + 1):</b> O cast transforma em char*, a aritmética soma apenas 1 byte. 1000 + 1 = 1001.
+                </div>
+            </div>
+
+            <!-- Questão 06 -->
+            <div class="question" id="q6">
+                <div class="question-header"><span class="question-num">06</span><span>Escopo e Stack Frame</span></div>
+                <pre>
+int* criar_buffer() {
+    int buffer = 100;
+    return &buffer;
+}
+
+int main() {
+    int *ptr = criar_buffer();
+    printf("%d", *ptr);
+    return 0;
+}
+                </pre>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q6" value="A"> A) Imprime 100 corretamente.</label>
+                    <label class="option"><input type="radio" name="q6" value="B"> B) Erro de compilação.</label>
+                    <label class="option"><input type="radio" name="q6" value="C"> C) Comportamento indefinido (Undefined Behavior).</label>
+                    <label class="option"><input type="radio" name="q6" value="D"> D) O valor impresso será 0.</label>
+                    <label class="option"><input type="radio" name="q6" value="E"> E) O ponteiro ptr será nulo.</label>
+                </div>
+                <div class="resolution" id="res6">
+                    <h4>Resolução Analítica:</h4>
+                    A variável `buffer` é local e vive na pilha (Stack). Ao retornar seu endereço e sair da função, a memória é liberada. Acessar `*ptr` no main é perigoso e indefinido.
+                </div>
+            </div>
+
+            <!-- Questão 07 -->
+            <div class="question" id="q7">
+                <div class="question-header"><span class="question-num">07</span><span>Precedência (* e ++)</span></div>
+                <pre>
+int x[] = {10, 20, 30};
+int *p = x;
+int res = *p++ + *++p;
+                </pre>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q7" value="A"> A) 30</label>
+                    <label class="option"><input type="radio" name="q7" value="B"> B) 40</label>
+                    <label class="option"><input type="radio" name="q7" value="C"> C) 50</label>
+                    <label class="option"><input type="radio" name="q7" value="D"> D) 20</label>
+                    <label class="option"><input type="radio" name="q7" value="E"> E) 60</label>
+                </div>
+                <div class="resolution" id="res7">
+                    <h4>Resolução Analítica:</h4>
+                    1. <b>*p++:</b> Usa o valor atual (10) e depois incrementa p para apontar para o 20.<br>
+                    2. <b>*++p:</b> Incrementa p primeiro (vai para o 30) e depois lê o valor (30).<br>
+                    3. <b>Soma:</b> 10 + 30 = 40.
+                </div>
+            </div>
+
+            <!-- Questão 08 -->
+            <div class="question" id="q8">
+                <div class="question-header"><span class="question-num">08</span><span>Ponteiros para Funções</span></div>
+                <pre>
+int soma(int a, int b) { return a + b; }
+int sub(int a, int b) { return a - b; }
+
+int main() {
+    int (*v[])(int, int) = {soma, sub};
+    int res = v[1](10, 5);
+    printf("%d", res);
+}
+                </pre>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q8" value="A"> A) 15</label>
+                    <label class="option"><input type="radio" name="q8" value="B"> B) 5</label>
+                    <label class="option"><input type="radio" name="q8" value="C"> C) 10</label>
+                    <label class="option"><input type="radio" name="q8" value="D"> D) 0</label>
+                    <label class="option"><input type="radio" name="q8" value="E"> E) Erro de sintaxe.</label>
+                </div>
+                <div class="resolution" id="res8">
+                    <h4>Resolução Analítica:</h4>
+                    v[1] armazena o endereço da função `sub`. Ao chamar v[1](10, 5), executa-se 10 - 5 = 5.
+                </div>
+            </div>
+
+            <!-- Questão 09 -->
+            <div class="question" id="q9">
+                <div class="question-header"><span class="question-num">09</span><span>Recursividade e Ponteiros</span></div>
+                <pre>
+int busca(int *v, int tam) {
+    if (tam == 0) return 0;
+    return *v + busca(v + 1, tam - 1);
+}
+                </pre>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q9" value="A"> A) Contagem de elementos.</label>
+                    <label class="option"><input type="radio" name="q9" value="B"> B) Soma dos elementos.</label>
+                    <label class="option"><input type="radio" name="q9" value="C"> C) Busca pelo maior.</label>
+                    <label class="option"><input type="radio" name="q9" value="D"> D) Inversão do vetor.</label>
+                    <label class="option"><input type="radio" name="q9" value="E"> E) Retorno do último.</label>
+                </div>
+                <div class="resolution" id="res9">
+                    <h4>Resolução Analítica:</h4>
+                    A função soma o elemento atual (*v) ao resultado da chamada recursiva para o restante do vetor (v + 1). É um algoritmo clássico de somatório recursivo.
+                </div>
+            </div>
+
+            <!-- Questão 10 -->
+            <div class="question" id="q10">
+                <div class="question-header"><span class="question-num">10</span><span>Subtração de Ponteiros</span></div>
+                <pre>
+float vet[] = {1.0, 2.0, 3.0, 4.0, 5.0};
+float *p1 = &vet[1];
+float *p2 = &vet[4];
+printf("%ld", p2 - p1);
+                </pre>
+                <div class="options">
+                    <label class="option"><input type="radio" name="q10" value="A"> A) 3</label>
+                    <label class="option"><input type="radio" name="q10" value="B"> B) 12</label>
+                    <label class="option"><input type="radio" name="q10" value="C"> C) 4</label>
+                    <label class="option"><input type="radio" name="q10" value="D"> D) 0.75</label>
+                    <label class="option"><input type="radio" name="q10" value="E"> E) Endereço de memória.</label>
+                </div>
+                <div class="resolution" id="res10">
+                    <h4>Resolução Analítica:</h4>
+                    A subtração de dois ponteiros do mesmo tipo em C resulta na distância em <b>número de elementos</b>, não em bytes. p2(índice 4) - p1(índice 1) = 3.
+                </div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="finishQuiz()">Finalizar e Ver Resoluções</button>
+        </form>
+    </div>
+
+    <script>
+        const answers = {
+            q1: "A", q2: "A", q3: "C", q4: "A", q5: "C",
+            q6: "C", q7: "B", q8: "B", q9: "B", q10: "A"
+        };
+
+        // Adicionar interatividade visual nas opções
+        document.querySelectorAll('.option').forEach(opt => {
+            opt.addEventListener('click', function() {
+                const name = this.querySelector('input').name;
+                document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+                    input.parentElement.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        function finishQuiz() {
+            let score = 0;
+            const form = document.getElementById('quiz-form');
+            const formData = new FormData(form);
+
+            // Verificar respostas
+            for (let i = 1; i <= 10; i++) {
+                const qKey = 'q' + i;
+                const userAnswer = formData.get(qKey);
+                const questionDiv = document.getElementById(qKey);
+                const resolutionDiv = document.getElementById('res' + i);
+                
+                // Mostrar Resolução
+                resolutionDiv.style.display = "block";
+
+                // Estilizar opções com base no acerto/erro
+                const options = questionDiv.querySelectorAll('.option');
+                options.forEach(opt => {
+                    const input = opt.querySelector('input');
+                    
+                    // Destacar a correta
+                    if (input.value === answers[qKey]) {
+                        opt.classList.add('is-correct');
+                    }
+                    
+                    // Se o usuário errou, destacar a dele em vermelho
+                    if (userAnswer === input.value && userAnswer !== answers[qKey]) {
+                        opt.classList.add('is-wrong');
+                    }
+                });
+
+                if (userAnswer === answers[qKey]) {
+                    score++;
+                }
+            }
+
+            // Exibir Resumo
+            const resultBox = document.getElementById('result-summary');
+            const scoreText = document.getElementById('score-text');
+            const feedbackText = document.getElementById('result-feedback');
+
+            resultBox.style.display = "block";
+            scoreText.innerText = `${score} / 10`;
+            
+            if (score >= 8) {
+                feedbackText.innerText = "Excelente! Você tem um ótimo domínio de ponteiros e lógica de baixo nível.";
+                feedbackText.style.color = "var(--correct-color)";
+            } else if (score >= 5) {
+                feedbackText.innerText = "Bom desempenho. Revise os pontos onde houve dúvida para garantir a aprovação.";
+                feedbackText.style.color = "#d68910";
+            } else {
+                feedbackText.innerText = "Atenção: Ponteiros são temas fundamentais na banca CEFETMINAS. Releia as resoluções com calma.";
+                feedbackText.style.color = "var(--wrong-color)";
+            }
+
+            // Scroll para o topo para ver o resultado
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Desabilitar botões para evitar nova submissão
+            document.querySelector('.btn-submit').style.display = "none";
+            document.querySelectorAll('input[type="radio"]').forEach(radio => radio.disabled = true);
+        }
+    </script>
+</body>
+</html>

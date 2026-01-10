@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Estratégico: Sub-rotinas - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+        .highlight {
+            background-color: #fde68a;
+            font-weight: 600;
+            padding: 0 2px;
+        }
+        .important-box {
+            border-left: 4px solid #2563eb;
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .trap-box {
+            border-left: 4px solid #dc2626;
+            background-color: #fff1f2;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th {
+            background-color: #f3f4f6;
+            text-align: left;
+            padding: 12px;
+            font-weight: 700;
+            border: 1px solid #e5e7eb;
+        }
+        td {
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f1f5f9;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .code-block {
+            display: block;
+            background: #f8fafc;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-6 py-10">
+
+    <!-- Header & Audio Player -->
+    <header class="text-center border-b border-gray-100 pb-10 mb-10">
+        <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight mb-4">
+            Lógica de Programação: Sub-rotinas
+        </h1>
+        <p class="text-lg text-gray-600 mb-8">Guia Definitivo de Revisão - Professor de Informática IFAM (CEFETMINAS)</p>
+        
+        <div class="inline-block w-full max-w-xl bg-white border border-gray-200 p-4 rounded-2xl shadow-sm">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Player de Áudio - Resumo de Memorização</p>
+            <audio controls class="w-full">
+                <source src="37sub-rotinas.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </audio>
+            <p class="text-[10px] text-gray-400 mt-2">Arquivo: <code>aula_subrotinas_ifam.mp3</code></p>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Definição e Modularização -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b-2 border-blue-100 pb-2">1. Modularização e Definição</h2>
+            <p>A utilização de sub-rotinas baseia-se no princípio de <span class="highlight">"Dividir para Conquistar"</span>. Consiste em decompor um problema complexo em partes menores, independentes e reutilizáveis.</p>
+            
+            <div class="important-box">
+                <strong>Características Essenciais:</strong>
+                <ul class="list-disc ml-6 mt-2 space-y-1">
+                    <li><span class="highlight">Reutilização:</span> O código é escrito uma vez e invocado múltiplas vezes.</li>
+                    <li><span class="highlight">Abstração:</span> O chamador sabe <em>o que</em> a sub-rotina faz, mas não necessariamente <em>como</em> (encapsulamento).</li>
+                    <li><span class="highlight">Facilidade de Manutenção:</span> Alterações são feitas em um único ponto do código.</li>
+                </ul>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição Técnica</th>
+                            <th>Exemplo de Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Procedimento</strong> (Procedure)</td>
+                            <td>Realiza uma tarefa sem retornar um valor associado ao seu nome. Em C, usa-se <code>void</code>.</td>
+                            <td><code>limpar_tela()</code>, <code>ordenar(vetor)</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Função</strong> (Function)</td>
+                            <td>Calcula e <span class="highlight">retorna obrigatoriamente um valor</span> para o ponto de chamada.</td>
+                            <td><code>resultado = calcular_raiz(16)</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 2. Variáveis e Escopo -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b-2 border-blue-100 pb-2">2. Escopo e Ciclo de Vida</h2>
+            <p>O "Escopo" determina a visibilidade e a validade de uma variável dentro do programa.</p>
+            <ul class="list-disc ml-6 space-y-3">
+                <li><strong>Variáveis Globais:</strong> Declaradas fora de qualquer sub-rotina. Visíveis em todo o programa. <span class="highlight text-red-600">Perigo:</span> Dificultam o rastreamento de erros e ferem a modularidade.</li>
+                <li><strong>Variáveis Locais:</strong> Declaradas dentro de uma sub-rotina. Existem apenas enquanto a sub-rotina está em execução.</li>
+                <li><strong>Parâmetros Formais:</strong> Variáveis declaradas no cabeçalho da sub-rotina que recebem os dados de entrada.</li>
+                <li><strong>Parâmetros Reais (Argumentos):</strong> Os valores ou variáveis passados no momento da chamada da sub-rotina.</li>
+            </ul>
+        </section>
+
+        <!-- 3. Passagem de Parâmetros -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b-2 border-blue-100 pb-2">3. Mecanismos de Passagem (Foco CEFETMINAS)</h2>
+            <p>A banca adora cobrar a diferença prática através de testes de mesa. Memorize as mecânicas:</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div class="border p-4 rounded-lg bg-gray-50">
+                    <h3 class="font-bold text-lg mb-2">Por Valor (Cópia)</h3>
+                    <p class="text-sm">A sub-rotina recebe uma cópia do valor da variável original. <span class="highlight">Alterações locais NÃO afetam o original.</span></p>
+                    <div class="code-block text-xs">
+void soma(int a) { a = a + 1; }
+// Chamada: x = 10; soma(x);
+// x continua sendo 10.
+                    </div>
+                </div>
+                <div class="border p-4 rounded-lg bg-gray-50">
+                    <h3 class="font-bold text-lg mb-2">Por Referência (Endereço)</h3>
+                    <p class="text-sm">A sub-rotina recebe o endereço de memória da variável. <span class="highlight">Alterações locais AFETAM o original (efeito colateral).</span></p>
+                    <div class="code-block text-xs">
+void soma(int *a) { *a = *a + 1; }
+// Chamada: x = 10; soma(&x);
+// x agora é 11.
+                    </div>
+                </div>
+            </div>
+
+            <div class="trap-box">
+                <strong>Peguinha recorrente (Vetores):</strong> Em linguagem C, ao passar um vetor para uma sub-rotina, ele é passado <span class="highlight">automaticamente por referência</span> (passa-se o endereço do primeiro elemento). Qualquer alteração no vetor dentro da função altera o vetor original.
+            </div>
+        </section>
+
+        <!-- 4. Recursividade -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-blue-900 mb-4 border-b-2 border-blue-100 pb-2">4. Recursividade</h2>
+            <p>Uma sub-rotina é recursiva quando invoca a si mesma. Elementos obrigatórios para a prova:</p>
+            <ul class="list-disc ml-6 space-y-2 mt-2">
+                <li><strong>Caso Base (Condição de Parada):</strong> Sem ele, ocorre recursão infinita e estouro de pilha (<em>Stack Overflow</em>).</li>
+                <li><strong>Caso Geral (Passo Recursivo):</strong> A chamada que aproxima o problema do caso base.</li>
+                <li><strong>Pilha de Execução:</strong> Lembre-se que cada chamada recursiva consome memória na pilha (<em>Stack</em>) para armazenar variáveis locais e endereço de retorno.</li>
+            </ul>
+        </section>
+
+        <!-- 5. Tendências CEFETMINAS / EBTT -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold text-red-800 mb-4 border-b-2 border-red-100 pb-2">5. O que a CEFETMINAS cobra em cargos EBTT</h2>
+            <p>Baseado em provas anteriores da banca e cargos de docência:</p>
+            
+            <div class="space-y-4 mt-4">
+                <div class="flex items-start gap-4">
+                    <div class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold mt-1">TENDÊNCIA</div>
+                    <p><strong>Teste de Mesa com Ponteiros:</strong> Questões que misturam sub-rotinas e ponteiros em C para verificar se o candidato sabe identificar quando a variável original muda.</p>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold mt-1">TENDÊNCIA</div>
+                    <p><strong>Recursão vs Iteração:</strong> Perguntas sobre qual consome mais memória (Recursão) ou qual é mais "elegante" mas perigosa para grandes volumes de dados.</p>
+                </div>
+                <div class="flex items-start gap-4">
+                    <div class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-bold mt-1">TENDÊNCIA</div>
+                    <p><strong>Nomenclatura Portugol:</strong> A banca pode usar termos como "Módulo", "Subalgoritmo", "Passagem por endereço" ou "Passagem por valor".</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Resumo Flash (Memorização) -->
+        <section class="mb-12 bg-gray-50 p-8 rounded-3xl border border-gray-100">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Resumo para Memorizar (Checklist do Aprovado)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-gray-200">
+                    <p>✅ <strong>Função:</strong> Retorna 1 valor. <br>✅ <strong>Procedimento:</strong> Faz uma ação (void).</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-gray-200">
+                    <p>✅ <strong>Valor:</strong> Cria cópia. Original seguro. <br>✅ <strong>Referência:</strong> Usa endereço (&). Original muda.</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-gray-200">
+                    <p>✅ <strong>Pilha (Stack):</strong> Onde sub-rotinas moram. <br>✅ <strong>Heap:</strong> Onde dados dinâmicos moram.</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-gray-200">
+                    <p>✅ <strong>Recursão:</strong> Exige Caso Base. <br>✅ <strong>Vetor em C:</strong> Sempre Referência.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Botão Final -->
+        <div class="text-center mt-16 mb-20">
+            <a href="37questoes.html" class="inline-flex items-center justify-center bg-gray-900 text-white font-bold py-5 px-12 rounded-2xl hover:bg-black transition-all shadow-xl hover:scale-105 active:scale-95">
+                Praticar com Questões →
+            </a>
+            <p class="text-gray-400 text-xs mt-6 uppercase tracking-widest">Preparação Técnica IFAM - Professor de Informática</p>
+        </div>
+    </main>
+
+</body>
+</html>
