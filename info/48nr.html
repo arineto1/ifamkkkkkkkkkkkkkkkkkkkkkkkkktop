@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Bancos de Dados NoSQL - IFAM/CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #111827; /* Gray 900 */
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            color: #000000;
+            letter-spacing: -0.025em;
+        }
+
+        /* Estilo para grifos de destaque (marca-texto) */
+        .highlight {
+            background-color: #fef08a; /* Yellow 200 */
+            color: #000;
+            font-weight: 600;
+            padding: 0 4px;
+            border-radius: 2px;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+
+        /* Termos técnicos chave */
+        .tech-term {
+            color: #0f172a; /* Slate 900 */
+            font-weight: 700;
+            border-bottom: 2px solid #cbd5e1;
+        }
+
+        /* Tabelas responsivas sem scroll */
+        .table-container {
+            width: 100%;
+            margin-bottom: 2rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Força colunas iguais ou definidas */
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            word-wrap: break-word; /* Quebra palavras longas */
+            hyphens: auto; /* Hifenização se necessário */
+            vertical-align: top;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f8fafc; /* Slate 50 */
+            font-weight: 700;
+            color: #334155;
+        }
+
+        /* Caixas de Nota e Alerta */
+        .note-box {
+            background-color: #eff6ff; /* Blue 50 */
+            border-left: 4px solid #2563eb; /* Blue 600 */
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .alert-box {
+            background-color: #fff1f2; /* Rose 50 */
+            border-left: 4px solid #e11d48; /* Rose 600 */
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Player de Áudio Customizado (Simples) */
+        .audio-wrapper {
+            background: #f3f4f6;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            border: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="max-w-5xl mx-auto px-4 py-10 md:px-8">
+
+        <!-- Cabeçalho -->
+        <header class="mb-12 text-center border-b pb-8">
+            <span class="inline-block bg-gray-100 text-gray-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-3">Concurso IFAM - EBTT Informática</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold mb-6 text-gray-900 leading-tight">
+                Bancos de Dados Não Relacionais (NoSQL)
+            </h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+                Modelos de dados agregados, distribuição, consistência e versionamento.
+                <br><em>Baseado em "NoSQL Distilled" (Sadalage & Fowler).</em>
+            </p>
+            
+            <!-- Player de Áudio -->
+            <div class="audio-wrapper shadow-sm mx-auto max-w-3xl">
+                <div class="flex flex-col items-center">
+                    <label class="font-semibold text-gray-700 mb-2 flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                        Resumo em Áudio da Aula
+                    </label>
+                    <audio controls class="w-full h-10 rounded-md">
+                        <!-- INSIRA O NOME DO ARQUIVO MP3 ABAIXO -->
+                        <source src="48nr.mp3" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                    <p class="text-xs text-gray-500 mt-2">Certifique-se de que o arquivo <code>resumo_aula_nosql.mp3</code> está na pasta.</p>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- 1. DEFINIÇÃO E CONTEXTO -->
+            <section class="mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
+                    <span class="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
+                    Definição e Motivação
+                </h2>
+                
+                <p class="mb-4 text-lg">
+                    O termo <strong>NoSQL</strong> (Not Only SQL) surgiu não como uma oposição ao SQL, mas como uma necessidade de resolver dois problemas fundamentais que os SGBDs Relacionais (RDBMS) falhavam em atender adequadamente na era da Web 2.0:
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-6 my-8">
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-xl mb-3 text-gray-900">1. Impedance Mismatch</h3>
+                        <p class="text-gray-700">Diferença entre o modelo de memória (Objetos, Listas, Grafos) e o modelo relacional (Tabelas e Linhas). NoSQL permite persistir os dados <span class="highlight">da forma como são manipulados na aplicação</span>, eliminando a necessidade complexa de mapeamento ORM.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-xl mb-3 text-gray-900">2. Escalabilidade Horizontal</h3>
+                        <p class="text-gray-700">O RDBMS foca em <em>Scale-Up</em> (servidores maiores). O NoSQL foi desenhado para <em>Scale-Out</em> (clusters de máquinas menores). Isso exige abdicar de certas garantias do modelo relacional (como JOINs complexos e ACID estrito em todo o banco).</p>
+                    </div>
+                </div>
+
+                <div class="note-box">
+                    <strong>Conceito Fundamental: Persistência Poliglota</strong><br>
+                    Não existe uma "bala de prata". A tendência moderna é usar diferentes tecnologias de armazenamento para diferentes necessidades dentro do mesmo sistema (ex: Redis para cache, MongoDB para catálogo, Neo4j para recomendações).
+                </div>
+            </section>
+
+            <!-- 2. MODELOS DE DADOS AGREGADOS -->
+            <section class="mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
+                    <span class="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
+                    Modelos de Dados Agregados
+                </h2>
+
+                <p class="mb-6">
+                    A principal distinção feita por Sadalage & Fowler é entre modelos <strong>Orientados a Agregados</strong> e <strong>Ignorantes a Agregados</strong>. Um agregado é uma coleção de dados que interagimos como uma unidade.
+                </p>
+
+                <div class="space-y-8">
+                    <!-- Key Value -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 border-l-4 border-gray-800 pl-3">2.1 Key-Value (Chave-Valor)</h3>
+                        <p class="mb-2">O modelo mais simples. O valor é um <span class="highlight">BLOB opaco</span> para o banco de dados. O banco não sabe o que está armazenado (pode ser um inteiro, uma imagem ou um JSON), ele apenas entrega o dado se você fornecer a chave.</p>
+                        <ul class="list-disc pl-5 text-gray-700">
+                            <li><strong>Característica:</strong> Performance extrema, modelo simples.</li>
+                            <li><strong>Limitação:</strong> Não é possível consultar pelo conteúdo do valor (ex: "buscar usuários maiores de 18 anos").</li>
+                            <li><strong>Exemplos:</strong> Redis, Riak, Memcached.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Document -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 border-l-4 border-gray-800 pl-3">2.2 Document (Documentos)</h3>
+                        <p class="mb-2">Similar ao chave-valor, mas o valor é <span class="highlight">transparente e estruturado</span> (JSON, XML, BSON). O banco "entende" o conteúdo.</p>
+                        <ul class="list-disc pl-5 text-gray-700">
+                            <li><strong>Característica:</strong> Permite indexação de campos internos e consultas complexas sem JOINs.</li>
+                            <li><strong>Schema-less:</strong> Flexibilidade de esquema (cada documento pode ter campos diferentes).</li>
+                            <li><strong>Exemplos:</strong> MongoDB, CouchDB.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Column Family -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-2 border-l-4 border-gray-800 pl-3">2.3 Column-Family (Família de Colunas)</h3>
+                        <p class="mb-2">Baseado no Google BigTable. Armazena dados em linhas que contêm colunas, mas as colunas são dinâmicas. Pode ser visto como um mapa de mapas bidimensional.</p>
+                        <ul class="list-disc pl-5 text-gray-700">
+                            <li><strong>Característica:</strong> Alta capacidade de escrita e suporte a dados esparsos (linhas podem ter milhões de colunas diferentes).</li>
+                            <li><strong>Estrutura:</strong> <em>Row Key</em> (particiona os dados) e <em>Clustering Key</em> (ordena os dados).</li>
+                            <li><strong>Exemplos:</strong> Apache Cassandra, HBase, ScyllaDB.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Graph (Non-Aggregate) -->
+                    <div class="bg-gray-50 p-4 rounded border-dashed border-2 border-gray-300">
+                        <h3 class="text-lg font-bold mb-2 text-gray-600">2.4 Grafos (Não-Agregado)</h3>
+                        <p class="text-sm text-gray-700">O único modelo NoSQL principal que <strong>não é orientado a agregados</strong>. Foca em relacionamentos e nós. Ideal para redes sociais, roteamento e recomendações. (Ex: Neo4j).</p>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <h4 class="font-bold text-lg mb-4 text-center">Resumo Comparativo</h4>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th width="25%">Modelo</th>
+                                    <th width="25%">Unidade</th>
+                                    <th width="25%">Visibilidade</th>
+                                    <th width="25%">Uso Ideal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="font-bold">Chave-Valor</td>
+                                    <td>Chave + Blob</td>
+                                    <td>Opaca</td>
+                                    <td>Cache, Sessão</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Documento</td>
+                                    <td>Chave + JSON</td>
+                                    <td>Transparente</td>
+                                    <td>Catálogos, CMS</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Colunas</td>
+                                    <td>Linha Larga</td>
+                                    <td>Transparente</td>
+                                    <td>Logs, Time-series</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. MODELOS DE DISTRIBUIÇÃO -->
+            <section class="mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
+                    <span class="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
+                    Distribuição: Sharding e Replicação
+                </h2>
+                
+                <p class="mb-6">Para lidar com grandes volumes de dados (Volume) e requisições (Velocity), o NoSQL utiliza duas técnicas ortogonais:</p>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Sharding -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-blue-900">3.1 Sharding (Fragmentação)</h3>
+                        <p class="mb-3 text-gray-700">Distribui dados diferentes entre vários servidores. Cada nó possui apenas uma parte do banco.</p>
+                        <ul class="list-disc pl-5 text-sm space-y-2">
+                            <li><strong>Objetivo:</strong> Escalar armazenamento e escrita.</li>
+                            <li><strong>Sharding Key:</strong> Critério crucial para distribuir dados. Uma má escolha cria "Hotspots" (um servidor sobrecarregado).</li>
+                            <li><strong>Ponto Fraco:</strong> Consultas que precisam agregar dados de múltiplos shards são lentas.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Replicação -->
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-blue-900">3.2 Replicação</h3>
+                        <p class="mb-3 text-gray-700">Copia o mesmo dado para múltiplos servidores.</p>
+                        <ul class="list-disc pl-5 text-sm space-y-2">
+                            <li><strong>Objetivo:</strong> Redundância (segurança) e Escalar leitura.</li>
+                            <li><strong>Master-Slave:</strong> Escrita no Mestre, leitura nos Escravos. Risco de leitura obsoleta.</li>
+                            <li><strong>Peer-to-Peer (P2P):</strong> Todos aceitam escrita. Risco de <span class="highlight">conflitos de atualização</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. CONSISTÊNCIA E TEOREMA CAP -->
+            <section class="mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
+                    <span class="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">4</span>
+                    Consistência, CAP e Versões
+                </h2>
+
+                <div class="note-box mb-8">
+                    <strong class="text-blue-900">Teorema CAP (Brewer)</strong><br>
+                    Em um sistema distribuído (sujeito a Partição de Rede - P), você deve escolher entre Consistência (C) e Disponibilidade (A). <br>
+                    <strong>CP:</strong> Se a rede falhar, o sistema bloqueia para garantir dados corretos (ex: Bancos Bancários).<br>
+                    <strong>AP:</strong> Se a rede falhar, o sistema responde, mesmo que o dado esteja desatualizado (ex: Likes no Facebook).
+                </div>
+
+                <h3 class="text-xl font-bold mb-4">4.1 Quóruns de Consistência (N, R, W)</h3>
+                <p class="mb-4">
+                    Em bancos P2P (como Cassandra/Dynamo), a consistência é configurável por consulta.
+                </p>
+                <div class="table-container">
+                    <table>
+                        <tr>
+                            <td class="font-bold bg-gray-50">N (Replication Factor)</td>
+                            <td>Número de cópias do dado.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold bg-gray-50">W (Write Quorum)</td>
+                            <td>Quantos nós devem confirmar a gravação para ser sucesso.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold bg-gray-50">R (Read Quorum)</td>
+                            <td>Quantos nós devem responder para a leitura ser válida.</td>
+                        </tr>
+                    </table>
+                </div>
+                <p class="text-center font-bold text-lg text-indigo-700 bg-indigo-50 p-4 rounded mb-8">
+                    Se <span class="text-2xl">R + W > N</span>, temos Consistência Forte (Lê-se o que escreveu).
+                </p>
+
+                <h3 class="text-xl font-bold mb-4">4.2 Marcadores de Versão e Conflitos</h3>
+                <p class="mb-4">Em sistemas AP e Peer-to-Peer, dois usuários podem alterar o mesmo dado ao mesmo tempo em nós diferentes. Como resolver?</p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="border p-4 rounded">
+                        <strong class="text-lg block mb-2">1. Timestamps (Relógio Físico)</strong>
+                        <p class="text-sm mb-2">Usa a hora do servidor. Estratégia <em>Last Write Wins (LWW)</em>.</p>
+                        <p class="text-xs text-red-600 font-bold">Problema: Relógios de servidores nunca estão perfeitamente sincronizados (Clock Skew). Pode haver perda de dados silenciosa.</p>
+                    </div>
+                    <div class="border p-4 rounded">
+                        <strong class="text-lg block mb-2">2. Vector Clocks (Relógio Lógico)</strong>
+                        <p class="text-sm mb-2">Cada nó mantém um contador. Ex: <code>[A:1, B:2]</code>. Permite detectar causalidade.</p>
+                        <p class="text-xs text-green-600 font-bold">Vantagem: Detecta conflitos reais e permite que a aplicação decida como mesclar os dados.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. TENDÊNCIAS E PEGUINHAS -->
+            <section class="mb-16">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6 flex items-center gap-3">
+                    <span class="bg-black text-white w-8 h-8 rounded-full flex items-center justify-center text-sm">5</span>
+                    Peguinhas da Banca (Foco Concurso)
+                </h2>
+                
+                <div class="space-y-4">
+                    <div class="alert-box">
+                        <h4 class="font-bold text-red-800 text-lg">⚠️ Peguinha 1: ACID no NoSQL</h4>
+                        <p class="text-gray-800">
+                            <strong>Afirmação errada:</strong> "Bancos NoSQL não suportam transações ACID."<br>
+                            <strong>Realidade:</strong> Bancos orientados a agregados suportam ACID <span class="highlight">dentro do escopo de um único agregado</span>. Eles não suportam ACID distribuído entre múltiplos agregados.
+                        </p>
+                    </div>
+
+                    <div class="alert-box">
+                        <h4 class="font-bold text-red-800 text-lg">⚠️ Peguinha 2: "Schema-less"</h4>
+                        <p class="text-gray-800">
+                            <strong>Afirmação errada:</strong> "NoSQL não tem esquema, logo os dados são desestruturados."<br>
+                            <strong>Realidade:</strong> Os dados têm estrutura implícita (JSON/XML). O correto é dizer <em>Schema-on-Read</em> (esquema na leitura) em vez de <em>Schema-on-Write</em> (esquema na escrita).
+                        </p>
+                    </div>
+
+                    <div class="alert-box">
+                        <h4 class="font-bold text-red-800 text-lg">⚠️ Peguinha 3: MapReduce</h4>
+                        <p class="text-gray-800">
+                            A banca pode associar MapReduce apenas ao Hadoop. Lembre-se que bancos como MongoDB e Riak usam MapReduce internamente para realizar agregações complexas que o SQL faria com `GROUP BY`.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer / CTA -->
+        <footer class="mt-20 pt-10 border-t border-gray-200 text-center pb-12">
+            <h3 class="text-2xl font-bold mb-4">Fixação de Conteúdo</h3>
+            <p class="text-gray-600 mb-8 max-w-xl mx-auto">
+                A teoria só se consolida com a prática. Acesse o banco de questões simuladas focadas no perfil da CEFETMINAS.
+            </p>
+            
+            <a href="48questoes.html" class="inline-block bg-gray-900 hover:bg-black text-white font-bold py-4 px-10 rounded-lg shadow-lg transition-all transform hover:-translate-y-1 hover:shadow-xl text-lg">
+                Iniciar Bateria de Questões &rarr;
+            </a>
+            
+            <p class="text-xs text-gray-400 mt-8">
+                &copy; Material Didático para Concurso IFAM - Uso Educacional.
+            </p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

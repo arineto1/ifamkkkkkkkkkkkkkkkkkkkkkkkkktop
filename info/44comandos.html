@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: DML para Concurso IFAM (EBTT)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937; /* Cinza muito escuro para leitura */
+            line-height: 1.7;
+        }
+        
+        /* Tipografia */
+        h1 { color: #111827; letter-spacing: -0.02em; }
+        h2 { color: #1e3a8a; /* Azul escuro corporativo */ letter-spacing: -0.01em; margin-top: 2rem; }
+        h3 { color: #374151; font-weight: 700; margin-top: 1.5rem; }
+
+        /* Tabelas Responsivas sem Scroll Horizontal */
+        .table-container {
+            width: 100%;
+            overflow-x: hidden; /* Força não ter scroll */
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        
+        table {
+            width: 100%;
+            table-layout: fixed; /* O segredo para não ter scroll horizontal */
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+            word-wrap: break-word; /* Quebra palavras longas */
+            overflow-wrap: break-word;
+            hyphens: auto;
+            font-size: 0.95rem;
+        }
+        
+        th { background-color: #f9fafb; color: #111827; font-weight: 700; }
+        
+        /* Grifos e Destaques */
+        .highlight {
+            background-color: #fef08a; /* Amarelo marca-texto suave */
+            color: #854d0e;
+            padding: 0 4px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+
+        .code-snippet {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #f3f4f6; /* Cinza claro */
+            color: #be123c; /* Vermelho escuro para contraste */
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-weight: 600;
+            white-space: normal; /* Permite quebra de linha no código inline */
+        }
+
+        .block-code {
+            background-color: #f8fafc;
+            border-left: 4px solid #94a3b8;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #334155;
+            overflow-x: auto;
+            white-space: pre-wrap; /* Quebra linha */
+        }
+
+        /* Caixas de Atenção */
+        .note-box {
+            background-color: #fff7ed; /* Laranja muito suave */
+            border-left: 4px solid #f97316;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .trap-box {
+            background-color: #fef2f2; /* Vermelho muito suave */
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Botão */
+        .btn-action {
+            transition: all 0.3s ease;
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div class="max-w-5xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
+        
+        <!-- Header -->
+        <header class="text-center mb-12 border-b border-gray-200 pb-8">
+            <h1 class="text-3xl sm:text-4xl font-extrabold mb-4 text-gray-900">Aula Teórica: Linguagem de Manipulação de Dados (DML)</h1>
+            <p class="text-lg text-gray-600">Foco: Concurso IFAM (EBTT) - Banca Fundação CEFETMINAS</p>
+        </header>
+
+        <!-- Player de Áudio -->
+        <div class="bg-gray-50 border border-gray-200 rounded-xl p-6 mb-12 shadow-sm flex flex-col sm:flex-row items-center gap-4">
+            <div class="flex-shrink-0 bg-blue-100 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                </svg>
+            </div>
+            <div class="w-full">
+                <label class="block text-gray-700 font-bold mb-1">Resumo em Áudio da Aula</label>
+                <audio controls class="w-full h-10 rounded">
+                    <source src="44comandos.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio HTML5.
+                </audio>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main>
+
+            <!-- 1. Definição e Taxonomia -->
+            <section>
+                <h2 class="text-2xl font-bold border-l-4 border-blue-800 pl-4">1. Definição e Taxonomia SQL</h2>
+                <p class="mt-3 text-justify">
+                    A <strong>DML (Data Manipulation Language)</strong> é o subconjunto da SQL responsável pela manutenção dos dados armazenados. Enquanto a DDL constrói o "balde" (tabelas), a DML enche, esvazia ou troca o conteúdo desse balde.
+                </p>
+                <p class="mt-2"><strong>Características Essenciais:</strong></p>
+                <ul class="list-disc pl-5 mt-2 space-y-1 text-gray-700">
+                    <li>Opera sobre linhas (tuplas/registros).</li>
+                    <li>É obrigatório o uso de transações (commit/rollback) para efetivação definitiva (exceto se o autocommit estiver ligado).</li>
+                    <li>Dispara Gatilhos (Triggers).</li>
+                </ul>
+
+                <div class="table-container mt-6">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 20%">Sublinguagem</th>
+                                <th style="width: 25%">Comandos Principais</th>
+                                <th>Função Chave para a Prova</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold text-blue-800">DML</td>
+                                <td>INSERT, UPDATE, DELETE, MERGE, CALL, EXPLAIN PLAN, LOCK TABLE</td>
+                                <td>Manipular o <strong>conteúdo</strong> dos dados. <span class="highlight">A FCM pode incluir o SELECT aqui em questões mais antigas/genéricas.</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-gray-600">DDL</td>
+                                <td>CREATE, ALTER, DROP, TRUNCATE, RENAME, COMMENT</td>
+                                <td>Definir a <strong>estrutura</strong>. <span class="highlight">Cuidado: TRUNCATE é DDL.</span></td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-gray-600">DCL</td>
+                                <td>GRANT, REVOKE</td>
+                                <td>Controlar <strong>acesso</strong>.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-gray-600">TCL</td>
+                                <td>COMMIT, ROLLBACK, SAVEPOINT, SET TRANSACTION</td>
+                                <td>Controlar a <strong>transação</strong>.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 2. Detalhando os Comandos (DML) -->
+            <section class="mt-12">
+                <h2 class="text-2xl font-bold border-l-4 border-blue-800 pl-4">2. Análise Técnica dos Comandos</h2>
+
+                <!-- INSERT -->
+                <div class="mt-6">
+                    <h3 class="text-xl">A. INSERT (Inserção)</h3>
+                    <p class="mb-2">Adiciona novas linhas à tabela.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                            <h4 class="font-bold text-gray-700 mb-2">Forma 1: Posicional</h4>
+                            <div class="block-code">INSERT INTO aluno VALUES (1, 'João');</div>
+                            <p class="text-sm">Perigo: Exige valores para todas as colunas na ordem exata de criação da tabela.</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+                            <h4 class="font-bold text-gray-700 mb-2">Forma 2: Declarativa (Recomendada)</h4>
+                            <div class="block-code">INSERT INTO aluno (nome, id) VALUES ('João', 1);</div>
+                            <p class="text-sm">Seguro: A ordem das colunas no comando não precisa ser a da tabela física.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <p class="font-bold">Pontos Críticos do INSERT:</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li><strong>Colunas Omitidas:</strong> Receberão <code>NULL</code> ou o valor definido em <code>DEFAULT</code>. Se for <code>NOT NULL</code> e sem <code>DEFAULT</code>, dá erro.</li>
+                            <li><strong>Multi-Row (PostgreSQL):</strong> <code>VALUES (1, 'A'), (2, 'B'), (3, 'C');</code> (Atomicidade: se um falhar, todos falham).</li>
+                            <li><strong>RETURNING (Ouro do PostgreSQL):</strong> Permite retornar o dado gerado (ex: ID serial) na mesma operação.
+                                <br><span class="code-snippet">INSERT INTO log (msg) VALUES ('Erro') RETURNING id_log;</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- SELECT INTO vs INSERT SELECT -->
+                <div class="mt-8 note-box">
+                    <h4 class="font-bold text-orange-800 text-lg">⚠️ Diferença Clássica de Concurso: Cópia de Tabelas</h4>
+                    <div class="table-container bg-white">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Comando</th>
+                                    <th>O que faz?</th>
+                                    <th>A tabela destino existe?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="code-snippet">INSERT INTO destino SELECT * FROM origem</td>
+                                    <td>Copia dados da origem para o destino.</td>
+                                    <td><span class="highlight">SIM</span>, deve existir previamente.</td>
+                                </tr>
+                                <tr>
+                                    <td class="code-snippet">SELECT * INTO destino FROM origem</td>
+                                    <td>Cria uma nova tabela e popula com os dados.</td>
+                                    <td><span class="highlight">NÃO</span>, ela é criada na hora (no SQL Server/Postgres).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- UPDATE -->
+                <div class="mt-8">
+                    <h3 class="text-xl">B. UPDATE (Atualização)</h3>
+                    <p class="mb-2">Modifica dados existentes. A sintaxe básica é <code>UPDATE tabela SET coluna = valor WHERE condição</code>.</p>
+                    
+                    <div class="trap-box">
+                        <h4 class="font-bold text-red-700">☠️ A Pegadinha do JOIN no UPDATE</h4>
+                        <p class="mb-2">O padrão ANSI SQL não suporta JOIN direto na cláusula UPDATE da mesma forma que o SELECT. Bancas adoram confundir sintaxe do SQL Server com PostgreSQL.</p>
+                        <p><strong>No PostgreSQL (Correto):</strong></p>
+                        <div class="block-code">UPDATE empregados e
+SET salario = salario * 1.10
+FROM departamentos d
+WHERE e.id_dep = d.id
+AND d.nome = 'TI';</div>
+                        <p class="text-sm mt-1">Note que o JOIN é feito através de uma cláusula <code>FROM</code> adicional (ou subquery), não um <code>INNER JOIN</code> direto logo após o nome da tabela.</p>
+                    </div>
+                </div>
+
+                <!-- MERGE -->
+                <div class="mt-8">
+                    <h3 class="text-xl">C. MERGE (A Fusão)</h3>
+                    <p class="mb-2">Comando híbrido (Upsert). Verifica se o registro existe: se sim, faz <strong>UPDATE</strong>; se não, faz <strong>INSERT</strong>.</p>
+                    <div class="block-code">MERGE INTO destino d
+USING origem o ON (d.id = o.id)
+WHEN MATCHED THEN
+   UPDATE SET d.valor = o.valor
+WHEN NOT MATCHED THEN
+   INSERT (id, valor) VALUES (o.id, o.valor);</div>
+                    <p class="text-sm text-gray-600"><em>Dica: A Fundação CEFETMINAS pode cobrar o conceito ("Qual comando realiza atualização ou inserção condicional em um único passo?").</em></p>
+                </div>
+            </section>
+
+            <!-- 3. TRUNCATE vs DELETE -->
+            <section class="mt-12">
+                <h2 class="text-2xl font-bold border-l-4 border-blue-800 pl-4">3. O Duelo: DELETE (DML) vs. TRUNCATE (DDL)</h2>
+                <p class="mt-2 mb-4">Esta é a tabela mais importante para memorização imediata.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 15%">Critério</th>
+                                <th style="width: 42%">DELETE</th>
+                                <th style="width: 42%">TRUNCATE</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold">Categoria</td>
+                                <td><span class="code-snippet">DML</span> (Manipulação)</td>
+                                <td><span class="code-snippet">DDL</span> (Definição)</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Filtro</td>
+                                <td>Aceita <code>WHERE</code>. Pode apagar 1 linha.</td>
+                                <td><span class="highlight">NÃO aceita WHERE</span>. Apaga tudo.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Performance</td>
+                                <td>Lento (gera log/undo por linha).</td>
+                                <td>Rápido (desaloca páginas de dados).</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Triggers</td>
+                                <td>Dispara triggers <code>ON DELETE</code>.</td>
+                                <td><span class="highlight">NÃO dispara triggers</span> de linha.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Identidade</td>
+                                <td>Mantém o contador (ID) onde parou.</td>
+                                <td>Reseta o contador (ID volta para 1).</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold">Integridade</td>
+                                <td>Respeita FK (não apaga pai se houver filho).</td>
+                                <td>Pode falhar se houver FK referenciando a tabela (mesmo vazia), a menos que use <code>CASCADE</code> em alguns SGBDs.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 4. Tendências CEFETMINAS -->
+            <section class="mt-12 bg-gray-50 p-6 rounded-xl border border-gray-200">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">4. Tendências de Cobrança e "Pegadinhas"</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-bold text-lg text-red-800 flex items-center">
+                            <span class="mr-2 text-2xl">⚡</span> Integridade Referencial
+                        </h4>
+                        <p class="text-gray-700">
+                            A banca adora cenários onde comandos falham. Lembre-se:<br>
+                            1. Você não pode deletar um registro "Pai" se existirem registros "Filhos" (Foreign Key), exceto se a FK foi criada com <code>ON DELETE CASCADE</code>.<br>
+                            2. Você não pode inserir um "Filho" apontando para um "Pai" inexistente.
+                        </p>
+                    </div>
+
+                    <div class="border-t border-gray-300 pt-4">
+                        <h4 class="font-bold text-lg text-red-800 flex items-center">
+                            <span class="mr-2 text-2xl">⚡</span> Nullability (Nulos)
+                        </h4>
+                        <p class="text-gray-700">
+                            <strong>Pegadinha Clássica:</strong> <code>UPDATE tabela SET col = NULL</code> funciona? <span class="highlight">SIM</span> (desde que a coluna não seja NOT NULL).<br>
+                            Mas <code>DELETE FROM tabela WHERE col = NULL</code> apaga algo? <span class="highlight">NÃO!</span> Comparações com NULL exigem <code>IS NULL</code> ou <code>IS NOT NULL</code>. Nenhuma linha será afetada.
+                        </p>
+                    </div>
+
+                    <div class="border-t border-gray-300 pt-4">
+                        <h4 class="font-bold text-lg text-red-800 flex items-center">
+                            <span class="mr-2 text-2xl">⚡</span> Strings e Aspas
+                        </h4>
+                        <p class="text-gray-700">
+                            Em SQL ANSI/Postgres, strings literais usam <strong>aspas simples</strong> (<code>'texto'</code>). Aspas duplas (<code>"texto"</code>) são usadas para <strong>identificadores</strong> (nomes de tabelas ou colunas com espaços/maiusculas). Trocar isso anula a questão.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer / Botão de Questões -->
+        <footer class="mt-16 pb-12 text-center">
+            <p class="text-gray-500 mb-6 italic text-sm">"A repetição é a mãe da retenção." - Revise a tabela de TRUNCATE vs DELETE antes da prova.</p>
+            
+            <a href="44questoes.html" class="btn-action inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-full text-white bg-gray-900 hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 shadow-xl">
+                <span>Resolver Questões de Fixação</span>
+                <svg class="ml-2 -mr-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </footer>
+
+    </div>
+</body>
+</html>

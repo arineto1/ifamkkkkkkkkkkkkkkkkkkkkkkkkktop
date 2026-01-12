@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Blindado: POO para IFAM/CEFETMINAS</title>
+    <style>
+        /* Reset e Estilos Básicos */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333; /* Cinza escuro para conforto visual */
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+        /* Container Principal */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        /* Tipografia */
+        h1 {
+            color: #111;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #ddd;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #222;
+            font-size: 1.5rem;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 5px solid #666; /* Detalhe neutro */
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #444;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-bottom: 20px;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        /* Grifos e Destaques */
+        strong {
+            color: #000;
+            font-weight: 700;
+        }
+
+        mark {
+            background-color: #fff9c4; /* Amarelo pálido suave */
+            color: #222;
+            padding: 0 4px;
+            border-radius: 3px;
+        }
+
+        .highlight-term {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        /* Audio Player Container */
+        .audio-container {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Tabelas Responsivas */
+        .table-container {
+            overflow-x: auto; /* Fallback caso a tela seja minuscula */
+            margin-bottom: 30px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            table-layout: fixed; /* Ajuda a forçar a largura */
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
+            word-wrap: break-word; /* Quebra palavras longas para não gerar scroll */
+        }
+
+        th {
+            background-color: #f4f4f4; /* Fundo muito claro neutro */
+            font-weight: bold;
+            color: #222;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Alertas / Peguinhas */
+        .alert-box {
+            background-color: #fdfdfd;
+            border-left: 5px solid #d9534f; /* Vermelho suave para alerta */
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .alert-title {
+            display: block;
+            color: #d9534f;
+            font-weight: bold;
+            font-style: normal;
+            margin-bottom: 5px;
+        }
+
+        /* Botão de Questões */
+        .action-area {
+            margin-top: 60px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .btn-questoes {
+            display: inline-block;
+            background-color: #444; /* Escuro neutro */
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-questoes:hover {
+            background-color: #222;
+        }
+
+        /* Ajustes Mobile */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            th, td { padding: 8px 5px; font-size: 0.85rem; }
+            /* No mobile, permitimos que a tabela use hifens para quebrar palavras */
+            table { word-break: break-word; hyphens: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Área do Player de Áudio -->
+        <div class="audio-container">
+            <span class="audio-label">🎧 Resumo em Áudio (MP3)</span>
+            <!-- SUBSTITUA 'seu_audio.mp3' PELO NOME DO SEU ARQUIVO -->
+            <audio controls>
+                <source src="41modelagem.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </div>
+
+        <header>
+            <h1>Resumo Blindado: POO para IFAM/CEFETMINAS</h1>
+            <p>Este documento condensa os conceitos críticos de POO para a prova de Professor EBTT, focando nas distinções sutis que geram "pegadinhas" e nos termos técnicos exatos cobrados pela banca.</p>
+        </header>
+
+        <section>
+            <h2>1. O Núcleo do Paradigma (Definições de Prova)</h2>
+            <ul>
+                <li><strong>Mudança de Foco:</strong> Do <em>procedural</em> (verbos/funções) para o <mark>orientado a objetos</mark> (substantivos/entidades). O objetivo é reduzir a <strong>lacuna semântica</strong> entre o mundo real e o código.</li>
+                <li><strong>Classe (Estática/Compile-time):</strong> É o <mark>TAD (Tipo Abstrato de Dados)</mark>. Representa o <em>molde</em>, a abstração e o contrato. <strong>Não ocupa memória de dados</strong> (exceto <code>static</code>).</li>
+                <li><strong>Objeto (Dinâmica/Runtime):</strong> É a <mark>instância</mark>. Possui:
+                    <ul>
+                        <li><strong>Identidade:</strong> única, mesmo com dados iguais.</li>
+                        <li><strong>Estado:</strong> valor dos atributos.</li>
+                        <li><strong>Comportamento:</strong> métodos.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p style="margin-left: 25px;"><em>Analogia:</em> Classe = Cortador de Biscoito; Objeto = Biscoito.</p>
+        </section>
+
+        <section>
+            <h2>2. Relacionamentos UML: O Mapa da Mina</h2>
+            <p>A Fundação CEFETMINAS explora a diferença visual e semântica entre estes itens. Memorize os símbolos e o ciclo de vida.</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Tipo</th>
+                            <th style="width: 15%;">Símbolo UML</th>
+                            <th style="width: 20%;">Palavra-Chave</th>
+                            <th style="width: 25%;">Ciclo de Vida (Dependência)</th>
+                            <th style="width: 25%;">Exemplo Memorável</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Associação</strong></td>
+                            <td>Linha sólida (―)</td>
+                            <td>"Usa um" / Conecta</td>
+                            <td><mark>Independente</mark></td>
+                            <td>Professor e Aluno (trocam mensagens).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Agregação</strong></td>
+                            <td>Losango Vazio (◇)</td>
+                            <td>"Tem um" (Coleção)</td>
+                            <td><mark>Independente</mark>. A parte vive sem o todo.</td>
+                            <td>Time e Jogadores. Se o time acaba, o jogador sobra.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Composição</strong></td>
+                            <td>Losango Cheio (◆)</td>
+                            <td>"Contém um" (Posse)</td>
+                            <td><mark>Dependente</mark>. A parte MORRE com o todo.</td>
+                            <td>Nota Fiscal e Itens. Sem nota, não há item.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Generalização</strong></td>
+                            <td>Triângulo Vazio (△)</td>
+                            <td>"É um" (Herança)</td>
+                            <td>Definição de Tipo.</td>
+                            <td>Cachorro é um Mamífero.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dependência</strong></td>
+                            <td>Linha tracejada (-->)</td>
+                            <td>"Usa temporariamente"</td>
+                            <td>Temporária (Escopo de método).</td>
+                            <td>Método recebe objeto como parâmetro.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert-box">
+                <span class="alert-title">⚠️ Peguinha de Prova:</span>
+                Se a questão disser "Ao destruir o objeto A, o objeto B também é destruído", o losango TEM que ser <strong>PRETO (Cheio)</strong>. Se for branco, a afirmativa é Falsa.
+            </div>
+        </section>
+
+        <section>
+            <h2>3. Os 4 Pilares (Definições Rápidas)</h2>
+            <ol>
+                <li><strong>Abstração:</strong> Focar no essencial, ignorar o acidental. Define os limites da classe. É o ato de <mark>modelar</mark>.</li>
+                <li><strong>Encapsulamento:</strong> Proteger o estado (atributos) contra acesso direto indevido.
+                    <ul>
+                        <li><em>Objetivo:</em> Manter "Invariantes" (regras de negócio) e reduzir acoplamento.</li>
+                        <li><em>Mecanismo:</em> <code>private</code>, <code>protected</code>, <code>public</code>.</li>
+                    </ul>
+                </li>
+                <li><strong>Herança:</strong> Reuso de código e extensão de comportamento.
+                    <ul>
+                        <li><em>Regra Java:</em> Herança simples de classes (<code>extends</code>), múltipla de interfaces (<code>implements</code>).</li>
+                        <li><em>Construtores:</em> A subclasse <strong>sempre</strong> chama o construtor da superclasse primeiro (<code>super()</code>).</li>
+                    </ul>
+                </li>
+                <li><strong>Polimorfismo:</strong> "Muitas formas". Capacidade de um objeto ser tratado genericamente, mas agir especificamente.</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>4. Polimorfismo: Sobrecarga vs. Sobrescrita</h2>
+            <p>Esta tabela resolve 80% das questões de código da banca.</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Característica</th>
+                            <th style="width: 40%;">Sobrecarga (Overloading)</th>
+                            <th style="width: 40%;">Sobrescrita (Overriding)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Onde?</strong></td>
+                            <td>Na <mark>mesma</mark> classe.</td>
+                            <td>Em classes <mark>diferentes</mark> (Herança).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Assinatura</strong></td>
+                            <td>Nome igual, <strong>parâmetros diferentes</strong>.</td>
+                            <td>Assinatura <strong>idêntica</strong> (nome + parâmetros).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Resolução</strong></td>
+                            <td><strong>Estática</strong> (Compilação). Early Binding.</td>
+                            <td><strong>Dinâmica</strong> (Execução). Late Binding.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Retorno</strong></td>
+                            <td>Pode mudar livremente.</td>
+                            <td>Deve ser igual ou subtipo (Covariante).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Exceção</strong></td>
+                            <td>Pode lançar novas.</td>
+                            <td>Não pode lançar exceções mais genéricas.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert-box">
+                <span class="alert-title">⚠️ O "Pulo do Gato":</span>
+                Se a variável é do tipo <code>Animal</code> mas recebe <code>new Cachorro()</code>, e chamamos <code>falar()</code>:<br>
+                1. Na <strong>Compilação</strong>, verifica-se se <code>Animal</code> tem o método.<br>
+                2. Na <strong>Execução</strong>, roda o método do <code>Cachorro</code> (Polimorfismo Dinâmico).
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Modelagem Avançada e Design</h2>
+            <ul>
+                <li><strong>Classe Abstrata vs. Interface:</strong>
+                    <ul>
+                        <li><strong>Abstrata:</strong> É uma classe (<code>extends</code>). Pode ter estado (atributos) e métodos concretos. Use para reuso de código em hierarquias relacionadas (ex: <code>Funcionario</code> -> <code>Gerente</code>).</li>
+                        <li><strong>Interface:</strong> É um contrato (<code>implements</code>). Não tem estado (apenas constantes). Use para definir capacidades comuns em classes não relacionadas (ex: <code>Autenticavel</code> para <code>Gerente</code> e <code>SistemaExterno</code>).</li>
+                    </ul>
+                </li>
+                <li><strong>Classe Associativa:</strong> Quando o <em>relacionamento</em> precisa ter atributos.
+                    <ul>
+                        <li><em>Exemplo:</em> <code>Aluno</code> e <code>Disciplina</code>. A <code>Nota</code> não pertence nem ao aluno nem à disciplina, mas à <mark>Matrícula</mark> (Classe Associativa).</li>
+                    </ul>
+                </li>
+                <li><strong>Princípios SOLID (Resumo Flash):</strong>
+                    <ul>
+                        <li><strong>S:</strong> Responsabilidade Única (Alta Coesão).</li>
+                        <li><strong>O:</strong> Aberto para Extensão, Fechado para Modificação (Use Polimorfismo, não altere o código fonte).</li>
+                        <li><strong>L:</strong> Substituição de Liskov (Subclasse deve agir como a Superclasse sem quebrar nada).</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>6. Check-list de Termos para a Prova</h2>
+            <ul>
+                <li><strong>Instanciação:</strong> Criação do objeto (<code>new</code>).</li>
+                <li><strong>Coesão:</strong> "Fazer uma única coisa bem feita". (<mark>Alto é bom</mark>).</li>
+                <li><strong>Acoplamento:</strong> "Dependência entre classes". (<mark>Baixo é bom</mark>).</li>
+                <li><strong>Garbage Collector:</strong> Libera memória <em>Heap</em> automaticamente (remove objetos sem referência).</li>
+                <li><strong>Assinatura do Método:</strong> Nome + Lista de Parâmetros (O retorno <em>não</em> faz parte da assinatura para fins de sobrecarga).</li>
+                <li><strong>Modificador <code>protected</code> (Java):</strong> Visível no mesmo pacote E por subclasses (mesmo em pacotes diferentes).</li>
+            </ul>
+
+            <p style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 10px;">
+                <strong>Dica Final de Didática:</strong> Em uma prova discursiva ou aula prática, <em>sempre</em> desenhe o diagrama antes de codificar. Mostre que você domina a <strong>Modelagem</strong> (o ato de pensar) antes da <strong>Implementação</strong> (o ato de digitar).
+            </p>
+        </section>
+
+        <!-- Botão Final -->
+        <div class="action-area">
+            <a href="41questoes.html" class="btn-questoes">Ir para Questões de Treinamento</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Avançado: Banco de Dados - CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc; /* Fundo quase branco, mais suave */
+            --card-bg: #ffffff;
+            --text-primary: #333333; /* Cinza escuro, não preto puro */
+            --text-secondary: #555555;
+            --accent-color: #2c5282; /* Azul sóbrio */
+            --accent-hover: #1a365d;
+            --success-color: #2f855a;
+            --error-color: #c53030;
+            --border-color: #e2e8f0;
+            --resolution-bg: #f7fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.8; /* Altura de linha generosa para leitura */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-title {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        .question-text {
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f8f9fa;
+            border-color: #cbd5e0;
+        }
+
+        .option-input {
+            margin-top: 6px;
+            margin-right: 15px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        /* Estilos de Feedback (Pós-Submissão) */
+        .feedback-section {
+            display: none; /* Escondido inicialmente */
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-color);
+            animation: fadeIn 0.5s;
+        }
+
+        .resolution-box {
+            background-color: var(--resolution-bg);
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid var(--text-secondary);
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        /* Cores para respostas certas/erradas */
+        .correct-answer-style {
+            background-color: #f0fff4 !important;
+            border-color: var(--success-color) !important;
+            color: var(--success-color);
+            font-weight: 600;
+        }
+
+        .incorrect-answer-style {
+            background-color: #fff5f5 !important;
+            border-color: var(--error-color) !important;
+            color: var(--error-color);
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        #submit-btn:hover {
+            background-color: var(--accent-hover);
+        }
+
+        #score-display {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            font-size: 1.5rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .container { padding: 20px 10px; }
+            .question-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Simulado Avançado: Banco de Dados</h1>
+            <p class="subtitle">Tipos, Arquiteturas e Aplicações - Estilo Fundação CEFETMINAS</p>
+        </header>
+
+        <div id="score-display"></div>
+
+        <form id="quiz-form">
+            <div id="quiz-container">
+                <!-- As questões serão renderizadas aqui via JS -->
+            </div>
+            
+            <button type="button" id="submit-btn" onclick="calculateResults()">Finalizar Simulado e Ver Resolução</button>
+        </form>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                title: "Questão 1",
+                text: "(Fundação CEFETMINAS - Adaptada) O ecossistema de gerenciamento de dados contemporâneo é caracterizado pela coexistência de múltiplos paradigmas de armazenamento...<br><br>I. O Modelo Relacional... apresenta desafios significativos de escalabilidade horizontal...<br>II. Bancos de dados NoSQL do tipo \"Chave-Valor\"... impossibilita nativamente a execução de consultas complexas...<br>III. Os sistemas de armazenamento orientados a documentos... encorajam a desnormalização e o aninhamento de dados...<br>IV. O Teorema CAP... postula que sistemas NoSQL... optam por sacrificar a Tolerância a Partição em favor da Consistência Forte...<br><br>Estão corretas apenas as afirmativas:",
+                options: [
+                    "A) I, II e III.",
+                    "B) I e IV.",
+                    "C) II, III e IV.",
+                    "D) I e III.",
+                    "E) II e IV."
+                ],
+                correct: 0,
+                resolution: `<strong>Gabarito: A (I, II e III corretas)</strong><br><br>
+                A questão explora a transição e coexistência entre os sistemas relacionais clássicos (RDBMS) e o ecossistema NoSQL.<br><br>
+                <strong>Afirmativa I (Correta):</strong> O Modelo Relacional garante ACID, mas enfrenta o problema da "impedância de escala" ao tentar escalar horizontalmente, devido à necessidade de locks distribuídos.<br>
+                <strong>Afirmativa II (Correta):</strong> Bancos Chave-Valor (Redis, DynamoDB) são extremamente rápidos (O(1)) mas agnósticos ao valor, o que impede queries complexas nativas baseadas no conteúdo do valor.<br>
+                <strong>Afirmativa III (Correta):</strong> Document Stores (MongoDB) utilizam JSON/BSON e favorecem a desnormalização (embedding) para garantir "localidade de dados", lendo tudo em uma única operação de I/O.<br>
+                <strong>Afirmativa IV (Incorreta):</strong> Em sistemas distribuídos geograficamente, a Partição de rede (P) é inevitável. Não se pode sacrificar P. A escolha real é entre CP ou AP. A maioria dos NoSQL Web-Scale escolhe AP (Disponibilidade), e não Consistência Forte (CA) como afirma o texto.`
+            },
+            {
+                id: 2,
+                title: "Questão 2",
+                text: "(Fundação CEFETMINAS - Adaptada) Associe os cenários de uso descritos na Coluna 1 com o tipo de Sistema Gerenciador de Banco de Dados (SGBD) mais adequado listado na Coluna 2.<br><br><strong>Coluna 1</strong><br>1. Detecção de Fraudes em Tempo Real...<br>2. Catálogo de Produtos de E-commerce...<br>3. Analytics e Business Intelligence (OLAP)...<br>4. Sessão de Usuário e Carrinho de Compras...<br><br><strong>Coluna 2</strong><br>( ) Banco de Dados Orientado a Colunas<br>( ) Banco de Dados de Grafos<br>( ) Banco de Dados Chave-Valor<br>( ) Banco de Dados Orientado a Documentos",
+                options: [
+                    "A) 3, 1, 4, 2.",
+                    "B) 1, 2, 4, 3.",
+                    "C) 3, 1, 2, 4.",
+                    "D) 2, 4, 1, 3.",
+                    "E) 4, 1, 3, 2."
+                ],
+                correct: 0,
+                resolution: `<strong>Gabarito: A (3, 1, 4, 2)</strong><br><br>
+                1. <strong>Analytics (OLAP) -> Orientado a Colunas (3):</strong> Para ler apenas colunas específicas de bilhões de linhas (agregação), o armazenamento colunar é muito mais eficiente em I/O e compressão.<br>
+                2. <strong>Detecção de Fraudes -> Grafos (1):</strong> Fraudes envolvem relacionamentos profundos. Bancos de grafos usam adjacência livre de índice para travessia rápida de conexões.<br>
+                3. <strong>Sessão de Usuário -> Chave-Valor (4):</strong> Dados efêmeros acessados por ID (SessionID) exigem latência mínima, ideal para Redis/DynamoDB.<br>
+                4. <strong>Catálogo de E-commerce -> Documentos (2):</strong> Produtos com atributos variados exigem esquema flexível (schemaless) para evitar migrações constantes.`
+            },
+            {
+                id: 3,
+                title: "Questão 3",
+                text: "(Fundação CEFETMINAS - Adaptada) Sobre a evolução histórica dos modelos de dados...<br><br>I. O Modelo Hierárquico... organiza os dados em estruturas de árvore... oferece altíssima performance para transações previsíveis que seguem a hierarquia estabelecida.<br><strong>PORQUE</strong><br>II. A rigidez estrutural do Modelo Hierárquico impedia a representação eficiente de relacionamentos 'muitos-para-muitos' (N:M)... limitação que foi abordada pelo Modelo de Rede...<br><br>A respeito dessas asserções, assinale a opção correta:",
+                options: [
+                    "A) As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+                    "B) As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+                    "C) A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+                    "D) A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+                    "E) As asserções I e II são proposições falsas."
+                ],
+                correct: 0,
+                resolution: `<strong>Gabarito: A</strong><br><br>
+                <strong>Asserção I (Verdadeira):</strong> O Modelo Hierárquico (ex: IMS) é extremamente rápido para dados que naturalmente formam árvores, usando ponteiros físicos.<br>
+                <strong>Asserção II (Verdadeira e Justificativa):</strong> O mundo real tem muitos relacionamentos N:M (ex: Alunos e Cursos). O modelo hierárquico exigia duplicação de dados para isso. O Modelo de Rede (CODASYL) foi criado justamente para resolver essa limitação, permitindo múltiplos "pais" via Sets. A relação causal histórica é correta.`
+            },
+            {
+                id: 4,
+                title: "Questão 4",
+                text: "(Fundação CEFETMINAS - Adaptada) Sobre as características distintivas e a arquitetura dos sistemas NewSQL, marque a alternativa <strong>incorreta</strong>:",
+                options: [
+                    "A) Sistemas NewSQL... mantêm as garantias ACID... utilizando algoritmos de consenso (como Paxos ou Raft)...",
+                    "B) ...os bancos NewSQL priorizam a consistência forte (Strong Consistency)...",
+                    "C) A arquitetura NewSQL fundamentalmente abandona o uso da linguagem SQL... substituindo-a por APIs proprietárias...",
+                    "D) ...utilizam particionamento automático (auto-sharding) e mecanismos de controle de concorrência otimista...",
+                    "E) A proposta de valor do NewSQL é fornecer a escalabilidade horizontal... combinada com a integridade referencial..."
+                ],
+                correct: 2,
+                resolution: `<strong>Gabarito: C (Incorreta)</strong><br><br>
+                A definição fundamental de <strong>NewSQL</strong> (como CockroachDB, VoltDB, TiDB) é justamente manter a interface e as garantias do SQL (ACID, JOINS) enquanto fornece a escalabilidade do NoSQL. Eles <strong>não</strong> abandonam a linguagem SQL; pelo contrário, o objetivo é revitalizá-la em ambientes distribuídos. A alternativa C afirma o oposto.`
+            },
+            {
+                id: 5,
+                title: "Questão 5",
+                text: "(Fundação CEFETMINAS - Adaptada) Bancos de dados orientados a colunas (Column-Family Stores), como Apache Cassandra... Analise as afirmativas:<br><br>I. ...taxas de compressão de dados significativamente superiores...<br>II. A arquitetura baseada em LSM Trees... otimiza as operações de escrita...<br>III. ...são a escolha ideal para sistemas transacionais gerais (ERP, CRM) que exigem frequentes atualizações...<br>IV. O conceito de \"Wide Rows\"... permite que uma única linha lógica contenha milhões de colunas dinâmicas...",
+                options: [
+                    "A) I e III, apenas.",
+                    "B) II e IV, apenas.",
+                    "C) I, II e IV, apenas.",
+                    "D) II, III e IV, apenas.",
+                    "E) I, II, III e IV."
+                ],
+                correct: 2,
+                resolution: `<strong>Gabarito: C (I, II e IV, apenas)</strong><br><br>
+                <strong>I (Correta):</strong> Armazenar dados do mesmo tipo juntos permite compressão massiva.<br>
+                <strong>II (Correta):</strong> LSM Trees transformam escritas aleatórias em sequenciais (append-only), otimizando a ingestão (Write-Heavy).<br>
+                <strong>III (Incorreta):</strong> Bancos Wide-Column (como Cassandra) não são ideais para ERPs/CRMs tradicionais. Eles geralmente oferecem consistência eventual e suporte limitado a transações ACID complexas multi-tabela.<br>
+                <strong>IV (Correta):</strong> Wide Rows são fundamentais para modelagem de séries temporais e IoT no Cassandra.`
+            },
+            {
+                id: 6,
+                title: "Questão 6",
+                text: "(Fundação CEFETMINAS - Adaptada) Assinale a alternativa que define corretamente o fenômeno \"Impedance Mismatch\" e as abordagens para mitigá-lo.",
+                options: [
+                    "A) A impedância ocorre devido à diferença de voltagem elétrica...",
+                    "B) Refere-se à discrepância teórica e prática entre o modelo orientado a objetos... e o modelo relacional... Frameworks ORM... são soluções...",
+                    "C) É a incapacidade dos bancos de dados relacionais de armazenar dados do tipo BLOB...",
+                    "D) Trata-se da dificuldade de sincronizar transações em bancos de dados distribuídos...",
+                    "E) Descreve a incompatibilidade entre as linguagens de programação compiladas... e as linguagens interpretadas de banco..."
+                ],
+                correct: 1,
+                resolution: `<strong>Gabarito: B</strong><br><br>
+                O <strong>Impedance Mismatch</strong> (Incompatibilidade de Impedância) descreve a fricção entre o modelo Orientado a Objetos (memória da aplicação: grafos, herança, identidade) e o Modelo Relacional (banco de dados: tabelas planas, chaves estrangeiras). Para "persistir" um objeto, é necessário desmontá-lo em tabelas. Soluções incluem ORMs (Hibernate) ou Bancos Orientados a Objetos.`
+            },
+            {
+                id: 7,
+                title: "Questão 7",
+                text: "(Fundação CEFETMINAS - Adaptada) Considere a aplicação do Teorema CAP...<br><br>I. **PostgreSQL (Cluster Single-Master Assíncrono):** ...Sob partição, o sistema tende ao comportamento AP...<br>II. **MongoDB (Replica Set):** ...O cluster cessa o processamento de escritas até que um novo líder seja eleito... sacrificando a Disponibilidade... (CP).<br>III. **Apache Cassandra:** ...resolve conflitos de dados *a posteriori*... permitindo que nós desconectados continuem operando (AP).<br><br>É correto o que se afirma em:",
+                options: [
+                    "A) I, apenas.",
+                    "B) II, apenas.",
+                    "C) I e III, apenas.",
+                    "D) II e III, apenas.",
+                    "E) I, II e III."
+                ],
+                correct: 4,
+                resolution: `<strong>Gabarito: E (I, II e III)</strong><br><br>
+                <strong>I (Correto):</strong> RDBMS assíncronos aceitam riscos de consistência sob falha para manter leitura (AP), embora sejam CA em operação normal.<br>
+                <strong>II (Correto):</strong> MongoDB (Replica Sets) para de aceitar escritas se o Primário cair até eleger um novo (CP - Consistência sobre Disponibilidade).<br>
+                <strong>III (Correto):</strong> Cassandra é "Always On", aceita escritas em qualquer nó mesmo particionado, resolvendo conflitos depois (AP - Disponibilidade sobre Consistência).`
+            },
+            {
+                id: 8,
+                title: "Questão 8",
+                text: "(Fundação CEFETMINAS - Adaptada) Sobre as características técnicas dos bancos de grafos, assinale a afirmativa correta:",
+                options: [
+                    "A) A modelagem em grafos exige a definição prévia de um esquema rígido...",
+                    "B) A propriedade de \"Adjacência Livre de Índice\" (Index-Free Adjacency) permite que cada nó contenha ponteiros diretos para seus nós adjacentes...",
+                    "C) Bancos de grafos são implementados exclusivamente sobre arquiteturas relacionais...",
+                    "D) Eles são a escolha ideal para operações de varredura global e agregação massiva...",
+                    "E) O modelo de grafos não suporta propriedades em arestas..."
+                ],
+                correct: 1,
+                resolution: `<strong>Gabarito: B</strong><br><br>
+                A grande vantagem de performance dos Grafos Nativos (como Neo4j) é a <strong>Adjacência Livre de Índice</strong>. Ao contrário dos Joins relacionais que exigem buscas em índices (O(log n)), navegar em um grafo é seguir um ponteiro de memória direto (O(1)), tornando a performance dependente apenas do tamanho da sub-rede percorrida, e não do tamanho total do banco.`
+            },
+            {
+                id: 9,
+                title: "Questão 9",
+                text: "(Fundação CEFETMINAS - Adaptada) A tendência de *Polyglot Persistence* e Bancos Multimodelo. Analise:<br><br>I. A Persistência Poliglota defende o uso de uma única tecnologia de banco de dados \"bala de prata\"...<br>II. SGBDs Multimodelo... permitem o armazenamento e consulta de dados em múltiplos formatos... dentro de um único motor...<br>III. A introdução do tipo de dados JSONB no PostgreSQL... são exemplos da convergência...",
+                options: [
+                    "A) I e II, apenas.",
+                    "B) I e III, apenas.",
+                    "C) II e III, apenas.",
+                    "D) III, apenas.",
+                    "E) I, II e III."
+                ],
+                correct: 2,
+                resolution: `<strong>Gabarito: C (II e III, apenas)</strong><br><br>
+                <strong>I (Incorreta):</strong> Persistência Poliglota defende exatamente o oposto: usar a ferramenta certa para cada trabalho (Redis para cache, Neo4j para social), e não uma "bala de prata".<br>
+                <strong>II (Correta):</strong> Bancos Multimodelo (ArangoDB, CosmosDB) buscam reduzir a complexidade operacional da persistência poliglota consolidando modelos em um motor.<br>
+                <strong>III (Correta):</strong> PostgreSQL com JSONB é o exemplo clássico de convergência Relacional + Documentos.`
+            },
+            {
+                id: 10,
+                title: "Questão 10",
+                text: "(Fundação CEFETMINAS - Adaptada) Em relação aos Bancos de Dados em Memória (IMDBs)...<br><br>I. A principal vantagem... eliminação do overhead de I/O... e simplificação das estruturas de dados internas...<br>II. A volatilidade da memória RAM impede que bancos In-Memory... sejam utilizados para armazenamento de dados persistentes.<br>III. O Redis... diferencia-se... por oferecer suporte a estruturas de dados complexas e atômicas no servidor...",
+                options: [
+                    "A) I, apenas.",
+                    "B) I e II, apenas.",
+                    "C) I e III, apenas.",
+                    "D) II e III, apenas.",
+                    "E) I, II e III."
+                ],
+                correct: 2,
+                resolution: `<strong>Gabarito: C (I e III, apenas)</strong><br><br>
+                <strong>I (Correta):</strong> Menos CPU e Latência por evitar tradução para blocos de disco.<br>
+                <strong>II (Incorreta):</strong> Bancos In-Memory modernos (Redis, SAP HANA) possuem persistência via Snapshots e Logs (AOF), permitindo durabilidade mesmo se a energia cair.<br>
+                <strong>III (Correta):</strong> Redis é um "Data Structure Server", manipulando Listas, Sets e Hash Maps atomicamente, não apenas strings simples como o Memcached.`
+            }
+        ];
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            
+            quizData.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `question-${index}`;
+
+                // Título e Texto
+                let html = `<div class="question-title">${q.title}</div>`;
+                html += `<div class="question-text">${q.text}</div>`;
+                html += `<div class="options-group">`;
+
+                // Opções
+                q.options.forEach((opt, optIndex) => {
+                    html += `
+                        <label class="option-label" id="label-${index}-${optIndex}">
+                            <input type="radio" name="q${index}" value="${optIndex}" class="option-input">
+                            <span>${opt}</span>
+                        </label>
+                    `;
+                });
+
+                html += `</div>`;
+
+                // Área de Resolução (inicialmente escondida)
+                html += `
+                    <div class="feedback-section" id="feedback-${index}">
+                        <div class="resolution-box">
+                            <span class="resolution-title">Resolução e Comentários:</span>
+                            <div class="resolution-content">${q.resolution}</div>
+                        </div>
+                    </div>
+                `;
+
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        function calculateResults() {
+            let score = 0;
+            let total = quizData.length;
+            const submitBtn = document.getElementById('submit-btn');
+            const scoreDisplay = document.getElementById('score-display');
+
+            // Desabilitar botão para evitar múltiplos envios
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Simulado Finalizado";
+            submitBtn.style.backgroundColor = "#718096";
+            submitBtn.style.cursor = "default";
+
+            quizData.forEach((q, index) => {
+                const selectedOption = document.querySelector(`input[name="q${index}"]:checked`);
+                const feedbackSection = document.getElementById(`feedback-${index}`);
+                const questionCard = document.getElementById(`question-${index}`);
+                
+                // Mostrar resolução
+                feedbackSection.style.display = "block";
+
+                // Verificar resposta
+                if (selectedOption) {
+                    const userVal = parseInt(selectedOption.value);
+                    const correctVal = q.correct;
+                    const selectedLabel = document.getElementById(`label-${index}-${userVal}`);
+                    const correctLabel = document.getElementById(`label-${index}-${correctVal}`);
+
+                    if (userVal === correctVal) {
+                        score++;
+                        selectedLabel.classList.add('correct-answer-style');
+                    } else {
+                        selectedLabel.classList.add('incorrect-answer-style');
+                        correctLabel.classList.add('correct-answer-style'); // Mostra qual era a certa
+                    }
+                } else {
+                    // Se não respondeu, destaca a correta
+                    const correctLabel = document.getElementById(`label-${index}-${q.correct}`);
+                    correctLabel.classList.add('correct-answer-style');
+                }
+            });
+
+            // Mostrar Placar
+            scoreDisplay.innerHTML = `
+                <strong>Resultado:</strong><br>
+                Você acertou ${score} de ${total} questões.
+            `;
+            scoreDisplay.style.display = "block";
+
+            // Scroll suave para o topo para ver o resultado
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', renderQuiz);
+
+    </script>
+</body>
+</html>

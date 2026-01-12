@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado NoSQL - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #f9fafb;
+            --card-bg: #ffffff;
+            --text-main: #374151;
+            --text-heading: #111827;
+            --accent-color: #2563eb;
+            --success-color: #059669;
+            --error-color: #dc2626;
+            --border-color: #e5e7eb;
+            --resolution-bg: #f3f4f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            color: var(--text-heading);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #6b7280;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .question-header {
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f8fafc;
+        }
+
+        .option-input {
+            margin-top: 5px;
+            margin-right: 12px;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        .btn-submit:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Styles for Results Mode */
+        .resolution-box {
+            display: none; /* Hidden by default */
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--text-heading);
+        }
+
+        .status-badge {
+            display: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .correct .status-badge {
+            display: inline-block;
+            background-color: #d1fae5;
+            color: var(--success-color);
+        }
+
+        .incorrect .status-badge {
+            display: inline-block;
+            background-color: #fee2e2;
+            color: var(--error-color);
+        }
+
+        .correct {
+            border-color: var(--success-color);
+        }
+
+        .incorrect {
+            border-color: var(--error-color);
+        }
+
+        #score-display {
+            display: none;
+            text-align: center;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            border: 2px solid var(--accent-color);
+        }
+
+        #score-display h2 {
+            margin: 0;
+            color: var(--accent-color);
+        }
+        
+        /* Typography for resolutions */
+        .resolution-content h4 { margin-top: 15px; margin-bottom: 5px; color: #1f2937; }
+        .resolution-content ul { padding-left: 20px; margin-top: 5px; }
+        .resolution-content li { margin-bottom: 5px; }
+        .resolution-content strong { color: #111827; }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado NoSQL</h1>
+        <div class="subtitle">Bancos de Dados Não Relacionais • Fundação CEFETMINAS</div>
+    </header>
+
+    <div id="score-display">
+        <h2>Resultado: <span id="score-value">0</span>/10</h2>
+        <p>Confira abaixo as resoluções detalhadas para cada questão.</p>
+    </div>
+
+    <form id="quiz-form">
+        <!-- Questions will be injected here by JS -->
+    </form>
+
+    <button type="button" class="btn-submit" id="btn-submit" onclick="calculateScore()">Finalizar Simulado e Ver Resoluções</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            profile: "Engenharia de Dados",
+            text: "O surgimento do movimento NoSQL foi impulsionado pela necessidade de escalar aplicações web para lidar com volumes massivos de dados (Big Data) e pela rigidez dos esquemas relacionais tradicionais. Considerando a taxonomia e os mecanismos de persistência dos bancos de dados NoSQL, analise as afirmativas abaixo:<br><br>I. O MongoDB, um banco de dados orientado a documentos, utiliza o formato BSON (Binary JSON) para armazenamento, o que permite a preservação de tipos de dados e a travessia eficiente de campos, além de suportar esquemas dinâmicos onde documentos de uma mesma coleção podem ter estruturas distintas.<br>II. O Teorema CAP postula que, em um sistema distribuído sujeito a particionamento de rede, é mandatório escolher entre Consistência Forte (Consistency) e Disponibilidade (Availability), sendo impossível garantir as três propriedades simultaneamente em caso de falha de rede.<br>III. Bancos de dados de Chave-Valor, como o Redis, são otimizados para relacionamentos complexos e consultas do tipo JOIN, superando o desempenho de bancos relacionais em operações de agregação profunda.<br>IV. O Apache Cassandra, um armazenamento de família de colunas, adota uma arquitetura *masterless* (sem mestre), onde todos os nós são iguais, eliminando o ponto único de falha e permitindo escalabilidade linear de escrita.<br><br>Estão CORRETAS as afirmativas:",
+            options: {
+                A: "Apenas I, II e IV.",
+                B: "Apenas I e III.",
+                C: "Apenas II, III e IV.",
+                D: "I, II, III e IV."
+            },
+            correct: "A",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                1. <strong>Fundamentação da Afirmativa I (Correta - MongoDB e BSON):</strong> O MongoDB opera sob o paradigma schema-less. O BSON estende o JSON introduzindo tipos de dados (como Date, Int64) e armazena informações de comprimento nos cabeçalhos, permitindo que o sistema "pule" bytes para navegar diretamente ao campo desejado. O polimorfismo de dados permite que documentos na mesma coleção tenham estruturas diferentes.<br><br>
+                2. <strong>Fundamentação da Afirmativa II (Correta - Teorema CAP):</strong> O Teorema CAP define que em redes distribuídas, partições vão ocorrer. Quando isso acontece, o sistema deve escolher entre Consistência (CP) ou Disponibilidade (AP).<br><br>
+                3. <strong>Fundamentação da Afirmativa III (Incorreta - Redis e JOINs):</strong> Bancos Chave-Valor são otimizados para velocidade e simplicidade (acesso O(1)), não para relacionamentos. Eles não possuem mecanismo nativo de Join. São ideais para Cache e Sessão, não para agregações complexas.<br><br>
+                4. <strong>Fundamentação da Afirmativa IV (Correta - Cassandra Masterless):</strong> O Cassandra implementa uma arquitetura peer-to-peer. Não existe um nó mestre; todos os nós são iguais, o que confere alta disponibilidade e escalabilidade linear de escrita.
+            `
+        },
+        {
+            id: 2,
+            profile: "Arquitetura de Software",
+            text: "Uma empresa de logística necessita modelar uma rede de rotas de entrega, onde cidades são entidades e as rodovias que as conectam possuem propriedades como distância, pedágio e qualidade do asfalto. O sistema deve calcular, em tempo real, o caminho menos custoso entre dois pontos, considerando múltiplas variáveis. Qual categoria de banco de dados NoSQL oferece a estrutura de dados nativa mais adequada e o melhor desempenho algorítmico para este cenário?",
+            options: {
+                A: "Banco de Dados de Documentos (ex: CouchDB).",
+                B: "Banco de Dados de Família de Colunas (ex: HBase).",
+                C: "Banco de Dados de Grafos (ex: Neo4j).",
+                D: "Banco de Dados Chave-Valor (ex: DynamoDB)."
+            },
+            correct: "C",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                O cenário descreve um problema clássico de Roteamento e Otimização de Caminhos.<br>
+                <strong>Por que Grafos? (Neo4j):</strong> Bancos de grafos implementam "Adjacência Livre de Índice". Cada nó (Cidade) mantém fisicamente ponteiros para seus relacionamentos (Rodovias). Para navegar de uma cidade para outra, o banco segue ponteiros na memória, o que é ordens de magnitude mais rápido que fazer JOINs recursivos em SQL. Eles possuem algoritmos nativos como Dijkstra ou A-Star para calcular o caminho mais curto.
+            `
+        },
+        {
+            id: 3,
+            profile: "Administração de Banco de Dados",
+            text: "No contexto do Teorema CAP e das estratégias de consistência em bancos de dados distribuídos, o conceito de \"Consistência Eventual\" (Eventual Consistency) é frequentemente adotado para maximizar a disponibilidade. Sobre esse modelo, é CORRETO afirmar:",
+            options: {
+                A: "Garante que, após uma operação de escrita, todas as leituras subsequentes, independentemente do nó acessado, retornarão imediatamente o valor atualizado, sacrificando a latência da rede.",
+                B: "Assegura que, se não houver novas atualizações em um item de dado, eventualmente todos os acessos a esse item retornarão o último valor atualizado, permitindo que réplicas estejam temporariamente divergentes.",
+                C: "É implementado nativamente em bancos relacionais através do protocolo *Two-Phase Commit* (2PC), garantindo atomicidade estrita em transações distribuídas globalmente.",
+                D: "Exige que o sistema fique indisponível para operações de escrita durante o processo de sincronização entre os nós (anti-entropy), priorizando a integridade dos dados sobre o tempo de atividade."
+            },
+            correct: "B",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                A Consistência Eventual é um compromisso de liveness. Ela aceita que, durante um período de tempo (janela de inconsistência), diferentes nós podem servir versões diferentes do mesmo dado. Mecanismos como Read Repair e Anti-Entropy garantem que, se as escritas pararem, os dados convergirão para o mesmo estado.
+            `
+        },
+        {
+            id: 4,
+            profile: "Desenvolvimento de Sistemas",
+            text: "O Redis é uma estrutura de armazenamento de dados em memória, amplamente utilizada como cache e message broker. Diferente de um armazenamento chave-valor simples, o Redis suporta estruturas de dados complexas. Assinale a alternativa que apresenta APENAS estruturas de dados suportadas nativamente pelo Redis.",
+            options: {
+                A: "Strings, Hashes, Lists, Sets, Sorted Sets.",
+                B: "Tables, Views, Triggers, Stored Procedures, Indexes.",
+                C: "Graphs, Edges, Vertices, Document Collections, B-Trees.",
+                D: "Blobs, CLOBs, XMLType, JSONType, SpatialGeometry."
+            },
+            correct: "A",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                O Redis é um "servidor de estrutura de dados".<br>
+                <ul>
+                    <li><strong>Strings:</strong> Tipo básico.</li>
+                    <li><strong>Hashes:</strong> Mapas de campos/valores (objetos planos).</li>
+                    <li><strong>Lists:</strong> Listas duplamente encadeadas (filas/timelines).</li>
+                    <li><strong>Sets:</strong> Coleções únicas não ordenadas.</li>
+                    <li><strong>Sorted Sets:</strong> Coleções únicas com pontuação (rankings).</li>
+                </ul>
+                As outras opções referem-se a conceitos de bancos Relacionais (B), Grafos (C) ou SQL Corporativo (D).
+            `
+        },
+        {
+            id: 5,
+            profile: "Infraestrutura de TI",
+            text: "O Apache Cassandra utiliza uma estrutura de armazenamento baseada em LSM Trees (Log-Structured Merge Trees) para otimizar o throughput de escrita. Sobre o fluxo de gravação (Write Path) no Cassandra, assinale a sequência correta de operações:",
+            options: {
+                A: "Os dados são gravados diretamente no arquivo SSTable no disco e, posteriormente, copiados para a memória RAM para cache de leitura.",
+                B: "A gravação ocorre primeiramente em uma estrutura em memória chamada MemTable e, simultaneamente, em um Commit Log em disco para durabilidade; quando a MemTable fica cheia, os dados são despejados (flushed) para uma SSTable imutável no disco.",
+                C: "O coordenador do cluster bloqueia todos os nós, realiza a escrita em um arquivo temporário centralizado e, após a confirmação de todos os nós, distribui os dados via protocolo Gossip.",
+                D: "Os dados são enviados para um nó Mestre (Master Node), que valida o esquema e replica os dados de forma síncrona para os nós escravos (Slave Nodes) antes de confirmar o sucesso ao cliente."
+            },
+            correct: "B",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                O fluxo de escrita do Cassandra prioriza I/O sequencial:<br>
+                1. <strong>Commit Log:</strong> Escrita sequencial em disco para durabilidade.<br>
+                2. <strong>MemTable:</strong> Escrita em RAM para ordenação.<br>
+                3. <strong>Flush:</strong> Quando a MemTable enche, vira uma SSTable imutável no disco.<br>
+                Isso permite que o Cassandra aceite milhões de escritas por segundo, evitando o custo de seeks aleatórios em disco típicos de B-Trees.
+            `
+        },
+        {
+            id: 6,
+            profile: "Análise de Requisitos",
+            text: "A modelagem de dados em bancos orientados a documentos, como o MongoDB, difere fundamentalmente da normalização em bancos relacionais. O conceito de \"Desnormalização\" e \"Documentos Aninhados\" (Embedded Documents) visa, primordialmente:",
+            options: {
+                A: "Reduzir o espaço de armazenamento em disco, eliminando a redundância de dados através de ponteiros de referência.",
+                B: "Garantir a integridade referencial absoluta, impedindo a exclusão de documentos pais que possuam documentos filhos associados.",
+                C: "Melhorar o desempenho de leitura através da \"localidade dos dados\", permitindo que informações relacionadas sejam recuperadas em uma única operação de busca, evitando operações de junção (JOINs) custosas.",
+                D: "Padronizar a estrutura dos dados para facilitar a migração para bancos SQL, forçando todos os documentos de uma coleção a terem os mesmos campos."
+            },
+            correct: "C",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                Ao aninhar (embed) dados acessados juntos (ex: Endereço dentro de Cliente), garantimos a <strong>Localidade Espacial</strong>. O banco realiza uma única operação de I/O para trazer todas as informações necessárias, eliminando a necessidade de CPU para computar JOINs e I/O extra para buscar dados espalhados.
+            `
+        },
+        {
+            id: 7,
+            profile: "Ciência de Dados",
+            text: "Bancos de dados *Wide-Column* (Família de Colunas), como o HBase e o BigTable, são projetados para armazenar grandes volumes de dados esparsos. Uma característica distinta desse modelo é:",
+            options: {
+                A: "O armazenamento é orientado a linhas, onde todos os dados de uma linha são armazenados contiguamente, otimizando transações OLTP típicas de sistemas bancários.",
+                B: "As colunas são agrupadas em famílias de colunas (Column Families), e os dados de uma mesma família são armazenados fisicamente juntos, permitindo a recuperação eficiente de apenas um subconjunto de atributos de uma entidade sem ler a linha inteira.",
+                C: "A utilização obrigatória de esquemas rígidos definidos na criação da tabela, onde adicionar uma nova coluna requer a paragem do banco de dados para reestruturação física dos arquivos (ALTER TABLE bloqueante).",
+                D: "O suporte nativo e otimizado para a linguagem SQL padrão (ANSI 92), permitindo a portabilidade imediata de aplicações legadas sem alteração de código."
+            },
+            correct: "B",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                Em Column-Family Stores, os dados são armazenados agrupados por família. Se uma query pede apenas dados de uma família específica, o banco lê apenas os arquivos físicos daquela família, ignorando o resto. Além disso, o modelo é esparso: colunas vazias não ocupam espaço físico.
+            `
+        },
+        {
+            id: 8,
+            profile: "Segurança da Informação",
+            text: "No contexto das propriedades ACID versus BASE, analise a seguinte situação: Um sistema de e-commerce permite que usuários adicionem itens ao carrinho de compras mesmo durante picos de tráfego extremos ou falhas parciais na rede. O sistema aceita que, temporariamente, o estoque exibido possa não estar perfeitamente sincronizado com o estoque real. Esse comportamento arquitetural prioriza:",
+            options: {
+                A: "Consistência Forte (C do CAP) e Atomicidade (A do ACID).",
+                B: "Disponibilidade (A do CAP) e Consistência Eventual (E do BASE).",
+                C: "Isolamento Serializável e Durabilidade síncrona.",
+                D: "Tolerância a Falhas Zero e Consistência Imediata."
+            },
+            correct: "B",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                O requisito é permitir vendas mesmo com falhas, o que define <strong>Alta Disponibilidade</strong>. O comportamento de estoque não sincronizado define <strong>Consistência Eventual</strong>. Isso se alinha perfeitamente com o acrônimo BASE (Basically Available, Soft-state, Eventual consistency).
+            `
+        },
+        {
+            id: 9,
+            profile: "Engenharia de Software",
+            text: "A \"Impedância Objeto-Relacional\" é um problema clássico no desenvolvimento de software que motivou, em parte, a adoção de bancos NoSQL. Esse problema refere-se a:",
+            options: {
+                A: "A dificuldade de mapear objetos em memória de linguagens orientadas a objetos (como Java ou C#), que possuem estruturas hierárquicas e listas, para tabelas bidimensionais planas de bancos relacionais.",
+                B: "A incompatibilidade elétrica entre os servidores de banco de dados e os servidores de aplicação.",
+                C: "A incapacidade dos bancos relacionais de armazenar dados numéricos com alta precisão (ponto flutuante).",
+                D: "A lentidão causada pelo excesso de índices em tabelas relacionais, que impede a criação de classes no código da aplicação."
+            },
+            correct: "A",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                A impedância ocorre porque objetos em memória são ricos e hierárquicos (grafos de objetos), enquanto tabelas relacionais são planas. Isso exige um trabalho custoso de \"desmontagem\" (ORM) para salvar e \"remontagem\" (Joins) para ler. Bancos de Documentos (JSON) eliminam essa impedância pois armazenam os dados de forma muito similar aos objetos.
+            `
+        },
+        {
+            id: 10,
+            profile: "Operações de TI",
+            text: "Sobre os mecanismos de distribuição de dados (Sharding) e Replicação em clusters NoSQL, assinale a alternativa correta:",
+            options: {
+                A: "O Sharding (Particionamento) é utilizado principalmente para aumentar a disponibilidade dos dados, criando cópias idênticas em múltiplos servidores para backup.",
+                B: "A Replicação tem como objetivo principal distribuir a carga de escrita, dividindo o conjunto de dados em fragmentos menores para que cada servidor armazene apenas uma parte do total.",
+                C: "O *Consistent Hashing* (Hashing Consistente) é uma técnica utilizada para distribuir dados uniformemente entre os nós de um cluster, minimizando a movimentação de dados quando nós são adicionados ou removidos.",
+                D: "Em uma arquitetura de Replicação *Master-Slave* (Mestre-Escravo), como a padrão do MongoDB, as operações de escrita podem ser direcionadas para qualquer nó escravo para aumentar a performance de gravação."
+            },
+            correct: "C",
+            resolution: `
+                <strong>Análise Aprofundada:</strong><br><br>
+                O Hashing Consistente mapeia dados e servidores em um anel. Ao adicionar um servidor, ele assume apenas uma pequena fatia das chaves do vizinho. Isso permite elasticidade (adicionar/remover nós) sem precisar mover todos os dados do cluster, evitando o \"Rebalancing Storm\" do hashing modular simples.
+            `
+        }
+    ];
+
+    const quizForm = document.getElementById('quiz-form');
+    
+    // Render Questions
+    function renderQuiz() {
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `card-${q.id}`;
+
+            const header = document.createElement('div');
+            header.className = 'question-header';
+            header.innerHTML = `Questão ${q.id} <span style="font-weight:normal; font-size: 0.9em; color:#666">(${q.profile})</span>`;
+
+            // Status Badge (Correct/Incorrect)
+            const status = document.createElement('div');
+            status.className = 'status-badge';
+            status.id = `status-${q.id}`;
+            card.appendChild(status);
+
+            const text = document.createElement('div');
+            text.className = 'question-text';
+            text.innerHTML = q.text;
+
+            const optionsGroup = document.createElement('div');
+            optionsGroup.className = 'options-group';
+
+            for (const [key, value] of Object.entries(q.options)) {
+                const label = document.createElement('label');
+                label.className = 'option-label';
+                
+                const input = document.createElement('input');
+                input.type = 'radio';
+                input.name = `question-${q.id}`;
+                input.value = key;
+                input.className = 'option-input';
+                
+                label.appendChild(input);
+                label.appendChild(document.createTextNode(`${key}) ${value}`));
+                optionsGroup.appendChild(label);
+            }
+
+            // Resolution Box (Hidden initially)
+            const resolution = document.createElement('div');
+            resolution.className = 'resolution-box';
+            resolution.id = `res-${q.id}`;
+            resolution.innerHTML = `
+                <span class="resolution-title">Resolução e Gabarito: ${q.correct}</span>
+                <div class="resolution-content">${q.resolution}</div>
+            `;
+
+            card.appendChild(header);
+            card.appendChild(text);
+            card.appendChild(optionsGroup);
+            card.appendChild(resolution);
+            
+            quizForm.appendChild(card);
+        });
+    }
+
+    function calculateScore() {
+        let score = 0;
+        let answeredCount = 0;
+
+        questions.forEach(q => {
+            const selected = document.querySelector(`input[name="question-${q.id}"]:checked`);
+            const card = document.getElementById(`card-${q.id}`);
+            const resolution = document.getElementById(`res-${q.id}`);
+            const status = document.getElementById(`status-${q.id}`);
+            
+            // Reset styles
+            card.classList.remove('correct', 'incorrect');
+            
+            if (selected) {
+                answeredCount++;
+                if (selected.value === q.correct) {
+                    score++;
+                    card.classList.add('correct');
+                    status.innerText = "Correto";
+                } else {
+                    card.classList.add('incorrect');
+                    status.innerText = `Incorreto (Sua resposta: ${selected.value})`;
+                }
+            } else {
+                card.classList.add('incorrect');
+                status.innerText = "Não respondida";
+            }
+
+            // Show resolution and status
+            resolution.style.display = 'block';
+            status.style.display = 'inline-block';
+            
+            // Disable inputs
+            const inputs = card.querySelectorAll('input');
+            inputs.forEach(input => input.disabled = true);
+        });
+
+        // Update Score Display
+        document.getElementById('score-value').innerText = score;
+        document.getElementById('score-display').style.display = 'block';
+        document.getElementById('btn-submit').style.display = 'none';
+
+        // Scroll to top to show score
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initialize
+    renderQuiz();
+
+</script>
+
+</body>
+</html>

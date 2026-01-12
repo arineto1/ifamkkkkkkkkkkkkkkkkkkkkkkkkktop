@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Operações de Banco de Dados - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #f9f7f1; /* Tom creme suave para leitura (papel antigo) */
+            --card-bg: #ffffff;
+            --text-primary: #2c3e50;
+            --text-secondary: #546e7a;
+            --accent-color: #2980b9;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --resolution-bg: #eaf2f8;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .question-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            margin-top: 5px;
+            accent-color: var(--accent-color);
+        }
+
+        /* Estilos de Feedback (aplicados via JS) */
+        .option-label.correct {
+            background-color: #d4edda;
+            border-color: var(--success-color);
+            color: #155724;
+            font-weight: 500;
+        }
+
+        .option-label.incorrect {
+            background-color: #f8d7da;
+            border-color: var(--error-color);
+            color: #721c24;
+            opacity: 0.8;
+        }
+
+        /* Área de Resolução (inicialmente oculta) */
+        .resolution-box {
+            display: none; /* Oculto até o submit */
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0 6px 6px 0;
+            font-size: 0.95rem;
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Footer e Botão */
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .btn-submit {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(41, 128, 185, 0.2);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2471a3;
+            transform: translateY(-2px);
+        }
+
+        .score-board {
+            display: none; /* Oculto até o submit */
+            text-align: center;
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+        }
+
+        .score-board h2 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .score-board p {
+            margin: 5px 0 0;
+            opacity: 0.9;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .container { padding: 10px; }
+            .question-card { padding: 15px; }
+            header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Banco de Dados</h1>
+        <p>Foco: Fundação CEFETMINAS (Operações e Teoria)</p>
+    </header>
+
+    <div id="score-display" class="score-board">
+        <!-- O resultado aparecerá aqui -->
+    </div>
+
+    <form id="quiz-form">
+        
+        <!-- QUESTÃO 01 -->
+        <div class="question-card" id="q1">
+            <div class="question-title">QUESTÃO 01 (FCM - Simulado)</div>
+            <p>Em relação aos conceitos de normalização em bancos de dados relacionais, considere uma tabela que armazena dados de funcionários e seus telefones de contato. Foi observado que, para cada funcionário, o campo "Telefone" armazena múltiplos números separados por vírgula (ex: "3333-1111, 9999-2222"). Para adequar essa tabela à <strong>Primeira Forma Normal (1FN)</strong>, conforme a teoria clássica de banco de dados, é necessário garantir que:</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q1" value="A"> A) Todos os atributos não-chave dependam funcionalmente de toda a chave primária.</label>
+                <label class="option-label"><input type="radio" name="q1" value="B"> B) Não existam dependências transitivas entre atributos não-chave.</label>
+                <label class="option-label"><input type="radio" name="q1" value="C"> C) A tabela possua uma chave primária simples, não composta.</label>
+                <label class="option-label"><input type="radio" name="q1" value="D"> D) Todas as colunas possuam apenas valores atômicos e indivisíveis, eliminando grupos repetitivos.</label>
+                <label class="option-label"><input type="radio" name="q1" value="E"> E) Os dados sejam indexados para evitar a duplicidade de registros na chave estrangeira.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: D.</strong> A questão explora a definição textual da Primeira Forma Normal (1FN). A 1FN exige a <strong>atomicidade</strong> dos dados. Isso significa que cada célula da tabela deve conter um único valor indivisível. O exemplo de "múltiplos telefones numa célula" é o caso clássico de grupo repetitivo. A alternativa A refere-se à 2FN, a B à 3FN, e a C é incorreta pois 1FN permite chaves compostas.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 02 -->
+        <div class="question-card" id="q2">
+            <div class="question-title">QUESTÃO 02 (FCM - Simulado)</div>
+            <p>A linguagem SQL (Structured Query Language) é composta por subconjuntos de comandos classificados de acordo com sua função. Assinale a alternativa que apresenta corretamente o comando SQL responsável por <strong>modificar</strong> os valores de dados já existentes em uma ou mais linhas de uma tabela:</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q2" value="A"> A) ALTER</label>
+                <label class="option-label"><input type="radio" name="q2" value="B"> B) UPDATE</label>
+                <label class="option-label"><input type="radio" name="q2" value="C"> C) INSERT</label>
+                <label class="option-label"><input type="radio" name="q2" value="D"> D) MODIFY</label>
+                <label class="option-label"><input type="radio" name="q2" value="E"> E) SELECT</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: B.</strong> O comando para modificar dados existentes (DML) é o <code>UPDATE</code>. <br>Distinções importantes: <code>ALTER</code> modifica a estrutura da tabela (DDL), <code>INSERT</code> adiciona novos dados e <code>SELECT</code> apenas lê os dados.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 03 -->
+        <div class="question-card" id="q3">
+            <div class="question-title">QUESTÃO 03 (FCM - Simulado)</div>
+            <p>São exemplos de Sistemas Gerenciadores de Banco de Dados (SGBD) baseados no Modelo Relacional, <strong>EXCETO</strong>:</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q3" value="A"> A) PostgreSQL.</label>
+                <label class="option-label"><input type="radio" name="q3" value="B"> B) Microsoft SQL Server.</label>
+                <label class="option-label"><input type="radio" name="q3" value="C"> C) Oracle Database.</label>
+                <label class="option-label"><input type="radio" name="q3" value="D"> D) MongoDB.</label>
+                <label class="option-label"><input type="radio" name="q3" value="E"> E) MySQL.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: D.</strong> PostgreSQL, SQL Server, Oracle e MySQL são pilares dos SGBDs Relacionais (baseados em tabelas). O <strong>MongoDB</strong> é um banco de dados NoSQL, orientado a documentos, e não segue o modelo relacional estrito.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 04 -->
+        <div class="question-card" id="q4">
+            <div class="question-title">QUESTÃO 04 (FCM - Simulado)</div>
+            <p>Analise as seguintes afirmações sobre boas práticas e sintaxe na linguagem SQL:<br>
+            I. A cláusula <code>WHERE</code> é opcional nos comandos <code>DELETE</code> e <code>UPDATE</code>, mas sua omissão resultará na aplicação da operação sobre todas as linhas da tabela.<br>
+            II. O comando <code>TRUNCATE TABLE</code> é classificado como DML pois sua função principal é manipular os dados, excluindo-os linha por linha.<br>
+            III. A instrução <code>SELECT</code> deve conter obrigatoriamente a cláusula <code>FROM</code> para especificar a origem dos dados.<br>
+            Estão corretas as afirmativas:</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q4" value="A"> A) I, apenas.</label>
+                <label class="option-label"><input type="radio" name="q4" value="B"> B) I e III, apenas.</label>
+                <label class="option-label"><input type="radio" name="q4" value="C"> C) II e III, apenas.</label>
+                <label class="option-label"><input type="radio" name="q4" value="D"> D) I, II e III.</label>
+                <label class="option-label"><input type="radio" name="q4" value="E"> E) III, apenas.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: B.</strong><br>
+                <strong>I (Correta):</strong> <code>UPDATE</code> e <code>DELETE</code> sem <code>WHERE</code> afetam todas as linhas.<br>
+                <strong>II (Incorreta):</strong> <code>TRUNCATE</code> é um comando <strong>DDL</strong> (Data Definition Language). Ele reseta a estrutura de armazenamento e não exclui linha a linha.<br>
+                <strong>III (Correta):</strong> No padrão SQL ANSI, <code>SELECT</code> exige <code>FROM</code>.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 05 -->
+        <div class="question-card" id="q5">
+            <div class="question-title">QUESTÃO 05 (FCM - Simulado)</div>
+            <p>No contexto das propriedades das transações em sistemas de banco de dados (ACID), a propriedade que garante que as alterações realizadas por uma transação confirmada (comitadas) sejam permanentes e sobrevivam a falhas subsequentes do sistema (como queda de energia) é denominada:</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q5" value="A"> A) Atomicidade.</label>
+                <label class="option-label"><input type="radio" name="q5" value="B"> B) Isolamento.</label>
+                <label class="option-label"><input type="radio" name="q5" value="C"> C) Durabilidade.</label>
+                <label class="option-label"><input type="radio" name="q5" value="D"> D) Consistência.</label>
+                <label class="option-label"><input type="radio" name="q5" value="E"> E) Concorrência.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: C.</strong> A <strong>Durabilidade</strong> é a propriedade ACID que garante a persistência dos dados após o <code>COMMIT</code>, mesmo em caso de falhas físicas ou de energia.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 06 -->
+        <div class="question-card" id="q6">
+            <div class="question-title">QUESTÃO 06 (FCM - Simulado)</div>
+            <p>Um Analista de TI precisa remover definitivamente uma tabela chamada <code>BACKUP_LOGS</code> do banco de dados, incluindo sua estrutura, definições de colunas, índices associados e todos os dados armazenados. O comando SQL correto para realizar essa operação é:</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q6" value="A"> A) <code>DELETE TABLE BACKUP_LOGS;</code></label>
+                <label class="option-label"><input type="radio" name="q6" value="B"> B) <code>DROP TABLE BACKUP_LOGS;</code></label>
+                <label class="option-label"><input type="radio" name="q6" value="C"> C) <code>ERASE TABLE BACKUP_LOGS;</code></label>
+                <label class="option-label"><input type="radio" name="q6" value="D"> D) <code>TRUNCATE TABLE BACKUP_LOGS;</code></label>
+                <label class="option-label"><input type="radio" name="q6" value="E"> E) <code>REMOVE FROM BACKUP_LOGS;</code></label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: B.</strong> O comando <code>DROP TABLE</code> remove o objeto inteiro (estrutura + dados). <code>DELETE</code> e <code>TRUNCATE</code> removem apenas os dados, mantendo a estrutura da tabela vazia.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 07 -->
+        <div class="question-card" id="q7">
+            <div class="question-title">QUESTÃO 07 (FCM - Simulado)</div>
+            <p>Considere a tabela <code>PRODUTOS</code> com as colunas <code>ID</code>, <code>CATEGORIA</code> e <code>PRECO</code>. Deseja-se obter a média de preços dos produtos, agrupados por categoria. A consulta SQL correta para obter esse resultado é:</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q7" value="A"> A) <code>SELECT CATEGORIA, AVG(PRECO) FROM PRODUTOS GROUP BY CATEGORIA;</code></label>
+                <label class="option-label"><input type="radio" name="q7" value="B"> B) <code>SELECT CATEGORIA, SUM(PRECO) FROM PRODUTOS ORDER BY CATEGORIA;</code></label>
+                <label class="option-label"><input type="radio" name="q7" value="C"> C) <code>SELECT CATEGORIA, MED(PRECO) FROM PRODUTOS GROUP BY ID;</code></label>
+                <label class="option-label"><input type="radio" name="q7" value="D"> D) <code>SELECT CATEGORIA, PRECO FROM PRODUTOS WHERE AVG(PRECO) > 0;</code></label>
+                <label class="option-label"><input type="radio" name="q7" value="E"> E) <code>SELECT AVG(CATEGORIA), PRECO FROM PRODUTOS GROUP BY PRECO;</code></label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: A.</strong> Para calcular média, usa-se a função de agregação <code>AVG()</code>. Como o resultado deve ser separado por categoria, a cláusula <code>GROUP BY CATEGORIA</code> é obrigatória.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 08 -->
+        <div class="question-card" id="q8">
+            <div class="question-title">QUESTÃO 08 (FCM - Simulado)</div>
+            <p>A integridade referencial em um banco de dados relacional é garantida principalmente através do uso de:</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q8" value="A"> A) Chaves Primárias (Primary Keys) apenas.</label>
+                <label class="option-label"><input type="radio" name="q8" value="B"> B) Índices Clustered e Non-Clustered.</label>
+                <label class="option-label"><input type="radio" name="q8" value="C"> C) Triggers de auditoria.</label>
+                <label class="option-label"><input type="radio" name="q8" value="D"> D) Chaves Estrangeiras (Foreign Keys).</label>
+                <label class="option-label"><input type="radio" name="q8" value="E"> E) Visões Materializadas (Materialized Views).</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: D.</strong> A Integridade Referencial mantém a consistência entre tabelas relacionadas. Isso é implementado através da <strong>Chave Estrangeira (Foreign Key)</strong>, que vincula um valor a uma Chave Primária existente em outra tabela.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 09 -->
+        <div class="question-card" id="q9">
+            <div class="question-title">QUESTÃO 09 (FCM - Simulado)</div>
+            <p>Qual das seguintes alternativas descreve corretamente a função do comando <code>GRANT</code> na linguagem SQL?</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q9" value="A"> A) Confirmar a transação atual, tornando as alterações permanentes.</label>
+                <label class="option-label"><input type="radio" name="q9" value="B"> B) Criar um novo usuário no sistema operacional do servidor.</label>
+                <label class="option-label"><input type="radio" name="q9" value="C"> C) Conceder privilégios de acesso ou permissões de operação a usuários ou papéis (roles).</label>
+                <label class="option-label"><input type="radio" name="q9" value="D"> D) Recuperar dados de uma tabela com base em critérios de segurança.</label>
+                <label class="option-label"><input type="radio" name="q9" value="E"> E) Revogar permissões previamente concedidas a um usuário.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: C.</strong> O comando <code>GRANT</code> (parte do DCL) é usado especificamente para conceder permissões. O comando para revogar é <code>REVOKE</code>, e para confirmar transação é <code>COMMIT</code>.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 10 -->
+        <div class="question-card" id="q10">
+            <div class="question-title">QUESTÃO 10 (FCM - Simulado)</div>
+            <p>Em uma modelagem de banco de dados, quando um atributo não-chave depende funcionalmente de outro atributo não-chave (dependência transitiva), diz-se que a tabela viola a:</p>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q10" value="A"> A) Primeira Forma Normal (1FN).</label>
+                <label class="option-label"><input type="radio" name="q10" value="B"> B) Segunda Forma Normal (2FN).</label>
+                <label class="option-label"><input type="radio" name="q10" value="C"> C) Terceira Forma Normal (3FN).</label>
+                <label class="option-label"><input type="radio" name="q10" value="D"> D) Forma Normal de Boyce-Codd (FNBC).</label>
+                <label class="option-label"><input type="radio" name="q10" value="E"> E) Quarta Forma Normal (4FN).</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Comentada</span>
+                <p><strong>Gabarito: C.</strong><br>
+                1FN: Foca em Atomicidade.<br>
+                2FN: Foca em Dependência Parcial (em chaves compostas).<br>
+                3FN: Foca em <strong>Dependência Transitiva</strong> (atributo não-chave dependendo de outro não-chave).</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="button" class="btn-submit" onclick="submitQuiz()">Finalizar e Ver Resultados</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    // Gabarito Oficial
+    const answers = {
+        q1: 'D',
+        q2: 'B',
+        q3: 'D',
+        q4: 'B',
+        q5: 'C',
+        q6: 'B',
+        q7: 'A',
+        q8: 'D',
+        q9: 'C',
+        q10: 'C'
+    };
+
+    function submitQuiz() {
+        let score = 0;
+        const total = Object.keys(answers).length;
+        const form = document.getElementById('quiz-form');
+        
+        // Desabilitar o botão para evitar múltiplos envios
+        const btn = document.querySelector('.btn-submit');
+        btn.disabled = true;
+        btn.innerText = "Resultado Gerado";
+        btn.style.backgroundColor = "#7f8c8d";
+        btn.style.cursor = "default";
+
+        // Iterar sobre cada questão
+        for (let questionId in answers) {
+            const correctAnswer = answers[questionId];
+            const questionBlock = document.getElementById(questionId);
+            const userOption = form.elements[questionId].value;
+            const resolutionBox = questionBlock.querySelector('.resolution-box');
+
+            // Mostrar resolução
+            resolutionBox.style.display = 'block';
+
+            // Processar visualmente as opções
+            const labels = questionBlock.querySelectorAll('.option-label');
+            labels.forEach(label => {
+                const input = label.querySelector('input');
+                
+                // Marcar a correta em verde
+                if (input.value === correctAnswer) {
+                    label.classList.add('correct');
+                }
+
+                // Se o usuário marcou errado, marcar em vermelho
+                if (userOption === input.value && userOption !== correctAnswer) {
+                    label.classList.add('incorrect');
+                }
+                
+                // Desabilitar inputs
+                input.disabled = true;
+            });
+
+            // Contabilizar pontos
+            if (userOption === correctAnswer) {
+                score++;
+            }
+        }
+
+        // Exibir Placar
+        const scoreBoard = document.getElementById('score-display');
+        scoreBoard.innerHTML = `
+            <h2>${score} / ${total}</h2>
+            <p>Você acertou ${Math.round((score/total)*100)}% das questões.</p>
+        `;
+        scoreBoard.style.display = 'block';
+
+        // Rolar suavemente para o topo para ver o resultado
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

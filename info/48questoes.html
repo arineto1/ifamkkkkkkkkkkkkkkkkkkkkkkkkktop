@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado NoSQL - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #333333;
+            --accent-color: #2c3e50;
+            --highlight-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+            --resolution-bg: #f4f6f7;
+            --resolution-border: #bdc3c7;
+        }
+
+        body {
+            font-family: 'Georgia', 'Cambria', serif; /* Serif para melhor leitura de textos longos */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--highlight-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Sans-serif para títulos */
+            color: var(--accent-color);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-style: italic;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .question-block {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .question-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+            font-size: 1.05em;
+        }
+
+        .options-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .option-item input[type="radio"] {
+            margin-top: 6px;
+            margin-right: 12px;
+            transform: scale(1.2);
+            flex-shrink: 0;
+        }
+
+        .option-label {
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Helvetica Neue', sans-serif; /* Sans-serif para as opções facilita escaneabilidade */
+            font-size: 0.95em;
+        }
+
+        /* Estilos de Feedback */
+        .correct-answer-highlight {
+            background-color: rgba(39, 174, 96, 0.1);
+            border-color: var(--correct-color);
+            font-weight: bold;
+        }
+
+        .incorrect-answer-highlight {
+            background-color: rgba(192, 57, 43, 0.1);
+            border-color: var(--incorrect-color);
+            opacity: 0.8;
+        }
+
+        .resolution-box {
+            display: none; /* Escondido inicialmente */
+            margin-top: 20px;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--resolution-border);
+            padding: 20px;
+            border-radius: 0 4px 4px 0;
+            font-size: 0.95em;
+        }
+
+        .resolution-box.visible {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+        }
+
+        .action-area {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        button.submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Helvetica Neue', sans-serif;
+            font-weight: bold;
+        }
+
+        button.submit-btn:hover {
+            background-color: #34495e;
+        }
+
+        button.submit-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        #score-display {
+            font-size: 1.5em;
+            margin-top: 20px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Math styling helper */
+        .math {
+            font-style: italic;
+            font-family: "Times New Roman", Times, serif;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Simulado: Bancos de Dados Não Relacionais</h1>
+    <p class="subtitle">Ênfase: Modelos Agregados, Distribuição, Consistência e Versionamento<br>Estilo: Fundação CEFETMINAS</p>
+
+    <form id="quiz-form">
+
+        <!-- QUESTÃO 01 -->
+        <div class="question-block" id="q1">
+            <span class="question-title">QUESTÃO 01</span>
+            <div class="question-text">
+                Os bancos de dados NoSQL emergiram como uma resposta às limitações de escalabilidade dos sistemas relacionais tradicionais em ambientes de <em>clusters</em> distribuídos. Um conceito central na arquitetura de muitas dessas novas tecnologias é a "orientação a agregados". Segundo a literatura de referência de Sadalage e Fowler, a escolha de um modelo de dados orientado a agregados impacta diretamente a forma como as transações e a consistência são gerenciadas.<br>
+                Considerando a taxonomia dos modelos de dados NoSQL, assinale a alternativa que apresenta corretamente a relação entre o modelo de dados e a característica de orientação a agregados.
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="A"> A) O modelo de Grafos é o exemplo mais sofisticado de orientação a agregados, pois encapsula nós e arestas em uma única estrutura de armazenamento atômica, facilitando o <em>sharding</em>.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="B"> B) Os modelos Chave-Valor, Documento e Família de Colunas são classificados como orientados a agregados, pois projetam o armazenamento em torno de unidades complexas de dados que são manipuladas de forma atômica, favorecendo a distribuição horizontal.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="C"> C) O modelo Relacional é, por definição, orientado a agregados, visto que as linhas de uma tabela (tuplas) funcionam como agregados naturais quando normalizadas na terceira forma normal.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="D"> D) A orientação a agregados é uma característica exclusiva dos bancos de dados <em>in-memory</em>, não se aplicando a bancos persistentes em disco como MongoDB ou Cassandra.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="E"> E) O modelo de Documentos não é orientado a agregados, pois a estrutura interna do documento (JSON/XML) é transparente para o banco de dados, violando o princípio de encapsulamento opaco necessário para a agregação.</label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>A questão aborda a taxonomia fundamental dos bancos de dados NoSQL. Um "agregado" é uma coleção de objetos relacionados tratados como uma unidade atômica para manipulação e consistência.
+                <ul>
+                    <li><strong>Modelos Orientados a Agregados:</strong> Chave-Valor, Documento e Família de Colunas. Eles permitem que estruturas complexas (listas, objetos aninhados) sejam armazenadas e distribuídas (via <em>sharding</em>) como uma unidade única.</li>
+                    <li><strong>Modelos Não Orientados a Agregados:</strong> Grafos. Eles priorizam relacionamentos e conexões entre pequenas entidades, o que dificulta o encapsulamento em agregados isolados para distribuição.</li>
+                </ul>
+                A alternativa B está correta pois lista os três modelos que utilizam essa estrutura para facilitar a escalabilidade horizontal.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 02 -->
+        <div class="question-block" id="q2">
+            <span class="question-title">QUESTÃO 02</span>
+            <div class="question-text">
+                Em um sistema de alta performance para jogos online, a equipe de desenvolvimento optou por utilizar um banco de dados NoSQL do tipo Chave-Valor para armazenar as sessões dos jogadores. A principal exigência é a velocidade extrema na leitura e escrita, aceitando-se que o banco de dados trate os dados armazenados como um "bloco opaco" (<em>opaque blob</em>).<br>
+                Sobre a distinção entre modelos de agregados opacos e transparentes, e suas implicações práticas na manipulação de dados, analise as afirmativas a seguir.<br><br>
+                I. No modelo Chave-Valor, o agregado é opaco, o que significa que o banco de dados não tem visibilidade sobre a estrutura interna do valor, impedindo a realização de consultas (<em>queries</em>) baseadas em atributos específicos dentro do objeto armazenado.<br>
+                II. O modelo de Documentos é considerado transparente, permitindo que o motor do banco de dados indexe campos internos e execute projeções parciais, retornando apenas fragmentos do agregado solicitado.<br>
+                III. A opacidade do agregado no modelo Família de Colunas impede que o banco de dados realize a validação de tipos de dados, delegando essa responsabilidade inteiramente para a camada de aplicação.<br><br>
+                Estão corretas as afirmativas:
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="A"> A) Apenas I.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="B"> B) Apenas II.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="C"> C) Apenas I e II.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="D"> D) Apenas I e III.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="E"> E) I, II e III.</label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: C (Apenas I e II)</strong></p>
+                <p>A questão explora a distinção entre agregados opacos e transparentes:</p>
+                <ul>
+                    <li><strong>Item I (Correto):</strong> No modelo Chave-Valor, o valor é geralmente um <em>blob</em> opaco. O banco só conhece a chave. Para filtrar por um atributo interno, a aplicação deve baixar o objeto inteiro e processar em memória.</li>
+                    <li><strong>Item II (Correto):</strong> O modelo de Documentos (ex: MongoDB) é transparente. O banco "vê" a estrutura (JSON/XML), permitindo criar índices em campos internos e fazer consultas complexas.</li>
+                    <li><strong>Item III (Incorreto):</strong> O modelo Família de Colunas (ex: Cassandra) não é opaco da mesma forma. O banco conhece as colunas e frequentemente possui tipos de dados definidos e validadores em seu esquema (schema), não sendo puramente responsabilidade da aplicação.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 03 -->
+        <div class="question-block" id="q3">
+            <span class="question-title">QUESTÃO 03</span>
+            <div class="question-text">
+                A escalabilidade em bancos de dados NoSQL é frequentemente alcançada através de modelos de distribuição que particionam os dados em múltiplos nós. Esse processo, conhecido como <em>Sharding</em>, pode ser gerenciado de diferentes formas.<br>
+                Assinale a alternativa que descreve corretamente as características e desafios do <em>Auto-Sharding</em> em comparação ao <em>Sharding</em> gerenciado pela aplicação.
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="A"> A) O <em>Auto-Sharding</em> exige que a aplicação cliente conheça a topologia física do <em>cluster</em> para calcular o <em>hash</em> da chave e direcionar a requisição ao nó correto, eliminando a necessidade de roteadores de consulta.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="B"> B) No <em>Sharding</em> gerenciado pela aplicação, a adição de novos nós ao <em>cluster</em> é transparente, pois o banco de dados redistribui automaticamente os dados existentes para balancear a carga sem intervenção dos desenvolvedores.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="C"> C) O <em>Auto-Sharding</em> delega ao Sistema Gerenciador de Banco de Dados (SGBD) a responsabilidade de particionar os dados e migrar fragmentos (<em>chunks</em>) entre os nós para manter o equilíbrio de carga, permitindo que a aplicação trate o <em>cluster</em> como um sistema único lógico.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="D"> D) O <em>Auto-Sharding</em> é incompatível com a replicação de dados, pois a movimentação automática de fragmentos invalida as cópias de segurança nos nós escravos, exigindo que o sistema opere sem redundância.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="E"> E) A técnica de <em>Consistent Hashing</em> é utilizada exclusivamente no <em>Sharding</em> manual, pois o <em>Auto-Sharding</em> depende de tabelas de roteamento estáticas centralizadas no nó mestre.</label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p><strong>Auto-Sharding</strong> é a capacidade do SGBD de gerenciar a distribuição de dados automaticamente.</p>
+                <ul>
+                    <li>A alternativa C está correta pois descreve que o banco de dados (e não a aplicação) decide onde colocar os dados e move "chunks" (pedaços de dados) entre servidores para balancear o uso de disco e processamento. Para a aplicação, o cluster parece ser uma única máquina lógica.</li>
+                    <li>O Sharding gerenciado pela aplicação (Alternativa B) é o oposto: requer intervenção manual complexa para adicionar nós e rebalancear dados.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 04 -->
+        <div class="question-block" id="q4">
+            <span class="question-title">QUESTÃO 04</span>
+            <div class="question-text">
+                A replicação de dados é essencial para garantir a disponibilidade e a durabilidade em sistemas distribuídos. Dois modelos predominantes de replicação são o <em>Master-Slave</em> (Mestre-Escravo) e o <em>Peer-to-Peer</em> (Ponto-a-Ponto).<br>
+                Considere um cenário onde a latência de escrita é um fator crítico e o sistema deve continuar aceitando atualizações mesmo na ocorrência de falhas de rede que isolem diversos nós. Qual modelo de replicação é mais adequado e qual é a sua principal contrapartida em termos de consistência?
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="A"> A) <em>Master-Slave</em>, pois garante consistência forte imediata, permitindo que qualquer escravo assuma as escritas instantaneamente sem risco de conflitos.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="B"> B) <em>Peer-to-Peer</em>, pois permite que escritas sejam aceitas por qualquer nó do <em>cluster</em>, eliminando o gargalo do mestre único, ao custo de introduzir a possibilidade de conflitos de atualização que devem ser resolvidos posteriormente.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="C"> C) <em>Master-Slave</em>, pois a centralização das escritas no mestre reduz a latência de rede, e a consistência eventual nos escravos garante que todos leiam os dados mais recentes em tempo real.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="D"> D) <em>Peer-to-Peer</em>, pois utiliza um protocolo de consenso global (como Paxos) para cada escrita, garantindo consistência ACID em todo o <em>cluster</em> sem penalizar a performance de escrita.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="E"> E) <em>Master-Slave</em> com replicação síncrona, pois oferece a maior disponibilidade de escrita possível, dado que a confirmação da gravação só ocorre após todos os nós estarem sincronizados.</label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>A questão foca em <strong>Disponibilidade de Escrita</strong>.</p>
+                <ul>
+                    <li>No modelo <strong>Master-Slave</strong>, se o mestre cair, a escrita para até que um novo mestre seja eleito (ponto único de falha de escrita).</li>
+                    <li>No modelo <strong>Peer-to-Peer</strong> (como Cassandra ou Dynamo), qualquer nó pode aceitar escritas. Isso oferece altíssima disponibilidade. A contrapartida (Trade-off) é que, como dois nós podem aceitar atualizações diferentes simultaneamente, podem ocorrer <strong>conflitos de dados</strong> que exigem resolução posterior (Consistência Eventual).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 05 -->
+        <div class="question-block" id="q5">
+            <span class="question-title">QUESTÃO 05</span>
+            <div class="question-text">
+                O Teorema CAP (Consistency, Availability, Partition Tolerance), formulado por Eric Brewer, estabelece limites teóricos para sistemas distribuídos.<br>
+                Em um banco de dados NoSQL projetado sob a filosofia AP (Availability e Partition Tolerance), como o Apache Cassandra ou DynamoDB (em configurações padrão), qual é o comportamento esperado do sistema durante uma partição de rede que separa o <em>cluster</em> em dois grupos incomunicáveis?
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="A"> A) O sistema interrompe todas as operações de escrita em ambos os lados da partição para preservar a integridade dos dados, mantendo apenas operações de leitura nos nós que possuem o quórum majoritário.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="B"> B) O sistema sacrifica a tolerância a partição (P) para garantir que a consistência (C) e a disponibilidade (A) sejam mantidas, desligando os nós desconectados.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="C"> C) O sistema continua aceitando leituras e escritas em todos os nós disponíveis, independentemente da partição, resultando em possíveis divergências nos dados (inconsistência) que convergirão quando a comunicação for restabelecida.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="D"> D) O sistema entra em modo de consistência estrita, rejeitando qualquer leitura que não possa ser verificada em todos os nós do <em>cluster</em>, garantindo que nenhum cliente receba dados desatualizados.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="E"> E) O sistema prioriza a consistência (C) sobre a disponibilidade (A), permitindo escritas apenas no componente da partição que contém o nó mestre "eleito" e rejeitando requisições no restante.</label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>Sistemas <strong>AP (Availability + Partition Tolerance)</strong> priorizam manter o serviço funcionando acima de tudo.</p>
+                <p>Durante uma partição de rede, um sistema AP continua aceitando leituras e escritas em ambos os lados da rede partida, mesmo que eles não consigam se falar. Isso gera inconsistência temporária (os lados divergem), que será corrigida quando a rede voltar (Consistência Eventual). A alternativa A descreve um sistema CP (Consistência e Tolerância a Partição).</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 06 -->
+        <div class="question-block" id="q6">
+            <span class="question-title">QUESTÃO 06</span>
+            <div class="question-text">
+                Para controlar os níveis de consistência em sistemas distribuídos sem transações ACID globais, utiliza-se o conceito de Quóruns de Leitura (R) e Escrita (W) em relação ao Fator de Replicação (N).<br>
+                Para garantir que uma operação de leitura retorne sempre o dado mais recente confirmado por uma operação de escrita anterior (Consistência Forte de Leitura), qual inequação deve ser satisfeita?
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="A"> A) <span class="math">W &gt; N / 2</span></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="B"> B) <span class="math">R + W &gt; N</span></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="C"> C) <span class="math">R + W &le; N</span></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="D"> D) <span class="math">R = 1</span> e <span class="math">W = N</span></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="E"> E) <span class="math">R &gt; N / 2</span> e <span class="math">W = 1</span></label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>O Princípio da Interseção de Quórum dita que, para garantir consistência forte, o conjunto de nós lidos deve ter pelo menos uma intersecção com o conjunto de nós onde a escrita foi confirmada.</p>
+                <p>Isso é matematicamente representado por: <strong>R + W > N</strong>.</p>
+                <p>Por exemplo, se N=3, W=2 e R=2, a soma (4) é maior que N (3). Isso garante que, ao ler de 2 nós, pelo menos um deles conterá a última escrita.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 07 -->
+        <div class="question-block" id="q7">
+            <span class="question-title">QUESTÃO 07</span>
+            <div class="question-text">
+                Em sistemas que adotam a consistência eventual, a ocorrência de atualizações concorrentes em diferentes nós pode levar a conflitos de dados. Para lidar com essas situações, utilizam-se Marcadores de Versão (<em>Version Stamps</em>).<br>
+                Sobre o uso de Relógios Vetoriais (<em>Vector Clocks</em>) como mecanismo de marcação de versão, assinale a alternativa correta.
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="A"> A) Relógios Vetoriais são utilizados para sincronizar o tempo físico dos servidores via protocolo NTP, garantindo que os <em>timestamps</em> de todas as transações sejam idênticos.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="B"> B) Um Relógio Vetorial é uma lista de contadores (pares nó:contador) que permite detectar se duas versões de um objeto são casuais (uma é ancestral da outra) ou concorrentes (conflitantes), sem depender de relógios de sistema sincronizados.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="C"> C) O principal objetivo dos Relógios Vetoriais é resolver automaticamente os conflitos de dados escolhendo a versão com o contador total mais alto, eliminando a necessidade de intervenção da aplicação.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="D"> D) Relógios Vetoriais impedem a ocorrência de <em>branching</em> (ramificação) de versões, bloqueando qualquer escrita que não possua o vetor de versão mais atualizado do <em>cluster</em>.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="E"> E) O uso de Relógios Vetoriais elimina a necessidade de armazenamento de múltiplos valores para a mesma chave, pois garante que apenas a "última escrita" (<em>Last Write Wins</em>) seja persistida no disco.</label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>Relógios Vetoriais (<em>Vector Clocks</em>) são mecanismos lógicos, não físicos. Eles servem para rastrear a causalidade entre eventos.</p>
+                <ul>
+                    <li>Eles permitem ao sistema saber se a Versão B é filha da Versão A (sem conflito) ou se a Versão B e a Versão C foram criadas ao mesmo tempo por usuários diferentes a partir da Versão A (Conflito/Concorrência).</li>
+                    <li>Eles não resolvem o conflito sozinhos (Alternativa C está errada) e não dependem de relógios físicos (NTP). A alternativa B define corretamente sua estrutura e função.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 08 -->
+        <div class="question-block" id="q8">
+            <span class="question-title">QUESTÃO 08</span>
+            <div class="question-text">
+                Analise o seguinte cenário de operação em um banco de dados NoSQL distribuído com Fator de Replicação <span class="math">N=3</span>:<br>
+                Um cliente envia uma requisição de escrita com nível de consistência <code>QUORUM</code>. No momento da requisição, um dos nós réplica está inoperante (down) e outro está sofrendo com alta latência de disco, respondendo lentamente. O terceiro nó está operando normalmente.<br>
+                Qual será o resultado da operação de escrita, considerando o comportamento padrão de quóruns estritos?
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="A"> A) A escrita será bem-sucedida, pois apenas um nó é necessário para confirmar a gravação em sistemas distribuídos modernos (Hinted Handoff).</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="B"> B) A escrita falhará ou sofrerá <em>timeout</em>, pois o quórum exigido é de 2 nós (<span class="math">3/2 + 1</span>), e o sistema não conseguiu obter confirmações suficientes dentro do tempo limite.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="C"> C) O sistema degradará automaticamente o nível de consistência para <code>ONE</code> e confirmará a escrita no único nó rápido, garantindo a disponibilidade.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="D"> D) A escrita será bem-sucedida, pois o nó inoperante não conta para o cálculo de <span class="math">N</span>, reduzindo o quórum necessário para 1.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="E"> E) A escrita ficará em estado de espera indefinida até que o nó inoperante retorne, garantindo que a durabilidade de 100% seja atingida.</label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>Para <span class="math">N=3</span>, um nível de consistência <code>QUORUM</code> exige confirmação de <span class="math">(3 / 2) + 1 = 2</span> nós.</p>
+                <p>No cenário apresentado:</p>
+                <ul>
+                    <li>Nó 1: OK (1 confirmação).</li>
+                    <li>Nó 2: Down (0 confirmações).</li>
+                    <li>Nó 3: Muito lento.</li>
+                </ul>
+                <p>Como o sistema precisa de 2 confirmações e só recebe 1 rapidamente, a operação ficará aguardando o nó lento. Se o atraso exceder o <em>timeout</em> configurado, a operação falha. A disponibilidade de escrita em Quorum com N=3 só tolera 1 falha. Com 1 nó morto e 1 lento, o risco de falha é altíssimo.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 09 -->
+        <div class="question-block" id="q9">
+            <span class="question-title">QUESTÃO 09</span>
+            <div class="question-text">
+                A modelagem de dados em bancos NoSQL orientados a agregados difere fundamentalmente da modelagem relacional. Enquanto o modelo relacional prioriza a normalização para evitar redundância, os modelos agregados frequentemente utilizam a desnormalização.<br>
+                Qual é a principal justificativa arquitetural para o uso da desnormalização e da estrutura de agregados em ambientes distribuídos?
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="A"> A) Reduzir o espaço de armazenamento em disco, visto que a desnormalização comprime os dados ao remover as chaves estrangeiras.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="B"> B) Permitir que o banco de dados realize operações de <em>Join</em> distribuídas de forma mais eficiente, cruzando dados de diferentes fragmentos (<em>shards</em>) em memória.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="C"> C) Garantir que os dados acessados juntos sejam armazenados juntos, permitindo que a leitura e a escrita de um objeto complexo ocorram em uma única operação atômica dentro de um único nó, minimizando a latência de rede.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="D"> D) Facilitar a implementação de restrições de integridade referencial, que são mais robustas em modelos de documentos do que em bancos relacionais.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="E"> E) Simplificar a camada de apresentação da aplicação, pois os dados já vêm formatados em HTML prontos para exibição.</label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A desnormalização em NoSQL visa <strong>performance e atomicidade</strong> em clusters distribuídos.</p>
+                <p>Em vez de espalhar dados por várias tabelas (que poderiam estar em servidores diferentes, tornando o JOIN lento ou impossível), agrupa-se tudo o que é lido junto em um único registro (agregado). Isso garante que buscar o "Pedido" traga também os "Itens do Pedido" em uma única ida ao disco/rede, sem necessidade de JOIN distribuído.</p>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 10 -->
+        <div class="question-block" id="q10">
+            <span class="question-title">QUESTÃO 10</span>
+            <div class="question-text">
+                A consistência eventual (Eventual Consistency) é um modelo de consistência utilizado em muitos sistemas NoSQL para alcançar alta disponibilidade.<br>
+                Dentro desse modelo, o que significa o conceito de "Read Your Own Writes" (Ler Suas Próprias Escritas) e como ele se relaciona com a consistência do sistema?
+            </div>
+            <ul class="options-list">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="A"> A) É uma garantia de consistência forte global, onde qualquer cliente, em qualquer lugar do mundo, vê imediatamente a escrita realizada por qualquer outro cliente.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="B"> B) É uma garantia de consistência de sessão, assegurando que, se um processo realizar uma escrita e logo em seguida uma leitura, ele verá o valor atualizado, mesmo que outros clientes ainda vejam o valor antigo.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="C"> C) É um mecanismo de <em>rollback</em> automático que desfaz escritas se o cliente tentar ler o dado antes da propagação completa para todas as réplicas.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="D"> D) É uma propriedade exclusiva de bancos de dados ACID relacionais, impossível de ser implementada em sistemas distribuídos eventualmente consistentes.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="E"> E) Significa que o sistema prioriza a leitura sobre a escrita, bloqueando atualizações até que o cliente confirme que leu a versão anterior.</label></li>
+            </ul>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Detalhada</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p><strong>Read Your Own Writes (RYOW)</strong> é um modelo de consistência focado na sessão do usuário.</p>
+                <p>Ele evita a confusão onde o usuário posta um comentário, a página recarrega e o comentário sumiu (porque a leitura bateu numa réplica desatualizada). Com RYOW, o sistema garante que o <em>próprio autor</em> veja suas mudanças imediatamente, embora outros usuários possam demorar um pouco mais para vê-las (Consistência Eventual Global).</p>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <button type="button" class="submit-btn" onclick="submitQuiz()">Conferir Resultado</button>
+            <div id="score-display"></div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    // Gabarito correto
+    const correctAnswers = {
+        q1: 'B',
+        q2: 'C',
+        q3: 'C',
+        q4: 'B',
+        q5: 'C',
+        q6: 'B',
+        q7: 'B',
+        q8: 'B',
+        q9: 'C',
+        q10: 'B'
+    };
+
+    function submitQuiz() {
+        let score = 0;
+        const totalQuestions = Object.keys(correctAnswers).length;
+        const form = document.getElementById('quiz-form');
+        const submitBtn = document.querySelector('.submit-btn');
+
+        // Desabilitar botão para evitar reenvio
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Resultado Gerado";
+
+        // Iterar sobre cada questão
+        for (let questionId in correctAnswers) {
+            const correctAnswer = correctAnswers[questionId];
+            const selectedOption = form.querySelector(`input[name="${questionId}"]:checked`);
+            const questionBlock = document.getElementById(questionId);
+            
+            // Lógica de Pontuação e Feedback Visual
+            let isCorrect = false;
+
+            if (selectedOption) {
+                if (selectedOption.value === correctAnswer) {
+                    score++;
+                    isCorrect = true;
+                    // Destacar a opção escolhida corretamente
+                    selectedOption.parentElement.parentElement.classList.add('correct-answer-highlight');
+                } else {
+                    // Destacar a opção escolhida incorretamente
+                    selectedOption.parentElement.parentElement.classList.add('incorrect-answer-highlight');
+                }
+            }
+
+            // Sempre destacar a resposta correta visualmente (para aprendizado)
+            const correctRadio = form.querySelector(`input[name="${questionId}"][value="${correctAnswer}"]`);
+            if (correctRadio && !isCorrect) {
+                // Adiciona um estilo leve para mostrar qual era a certa se o usuário errou
+                correctRadio.parentElement.parentElement.style.border = "2px solid #27ae60";
+            }
+
+            // Revelar a caixa de resolução
+            const resolutionBox = questionBlock.querySelector('.resolution-box');
+            resolutionBox.classList.add('visible');
+
+            // Desabilitar inputs
+            const inputs = questionBlock.querySelectorAll('input');
+            inputs.forEach(input => input.disabled = true);
+        }
+
+        // Exibir pontuação final
+        const scoreDisplay = document.getElementById('score-display');
+        const percentage = (score / totalQuestions) * 100;
+        
+        let message = "";
+        if (percentage === 100) message = "Excelente! Domínio total do conteúdo.";
+        else if (percentage >= 70) message = "Muito bom! Você tem um conhecimento sólido.";
+        else if (percentage >= 50) message = "Bom, mas precisa revisar alguns conceitos de consistência e distribuição.";
+        else message = "Recomenda-se uma revisão aprofundada nos capítulos de NoSQL Distilled.";
+
+        scoreDisplay.innerHTML = `Você acertou ${score} de ${totalQuestions} questões (${percentage}%).<br><span style="font-size: 0.7em; font-weight: normal; color: #555;">${message}</span>`;
+        
+        // Rolar suavemente até o resultado
+        scoreDisplay.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

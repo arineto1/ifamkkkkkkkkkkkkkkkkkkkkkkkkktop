@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Bancos de Dados NoSQL - IFAM/CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configurações de Tipografia para Leitura Focada */
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            line-height: 1.8;
+            color: #1f2937; /* Cinza Chumbo para alto contraste sem cansar */
+            background-color: #ffffff;
+        }
+
+        h1, h2, h3, h4 {
+            color: #111827;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Estilo de Grifo (Marking) */
+        .highlight {
+            background-color: #fef08a; /* Amarelo Canário Suave */
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+
+        /* Tabelas "Quebra-Linha" (Sem Scroll Horizontal) */
+        .table-container {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Força colunas a obedecerem a largura */
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+            vertical-align: top;
+            font-size: 0.95rem;
+            word-wrap: break-word; /* Quebra palavras longas */
+            overflow-wrap: break-word;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            font-weight: 700;
+            color: #374151;
+            width: 30%; /* Define largura da primeira coluna */
+        }
+        
+        /* Ajuste para mobile nas tabelas */
+        @media (max-width: 640px) {
+            th { width: 40%; }
+        }
+
+        /* Blocos de Código e Citações */
+        code {
+            background-color: #f3f4f6;
+            color: #ef4444;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+
+        .exam-alert {
+            background-color: #fff1f2;
+            border-left: 4px solid #e11d48;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        .concept-box {
+            background-color: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Player de Áudio Fixo */
+        .audio-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Cabeçalho -->
+    <header class="text-center mb-10">
+        <h1 class="text-3xl md:text-5xl mb-4 text-blue-900">Bancos de Dados NoSQL</h1>
+        <h2 class="text-xl text-gray-600 font-semibold">Material Didático Completo para o Concurso IFAM (Banca Fundação CEFETMINAS)</h2>
+        <p class="text-sm text-gray-500 mt-2">Foco: Cargo de Professor EBTT - Área de Informática</p>
+    </header>
+
+    <!-- Player de Áudio -->
+    <div class="audio-container">
+        <div class="flex flex-col md:flex-row items-center gap-4">
+            <div class="flex-1 w-full">
+                <label class="block text-sm font-bold text-gray-700 mb-2 uppercase tracking-wide">🎧 Resumo em Áudio da Aula</label>
+                <audio controls class="w-full h-10 rounded">
+                    <!-- Nome do arquivo conforme solicitado -->
+                    <source src="49nr2.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+            </div>
+            <div class="text-xs text-gray-500 md:w-48 text-center md:text-right">
+                <p>Ouça enquanto lê para fixação dupla.</p>
+            </div>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- Seção 1: Definição e Motivação -->
+        <section class="mb-12">
+            <h3 class="text-2xl border-b-2 border-blue-200 pb-2 mb-6">1. Definição e Contexto Histórico</h3>
+            
+            <p>
+                O termo <strong>NoSQL</strong> (originalmente <em>"Non-SQL"</em>, hoje ressignificado pela comunidade como <em>"Not Only SQL"</em>) refere-se a uma classe de sistemas de gerenciamento de banco de dados que divergem do modelo clássico do Sistema Gerenciador de Banco de Dados Relacional (SGBDR).
+            </p>
+            <p>
+                A motivação para o surgimento do NoSQL reside nos desafios impostos pela Web 2.0 e Big Data, que o modelo relacional (baseado em tabelas rígidas e normalização) tem dificuldade em atender de forma custosa-eficiente. As três motivações primárias são:
+            </p>
+
+            <div class="concept-box">
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong>Escalabilidade Horizontal (Scale-Out):</strong> Capacidade de distribuir dados em <span class="highlight">clusters de servidores commodity</span> (baratos), ao invés de comprar um servidor "superpoderoso" (Scale-Up/Vertical).</li>
+                    <li><strong>Flexibilidade de Esquema (Schema-less):</strong> Capacidade de armazenar dados sem definir a estrutura da tabela previamente. Isso permite iteração rápida de desenvolvimento e tratamento de dados polimórficos.</li>
+                    <li><strong>Alta Disponibilidade e Tolerância a Falhas:</strong> Sistemas desenhados para continuar operando mesmo se nós da rede falharem.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Seção 2: Teoria Fundamental (Obrigatório para Provas) -->
+        <section class="mb-12">
+            <h3 class="text-2xl border-b-2 border-blue-200 pb-2 mb-6">2. Fundamentos Teóricos: O que cai na prova</h3>
+
+            <h4 class="text-xl mt-6 mb-3">2.1 O Teorema CAP (Eric Brewer)</h4>
+            <p>
+                A "lei da física" dos sistemas distribuídos. Afirma que é impossível garantir simultaneamente as três propriedades seguintes:
+            </p>
+            
+            <div class="table-container">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Consistência (C)</th>
+                            <td>Todos os clientes veem os mesmos dados ao mesmo tempo, não importa em qual nó se conectem. (Atomicidade forte).</td>
+                        </tr>
+                        <tr>
+                            <th>Disponibilidade (A)</th>
+                            <td>Qualquer cliente que faça uma requisição de leitura/escrita recebe uma resposta (não necessariamente a mais recente), mesmo que alguns nós estejam inoperantes.</td>
+                        </tr>
+                        <tr>
+                            <th>Tolerância a Partição (P)</th>
+                            <td>O sistema continua operando apesar de perdas arbitrárias de mensagens ou falhas de rede entre os nós.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="exam-alert">
+                <strong>⚠️ Peguinha da Banca:</strong> Em sistemas distribuídos (como NoSQL), a <strong>Tolerância a Partição (P)</strong> é inevitável (redes falham). Logo, você deve escolher apenas entre <strong>CP</strong> (Consistência + Partição) ou <strong>AP</strong> (Disponibilidade + Partição). <span class="highlight">Não existe sistema CA distribuído real.</span>
+            </div>
+
+            <h4 class="text-xl mt-6 mb-3">2.2 ACID vs. BASE</h4>
+            <p>Enquanto bancos relacionais buscam ACID, bancos NoSQL geralmente (mas não sempre) adotam o modelo <strong>BASE</strong>.</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ACID (Relacional/SQL)</th>
+                            <th>BASE (NoSQL)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A</strong>tomicidade: Tudo ou nada.</td>
+                            <td><strong>B</strong>asically <strong>A</strong>vailable: O sistema garante disponibilidade (responde sempre), mas pode haver falhas parciais.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C</strong>onsistência: Dados válidos sempre.</td>
+                            <td><strong>S</strong>oft state: O estado do sistema pode mudar ao longo do tempo, mesmo sem entrada (devido à replicação).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>I</strong>solamento: Transações independentes.</td>
+                            <td rowspan="2"><strong>E</strong>ventual consistency: Se o sistema parar de receber inputs, eventualmente todos os nós terão os mesmos dados. <span class="highlight">A consistência não é imediata.</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>D</strong>urabilidade: Dados salvos permanentemente.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 3: Os 4 Tipos de Bancos NoSQL -->
+        <section class="mb-12">
+            <h3 class="text-2xl border-b-2 border-blue-200 pb-2 mb-6">3. Taxonomia: As 4 Famílias do NoSQL</h3>
+
+            <!-- Tipo 1: Chave-Valor -->
+            <div class="mb-8">
+                <h4 class="text-xl text-blue-800 mb-2">3.1 Chave-Valor (Key-Value)</h4>
+                <p><strong>Conceito:</strong> O modelo mais simples. Um "Map" ou "Dicionário" gigante e persistente. O valor é opaco para o banco de dados (o banco não "vê" o que tem dentro, apenas entrega o blob).</p>
+                <p><strong>Características:</strong> Performance altíssima (O(1)), ótimo para Cache e Sessão de Usuário.</p>
+                <p><strong>Exemplos:</strong> <span class="highlight">Redis, Amazon DynamoDB, Riak, Memcached.</span></p>
+                <p><strong>Atenção:</strong> O Redis é um caso especial ("Data Structure Server") pois permite operações complexas no valor (listas, sets), mas a base é chave-valor.</p>
+            </div>
+
+            <!-- Tipo 2: Documentos -->
+            <div class="mb-8">
+                <h4 class="text-xl text-blue-800 mb-2">3.2 Orientado a Documentos</h4>
+                <p><strong>Conceito:</strong> Evolução do Chave-Valor. O dado é armazenado em documentos auto-descritivos (JSON, BSON, XML). A principal diferença é que <strong>o banco entende o conteúdo</strong>, permitindo consultas (queries) em campos internos.</p>
+                <p><strong>Características:</strong> Schema-less. Permite estruturas aninhadas complexas. Evita JOINs através da <span class="highlight">Desnormalização</span> (embutir dados relacionados no mesmo documento).</p>
+                <p><strong>Exemplos:</strong> <span class="highlight">MongoDB (BSON), CouchDB, Couchbase.</span></p>
+            </div>
+
+            <!-- Tipo 3: Família de Colunas -->
+            <div class="mb-8">
+                <h4 class="text-xl text-blue-800 mb-2">3.3 Família de Colunas (Wide-Column)</h4>
+                <p><strong>Conceito:</strong> Inspirado no Google BigTable. Armazena dados em linhas que podem ter colunas diferentes. As colunas são agrupadas em "Famílias". É pensado como um mapa multidimensional esparso.</p>
+                <p><strong>Uso:</strong> Cargas massivas de escrita e leitura, IoT, logs históricos, Time-Series.</p>
+                <p><strong>Arquitetura:</strong> Geralmente Masterless (P2P), usando "Gossip Protocol". Altamente escalável.</p>
+                <p><strong>Exemplos:</strong> <span class="highlight">Apache Cassandra, HBase, ScyllaDB.</span></p>
+                
+                <div class="exam-alert">
+                    <strong>⚠️ Ponto Crítico (CEFETMINAS):</strong> Não confunda "Família de Colunas" (Cassandra - NoSQL) com "Banco Colunar" (Vertica, Redshift - OLAP). 
+                    <br>• Família de Colunas = Agrupa colunas relacionadas no disco para acesso rápido por linha.
+                    <br>• Banco Colunar = Armazena cada coluna separadamente para análises estatísticas.
+                </div>
+            </div>
+
+            <!-- Tipo 4: Grafos -->
+            <div class="mb-8">
+                <h4 class="text-xl text-blue-800 mb-2">3.4 Grafos</h4>
+                <p><strong>Conceito:</strong> Baseado na teoria dos grafos (Nós e Arestas). O relacionamento é tão importante quanto o dado.</p>
+                <p><strong>Características:</strong> <span class="highlight">Index-Free Adjacency</span> (cada nó tem um ponteiro físico para o vizinho). Resolve problemas onde o SQL falha (muitos JOINs recursivos). Excelente para redes sociais, recomendação, detecção de fraude.</p>
+                <p><strong>Exemplos:</strong> <span class="highlight">Neo4j, Amazon Neptune, OrientDB.</span></p>
+            </div>
+        </section>
+
+        <!-- Seção 4: Tendências e Dicas Finais -->
+        <section class="mb-12 bg-gray-50 p-6 rounded-lg border border-gray-200">
+            <h3 class="text-2xl text-blue-900 mb-6">4. Análise de Tendências e 'Peguinhas' da Banca</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-bold text-lg mb-2">❌ O Mito: "NoSQL não tem transação"</h4>
+                    <p class="text-sm">Antigamente verdade, hoje falso. O MongoDB (a partir da v4.0) suporta transações multi-documento ACID. A banca pode testar se você está atualizado.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-2">❌ O Mito: "NoSQL substitui SQL"</h4>
+                    <p class="text-sm">A resposta correta é <span class="highlight">Persistência Poliglota</span>. Usa-se SQL para dados financeiros (rigor) e NoSQL para catálogos/logs (flexibilidade) no mesmo sistema.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-2">⚠️ Consistência Eventual</h4>
+                    <p class="text-sm">Entenda que "eventual" não significa "nunca". Significa que, se as escritas pararem, os dados convergirão. É o preço da alta disponibilidade.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-lg mb-2">🔑 Sharding vs. Replicação</h4>
+                    <p class="text-sm"><strong>Sharding:</strong> Divide os dados em fatias (partições) para escalar escrita/armazenamento.<br><strong>Replicação:</strong> Copia os dados para garantir disponibilidade e segurança.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Botão Final -->
+        <footer class="text-center mt-16 pb-8">
+            <p class="mb-4 text-gray-600">Pronto para testar seus conhecimentos?</p>
+            <a href="49questoes.html" class="inline-flex items-center justify-center bg-gray-800 hover:bg-gray-900 text-white font-bold py-4 px-10 rounded-lg text-lg transition duration-300 shadow-xl transform hover:-translate-y-1">
+                <span>Ir para Questões da Prova</span>
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+        </footer>
+
+    </main>
+
+</body>
+</html>

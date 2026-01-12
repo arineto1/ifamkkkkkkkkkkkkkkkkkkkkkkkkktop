@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado SQL - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #333333;
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        header p {
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .question-header {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 1rem;
+        }
+
+        .question-meta {
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-block {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            border-left: 4px solid var(--accent-color);
+            margin: 1rem 0;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f8f9fa;
+            border-color: #ccc;
+        }
+
+        .option-input {
+            margin-right: 1rem;
+            margin-top: 0.3rem;
+            transform: scale(1.2);
+        }
+
+        /* Feedback Styles */
+        .correct-answer {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+        }
+
+        .incorrect-answer {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+        }
+
+        .missed-correct {
+            border: 2px solid var(--success-color) !important;
+            position: relative;
+        }
+
+        .missed-correct::after {
+            content: " (Correta)";
+            font-weight: bold;
+            color: var(--success-color);
+        }
+
+        .actions {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none; /* Hidden by default */
+            margin-top: 3rem;
+            border-top: 2px solid var(--border-color);
+            padding-top: 2rem;
+        }
+
+        .score-card {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .resolution-block {
+            background-color: #fff;
+            border-left: 5px solid var(--success-color);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .resolution-title {
+            font-size: 1.3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .resolution-content {
+            color: #444;
+        }
+        
+        .resolution-content h4 {
+            color: var(--accent-color);
+            margin-top: 1.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 600px) {
+            .question-card {
+                padding: 1rem;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado Banco de Dados</h1>
+    <p>Foco: Comandos DML (Insert, Update, Delete) - Banca Fundação CEFETMINAS</p>
+</header>
+
+<main>
+    <form id="quiz-form">
+        
+        <!-- Questão 1 -->
+        <div class="question-card" id="q1-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 1 | Assunto: Classificação DML</span>
+            </div>
+            <div class="question-text">
+                <p>A linguagem SQL (Structured Query Language) é segmentada em subconjuntos funcionais que organizam os comandos de acordo com o seu impacto na estrutura ou nos dados do Banco de Dados. No contexto da manutenção de registros em um Sistema Gerenciador de Banco de Dados (SGBD) Relacional, a categoria DML (Data Manipulation Language) engloba instruções essenciais para o ciclo de vida da informação.</p>
+                <p>Analise as afirmativas a seguir quanto à categorização e funcionalidade dos comandos SQL:</p>
+                <ol type="I">
+                    <li>Os comandos <code>INSERT</code>, <code>UPDATE</code> e <code>DELETE</code> constituem o núcleo da DML de escrita, permitindo, respectivamente, a criação, modificação e remoção de tuplas em relações existentes.</li>
+                    <li>O comando <code>TRUNCATE TABLE</code>, embora remova dados de uma tabela, é tecnicamente classificado como DDL (Data Definition Language) na maioria das implementações, pois opera na redefinição do armazenamento físico e reset de metadados, diferindo do <code>DELETE</code> por não gerar logs de transação individuais para cada linha.</li>
+                    <li>A instrução <code>MERGE</code>, introduzida em padrões SQL mais recentes (SQL:2003), é considerada uma operação híbrida de DML que condensa as lógicas de <code>INSERT</code> e <code>UPDATE</code> (e por vezes <code>DELETE</code>) em um único comando atômico, baseado na existência ou não de um registro correspondente.</li>
+                    <li>O comando <code>DROP</code>, frequentemente confundido com operações de exclusão de dados, pertence à DML e tem a função específica de remover o conteúdo de uma coluna específica, mantendo a estrutura da tabela intacta.</li>
+                </ol>
+                <p>Estão corretas apenas as afirmativas:</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="A" class="option-input"> A) I e II.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="B" class="option-input"> B) I, II e III.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="C" class="option-input"> C) II e IV.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="D" class="option-input"> D) I, III e IV.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="E" class="option-input"> E) I, II, III e IV.</label></li>
+            </ul>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-card" id="q2-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 2 | Assunto: Comando INSERT - Bulk</span>
+            </div>
+            <div class="question-text">
+                <p>Considere a seguinte definição de tabela em um banco de dados relacional compatível com o padrão ANSI SQL:</p>
+                <div class="code-block">
+CREATE TABLE AUDITORIA (
+    ID_LOG INT PRIMARY KEY,
+    DATA_EVENTO DATE DEFAULT CURRENT_DATE,
+    MSG VARCHAR(100) NOT NULL,
+    SEVERIDADE INT CHECK (SEVERIDADE BETWEEN 1 AND 5)
+);
+                </div>
+                <p>Um analista de sistemas precisa inserir três registros de log em uma única instrução para otimizar a comunicação com o servidor. Assinale a alternativa que apresenta a sintaxe correta e válida para realizar essa operação de <em>bulk insert</em> (inserção em lote), assumindo que o SGBD suporta construtores de linha de valores múltiplos (Row Value Constructors).</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="A" class="option-input"> A) <code>INSERT INTO AUDITORIA ... VALUES (10, ...) AND (11, ...) ...;</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="B" class="option-input"> B) <code>INSERT ALL INTO AUDITORIA VALUES ... INTO AUDITORIA VALUES ...;</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="C" class="option-input"> C) <code>INSERT INTO AUDITORIA (ID_LOG, MSG, SEVERIDADE) VALUES (10, 'Erro de Conexão', 5), (11, 'Aviso de Timeout', 2), (12, 'Login Sucesso', 1);</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="D" class="option-input"> D) <code>ADD RECORDS TO AUDITORIA (10, 'Erro', 5), (11, 'Aviso', 2);</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="E" class="option-input"> E) <code>INSERT INTO AUDITORIA SET ID_LOG = 10... REPEAT FOR (11...);</code></label></li>
+            </ul>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card" id="q3-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 3 | Assunto: UPDATE Condicional</span>
+            </div>
+            <div class="question-text">
+                <p>Em um cenário de e-commerce, existem duas tabelas: <code>PRODUTOS</code> e <code>CATEGORIAS</code>. O gestor deseja atualizar o <code>PRECO_UNIT</code> na tabela <code>PRODUTOS</code>, aplicando um aumento percentual baseado na <code>MARGEM_LUCRO</code> definida na tabela <code>CATEGORIAS</code> correspondente a cada produto.</p>
+                <p>Assinale a alternativa que descreve corretamente o comportamento e a sintaxe para esta operação de <code>UPDATE</code> correlacionado.</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="A" class="option-input"> A) A sintaxe padrão ANSI SQL exige estritamente o uso de uma subquery na cláusula <code>SET</code> ou <code>WHERE</code> para capturar o valor da outra tabela.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="B" class="option-input"> B) O comando <code>UPDATE PRODUTOS INNER JOIN CATEGORIAS ON...</code> é universalmente aceito em todos os SGBDs.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="C" class="option-input"> C) É obrigatório criar primeiro uma View temporária unindo as duas tabelas e executar o UPDATE na View.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="D" class="option-input"> D) A instrução correta deve utilizar o comando <code>MERGE</code> obrigatoriamente.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="E" class="option-input"> E) O uso da cláusula <code>FROM</code> dentro do comando <code>UPDATE</code> gera um erro de sintaxe imediato em qualquer SGBD.</label></li>
+            </ul>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card" id="q4-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 4 | Assunto: Integridade Referencial</span>
+            </div>
+            <div class="question-text">
+                <p>Considere a tabela <code>DEPARTAMENTOS</code> (Pai) e <code>FUNCIONARIOS</code> (Filho), onde <code>FUNCIONARIOS</code> possui uma FK apontando para <code>DEPARTAMENTOS</code>. A restrição de chave estrangeira foi criada com a opção <code>ON DELETE SET NULL</code>.</p>
+                <p>Ao executar o comando <code>DELETE FROM DEPARTAMENTOS WHERE ID_DEPTO = 99;</code>, e assumindo que existem 50 funcionários lotados no departamento 99, qual será o resultado exato?</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="A" class="option-input"> A) Bloqueio da exclusão e erro de violação de integridade.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="B" class="option-input"> B) Exclusão do departamento e dos 50 funcionários (Cascading Delete).</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="C" class="option-input"> C) Exclusão do departamento e atualização da FK nos funcionários para <code>NULL</code>.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="D" class="option-input"> D) Estado de espera (deadlock) até confirmação do administrador.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="E" class="option-input"> E) Soft Delete do departamento (marcado como inativo) apenas.</label></li>
+            </ul>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card" id="q5-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 5 | Assunto: Transações (Commit/Rollback)</span>
+            </div>
+            <div class="question-text">
+                <p>Analise o seguinte script SQL executado em uma sessão com o modo <em>Autocommit</em> desativado:</p>
+                <div class="code-block">
+1. INSERT INTO CLIENTES (ID, NOME) VALUES (100, 'Alpha');
+2. UPDATE CLIENTES SET NOME = 'Alpha Renovado' WHERE ID = 100;
+3. SAVEPOINT PONTO_A;
+4. DELETE FROM CLIENTES WHERE ID = 200; 
+5. INSERT INTO CLIENTES (ID, NOME) VALUES (300, 'Beta');
+6. ROLLBACK TO PONTO_A;
+7. COMMIT;
+                </div>
+                <p>Ao final do processamento, qual é o estado dos registros com IDs 100, 200 e 300 no banco de dados?</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="A" class="option-input"> A) ID 100: 'Alpha'; ID 200: Existe; ID 300: Não existe.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="B" class="option-input"> B) ID 100: 'Alpha Renovado'; ID 200: Não existe; ID 300: 'Beta'.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="C" class="option-input"> C) ID 100: 'Alpha Renovado'; ID 200: Existe; ID 300: Não existe.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="D" class="option-input"> D) ID 100: Não existe; ID 200: Existe; ID 300: Não existe.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="E" class="option-input"> E) ID 100: 'Alpha Renovado'; ID 200: Não existe; ID 300: Não existe.</label></li>
+            </ul>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card" id="q6-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 6 | Assunto: Tratamento de NULL</span>
+            </div>
+            <div class="question-text">
+                <p>Um desenvolvedor precisa remover usuários sem <code>DATA_NASCIMENTO</code> (permitido nulo) e atualizar o <code>STATUS</code> para 'PENDENTE' onde este for nulo. Assinale a sintaxe correta.</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="A" class="option-input"> A) <code>WHERE DATA_NASCIMENTO = NULL</code> / <code>WHERE STATUS = NULL</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="B" class="option-input"> B) <code>WHERE DATA_NASCIMENTO IS NULL</code> / <code>WHERE STATUS IS NULL</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="C" class="option-input"> C) <code>WHERE DATA_NASCIMENTO IS EMPTY</code> / <code>MODIFY ... IF STATUS IS NULL</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="D" class="option-input"> D) <code>REMOVE ...</code> / <code>UPDATE ... REPLACE</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="E" class="option-input"> E) <code>WHERE DATA_NASCIMENTO = ''</code> / <code>WHERE STATUS = ''</code></label></li>
+            </ul>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card" id="q7-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 7 | Assunto: Erros de Restrição (Constraints)</span>
+            </div>
+            <div class="question-text">
+                <p>Ao tentar executar o comando <code>INSERT INTO PEDIDOS ... VALUES (5001, '2024-01-01', 999);</code>, o SGBD retornou: <em>"Integrity Constraint Violation - Parent key not found."</em>. O que isso significa?</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="A" class="option-input"> A) O valor '5001' já existe na coluna <code>NUM_PEDIDO</code> (Duplicação).</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="B" class="option-input"> B) A tabela <code>PEDIDOS</code> está corrompida.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="C" class="option-input"> C) Violação de <code>CHECK Constraint</code> na data.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="D" class="option-input"> D) Violação de Chave Estrangeira: não existe cliente com ID '999'.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="E" class="option-input"> E) O valor da chave estrangeira foi interpretado como nulo.</label></li>
+            </ul>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card" id="q8-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 8 | Assunto: Subqueries em INSERT</span>
+            </div>
+            <div class="question-text">
+                <p>Sobre o uso de subqueries com o comando <code>INSERT</code>, analise as asserções:</p>
+                <ol type="I">
+                    <li>A sintaxe <code>INSERT INTO Tabela_A SELECT * FROM Tabela_B</code> é válida, desde que a estrutura corresponda.</li>
+                    <li>Ao utilizar <code>INSERT INTO... SELECT</code>, é obrigatório o uso da cláusula <code>VALUES</code> antes do <code>SELECT</code>.</li>
+                    <li>É possível utilizar constantes literais misturadas com colunas da subquery no <code>SELECT</code>.</li>
+                </ol>
+                <p>Está(ão) correta(s):</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="A" class="option-input"> A) Apenas I.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="B" class="option-input"> B) Apenas II.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="C" class="option-input"> C) Apenas I e III.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="D" class="option-input"> D) Apenas II e III.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="E" class="option-input"> E) I, II e III.</label></li>
+            </ul>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card" id="q9-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 9 | Assunto: View Updating</span>
+            </div>
+            <div class="question-text">
+                <p>Sobre a execução de comandos DML (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>) em Views, é <strong>INCORRETO</strong> afirmar:</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="A" class="option-input"> A) Views simples (1:1 sem agragação) são geralmente atualizáveis.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="B" class="option-input"> B) A inserção falhará se a tabela base tiver colunas <code>NOT NULL</code> não mapeadas na view e sem default.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="C" class="option-input"> C) É impossível/ambíguo executar <code>DELETE</code> em Views com <code>JOIN</code> na maioria das implementações.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="D" class="option-input"> D) <code>WITH CHECK OPTION</code> impede a criação de dados "invisíveis" à View.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="E" class="option-input"> E) Comandos DML em Views são sempre mais rápidos pois usam cache otimizado, eliminando I/O na tabela original.</label></li>
+            </ul>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10-card">
+            <div class="question-header">
+                <span class="question-meta">Questão 10 | Assunto: Comando DELETE</span>
+            </div>
+            <div class="question-text">
+                <p>Qual das alternativas apresenta uma afirmação verdadeira sobre o comando <code>DELETE</code>?</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="A" class="option-input"> A) <code>DELETE * FROM TABELA</code> é sintaxe válida.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="B" class="option-input"> B) <code>DELETE</code> libera espaço em disco (arquivo físico) imediatamente para zero bytes.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="C" class="option-input"> C) <code>DELETE</code> não dispara <em>triggers</em> se for exclusão múltipla.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="D" class="option-input"> D) Sem <code>WHERE</code>, remove todas as tuplas mas mantém estrutura, índices e restrições.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="E" class="option-input"> E) <code>DELETE COLUMN</code> é usado para remover colunas.</label></li>
+            </ul>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn">Finalizar Quiz e Ver Resultados</button>
+        </div>
+    </form>
+
+    <!-- Seção de Resultados e Explicações -->
+    <section id="results-section">
+        <div class="score-card">
+            <span>Você acertou</span>
+            <span class="score-number" id="final-score">0 / 10</span>
+            <span id="score-message"></span>
+        </div>
+
+        <h2>Gabarito Comentado e Resoluções Detalhadas</h2>
+
+        <!-- Resoluções (Conteúdo do Documento) -->
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 1: Alternativa B</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> são DML. <code>MERGE</code> também é DML (híbrido). O erro está no item IV: <code>DROP</code> é DDL (estrutura) e apaga objetos inteiros, não valores de coluna. <code>TRUNCATE</code> é DDL pois reseta armazenamento físico.</p>
+            </div>
+        </div>
+
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 2: Alternativa C</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> O padrão ANSI para <em>bulk insert</em> utiliza uma única cláusula <code>VALUES</code> seguida de listas entre parênteses separadas por vírgula: <code>VALUES (x,y), (x,y)</code>. As outras opções misturam sintaxe proprietária ou lógica incorreta.</p>
+            </div>
+        </div>
+
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 3: Alternativa A</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> O padrão ANSI SQL puro não suporta <code>JOIN</code> direto na cláusula <code>UPDATE</code>. Para usar dados de outra tabela, deve-se usar Subqueries correlacionadas na cláusula <code>SET</code> ou <code>WHERE</code>. Sintaxes com <code>FROM/JOIN</code> são extensões específicas de cada vendor (Oracle, SQL Server, etc).</p>
+            </div>
+        </div>
+
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 4: Alternativa C</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> A restrição foi definida como <code>ON DELETE SET NULL</code>. Quando o pai (Departamento 99) é excluído, o SGBD localiza os filhos e atualiza a coluna FK para <code>NULL</code>, preservando o registro do funcionário mas removendo o vínculo.</p>
+            </div>
+        </div>
+
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 5: Alternativa C</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> O <code>ROLLBACK TO PONTO_A</code> desfaz apenas o que foi feito <em>após</em> o savepoint (passos 4 e 5). O que foi feito antes (passos 1 e 2) é mantido. Logo, o ID 100 fica atualizado, o ID 200 (deletado após savepoint) é restaurado, e o ID 300 (inserido após savepoint) é desfeito.</p>
+            </div>
+        </div>
+
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 6: Alternativa B</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> Em SQL, <code>NULL</code> não é igual a nada, nem a ele mesmo. Comparações <code>= NULL</code> sempre retornam <em>Unknown</em>. Para filtrar nulos, é obrigatório usar o operador <code>IS NULL</code>.</p>
+            </div>
+        </div>
+
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 7: Alternativa D</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> "Parent key not found" indica violação de chave estrangeira. O sistema tentou vincular o pedido ao cliente 999, mas este cliente não existe na tabela pai (Clientes).</p>
+            </div>
+        </div>
+
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 8: Alternativa C</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> O item II está errado porque não se usa <code>VALUES</code> junto com <code>SELECT</code>. A sintaxe é <code>INSERT INTO ... SELECT ...</code>. É permitido usar literais na projeção do SELECT para preencher colunas com valores fixos.</p>
+            </div>
+        </div>
+
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 9: Alternativa E</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> Views padrão são apenas consultas salvas (macros), não armazenam dados físicos nem cache. A query é resolvida contra a tabela base em tempo real. Dizer que elas eliminam I/O e são sempre mais rápidas é falso (isso se aplicaria a Materialized Views, que são objetos diferentes).</p>
+            </div>
+        </div>
+
+        <div class="resolution-block">
+            <div class="resolution-title">Resolução Questão 10: Alternativa D</div>
+            <div class="resolution-content">
+                <p><strong>Fundamentação:</strong> <code>DELETE</code> sem <code>WHERE</code> apaga todos os dados, mas a tabela continua existindo (estrutura). Diferente do <code>DROP TABLE</code> que apaga tudo. <code>DELETE</code> não libera espaço físico automaticamente em muitos SGBDs (apenas marca como livre internamente).</p>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<footer>
+    <p>Simulado gerado para fins educacionais. Baseado em questões estilo Fundação CEFETMINAS.</p>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('quiz-form');
+        const resultsSection = document.getElementById('results-section');
+        const finalScoreSpan = document.getElementById('final-score');
+        const scoreMessage = document.getElementById('score-message');
+
+        // Gabarito correto
+        const correctAnswers = {
+            q1: 'B',
+            q2: 'C',
+            q3: 'A',
+            q4: 'C',
+            q5: 'C',
+            q6: 'B',
+            q7: 'D',
+            q8: 'C',
+            q9: 'E',
+            q10: 'D'
+        };
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+            const formData = new FormData(form);
+
+            // Resetar estilos anteriores
+            document.querySelectorAll('.option-label').forEach(el => {
+                el.classList.remove('correct-answer', 'incorrect-answer', 'missed-correct');
+            });
+
+            // Verificar respostas
+            for (const [question, correctAnswer] of Object.entries(correctAnswers)) {
+                const card = document.getElementById(`${question}-card`);
+                const userAnswer = formData.get(question);
+                
+                // Inputs desta questão
+                const inputs = card.querySelectorAll(`input[name="${question}"]`);
+                
+                if (userAnswer) {
+                    // Encontrar o input selecionado pelo usuário
+                    const selectedInput = card.querySelector(`input[value="${userAnswer}"]`);
+                    const selectedLabel = selectedInput.parentElement;
+
+                    if (userAnswer === correctAnswer) {
+                        score++;
+                        selectedLabel.classList.add('correct-answer');
+                    } else {
+                        selectedLabel.classList.add('incorrect-answer');
+                        // Destacar a correta que o usuário errou
+                        const correctInput = card.querySelector(`input[value="${correctAnswer}"]`);
+                        correctInput.parentElement.classList.add('missed-correct');
+                    }
+                } else {
+                    // Usuário não respondeu, mostrar qual era a correta
+                    const correctInput = card.querySelector(`input[value="${correctAnswer}"]`);
+                    correctInput.parentElement.classList.add('missed-correct');
+                }
+            }
+
+            // Atualizar placar
+            finalScoreSpan.textContent = `${score} / ${totalQuestions}`;
+            
+            if(score === totalQuestions) {
+                scoreMessage.textContent = "Excelente! Você dominou o conteúdo.";
+                scoreMessage.style.color = "var(--success-color)";
+            } else if (score >= totalQuestions * 0.7) {
+                scoreMessage.textContent = "Muito bom! Continue praticando.";
+                scoreMessage.style.color = "var(--primary-color)";
+            } else {
+                scoreMessage.textContent = "Revise as resoluções abaixo para melhorar.";
+                scoreMessage.style.color = "var(--error-color)";
+            }
+
+            // Mostrar seção de resultados
+            resultsSection.style.display = 'block';
+            
+            // Scroll suave até os resultados
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Desabilitar botão para evitar duplo submit confuso
+            const btn = form.querySelector('button');
+            btn.textContent = "Quiz Finalizado";
+            btn.disabled = true;
+            btn.style.opacity = "0.7";
+            btn.style.cursor = "default";
+        });
+    });
+</script>
+
+</body>
+</html>

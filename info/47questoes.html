@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Banco de Dados - Fundação CEFETMINAS</title>
+    <style>
+        /* Variáveis de Cores e Tipografia para Leitura Confortável */
+        :root {
+            --bg-color: #fcfcfc; /* Branco gelo suave */
+            --text-color: #2d3748; /* Cinza escuro, menos agressivo que preto */
+            --accent-color: #2b6cb0; /* Azul sóbrio */
+            --accent-hover: #2c5282;
+            --border-color: #e2e8f0;
+            --resolution-bg: #f7fafc;
+            --resolution-border: #4299e1;
+            --success-color: #38a169;
+            --error-color: #e53e3e;
+            --code-bg: #edf2f7;
+        }
+
+        /* Reset e Configurações Gerais */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8; /* Espaçamento entre linhas aumentado para leitura */
+            margin: 0;
+            padding: 0;
+            font-size: 17px; /* Tamanho de fonte confortável */
+        }
+
+        /* Container Principal Centralizado */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Cabeçalho */
+        header {
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--accent-color);
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        p.intro {
+            color: #718096;
+            font-size: 1.1rem;
+        }
+
+        /* Blocos de Questão */
+        .question-block {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-title {
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            display: block;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .question-text {
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        /* Opções de Resposta */
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: background-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f7fafc;
+        }
+
+        .option-label input {
+            margin-right: 15px;
+            margin-top: 6px;
+            transform: scale(1.2);
+            accent-color: var(--accent-color);
+        }
+
+        /* Estilos de Código */
+        pre, code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            background-color: var(--code-bg);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+            border-left: 4px solid var(--border-color);
+            color: #2d3748;
+        }
+
+        /* Botão de Envio */
+        .actions {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        button#submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button#submit-btn:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        button#submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Área de Resultados e Resolução */
+        .resolution-area {
+            display: none; /* Escondido por padrão */
+            margin-top: 20px;
+            padding: 25px;
+            background-color: var(--resolution-bg);
+            border-left: 5px solid var(--resolution-border);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .status-correct {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status-incorrect {
+            background-color: #fed7d7;
+            color: #822727;
+        }
+
+        /* Painel Final de Pontuação */
+        #score-panel {
+            display: none;
+            text-align: center;
+            background-color: #2d3748;
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        #score-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--success-color);
+        }
+        
+        /* Feedback visual nas opções após responder */
+        .option-label.correct-answer {
+            background-color: #c6f6d5;
+            border: 1px solid #48bb78;
+            color: #22543d;
+        }
+        
+        .option-label.user-wrong {
+            background-color: #fed7d7;
+            border: 1px solid #f56565;
+            opacity: 0.8;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Banco de Dados</h1>
+        <p class="intro">10 Questões focadas no estilo da banca Fundação CEFETMINAS.</p>
+        <p><small>Tópicos: Modelo Relacional, Diagrama ER, Normalização, SQL.</small></p>
+    </header>
+
+    <div id="score-panel">
+        <h2>Resultado Final</h2>
+        <div id="score-number">0/10</div>
+        <p>Confira abaixo o gabarito comentado de cada questão.</p>
+        <button onclick="window.location.reload()" style="margin-top:20px; padding: 10px 20px; cursor:pointer;">Refazer Simulado</button>
+    </div>
+
+    <form id="quiz-form">
+        
+        <!-- Questão 01 -->
+        <div class="question-block" id="q1" data-correct="E">
+            <span class="question-title">Questão 01</span>
+            <div class="question-text">
+                São exemplos de Sistemas Gerenciadores de Banco de Dados (SGBD) baseados estritamente no modelo Relacional, EXCETO:
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q1" value="A"> A) PostgreSQL.</label>
+                <label class="option-label"><input type="radio" name="q1" value="B"> B) Oracle Database.</label>
+                <label class="option-label"><input type="radio" name="q1" value="C"> C) Microsoft SQL Server.</label>
+                <label class="option-label"><input type="radio" name="q1" value="D"> D) MySQL.</label>
+                <label class="option-label"><input type="radio" name="q1" value="E"> E) NoSQL.</label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: E)</span>
+                <p><strong>Análise Conceitual:</strong> A questão exige que o candidato distinga entre <em>produtos</em> de software (A, B, C, D) e um <em>paradigma</em> ou <em>classe</em> de sistemas (E).</p>
+                <ul>
+                    <li><strong>Alternativas A, B, C, D:</strong> Todos são SGBDs relacionais (RDBMS) maduros, que utilizam SQL e tabelas. PostgreSQL é open-source e objeto-relacional; Oracle e SQL Server são proprietários de grande porte; MySQL é o open-source mais popular para web.</li>
+                    <li><strong>Alternativa E:</strong> "NoSQL" não é um software específico, mas um movimento/categoria de bancos de dados (Not Only SQL) que surgiu para resolver problemas de escalabilidade e flexibilidade que o modelo relacional tradicional tinha dificuldade em tratar. Eles utilizam modelos de documentos, grafos, colunas ou chave-valor. Portanto, não são "Bancos de Dados Relacionais".</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-block" id="q2" data-correct="B">
+            <span class="question-title">Questão 02</span>
+            <div class="question-text">
+                Com relação à normalização em banco de dados, quando todas as colunas de uma tabela possuem um único valor atômico (indivisível), não existem grupos repetitivos de colunas em uma linha e não há atributos multivalorados, afirma-se que a tabela encontra-se na:
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q2" value="A"> A) Forma Normal de Boyce-Codd (FNBC).</label>
+                <label class="option-label"><input type="radio" name="q2" value="B"> B) Primeira Forma Normal (1FN).</label>
+                <label class="option-label"><input type="radio" name="q2" value="C"> C) Segunda Forma Normal (2FN).</label>
+                <label class="option-label"><input type="radio" name="q2" value="D"> D) Terceira Forma Normal (3FN).</label>
+                <label class="option-label"><input type="radio" name="q2" value="E"> E) Quarta Forma Normal (4FN).</label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: B)</span>
+                <p><strong>Análise da 1FN:</strong> A Primeira Forma Normal trata da estrutura fundamental da célula na tabela. Ela proíbe "tabelas dentro de tabelas" ou listas de valores (ex: Campo <code>Telefones</code> contendo "3333-0000, 9999-1111"). A descrição do enunciado ("único valor", "não existem grupos repetitivos") é a definição de texto-livro da 1FN.</p>
+                <p><strong>Distinção das Demais:</strong></p>
+                <ul>
+                    <li>2FN lida com dependência funcional <em>parcial</em> (exige PK composta).</li>
+                    <li>3FN lida com dependência <em>transitiva</em>.</li>
+                    <li>FNBC é um refinamento da 3FN.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-block" id="q3" data-correct="A">
+            <span class="question-title">Questão 03</span>
+            <div class="question-text">
+                Considere a tabela <code>conta(numero_conta, nome_agencia, saldo)</code>. Suponha que a instituição bancária deseje aplicar uma correção monetária aos saldos, seguindo a regra: contas com saldo de até R$ 10.000,00 recebem 5% de aumento; contas com saldo superior a R$ 10.000,00 recebem 6% de aumento.<br>
+                Assinale o comando SQL que realiza essa operação de forma atômica e correta.
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q3" value="A"> A) <code>UPDATE conta SET saldo = CASE WHEN saldo <= 10000 THEN saldo * 1.05 ELSE saldo * 1.06 END;</code></label>
+                <label class="option-label"><input type="radio" name="q3" value="B"> B) <code>UPDATE conta SET saldo = saldo * 1.05 WHERE saldo <= 10000; UPDATE conta SET saldo = saldo * 1.06 WHERE saldo > 10000;</code></label>
+                <label class="option-label"><input type="radio" name="q3" value="C"> C) <code>UPDATE conta SET saldo = IF(saldo <= 10000) THEN saldo * 1.05 ELSE saldo * 1.06;</code></label>
+                <label class="option-label"><input type="radio" name="q3" value="D"> D) <code>UPDATE conta SET saldo = saldo * 1.05 AND SET saldo = saldo * 1.06 WHERE saldo > 10000;</code></label>
+                <label class="option-label"><input type="radio" name="q3" value="E"> E) <code>ALTER TABLE conta CHANGE saldo (CASE WHEN saldo <= 10000 THEN saldo * 1.05 ELSE saldo * 1.06 END);</code></label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: A)</span>
+                <ul>
+                    <li><strong>O Perigo da Sequência (Alternativa B):</strong> Executar dois comandos separados é perigoso. Se uma conta tem R$ 9.800,00, o primeiro update a eleva para R$ 10.290,00. O segundo comando então pegaria esse novo valor e aplicaria mais 6%, gerando inconsistência.</li>
+                    <li><strong>A Solução CASE (Alternativa A):</strong> A cláusula <code>CASE</code> dentro do <code>UPDATE</code> avalia o valor <em>original</em> da linha no momento da execução e aplica a lógica correta em uma única passagem. É a forma segura e performática.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-block" id="q4" data-correct="C">
+            <span class="question-title">Questão 04</span>
+            <div class="question-text">
+                Em um ambiente de banco de dados transacional, uma transação é uma unidade lógica de trabalho que deve satisfazer as propriedades ACID. Caso ocorra um erro durante a execução de uma transação, ou caso o usuário decida não persistir as alterações pendentes, qual comando SQL deve ser utilizado para desfazer todas as modificações realizadas desde o início da transação?
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q4" value="A"> A) DELETE TRANSACTION</label>
+                <label class="option-label"><input type="radio" name="q4" value="B"> B) REVOKE</label>
+                <label class="option-label"><input type="radio" name="q4" value="C"> C) ROLLBACK</label>
+                <label class="option-label"><input type="radio" name="q4" value="D"> D) COMMIT</label>
+                <label class="option-label"><input type="radio" name="q4" value="E"> E) TRUNCATE</label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: C)</span>
+                <ul>
+                    <li><code>COMMIT</code>: Salva definitivamente.</li>
+                    <li><strong><code>ROLLBACK</code>: Restaura o estado anterior (desfaz). É o comando pedido.</strong></li>
+                    <li><code>REVOKE</code>: Retira permissões de acesso (DCL).</li>
+                    <li><code>TRUNCATE</code>: Esvazia uma tabela inteira (DDL).</li>
+                    <li><code>DELETE TRANSACTION</code>: Comando inexistente.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-block" id="q5" data-correct="D">
+            <span class="question-title">Questão 05</span>
+            <div class="question-text">
+                Analise a representação gráfica de um Diagrama Entidade-Relacionamento (DER) segundo a notação clássica de Peter Chen. Um atributo desenhado como uma <strong>elipse com linha tracejada</strong> (ou pontilhada) conectado a uma entidade representa:
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q5" value="A"> A) Um atributo identificador (Chave Primária).</label>
+                <label class="option-label"><input type="radio" name="q5" value="B"> B) Um atributo multivalorado.</label>
+                <label class="option-label"><input type="radio" name="q5" value="C"> C) Um atributo composto.</label>
+                <label class="option-label"><input type="radio" name="q5" value="D"> D) Um atributo derivado.</label>
+                <label class="option-label"><input type="radio" name="q5" value="E"> E) Um atributo opcional (NULL).</label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: D)</span>
+                <p><strong>Mapeamento Visual:</strong></p>
+                <ul>
+                    <li><strong>Atributo Derivado (Tracejado):</strong> Representa um dado que não precisa ser armazenado fisicamente, pois pode ser calculado a partir de outros (ex: <code>Idade</code> vem de <code>Data_Nascimento</code>).</li>
+                    <li><strong>Atributo Multivalorado:</strong> Elipse Dupla.</li>
+                    <li><strong>Atributo Identificador:</strong> Elipse com nome sublinhado.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-block" id="q6" data-correct="B">
+            <span class="question-title">Questão 06</span>
+            <div class="question-text">
+                Considere duas entidades: <code>Departamento</code> e <code>Funcionário</code>. A regra de negócio estabelece que:<br>
+                1. Um departamento possui <em>vários</em> funcionários.<br>
+                2. Um funcionário está lotado em <em>exatamente um</em> departamento.<br>
+                3. Não podem existir funcionários sem departamento.<br><br>
+                No mapeamento para o modelo relacional (tabelas), como deve ser implementada a Chave Estrangeira (FK)?
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q6" value="A"> A) A tabela <code>Departamento</code> deve conter uma coluna <code>id_funcionario</code> como FK.</label>
+                <label class="option-label"><input type="radio" name="q6" value="B"> B) A tabela <code>Funcionário</code> deve conter uma coluna <code>id_departamento</code> como FK, com restrição <code>NOT NULL</code>.</label>
+                <label class="option-label"><input type="radio" name="q6" value="C"> C) A tabela <code>Funcionário</code> deve conter uma coluna <code>id_departamento</code> como FK, permitindo valores <code>NULL</code>.</label>
+                <label class="option-label"><input type="radio" name="q6" value="D"> D) Deve ser criada uma terceira tabela <code>Departamento_Funcionario</code> contendo as chaves de ambas.</label>
+                <label class="option-label"><input type="radio" name="q6" value="E"> E) A relação é 1:1, logo as tabelas devem ser fundidas em uma única tabela.</label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: B)</span>
+                <ul>
+                    <li><strong>Regra da FK no 1:N:</strong> A chave estrangeira sempre migra para o lado N (Muitos), ou seja, <code>Funcionário</code>.</li>
+                    <li><strong>Restrição de Participação:</strong> A regra "exatamente um" e "não podem existir funcionários sem departamento" define <strong>participação total</strong>. Portanto, a FK não pode ser nula (constraint <code>NOT NULL</code>).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-block" id="q7" data-correct="B">
+            <span class="question-title">Questão 07</span>
+            <div class="question-text">
+                Assinale a alternativa que define corretamente <strong>Informação</strong> no contexto de banco de dados e sistemas de informação.
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q7" value="A"> A) Sequência de símbolos brutos sem contexto ou interpretação.</label>
+                <label class="option-label"><input type="radio" name="q7" value="B"> B) O resultado do processamento, manipulação e organização de dados de tal forma que represente uma modificação no conhecimento do receptor.</label>
+                <label class="option-label"><input type="radio" name="q7" value="C"> C) A acumulação de experiências e saberes práticos aplicados à solução de problemas.</label>
+                <label class="option-label"><input type="radio" name="q7" value="D"> D) O meio físico magnético onde os bits são gravados.</label>
+                <label class="option-label"><input type="radio" name="q7" value="E"> E) A sintaxe utilizada para consultar o SGBD.</label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: B)</span>
+                <ul>
+                    <li><strong>Dados (A):</strong> Fatos brutos (ex: "38").</li>
+                    <li><strong>Informação (B):</strong> Dado contextualizado que reduz a incerteza (ex: "38 graus Celsius é a temperatura").</li>
+                    <li><strong>Conhecimento (C):</strong> Internalização e uso da informação (ex: "O paciente tem febre, medicar").</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-block" id="q8" data-correct="B">
+            <span class="question-title">Questão 08</span>
+            <div class="question-text">
+                Um analista precisa gerar um relatório listando <strong>todos</strong> os clientes cadastrados no banco de dados e, para aqueles que fizeram pedidos, listar os números dos pedidos. Clientes que nunca fizeram pedidos <strong>também devem aparecer</strong> na listagem, com o campo de pedido exibindo valor nulo.<br>
+                Considerando as tabelas <code>Cliente</code> e <code>Pedido</code>, qual a consulta SQL correta?
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q8" value="A"> A) <code>SELECT c.nome, p.numero FROM Cliente c INNER JOIN Pedido p ON c.id = p.id_cliente;</code></label>
+                <label class="option-label"><input type="radio" name="q8" value="B"> B) <code>SELECT c.nome, p.numero FROM Cliente c LEFT JOIN Pedido p ON c.id = p.id_cliente;</code></label>
+                <label class="option-label"><input type="radio" name="q8" value="C"> C) <code>SELECT c.nome, p.numero FROM Cliente c RIGHT JOIN Pedido p ON c.id = p.id_cliente;</code></label>
+                <label class="option-label"><input type="radio" name="q8" value="D"> D) <code>SELECT c.nome, p.numero FROM Cliente c CROSS JOIN Pedido p;</code></label>
+                <label class="option-label"><input type="radio" name="q8" value="E"> E) <code>SELECT c.nome, p.numero FROM Cliente c NATURAL JOIN Pedido p;</code></label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: B)</span>
+                <ul>
+                    <li><strong>Requisito:</strong> Listar <em>todos</em> da tabela da esquerda (<code>Cliente</code>) independente de correspondência na direita.</li>
+                    <li><code>INNER JOIN</code> (A): Mostraria apenas interseção (clientes com pedidos).</li>
+                    <li><strong><code>LEFT JOIN</code> (B): Preserva a tabela da esquerda. É a resposta correta.</strong></li>
+                    <li><code>RIGHT JOIN</code> (C): Preservaria a tabela <code>Pedido</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-block" id="q9" data-correct="A">
+            <span class="question-title">Questão 09</span>
+            <div class="question-text">
+                Uma tabela <code>Veiculo (Placa, Modelo, Cod_Marca, Nome_Marca)</code> tem <code>Placa</code> como chave primária.<br>
+                Observa-se que:<br>
+                1. <code>Placa</code> determina <code>Modelo</code> e <code>Cod_Marca</code>.<br>
+                2. <code>Cod_Marca</code> determina <code>Nome_Marca</code>.<br><br>
+                Essa tabela viola a 3FN por quê?
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q9" value="A"> A) <code>Nome_Marca</code> depende transitivamente de <code>Placa</code> através de <code>Cod_Marca</code>.</label>
+                <label class="option-label"><input type="radio" name="q9" value="B"> B) A chave primária não é composta.</label>
+                <label class="option-label"><input type="radio" name="q9" value="C"> C) Existem atributos multivalorados em <code>Modelo</code>.</label>
+                <label class="option-label"><input type="radio" name="q9" value="D"> D) <code>Cod_Marca</code> é uma chave candidata.</label>
+                <label class="option-label"><input type="radio" name="q9" value="E"> E) A tabela já está normalizada.</label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: A)</span>
+                <ul>
+                    <li><strong>Definição de 3FN:</strong> Nenhum atributo não-chave deve depender de outro atributo não-chave.</li>
+                    <li><strong>O Problema:</strong> <code>Nome_Marca</code> depende de <code>Cod_Marca</code>, que não é a chave primária. Isso cria a cadeia: <code>Placa -> Cod_Marca -> Nome_Marca</code>.</li>
+                    <li><strong>Conclusão:</strong> Isso é uma <strong>dependência transitiva</strong>, o que viola a 3FN.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-block" id="q10" data-correct="C">
+            <span class="question-title">Questão 10</span>
+            <div class="question-text">
+                Analise o comando SQL abaixo:
+<pre><code>CREATE TABLE Inscricao (
+    id_aluno INT,
+    id_curso INT,
+    data_inscricao DATE,
+    PRIMARY KEY (id_aluno, id_curso),
+    FOREIGN KEY (id_aluno) REFERENCES Aluno(id),
+    FOREIGN KEY (id_curso) REFERENCES Curso(id)
+);</code></pre>
+                Sobre essa estrutura, é correto afirmar:
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q10" value="A"> A) A tabela <code>Inscricao</code> não possui chave primária.</label>
+                <label class="option-label"><input type="radio" name="q10" value="B"> B) A chave primária é simples, composta apenas por <code>id_aluno</code>.</label>
+                <label class="option-label"><input type="radio" name="q10" value="C"> C) Trata-se da implementação típica de um relacionamento N:M (Muitos para Muitos) entre Aluno e Curso.</label>
+                <label class="option-label"><input type="radio" name="q10" value="D"> D) Um mesmo aluno pode se inscrever no mesmo curso múltiplas vezes, desde que em datas diferentes.</label>
+                <label class="option-label"><input type="radio" name="q10" value="E"> E) A exclusão de um Aluno causará automaticamente a exclusão de suas inscrições (CASCADE).</label>
+            </div>
+            <div class="resolution-area">
+                <span class="resolution-title">Resolução Detalhada (Gabarito: C)</span>
+                <ul>
+                    <li><strong>Estrutura Associativa:</strong> A tabela tem uma chave primária composta (<code>id_aluno</code>, <code>id_curso</code>). Isso significa que a combinação aluno+curso deve ser única.</li>
+                    <li><strong>Relacionamento N:M:</strong> Essa estrutura é a forma clássica de resolver o relacionamento "Muitos para Muitos".</li>
+                    <li><strong>Erro da D:</strong> Como a PK é (aluno, curso), o par não pode se repetir. Para permitir repetição em datas diferentes, a <code>data</code> teria que fazer parte da PK.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="submit" id="submit-btn">Finalizar e Ver Gabarito</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    document.getElementById('quiz-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let score = 0;
+        let total = 10;
+        const questions = document.querySelectorAll('.question-block');
+        
+        questions.forEach((block) => {
+            const questionId = block.id;
+            const correctAnswer = block.getAttribute('data-correct');
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const resolutionArea = block.querySelector('.resolution-area');
+            const options = block.querySelectorAll('.option-label');
+            
+            // Remover estilos anteriores
+            options.forEach(opt => {
+                opt.classList.remove('correct-answer', 'user-wrong');
+            });
+            
+            let isCorrect = false;
+
+            // Lógica de verificação
+            if (selectedOption) {
+                if (selectedOption.value === correctAnswer) {
+                    score++;
+                    isCorrect = true;
+                } else {
+                    // Marcar a errada que o usuário escolheu
+                    selectedOption.parentElement.classList.add('user-wrong');
+                }
+            }
+            
+            // Sempre destacar a correta visualmente
+            const correctInput = block.querySelector(`input[value="${correctAnswer}"]`);
+            if(correctInput) {
+                correctInput.parentElement.classList.add('correct-answer');
+            }
+
+            // Exibir badge de status
+            let badge = document.createElement('div');
+            badge.className = 'status-badge ' + (isCorrect ? 'status-correct' : 'status-incorrect');
+            badge.textContent = isCorrect ? '✓ Você acertou' : (selectedOption ? '✕ Você errou' : '✕ Não respondida');
+            
+            // Limpar badges antigos se houver re-submissão
+            const oldBadge = resolutionArea.querySelector('.status-badge');
+            if(oldBadge) oldBadge.remove();
+            
+            resolutionArea.insertBefore(badge, resolutionArea.firstChild);
+            
+            // Mostrar resolução
+            resolutionArea.style.display = 'block';
+        });
+
+        // Atualizar e mostrar painel de pontuação
+        const scorePanel = document.getElementById('score-panel');
+        const scoreNumber = document.getElementById('score-number');
+        scoreNumber.textContent = `${score}/${total}`;
+        scorePanel.style.display = 'block';
+        
+        // Scroll suave até o topo para ver o resultado
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Desabilitar botão para evitar reenvio acidental sem refresh
+        document.getElementById('submit-btn').textContent = 'Simulado Finalizado';
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').style.backgroundColor = '#a0aec0';
+        document.getElementById('submit-btn').style.cursor = 'default';
+        
+        // Desabilitar inputs
+        const allInputs = document.querySelectorAll('input[type="radio"]');
+        allInputs.forEach(input => input.disabled = true);
+    });
+</script>
+
+</body>
+</html>

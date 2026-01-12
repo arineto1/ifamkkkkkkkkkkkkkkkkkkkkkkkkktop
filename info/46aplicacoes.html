@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo: Banco de Dados - IFAM/CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937; /* Gray-800 */
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+        .prose-custom {
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        /* Estilo de Marca-texto suave */
+        .highlight {
+            background-color: #fef3c7; /* Amber-100 */
+            padding: 0 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #1e1e1e;
+        }
+        .highlight-blue {
+            background-color: #e0f2fe; /* Sky-100 */
+            padding: 0 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #0c4a6e;
+        }
+        .highlight-danger {
+            background-color: #fee2e2; /* Red-100 */
+            padding: 0 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #991b1b;
+        }
+        /* Tabela responsiva sem scroll horizontal (texto quebra) */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            table-layout: fixed; /* Força colunas iguais ou controladas */
+        }
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 0.85rem;
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word; /* Quebra palavras longas */
+        }
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            color: #334155;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+        /* Player de áudio customizado */
+        audio {
+            width: 100%;
+            height: 45px;
+            border-radius: 8px;
+            background-color: #f1f5f9;
+        }
+        .section-divider {
+            border-top: 1px solid #e5e7eb;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+        /* Greek letters for algebra */
+        .math-symbol {
+            font-family: 'Times New Roman', serif;
+            font-style: italic;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen flex flex-col items-center py-10 px-4 sm:px-6">
+
+    <main class="w-full max-w-5xl bg-white">
+        
+        <!-- Header & Audio -->
+        <header class="mb-12 border-b border-gray-200 pb-8">
+            <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                    <span class="px-3 py-1 bg-gray-100 text-gray-600 text-xs font-bold uppercase rounded-full tracking-wider">Revisão Final</span>
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold uppercase rounded-full tracking-wider">IFAM / CEFETMINAS</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight mb-4">
+                    Banco de Dados: <br class="hidden md:block" />
+                    <span class="text-blue-700">Teoria, Arquitetura e Modelagem</span>
+                </h1>
+                <p class="text-gray-600 text-lg md:w-3/4">
+                    Resumo técnico completo focado nas definições acadêmicas e 'pegadinhas' recorrentes da banca para o cargo de Professor EBTT.
+                </p>
+            </div>
+
+            <!-- PLAYER DE ÁUDIO -->
+            <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center gap-4">
+                <div class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 text-blue-600">
+                    <i class="fas fa-play text-lg"></i>
+                </div>
+                <div class="w-full">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">
+                        Ouvir Resumo em Áudio
+                    </label>
+                    <!-- Substitua 'resumo_banco_dados_ifam.mp3' pelo nome real do arquivo -->
+                    <audio controls>
+                        <source src="46aplicacoes.mp3" type="audio/mpeg">
+                        Seu navegador não suporta o elemento de áudio.
+                    </audio>
+                </div>
+            </div>
+        </header>
+
+        <!-- Conteúdo Principal -->
+        <article class="prose-custom text-gray-800 space-y-16">
+
+            <!-- 1. Conceitos Fundamentais -->
+            <section id="conceitos">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg mr-3 shadow-md">1</span>
+                    Fundamentos Essenciais
+                </h2>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-gray-50 p-5 rounded-lg border border-gray-100">
+                        <h3 class="font-bold text-gray-900 mb-2">Dado vs. Informação vs. Conhecimento</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><strong>Dado:</strong> Fato bruto, sem contexto (Ex: "30").</li>
+                            <li><strong>Informação:</strong> Dado processado com significado (Ex: "30 graus Celsius").</li>
+                            <li><strong>Conhecimento:</strong> Informação aplicada para decisão (Ex: "Está calor, ligar o ar").</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-5 rounded-lg border border-gray-100">
+                        <h3 class="font-bold text-gray-900 mb-2">SGBD (DBMS)</h3>
+                        <p class="text-sm mb-2">Software que gerencia o acesso ao BD. Garante a consistência e isola os dados das aplicações.</p>
+                        <p class="text-sm"><strong>Propriedade Chave:</strong> <span class="highlight">Auto-descrição</span> (Metadados/Catálogo).</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-800 mt-8 mb-3">Arquitetura ANSI/SPARC (3 Níveis de Abstração)</h3>
+                <p class="mb-4 text-gray-600">Essencial para entender a independência de dados.</p>
+                <div class="overflow-hidden rounded-lg border border-gray-200">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-1/4">Nível</th>
+                                <th class="w-3/4">Descrição e Palavra-Chave</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1. Externo</strong><br>(Visão)</td>
+                                <td>Próximo ao usuário. Define <strong>quem vê o quê</strong>. Múltiplas visões para o mesmo banco.<br><span class="highlight-blue">Foco: Segurança e Simplificação</span>.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2. Conceitual</strong><br>(Lógico)</td>
+                                <td>Define <strong>o que</strong> é armazenado. Entidades, relacionamentos, restrições. É a estrutura global.<br><span class="highlight-blue">Foco: Estrutura sem detalhes físicos</span>.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>3. Interno</strong><br>(Físico)</td>
+                                <td>Define <strong>como</strong> é armazenado. Índices, B-Trees, Hashing, clusters, blocos em disco.<br><span class="highlight-blue">Foco: Performance e Armazenamento</span>.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- 2. Modelagem de Dados (Novo: Conteúdo Expandido) -->
+            <section id="modelagem">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg mr-3 shadow-md">2</span>
+                    Modelagem Conceitual (MER)
+                </h2>
+                <p class="mb-6">O Modelo Entidade-Relacionamento (Peter Chen) é a base abstrata antes das tabelas.</p>
+
+                <h3 class="text-lg font-bold mb-3">Classificação de Atributos</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-8">
+                    <div class="p-3 border rounded text-center hover:bg-gray-50">
+                        <strong>Simples/Atômico</strong><br>Indivisível (Ex: CPF).
+                    </div>
+                    <div class="p-3 border rounded text-center hover:bg-gray-50">
+                        <strong>Composto</strong><br>Subpartes (Ex: Endereço = Rua + CEP).
+                    </div>
+                    <div class="p-3 border rounded text-center hover:bg-gray-50">
+                        <strong>Multivalorado</strong><br>Vários valores (Ex: Telefones).<br><span class="text-xs text-red-600">Vira tabela nova no relacional.</span>
+                    </div>
+                    <div class="p-3 border rounded text-center hover:bg-gray-50">
+                        <strong>Derivado</strong><br>Calculado (Ex: Idade via Data Nasc).
+                    </div>
+                </div>
+
+                <h3 class="text-lg font-bold mb-3">Entidades e Relacionamentos</h3>
+                <ul class="list-disc pl-5 space-y-3 mb-6">
+                    <li><strong>Entidade Forte:</strong> Existe por si só. Tem chave primária própria.</li>
+                    <li><strong>Entidade Fraca:</strong> Depende de uma forte para existir. A chave é a PK da forte + discriminador parcial. <span class="highlight">Representada com retângulo duplo.</span></li>
+                    <li><strong>Cardinalidade:</strong> (1:1), (1:N), (N:M).
+                        <br><em>Dica de prova:</em> No relacionamento <strong>N:M</strong>, surge uma tabela associativa contendo as chaves primárias das duas entidades originais.
+                    </li>
+                </ul>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- 3. Modelo Relacional e Álgebra (Expandido) -->
+            <section id="relacional">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg mr-3 shadow-md">3</span>
+                    Modelo Relacional e Álgebra
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div>
+                        <h3 class="text-lg font-bold mb-3">Chaves (Keys)</h3>
+                        <ul class="space-y-2 text-sm border-l-4 border-blue-200 pl-4">
+                            <li><strong>Superchave:</strong> Qualquer conjunto que identifica a tupla (pode ter excesso).</li>
+                            <li><strong>Chave Candidata:</strong> Superchave mínima (sem excesso).</li>
+                            <li><strong>Chave Primária (PK):</strong> A escolhida. <span class="highlight-danger">Única e Não Nula</span>.</li>
+                            <li><strong>Chave Estrangeira (FK):</strong> Referencia a PK de outra tabela. Permite Nulos (se não for parte da PK).</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold mb-3">Integridade</h3>
+                        <ul class="space-y-2 text-sm border-l-4 border-green-200 pl-4">
+                            <li><strong>Integridade de Domínio:</strong> Valor deve respeitar o tipo (int, char).</li>
+                            <li><strong>Integridade de Vazio:</strong> PK não pode ser Null.</li>
+                            <li><strong>Integridade Referencial:</strong> Valor da FK deve existir na tabela de origem ou ser Null.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 class="text-lg font-bold mb-4">Álgebra Relacional (Linguagem Procedural)</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Símbolo</th>
+                                <th>Correspondência SQL</th>
+                                <th>Descrição (Pegadinha)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Seleção</strong></td>
+                                <td class="text-center text-xl math-symbol">&sigma; (Sigma)</td>
+                                <td><code>WHERE</code></td>
+                                <td>Filtra <strong>linhas</strong> (tuplas) horizontais.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Projeção</strong></td>
+                                <td class="text-center text-xl math-symbol">&pi; (Pi)</td>
+                                <td><code>SELECT col1, col2</code></td>
+                                <td>Filtra <strong>colunas</strong> (atributos) verticais e <span class="highlight">remove duplicatas</span> na teoria.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Produto Cartesiano</strong></td>
+                                <td class="text-center text-xl math-symbol">&times;</td>
+                                <td><code>CROSS JOIN</code></td>
+                                <td>Combina todas as linhas de A com todas de B.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Junção</strong></td>
+                                <td class="text-center text-xl math-symbol">&bowtie;</td>
+                                <td><code>JOIN</code></td>
+                                <td>Produto Cartesiano + Seleção.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- 4. SQL: DDL, DML, DCL, TCL -->
+            <section id="sql">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg mr-3 shadow-md">4</span>
+                    Linguagem SQL
+                </h2>
+                
+                <p class="mb-4">Classificação obrigatória para provas objetivas:</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+                    <div class="bg-slate-50 border p-3 rounded">
+                        <strong class="text-blue-700 block mb-1">DDL (Definição)</strong>
+                        <span class="text-xs text-gray-600">Estrutura do BD</span>
+                        <div class="mt-2 text-sm font-mono text-gray-800">CREATE<br>ALTER<br>DROP<br>TRUNCATE</div>
+                    </div>
+                    <div class="bg-slate-50 border p-3 rounded">
+                        <strong class="text-blue-700 block mb-1">DML (Manipulação)</strong>
+                        <span class="text-xs text-gray-600">Dados/Linhas</span>
+                        <div class="mt-2 text-sm font-mono text-gray-800">INSERT<br>UPDATE<br>DELETE</div>
+                    </div>
+                    <div class="bg-slate-50 border p-3 rounded">
+                        <strong class="text-blue-700 block mb-1">DQL (Consulta)</strong>
+                        <span class="text-xs text-gray-600">Extração</span>
+                        <div class="mt-2 text-sm font-mono text-gray-800">SELECT</div>
+                    </div>
+                    <div class="bg-slate-50 border p-3 rounded">
+                        <strong class="text-blue-700 block mb-1">DCL (Controle)</strong>
+                        <span class="text-xs text-gray-600">Permissões</span>
+                        <div class="mt-2 text-sm font-mono text-gray-800">GRANT<br>REVOKE</div>
+                    </div>
+                </div>
+
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded text-sm mb-6">
+                    <h4 class="font-bold text-yellow-800 mb-1"><i class="fas fa-exclamation-circle"></i> Atenção à View (Visão)</h4>
+                    <p>É uma "tabela virtual" baseada em um SELECT. Não armazena dados físicos (apenas a query), exceto se for uma <em>Materialized View</em>. Usada para simplificar consultas complexas e restringir acesso a colunas sensíveis.</p>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- 5. Normalização -->
+            <section id="normalizacao">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg mr-3 shadow-md">5</span>
+                    Normalização (1FN a 3FN)
+                </h2>
+                <p class="mb-4">Processo para reduzir redundância e anomalias.</p>
+
+                <div class="space-y-4">
+                    <div class="flex flex-col md:flex-row border rounded-lg overflow-hidden">
+                        <div class="bg-gray-100 p-4 md:w-32 flex items-center justify-center font-bold text-xl text-gray-600">1FN</div>
+                        <div class="p-4 bg-white flex-1">
+                            <h4 class="font-bold text-blue-700 mb-1">Atomicidade</h4>
+                            <p class="text-sm">Não deve haver tabelas aninhadas, grupos repetitivos ou atributos multivalorados.</p>
+                            <p class="text-xs text-gray-500 mt-1">Solução: Criar nova tabela para o atributo multivalorado.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row border rounded-lg overflow-hidden">
+                        <div class="bg-gray-100 p-4 md:w-32 flex items-center justify-center font-bold text-xl text-gray-600">2FN</div>
+                        <div class="p-4 bg-white flex-1">
+                            <h4 class="font-bold text-blue-700 mb-1">Dependência Funcional Total</h4>
+                            <p class="text-sm">Deve estar na 1FN e os atributos não chave devem depender da <strong>Chave Primária Inteira</strong>, e não de parte dela.</p>
+                            <p class="text-xs text-gray-500 mt-1">Contexto: Só ocorre quando a PK é composta.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col md:flex-row border rounded-lg overflow-hidden">
+                        <div class="bg-gray-100 p-4 md:w-32 flex items-center justify-center font-bold text-xl text-gray-600">3FN</div>
+                        <div class="p-4 bg-white flex-1">
+                            <h4 class="font-bold text-blue-700 mb-1">Sem Dependência Transitiva</h4>
+                            <p class="text-sm">Deve estar na 2FN e atributos não chave não devem depender de outros atributos não chave.</p>
+                            <p class="text-xs text-gray-500 mt-1">Ex: Tabela Pedido ter Coluna 'Nome_Cidade' dependendo de 'ID_Cidade' que não é a PK.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- 6. Administração e Segurança (Novo) -->
+            <section id="admin">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6 flex items-center">
+                    <span class="bg-blue-600 text-white w-8 h-8 rounded-lg flex items-center justify-center text-lg mr-3 shadow-md">6</span>
+                    Administração, Backup e NoSQL
+                </h2>
+
+                <h3 class="text-lg font-bold mb-3">Rotinas de Backup</h3>
+                <table class="mb-8">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>O que copia?</th>
+                            <th>Tempo de Backup</th>
+                            <th>Tempo de Restauração</th>
+                            <th>Flag de Arquivo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Completo</strong><br>(Full)</td>
+                            <td>Tudo.</td>
+                            <td>Lento (Maior)</td>
+                            <td>Rápido (Simples)</td>
+                            <td>Limpa a flag (marca como salvo).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Diferencial</strong></td>
+                            <td>Tudo alterado desde o último <strong>FULL</strong>.</td>
+                            <td>Médio</td>
+                            <td>Médio (Full + Último Dif)</td>
+                            <td>Não limpa a flag.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Incremental</strong></td>
+                            <td>Tudo alterado desde o <strong>qualquer último backup</strong>.</td>
+                            <td>Rápido (Menor)</td>
+                            <td>Lento (Full + Todos Incs)</td>
+                            <td>Limpa a flag.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="text-lg font-bold mb-3">NoSQL e Teorema CAP</h3>
+                <p class="mb-4 text-sm">Em sistemas distribuídos é impossível ter os 3 simultaneamente: <strong>C</strong>onsistency, <strong>A</strong>vailability, <strong>P</strong>artition Tolerance.</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                    <div class="border p-3 rounded">
+                        <strong class="block text-gray-900">Key-Value</strong>
+                        <span class="text-gray-600">Simples, Alta performance.</span>
+                        <div class="mt-1 font-mono text-xs bg-gray-100 p-1">Redis, DynamoDB</div>
+                    </div>
+                    <div class="border p-3 rounded">
+                        <strong class="block text-gray-900">Document Store</strong>
+                        <span class="text-gray-600">Dados semi-estruturados (JSON).</span>
+                        <div class="mt-1 font-mono text-xs bg-gray-100 p-1">MongoDB, CouchDB</div>
+                    </div>
+                    <div class="border p-3 rounded">
+                        <strong class="block text-gray-900">Wide-Column</strong>
+                        <span class="text-gray-600">Escalabilidade massiva.</span>
+                        <div class="mt-1 font-mono text-xs bg-gray-100 p-1">Cassandra, HBase</div>
+                    </div>
+                    <div class="border p-3 rounded">
+                        <strong class="block text-gray-900">Graph</strong>
+                        <span class="text-gray-600">Relacionamentos complexos.</span>
+                        <div class="mt-1 font-mono text-xs bg-gray-100 p-1">Neo4j</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="section-divider"></div>
+
+            <!-- 7. Peguinhas Finais -->
+            <section class="bg-red-50 border border-red-100 rounded-xl p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-red-900 mb-6 flex items-center">
+                    <i class="fas fa-skull-crossbones mr-3"></i> Top "Peguinhas" da CEFETMINAS
+                </h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white p-4 rounded shadow-sm border-l-4 border-red-500">
+                        <strong class="block text-red-700 mb-1">TRUNCATE vs DELETE</strong>
+                        <p class="text-sm">TRUNCATE é <span class="highlight">DDL</span>, apaga tudo, reseta IDs e não gera log linha a linha (rápido). DELETE é <span class="highlight">DML</span>, apaga condicionalmente (WHERE) e gera log.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded shadow-sm border-l-4 border-red-500">
+                        <strong class="block text-red-700 mb-1">HAVING vs WHERE</strong>
+                        <p class="text-sm">WHERE filtra linhas <strong>antes</strong> do agrupamento. HAVING filtra grupos <strong>depois</strong> do agrupamento (`GROUP BY`).</p>
+                    </div>
+                    <div class="bg-white p-4 rounded shadow-sm border-l-4 border-red-500">
+                        <strong class="block text-red-700 mb-1">Stored Procedure vs Function</strong>
+                        <p class="text-sm">Funções <strong>devem</strong> retornar valor. Procedures podem ou não retornar e suportam transações completas.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded shadow-sm border-l-4 border-red-500">
+                        <strong class="block text-red-700 mb-1">Aritmética com NULL</strong>
+                        <p class="text-sm">10 + NULL = <span class="font-mono bg-gray-100 px-1">NULL</span>. Qualquer conta com NULL dá NULL. No `ORDER BY`, os NULLs costumam aparecer juntos (no início ou fim).</p>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+
+        <!-- Botão de Questões -->
+        <div class="mt-20 mb-12 text-center">
+            <a href="46questoes.html" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-gray-900 rounded-full hover:bg-gray-800 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-gray-300 transform hover:-translate-y-1">
+                <span class="mr-3">Resolver Questões de Fixação</span>
+                <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <p class="text-gray-400 mt-3 text-sm italic">Clique para testar seus conhecimentos (Link para questoes.html)</p>
+        </div>
+
+    </main>
+
+    <footer class="text-center text-gray-400 text-xs py-8 w-full border-t mt-12">
+        <p>&copy; 2024 Material de Estudo Focado - IFAM / CEFETMINAS. Uso Educacional.</p>
+    </footer>
+
+</body>
+</html>

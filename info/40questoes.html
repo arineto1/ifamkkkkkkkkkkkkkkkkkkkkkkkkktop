@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado POO - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #f9f9f9;
+            --container-bg: #ffffff;
+            --text-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --code-bg: #f4f6f7;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            font-weight: 400;
+        }
+
+        .question-block {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            border: 1px solid #dce4ec;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            margin: 15px 0;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f0f3f5;
+        }
+
+        .option-item input[type="radio"] {
+            margin-top: 6px;
+            margin-right: 12px;
+        }
+
+        .option-item label {
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Feedback Styles */
+        .resolution-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            font-size: 0.95rem;
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .correct-answer-highlight {
+            background-color: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+            font-weight: bold;
+        }
+        
+        .wrong-answer-highlight {
+            background-color: rgba(192, 57, 43, 0.1);
+            border: 1px solid var(--error-color);
+            color: var(--error-color);
+        }
+
+        .status-msg {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .correct-msg { color: var(--success-color); }
+        .wrong-msg { color: var(--error-color); }
+
+        #submit-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+        }
+
+        #submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        #score-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado POO: Fundação CEFETMINAS</h1>
+        <h2>Foco: Encapsulamento, Herança, Polimorfismo e Construtores</h2>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 01 -->
+        <div class="question-block" id="q1">
+            <div class="question-title">Questão 01 - Tema: Encapsulamento e Modificadores de Acesso</div>
+            <div class="question-text">
+                <p>Na Programação Orientada a Objetos, o encapsulamento visa proteger o estado interno de um objeto, garantindo que suas propriedades sejam acessadas e modificadas apenas através de uma interface pública definida. Considere uma aplicação bancária desenvolvida em Java. Analise as afirmativas abaixo quanto à correta aplicação dos modificadores de acesso segundo as boas práticas de encapsulamento frequentemente cobradas pela banca:</p>
+                <p>I. Atributos críticos, como o saldo de uma conta, devem ser declarados como <code>private</code> para impedir a manipulação direta por outras classes, obrigando o uso de métodos acessores (<em>getters</em>) e modificadores (<em>setters</em>) que podem conter regras de negócio.</p>
+                <p>II. O modificador <code>protected</code> deve ser utilizado em atributos que precisam ser acessíveis por qualquer classe externa, independentemente do pacote em que se encontrem, facilitando a integração entre módulos.</p>
+                <p>III. Ao não declarar explicitamente um modificador de acesso em um membro de uma classe (modificador <em>default</em> ou <em>package-private</em>), este membro torna-se visível apenas para classes dentro do mesmo pacote, promovendo um nível intermediário de encapsulamento.</p>
+                <p>Estão corretas as afirmativas:</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q1" value="A"> A) Apenas I.</label></li>
+                <li class="option-item"><label><input type="radio" name="q1" value="B"> B) Apenas I e III.</label></li>
+                <li class="option-item"><label><input type="radio" name="q1" value="C"> C) Apenas II e III.</label></li>
+                <li class="option-item"><label><input type="radio" name="q1" value="D"> D) Apenas III.</label></li>
+                <li class="option-item"><label><input type="radio" name="q1" value="E"> E) I, II e III.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q1">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: B (Apenas I e III)</strong></p>
+                <p><strong>Item I (Correto):</strong> Atributos críticos devem ser <code>private</code>. Isso é a essência do "ocultamento de informação", permitindo que a classe controle como seus dados mudam através de métodos.</p>
+                <p><strong>Item II (Incorreto):</strong> O <code>protected</code> permite acesso a classes do <strong>mesmo pacote</strong> e <strong>subclasses</strong> (mesmo em outros pacotes). Para acesso global irrestrito, usa-se <code>public</code>. Ele não é para integração "por qualquer classe externa".</p>
+                <p><strong>Item III (Correto):</strong> O modificador <em>default</em> (sem declaração) restringe a visibilidade ao pacote, sendo vital para criar componentes que colaboram internamente sem expor detalhes para clientes externos da API.</p>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-block" id="q2">
+            <div class="question-title">Questão 02 - Tema: Análise de Código, Construtores e Palavra-chave 'this'</div>
+            <div class="question-text">
+                <p>Considere o seguinte trecho de código Java, que ilustra o uso de construtores e referência a atributos de instância:</p>
+<pre>
+public class Produto {
+    private String codigo;
+    private double preco;
+
+    // Construtor 1
+    public Produto() {
+        this("GENERICO", 0.0);
+    }
+
+    // Construtor 2
+    public Produto(String codigo, double preco) {
+        this.codigo = codigo;
+        this.preco = preco;
+    }
+
+    public void atualizarPreco(double preco) {
+        this.preco = preco;
+    }
+
+    public String obterDetalhes() {
+        return codigo + " : " + preco;
+    }
+}
+
+public class SistemaEstoque {
+    public static void main(String args[]) {
+        Produto p1 = new Produto();
+        Produto p2 = new Produto("REF-99", 150.0);
+        
+        p1.atualizarPreco(10.0);
+        
+        System.out.println(p1.obterDetalhes());
+        System.out.println(p2.obterDetalhes());
+    }
+}
+</pre>
+                <p>Assinale a alternativa que apresenta corretamente o resultado exibido no console após a execução da classe <code>SistemaEstoque</code>.</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q2" value="A"> A) O código não compila, pois a chamada <code>this("GENERICO", 0.0)</code> é inválida.</label></li>
+                <li class="option-item"><label><input type="radio" name="q2" value="B"> B) GENERICO : 0.0 <br> REF-99 : 150.0</label></li>
+                <li class="option-item"><label><input type="radio" name="q2" value="C"> C) GENERICO : 10.0 <br> REF-99 : 150.0</label></li>
+                <li class="option-item"><label><input type="radio" name="q2" value="D"> D) null : 10.0 <br> REF-99 : 150.0</label></li>
+                <li class="option-item"><label><input type="radio" name="q2" value="E"> E) null : 0.0 <br> null : 0.0</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q2">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <ol>
+                    <li><strong>p1:</strong> Criado via construtor padrão, que chama <code>this("GENERICO", 0.0)</code>. Inicialmente: {"GENERICO", 0.0}. Depois, <code>p1.atualizarPreco(10.0)</code> altera apenas o preço de p1. Estado final: {"GENERICO", 10.0}.</li>
+                    <li><strong>p2:</strong> Criado via segundo construtor diretamente com {"REF-99", 150.0}. Não sofre alterações.</li>
+                </ol>
+                <p>Portanto, a saída é:</p>
+                <code>GENERICO : 10.0</code><br>
+                <code>REF-99 : 150.0</code>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-block" id="q3">
+            <div class="question-title">Questão 03 - Tema: Herança e Polimorfismo (Conceitual)</div>
+            <div class="question-text">
+                <p>"Em um sistema de desenho vetorial, existe uma classe base <code>Forma</code> com um método <code>calcularArea()</code>. As classes <code>Circulo</code> e <code>Retangulo</code> estendem <code>Forma</code> e fornecem implementações distintas para <code>calcularArea()</code>. Um vetor do tipo <code>Forma</code> armazena instâncias mistas de círculos e retângulos. Ao percorrer esse vetor e invocar <code>calcularArea()</code> para cada elemento, o sistema executa o cálculo correto conforme o tipo específico do objeto."</p>
+                <p>O comportamento descrito acima evidencia:</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q3" value="A"> A) O Polimorfismo de Sobrescrita (Dinâmico), onde a implementação do método é decidida em tempo de execução com base no tipo real do objeto.</label></li>
+                <li class="option-item"><label><input type="radio" name="q3" value="B"> B) A Sobrecarga de Métodos, pois o nome do método é o mesmo em todas as classes.</label></li>
+                <li class="option-item"><label><input type="radio" name="q3" value="C"> C) O Encapsulamento, pois a lógica do cálculo está escondida dentro de cada classe.</label></li>
+                <li class="option-item"><label><input type="radio" name="q3" value="D"> D) A Herança Múltipla, pois as classes derivam funcionalidades de várias fontes.</label></li>
+                <li class="option-item"><label><input type="radio" name="q3" value="E"> E) O Acoplamento Estático, já que o compilador define qual método chamar baseando-se no tipo do vetor.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q3">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: A (Polimorfismo de Sobrescrita - Dinâmico)</strong></p>
+                <p>O cenário descreve o <em>Dynamic Binding</em>. Embora a referência seja genérica (<code>Forma</code>), a JVM decide em tempo de execução qual implementação executar baseada no objeto real na memória (Heap). Isso difere da Sobrecarga (estática) ou Acoplamento Estático.</p>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-block" id="q4">
+            <div class="question-title">Questão 04 - Tema: Métodos Estáticos e Variáveis de Classe</div>
+            <div class="question-text">
+                <p>Analise o código a seguir, focado no comportamento de membros estáticos (<code>static</code>):</p>
+<pre>
+public class Processador {
+    public static int contadorGlobal = 0;
+    public int idLocal;
+
+    public Processador() {
+        contadorGlobal++;
+        idLocal = contadorGlobal;
+    }
+}
+
+public class TesteProcessador {
+    public static void main(String args[]) {
+        Processador p1 = new Processador();
+        Processador p2 = new Processador();
+        Processador p3 = new Processador();
+        
+        System.out.print("P1:" + p1.idLocal + " ");
+        System.out.print("P2:" + p2.idLocal + " ");
+        System.out.print("Global:" + Processador.contadorGlobal);
+    }
+}
+</pre>
+                <p>Qual será a saída exata gerada pela execução?</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q4" value="A"> A) P1:1 P2:1 Global:1</label></li>
+                <li class="option-item"><label><input type="radio" name="q4" value="B"> B) P1:1 P2:2 Global:2</label></li>
+                <li class="option-item"><label><input type="radio" name="q4" value="C"> C) P1:1 P2:2 Global:3</label></li>
+                <li class="option-item"><label><input type="radio" name="q4" value="D"> D) P1:3 P2:3 Global:3</label></li>
+                <li class="option-item"><label><input type="radio" name="q4" value="E"> E) P1:0 P2:1 Global:2</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q4">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: C (P1:1 P2:2 Global:3)</strong></p>
+                <ul>
+                    <li><code>contadorGlobal</code> é estática (compartilhada). <code>idLocal</code> é de instância.</li>
+                    <li>Criação p1: global vira 1, p1.idLocal recebe 1.</li>
+                    <li>Criação p2: global vira 2, p2.idLocal recebe 2.</li>
+                    <li>Criação p3: global vira 3, p3.idLocal recebe 3. (p3 não é impresso, mas afeta o global).</li>
+                </ul>
+                <p>Saída: P1 (fixo em 1), P2 (fixo em 2), Global (valor atual 3).</p>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-block" id="q5">
+            <div class="question-title">Questão 05 - Tema: Sobrecarga de Métodos (Overloading)</div>
+            <div class="question-text">
+                <p>Na programação orientada a objetos, especificamente em Java, o recurso que permite a coexistência de dois ou mais métodos com o mesmo nome dentro de uma classe, desde que suas assinaturas sejam diferentes, é denominado Sobrecarga. Para que a sobrecarga seja válida, é <strong>obrigatório</strong> que:</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q5" value="A"> A) Os métodos possuam tipos de retorno diferentes.</label></li>
+                <li class="option-item"><label><input type="radio" name="q5" value="B"> B) Os métodos tenham modificadores de visibilidade distintos (ex: um public, outro private).</label></li>
+                <li class="option-item"><label><input type="radio" name="q5" value="C"> C) As listas de parâmetros difiram em quantidade de argumentos ou em seus tipos de dados.</label></li>
+                <li class="option-item"><label><input type="radio" name="q5" value="D"> D) Os nomes dos parâmetros declarados sejam diferentes.</label></li>
+                <li class="option-item"><label><input type="radio" name="q5" value="E"> E) Um dos métodos seja abstrato e o outro concreto.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q5">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A assinatura de um método é composta pelo seu nome e pela lista de tipos de seus parâmetros. O tipo de retorno não faz parte da assinatura para fins de diferenciação na sobrecarga. Portanto, é obrigatório que a lista de parâmetros seja diferente (quantidade ou tipos).</p>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-block" id="q6">
+            <div class="question-title">Questão 06 - Tema: Propriedades, Getters e Setters</div>
+            <div class="question-text">
+                <p>Considere a classe <code>ContaBancaria</code> abaixo.</p>
+<pre>
+public class ContaBancaria {
+    private double saldo;
+
+    public ContaBancaria(double saldoInicial) {
+        if (saldoInicial >= 0) {
+            this.saldo = saldoInicial;
+        } else {
+            this.saldo = 0;
+        }
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+    
+    // Método sem setter explícito para saldo
+    public void depositar(double valor) {
+        if (valor > 0) {
+            saldo += valor;
+        }
+    }
+}
+</pre>
+                <p>Com base no código e nos princípios de propriedades, assinale a afirmativa correta:</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q6" value="A"> A) A ausência de um método <code>setSaldo</code> torna a classe imutável, impossibilitando qualquer alteração no saldo após a criação.</label></li>
+                <li class="option-item"><label><input type="radio" name="q6" value="B"> B) O atributo <code>saldo</code> viola o encapsulamento por não possuir um par getter/setter completo.</label></li>
+                <li class="option-item"><label><input type="radio" name="q6" value="C"> C) O encapsulamento foi aplicado corretamente para garantir que o saldo nunca seja negativo ou alterado arbitrariamente, permitindo modificações apenas via operações de negócio (<code>depositar</code>).</label></li>
+                <li class="option-item"><label><input type="radio" name="q6" value="D"> D) O construtor está incorreto, pois deveria lançar uma exceção em vez de definir o saldo como 0.</label></li>
+                <li class="option-item"><label><input type="radio" name="q6" value="E"> E) O método <code>getSaldo</code> deveria ser <code>private</code> para garantir o total ocultamento da informação.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q6">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A classe protege o atributo <code>saldo</code> ao não fornecer um setter genérico que permitiria atribuir qualquer valor. As alterações são controladas via métodos de negócio (<code>depositar</code>), garantindo a validade dos dados (ex: impedir saldo negativo). A classe não é imutável, pois seu estado muda.</p>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-block" id="q7">
+            <div class="question-title">Questão 07 - Tema: Classes Abstratas vs Interfaces</div>
+            <div class="question-text">
+                <p>Em questões teóricas comparativas, a distinção entre Classes Abstratas e Interfaces é fundamental. Analise as assertivas:</p>
+                <p>I. Uma classe pode implementar múltiplas interfaces, mas só pode estender uma única classe abstrata (em linguagens como Java).</p>
+                <p>II. Interfaces podem conter construtores que são invocados quando uma classe implementadora é instanciada.</p>
+                <p>III. Classes abstratas podem conter métodos concretos (com corpo) e atributos de estado (campos não-estáticos), enquanto interfaces (tradicionalmente) definem contratos de comportamento.</p>
+                <p>Estão corretas:</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q7" value="A"> A) Apenas I.</label></li>
+                <li class="option-item"><label><input type="radio" name="q7" value="B"> B) Apenas II.</label></li>
+                <li class="option-item"><label><input type="radio" name="q7" value="C"> C) Apenas I e III.</label></li>
+                <li class="option-item"><label><input type="radio" name="q7" value="D"> D) Apenas II e III.</label></li>
+                <li class="option-item"><label><input type="radio" name="q7" value="E"> E) I, II e III.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q7">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: C (Apenas I e III)</strong></p>
+                <p><strong>Item I (Verdadeiro):</strong> Java não suporta herança múltipla de classes (mesmo abstratas), mas suporta múltiplas interfaces.</p>
+                <p><strong>Item II (Falso):</strong> Interfaces não possuem construtores, pois não são instanciadas diretamente e não mantêm estado de instância para inicializar.</p>
+                <p><strong>Item III (Verdadeiro):</strong> Classes abstratas podem ter implementação parcial (métodos concretos e atributos), enquanto interfaces focam no contrato (embora Java moderno tenha métodos <em>default</em>, a distinção clássica de estado permanece).</p>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-block" id="q8">
+            <div class="question-title">Questão 08 - Tema: Herança e Ordem de Execução de Construtores</div>
+            <div class="question-text">
+                <p>Analise o seguinte diagrama de herança textual e o código associado: Classe <code>A</code> (Superclasse) -> Classe <code>B</code> (Subclasse de A).</p>
+<pre>
+class A {
+    public A() {
+        System.out.print("Construtor A; ");
+    }
+}
+
+class B extends A {
+    public B() {
+        System.out.print("Construtor B; ");
+    }
+}
+
+public class Main {
+    public static void main(String args[]) {
+        new B();
+    }
+}
+</pre>
+                <p>O resultado da execução será:</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q8" value="A"> A) Construtor B;</label></li>
+                <li class="option-item"><label><input type="radio" name="q8" value="B"> B) Construtor A;</label></li>
+                <li class="option-item"><label><input type="radio" name="q8" value="C"> C) Construtor B; Construtor A;</label></li>
+                <li class="option-item"><label><input type="radio" name="q8" value="D"> D) Construtor A; Construtor B;</label></li>
+                <li class="option-item"><label><input type="radio" name="q8" value="E"> E) Erro de execução, pois <code>super()</code> não foi chamado explicitamente.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q8">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: D (Construtor A; Construtor B;)</strong></p>
+                <p>Quando uma subclasse é instanciada, o construtor da superclasse deve ser executado primeiro para garantir que a parte herdada do objeto esteja pronta. O compilador insere uma chamada implícita para <code>super()</code> no início do construtor de B.</p>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-block" id="q9">
+            <div class="question-title">Questão 09 - Tema: Polimorfismo e Casting (instanceof)</div>
+            <div class="question-text">
+                <p>Considere a hierarquia: <code>Veiculo</code> (classe base) e <code>Carro</code> (subclasse). Analise o trecho:</p>
+<pre>
+Veiculo v = new Carro();
+if (v instanceof Carro) {
+    Carro c = (Carro) v;
+    c.ligarArCondicionado();
+}
+</pre>
+                <p>Suponha que <code>ligarArCondicionado()</code> seja um método existente apenas na classe <code>Carro</code>. É correto afirmar:</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q9" value="A"> A) O código não compila na linha 1, pois não se pode atribuir um objeto filho a uma referência pai.</label></li>
+                <li class="option-item"><label><input type="radio" name="q9" value="B"> B) O <em>downcasting</em> na linha 3 é seguro devido à verificação <code>instanceof</code>, permitindo o acesso ao método específico da subclasse.</label></li>
+                <li class="option-item"><label><input type="radio" name="q9" value="C"> C) O método poderia ser chamado diretamente via <code>v.ligarArCondicionado()</code> sem necessidade de cast, devido ao polimorfismo.</label></li>
+                <li class="option-item"><label><input type="radio" name="q9" value="D"> D) O operador <code>instanceof</code> verifica se a classe <code>Carro</code> herda de <code>Veiculo</code> em tempo de compilação.</label></li>
+                <li class="option-item"><label><input type="radio" name="q9" value="E"> E) O código lança uma <code>ClassCastException</code> em tempo de execução.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q9">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>O <em>upcasting</em> na linha 1 é válido. Como o método é exclusivo da filha, a referência <code>v</code> (tipo pai) não o enxerga. É necessário fazer o <em>downcasting</em>. O uso de <code>instanceof</code> garante que o objeto na memória é realmente um Carro, tornando o cast seguro e evitando exceções em tempo de execução.</p>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-block" id="q10">
+            <div class="question-title">Questão 10 - Tema: Definições Fundamentais</div>
+            <div class="question-text">
+                <p>Qual das alternativas abaixo melhor define o conceito de "Herança" segundo a literatura clássica de Orientação a Objetos adotada pela banca?</p>
+            </div>
+            <ul class="options">
+                <li class="option-item"><label><input type="radio" name="q10" value="A"> A) É a capacidade de um método ter várias formas de implementação.</label></li>
+                <li class="option-item"><label><input type="radio" name="q10" value="B"> B) É o mecanismo que permite definir uma nova classe baseada em uma classe existente, herdando seus comportamentos e estados, promovendo a reutilização de código e a especialização.</label></li>
+                <li class="option-item"><label><input type="radio" name="q10" value="C"> C) É a técnica de esconder a complexidade interna de um objeto através de interfaces.</label></li>
+                <li class="option-item"><label><input type="radio" name="q10" value="D"> D) É a capacidade de um objeto persistir seu estado em um banco de dados.</label></li>
+                <li class="option-item"><label><input type="radio" name="q10" value="E"> E) É o processo de dividir um programa em módulos independentes que não compartilham dados.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q10">
+                <span class="resolution-title">Resolução Detalhada:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>Esta definição sintetiza os dois principais objetivos da herança: Reutilização (aproveitar código da superclasse) e Especialização (adicionar comportamentos específicos na subclasse). As outras opções referem-se a polimorfismo (A), encapsulamento (C) ou persistência (D).</p>
+            </div>
+        </div>
+
+        <!-- Botão de Finalização -->
+        <div id="submit-section">
+            <button type="button" id="submit-btn" onclick="checkAnswers()">Finalizar Simulado</button>
+            <div id="score-display"></div>
+        </div>
+    </form>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: 'B',
+        q2: 'C',
+        q3: 'A',
+        q4: 'C',
+        q5: 'C',
+        q6: 'C',
+        q7: 'C',
+        q8: 'D',
+        q9: 'B',
+        q10: 'B'
+    };
+
+    function checkAnswers() {
+        let score = 0;
+        const totalQuestions = Object.keys(correctAnswers).length;
+        const form = document.getElementById('quiz-form');
+
+        // Loop through each question
+        for (let qId in correctAnswers) {
+            const selectedOption = form.elements[qId].value;
+            const correctAnswer = correctAnswers[qId];
+            const resolutionBox = document.getElementById('res-' + qId);
+            const questionBlock = document.getElementById(qId);
+            
+            // Show resolution
+            resolutionBox.style.display = 'block';
+
+            // Find the selected label to highlight
+            const radios = document.getElementsByName(qId);
+            let userLabel = null;
+            let correctLabel = null;
+
+            // Highlight Logic
+            radios.forEach(radio => {
+                const label = radio.parentElement;
+                
+                // Identify correct label
+                if (radio.value === correctAnswer) {
+                    correctLabel = label;
+                }
+
+                // If this radio is checked by user
+                if (radio.checked) {
+                    userLabel = label;
+                }
+            });
+
+            // Apply Classes
+            if (selectedOption === correctAnswer) {
+                score++;
+                if (userLabel) {
+                    userLabel.classList.add('correct-answer-highlight');
+                    userLabel.innerHTML += ' <span class="status-msg correct-msg">✓ Correto</span>';
+                }
+            } else {
+                if (userLabel) {
+                    userLabel.classList.add('wrong-answer-highlight');
+                    userLabel.innerHTML += ' <span class="status-msg wrong-msg">✗ Seu voto</span>';
+                }
+                // Always show correct answer
+                if (correctLabel) {
+                    correctLabel.classList.add('correct-answer-highlight');
+                    correctLabel.innerHTML += ' <span class="status-msg correct-msg">← Gabarito</span>';
+                }
+            }
+        }
+
+        // Show Score
+        const scoreDisplay = document.getElementById('score-display');
+        scoreDisplay.innerHTML = `Você acertou ${score} de ${totalQuestions} questões.`;
+        scoreDisplay.style.color = score >= 7 ? '#27ae60' : '#c0392b';
+        scoreDisplay.style.display = 'block';
+
+        // Disable button to prevent re-submission styling issues
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').innerText = "Prova Finalizada";
+        document.getElementById('submit-btn').style.backgroundColor = "#95a5a6";
+
+        // Scroll to score
+        scoreDisplay.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

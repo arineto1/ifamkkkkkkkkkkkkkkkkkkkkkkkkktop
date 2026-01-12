@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado MySQL - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d2d2d;
+            --primary-color: #2563eb;
+            --border-color: #e5e7eb;
+            --code-bg: #f3f4f6;
+            --success-color: #16a34a;
+            --error-color: #dc2626;
+            --highlight-bg: #eff6ff;
+        }
+
+        body {
+            font-family: 'Merriweather', 'Georgia', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-weight: 700;
+            color: #1a1a1a;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Questões */
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-header {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+        }
+
+        .enunciado {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        /* Code Blocks styling */
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #e0e0e0;
+            margin: 15px 0;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #c7254e;
+            background-color: #f9f2f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            color: inherit;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        /* Options */
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f8fafc;
+        }
+
+        .option-input {
+            margin-top: 6px;
+            margin-right: 12px;
+            accent-color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* Resolução */
+        .resolution-box {
+            display: none; /* Hidden by default */
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f0fdf4;
+            border-left: 4px solid var(--success-color);
+            border-radius: 0 4px 4px 0;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .resolution-title {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-weight: 700;
+            color: var(--success-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Feedback visual */
+        .correct-answer-style {
+            background-color: #dcfce7 !important;
+            border-color: var(--success-color) !important;
+            font-weight: 600;
+        }
+
+        .wrong-answer-style {
+            background-color: #fee2e2 !important;
+            border-color: var(--error-color) !important;
+            opacity: 0.8;
+        }
+
+        /* Footer & Score */
+        .quiz-controls {
+            text-align: center;
+            margin-top: 60px;
+            padding: 40px;
+            background: #fff;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-finish {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn-finish:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .score-display {
+            display: none;
+            margin-top: 30px;
+            font-size: 1.5rem;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .score-circle {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .container { padding: 20px 15px; }
+            h1 { font-size: 1.8rem; }
+            .question-card { padding: 20px; }
+            pre { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Técnico: MySQL</h1>
+        <div class="subtitle">Banca: Fundação CEFETMINAS | 10 Questões</div>
+    </header>
+
+    <form id="quiz-form">
+        
+        <!-- QUESTÃO 01 -->
+        <article class="question-card" id="q1" data-correct="B">
+            <div class="question-header">Questão 01 - Modelagem de Dados</div>
+            <div class="enunciado">
+                <p>Em um projeto de reformulação do sistema acadêmico, o administrador de banco de dados do CEFET-MG precisa criar uma tabela para armazenar o histórico de acessos dos alunos aos laboratórios de informática. A tabela deve ser otimizada para um alto volume de inserções (logs) e consultas baseadas em intervalos de tempo.</p>
+                <p>Considere os seguintes requisitos técnicos:</p>
+                <ol type="I">
+                    <li>A chave primária deve ser um identificador sequencial automático que suporte um crescimento exponencial de registros, prevenindo o esgotamento precoce de valores inteiros comuns.</li>
+                    <li>O registro do momento exato do acesso deve ser imutável após a inserção e deve ocupar o menor espaço de armazenamento possível, mantendo a precisão de segundos.</li>
+                    <li>O endereço IP do aluno (IPv4) deve ser armazenado.</li>
+                    <li>O motor de armazenamento deve priorizar a integridade referencial com a tabela de alunos já existente.</li>
+                </ol>
+                <p>Assinale a alternativa que apresenta o comando DDL (<code>Data Definition Language</code>) que melhor atende a <strong>todos</strong> os requisitos técnicos supracitados no MySQL 8.0.</p>
+            </div>
+            
+            <div class="options-group">
+                <label class="option-label">
+                    <input type="radio" name="q1" value="A" class="option-input">
+                    <div>
+                        <strong>A)</strong>
+<pre>CREATE TABLE log_acessos (
+    id_acesso INT AUTO_INCREMENT PRIMARY KEY,
+    momento DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ip_aluno VARCHAR(15) NOT NULL,
+    id_aluno INT,
+    FOREIGN KEY (id_aluno) REFERENCES alunos(id)
+) ENGINE=MyISAM;</pre>
+                    </div>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="B" class="option-input">
+                    <div>
+                        <strong>B)</strong>
+<pre>CREATE TABLE log_acessos (
+    id_acesso BIGINT UNSIGNED AUTO_INCREMENT,
+    momento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ip_aluno INT UNSIGNED,
+    id_aluno INT,
+    CONSTRAINT pk_logs PRIMARY KEY (id_acesso),
+    CONSTRAINT fk_aluno_log FOREIGN KEY (id_aluno) REFERENCES alunos(id)
+) ENGINE=InnoDB;</pre>
+                    </div>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="C" class="option-input">
+                    <div>
+                        <strong>C)</strong>
+<pre>CREATE TABLE log_acessos (
+    id_acesso SERIAL,
+    momento DATE NOT NULL,
+    ip_aluno VARCHAR(15),
+    id_aluno INT REFERENCES alunos(id)
+) TYPE=InnoDB;</pre>
+                    </div>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="D" class="option-input">
+                    <div>
+                        <strong>D)</strong>
+<pre>CREATE TABLE log_acessos (
+    id_acesso NUMERIC(20) NOT NULL,
+    momento TIME DEFAULT NOW(),
+    ip_aluno CHAR(15),
+    id_aluno INT,
+    PRIMARY KEY (id_acesso)
+) ENGINE=MEMORY;</pre>
+                    </div>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q1" value="E" class="option-input">
+                    <div>
+                        <strong>E)</strong>
+<pre>CREATE TABLE log_acessos (
+    id_acesso MEDIUMINT AUTO_INCREMENT,
+    momento TIMESTAMP DEFAULT 0,
+    ip_aluno BINARY(4),
+    id_aluno INT,
+    KEY (id_acesso),
+    FOREIGN KEY (id_aluno) REFERENCES alunos(id) ON DELETE CASCADE
+) ENGINE=CSV;</pre>
+                    </div>
+                </label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>Esta questão exige a síntese de conhecimentos sobre Tipos de Dados, Motores de Armazenamento e Otimização.</p>
+                <ul>
+                    <li><strong>Requisito I (Escalabilidade):</strong> O uso de <code>BIGINT UNSIGNED</code> (8 bytes) é essencial para suportar crescimento exponencial, prevenindo o esgotamento que ocorreria com <code>INT</code>.</li>
+                    <li><strong>Requisito II (Espaço):</strong> <code>TIMESTAMP</code> ocupa 4 bytes contra 5-8 bytes do <code>DATETIME</code>, sendo mais eficiente para armazenamento em massa.</li>
+                    <li><strong>Requisito III (IP):</strong> Armazenar IPv4 como <code>INT UNSIGNED</code> é uma técnica clássica de otimização de espaço e performance em comparação a strings.</li>
+                    <li><strong>Requisito IV (Integridade):</strong> Apenas o motor <strong>InnoDB</strong> suporta Foreign Keys nativamente. A opção A usa MyISAM (não suporta FK), D usa MEMORY (volátil) e E usa CSV.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- QUESTÃO 02 -->
+        <article class="question-card" id="q2" data-correct="C">
+            <div class="question-header">Questão 02 - DML e Transações</div>
+            <div class="enunciado">
+                <p>Analise o cenário a seguir envolvendo uma transação em um banco de dados MySQL configurado com o nível de isolamento padrão (<code>REPEATABLE READ</code>) e o motor InnoDB.</p>
+                <p>A tabela <code>contas</code> possui a seguinte estrutura e dados iniciais:</p>
+                <ul>
+                    <li><code>id</code> (INT, PK): 1</li>
+                    <li><code>saldo</code> (DECIMAL): 1000.00</li>
+                </ul>
+                <p>Duas sessões (Sessão A e Sessão B) executam os comandos na ordem cronológica apresentada:</p>
+                <ol>
+                    <li><strong>Sessão A:</strong> <code>START TRANSACTION;</code></li>
+                    <li><strong>Sessão A:</strong> <code>UPDATE contas SET saldo = saldo - 200 WHERE id = 1;</code></li>
+                    <li><strong>Sessão B:</strong> <code>START TRANSACTION;</code></li>
+                    <li><strong>Sessão B:</strong> <code>UPDATE contas SET saldo = saldo + 500 WHERE id = 1;</code></li>
+                    <li><strong>Sessão A:</strong> <code>COMMIT;</code></li>
+                    <li><strong>Sessão B:</strong> <code>COMMIT;</code></li>
+                </ol>
+                <p>Considerando o mecanismo de bloqueio (locking) e controle de concorrência do InnoDB, qual será o resultado final do saldo e o comportamento observado durante a execução?</p>
+            </div>
+
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q2" value="A" class="option-input"> A) O saldo final será 1300.00. A Sessão B lerá o valor atualizado pela Sessão A (800) antes de somar 500, pois transações simultâneas compartilham a visão dos dados em tempo real.</label>
+                <label class="option-label"><input type="radio" name="q2" value="B" class="option-input"> B) O saldo final será 1500.00. A Sessão B sobrescreverá a alteração da Sessão A, caracterizando o fenômeno da "Perda de Atualização" (<em>Lost Update</em>).</label>
+                <label class="option-label"><input type="radio" name="q2" value="C" class="option-input"> C) A Sessão B entrará em estado de espera (<em>lock wait</em>) no passo 4 e só prosseguirá após o passo 5 (Commit da Sessão A). O saldo final será 1300.00.</label>
+                <label class="option-label"><input type="radio" name="q2" value="D" class="option-input"> D) Ocorrerá um <em>Deadlock</em> imediato no passo 4, forçando o MySQL a encerrar a transação da Sessão B para preservar a integridade da Sessão A.</label>
+                <label class="option-label"><input type="radio" name="q2" value="E" class="option-input"> E) O saldo final será 800.00. A transação da Sessão B será ignorada silenciosamente pelo SGBD porque a linha estava "suja" (<em>dirty</em>).</label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>O InnoDB utiliza <strong>Row-Level Locking</strong> (Bloqueio em Nível de Linha).</p>
+                <ol>
+                    <li>Quando a Sessão A executa o <code>UPDATE</code>, ela adquire um bloqueio exclusivo (X-Lock) na linha id=1.</li>
+                    <li>Quando a Sessão B tenta fazer seu <code>UPDATE</code> no passo 4, ela encontra o bloqueio da Sessão A.</li>
+                    <li>A Sessão B entra em <strong>LOCK WAIT</strong> (espera) até que A libere o recurso (no COMMIT do passo 5).</li>
+                    <li>Após o Commit de A, o saldo é 800. B acorda, lê o valor atualizado (Current Read para update) e soma 500. 800 + 500 = 1300.</li>
+                </ol>
+            </div>
+        </article>
+
+        <!-- QUESTÃO 03 -->
+        <article class="question-card" id="q3" data-correct="B">
+            <div class="question-header">Questão 03 - Junções (Joins)</div>
+            <div class="enunciado">
+                <p>Considere o esquema relacional simplificado de uma biblioteca universitária:</p>
+                <ul>
+                    <li><code>livros</code> (id_livro, titulo, id_editora)</li>
+                    <li><code>editoras</code> (id_editora, nome_editora)</li>
+                </ul>
+                <p>Deseja-se listar os nomes de <strong>todas</strong> as editoras cadastradas e, para aquelas que possuem livros associados, apresentar também o título dos livros. Caso uma editora não possua nenhum livro cadastrado, ela deve aparecer no resultado, mas com o campo do título nulo. Além disso, o resultado deve ser ordenado pelo nome da editora.</p>
+                <p>Assinale a alternativa que contém a consulta SQL correta para obter este resultado.</p>
+            </div>
+            
+            <div class="options-group">
+                <label class="option-label">
+                    <input type="radio" name="q3" value="A" class="option-input">
+                    <div>
+                        <strong>A)</strong>
+<pre>SELECT E.nome_editora, L.titulo
+FROM editoras E
+INNER JOIN livros L ON E.id_editora = L.id_editora
+ORDER BY E.nome_editora;</pre>
+                    </div>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="B" class="option-input">
+                    <div>
+                        <strong>B)</strong>
+<pre>SELECT E.nome_editora, L.titulo
+FROM livros L
+RIGHT JOIN editoras E ON L.id_editora = E.id_editora
+ORDER BY E.nome_editora;</pre>
+                    </div>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="C" class="option-input">
+                    <div>
+                        <strong>C)</strong>
+<pre>SELECT E.nome_editora, L.titulo
+FROM editoras E
+LEFT JOIN livros L WHERE E.id_editora = L.id_editora
+ORDER BY E.nome_editora;</pre>
+                    </div>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="D" class="option-input">
+                    <div>
+                        <strong>D)</strong>
+<pre>SELECT E.nome_editora, L.titulo
+FROM livros L
+FULL OUTER JOIN editoras E ON L.id_editora = E.id_editora
+ORDER BY E.nome_editora;</pre>
+                    </div>
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q3" value="E" class="option-input">
+                    <div>
+                        <strong>E)</strong>
+<pre>SELECT E.nome_editora, L.titulo
+FROM editoras E, livros L
+WHERE E.id_editora = L.id_editora (+)
+ORDER BY E.nome_editora;</pre>
+                    </div>
+                </label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>O objetivo é listar <strong>todas as editoras</strong>, independentemente de terem livros ou não.</p>
+                <ul>
+                    <li>A opção A (<code>INNER JOIN</code>) exclui editoras sem livros.</li>
+                    <li>A opção B usa <code>RIGHT JOIN</code> com <code>editoras</code> à direita. Isso retorna todas as linhas da tabela da direita (editoras) e as correspondentes da esquerda (livros). É logicamente equivalente a <code>editoras LEFT JOIN livros</code>.</li>
+                    <li>A opção C usa <code>WHERE</code> para junção, o que é sintaxe incorreta para Outer Join explícito.</li>
+                    <li>A opção D usa <code>FULL OUTER JOIN</code>, que não é suportado nativamente pelo MySQL.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- QUESTÃO 04 -->
+        <article class="question-card" id="q4" data-correct="D">
+            <div class="question-header">Questão 04 - Agregação e HAVING</div>
+            <div class="enunciado">
+                <p>Um analista de sistemas precisa gerar um relatório que mostre apenas os departamentos que possuem uma média salarial superior a R$ 5.000,00 e que tenham mais de 10 funcionários lotados. A tabela base é <code>funcionarios</code> (id, nome, salario, id_depto).</p>
+                <p>Analise as afirmativas abaixo quanto à construção correta desta consulta em SQL padrão (ANSI) compatível com MySQL.</p>
+                <ol type="I">
+                    <li>A filtragem da média salarial deve ser feita na cláusula <code>WHERE</code>, pois se trata de uma condição sobre valores numéricos.</li>
+                    <li>A contagem de funcionários (<code>COUNT</code>) e a média salarial (<code>AVG</code>) são funções de agregação, portanto suas condições de filtro devem residir obrigatoriamente na cláusula <code>HAVING</code> ou ser aplicadas sobre uma <em>subquery</em>.</li>
+                    <li>É necessário agrupar os resultados pelo campo <code>id_depto</code> utilizando a cláusula <code>GROUP BY</code> antes de aplicar os filtros de agregação.</li>
+                </ol>
+                <p>Estão corretas as afirmativas:</p>
+            </div>
+
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q4" value="A" class="option-input"> A) I, apenas.</label>
+                <label class="option-label"><input type="radio" name="q4" value="B" class="option-input"> B) III, apenas.</label>
+                <label class="option-label"><input type="radio" name="q4" value="C" class="option-input"> C) I e II, apenas.</label>
+                <label class="option-label"><input type="radio" name="q4" value="D" class="option-input"> D) II e III, apenas.</label>
+                <label class="option-label"><input type="radio" name="q4" value="E" class="option-input"> E) I, II e III.</label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: D</strong></p>
+                <ul>
+                    <li><strong>I (Falsa):</strong> O <code>WHERE</code> filtra linhas <em>antes</em> do agrupamento. Como a média (<code>AVG</code>) só existe após o agrupamento, ela não pode ser usada no WHERE.</li>
+                    <li><strong>II (Verdadeira):</strong> Filtros baseados em resultado de agregação devem ir no <code>HAVING</code>.</li>
+                    <li><strong>III (Verdadeira):</strong> Para calcular métricas "por departamento", o <code>GROUP BY id_depto</code> é obrigatório.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- QUESTÃO 05 -->
+        <article class="question-card" id="q5" data-correct="A">
+            <div class="question-header">Questão 05 - DDL e Alteração de Tabelas</div>
+            <div class="enunciado">
+                <p>Durante a manutenção de um banco de dados legado, verificou-se a necessidade de alterar a estrutura da tabela <code>produtos</code>. A coluna <code>descricao</code>, que atualmente é do tipo <code>VARCHAR(100)</code>, precisa ser ampliada para <code>VARCHAR(255)</code> e deve passar a não aceitar valores nulos (<code>NOT NULL</code>).</p>
+                <p>Qual comando SQL executa essa modificação corretamente no MySQL, garantindo a preservação dos dados existentes (assumindo que não existem nulos na tabela atual)?</p>
+            </div>
+
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q5" value="A" class="option-input"> A) <code>ALTER TABLE produtos CHANGE COLUMN descricao descricao VARCHAR(255) NOT NULL;</code></label>
+                <label class="option-label"><input type="radio" name="q5" value="B" class="option-input"> B) <code>UPDATE TABLE produtos SET descricao TYPE VARCHAR(255) CONSTRAINTS NOT NULL;</code></label>
+                <label class="option-label"><input type="radio" name="q5" value="C" class="option-input"> C) <code>ALTER TABLE produtos MODIFY descricao VARCHAR(255) NULL;</code></label>
+                <label class="option-label"><input type="radio" name="q5" value="D" class="option-input"> D) <code>ALTER TABLE produtos RENAME COLUMN descricao TO descricao_nova VARCHAR(255);</code></label>
+                <label class="option-label"><input type="radio" name="q5" value="E" class="option-input"> E) <code>MODIFY TABLE produtos ALTER COLUMN descricao SET DATA TYPE VARCHAR(255);</code></label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: A</strong></p>
+                <p>No MySQL, para alterar a definição completa de uma coluna, usamos <code>MODIFY</code> ou <code>CHANGE</code>.</p>
+                <ul>
+                    <li><code>CHANGE</code> requer o nome antigo e o novo (mesmo que sejam iguais) seguido da definição completa. A opção A faz exatamente isso: altera tipo e adiciona NOT NULL.</li>
+                    <li>A opção C usa <code>MODIFY</code> mas define <code>NULL</code> (permitindo nulos), o oposto do solicitado.</li>
+                    <li>As opções B e E usam sintaxe inexistente.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- QUESTÃO 06 -->
+        <article class="question-card" id="q6" data-correct="C">
+            <div class="question-header">Questão 06 - Operadores SQL</div>
+            <div class="enunciado">
+                <p>Analise a seguinte consulta SQL:</p>
+<pre>SELECT nome
+FROM candidatos
+WHERE nota_final BETWEEN 70 AND 90
+  AND nome LIKE '_a%'
+  AND id_curso IN (10, 20, 30);</pre>
+                <p>Para que um registro seja retornado por esta consulta, ele deve satisfazer simultaneamente a quais condições?</p>
+            </div>
+
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q6" value="A" class="option-input"> A) Ter nota entre 70 e 90 (exclusive), nome terminando com a letra 'a' e estar matriculado nos cursos 10, 20 e 30 ao mesmo tempo.</label>
+                <label class="option-label"><input type="radio" name="q6" value="B" class="option-input"> B) Ter nota maior ou igual a 70 e menor ou igual a 90; nome contendo a letra 'a' em qualquer posição; e curso igual a 10, 20 ou 30.</label>
+                <label class="option-label"><input type="radio" name="q6" value="C" class="option-input"> C) Ter nota entre 70 e 90 (inclusive); nome começando com qualquer caractere, seguido da letra 'a', e depois qualquer sequência de caracteres; e pertencer a um dos cursos: 10, 20 ou 30.</label>
+                <label class="option-label"><input type="radio" name="q6" value="D" class="option-input"> D) Ter nota estritamente maior que 70 e menor que 90; nome iniciando com a letra 'a'; e curso 10, 20 ou 30.</label>
+                <label class="option-label"><input type="radio" name="q6" value="E" class="option-input"> E) Ter nota entre 70 e 90; nome começando com a letra 'a' minúscula; e id_curso não nulo.</label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <ul>
+                    <li><code>BETWEEN 70 AND 90</code>: Inclusivo (>= 70 e <= 90).</li>
+                    <li><code>LIKE '_a%'</code>: O <code>_</code> significa "exatamente 1 caractere qualquer". O <code>a</code> é a segunda letra. O <code>%</code> é "qualquer coisa depois". Logo: 2ª letra deve ser 'a'.</li>
+                    <li><code>IN (10, 20, 30)</code>: Lista de "OU". O curso deve ser um desses valores.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- QUESTÃO 07 -->
+        <article class="question-card" id="q7" data-correct="C">
+            <div class="question-header">Questão 07 - Integridade Referencial</div>
+            <div class="enunciado">
+                <p>Considere duas tabelas relacionadas: <code>categorias</code> (pai) e <code>produtos</code> (filho). A tabela <code>produtos</code> possui uma chave estrangeira <code>fk_cat</code> referenciando <code>categorias(id)</code>.</p>
+                <p>Ao definir a chave estrangeira, o projetista utilizou a cláusula <code>ON DELETE SET NULL</code>. O que acontecerá com os registros na tabela <code>produtos</code> se um usuário executar o comando <code>DELETE FROM categorias WHERE id = 5;</code>, assumindo que existem produtos vinculados à categoria 5?</p>
+            </div>
+
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q7" value="A" class="option-input"> A) O SGBD impedirá a exclusão da categoria 5 e retornará um erro de violação de integridade (<em>Foreign Key Constraint Violation</em>).</label>
+                <label class="option-label"><input type="radio" name="q7" value="B" class="option-input"> B) Todos os produtos vinculados à categoria 5 serão automaticamente excluídos (exclusão em cascata).</label>
+                <label class="option-label"><input type="radio" name="q7" value="C" class="option-input"> C) A categoria 5 será excluída, e a coluna <code>fk_cat</code> dos produtos vinculados a ela será atualizada para o valor <code>NULL</code>.</label>
+                <label class="option-label"><input type="radio" name="q7" value="D" class="option-input"> D) A categoria 5 será excluída, e a coluna <code>fk_cat</code> dos produtos manterá o valor 5, criando "registros órfãos" e inconsistência no banco.</label>
+                <label class="option-label"><input type="radio" name="q7" value="E" class="option-input"> E) A operação entrará em espera até que o usuário exclua manualmente os produtos filhos.</label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A cláusula <code>ON DELETE SET NULL</code> instrui o banco a não impedir a exclusão do pai, mas sim desvincular os filhos, definindo a chave estrangeira deles como <code>NULL</code>. Isso permite manter o histórico dos produtos mesmo sem categoria.</p>
+            </div>
+        </article>
+
+        <!-- QUESTÃO 08 -->
+        <article class="question-card" id="q8" data-correct="A">
+            <div class="question-header">Questão 08 - Funções de String e Data</div>
+            <div class="enunciado">
+                <p>Em uma auditoria, foi solicitado que se listasse o nome dos usuários e o ano de cadastro, mas apenas para aqueles cujo nome possui mais de 10 caracteres.</p>
+                <p>Qual alternativa apresenta a sintaxe correta utilizando as funções escalares do MySQL?</p>
+            </div>
+
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q8" value="A" class="option-input"> A) <code>SELECT nome, EXTRACT(YEAR FROM data_cadastro) FROM usuarios WHERE LENGTH(nome) > 10;</code></label>
+                <label class="option-label"><input type="radio" name="q8" value="B" class="option-input"> B) <code>SELECT nome, YEAR(data_cadastro) FROM usuarios WHERE SIZE(nome) > 10;</code></label>
+                <label class="option-label"><input type="radio" name="q8" value="C" class="option-input"> C) <code>SELECT nome, GETDATE(data_cadastro, 'YYYY') FROM usuarios WHERE CHAR_LENGTH(nome) >= 10;</code></label>
+                <label class="option-label"><input type="radio" name="q8" value="D" class="option-input"> D) <code>SELECT nome, DATE_FORMAT(data_cadastro, '%Y') FROM usuarios WHERE LEN(nome) > 10;</code></label>
+                <label class="option-label"><input type="radio" name="q8" value="E" class="option-input"> E) <code>SELECT nome, YEAR(data_cadastro) FROM usuarios WHERE CONCAT(nome) > 10;</code></label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: A</strong></p>
+                <ul>
+                    <li><code>EXTRACT(YEAR FROM data)</code> é padrão SQL e válido no MySQL.</li>
+                    <li><code>LENGTH()</code> retorna o tamanho em bytes (aceito no MySQL). <code>CHAR_LENGTH</code> seria melhor para caracteres, mas <code>SIZE</code> e <code>LEN</code> (opções B e D) não existem nativamente no MySQL.</li>
+                </ul>
+            </div>
+        </article>
+
+        <!-- QUESTÃO 09 -->
+        <article class="question-card" id="q9" data-correct="B">
+            <div class="question-header">Questão 09 - DCL e Segurança</div>
+            <div class="enunciado">
+                <p>O administrador do banco de dados precisa revogar a permissão de deletar registros (<code>DELETE</code>) que foi concedida anteriormente ao usuário 'estagiario'@'%', mantendo porém as permissões de consulta e inserção na tabela <code>pedidos</code>.</p>
+                <p>O comando correto para realizar essa ação específica é:</p>
+            </div>
+
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q9" value="A" class="option-input"> A) <code>DENY DELETE ON pedidos TO 'estagiario'@'%';</code></label>
+                <label class="option-label"><input type="radio" name="q9" value="B" class="option-input"> B) <code>REVOKE DELETE ON pedidos FROM 'estagiario'@'%';</code></label>
+                <label class="option-label"><input type="radio" name="q9" value="C" class="option-input"> C) <code>REMOVE PERMISSION DELETE ON pedidos FROM 'estagiario'@'%';</code></label>
+                <label class="option-label"><input type="radio" name="q9" value="D" class="option-input"> D) <code>ALTER USER 'estagiario'@'%' DROP PRIVILEGE DELETE;</code></label>
+                <label class="option-label"><input type="radio" name="q9" value="E" class="option-input"> E) <code>REVOKE ALL PRIVILEGES ON pedidos FROM 'estagiario'@'%' AND GRANT SELECT, INSERT;</code></label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>A sintaxe padrão para remover privilégios é <code>REVOKE [privilegio] ON [tabela] FROM [usuario]</code>. O comando <code>DENY</code> é do SQL Server e não existe no MySQL.</p>
+            </div>
+        </article>
+
+        <!-- QUESTÃO 10 -->
+        <article class="question-card" id="q10" data-correct="A">
+            <div class="question-header">Questão 10 - Visões (Views)</div>
+            <div class="enunciado">
+                <p>Sobre o conceito e a utilização de Visões (<code>VIEWS</code>) em bancos de dados relacionais como o MySQL, analise as assertivas abaixo e classifique-as como Verdadeiras (V) ou Falsas (F).</p>
+                <ol>
+                    <li>( ) Uma VIEW é uma tabela virtual que não armazena dados fisicamente (exceto em casos de Materialized Views, não nativas no MySQL padrão), sendo derivada de uma consulta SQL armazenada.</li>
+                    <li>( ) Ao atualizar os dados de uma VIEW simples (que mapeia 1:1 para uma tabela base sem agregações), os dados da tabela original subjacente são modificados.</li>
+                    <li>( ) O uso de VIEWs melhora a segurança do banco de dados, pois permite restringir o acesso do usuário apenas a colunas ou linhas específicas, ocultando o restante da tabela base.</li>
+                    <li>( ) Uma VIEW, uma vez criada, não pode ser alterada; deve ser sempre excluída (<code>DROP</code>) e recriada (<code>CREATE</code>) se a lógica da consulta precisar mudar.</li>
+                </ol>
+                <p>A sequência correta, de cima para baixo, é:</p>
+            </div>
+
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q10" value="A" class="option-input"> A) V - V - V - F</label>
+                <label class="option-label"><input type="radio" name="q10" value="B" class="option-input"> B) V - F - V - V</label>
+                <label class="option-label"><input type="radio" name="q10" value="C" class="option-input"> C) F - V - F - V</label>
+                <label class="option-label"><input type="radio" name="q10" value="D" class="option-input"> D) V - V - F - F</label>
+                <label class="option-label"><input type="radio" name="q10" value="E" class="option-input"> E) F - F - V - V</label>
+            </div>
+
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução Analítica:</span>
+                <p><strong>Gabarito: A</strong></p>
+                <ul>
+                    <li>(V) Views são tabelas virtuais.</li>
+                    <li>(V) Views simples são "Updatable" no MySQL.</li>
+                    <li>(V) Segurança é um dos principais casos de uso.</li>
+                    <li>(F) Views podem ser alteradas com <code>ALTER VIEW</code> ou <code>CREATE OR REPLACE VIEW</code>.</li>
+                </ul>
+            </div>
+        </article>
+
+    </form>
+
+    <section class="quiz-controls">
+        <button class="btn-finish" onclick="finishQuiz()">Finalizar e Corrigir</button>
+        <div class="score-display" id="scoreDisplay">
+            Resultado: <span id="scoreValue" class="score-circle">0</span> de 10 acertos
+        </div>
+    </section>
+</div>
+
+<script>
+    function finishQuiz() {
+        let score = 0;
+        const totalQuestions = 10;
+        const questions = document.querySelectorAll('.question-card');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const scoreValue = document.getElementById('scoreValue');
+        const btnFinish = document.querySelector('.btn-finish');
+
+        questions.forEach(card => {
+            const correctAnswer = card.getAttribute('data-correct');
+            const selectedOption = card.querySelector('input[type="radio"]:checked');
+            const resolutionBox = card.querySelector('.resolution-box');
+            const options = card.querySelectorAll('.option-label');
+
+            // Reset visual styles first
+            options.forEach(opt => {
+                opt.classList.remove('correct-answer-style');
+                opt.classList.remove('wrong-answer-style');
+            });
+
+            // Logic
+            if (selectedOption) {
+                if (selectedOption.value === correctAnswer) {
+                    score++;
+                    selectedOption.parentElement.classList.add('correct-answer-style');
+                } else {
+                    selectedOption.parentElement.classList.add('wrong-answer-style');
+                    // Highlight the correct one to show user what was right
+                    const correctInput = card.querySelector(`input[value="${correctAnswer}"]`);
+                    if(correctInput) correctInput.parentElement.classList.add('correct-answer-style');
+                }
+            } else {
+                // If nothing selected, highlight correct answer anyway
+                const correctInput = card.querySelector(`input[value="${correctAnswer}"]`);
+                if(correctInput) correctInput.parentElement.classList.add('correct-answer-style');
+            }
+
+            // Show resolution
+            resolutionBox.style.display = 'block';
+        });
+
+        // Update Score
+        scoreValue.textContent = score;
+        scoreDisplay.style.display = 'block';
+        
+        // Scroll to score
+        scoreDisplay.scrollIntoView({ behavior: 'smooth' });
+
+        // Disable button to prevent re-submission confusion
+        btnFinish.textContent = "Correção Realizada";
+        btnFinish.disabled = true;
+        btnFinish.style.backgroundColor = "#9ca3af";
+        btnFinish.style.cursor = "default";
+    }
+</script>
+
+</body>
+</html>

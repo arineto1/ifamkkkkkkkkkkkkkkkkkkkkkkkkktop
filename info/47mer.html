@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo: Banco de Dados - Concurso IFAM</title>
+    <!-- Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Tipografia otimizada para leitura em tela */
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7; /* Aumentado para melhor legibilidade */
+            color: #1f2937; /* Cinza escuro (Gray-800) */
+            background-color: #ffffff;
+        }
+
+        h1, h2, h3 {
+            color: #111827; /* Preto suave (Gray-900) */
+        }
+        
+        /* Estilo de Grifo (Marca-texto) */
+        .highlight {
+            background-color: #fef08a; /* Amarelo pastel (Yellow-200) */
+            color: #000;
+            padding: 0 4px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        /* Estilo para termos técnicos */
+        .tech-term {
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #dc2626; /* Vermelho escuro para destacar comandos/termos */
+            background-color: #fef2f2;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* Tabelas responsivas sem scroll horizontal */
+        .responsive-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .responsive-table th, .responsive-table td {
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            vertical-align: top;
+            word-wrap: break-word; /* Garante quebra de linha */
+        }
+        .responsive-table th {
+            background-color: #f3f4f6;
+            font-weight: 700;
+            text-align: left;
+        }
+
+        /* Player de Áudio */
+        .audio-container {
+            background-color: #f8fafc;
+            border-left: 5px solid #475569;
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen">
+
+    <div class="max-w-4xl mx-auto p-5 md:p-10">
+        
+        <!-- AUDIO PLAYER -->
+        <div class="audio-container p-4 mb-8 rounded shadow-sm">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="w-full md:w-1/3">
+                    <h3 class="font-bold text-slate-700 uppercase text-sm tracking-wide">🎧 Resumo em Áudio</h3>
+                    <p class="text-xs text-gray-500">Ouça enquanto revisa</p>
+                </div>
+                <div class="w-full md:w-2/3">
+                    <audio controls class="w-full h-10">
+                        <!-- INSIRA O NOME DO ARQUIVO AQUI -->
+                        <source src="47mer.mp3" type="audio/mpeg">
+                        Seu navegador não suporta áudio HTML5.
+                    </audio>
+                </div>
+            </div>
+        </div>
+
+        <!-- CABEÇALHO -->
+        <header class="mb-10 text-center md:text-left border-b pb-6">
+            <h1 class="text-3xl md:text-4xl font-extrabold mb-2 text-slate-900">Banco de Dados: Teoria e Prática</h1>
+            <p class="text-lg text-slate-600">Material focado para o cargo de <strong>Professor EBTT - IFAM</strong> (Banca FCM).</p>
+        </header>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="space-y-12">
+
+            <!-- 1. FUNDAMENTOS -->
+            <section>
+                <h2 class="text-2xl font-bold border-l-4 border-slate-700 pl-3 mb-5">1. Conceitos Fundamentais (A Base)</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-4">
+                    <div class="bg-gray-50 p-5 rounded-lg border border-gray-100">
+                        <h3 class="font-bold text-lg mb-2">Hierarquia da Informação</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-sm md:text-base">
+                            <li><span class="highlight">Dado:</span> Elemento bruto, desprovido de significado isolado (Ex: "10").</li>
+                            <li><span class="highlight">Informação:</span> Dados processados/organizados que geram compreensão (Ex: "Nota 10").</li>
+                            <li><span class="highlight">Conhecimento:</span> Informação aplicada para tomar decisões ou criar novas competências.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-5 rounded-lg border border-gray-100">
+                        <h3 class="font-bold text-lg mb-2">Definições de Sistema</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-sm md:text-base">
+                            <li><strong>Banco de Dados (BD):</strong> Coleção de dados inter-relacionados, organizada para atender a uma comunidade de usuários.</li>
+                            <li><strong>SGBD (DBMS):</strong> O <em>software</em> que gerencia o BD. É a interface entre o usuário e os dados (Ex: PostgreSQL, MySQL, Oracle).</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                    <p><strong>Nota Importante:</strong> Um SGBD garante a <span class="highlight">abstração dos dados</span>, escondendo a complexidade do armazenamento físico do usuário final.</p>
+                </div>
+            </section>
+
+            <!-- 2. ARQUITETURA ANSI/SPARC -->
+            <section>
+                <h2 class="text-2xl font-bold border-l-4 border-slate-700 pl-3 mb-5">2. Arquitetura ANSI/SPARC (3 Níveis)</h2>
+                <p class="mb-4">Essencial para entender a <strong>Independência de Dados</strong>. A banca adora cobrar o que pertence a cada nível.</p>
+
+                <table class="responsive-table text-sm md:text-base">
+                    <thead>
+                        <tr>
+                            <th width="25%">Nível</th>
+                            <th>Descrição e Foco</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Externo (Visão)</strong></td>
+                            <td>É o nível mais alto. Define <span class="highlight">como cada usuário enxerga os dados</span>. O mesmo dado pode ter visões diferentes para usuários diferentes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Conceitual (Lógico)</strong></td>
+                            <td>Descreve <span class="highlight">QUAIS dados</span> são armazenados e seus relacionamentos. É o diagrama completo (MER), livre de detalhes de hardware ou software específico.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Interno (Físico)</strong></td>
+                            <td>Nível mais baixo. Define <span class="highlight">COMO os dados são armazenados</span> fisicamente (índices, alocação de bytes, compressão).</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="mt-4 p-4 bg-yellow-50 border-l-4 border-yellow-400">
+                    <h4 class="font-bold text-yellow-900 mb-1">🎯 Ponto de Acerto: Independência de Dados</h4>
+                    <p class="text-sm">
+                        <strong>Independência Lógica:</strong> Capacidade de alterar o esquema conceitual (adicionar campos) sem alterar os esquemas externos (aplicações).<br>
+                        <strong>Independência Física:</strong> Capacidade de alterar o esquema interno (criar um índice de performance) sem alterar o conceitual.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 3. MODELO RELACIONAL -->
+            <section>
+                <h2 class="text-2xl font-bold border-l-4 border-slate-700 pl-3 mb-5">3. Modelo de Dados Relacional</h2>
+                <p class="mb-4">Baseado na teoria dos conjuntos. Os dados são organizados em <strong>Tabelas (Relações)</strong>.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-slate-800">Terminologia Técnica</h3>
+                        <ul class="space-y-2">
+                            <li class="p-2 bg-gray-50 rounded"><span class="font-bold">Relação:</span> Tabela.</li>
+                            <li class="p-2 bg-gray-50 rounded"><span class="font-bold">Tupla:</span> Linha ou Registro da tabela.</li>
+                            <li class="p-2 bg-gray-50 rounded"><span class="font-bold">Atributo:</span> Coluna ou Campo.</li>
+                            <li class="p-2 bg-gray-50 rounded"><span class="font-bold">Domínio:</span> Conjunto de valores atômicos permitidos para um atributo (ex: inteiros, datas).</li>
+                            <li class="p-2 bg-gray-50 rounded"><span class="font-bold">Grau:</span> Número de colunas.</li>
+                            <li class="p-2 bg-gray-50 rounded"><span class="font-bold">Cardinalidade:</span> Número de linhas.</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-lg mb-3 text-slate-800">Sistema de Chaves (Obrigatório Decorar)</h3>
+                        <div class="space-y-3">
+                            <div class="border-l-4 border-blue-500 pl-3">
+                                <span class="block font-bold">Chave Primária (PK)</span>
+                                <span class="text-sm">Identificador único. <span class="highlight">Não pode ser NULL</span> e não pode repetir. (Restrição de Integridade de Entidade).</span>
+                            </div>
+                            <div class="border-l-4 border-green-500 pl-3">
+                                <span class="block font-bold">Chave Estrangeira (FK)</span>
+                                <span class="text-sm">Atributo que referencia a PK de outra tabela. Garante a <span class="highlight">Integridade Referencial</span>. Pode ser NULL (se a regra permitir).</span>
+                            </div>
+                            <div class="border-l-4 border-gray-400 pl-3">
+                                <span class="block font-bold">Chave Candidata</span>
+                                <span class="text-sm">Chave mínima que poderia ser primária (ex: CPF e Matrícula são candidatas; escolhe-se uma para ser PK, a outra vira Chave Alternativa).</span>
+                            </div>
+                            <div class="border-l-4 border-gray-400 pl-3">
+                                <span class="block font-bold">Superchave</span>
+                                <span class="text-sm">Qualquer conjunto de atributos que torna a linha única (pode ter atributos "sobrando").</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. MODELAGEM ER (Entidade-Relacionamento) -->
+            <section>
+                <h2 class="text-2xl font-bold border-l-4 border-slate-700 pl-3 mb-5">4. Modelagem ER (Conceitual)</h2>
+                
+                <h3 class="font-bold text-xl mb-3 mt-6">Classificação de Atributos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <div class="p-4 border rounded bg-white shadow-sm">
+                        <strong class="block text-indigo-700 mb-1">Simples vs Composto</strong>
+                        <p class="text-sm">Simples é indivisível (CPF). Composto pode ser dividido (Endereço = Rua + Num + CEP).</p>
+                    </div>
+                    <div class="p-4 border rounded bg-white shadow-sm">
+                        <strong class="block text-indigo-700 mb-1">Monovalorado vs Multivalorado</strong>
+                        <p class="text-sm">Multivalorado aceita vários valores (Telefones). No diagrama, é a elipse com linha dupla.</p>
+                    </div>
+                    <div class="p-4 border rounded bg-white shadow-sm">
+                        <strong class="block text-indigo-700 mb-1">Derivado</strong>
+                        <p class="text-sm">Calculado a partir de outros (Idade vem de DataNasc). Elipse tracejada.</p>
+                    </div>
+                </div>
+
+                <h3 class="font-bold text-xl mb-3">Relacionamentos e Cardinalidade</h3>
+                <p class="mb-4 text-gray-700">Define "quantos" de um lado se relacionam com "quantos" do outro. Notação (Min, Max).</p>
+                <ul class="list-disc pl-5 mb-4">
+                    <li><strong>1:1 (Um para Um):</strong> Um Gerente gerencia um Departamento.</li>
+                    <li><strong>1:N (Um para Muitos):</strong> Um Departamento tem vários Funcionários.</li>
+                    <li><strong>N:M (Muitos para Muitos):</strong> Um Aluno cursa várias Disciplinas e vice-versa.</li>
+                </ul>
+            </section>
+
+            <!-- 5. MAPEAMENTO (MER -> Relacional) - CRÍTICO -->
+            <section>
+                <h2 class="text-2xl font-bold border-l-4 border-slate-700 pl-3 mb-5">5. Mapeamento para Tabelas (Ponto Crítico)</h2>
+                <p class="mb-4">Como transformar o desenho (MER) em tabelas reais? <span class="highlight">Isso cai em questões de "esquema resultante".</span></p>
+
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th width="30%">Cenário no Diagrama</th>
+                            <th>Regra de Transformação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Entidade Forte</strong></td>
+                            <td>Vira uma Tabela simples. Atributos simples viram colunas.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Atributo Multivalorado</strong></td>
+                            <td><span class="highlight">Vira uma NOVA TABELA.</span> Essa tabela terá: A FK da entidade original + o valor do atributo. Ambas formam a PK composta.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Relacionamento 1:N</strong></td>
+                            <td>Não cria nova tabela. <strong>Regra do Filho:</strong> A chave primária do lado 1 vira <span class="highlight">Chave Estrangeira (FK) no lado N</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Relacionamento N:M</strong></td>
+                            <td><span class="highlight">SEMPRE cria uma NOVA TABELA (Associativa).</span> Essa tabela conterá as FKs das duas entidades originais (que juntas formam a PK composta) + atributos do relacionamento.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Relacionamento 1:1</strong></td>
+                            <td>Geralmente unifica-se as tabelas ou coloca-se a FK na tabela que tem participação <strong>total</strong> (obrigatória) para evitar NULLs.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 6. NORMALIZAÇÃO -->
+            <section>
+                <h2 class="text-2xl font-bold border-l-4 border-slate-700 pl-3 mb-5">6. Normalização (Eliminando Redundâncias)</h2>
+                <p class="mb-4">Processo para minimizar redundância e evitar anomalias de inserção/exclusão. As Formas Normais (FN) são cumulativas (para ser 2FN, tem que ser 1FN).</p>
+
+                <div class="space-y-6">
+                    <div class="bg-white border-l-8 border-green-400 p-4 shadow-sm">
+                        <h3 class="font-bold text-lg">1ª Forma Normal (1FN) - Atomicidade</h3>
+                        <p class="text-gray-700 mb-2"><strong>Problema:</strong> Tabelas com colunas multivaloradas (Telefone1, Telefone2) ou campos compostos não atômicos.</p>
+                        <p class="text-sm bg-gray-50 p-2 rounded"><strong>Solução:</strong> Criar tabela separada para o atributo repetitivo ou decompor campos compostos.</p>
+                    </div>
+
+                    <div class="bg-white border-l-8 border-blue-400 p-4 shadow-sm">
+                        <h3 class="font-bold text-lg">2ª Forma Normal (2FN) - Dependência Parcial</h3>
+                        <p class="text-gray-700 mb-2"><strong>Requisito:</strong> Estar na 1FN.</p>
+                        <p class="text-gray-700 mb-2"><strong>Problema:</strong> Ocorre apenas em tabelas com <span class="highlight">Chave Primária Composta</span>. Quando um atributo não-chave depende apenas de <em>uma parte</em> da chave, não dela toda.</p>
+                        <p class="text-sm bg-gray-50 p-2 rounded"><strong>Solução:</strong> Mover o atributo para uma nova tabela onde a "parte" da chave seja a PK completa.</p>
+                    </div>
+
+                    <div class="bg-white border-l-8 border-purple-400 p-4 shadow-sm">
+                        <h3 class="font-bold text-lg">3ª Forma Normal (3FN) - Dependência Transitiva</h3>
+                        <p class="text-gray-700 mb-2"><strong>Requisito:</strong> Estar na 2FN.</p>
+                        <p class="text-gray-700 mb-2"><strong>Problema:</strong> Quando um atributo não-chave depende de outro atributo não-chave. (Ex: A tabela Pedido tem "Cod_Cliente" e "Nome_Cliente". O nome depende do código, não do pedido).</p>
+                        <p class="text-sm bg-gray-50 p-2 rounded"><strong>Solução:</strong> Separar em tabelas distintas (Tabela Pedidos e Tabela Clientes).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. RAIO-X BANCA FCM -->
+            <section class="bg-red-50 p-6 rounded-xl border border-red-100">
+                <h2 class="text-2xl font-bold text-red-900 mb-4">7. Raio-X da Banca FCM (Atenção Máxima!)</h2>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-2">⚠️</span>
+                        <div>
+                            <strong>Pegadinha da Ordem ("Respectivamente"):</strong>
+                            <p>A banca adora dar 3 definições (Ex: Chave Primária, Candidata e Estrangeira) e nas opções colocar a ordem trocada. Sempre numere as definições no enunciado antes de olhar as alternativas.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-2">🔄</span>
+                        <div>
+                            <strong>Conceitual vs Lógico:</strong>
+                            <p>Em provas antigas, a banca às vezes usa "Modelo Lógico" como sinônimo de "Modelo Relacional" (esquema das tabelas) e "Modelo Conceitual" para o "Diagrama ER". Fique atento ao contexto.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-2">🆚</span>
+                        <div>
+                            <strong>Cardinalidade Max vs Min:</strong>
+                            <p>O diagrama geralmente mostra (min, max). A banca pode perguntar "quantos no máximo" ou "se é obrigatório (min > 0)". Leia com calma.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <!-- RODAPÉ AÇÃO -->
+        <footer class="mt-16 pt-8 border-t border-gray-200 text-center">
+            <h3 class="text-xl font-bold text-slate-800 mb-4">Pronto para testar o conhecimento?</h3>
+            <p class="text-gray-600 mb-8 max-w-lg mx-auto">A prática é o único caminho para fixar as regras de normalização e mapeamento.</p>
+            
+            <a href="47questoes.html" class="inline-flex items-center justify-center bg-slate-800 hover:bg-slate-900 text-white text-lg font-bold py-4 px-10 rounded-lg shadow-lg transition-all transform hover:-translate-y-1">
+                <span>📝 Resolver Questões de Fixação</span>
+                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </a>
+            
+            <p class="text-xs text-gray-400 mt-8">Material elaborado para fins didáticos - Concurso IFAM.</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>

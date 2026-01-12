@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado POO - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fdfbf7; /* Tom de papel suave */
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --accent-color: #34495e;
+            --primary-color: #2980b9;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --border-color: #e0e0e0;
+            --resolution-bg: #f0f4f8;
+        }
+
+        body {
+            font-family: 'Merriweather', 'Georgia', serif; /* Serifada para leitura longa */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        p.subtitle {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .question-header {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            margin-bottom: 25px;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--accent-color);
+            margin: 15px 0;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Segoe UI', sans-serif;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f9f9f9;
+        }
+
+        .option-input {
+            margin-top: 6px;
+            margin-right: 12px;
+            accent-color: var(--primary-color);
+        }
+
+        /* Estilos de Feedback */
+        .feedback-correct {
+            border-color: var(--success-color);
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .feedback-wrong {
+            border-color: var(--error-color);
+            background-color: rgba(192, 57, 43, 0.1);
+            color: var(--error-color);
+            text-decoration: line-through; /* Opcional: riscar a errada */
+        }
+
+        /* Resolução */
+        .resolution-box {
+            display: none; /* Escondido inicialmente */
+            margin-top: 25px;
+            padding: 20px;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 4px 4px 0;
+            font-size: 1rem;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .result-panel {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+            font-family: 'Segoe UI', sans-serif;
+            z-index: 100;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2980b9;
+            filter: brightness(1.1);
+        }
+
+        .btn-submit:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .score-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            .container { padding: 10px; }
+            .question-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado POO</h1>
+        <p class="subtitle">Introdução à Programação Orientada a Objetos: Modelagem de Problemas</p>
+        <p style="font-size: 0.9rem; color: #999;">Baseado no estilo Fundação CEFETMINAS</p>
+    </header>
+
+    <form id="quizForm">
+        <!-- Questão 01 -->
+        <div class="question-card" id="q1">
+            <div class="question-header">
+                <span>Questão 01</span>
+                <span>Fundamentos de OO</span>
+            </div>
+            <div class="question-text">
+                <p>A programação orientada a objetos (POO) é fundamentada na criação de entidades digitais que simulam comportamentos e estados. Diferentemente da programação procedural, onde o foco reside na sequência de instruções e manipulação direta de memória global, a POO enfatiza a comunicação entre unidades autônomas.</p>
+                <p>Considerando a teoria fundamental da orientação a objetos, assinale a alternativa que descreve corretamente o mecanismo primário de interação entre objetos em um sistema:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q1" value="A" class="option-input"> A) A interação ocorre através da instância direta dos objetos, onde um objeto acessa fisicamente o endereço de memória do outro para alterar seus bits internos sem intermediação.</label>
+                <label class="option-label"><input type="radio" name="q1" value="B" class="option-input"> B) A interação se dá através da troca de mensagens; ou seja, um objeto solicita a execução de uma operação a outro objeto invocando um método, podendo ou não enviar parâmetros.</label>
+                <label class="option-label"><input type="radio" name="q1" value="C" class="option-input"> C) A comunicação é realizada exclusivamente através de variáveis globais estáticas compartilhadas, garantindo que todos os objetos enxerguem o mesmo estado simultaneamente.</label>
+                <label class="option-label"><input type="radio" name="q1" value="D" class="option-input"> D) A interação acontece por meio da herança múltipla, onde um objeto herda o estado do outro em tempo de execução para modificar seus valores.</label>
+                <label class="option-label"><input type="radio" name="q1" value="E" class="option-input"> E) A interação é baseada na alteração direta de propriedades privadas de um objeto por outro objeto externo, ignorando o encapsulamento para garantir performance.</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: B</strong></p>
+                <p>A "Troca de Mensagens" é a metáfora central para a invocação de métodos na POO. Quando um objeto A envia uma mensagem para o objeto B (invoca um método), ele solicita um comportamento, respeitando a autonomia de B. As outras alternativas descrevem violações de encapsulamento ou conceitos incorretos (como acesso direto à memória ou uso de variáveis globais como meio primário).</p>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-card" id="q2">
+            <div class="question-header">
+                <span>Questão 02</span>
+                <span>Encapsulamento</span>
+            </div>
+            <div class="question-text">
+                <p>Analise o trecho de código Java abaixo, que define uma classe para representar uma conta bancária:</p>
+<pre>
+public class Conta {
+    private String nome;
+    private double saldo;
+
+    public Conta(String nome) {
+        this.nome = nome;
+        this.saldo = 0.0;
+    }
+
+    public void depositar(double valor) {
+        if (valor > 0) {
+            saldo = saldo + valor;
+        }
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+}
+</pre>
+                <p>Tendo em vista o paradigma de programação orientada a objetos e a definição da classe <code>Conta</code> apresentada, é correto afirmar que:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q2" value="A" class="option-input"> A) O atributo saldo possui visibilidade pública implícita, permitindo que qualquer classe externa altere seu valor diretamente sem passar pelo método depositar.</label>
+                <label class="option-label"><input type="radio" name="q2" value="B" class="option-input"> B) O método depositar viola o encapsulamento ao permitir a alteração do saldo, devendo ser substituído por um método setSaldo público.</label>
+                <label class="option-label"><input type="radio" name="q2" value="C" class="option-input"> C) A classe implementa o conceito de encapsulamento, pois protege os atributos nome e saldo com o modificador private e fornece métodos públicos controlados para acesso e modificação.</label>
+                <label class="option-label"><input type="radio" name="q2" value="D" class="option-input"> D) Os clientes da classe Conta não poderão invocar o método setNome, pois atributos privados impedem a execução de qualquer método que os manipule.</label>
+                <label class="option-label"><input type="radio" name="q2" value="E" class="option-input"> E) A classe Conta implementa incorretamente o conceito de polimorfismo, pois não estende nenhuma outra classe base.</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A classe demonstra o encapsulamento clássico: atributos <code>private</code> (ocultamento de informação) e métodos <code>public</code> (interface). O método <code>depositar</code> é a forma correta de alterar o estado preservando a invariante de que depósitos devem ser positivos, ao contrário de um simples <code>setSaldo</code>.</p>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-card" id="q3">
+            <div class="question-header">
+                <span>Questão 03</span>
+                <span>Herança</span>
+            </div>
+            <div class="question-text">
+                <p>No contexto da modelagem orientada a objetos, a herança é um mecanismo que permite a criação de novas classes a partir de classes existentes. Considere um sistema de gestão de frota que possui a classe base <code>Veiculo</code> e as subclasses <code>Carro</code> e <code>Caminhao</code>.</p>
+                <p>Sobre as características da herança em linguagens como Java, analise as afirmativas:</p>
+                <p>I. A herança estabelece uma relação "é-um" (is-a), onde Carro é um tipo de Veiculo, herdando seus atributos e métodos não privados.<br>
+                II. Uma subclasse pode herdar de múltiplas superclasses simultaneamente em Java (ex: Carro extends Veiculo, Motorizado), permitindo a combinação direta de comportamentos de diversas fontes.<br>
+                III. O modificador de acesso protected na superclasse Veiculo permite que os atributos sejam acessados diretamente pelas subclasses Carro e Caminhao, mas não por classes não relacionadas fora do pacote.</p>
+                <p>Estão corretas as afirmativas:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q3" value="A" class="option-input"> A) Apenas I.</label>
+                <label class="option-label"><input type="radio" name="q3" value="B" class="option-input"> B) Apenas II.</label>
+                <label class="option-label"><input type="radio" name="q3" value="C" class="option-input"> C) Apenas I e III.</label>
+                <label class="option-label"><input type="radio" name="q3" value="D" class="option-input"> D) Apenas II e III.</label>
+                <label class="option-label"><input type="radio" name="q3" value="E" class="option-input"> E) I, II e III.</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A afirmativa I está correta (relação "é-um"). A afirmativa III está correta (o modificador <code>protected</code> serve exatamente para visibilidade em subclasses e no mesmo pacote). A afirmativa II está incorreta porque Java não suporta herança múltipla de classes (apenas implementação múltipla de interfaces).</p>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-card" id="q4">
+            <div class="question-header">
+                <span>Questão 04</span>
+                <span>Polimorfismo</span>
+            </div>
+            <div class="question-text">
+                <p>A orientação a objetos possui características que favorecem a flexibilidade do software. Uma dessas características permite que um método de uma classe derivada tenha a mesma assinatura (nome e parâmetros) que um método da classe base, mas com uma implementação de comportamento diferente.</p>
+                <p>Esse recurso, fundamental para o tratamento genérico de objetos em uma hierarquia, é denominado:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q4" value="A" class="option-input"> A) Encapsulamento.</label>
+                <label class="option-label"><input type="radio" name="q4" value="B" class="option-input"> B) Sobrecarga (Overloading).</label>
+                <label class="option-label"><input type="radio" name="q4" value="C" class="option-input"> C) Polimorfismo por Sobrescrita (Overriding).</label>
+                <label class="option-label"><input type="radio" name="q4" value="D" class="option-input"> D) Acoplamento Dinâmico.</label>
+                <label class="option-label"><input type="radio" name="q4" value="E" class="option-input"> E) Injeção de Dependência.</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C</strong></p>
+                <p>Trata-se do Polimorfismo por Sobrescrita (Overriding). A Sobrecarga (Overloading) usa o mesmo nome, mas assinaturas diferentes (parâmetros distintos) e ocorre em tempo de compilação. A Sobrescrita mantém a mesma assinatura e ocorre em tempo de execução via herança.</p>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-card" id="q5">
+            <div class="question-header">
+                <span>Questão 05</span>
+                <span>Construtores e 'this'</span>
+            </div>
+            <div class="question-text">
+                <p>Considere a seguinte definição de classe em Java:</p>
+<pre>
+public class Produto {
+    private int codigo;
+    private String descricao;
+
+    public Produto() {
+        this(0, "Indefinido");
+    }
+
+    public Produto(int codigo, String descricao) {
+        this.codigo = codigo;
+        this.descricao = descricao;
+    }
+}
+</pre>
+                <p>Sobre o código acima e o funcionamento dos construtores, assinale a alternativa incorreta:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q5" value="A" class="option-input"> A) A classe possui sobrecarga de construtores, oferecendo duas formas diferentes de instanciar um objeto Produto.</label>
+                <label class="option-label"><input type="radio" name="q5" value="B" class="option-input"> B) A instrução this(0, "Indefinido") dentro do primeiro construtor realiza uma chamada explícita ao segundo construtor, reaproveitando a lógica de inicialização.</label>
+                <label class="option-label"><input type="radio" name="q5" value="C" class="option-input"> C) A palavra-chave this no segundo construtor é utilizada para diferenciar os atributos da instância (campos da classe) dos parâmetros locais do método.</label>
+                <label class="option-label"><input type="radio" name="q5" value="D" class="option-input"> D) Se nenhum construtor fosse declarado explicitamente, o compilador Java forneceria automaticamente um construtor padrão sem argumentos.</label>
+                <label class="option-label"><input type="radio" name="q5" value="E" class="option-input"> E) O uso do this() para chamar outro construtor pode ser feito em qualquer linha dentro do bloco do construtor, não sendo obrigatório ser a primeira instrução.</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: E</strong></p>
+                <p>A chamada de construtor via <code>this()</code> ou <code>super()</code> deve ser obrigatoriamente a <strong>primeira instrução</strong> dentro do corpo do construtor. Isso garante que o objeto seja inicializado corretamente antes de qualquer outra lógica ser executada.</p>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-card" id="q6">
+            <div class="question-header">
+                <span>Questão 06</span>
+                <span>Atributos Estáticos</span>
+            </div>
+            <div class="question-text">
+                <p>Durante a modelagem de um sistema escolar, foi identificada a necessidade de armazenar o número total de alunos matriculados na instituição, independentemente de qual objeto Aluno específico esteja sendo consultado. Esse dado deve ser compartilhado por todas as instâncias da classe.</p>
+                <p>Qual modificador deve ser aplicado ao atributo totalMatriculados na classe Aluno para atender a esse requisito de modelagem?</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q6" value="A" class="option-input"> A) final</label>
+                <label class="option-label"><input type="radio" name="q6" value="B" class="option-input"> B) abstract</label>
+                <label class="option-label"><input type="radio" name="q6" value="C" class="option-input"> C) static</label>
+                <label class="option-label"><input type="radio" name="q6" value="D" class="option-input"> D) synchronized</label>
+                <label class="option-label"><input type="radio" name="q6" value="E" class="option-input"> E) protected</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C</strong></p>
+                <p>O modificador <code>static</code> define que um atributo pertence à classe, e não a cada instância individualmente. Assim, todos os objetos compartilham a mesma variável de memória, ideal para contadores globais da classe.</p>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-card" id="q7">
+            <div class="question-header">
+                <span>Questão 07</span>
+                <span>Classes Abstratas vs Interfaces</span>
+            </div>
+            <div class="question-text">
+                <p>Na modelagem de sistemas orientados a objetos, frequentemente nos deparamos com a necessidade de definir contratos de comportamento sem necessariamente fornecer uma implementação completa.</p>
+                <p>Assinale a alternativa que apresenta uma diferença técnica correta entre uma Classe Abstrata e uma Interface (considerando Java 8+):</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q7" value="A" class="option-input"> A) Uma classe pode herdar de múltiplas classes abstratas, mas pode implementar apenas uma interface.</label>
+                <label class="option-label"><input type="radio" name="q7" value="B" class="option-input"> B) Interfaces podem possuir construtores que são executados quando a classe implementadora é instanciada.</label>
+                <label class="option-label"><input type="radio" name="q7" value="C" class="option-input"> C) Classes abstratas podem possuir atributos de instância (estado) mutáveis, enquanto interfaces só podem possuir constantes (public static final).</label>
+                <label class="option-label"><input type="radio" name="q7" value="D" class="option-input"> D) Todos os métodos de uma classe abstrata devem ser obrigatoriamente abstratos, não sendo permitida a implementação de métodos concretos.</label>
+                <label class="option-label"><input type="radio" name="q7" value="E" class="option-input"> E) Interfaces são utilizadas para definir a relação "é-um", enquanto classes abstratas definem a relação "tem-um".</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: C</strong></p>
+                <p>Esta é a principal distinção estrutural. Classes abstratas podem manter estado (atributos de instância como <code>private String nome</code>), enquanto interfaces não têm estado de instância, apenas constantes estáticas. Interfaces não possuem construtores.</p>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-card" id="q8">
+            <div class="question-header">
+                <span>Questão 08</span>
+                <span>Princípios SOLID</span>
+            </div>
+            <div class="question-text">
+                <p>O acrônimo SOLID representa cinco princípios fundamentais para o design de software orientado a objetos, visando facilitar a manutenção e a extensão dos sistemas.</p>
+                <p>Ao analisar um código onde uma classe Relatorio é responsável por calcular estatísticas de vendas, formatar o relatório em HTML e salvar o arquivo no disco, um analista identifica que essa classe viola um dos princípios SOLID, pois possui múltiplas razões para mudar. Qual princípio está sendo violado?</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q8" value="A" class="option-input"> A) Princípio da Substituição de Liskov (LSP).</label>
+                <label class="option-label"><input type="radio" name="q8" value="B" class="option-input"> B) Princípio da Responsabilidade Única (SRP).</label>
+                <label class="option-label"><input type="radio" name="q8" value="C" class="option-input"> C) Princípio da Inversão de Dependência (DIP).</label>
+                <label class="option-label"><input type="radio" name="q8" value="D" class="option-input"> D) Princípio do Aberto/Fechado (OCP).</label>
+                <label class="option-label"><input type="radio" name="q8" value="E" class="option-input"> E) Princípio da Segregação de Interface (ISP).</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: B</strong></p>
+                <p>O Princípio da Responsabilidade Única (SRP) dita que uma classe deve ter apenas uma razão para mudar. A classe descrita mistura lógica de negócio, apresentação (HTML) e persistência (Disco), violando claramente este princípio.</p>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-card" id="q9">
+            <div class="question-header">
+                <span>Questão 09</span>
+                <span>Tratamento de Exceções</span>
+            </div>
+            <div class="question-text">
+                <p>A robustez é uma qualidade essencial na POO. O tratamento de exceções permite que erros sejam gerenciados sem interromper abruptamente a execução do programa.</p>
+                <p>Analise o seguinte bloco de código:</p>
+<pre>
+try {
+    // Código que pode gerar ArithmeticException
+} catch (ArithmeticException e) {
+    System.out.println("Erro A");
+} catch (RuntimeException e) {
+    System.out.println("Erro B");
+} finally {
+    System.out.println("Finalizando");
+}
+</pre>
+                <p>Se uma exceção do tipo ArithmeticException for lançada dentro do bloco try, qual será a saída exata no console?</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q9" value="A" class="option-input"> A) "Erro A" seguido de "Finalizando".</label>
+                <label class="option-label"><input type="radio" name="q9" value="B" class="option-input"> B) Apenas "Erro A", pois o bloco catch encerra o fluxo.</label>
+                <label class="option-label"><input type="radio" name="q9" value="C" class="option-input"> C) "Erro A" seguido de "Erro B", pois ArithmeticException é uma subclasse de RuntimeException.</label>
+                <label class="option-label"><input type="radio" name="q9" value="D" class="option-input"> D) Apenas "Finalizando", pois o finally sobrescreve os blocos catch.</label>
+                <label class="option-label"><input type="radio" name="q9" value="E" class="option-input"> E) "Erro B" seguido de "Finalizando", pois a exceção mais genérica tem preferência.</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: A</strong></p>
+                <p>O Java executa o <strong>primeiro</strong> bloco <code>catch</code> compatível. Como <code>ArithmeticException</code> é capturado especificamente no primeiro bloco, ele imprime "Erro A". Os blocos catch seguintes são ignorados. O bloco <code>finally</code> é sempre executado ao final, imprimindo "Finalizando".</p>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10">
+            <div class="question-header">
+                <span>Questão 10</span>
+                <span>Composição vs Agregação</span>
+            </div>
+            <div class="question-text">
+                <p>Na modelagem UML e implementação de classes, a distinção entre Associação, Agregação e Composição é crucial para definir o ciclo de vida dos objetos.</p>
+                <p>Considere o cenário: "Um objeto do tipo Janela possui uma lista de Botoes. Se a Janela for fechada e destruída pelo coletor de lixo, os Botoes que pertencem a ela também devem ser destruídos, pois não fazem sentido existindo isoladamente fora da janela."</p>
+                <p>Este cenário descreve um relacionamento de:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q10" value="A" class="option-input"> A) Associação Simples.</label>
+                <label class="option-label"><input type="radio" name="q10" value="B" class="option-input"> B) Generalização.</label>
+                <label class="option-label"><input type="radio" name="q10" value="C" class="option-input"> C) Agregação.</label>
+                <label class="option-label"><input type="radio" name="q10" value="D" class="option-input"> D) Composição.</label>
+                <label class="option-label"><input type="radio" name="q10" value="E" class="option-input"> E) Dependência Fraca.</label>
+            </div>
+            <div class="resolution-box">
+                <h4>Resolução:</h4>
+                <p><strong>Gabarito: D</strong></p>
+                <p>O cenário descreve dependência existencial forte (o todo morre, as partes morrem). Isso é a definição de Composição ("Parte-Todo" forte). Na Agregação ("Parte-Todo" fraca), as partes podem sobreviver à destruição do todo (ex: Alunos sobrevivem à destruição de uma Turma).</p>
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Finalizar Simulado</button>
+    </form>
+</div>
+
+<div class="result-panel" id="resultPanel">
+    <div class="score-display" id="scoreDisplay"></div>
+    <div>Role para cima para ver as resoluções detalhadas.</div>
+</div>
+
+<script>
+    const gabarito = {
+        q1: 'B',
+        q2: 'C',
+        q3: 'C',
+        q4: 'C',
+        q5: 'E',
+        q6: 'C',
+        q7: 'C',
+        q8: 'B',
+        q9: 'A',
+        q10: 'D'
+    };
+
+    function submitQuiz() {
+        let score = 0;
+        const total = Object.keys(gabarito).length;
+        const form = document.getElementById('quizForm');
+        
+        // Iterar sobre cada questão
+        for (let q in gabarito) {
+            const correctAnswer = gabarito[q];
+            const selectedOption = form.elements[q].value;
+            const questionDiv = document.getElementById(q);
+            const options = questionDiv.querySelectorAll('.option-label');
+            
+            // Desabilitar inputs
+            const inputs = questionDiv.querySelectorAll('input');
+            inputs.forEach(input => input.disabled = true);
+
+            // Verificar acerto
+            if (selectedOption === correctAnswer) {
+                score++;
+            }
+
+            // Estilização das opções
+            options.forEach(label => {
+                const input = label.querySelector('input');
+                
+                // Se for a resposta correta, pinta de verde
+                if (input.value === correctAnswer) {
+                    label.classList.add('feedback-correct');
+                    // Adiciona ícone de check
+                    label.innerHTML += ' ✅';
+                }
+                // Se foi a selecionada pelo usuário mas está errada, pinta de vermelho
+                else if (input.checked && input.value !== correctAnswer) {
+                    label.classList.add('feedback-wrong');
+                    label.innerHTML += ' ❌';
+                }
+            });
+
+            // Mostrar caixa de resolução
+            questionDiv.querySelector('.resolution-box').style.display = 'block';
+        }
+
+        // Mostrar painel de resultado
+        const resultPanel = document.getElementById('resultPanel');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        
+        scoreDisplay.textContent = `Você acertou ${score} de ${total} questões`;
+        resultPanel.style.display = 'block';
+
+        // Desabilitar botão de envio
+        document.querySelector('.btn-submit').disabled = true;
+        document.querySelector('.btn-submit').textContent = "Simulado Finalizado";
+
+        // Scroll suave para o primeiro erro ou topo se tudo certo (opcional, aqui apenas mostra o painel)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

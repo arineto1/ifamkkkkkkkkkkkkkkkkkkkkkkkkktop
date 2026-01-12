@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado SQL - Padrão CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --accent-color: #3498db;
+            --border-color: #e0e0e0;
+            --code-bg: #f4f6f7;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --highlight-bg: #fff3cd;
+        }
+
+        body {
+            font-family: 'Georgia', 'Merriweather', serif; /* Serif para leitura longa */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Segoe UI', 'Roboto', sans-serif; /* Sans-serif para títulos */
+            color: #2c3e50;
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        .meta-info {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            font-family: sans-serif;
+        }
+
+        .question-block {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background-color: var(--code-bg);
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #d35400;
+        }
+
+        pre {
+            background-color: var(--code-bg);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f0f8ff;
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 15px;
+            margin-top: 6px;
+            transform: scale(1.2);
+        }
+
+        .option-label {
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Estilos de Feedback */
+        .correct-answer {
+            background-color: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success-color);
+        }
+
+        .wrong-answer {
+            background-color: rgba(192, 57, 43, 0.1);
+            border: 1px solid var(--error-color);
+        }
+
+        .explanation {
+            display: none; /* Escondido inicialmente */
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            font-size: 0.95em;
+        }
+
+        .explanation h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: sans-serif;
+            margin-top: 20px;
+        }
+
+        #submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        #score-display {
+            display: none;
+            text-align: center;
+            background-color: var(--highlight-bg);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            border: 1px solid #ffeeba;
+        }
+
+        #score-display h2 {
+            margin: 0;
+            color: #856404;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            body {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Simulado Técnico Avançado: SQL<br><small style="font-size: 0.6em; color: #7f8c8d;">Padrão Fundação CEFETMINAS</small></h1>
+
+    <div id="score-display">
+        <h2>Resultado: <span id="score-value"></span>/10</h2>
+        <p>Confira abaixo o gabarito comentado detalhado.</p>
+    </div>
+
+    <form id="quiz-form">
+        <!-- Questão 01 -->
+        <div class="question-block" id="q1">
+            <div class="meta-info">Questão 01 | Classificação de Linguagens SQL</div>
+            <div class="question-text">
+                A linguagem SQL (Structured Query Language) é segmentada em subconjuntos funcionais. Considerando a taxonomia padrão ANSI, analise as afirmativas:
+                <br><br>
+                I. O comando <code>DROP</code>, pertencente à DDL, remove integralmente a estrutura de uma tabela e seus metadados.<br>
+                II. O comando <code>DELETE</code>, classificado como DML, quando executado sem <code>WHERE</code>, remove todas as tuplas mas preserva a definição da tabela.<br>
+                III. O comando <code>TRUNCATE</code> é um sinônimo exato do comando <code>DELETE</code> sem <code>WHERE</code>, sendo ambos processados linha a linha.<br>
+                IV. Os comandos <code>GRANT</code> e <code>REVOKE</code> integram o subconjunto DCL.
+                <br><br>
+                Estão corretas apenas as afirmativas:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="A"> A) I e III.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="B"> B) I, II e IV.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="C"> C) II e III.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="D"> D) I, II e III.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="E"> E) III e IV.</label></li>
+            </ul>
+            <div class="explanation" id="expl-q1">
+                <h4>Gabarito: B</h4>
+                <p><strong>Análise:</strong></p>
+                <ul>
+                    <li><strong>I (Correto):</strong> <code>DROP</code> é DDL e destrói a estrutura e os dados.</li>
+                    <li><strong>II (Correto):</strong> <code>DELETE</code> é DML e remove apenas os dados (linhas), mantendo a estrutura.</li>
+                    <li><strong>III (Incorreto):</strong> <code>TRUNCATE</code> (geralmente DDL) não é sinônimo exato de <code>DELETE</code>. O <code>TRUNCATE</code> desaloca páginas de dados e usa menos log de transação, enquanto o <code>DELETE</code> processa linha a linha e loga cada exclusão.</li>
+                    <li><strong>IV (Correto):</strong> <code>GRANT</code> e <code>REVOKE</code> são comandos de controle de acesso (DCL).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-block" id="q2">
+            <div class="meta-info">Questão 02 | Comando UPDATE</div>
+            <div class="question-text">
+                Em um ambiente ANSI SQL estrito, considere a execução do seguinte comando:
+                <pre><code>UPDATE tb_funcionarios
+SET vlr_salario = vlr_salario * 1.15;</code></pre>
+                Com relação ao comportamento do SGBD, é correto afirmar que:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="A"> A) O SGBD abortará a transação por falta do WHERE.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="B"> B) A instrução será executada com sucesso, atualizando todos os registros.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="C"> C) O comando atualizará apenas o primeiro registro (single-row update).</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="D"> D) A instrução resultará na exclusão lógica de todos os dados da coluna.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="E"> E) O comando é inválido porque a palavra-chave correta é ALTER.</label></li>
+            </ul>
+            <div class="explanation" id="expl-q2">
+                <h4>Gabarito: B</h4>
+                <p><strong>Análise:</strong> O SQL é uma linguagem baseada em conjuntos. Se a cláusula <code>WHERE</code> é omitida, o predicado é considerado verdadeiro para todas as tuplas da relação. Portanto, o comando é sintaticamente válido e aplicará o aumento de 15% a <strong>todos</strong> os funcionários da tabela <code>tb_funcionarios</code>. A restrição de UPDATE sem WHERE é uma configuração de ferramentas clientes ("Safe Updates"), não uma regra da linguagem SQL padrão.</p>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-block" id="q3">
+            <div class="meta-info">Questão 03 | Normalização</div>
+            <div class="question-text">
+                Analise a definição e preencha as lacunas:<br><br>
+                "Uma relação R encontra-se na __________ Forma Normal se, e somente se, estiver na __________ Forma Normal e não existirem dependências __________ de atributos não-chave em relação à chave primária."
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="A"> A) Segunda – Primeira – funcionais parciais.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="B"> B) Terceira – Segunda – transitivas.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="C"> C) Primeira – Segunda – multivaloradas.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="D"> D) Boyce-Codd – Terceira – triviais.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="E"> E) Terceira – Primeira – diretas.</label></li>
+            </ul>
+            <div class="explanation" id="expl-q3">
+                <h4>Gabarito: B</h4>
+                <p><strong>Análise:</strong> A questão define a <strong>Terceira Forma Normal (3FN)</strong>. Para estar na 3FN, a tabela deve estar na 2FN e não possuir dependências transitivas (onde um atributo não-chave depende de outro atributo não-chave).</p>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-block" id="q4">
+            <div class="meta-info">Questão 04 | Pattern Matching (LIKE)</div>
+            <div class="question-text">
+                Um desenvolvedor precisa extrair uma lista de produtos cujos códigos <strong>NÃO</strong> iniciem com o prefixo 'PROD'. Assinale a consulta correta:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="A"> A) <code>SELECT cod_item FROM tb_estoque WHERE cod_item NOT LIKE 'PROD%';</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="B"> B) <code>SELECT cod_item FROM tb_estoque WHERE cod_item &lt;&gt; 'PROD*';</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="C"> C) <code>SELECT cod_item FROM tb_estoque WHERE cod_item EXCLUDE 'PROD%';</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="D"> D) <code>SELECT cod_item FROM tb_estoque WHERE cod_item NOT IN ('PROD');</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="E"> E) <code>SELECT cod_item FROM tb_estoque WHERE LEFT(cod_item, 4)!= LIKE 'PROD';</code></label></li>
+            </ul>
+            <div class="explanation" id="expl-q4">
+                <h4>Gabarito: A</h4>
+                <p><strong>Análise:</strong> O operador padrão para correspondência de padrões parciais é o <code>LIKE</code> (ou <code>NOT LIKE</code> para negação). O caractere curinga <code>%</code> representa qualquer sequência de caracteres. Logo, <code>'PROD%'</code> significa "começa com PROD". A opção B usa sintaxe incorreta (<code>*</code> não é curinga padrão SQL), e as outras opções contêm erros de sintaxe ou lógica.</p>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-block" id="q5">
+            <div class="meta-info">Questão 05 | Integridade Referencial</div>
+            <div class="question-text">
+                Sobre Chave Primária (PK) e Chave Estrangeira (FK), avalie as proposições:<br><br>
+                I. Uma Chave Primária deve garantir a unicidade e não admite valores nulos.<br>
+                II. A Integridade Referencial é violada quando uma FK referencia um valor inexistente na tabela pai (exceto se for NULL).<br>
+                III. É tecnicamente impossível definir uma Chave Primária composta por mais de um atributo.
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="A"> A) Apenas I.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="B"> B) Apenas II.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="C"> C) Apenas I e II.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="D"> D) Apenas I e III.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="E"> E) I, II e III.</label></li>
+            </ul>
+            <div class="explanation" id="expl-q5">
+                <h4>Gabarito: C</h4>
+                <p><strong>Análise:</strong>
+                <br>I (Verdadeiro): PKs exigem unicidade e NOT NULL.
+                <br>II (Verdadeiro): FKs garantem que o valor filho exista no pai, mas permitem NULL (falta de associação) se a coluna não for restrita.
+                <br>III (Falso): Chaves compostas (composite keys) são perfeitamente válidas e comuns no modelo relacional (ex: tabela associativa Aluno_Curso).</p>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-block" id="q6">
+            <div class="meta-info">Questão 06 | Projeção e Cálculo</div>
+            <div class="question-text">
+                Considere a instrução:
+                <pre><code>SELECT nm_vendedor, 
+       vl_comissao = (vl_total_vendas * 0.10)
+FROM tb_vendas...</code></pre>
+                O objetivo da expressão <code>vl_comissao = ...</code> é:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="A"> A) Alterar fisicamente a estrutura da tabela tb_vendas.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="B"> B) Atualizar os dados da tabela tb_vendas.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="C"> C) Gerar uma coluna derivada (virtual) apenas para visualização.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="D"> D) Ordenar o resultado da consulta.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="E"> E) Inserir um novo registro na tabela.</label></li>
+            </ul>
+            <div class="explanation" id="expl-q6">
+                <h4>Gabarito: C</h4>
+                <p><strong>Análise:</strong> O comando <code>SELECT</code> é de leitura. Cálculos na lista de projeção criam colunas virtuais no resultado (*result set*) que existem apenas em memória durante a execução. Não há alteração persistente no banco de dados (nem estrutura, nem dados).</p>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-block" id="q7">
+            <div class="meta-info">Questão 07 | INSERT e Aridade</div>
+            <div class="question-text">
+                Dado o comando:
+                <pre><code>INSERT INTO tb_alunos (num_matricula, nom_aluno, cod_curso) 
+VALUES (2025001, 'Ana Souza');</code></pre>
+                O que acontece se executado em uma tabela com 3 colunas NOT NULL?
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="A"> A) Inserção com sucesso, preenchendo NULL automaticamente.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="B"> B) Erro de sintaxe/aridade: quantidade de valores não corresponde às colunas.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="C"> C) Solicitação interativa do valor faltante.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="D"> D) Registro fica em estado de "pendência".</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="E"> E) O SGBD assume zero ou string vazia.</label></li>
+            </ul>
+            <div class="explanation" id="expl-q7">
+                <h4>Gabarito: B</h4>
+                <p><strong>Análise:</strong> O SQL exige correspondência exata entre a lista de colunas declarada no <code>INSERT INTO</code> e a lista de valores em <code>VALUES</code>. Foram declaradas 3 colunas, mas passados apenas 2 valores. O erro ocorre antes da verificação de NOT NULL, é um erro de contagem de argumentos.</p>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-block" id="q8">
+            <div class="meta-info">Questão 08 | Funções de Agregação e NULL</div>
+            <div class="question-text">
+                Tabela com 50 registros. 10 registros possuem <code>dt_termino</code> como NULL.<br>
+                1. <code>SELECT COUNT(*) ...</code><br>
+                2. <code>SELECT COUNT(dt_termino) ...</code><br>
+                Os resultados serão:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="A"> A) 50 e 50.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="B"> B) 40 e 50.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="C"> C) 50 e 40.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="D"> D) 40 e 40.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="E"> E) 50 e 10.</label></li>
+            </ul>
+            <div class="explanation" id="expl-q8">
+                <h4>Gabarito: C</h4>
+                <p><strong>Análise:</strong> <code>COUNT(*)</code> conta todas as linhas, independentemente do conteúdo (Resultado: 50). <code>COUNT(coluna)</code> conta apenas as ocorrências não nulas daquela coluna específica (50 total - 10 nulos = 40).</p>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-block" id="q9">
+            <div class="meta-info">Questão 09 | DELETE sem WHERE</div>
+            <div class="question-text">
+                A respeito da execução do comando <code>DELETE FROM tb_log_acesso;</code> (sem cláusula WHERE), qual o impacto correto?
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="A"> A) Remove fisicamente a tabela e a definição do catálogo.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="B"> B) Falha obrigatoriamente por bloqueio padrão.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="C"> C) Remove todas as linhas uma a uma, gerando log, mantendo a estrutura.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="D"> D) Apenas o primeiro registro será excluído.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="E"> E) Converte a tabela para somente leitura.</label></li>
+            </ul>
+            <div class="explanation" id="expl-q9">
+                <h4>Gabarito: C</h4>
+                <p><strong>Análise:</strong> <code>DELETE</code> sem WHERE limpa todos os dados da tabela. Diferente do <code>DROP</code> (que apaga a estrutura), a tabela continua existindo vazia. Diferente do <code>TRUNCATE</code>, o <code>DELETE</code> gera log para cada linha removida, permitindo rollback granular.</p>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-block" id="q10">
+            <div class="meta-info">Questão 10 | DDL - Alteração de Estrutura</div>
+            <div class="question-text">
+                Qual o comando correto para adicionar uma nova coluna <code>email_contato</code> do tipo <code>VARCHAR(100)</code> na tabela <code>tb_clientes</code>?
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="A"> A) <code>UPDATE TABLE tb_clientes ADD email_contato VARCHAR(100);</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="B"> B) <code>INSERT COLUMN email_contato VARCHAR(100) INTO tb_clientes;</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="C"> C) <code>ALTER TABLE tb_clientes ADD email_contato VARCHAR(100);</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="D"> D) <code>MODIFY TABLE tb_clientes INSERT email_contato VARCHAR(100);</code></label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="E"> E) <code>CREATE COLUMN email_contato VARCHAR(100) ON tb_clientes;</code></label></li>
+            </ul>
+            <div class="explanation" id="expl-q10">
+                <h4>Gabarito: C</h4>
+                <p><strong>Análise:</strong> Para modificar a estrutura de um objeto existente, usamos o verbo DDL <code>ALTER</code>. A sintaxe padrão é <code>ALTER TABLE [tabela] ADD [coluna] [tipo];</code>.</p>
+            </div>
+        </div>
+
+        <button type="button" id="submit-btn">Corrigir Simulado e Ver Resoluções</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('submit-btn').addEventListener('click', function() {
+        // Gabarito
+        const answers = {
+            q1: 'B',
+            q2: 'B',
+            q3: 'B',
+            q4: 'A',
+            q5: 'C',
+            q6: 'C',
+            q7: 'B',
+            q8: 'C',
+            q9: 'C',
+            q10: 'C'
+        };
+
+        let score = 0;
+        let total = Object.keys(answers).length;
+        const form = document.getElementById('quiz-form');
+
+        // Resetar estilos anteriores
+        document.querySelectorAll('.option-item').forEach(el => {
+            el.classList.remove('correct-answer', 'wrong-answer');
+        });
+
+        // Iterar sobre cada questão
+        for (let question in answers) {
+            const correctAnswer = answers[question];
+            const selectedOption = form.querySelector(`input[name="${question}"]:checked`);
+            const explDiv = document.getElementById(`expl-${question}`);
+            
+            // Mostrar explicação
+            if (explDiv) explDiv.style.display = 'block';
+
+            // Lógica de Pontuação e Visualização
+            if (selectedOption) {
+                if (selectedOption.value === correctAnswer) {
+                    score++;
+                    selectedOption.closest('.option-item').classList.add('correct-answer');
+                } else {
+                    selectedOption.closest('.option-item').classList.add('wrong-answer');
+                    // Mostrar qual seria a correta
+                    const correctInput = form.querySelector(`input[name="${question}"][value="${correctAnswer}"]`);
+                    if (correctInput) correctInput.closest('.option-item').classList.add('correct-answer');
+                }
+            } else {
+                // Se não respondeu, mostrar a correta
+                const correctInput = form.querySelector(`input[name="${question}"][value="${correctAnswer}"]`);
+                if (correctInput) correctInput.closest('.option-item').classList.add('correct-answer');
+            }
+        }
+
+        // Exibir Resultado no topo
+        const scoreDisplay = document.getElementById('score-display');
+        const scoreValue = document.getElementById('score-value');
+        scoreValue.textContent = score;
+        scoreDisplay.style.display = 'block';
+
+        // Rolar para o topo para ver o resultado
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Desabilitar botão após envio
+        this.disabled = true;
+        this.innerText = "Simulado Corrigido";
+        this.style.backgroundColor = "#95a5a6";
+    });
+</script>
+
+</body>
+</html>
