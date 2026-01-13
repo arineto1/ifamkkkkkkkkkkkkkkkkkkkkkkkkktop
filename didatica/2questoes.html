@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Didática e Avaliação Educacional</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --bg-color: #fdfdfd;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+            --highlight-bg: #f4f8fb;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .question-block {
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .question-title {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .enunciation {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 10px 15px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 15px;
+            margin-top: 6px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        /* Classes para feedback pós-correção */
+        .option-item.correct {
+            background-color: rgba(39, 174, 96, 0.15);
+            border: 1px solid var(--success-color);
+            color: #1e8449;
+            font-weight: 600;
+        }
+
+        .option-item.wrong {
+            background-color: rgba(192, 57, 43, 0.15);
+            border: 1px solid var(--error-color);
+            color: #922b21;
+            opacity: 0.8;
+        }
+
+        .resolution-box {
+            display: none; /* Escondido inicialmente */
+            margin-top: 25px;
+            padding: 25px;
+            background-color: var(--highlight-bg);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .resolution-box h3 {
+            font-family: 'Segoe UI', sans-serif;
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .resolution-box h4 {
+            font-size: 1rem;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            color: #444;
+        }
+        
+        .resolution-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        .resolution-table th, .resolution-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .resolution-table th {
+            background-color: #e9e9e9;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            position: sticky;
+            bottom: 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        button#finish-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button#finish-btn:hover {
+            background-color: #1a252f;
+            transform: translateY(-2px);
+        }
+
+        #score-display {
+            display: none;
+            margin-top: 20px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #score-display h2 {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .quote-block {
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid #ccc;
+            padding-left: 15px;
+            margin: 10px 0;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            header h1 {
+                font-size: 1.5rem;
+            }
+            button#finish-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Dossiê Analítico de Didática</h1>
+            <h2>Avaliação Interna e Externa: Limites e Possibilidades</h2>
+            <p style="font-size: 0.9rem; color: #777;">Estilo Banca Fundação CEFETMINAS</p>
+        </header>
+
+        <form id="quiz-form">
+            
+            <!-- Questão 1 -->
+            <div class="question-block" data-correct="A">
+                <span class="question-title">Questão 1</span>
+                <div class="enunciation">
+                    <p>José Carlos Libâneo, em sua obra seminal sobre a Didática, estabelece que a avaliação escolar não constitui um fim em si mesma, mas um componente intrínseco e indissociável do processo de ensino-aprendizagem. Ao analisar a estrutura didática, o autor identifica funções específicas que a avaliação deve cumprir para garantir a unidade entre ensino e aprendizagem. Considerando a dialética entre os <em>limites e possibilidades</em> da avaliação no contexto escolar, analise as afirmativas abaixo sobre as funções da avaliação segundo a perspectiva de Libâneo:</p>
+                    <ol type="I">
+                        <li>A função <strong>pedagógico-didática</strong> refere-se ao cumprimento dos objetivos gerais e específicos da educação escolar, articulando o trabalho docente com as exigências da sociedade; é o momento em que a avaliação verifica a compatibilidade entre os resultados obtidos e o papel social da escola na democratização do saber.</li>
+                        <li>A função de <strong>diagnóstico</strong> permite identificar os progressos e as dificuldades dos alunos, bem como a eficácia da atuação docente, servindo como instrumento para reorientar o trabalho pedagógico e as atividades de aprendizagem, devendo ocorrer não apenas no início, mas ao longo de todo o processo.</li>
+                        <li>A função de <strong>controle</strong> apresenta-se como um mecanismo estritamente burocrático e punitivo, dissociado da melhoria do ensino, servindo exclusivamente para a classificação final dos discentes e para o preenchimento de diários de classe exigidos pela administração escolar.</li>
+                    </ol>
+                    <p>Estão corretas as afirmativas:</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q1" value="A"> A) Apenas I e II.</label>
+                    <label class="option-item"><input type="radio" name="q1" value="B"> B) Apenas II.</label>
+                    <label class="option-item"><input type="radio" name="q1" value="C"> C) Apenas I e III.</label>
+                    <label class="option-item"><input type="radio" name="q1" value="D"> D) Apenas II e III.</label>
+                    <label class="option-item"><input type="radio" name="q1" value="E"> E) I, II e III.</label>
+                </div>
+                
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: A (Apenas I e II estão corretas)</strong></p>
+                    <p>A questão exige um domínio aprofundado da obra <em>Didática</em> (1994) de José Carlos Libâneo.</p>
+                    <p><strong>I. A Função Pedagógico-Didática (Correta):</strong> Refere-se ao cumprimento dos objetivos educativos e à articulação com a função social da escola. Verifica a eficácia do método e a adequação dos conteúdos.</p>
+                    <p><strong>II. A Função de Diagnóstico (Correta):</strong> Não se limita ao início. É a bússola do processo, identificando progressos e dificuldades para reorientar a prática docente a qualquer momento.</p>
+                    <p><strong>III. A Função de Controle (Incorreta):</strong> A afirmativa descreve a <em>patologia</em> (o desvio), e não a função teórica correta. Para Libâneo, o controle é necessário para a verificação sistemática dos resultados, mas não deve ser punitivo ou meramente burocrático. Ele serve para coletar dados sobre o rendimento escolar visando a qualificação dos resultados.</p>
+                    
+                    <table class="resolution-table">
+                        <tr><th>Função</th><th>Característica Principal</th></tr>
+                        <tr><td>Pedagógico-Didática</td><td>Integradora e Teleológica (Fins)</td></tr>
+                        <tr><td>Diagnóstica</td><td>Analítica e Orientadora</td></tr>
+                        <tr><td>De Controle</td><td>Sistemática e Verificadora (Dados)</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Questão 2 -->
+            <div class="question-block" data-correct="B">
+                <span class="question-title">Questão 2</span>
+                <div class="enunciation">
+                    <p>Cipriano Carlos Luckesi, ao discutir a prática da avaliação da aprendizagem escolar, estabelece uma distinção teórica e política fundamental entre o ato de "examinar" e o ato de "avaliar". Para o autor, a escola brasileira opera predominantemente sob a "pedagogia do exame", o que impõe <em>limites</em> severos à democratização do ensino. A <em>possibilidade</em> de superação desse modelo reside na adoção de uma postura avaliativa autêntica. Assinale a alternativa que expressa corretamente a concepção de Luckesi sobre a natureza do ato de avaliar.</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q2" value="A"> A) A avaliação deve ser classificatória e seletiva, garantindo que apenas os estudantes que demonstrem domínio integral dos conteúdos avancem, mantendo assim a qualidade e o rigor acadêmico da instituição.</label>
+                    <label class="option-item"><input type="radio" name="q2" value="B"> B) O ato de avaliar constitui um "ato amoroso" e inclusivo, que não julga para excluir, mas diagnostica para incluir; ele acolhe a realidade do educando tal como ela é para, a partir desse acolhimento, promover a intervenção pedagógica necessária à superação das dificuldades.</label>
+                    <label class="option-item"><input type="radio" name="q2" value="C"> C) A avaliação assume primordialmente uma função de controle social disciplinar, onde os instrumentos avaliativos (provas) funcionam como mecanismos de coerção para garantir a atenção e o silêncio dos alunos em sala de aula.</label>
+                    <label class="option-item"><input type="radio" name="q2" value="D"> D) A distinção entre examinar e avaliar é irrelevante na prática docente, uma vez que ambos utilizam os mesmos instrumentos de coleta de dados e resultam, obrigatoriamente, na atribuição de notas exigidas pelo sistema legal.</label>
+                    <label class="option-item"><input type="radio" name="q2" value="E"> E) A avaliação formativa proposta pelo autor exige a eliminação total de qualquer registro quantitativo ou conceito, pois a atribuição de valor numérico anula automaticamente o caráter pedagógico da verificação.</label>
+                </div>
+
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: B</strong></p>
+                    <p><strong>A Patologia do Exame (Crítica):</strong> O exame é pontual, classificatório e excludente. A alternativa A descreve exatamente o que Luckesi critica.</p>
+                    <p><strong>A Natureza do Ato de Avaliar (Correta na B):</strong> Luckesi define a avaliação como um "ato amoroso". Isso significa ter a disposição de acolher a realidade do aluno (o erro ou o acerto) para intervir. A avaliação inclui, pois seu fim é a aprendizagem de todos. Se o diagnóstico aponta falha, a ação é intervir para corrigir o rumo, não punir com nota baixa.</p>
+                    <p>A alternativa E está incorreta porque Luckesi não propõe a ilegalidade (não dar notas), mas a ressignificação das notas como consequência de uma aprendizagem bem-sucedida, não como fim em si mesmas.</p>
+                </div>
+            </div>
+
+            <!-- Questão 3 -->
+            <div class="question-block" data-correct="D">
+                <span class="question-title">Questão 3</span>
+                <div class="enunciation">
+                    <p>As avaliações em larga escala (avaliação externa), como o Sistema de Avaliação da Educação Básica (Saeb), tornaram-se instrumentos centrais na regulação das políticas educacionais contemporâneas. Sobre a relação entre <strong>avaliação externa</strong> e <strong>avaliação interna</strong> (realizada no cotidiano escolar), e considerando as tensões entre seus <em>limites e possibilidades</em>, analise as asserções a seguir e a relação proposta entre elas:</p>
+                    <p>I. A avaliação externa deve sobrepor-se hierarquicamente à avaliação interna da escola, ditando o currículo e as práticas pedagógicas, uma vez que oferece dados estatísticos padronizados e isentos da subjetividade inerente ao julgamento dos professores.</p>
+                    <p><strong>PORQUE</strong></p>
+                    <p>II. Os resultados das avaliações de larga escala fornecem indicadores de qualidade (como o Ideb) que permitem o monitoramento das redes de ensino, mas, se tomados como único critério de qualidade, podem induzir ao estreitamento curricular (<em>curriculum narrowing</em>) e ao treinamento para testes, ignorando as especificidades do projeto político-pedagógico da escola.</p>
+                    <p>A respeito dessas asserções, assinale a opção correta:</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q3" value="A"> A) As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.</label>
+                    <label class="option-item"><input type="radio" name="q3" value="B"> B) As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.</label>
+                    <label class="option-item"><input type="radio" name="q3" value="C"> C) A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.</label>
+                    <label class="option-item"><input type="radio" name="q3" value="D"> D) A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.</label>
+                    <label class="option-item"><input type="radio" name="q3" value="E"> E) As asserções I e II são proposições falsas.</label>
+                </div>
+
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: D (A asserção I é falsa, e a II é verdadeira)</strong></p>
+                    <p><strong>Análise da I (Falsa):</strong> A avaliação externa deve ser subsidiária e complementar, não hierarquicamente superior. Defender que ela dite o currículo é um erro pedagógico que anula a autonomia da escola e o Projeto Político-Pedagógico. A avaliação interna possui a riqueza da intersubjetividade e do conhecimento profundo do aluno.</p>
+                    <p><strong>Análise da II (Verdadeira):</strong> Descreve corretamente os limites e possibilidades. Possibilidade: monitoramento de redes e gestão de políticas. Limite: <em>curriculum narrowing</em> (focar só no que cai na prova) e treinamento mecânico.</p>
+                </div>
+            </div>
+
+            <!-- Questão 4 -->
+            <div class="question-block" data-correct="C">
+                <span class="question-title">Questão 4</span>
+                <div class="enunciation">
+                    <p>Jussara Hoffmann, em suas obras sobre a Avaliação Mediadora, propõe uma ressignificação radical do papel do erro no processo de ensino-aprendizagem. No contexto dos <em>limites e possibilidades</em> da avaliação interna, como o docente deve proceder diante do erro do aluno para que a avaliação cumpra sua função mediadora e favoreça a construção do conhecimento?</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q4" value="A"> A) O erro deve ser punido com o decréscimo da nota, reforçando a responsabilidade do aluno e a necessidade de maior dedicação aos estudos para evitar falhas futuras.</label>
+                    <label class="option-item"><input type="radio" name="q4" value="B"> B) O erro deve ser desconsiderado em nome da autoestima do estudante, focando-se a correção apenas nos acertos para manter um clima positivo e não traumatizante em sala de aula.</label>
+                    <label class="option-item"><input type="radio" name="q4" value="C"> C) O erro deve ser compreendido como uma hipótese provisória de conhecimento, exigindo do professor uma postura investigativa para entender a lógica do aluno e realizar intervenções dialógicas que desestabilizem essa hipótese e promovam avanços cognitivos.</label>
+                    <label class="option-item"><input type="radio" name="q4" value="D"> D) O erro deve ser corrigido imediatamente e de forma coletiva no quadro, expondo o equívoco para que toda a turma aprenda e evitando a necessidade de atendimento individualizado, que é inviável em turmas numerosas.</label>
+                    <label class="option-item"><input type="radio" name="q4" value="E"> E) O erro persistente indica incapacidade cognitiva ou déficit de aprendizagem, sinalizando a necessidade imediata de encaminhamento do aluno para especialistas clínicos externos à escola.</label>
+                </div>
+
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: C</strong></p>
+                    <p><strong>O Erro como Hipótese:</strong> Para Hoffmann (base construtivista), o erro é uma manifestação de saber, uma "janela" para a lógica do aluno. Não é falta de saber, mas uma hipótese provisória.</p>
+                    <p><strong>Mediação:</strong> O professor deve agir como mediador. Isso exige: 1) Investigar como o aluno pensou; 2) Realizar intervenções dialógicas (perguntas, desafios) que ajudem o aluno a perceber a insuficiência de sua hipótese e avançar.</p>
+                    <p>A punição (A) bloqueia a aprendizagem. Ignorar o erro (B) impede o conflito cognitivo necessário para avançar. A correção apenas coletiva (D) pode não atingir a lógica individual de quem errou.</p>
+                </div>
+            </div>
+
+            <!-- Questão 5 -->
+            <div class="question-block" data-correct="B">
+                <span class="question-title">Questão 5</span>
+                <div class="enunciation">
+                    <p>A Avaliação Institucional distingue-se conceptualmente da avaliação da aprendizagem, embora ambas sejam essenciais para a garantia da qualidade educativa. Segundo pesquisadores como Brandalise e as diretrizes inspiradoras do SINAES (aplicadas analogamente à educação básica), a <strong>autoavaliação institucional</strong> apresenta-se como uma <em>possibilidade</em> potente de fortalecimento da gestão democrática. Assinale a alternativa que melhor descreve a natureza e a finalidade da autoavaliação institucional na escola básica.</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q5" value="A"> A) Constitui um processo de auditoria externa realizado pelas Secretarias de Educação para fiscalizar o cumprimento da carga horária e a assiduidade dos docentes, garantindo a eficiência administrativa dos recursos públicos.</label>
+                    <label class="option-item"><input type="radio" name="q5" value="B"> B) É um momento de reflexão coletiva e sistemática da comunidade escolar (professores, funcionários, gestores, pais e alunos) sobre a totalidade do trabalho educativo, visando identificar fragilidades e potencialidades para rever o Projeto Político-Pedagógico e aprimorar a qualidade social da escola.</label>
+                    <label class="option-item"><input type="radio" name="q5" value="C"> C) Consiste na aplicação exclusiva de questionários de satisfação às famílias para verificar se os "clientes" da escola aprovam os serviços prestados, seguindo uma lógica empresarial de gestão da qualidade total.</label>
+                    <label class="option-item"><input type="radio" name="q5" value="D"> D) É a somatória das médias finais de aprovação de todos os alunos da escola, utilizada para criar um ranking interno de turmas e professores, estimulando a competição como motor da melhoria da qualidade.</label>
+                    <label class="option-item"><input type="radio" name="q5" value="E"> E) Trata-se de um procedimento burocrático anual de preenchimento do Censo Escolar, cujos dados são remetidos ao Ministério da Educação sem necessidade de análise interna pela equipe pedagógica.</label>
+                </div>
+
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: B</strong></p>
+                    <p><strong>Autoavaliação (Self-Evaluation):</strong> É um processo interno, protagonizado pelos sujeitos da escola, e não auditoria externa (A). O objetivo não é punir ou ranquear, mas rever o Projeto Político-Pedagógico (PPP).</p>
+                    <p><strong>Gestão Democrática:</strong> Envolve professores, funcionários, gestores, pais e alunos refletindo sobre infraestrutura, relações interpessoais, currículo e gestão. A alternativa B descreve perfeitamente essa natureza reflexiva e política voltada para a qualidade social.</p>
+                </div>
+            </div>
+
+            <!-- Questão 6 -->
+            <div class="question-block" data-correct="A">
+                <span class="question-title">Questão 6</span>
+                <div class="enunciation">
+                    <p>A Lei de Diretrizes e Bases da Educação Nacional (LDB nº 9.394/96), em seu Art. 24, inciso V, estabelece critérios normativos para a verificação do rendimento escolar na Educação Básica. Esse dispositivo legal abre importantes <em>possibilidades</em> para a superação de práticas tradicionais, embora encontre <em>limites</em> na cultura escolar arraigada. De acordo com a LDB, a avaliação do desempenho do aluno deve ser:</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q6" value="A"> A) Contínua e cumulativa, com prevalência dos aspectos qualitativos sobre os quantitativos e dos resultados obtidos ao longo do período sobre os de eventuais provas finais.</label>
+                    <label class="option-item"><input type="radio" name="q6" value="B"> B) Pontual e somativa, priorizando os aspectos quantitativos (notas) sobre os qualitativos, a fim de garantir a objetividade, a meritocracia e a impessoalidade do processo seletivo escolar.</label>
+                    <label class="option-item"><input type="radio" name="q6" value="C"> C) Exclusivamente diagnóstica e formativa, sendo vedada legalmente qualquer forma de atribuição de notas, conceitos ou classificação que possa resultar em retenção do aluno em qualquer série ou ano.</label>
+                    <label class="option-item"><input type="radio" name="q6" value="D"> D) Baseada fundamentalmente em exames finais rigorosos, que devem possuir peso superior às atividades desenvolvidas ao longo do ano letivo, pois sintetizam a consolidação do conhecimento adquirido.</label>
+                    <label class="option-item"><input type="radio" name="q6" value="E"> E) Centrada na memorização de conteúdos factuais, verificada através de testes padronizados idênticos para todas as turmas da mesma rede de ensino, garantindo a isonomia do sistema.</label>
+                </div>
+
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: A</strong></p>
+                    <p>A questão exige conhecimento literal do <strong>Artigo 24, Inciso V, alínea 'a'</strong> da LDB.</p>
+                    <p><strong>Qualitativo > Quantitativo:</strong> A lei inova ao dizer que a qualidade da aprendizagem vale mais que a nota fria. O processo vale mais que o evento final.</p>
+                    <p><strong>Contínua e Cumulativa:</strong> A avaliação não é um evento isolado. O aprendizado de hoje soma-se ao de ontem.</p>
+                    <p>A alternativa B defende o oposto da lei. A alternativa C erra ao dizer que é "vedada" a atribuição de notas ou retenção (a LDB permite retenção). A alternativa D erra ao priorizar exames finais.</p>
+                </div>
+            </div>
+
+            <!-- Questão 7 -->
+            <div class="question-block" data-correct="B">
+                <span class="question-title">Questão 7</span>
+                <div class="enunciation">
+                    <p>No debate contemporâneo sobre a <strong>avaliação externa</strong>, autores críticos como Luiz Carlos de Freitas alertam para os riscos das políticas de "responsabilização" (<em>accountability</em>) verticalizada. Quando os resultados de testes padronizados de larga escala são utilizados como critério único para premiação financeira de professores ou punição de escolas, cria-se um <em>limite</em> severo à qualidade pedagógica. Qual das alternativas abaixo descreve uma consequência negativa típica (efeito colateral) desse modelo de avaliação?</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q7" value="A"> A) O fomento à autonomia docente, pois os professores sentem-se estimulados a criar currículos diversificados e contextualizados que atendam às necessidades culturais locais, independentemente das matrizes dos testes.</label>
+                    <label class="option-item"><input type="radio" name="q7" value="B"> B) O estreitamento curricular (<em>teaching to the test</em>), onde as escolas passam a focar o ensino apenas nos descritores de Língua Portuguesa e Matemática cobrados nos testes, negligenciando outras áreas do conhecimento e a formação humana integral.</label>
+                    <label class="option-item"><input type="radio" name="q7" value="C"> C) A redução significativa das desigualdades educacionais, uma vez que as escolas com menores índices de desempenho recebem automaticamente mais recursos financeiros e pedagógicos para superar suas dificuldades históricas.</label>
+                    <label class="option-item"><input type="radio" name="q7" value="D"> D) A valorização da avaliação interna e do Conselho de Classe, que passam a ter preponderância sobre os índices externos na definição das políticas públicas e na alocação de verbas para a escola.</label>
+                    <label class="option-item"><input type="radio" name="q7" value="E"> E) O fortalecimento da gestão democrática, pois a comunidade escolar é convocada a decidir coletivamente os critérios para a distribuição dos bônus salariais entre os profissionais da educação.</label>
+                </div>
+
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: B</strong></p>
+                    <p><strong>Accountability e Efeitos Colaterais:</strong> Quando há "altas consequências" (prêmios ou punições) atreladas a testes, a resposta racional da escola é focar no que cai na prova.</p>
+                    <p><strong>Estreitamento Curricular (Narrowing):</strong> A escola reduz o tempo de Artes, História e Ciências para treinar Português e Matemática. Ocorre o "ensinar para o teste". A educação fica culturalmente pobre para parecer estatisticamente eficiente.</p>
+                    <p>A alternativa C é falsa porque, na prática, sistemas de bônus tendem a punir as escolas de periferia (que têm mais dificuldade de atingir metas), aumentando a desigualdade.</p>
+                </div>
+            </div>
+
+            <!-- Questão 8 -->
+            <div class="question-block" data-correct="C">
+                <span class="question-title">Questão 8</span>
+                <div class="enunciation">
+                    <p>Considere a seguinte situação hipotética no contexto escolar: Uma equipe pedagógica de Ensino Fundamental decide substituir as provas escritas tradicionais bimestrais por um sistema de avaliação baseado em portfólios, autoavaliação e observação sistemática. Parte das famílias questiona a "falta de rigor" e a ausência de "notas concretas" mensais. À luz das teorias progressistas de avaliação e considerando os <em>limites e possibilidades</em> da relação escola-família, qual argumento pedagógico fundamenta corretamente a decisão da escola?</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q8" value="A"> A) A escola detém autonomia absoluta garantida constitucionalmente, não devendo satisfações técnicas às famílias sobre os métodos avaliativos, cabendo aos pais apenas a aceitação dos resultados finais.</label>
+                    <label class="option-item"><input type="radio" name="q8" value="B"> B) A avaliação por portfólios é preferível porque reduz a carga de trabalho docente referente à correção de provas, liberando tempo para o planejamento, embora seja tecnicamente menos precisa na verificação de conteúdos conceituais.</label>
+                    <label class="option-item"><input type="radio" name="q8" value="C"> C) A diversificação dos instrumentos avaliativos (como o portfólio) permite acompanhar o <em>processo</em> de construção do conhecimento e a trajetória individual do aluno, oferecendo uma visão mais rigorosa, abrangente e qualitativa da aprendizagem do que a nota isolada de uma prova pontual.</label>
+                    <label class="option-item"><input type="radio" name="q8" value="D"> D) As provas escritas são instrumentos ultrapassados que mensuram apenas a memorização mecânica, enquanto os portfólios garantem a aprovação de todos os alunos, evitando conflitos com a comunidade e o trauma da reprovação.</label>
+                    <label class="option-item"><input type="radio" name="q8" value="E"> E) A escola adotou esse sistema temporariamente devido à escassez de recursos para impressão de avaliações escritas, planejando o retorno ao modelo tradicional de provas assim que a verba de custeio for normalizada.</label>
+                </div>
+
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: C</strong></p>
+                    <p><strong>Argumento de Rigor:</strong> Ao contrário do senso comum, a avaliação diversificada é <strong>mais rigorosa</strong> que a prova. A prova é um recorte momentâneo. O portfólio e a observação oferecem triangulação de dados, permitindo ver a evolução (fevereiro vs. junho).</p>
+                    <p>A resposta C articula tecnicamente essa defesa: foco no processo, visão abrangente e qualidade superior à nota isolada. Justificativas como "menos trabalho" (B) ou "autonomia absoluta" (A) são pedagogicamente e politicamente frágeis.</p>
+                </div>
+            </div>
+
+            <!-- Questão 9 -->
+            <div class="question-block" data-correct="B">
+                <span class="question-title">Questão 9</span>
+                <div class="enunciation">
+                    <p>A relação entre <strong>planejamento</strong> e <strong>avaliação</strong> é um tema central na Didática. José Carlos Libâneo afirma que o planejamento não é um ato meramente burocrático, mas um processo de racionalização, organização e coordenação da ação docente. Nesse contexto, a avaliação diagnóstica (ou inicial) desempenha uma função estratégica. Qual é o objetivo primordial da avaliação diagnóstica realizada no início de um ano letivo ou unidade de ensino?</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q9" value="A"> A) Classificar os estudantes em turmas homogêneas de "fortes", "médios" e "fracos", facilitando a gestão da sala de aula e permitindo que o professor trabalhe apenas com alunos de mesmo nível cognitivo.</label>
+                    <label class="option-item"><input type="radio" name="q9" value="B"> B) Verificar os conhecimentos prévios e os pré-requisitos dos estudantes para adequar o planejamento docente à realidade da turma, garantindo a ancoragem dos novos conteúdos e a viabilidade da aprendizagem significativa.</label>
+                    <label class="option-item"><input type="radio" name="q9" value="C"> C) Atribuir a primeira nota do bimestre para compor a média final, garantindo que os alunos mantenham a disciplina e o compromisso com os estudos desde as primeiras semanas de aula.</label>
+                    <label class="option-item"><input type="radio" name="q9" value="D"> D) Identificar os alunos com histórico de indisciplina ou dificuldades graves para estabelecer contratos de comportamento rigorosos e, se necessário, encaminhá-los precocemente à coordenação pedagógica.</label>
+                    <label class="option-item"><input type="radio" name="q9" value="E"> E) Cumprir uma exigência administrativa das Secretarias de Educação para a produção de estatísticas sobre o analfabetismo funcional, sem conexão direta com o planejamento das aulas subsequentes.</label>
+                </div>
+
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: B</strong></p>
+                    <p><strong>Planejamento e Diagnóstico:</strong> São faces da mesma moeda. Não se planeja sem saber de onde se parte.</p>
+                    <p><strong>Conhecimentos Prévios:</strong> Baseado na aprendizagem significativa (Ausubel), o diagnóstico serve para mapear o que o aluno já sabe (âncoras) para adequar o ensino. Se a turma não tem os pré-requisitos, o planejamento deve mudar. As outras opções (classificar, dar nota, rotular indisciplina) desvirtuam a função pedagógica do diagnóstico.</p>
+                </div>
+            </div>
+
+            <!-- Questão 10 -->
+            <div class="question-block" data-correct="C">
+                <span class="question-title">Questão 10</span>
+                <div class="enunciation">
+                    <p>Sobre os <em>limites</em> da avaliação na escola contemporânea, observa-se frequentemente uma disjunção entre o discurso pedagógico (formativo, inclusivo) e a prática escolar (somativa, excludente). Um dos fatores que perpetua essa contradição é a predominância da "cultura da nota". Para superar esse limite e ampliar as <em>possibilidades</em> de uma avaliação democrática, a escola deve:</p>
+                </div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="q10" value="A"> A) Abolir totalmente os registros escolares formais, mantendo a avaliação restrita à oralidade e à memória do professor, a fim de evitar a burocratização e a rotulação dos estudantes.</label>
+                    <label class="option-item"><input type="radio" name="q10" value="B"> B) Alinhar integralmente a prática pedagógica interna às matrizes de referência das avaliações externas (como o Saeb), utilizando o Ideb como único parâmetro válido de qualidade educativa.</label>
+                    <label class="option-item"><input type="radio" name="q10" value="C"> C) Ressignificar os espaços de gestão coletiva, como o Conselho de Classe, transformando-o de um momento burocrático de homologação de médias em um espaço de reflexão pedagógica sobre o percurso dos estudantes, o currículo e a própria prática docente.</label>
+                    <label class="option-item"><input type="radio" name="q10" value="D"> D) Aumentar o nível de dificuldade das provas internas, tornando-as mais exigentes que os testes externos, para assegurar que os alunos estejam preparados para qualquer desafio seletivo futuro.</label>
+                    <label class="option-item"><input type="radio" name="q10" value="E"> E) Transferir a responsabilidade da avaliação e da correção de atividades para softwares de inteligência artificial, garantindo assim uma mensuração matemática precisa do desempenho e eliminando a subjetividade humana do professor.</label>
+                </div>
+
+                <div class="resolution-box">
+                    <h3>Resolução Analítica</h3>
+                    <p><strong>Gabarito: C</strong></p>
+                    <p><strong>Superação da Cultura da Nota:</strong> Para transformar a teoria em prática, a escola precisa de espaços coletivos de reflexão.</p>
+                    <p><strong>O Conselho de Classe:</strong> É o espaço privilegiado para isso. Em vez de apenas ler notas, ele deve ser uma avaliação colegiada do percurso do aluno e da própria prática docente (autoavaliação do professor). Isso fortalece a autonomia e a democracia, superando o tecnicismo das notas e das avaliações externas como único critério.</p>
+                </div>
+            </div>
+
+            <!-- Controles -->
+            <div class="controls">
+                <button type="button" id="finish-btn">Finalizar Simulado</button>
+                <div id="score-display">
+                    <h2>Resultado: <span id="score-value">0</span>/10</h2>
+                    <p>Confira abaixo as resoluções detalhadas para cada questão.</p>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('finish-btn').addEventListener('click', function() {
+            let score = 0;
+            const totalQuestions = 10;
+            const questions = document.querySelectorAll('.question-block');
+            
+            // Desabilitar botão para evitar múltiplos cliques
+            this.disabled = true;
+            this.textContent = "Simulado Finalizado";
+            this.style.backgroundColor = "#7f8c8d";
+
+            questions.forEach(question => {
+                const correctAnswer = question.getAttribute('data-correct');
+                const options = question.querySelectorAll('input[type="radio"]');
+                let selectedAnswer = null;
+
+                // Verificar qual opção foi marcada
+                options.forEach(option => {
+                    option.disabled = true; // Travar opções
+                    if (option.checked) {
+                        selectedAnswer = option.value;
+                    }
+                });
+
+                // Lógica de Correção Visual
+                options.forEach(option => {
+                    const parentLabel = option.parentElement;
+                    
+                    // Destacar a correta (sempre)
+                    if (option.value === correctAnswer) {
+                        parentLabel.classList.add('correct');
+                    }
+
+                    // Se o usuário errou, destacar a errada
+                    if (option.checked && option.value !== correctAnswer) {
+                        parentLabel.classList.add('wrong');
+                    }
+                });
+
+                // Contar Pontos
+                if (selectedAnswer === correctAnswer) {
+                    score++;
+                }
+
+                // Mostrar Resolução
+                const resolutionBox = question.querySelector('.resolution-box');
+                resolutionBox.style.display = 'block';
+            });
+
+            // Exibir Placar
+            const scoreDisplay = document.getElementById('score-display');
+            const scoreValue = document.getElementById('score-value');
+            scoreValue.textContent = score;
+            scoreDisplay.style.display = 'block';
+            
+            // Scroll suave até o placar
+            scoreDisplay.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

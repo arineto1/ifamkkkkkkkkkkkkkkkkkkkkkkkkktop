@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo: Didática e Avaliação IFAM (EBTT)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos focados em legibilidade e impressão mental */
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #1a202c; /* Cinza chumbo para alto contraste */
+            line-height: 1.6;
+        }
+
+        /* Marcador de texto digital */
+        .highlight {
+            background-color: #fef08a; /* Amarelo 'Post-it' suave */
+            padding: 0 4px;
+            border-radius: 2px;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .highlight-secondary {
+            background-color: #e2e8f0; /* Cinza claro para destaques secundários */
+            padding: 0 4px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+
+        .section-card {
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            position: relative;
+        }
+        
+        /* Barra lateral nos títulos para hierarquia visual */
+        h2::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #1f2937; /* Cinza escuro */
+            border-radius: 2px;
+        }
+
+        /* Forçar tabelas a não terem scroll horizontal */
+        table {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        th, td {
+            word-wrap: break-word; /* Quebra palavras longas */
+            overflow-wrap: break-word;
+            hyphens: auto;
+            vertical-align: top;
+        }
+
+        /* Estilo da lista de peguinhas */
+        .trap-item {
+            border-left: 3px solid #ef4444;
+            padding-left: 1rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-white min-h-screen">
+
+    <!-- Container Central -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-8 py-12">
+
+        <!-- Cabeçalho -->
+        <header class="mb-12 text-center border-b border-gray-200 pb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">
+                Didática: Avaliação & Recomposição de Aprendizagens
+            </h1>
+            <p class="text-xl text-gray-600 font-medium">Foco: Concurso IFAM / Banca CEFETMINAS (EBTT)</p>
+            <p class="text-sm text-gray-400 mt-2">Baseado em temas pós-pandemia e programas locais.</p>
+        </header>
+
+        <!-- Player de Áudio -->
+        <section class="mb-12 bg-gray-50 p-6 rounded-xl border border-gray-100 shadow-sm">
+            <div class="flex items-center mb-3">
+                <span class="text-2xl mr-3">🎧</span>
+                <h3 class="text-sm font-bold text-gray-600 uppercase tracking-wide">Áudio Resumo para Fixação</h3>
+            </div>
+            <!-- INSERIR ARQUIVO MP3 AQUI -->
+            <audio controls class="w-full h-10 rounded-md">
+                <source src="6recomposicao.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+            <p class="text-xs text-gray-400 mt-2 ml-1">Certifique-se de que o arquivo <code>resumo_didatica_ifam.mp3</code> está na mesma pasta.</p>
+        </section>
+
+        <!-- 1. Definições Fundamentais -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 ml-4">1. Distinções Conceituais (Obrigatório para a Prova)</h2>
+            <p class="mb-6 text-gray-700 text-lg">
+                A banca CEFETMINAS cobra a precisão terminológica. Entenda que <strong>Recomposição</strong> não é sinônimo de Recuperação.
+            </p>
+
+            <div class="overflow-hidden rounded-lg border border-gray-200 mb-8">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-3 px-4 text-left text-xs font-bold text-gray-600 uppercase w-1/4">Conceito</th>
+                            <th class="py-3 px-4 text-left text-xs font-bold text-gray-600 uppercase w-1/4">Foco Temporal</th>
+                            <th class="py-3 px-4 text-left text-xs font-bold text-gray-600 uppercase w-2/4">Características Chave</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                        <tr>
+                            <td class="py-4 px-4 font-bold text-gray-800">Recuperação</td>
+                            <td class="py-4 px-4 text-sm text-gray-600">Passado (Imediato)</td>
+                            <td class="py-4 px-4 text-sm text-gray-700">Ação pontual, reativa, foca na nota/conteúdo não fixado. Geralmente ao final do bimestre.</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-4 font-bold text-gray-800">Reforço</td>
+                            <td class="py-4 px-4 text-sm text-gray-600">Presente (Paralelo)</td>
+                            <td class="py-4 px-4 text-sm text-gray-700">Apoio a dificuldades momentâneas. Ocorre geralmente no contraturno.</td>
+                        </tr>
+                        <tr class="bg-yellow-50">
+                            <td class="py-4 px-4 font-bold text-gray-900 text-lg">Recomposição <br><span class="text-xs font-normal">(Tema Central)</span></td>
+                            <td class="py-4 px-4 text-sm text-gray-900 font-semibold">Passado + Futuro (Estrutural)</td>
+                            <td class="py-4 px-4 text-sm text-gray-900">
+                                Resposta sistêmica às lacunas da pandemia. Envolve <span class="highlight">priorização curricular</span>, <span class="highlight">aceleração</span> e garantia do direito de aprender. Não foca apenas no conteúdo, mas no desenvolvimento de habilidades basilares perdidas.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bg-gray-50 p-5 rounded-lg border-l-4 border-gray-800">
+                <h3 class="font-bold text-gray-900 mb-2">Conceito de Priorização Curricular:</h3>
+                <p class="text-gray-700 mb-2">Na recomposição, divide-se o currículo em:</p>
+                <ul class="list-disc ml-5 space-y-1 text-gray-700">
+                    <li><strong>Aprendizagens Essenciais:</strong> Aquilo que é pré-requisito indispensável para o ano seguinte (Foco total).</li>
+                    <li><strong>Aprendizagens Desejáveis:</strong> Podem ser aprofundadas posteriormente.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2. A Tríade da Avaliação -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 ml-4">2. Tipologia da Avaliação (Teoria Clássica)</h2>
+            <p class="mb-4 text-gray-700">Para o cargo EBTT, a banca exige domínio sobre a função de cada avaliação no processo de ensino-aprendizagem.</p>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Diagnóstica -->
+                <div class="border border-gray-200 p-5 rounded-lg shadow-sm">
+                    <div class="text-sm font-bold text-gray-400 uppercase mb-1">Início do Processo</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Diagnóstica</h3>
+                    <p class="text-sm text-gray-600 italic mb-3">Principal autor: Cipriano Luckesi</p>
+                    <p class="text-gray-700 mb-2"><strong>Função:</strong> Identificar conhecimentos prévios e lacunas.</p>
+                    <p class="text-gray-700"><strong>Características:</strong> Preventiva, <span class="highlight">sem nota</span>, orienta o planejamento. Luckesi chama de "juízo de qualidade".</p>
+                </div>
+
+                <!-- Formativa -->
+                <div class="border-2 border-yellow-200 bg-yellow-50 p-5 rounded-lg shadow-sm relative">
+                    <div class="absolute -top-3 right-4 bg-yellow-400 text-xs font-bold px-2 py-1 rounded">FAVORITO DA BANCA</div>
+                    <div class="text-sm font-bold text-gray-500 uppercase mb-1">Durante o Processo</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Formativa</h3>
+                    <p class="text-sm text-gray-600 italic mb-3">Autores: Perrenoud / Hoffmann</p>
+                    <p class="text-gray-700 mb-2"><strong>Função:</strong> Regular a aprendizagem e informar o aluno.</p>
+                    <p class="text-gray-700"><strong>Características:</strong> Processual, feedback contínuo, erro como "trampolim" para o acerto. É a chamada <span class="highlight">Avaliação Mediadora</span>.</p>
+                </div>
+
+                <!-- Somativa -->
+                <div class="border border-gray-200 p-5 rounded-lg shadow-sm">
+                    <div class="text-sm font-bold text-gray-400 uppercase mb-1">Fim do Processo</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Somativa</h3>
+                    <p class="text-sm text-gray-600 italic mb-3">Tradicional / Bloom</p>
+                    <p class="text-gray-700 mb-2"><strong>Função:</strong> Classificar e certificar.</p>
+                    <p class="text-gray-700"><strong>Características:</strong> Foca no resultado final (produto), atribuição de notas, caráter excludente se usada isoladamente.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Legislação e Normativas -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 ml-4">3. Legislação: O Que Levar para a Prova</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">Parecer CNE/CP nº 05/2020: Continuum Curricular</h3>
+                    <p class="text-gray-700 mt-1">
+                        Permite a fusão de anos letivos. O foco é evitar a evasão escolar através da reprovação em massa.
+                        <br><strong>Ponto chave:</strong> Não significa aprovação automática, mas sim <span class="highlight">reorganização dos objetivos de aprendizagem</span> em um ciclo maior.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">Parecer CNE/CP nº 11/2020: Avaliação na Pandemia</h3>
+                    <p class="text-gray-700 mt-1">
+                        Veda (proíbe) a reprovação baseada <strong>exclusivamente</strong> na falta de acesso tecnológico ou não participação nas atividades remotas.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-gray-900">LDB (Art. 24, Inciso V)</h3>
+                    <p class="text-gray-700 mt-1">
+                        A avaliação deve ser contínua e cumulativa, com <span class="highlight">prevalência dos aspectos qualitativos sobre os quantitativos</span>. Essa é a base legal de toda questão sobre avaliação formativa.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Contexto Local e Específico IFAM -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 ml-4">4. Contexto Local (Amazonas) e IFAM</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-gray-900 border-b pb-2 mb-3">Realidade Amazônica</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li>
+                            <strong>Conectividade:</strong> Grande disparidade digital. O uso de material impresso e rádio foi essencial para comunidades ribeirinhas.
+                        </li>
+                        <li>
+                            <strong>"Aula em Casa":</strong> Programa do Governo do AM (em parceria com Seduc e redes municipais) via TV aberta. O IFAM dialoga com essa realidade dos alunos ingressantes.
+                        </li>
+                        <li>
+                            <strong>Busca Ativa Escolar:</strong> Programa do UNICEF/Undime fortemente aplicado no AM para localizar alunos que evadiram na pandemia.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h3 class="font-bold text-gray-900 border-b pb-2 mb-3">Identidade IFAM (EBTT)</h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li>
+                            <strong>Formação Omnilateral:</strong> O ensino técnico no IFAM não visa apenas o mercado, mas a formação integral (trabalho, ciência, cultura e tecnologia).
+                        </li>
+                        <li>
+                            <strong>Interdisciplinaridade:</strong> A recomposição no IFAM deve buscar projetos integradores (ex: Matemática + Física + Oficina).
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Perfil da Banca -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 ml-4">5. Perfil da Banca Fundação CEFETMINAS</h2>
+            
+            <div class="mb-6">
+                <p class="text-gray-700 mb-4">
+                    Ao contrário de bancas que cobram apenas a letra da lei, a CEFETMINAS gosta de <strong>situações-problema</strong> contextualizadas na sala de aula.
+                </p>
+                <h3 class="font-bold text-gray-900 mb-3">Termos "Queridinhos" da Banca (Palavras de Segurança):</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="highlight-secondary text-sm">Acolhimento</span>
+                    <span class="highlight-secondary text-sm">Equidade</span>
+                    <span class="highlight-secondary text-sm">Flexibilização Curricular</span>
+                    <span class="highlight-secondary text-sm">Ensino Híbrido (Metodologia Ativa)</span>
+                    <span class="highlight-secondary text-sm">Avaliação Emancipatória</span>
+                </div>
+            </div>
+
+            <h3 class="font-bold text-gray-900 mb-4">Pegadinhas Recorrentes (Cuidado!):</h3>
+            <div class="trap-item">
+                <p class="text-gray-800 font-semibold">Pegadinha 1: O Mito da Aprovação Automática</p>
+                <p class="text-gray-600 text-sm">A banca afirmará que o "Continuum Curricular" obriga aprovar todos sem critério. <strong>Falso.</strong> O critério muda (foco no essencial), mas a avaliação continua existindo.</p>
+            </div>
+            <div class="trap-item">
+                <p class="text-gray-800 font-semibold">Pegadinha 2: O Ensino Híbrido "Fake"</p>
+                <p class="text-gray-600 text-sm">Dizer que transmitir aula expositiva pelo Google Meet é Ensino Híbrido. <strong>Falso.</strong> Ensino Híbrido exige integração de dados e personalização do ensino.</p>
+            </div>
+        </section>
+
+        <!-- 6. Roteiro Prático -->
+        <section class="mb-16">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 ml-4">6. Roteiro Prático: Como aplicar na Prova Didática</h2>
+            <div class="bg-gray-900 text-white rounded-xl p-8 shadow-lg">
+                <h3 class="text-xl font-bold mb-4 text-yellow-400">Passo a Passo para a Aula de Desempenho</h3>
+                <ol class="space-y-4">
+                    <li class="flex">
+                        <span class="font-bold text-yellow-400 mr-3">1.</span>
+                        <p><strong>Acolhida e Diagnóstico:</strong> Comece a aula com uma pergunta disparadora ou quiz rápido para sondar o nível da turma (Justifique com Luckesi).</p>
+                    </li>
+                    <li class="flex">
+                        <span class="font-bold text-yellow-400 mr-3">2.</span>
+                        <p><strong>Contextualização Regional:</strong> Ligue o tema técnico a um problema local do Amazonas (ex: logística fluvial, energia solar em comunidades isoladas).</p>
+                    </li>
+                    <li class="flex">
+                        <span class="font-bold text-yellow-400 mr-3">3.</span>
+                        <p><strong>Metodologia Ativa:</strong> Use "Rotação por Estações" ou "Estudo de Caso". Evite aula 100% expositiva. Mostre o aluno como protagonista.</p>
+                    </li>
+                    <li class="flex">
+                        <span class="font-bold text-yellow-400 mr-3">4.</span>
+                        <p><strong>Verificação de Aprendizagem (Fechamento):</strong> Finalize não com uma prova, mas com uma produção prática (mapa mental, solução técnica) para evidenciar a avaliação formativa.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Rodapé com Botão -->
+        <footer class="mt-16 pb-10 text-center">
+            <a href="6questoes.html" class="inline-block bg-gray-800 hover:bg-gray-700 text-white font-bold text-lg py-5 px-10 rounded-lg shadow-lg transform hover:-translate-y-1 transition duration-300">
+                Acessar Banco de Questões
+            </a>
+            <p class="text-gray-500 mt-6 text-sm">
+                Material de apoio para concurso IFAM. Boa sorte!
+            </p>
+        </footer>
+
+    </main>
+</body>
+</html>

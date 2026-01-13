@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo: Didática e Avaliação (IFAM/FCM)</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1f2937;
+            --heading-color: #111827;
+            --accent-color: #2563eb; /* Azul Institucional */
+            --secondary-accent: #059669; /* Verde Sucesso */
+            --warning-bg: #fff7ed;
+            --warning-border: #f97316;
+            --highlight-bg: #fef9c3;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-bottom: 6rem;
+        }
+
+        /* Tipografia */
+        h1, h2, h3, h4 {
+            color: var(--heading-color);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            text-align: center;
+            border-bottom: 4px solid var(--accent-color);
+            padding-bottom: 1rem;
+            margin-top: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            border-left: 6px solid var(--accent-color);
+            padding-left: 1rem;
+            background-color: #f8fafc;
+            padding: 0.8rem 0.8rem 0.8rem 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        h3 {
+            font-size: 1.4rem;
+            color: #374151;
+            font-weight: 700;
+            margin-top: 2rem;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+
+        /* Destaques e Grifos */
+        strong {
+            color: #000;
+            font-weight: 700;
+        }
+
+        mark {
+            background-color: var(--highlight-bg);
+            color: #000;
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-weight: 500;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .keyword-box {
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Caixas de Texto Especiais */
+        .concept-box {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .alert-box {
+            background-color: var(--warning-bg);
+            border-left: 5px solid var(--warning-border);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .alert-title {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #c2410c;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* Tabelas Responsivas sem Scroll Horizontal */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+            table-layout: fixed; /* Essencial para evitar scroll */
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border-color);
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #eef2ff;
+            color: var(--heading-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        /* Player de Áudio */
+        .audio-player-container {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .audio-wrapper {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            padding: 0 2rem;
+        }
+
+        .audio-label {
+            font-weight: bold;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+        }
+
+        audio {
+            flex-grow: 1;
+            height: 40px;
+            outline: none;
+        }
+
+        /* Botão de Questões */
+        .btn-container {
+            margin-top: 5rem;
+            text-align: center;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .btn-questoes {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-questoes:hover {
+            background-color: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 20px -3px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Listas */
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -0.4rem;
+        }
+
+        /* Responsividade Extrema para Mobile */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.5rem; }
+            
+            .audio-wrapper {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            audio { width: 100%; }
+
+            /* Transformação de Tabelas em Cards no Mobile */
+            table, thead, tbody, th, td, tr { 
+                display: block; 
+            }
+            
+            thead tr { 
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            tr { 
+                border: 1px solid #e5e7eb; 
+                margin-bottom: 1.5rem; 
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                overflow: hidden;
+            }
+            
+            td { 
+                border: none;
+                border-bottom: 1px solid #f3f4f6; 
+                position: relative;
+                padding-left: 40%; 
+                text-align: right;
+                font-size: 0.95rem;
+            }
+            
+            td:last-child { border-bottom: none; }
+
+            td:before { 
+                position: absolute;
+                top: 1rem;
+                left: 1rem;
+                width: 35%; 
+                padding-right: 10px; 
+                white-space: nowrap;
+                text-align: left;
+                font-weight: 700;
+                color: #6b7280;
+                content: attr(data-label);
+                font-size: 0.85rem;
+                text-transform: uppercase;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Reprodutor de Áudio -->
+    <div class="audio-player-container">
+        <div class="audio-wrapper">
+            <div class="audio-label">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                Resumo da Aula
+            </div>
+            <audio controls>
+                <source src="3formativa.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h4>Concurso IFAM - Banca CEFETMINAS</h4>
+            <h1>AULA COMPLETA: DIDÁTICA E AVALIAÇÃO</h1>
+            <p style="text-align: center; color: #555; max-width: 700px; margin: 0 auto;">
+                Este material consolida a teoria essencial, a legislação vigente e as tendências da banca examinadora para o cargo de Professor EBTT.
+            </p>
+        </header>
+
+        <!-- PARTE 1: DEFINIÇÕES FUNDAMENTAIS -->
+        <section>
+            <h2>1. Definições Básicas e Diferenciações</h2>
+            
+            <div class="concept-box">
+                <h3>O Conceito de Avaliação Formativa</h3>
+                <p>
+                    A avaliação formativa não é apenas "dar nota". É um processo <strong>contínuo, interativo e indissociável</strong> do ensino. Ela serve para informar o professor e o aluno sobre o progresso da aprendizagem, permitindo ajustes em tempo real.
+                </p>
+                <p>
+                    <span class="keyword-box">Palavras-Chave:</span>
+                    <mark>Regulação</mark> <mark>Processo</mark> <mark>Feedback</mark> <mark>Acompanhamento</mark> <mark>Inclusão</mark>
+                </p>
+            </div>
+
+            <h3>⚠️ Ponto de Atenção: Mensuração vs. Avaliação</h3>
+            <p>Muitas questões da FCM tentam confundir estes dois conceitos. Entenda a diferença:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th width="20%">Conceito</th>
+                        <th width="40%">O que faz?</th>
+                        <th width="40%">Característica</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Conceito"><strong>Mensuração</strong></td>
+                        <td data-label="O que faz">Descreve fenômenos quantitativamente.</td>
+                        <td data-label="Característica">É objetiva, numérica, estatística. (Ex: "O aluno acertou 7 de 10"). É apenas um <em>dado</em>.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Conceito"><strong>Avaliação</strong></td>
+                        <td data-label="O que faz">Interpreta os dados para a tomada de decisão.</td>
+                        <td data-label="Característica">Envolve <strong>julgamento de valor</strong> e uma <strong>ação pedagógica</strong> posterior. (Ex: "O aluno precisa reforçar lógica booleana").</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- PARTE 2: AUTORES -->
+        <section>
+            <h2>2. O "Tripé Teórico" da Banca (Memorização Obrigatória)</h2>
+            <p>A Fundação CEFETMINAS cobra a associação direta entre autor e conceito. Não confunda as terminologias.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th width="25%">Autor</th>
+                        <th width="30%">Conceito Chave</th>
+                        <th>Explicação para a Prova</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Autor"><strong>Cipriano LUCKESI</strong></td>
+                        <td data-label="Conceito"><mark>Ato Amoroso</mark> / Diagnóstico</td>
+                        <td data-label="Explicação">Critica a "Pedagogia do Exame". Para ele, avaliar é um ato de acolher a realidade do aluno para transformá-la. Não julga para excluir, mas diagnostica para incluir.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Autor"><strong>Jussara HOFFMANN</strong></td>
+                        <td data-label="Conceito"><mark>Avaliação Mediadora</mark></td>
+                        <td data-label="Explicação">O professor é um mediador. O erro não é falha, é uma "hipótese de construção do conhecimento". A avaliação deve ser provocativa e reflexiva.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Autor"><strong>Philippe PERRENOUD</strong></td>
+                        <td data-label="Conceito"><mark>Regulação</mark> / Diferenciação</td>
+                        <td data-label="Explicação">Avaliação a serviço da "Pedagogia Diferenciada". Serve para regular as aprendizagens: se o aluno não aprendeu, muda-se o método, não o aluno.</td>
+                    </tr>
+                     <tr>
+                        <td data-label="Autor"><strong>Outros Citados</strong></td>
+                        <td data-label="Conceito">Haydt / Sant'Anna</td>
+                        <td data-label="Explicação"><strong>Haydt:</strong> Foca nos objetivos educacionais. <strong>Sant'Anna:</strong> Foca no planejamento. Ambas reforçam a avaliação como processo, não produto.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- PARTE 3: FUNÇÕES -->
+        <section>
+            <h2>3. As Três Funções da Avaliação (Bloom/Scriven)</h2>
+            <div class="alert-box">
+                <span class="alert-title">Fique Esperto:</span>
+                O enunciado trará um "estudo de caso". Identifique a função pelo <strong>momento</strong> e pelo <strong>objetivo</strong>.
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Função</th>
+                        <th>Momento</th>
+                        <th>Objetivo Central</th>
+                        <th>Exemplo Prático (TI)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Função"><strong>DIAGNÓSTICA</strong><br>(Analítica/Preventiva)</td>
+                        <td data-label="Momento">Início (do ano, da aula, do projeto)</td>
+                        <td data-label="Objetivo">Identificar conhecimentos prévios (subsunçores) e detectar pré-requisitos. Evita ensinar o que o aluno não tem base para entender.</td>
+                        <td data-label="Exemplo">Questionário inicial sobre lógica de programação antes de ensinar Java.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Função"><strong>FORMATIVA</strong><br>(Controladora/Reguladora)</td>
+                        <td data-label="Momento">Durante todo o processo</td>
+                        <td data-label="Objetivo">Informar professor e aluno sobre o desempenho (Feedback). Localizar dificuldades para correção imediata de rumos.</td>
+                        <td data-label="Exemplo">Code review (revisão de código) assistida ou exercícios práticos sem nota para fixação.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Função"><strong>SOMATIVA</strong><br>(Classificatória)</td>
+                        <td data-label="Momento">Final (ciclo, bimestre, curso)</td>
+                        <td data-label="Objetivo">Classificar os alunos segundo níveis de aproveitamento. Emitir certificados. Tem função social, mas não deve ser a única.</td>
+                        <td data-label="Exemplo">Projeto final de semestre ou prova de certificação.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- PARTE 4: LEGISLAÇÃO -->
+        <section>
+            <h2>4. Legislação Obrigatória (LDB e EPT)</h2>
+            <p>O que diz a lei seca que cai na prova (Art. 24, Inciso V da LDB 9394/96):</p>
+            
+            <ul style="background: #fdfdfd; padding: 1.5rem; border: 1px dashed #ccc;">
+                <li><strong>a)</strong> Avaliação contínua e cumulativa do desempenho do aluno.</li>
+                <li><strong>b)</strong> <mark>Prevalência dos aspectos QUALITATIVOS sobre os quantitativos.</mark></li>
+                <li><strong>c)</strong> Prevalência dos resultados ao longo do período sobre os de eventuais provas finais.</li>
+                <li><strong>d)</strong> Obrigatoriedade de estudos de recuperação (de preferência paralelos).</li>
+            </ul>
+
+            <h3>Avaliação na Educação Profissional (EPT)</h3>
+            <p>
+                Na EPT, avalia-se por <strong>Competências</strong> (Conhecimentos, Habilidades e Atitudes - CHA). A avaliação deve simular situações reais de trabalho.
+                <br><em>Atenção:</em> Um aluno que sabe a teoria de redes (sabe "falar sobre") mas não sabe crimpar um cabo ou configurar um roteador (não sabe "fazer") não desenvolveu a competência completa.
+            </p>
+        </section>
+
+        <!-- PARTE 5: INSTRUMENTOS -->
+        <section>
+            <h2>5. Instrumentos e Práticas (Foco Prático)</h2>
+            <p>A FCM detesta a "prova escrita" como instrumento único. Você deve conhecer as alternativas:</p>
+
+            <ul>
+                <li><strong>Portfólio (A "Menina dos Olhos"):</strong> Coleção organizada de trabalhos produzidos pelo aluno. Exige <em>reflexão</em> do aluno sobre o que produziu. Não é apenas uma pasta de arquivos, é um diário de bordo da aprendizagem.</li>
+                <li><strong>Rubricas (Matrizes de Avaliação):</strong> Tabelas que descrevem critérios claros para cada nota. Aumentam a objetividade e reduzem o "eu acho" do professor.</li>
+                <li><strong>Mapas Conceituais:</strong> Ótimos para avaliar a estrutura cognitiva e as conexões que o aluno faz entre conceitos (ex: Hardware vs Software).</li>
+                <li><strong>Observação Sistemática:</strong> O professor registra atitudes, participação e evolução em uma ficha de acompanhamento, fugindo da "nota de prova".</li>
+            </ul>
+
+            <div class="concept-box">
+                <h4>Taxonomia de Bloom na Informática</h4>
+                <p>Não cobre "Criação" (nível alto) se você só ensinou "Memorização" (nível baixo).</p>
+                <ol style="margin-top: 0.5rem;">
+                    <li><strong>Lembrar:</strong> O que é uma variável?</li>
+                    <li><strong>Entender:</strong> Explicar para que serve um loop.</li>
+                    <li><strong>Aplicar:</strong> Escrever um loop `for`.</li>
+                    <li><strong>Analisar:</strong> Debugar um código com erro.</li>
+                    <li><strong>Avaliar:</strong> Comparar dois algoritmos e dizer qual é mais eficiente.</li>
+                    <li><strong>Criar:</strong> Desenvolver um sistema completo.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- PARTE 6: FEEDBACK -->
+        <section>
+            <h2>6. O Poder do Feedback (Hattie & Timperley)</h2>
+            <p>O feedback é o motor da avaliação formativa. Mas nem todo feedback é útil.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th width="30%">Nível de Feedback</th>
+                        <th>Descrição e Eficácia</th>
+                        <th>Exemplo (Professor de TI)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Nível"><strong>Nível da Tarefa</strong><br>(Task Level)</td>
+                        <td data-label="Descrição">Corretivo. Indica se está certo ou errado. <span style="color:green">Eficaz para iniciantes.</span></td>
+                        <td data-label="Exemplo">"Seu código não compila porque falta um ponto-e-vírgula na linha 10."</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nível"><strong>Nível de Processo</strong><br>(Process Level)</td>
+                        <td data-label="Descrição">Foca na estratégia utilizada. <span style="color:green">Muito Eficaz.</span></td>
+                        <td data-label="Exemplo">"Você usou muitas variáveis globais. Tente modularizar para economizar memória."</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nível"><strong>Nível de Autorregulação</strong><br>(Self-regulation)</td>
+                        <td data-label="Descrição">Estimula o aluno a se avaliar. <span style="color:green">Altamente Eficaz.</span></td>
+                        <td data-label="Exemplo">"Como você saberia se esse resultado está correto antes de me entregar?"</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nível"><strong>Nível do "Eu"</strong><br>(Self Level)</td>
+                        <td data-label="Descrição">Elogio ou crítica pessoal. <span style="color:red; font-weight:bold;">INEFICAZ.</span> Desvia o foco da aprendizagem.</td>
+                        <td data-label="Exemplo">"Você é muito inteligente!" ou "Você é fraco nisso." (Evite na prova!)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- PARTE 7: PEGUINHAS DA BANCA -->
+        <section>
+            <h2>7. Raio-X da Banca CEFETMINAS (Tendências)</h2>
+            <div class="alert-box">
+                <p><strong>1. Avaliação vs. Inclusão:</strong> A banca ama cenários onde um aluno tem dificuldade. A resposta correta NUNCA é "reprovar", "encaminhar para a direção" ou "facilitar passando a mão na cabeça". A resposta certa é <strong>"adaptar a metodologia e os instrumentos de avaliação"</strong>.</p>
+                <p><strong>2. Erro Construtivo:</strong> Se uma alternativa disser que o erro deve ser punido ou ignorado, está errada. O erro é <em>matéria-prima</em> para a aula seguinte.</p>
+                <p><strong>3. O Mito da "Espontaneidade":</strong> Avaliação formativa NÃO é avaliação "solta" ou "sem registro". Ela exige <strong>mais</strong> planejamento e registro (fichas, diários) do que a somativa.</p>
+                <p><strong>4. Interdisciplinaridade:</strong> Em provas EBTT, a avaliação que conecta a disciplina técnica (ex: Banco de Dados) com a formação geral (ex: Matemática/Português) é sempre a preferida.</p>
+            </div>
+        </section>
+
+        <!-- BOTÃO PARA QUESTÕES -->
+        <div class="btn-container">
+            <h3>Preparado para testar o conhecimento?</h3>
+            <p style="margin-bottom: 2rem; color: #666;">A teoria só fixa com a prática.</p>
+            <a href="3questoes.html" class="btn-questoes">Resolver Questões da Banca</a>
+        </div>
+    </div>
+
+</body>
+</html>

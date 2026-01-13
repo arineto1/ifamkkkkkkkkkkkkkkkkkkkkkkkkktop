@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Avaliação na Educação Infantil e Anos Iniciais</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --border-color: #e0e0e0;
+            --highlight-bg: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text-color);
+        }
+
+        header p {
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .question-header {
+            font-weight: bold;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: var(--highlight-bg);
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 15px;
+            margin-top: 5px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+
+        .option-label {
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Estilos de Feedback Pós-Correção */
+        .correct-answer-style {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+        }
+
+        .incorrect-answer-style {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+        }
+
+        .resolution-box {
+            display: none; /* Escondido inicialmente */
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f8ff;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 4px;
+            animation: fadeIn 0.5s;
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .resolution-content {
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .resolution-content ul {
+            padding-left: 20px;
+        }
+        
+        .resolution-content li {
+            margin-bottom: 5px;
+        }
+
+        .actions {
+            text-align: center;
+            margin: 40px 0 60px 0;
+        }
+
+        .btn-submit {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .score-panel {
+            display: none;
+            background-color: #fff;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid var(--success-color);
+            animation: slideDown 0.5s;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--success-color);
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .container { padding: 10px; }
+            .question-card { padding: 20px; }
+            header h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Didática e Avaliação</h1>
+        <p>Educação Infantil e Anos Iniciais: observação, registros e encaminhamentos pedagógicos</p>
+        <p style="font-size: 0.9rem;">Baseado no estilo da banca Fundação CEFETMINAS</p>
+    </header>
+
+    <div id="score-display" class="score-panel">
+        <h2>Resultado do Simulado</h2>
+        <span class="score-number" id="final-score">0/10</span>
+        <p id="score-message">Confira abaixo as resoluções detalhadas de cada questão.</p>
+    </div>
+
+    <form id="quiz-form">
+        <div id="quiz-container">
+            <!-- As questões serão renderizadas aqui via JavaScript -->
+        </div>
+
+        <div class="actions">
+            <button type="button" class="btn-submit" onclick="submitQuiz()">Finalizar e Ver Resoluções</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            subject: "Legislação Educacional e Didática",
+            text: "(FCM - Adaptada) A organização da Educação Infantil no Brasil sofreu mudanças paradigmáticas com a promulgação da Lei de Diretrizes e Bases da Educação Nacional (Lei nº 9.394/96) e, posteriormente, com as alterações trazidas pela Lei nº 12.796/2013. Tais marcos legais romperam com a tradição assistencialista, instituindo a avaliação como ferramenta de acompanhamento do desenvolvimento infantil, dissociada da promoção. Considerando o Artigo 31 da LDBEN e as Diretrizes Curriculares Nacionais para a Educação Infantil (Resolução CNE/CEB nº 5/2009), analise o estudo de caso a seguir:<br><br><em>A Escola Municipal \"Pequenos Passos\" elaborou seu Regimento Escolar definindo que, para o ingresso no 1º ano do Ensino Fundamental, as crianças do Grupo 5 (Pré-escola II) deveriam submeter-se a uma \"Sondagem de Prontidão\". Aquelas que não demonstrassem domínio das vogais e contagem até 50 permaneceriam retidas na Educação Infantil para \"amadurecimento\", independentemente da idade cronológica.</em><br><br>Diante do exposto e da legislação vigente, assinale a alternativa que apresenta a análise CORRETA sobre a prática da escola:",
+            options: [
+                "A) A escola age corretamente, pois a autonomia pedagógica garantida pela LDB permite que cada instituição defina seus critérios de avaliação e classificação, visando garantir que apenas alunos alfabetizados ingressem no Ensino Fundamental, evitando o fracasso escolar futuro.",
+                "B) A prática é parcialmente correta; embora a retenção não seja recomendada, a \"Sondagem de Prontidão\" é um instrumento obrigatório segundo a BNCC para diagnosticar o nível de letramento, devendo seus resultados compor o histórico escolar obrigatório para a matrícula no ano seguinte.",
+                "C) A prática fere frontalmente o Art. 31 da LDBEN, que estabelece que a avaliação na Educação Infantil destina-se ao acompanhamento e registro do desenvolvimento das crianças, sem objetivo de promoção, mesmo para o acesso ao Ensino Fundamental, sendo a retenção por desempenho ilegal nesta etapa.",
+                "D) A escola equivoca-se apenas na idade, pois a retenção por falta de \"prontidão\" só é permitida a partir dos 6 anos de idade, quando a criança entra na escolaridade obrigatória, devendo na Educação Infantil prevalecer apenas o controle de frequência mínima de 75%.",
+                "E) A conduta é amparada pelas Diretrizes Curriculares Nacionais, que preveem a \"aceleração de estudos\" e a \"classificação\" em qualquer série ou etapa, exceto na creche, para garantir a homogeneidade das turmas de alfabetização."
+            ],
+            correct: 2, // Index 2 = C
+            resolution: `
+                <strong>Gabarito: C</strong><br><br>
+                Esta questão explora um dos pilares mais importantes e frequentemente cobrados em concursos da área educacional: a natureza da avaliação na primeira etapa da Educação Básica. A resposta fundamenta-se na <strong>Lei de Diretrizes e Bases da Educação Nacional (LDB - Lei 9.394/96)</strong>, especificamente em seu Artigo 31.
+                <br><br>
+                1. <strong>O Princípio da Não-Retenção (Art. 31, incisos I e V):</strong> A LDB é taxativa ao afirmar que a avaliação na Educação Infantil far-se-á mediante acompanhamento e registro do desenvolvimento das crianças, <strong>sem o objetivo de promoção, mesmo para o acesso ao ensino fundamental</strong>. Isso significa que nenhuma criança pode ser "reprovada" ou "retida" na pré-escola por não saber ler, contar ou escrever. O critério de passagem para o Ensino Fundamental é exclusivamente <strong>etário</strong> (6 anos completos até 31 de março do ano letivo). A escola do estudo de caso comete uma ilegalidade ao instituir uma "Sondagem de Prontidão" com caráter eliminatório/retentor.<br>
+                2. <strong>A Função do Registro:</strong> O registro (relatórios, portfólios) serve para documentar a história da criança, permitindo que a escola e a família acompanhem a evolução. Ele jamais deve ser usado como veredito de aptidão.<br>
+                3. <strong>Frequência (Art. 31, inciso IV):</strong> A Lei 12.796/2013 introduziu a obrigatoriedade de controle de frequência na pré-escola (4 e 5 anos), exigindo mínimo de <strong>60%</strong>. A alternativa D menciona 75% (que é a regra para o Fundamental e Médio), o que constitui um erro comum.
+            `
+        },
+        {
+            id: 2,
+            subject: "Didática e Teoria Pedagógica",
+            text: "(FCM - Adaptada) Leia o fragmento abaixo, extraído da obra de Jussara Hoffmann:<br><br><em>\"A avaliação mediadora é uma postura de vida, e os fundamentos de uma ação avaliativa mediadora ultrapassam o estudo sobre teorias de avaliação e exigem o aprofundamento em teorias de conhecimento. [...] O erro, nessa perspectiva, deixa de ser algo a ser punido ou eliminado e passa a ser uma 'janela' para a mente do aluno.\"</em> (HOFFMANN, Jussara. Avaliação Mediadora. Porto Alegre: Mediação).<br><br>No contexto dos Anos Iniciais do Ensino Fundamental, uma professora que adota a <strong>Avaliação Mediadora</strong> diante de um aluno que escreve \"KZA\" para \"CASA\" deve adotar o seguinte encaminhamento pedagógico:",
+            options: [
+                "A) Corrigir imediatamente o erro com caneta vermelha, escrevendo a forma correta ao lado dez vezes, para que o aluno memorize a ortografia correta e não fossilize o erro cognitivo.",
+                "B) Interpretar a escrita \"KZA\" como uma hipótese de construção do conhecimento (fonética), dialogar com o aluno problematizando o uso do \"K\" e do \"Z\" em comparação com outras palavras conhecidas, e propor novas situações de escrita que desafiem essa hipótese, sem atribuir nota baixa.",
+                "C) Encaminhar o aluno para o Atendimento Educacional Especializado (AEE), pois a troca de fonemas surdos e sonoros e o uso de letras estrangeiras no 2º ano indicam, invariavelmente, um quadro de dislexia ou déficit de atenção.",
+                "D) Ignorar o erro, pois na perspectiva construtivista e mediadora, a correção pode traumatizar a criança e bloquear sua expressão criativa, devendo o professor esperar que a maturação biológica resolva as questões ortográficas naturalmente.",
+                "E) Utilizar o erro para classificar o aluno no grupo de \"nível pré-silábico\" e aplicar provas adaptadas com menor nível de exigência, garantindo que ele tenha notas suficientes para passar de ano sem se frustrar."
+            ],
+            correct: 1, // Index 1 = B
+            resolution: `
+                <strong>Gabarito: B</strong><br><br>
+                Jussara Hoffmann é a principal referência brasileira para a "Avaliação Mediadora". Sua teoria propõe uma ruptura radical com a "avaliação classificatória".<br><br>
+                1. <strong>Conceito de Mediação:</strong> Avaliar é mediar o conhecimento. O professor observa o aluno não para julgar ("sabe/não sabe"), mas para entender <em>como</em> ele pensa e, a partir disso, propor desafios ("provocações").<br>
+                2. <strong>O Estatuto do Erro:</strong> Na avaliação mediadora, o erro é <strong>construtivo</strong>. Escrever "KZA" revela que a criança já tem consciência fonológica (identifica os sons /k/, /z/, /a/), mas ainda não domina a convenção ortográfica. Isso é um avanço.<br>
+                3. <strong>Encaminhamento Pedagógico:</strong> O professor deve problematizar (Opção B). Não se deve corrigir mecanicamente (A), nem ignorar (D), nem patologizar (C). O professor mostra a palavra "ZEBRA" e "CASA" e pergunta: "Olha, o som é igual, mas as letras são diferentes. Por que será?". Isso faz a criança pensar sobre a língua.
+            `
+        },
+        {
+            id: 3,
+            subject: "Práticas Pedagógicas",
+            text: "(FCM - Adaptada) A documentação pedagógica, inspirada nas abordagens de Reggio Emilia e preconizada pelas diretrizes brasileiras, transformou o papel do registro na Educação Infantil. Deixando de ser meramente burocrático, o registro tornou-se instrumento de reflexão docente e memória da aprendizagem. Sobre a construção e o uso de <strong>portfólios</strong> e <strong>relatórios descritivos</strong>, analise as afirmativas a seguir:<br><br>I. O portfólio deve ser uma compilação aleatória de todas as atividades realizadas pela criança, sem seleção ou curadoria, para demonstrar o volume de trabalho realizado aos pais.<br>II. O relatório descritivo individual deve evitar rotulações e diagnósticos clínicos, focando na narração dos percursos de aprendizagem, nas interações da criança com os pares e objetos de conhecimento, e nos avanços em relação a si mesma.<br>III. A fotografia, quando utilizada na documentação pedagógica, deve vir acompanhada de pautas de observação ou legendas reflexivas que explicitem o processo de aprendizagem capturado, sob pena de tornar-se apenas um registro contemplativo ou decorativo.<br>IV. Os registros avaliativos na Educação Infantil são de uso exclusivo da coordenação pedagógica para fins de estatística, não devendo ser partilhados com as famílias para evitar interpretações equivocadas sobre o desenvolvimento infantil.<br><br>Estão CORRETAS apenas as afirmativas:",
+            options: [
+                "A) I e II.",
+                "B) II e III.",
+                "C) III e IV.",
+                "D) I, II e IV.",
+                "E) I, III e IV."
+            ],
+            correct: 1, // Index 1 = B
+            resolution: `
+                <strong>Gabarito: B (II e III)</strong><br><br>
+                1. <strong>O Portfólio (Análise da I):</strong> O portfólio <strong>não</strong> é um "arquivão". Ele exige <strong>curadoria</strong> (seleção). Professor e criança devem escolher juntos quais trabalhos representam melhor o percurso. Portanto, a afirmativa I está incorreta.<br>
+                2. <strong>O Relatório Descritivo (Análise da II):</strong> Correta. O relatório deve ser etnográfico. Em vez de "João é agressivo" (rótulo), deve-se escrever "Em disputas de brinquedo, João tende a usar força física...". Isso descreve o processo e aponta a intervenção pedagógica.<br>
+                3. <strong>A Fotografia (Análise da III):</strong> Correta. Uma foto solta não diz nada. Uma foto precisa de uma legenda explicativa que mostre o processo de aprendizagem capturado.<br>
+                4. <strong>A Comunicação (Análise da IV):</strong> Incorreta. A documentação tem tripla função: para o professor, para a criança e para a família. Sonegar essa informação é contraproducente.
+            `
+        },
+        {
+            id: 4,
+            subject: "Didática",
+            text: "(FCM - Adaptada) Cipriano Luckesi, em sua extensa obra sobre a avaliação da aprendizagem escolar, estabelece uma distinção fundamental entre \"Avaliar\" e \"Examinar\". Segundo o autor, a escola brasileira tradicionalmente pratica a \"pedagogia do exame\". Assinale a alternativa que apresenta uma característica exclusiva da <strong>AVALIAÇÃO</strong>, em oposição ao EXAME, segundo a teoria de Luckesi:",
+            options: [
+                "A) A função classificatória, que permite agrupar os alunos em turmas homogêneas de acordo com seu rendimento, otimizando o trabalho docente.",
+                "B) O caráter pontual e terminal, ocorrendo ao final de um bimestre para sentenciar o grau de aprendizado adquirido naquele período fechado.",
+                "C) A seletividade, utilizando a nota como critério social para definir quem está apto a prosseguir nos estudos e quem deve ser retido.",
+                "D) A função diagnóstica e inclusiva, que investiga a realidade para nela intervir, visando a melhoria da aprendizagem e o sucesso de todos os alunos, sem excluí-los do processo.",
+                "E) O uso do medo e da ameaça de reprovação como instrumentos de controle disciplinar e motivacional para garantir o estudo."
+            ],
+            correct: 3, // Index 3 = D
+            resolution: `
+                <strong>Gabarito: D</strong><br><br>
+                Luckesi critica a "pedagogia do exame", que é classificatória, seletiva e excludente. Para ele, a verdadeira <strong>Avaliação da Aprendizagem</strong> deve ser:<br>
+                <ul>
+                    <li><strong>Diagnóstica:</strong> Busca saber "como estamos" para saber "onde podemos chegar".</li>
+                    <li><strong>Processual:</strong> Acontece todo dia.</li>
+                    <li><strong>Inclusiva:</strong> O objetivo é que <em>todos</em> aprendam. Se o aluno não aprendeu, a avaliação serve para indicar que precisamos mudar o método.</li>
+                </ul>
+                A alternativa D é a única que apresenta a avaliação como um ato de inclusão e intervenção na realidade para melhorá-la, enquanto as outras descrevem características de "exames".
+            `
+        },
+        {
+            id: 5,
+            subject: "Educação Inclusiva e Gestão Escolar",
+            text: "(FCM - Adaptada) O processo de encaminhamento de alunos para especialistas (neurologistas, psicólogos, fonoaudiólogos) tem sido tema de debate crítico na educação, devido ao fenômeno da medicalização de questões pedagógicas. Considere a situação de uma criança de 4 anos que apresenta agitação motora constante e dificuldade em permanecer sentada durante as atividades de roda. Antes de proceder a qualquer encaminhamento externo, qual deve ser o fluxo de <strong>encaminhamentos pedagógicos internos</strong> corretos?",
+            options: [
+                "A) Convocar imediatamente os pais para solicitar o uso de medicação controlada, condicionando a renovação da matrícula à apresentação de laudo médico.",
+                "B) Realizar observação sistemática em diferentes tempos e espaços (sala, parque, refeitório), registrar os contextos que desencadeiam a agitação, rever a rotina e as propostas pedagógicas (verificando se são adequadas à faixa etária) e dialogar com a família para compreender a rotina doméstica.",
+                "C) Encaminhar a criança para a coordenação disciplinar a cada episódio de agitação, aplicando advertências escritas para que ela compreenda as normas institucionais desde cedo.",
+                "D) Isolar a criança em atividades individuais num canto da sala, oferecendo desenhos para colorir, a fim de não atrapalhar a concentração dos demais colegas durante as atividades coletivas.",
+                "E) Solicitar à Secretaria de Educação um monitor exclusivo (cuidador) para a criança, assumindo de antemão que se trata de um caso de deficiência ou transtorno global do desenvolvimento, dispensando avaliação pedagógica prévia."
+            ],
+            correct: 1, // Index 1 = B
+            resolution: `
+                <strong>Gabarito: B</strong><br><br>
+                A escola não faz diagnóstico clínico. Antes de considerar um problema biológico, deve-se investigar o pedagógico.<br>
+                <strong>Fluxo de Encaminhamento Correto:</strong><br>
+                1. <strong>Observação e Registro:</strong> O comportamento é constante? Ocorre só na aula de matemática? Ocorre só com aquela professora?<br>
+                2. <strong>Variação de Estratégias:</strong> Rever a rotina e as propostas (será que a roda não está durando muito tempo para 4 anos?).<br>
+                3. <strong>Escuta da Família:</strong> Compreender a rotina doméstica.<br>
+                A opção B descreve essa postura investigativa e responsável. As outras opções são punitivas, ilegais (solicitar medicação) ou segregadoras.
+            `
+        },
+        {
+            id: 6,
+            subject: "Legislação e Currículo",
+            text: "(FCM - Adaptada) A Base Nacional Comum Curricular (BNCC) estrutura a Educação Infantil em cinco Campos de Experiências, definindo Objetivos de Aprendizagem e Desenvolvimento. Diferente do Ensino Fundamental, não há divisão por componentes curriculares. Nesse contexto, a avaliação deve focar:",
+            options: [
+                "A) Na verificação do domínio de conteúdos conceituais, através de testes orais sobre cores, formas geométricas, números e letras, atribuindo conceitos de A a E.",
+                "B) No acompanhamento das aprendizagens e do desenvolvimento das crianças através da observação de suas interações e brincadeiras, documentando suas conquistas em relação aos objetivos de cada campo (como \"O eu, o outro e o nós\"), sem finalidade de retenção.",
+                "C) Exclusivamente no comportamento socioemocional, uma vez que o desenvolvimento cognitivo não é prioridade da BNCC para a Educação Infantil.",
+                "D) Na capacidade da criança de reproduzir atividades xerocopiadas com precisão motora fina, preparando-a para a escrita cursiva no Ensino Fundamental.",
+                "E) Na memorização das regras de convivência e combinados da turma, sendo a disciplina o principal indicador de sucesso na pré-escola."
+            ],
+            correct: 1, // Index 1 = B
+            resolution: `
+                <strong>Gabarito: B</strong><br><br>
+                A BNCC na Educação Infantil estrutura-se em <strong>Campos de Experiências</strong>. O foco não é o "produto" ou o conteúdo acadêmico isolado, mas a <strong>vivência</strong>, a <strong>interação</strong> e a <strong>brincadeira</strong>.
+                A avaliação deve acompanhar o desenvolvimento das competências e objetivos de aprendizagem através da documentação pedagógica (observação, registro), sem notas ou retenção, conforme a alternativa B. A alternativa A é conteudista; C cria uma falsa dicotomia (cognitivo vs socioemocional); D foca em treino mecânico.
+            `
+        },
+        {
+            id: 7,
+            subject: "Alfabetização e Letramento",
+            text: "(FCM - Adaptada) Durante uma sondagem de escrita no 1º ano do Ensino Fundamental, a professora dita a palavra <strong>BORBOLETA</strong>. O aluno Marcos escreve <strong>BOTA</strong>. Ao pedir para o aluno ler o que escreveu, ele aponta para as letras e lê \"Bor-bo-le-ta\", tentando ajustar a pauta sonora à quantidade de letras.<br><br>Com base nos estudos da Psicogênese da Língua Escrita (Emilia Ferreiro e Ana Teberosky), qual é a análise diagnóstica e o encaminhamento pedagógico adequado?",
+            options: [
+                "A) O aluno é alfabético, pois usou as letras B, O, T e A, que pertencem à palavra, cometendo apenas um erro de ortografia por desatenção. Encaminhamento: exercícios de cópia da palavra correta.",
+                "B) O aluno encontra-se na hipótese silábica com valor sonoro, utilizando uma letra para representar cada sílaba (ou partes dela), mas entra em conflito cognitivo ao ler (sobra fala, falta letra). Encaminhamento: atividades de completar palavras, bingo de letras e análise da quantidade de sílabas versus letras.",
+                "C) O aluno é pré-silábico, pois escreveu uma palavra aleatória que não corresponde à quantidade de sílabas da palavra ditada. Encaminhamento: treino do alfabeto.",
+                "D) O aluno apresenta disgrafia, pois omitiu sílabas inteiras da palavra. Encaminhamento: avaliação fonoaudiológica urgente.",
+                "E) O aluno está na hipótese silábico-alfabética, pois alternou entre escrever a sílaba completa e apenas uma letra. Encaminhamento: leitura de textos longos."
+            ],
+            correct: 1, // Index 1 = B
+            resolution: `
+                <strong>Gabarito: B</strong><br><br>
+                <strong>Diagnóstico:</strong> O aluno escreveu 4 letras (BOTA) para uma palavra de 4 sílabas (BOR-BO-LE-TA). As letras usadas têm valor sonoro (B/O para Bor/Bo, T/A para Le/Ta). Isso caracteriza a <strong>Hipótese Silábica com Valor Sonoro</strong>: ele usa uma letra para cada sílaba.<br>
+                <strong>Conflito:</strong> Ao ler, ele tenta fazer caber o som nas letras.<br>
+                <strong>Encaminhamento:</strong> O aluno precisa perceber que uma letra só não basta para fazer a sílaba. Atividades que confrontem a quantidade de letras com a pauta sonora (palavras cruzadas, completar lacunas) são ideais para ele avançar para a hipótese silábico-alfabética.
+            `
+        },
+        {
+            id: 8,
+            subject: "Didática da Matemática",
+            text: "(FCM - Adaptada) Numa turma de 3º ano, ao resolver a subtração <strong>53 - 28</strong>, um aluno apresenta o resultado <strong>35</strong>. Ao investigar o raciocínio (avaliação processual), a professora percebe que o aluno fez: \"8 menos 3 é 5\" (unidades) e \"5 menos 2 é 3\" (dezenas), subtraindo sempre o menor algarismo do maior, independentemente da posição (minuendo ou subtraendo).<br><br>Essa análise revela que:",
+            options: [
+                "A) O aluno não sabe a tabuada de subtração e precisa decorar os fatos fundamentais.",
+                "B) O erro decorre da falta de atenção, pois o aluno sabe o algoritmo mas se distraiu.",
+                "C) O aluno não compreendeu o sistema de numeração decimal e a necessidade de reagrupamento (troca) quando a unidade do minuendo é menor que a do subtraendo.",
+                "D) O aluno deve ser reprovado em matemática, pois no 3º ano esse tipo de erro é inadmissível.",
+                "E) O método de ensino deve ser substituído pelo ábaco apenas para este aluno, enquanto a turma segue com o livro didático."
+            ],
+            correct: 2, // Index 2 = C
+            resolution: `
+                <strong>Gabarito: C</strong><br><br>
+                O erro apresentado (subtrair sempre o menor do maior, ignorando a ordem minuendo/subtraendo) é clássico. Ele revela que o aluno opera os algarismos isoladamente e não compreende a <strong>natureza posicional</strong> e o conceito de <strong>troca/reagrupamento</strong> (o famoso "pedir emprestado", que na verdade é transformar uma dezena em unidades).<br>
+                O encaminhamento correto envolveria uso de Material Dourado ou Ábaco para trabalhar a compreensão do conceito antes de insistir no algoritmo. Não é falta de atenção ou tabuada (ele calculou 8-3=5 corretamente, apenas aplicou a lógica errada).
+            `
+        },
+        {
+            id: 9,
+            subject: "Relação Escola-Família",
+            text: "(FCM - Adaptada) A comunicação dos resultados da avaliação às famílias é um dever da escola e um direito dos responsáveis. Nos Anos Iniciais, as reuniões de pais e a entrega de boletins/pareceres são momentos chaves. Assinale a alternativa que apresenta a postura mais adequada para este momento, segundo uma perspectiva de avaliação democrática e formativa:",
+            options: [
+                "A) Utilizar a reunião para expor publicamente as notas de todos os alunos em um gráfico comparativo, estimulando a competição saudável entre as famílias para a melhoria do desempenho.",
+                "B) Focar a conversa individual apenas nas queixas comportamentais e nas notas baixas, solicitando que os pais apliquem castigos em casa para resolver os problemas de indisciplina escolar.",
+                "C) Entregar o boletim sem comentários adicionais, pois os números falam por si, economizando tempo para tratar de questões administrativas e financeiras da escola (APM).",
+                "D) Realizar atendimentos individuais ou entregar pareceres descritivos que contextualizem os avanços, as dificuldades e as estratégias pedagógicas utilizadas, convidando a família a ser parceira no processo de aprendizagem, sem culpabilização.",
+                "E) Proibir a presença das crianças na reunião, pois a avaliação é um assunto de adultos e a presença dos alunos inibe as críticas severas que os professores precisam fazer aos pais."
+            ],
+            correct: 3, // Index 3 = D
+            resolution: `
+                <strong>Gabarito: D</strong><br><br>
+                A avaliação democrática exige transparência, ética e parceria.<br>
+                Expor notas (A) é antiético e humilhante. Focar apenas em queixas (B) afasta a família. O ideal é o atendimento que contextualiza o processo (D), explicando não apenas "quanto" o aluno tirou, mas "como" ele está aprendendo, quais as dificuldades e como a família pode auxiliar, sem culpabilização.
+            `
+        },
+        {
+            id: 10,
+            subject: "Organização da Educação Básica",
+            text: "(FCM - Adaptada) A transição da Educação Infantil para o Ensino Fundamental é um momento crítico que pode gerar rupturas no processo de aprendizagem. Para mitigar esses impactos, o Ministério da Educação propõe estratégias de articulação. Sob a ótica da avaliação e dos registros, qual ação favorece a continuidade educativa?",
+            options: [
+                "A) Ignorar os registros da Educação Infantil, pois o Ensino Fundamental inaugura uma fase de \"estudos sérios\" onde o brincar não tem mais espaço avaliativo.",
+                "B) Realizar uma prova de classificação no início do 1º ano para separar os alunos em turmas de \"fortes\", \"médios\" e \"fracos\", facilitando o ensino padronizado.",
+                "C) Compartilhar os portfólios e relatórios descritivos da Educação Infantil com os professores do 1º ano, promovendo reuniões pedagógicas conjuntas para análise desses documentos e planejamento do acolhimento.",
+                "D) Antecipar conteúdos do 1º ano (alfabetização sistemática) para a Pré-Escola II, garantindo que as crianças cheguem prontas e não precisem de avaliação diagnóstica inicial.",
+                "E) Reter na Educação Infantil as crianças que completam 6 anos após 31 de março, mesmo que já estejam lendo e escrevendo, proibindo qualquer tipo de avaliação de avanço ou classificação para o Fundamental."
+            ],
+            correct: 2, // Index 2 = C
+            resolution: `
+                <strong>Gabarito: C</strong><br><br>
+                A transição deve garantir a continuidade do desenvolvimento. Os documentos produzidos na Educação Infantil (portfólios, relatórios) contêm informações valiosas sobre o percurso da criança.<br>
+                Compartilhar esses documentos (C) permite que o professor do 1º ano conheça seus alunos antes mesmo de começarem as aulas, planejando um acolhimento adequado. Classificar (B) gera segregação. Antecipar conteúdo (D) desrespeita a infância. Ignorar registros (A) desperdiça a história do aluno.
+            `
+        }
+    ];
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        let html = '';
+
+        quizData.forEach((q, index) => {
+            html += `
+                <div class="question-card" id="card-${index}">
+                    <div class="question-header">Questão ${q.id} • ${q.subject}</div>
+                    <div class="question-text">${q.text}</div>
+                    <ul class="options-list">
+                        ${q.options.map((opt, optIndex) => `
+                            <li class="option-item" onclick="selectOption(${index}, ${optIndex})">
+                                <input type="radio" name="q${index}" value="${optIndex}" id="q${index}_opt${optIndex}">
+                                <label class="option-label" for="q${index}_opt${optIndex}">${opt}</label>
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <div class="resolution-box" id="resolution-${index}">
+                        <span class="resolution-title">Resolução Detalhada:</span>
+                        <div class="resolution-content">${q.resolution}</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    function selectOption(qIndex, optIndex) {
+        // Verifica se o quiz já foi finalizado
+        const btn = document.querySelector('.btn-submit');
+        if (btn.disabled) return;
+
+        const radio = document.getElementById(`q${qIndex}_opt${optIndex}`);
+        radio.checked = true;
+    }
+
+    function submitQuiz() {
+        // Desabilitar botão
+        const btn = document.querySelector('.btn-submit');
+        btn.disabled = true;
+        btn.textContent = "Simulado Finalizado";
+        btn.style.backgroundColor = "#95a5a6";
+        btn.style.cursor = "default";
+
+        let score = 0;
+        let total = quizData.length;
+
+        quizData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const card = document.getElementById(`card-${index}`);
+            const resolution = document.getElementById(`resolution-${index}`);
+            const optionsItems = card.querySelectorAll('.option-item');
+
+            // Mostrar resolução
+            resolution.style.display = 'block';
+
+            // Destacar resposta correta e incorreta
+            optionsItems.forEach((item, optIndex) => {
+                // Remove cliques
+                item.onclick = null;
+                item.style.cursor = "default";
+                const input = item.querySelector('input');
+                input.disabled = true;
+
+                // Destacar a correta visualmente
+                if (optIndex === q.correct) {
+                    item.classList.add('correct-answer-style');
+                    item.innerHTML += ' ✅';
+                }
+
+                // Se usuário errou, destacar a que ele marcou
+                if (selected && parseInt(selected.value) === optIndex && optIndex !== q.correct) {
+                    item.classList.add('incorrect-answer-style');
+                    item.innerHTML += ' ❌';
+                }
+            });
+
+            // Contabilizar pontos
+            if (selected && parseInt(selected.value) === q.correct) {
+                score++;
+            }
+        });
+
+        // Mostrar Placar
+        const scoreDisplay = document.getElementById('score-display');
+        const scoreNumber = document.getElementById('final-score');
+        const scoreMessage = document.getElementById('score-message');
+
+        scoreDisplay.style.display = 'block';
+        scoreNumber.textContent = `${score} / ${total}`;
+        
+        if (score === total) {
+            scoreMessage.textContent = "Excelente! Você dominou o conteúdo.";
+        } else if (score >= 7) {
+            scoreMessage.textContent = "Muito bom! Revise os detalhes abaixo.";
+        } else {
+            scoreMessage.textContent = "Bom treino. Leia atentamente as resoluções abaixo para fixar o conteúdo.";
+        }
+
+        // Rolar para o topo suavemente
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Inicializar
+    renderQuiz();
+
+</script>
+
+</body>
+</html>

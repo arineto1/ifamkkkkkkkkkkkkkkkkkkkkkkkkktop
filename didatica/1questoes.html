@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Didática: Teorias Pedagógicas (CEFETMINAS)</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2d2d2d;
+            --accent-color: #2563eb;
+            --border-color: #e5e7eb;
+            --correct-color: #059669;
+            --incorrect-color: #dc2626;
+            --card-bg: #ffffff;
+            --resolution-bg: #f3f4f6;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif; /* Serif para leitura longa confortável */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 2rem;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        p.subtitle {
+            color: #666;
+            font-style: italic;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-header {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-family: 'Segoe UI', sans-serif; /* Sans-serif para as opções para contraste */
+        }
+
+        .option-label:hover {
+            background-color: #f9fafb;
+        }
+
+        .option-input {
+            margin-right: 15px;
+            margin-top: 6px;
+            accent-color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+        .resolution-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 4px;
+            display: none; /* Oculto inicialmente */
+            font-size: 0.95rem;
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--accent-color);
+        }
+
+        /* Estilos de Feedback */
+        .option-label.correct {
+            background-color: #d1fae5;
+            border-color: var(--correct-color);
+            color: #065f46;
+        }
+
+        .option-label.incorrect {
+            background-color: #fee2e2;
+            border-color: var(--incorrect-color);
+            color: #991b1b;
+        }
+
+        .status-msg {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .status-correct { color: var(--correct-color); }
+        .status-wrong { color: var(--incorrect-color); }
+
+        #submit-section {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: white;
+            border-top: 2px solid var(--border-color);
+            position: sticky;
+            bottom: 0;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+        }
+
+        button#finish-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: background-color 0.2s;
+        }
+
+        button#finish-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        #score-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 10px; }
+            .question-card { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Didática e Processos de Ensino</h1>
+        <p class="subtitle">Focado na banca Fundação CEFETMINAS</p>
+    </header>
+
+    <form id="quiz-form">
+        
+        <!-- Questão 01 -->
+        <div class="question-card" id="q1">
+            <div class="question-header">Questão 01 - Avaliação da Aprendizagem</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Perrenoud, P. (1999). <em>Avaliação: da excelência à regulação das aprendizagens</em>.</p>
+                <p>No contexto da didática contemporânea e das teorias pedagógicas que influenciam as provas da Fundação CEFETMINAS, a avaliação é compreendida para além da mera classificação. Philippe Perrenoud, em sua obra seminal "Avaliação: da excelência à regulação das aprendizagens", discute a tensão existente entre a lógica de fabricação de hierarquias e a lógica de regulação dos processos de aprendizagem. Considerando as concepções desse autor sobre a avaliação formativa, analise as afirmativas a seguir:</p>
+                <p>I. A avaliação formativa distingue-se da avaliação normativa porque seu objetivo primordial não é a classificação dos sujeitos em uma escala de excelência, mas sim o fornecimento de informações que permitam ao professor ajustar a intervenção pedagógica e ao aluno regular suas estratégias de estudo.<br>
+                II. Para Perrenoud, a regulação das aprendizagens deve ocorrer preferencialmente ao final de cada ciclo letivo, através de exames padronizados que garantam a isonomia do processo e a certificação das competências adquiridas, evitando subjetividades inerentes à observação diária.<br>
+                III. A avaliação formativa é descrita como uma prática de intervenção na realização do currículo, pois, ao priorizar certos critérios e feedbacks, ela modula o ritmo do ensino e define, na prática, o que é considerado conhecimento válido na sala de aula.<br>
+                IV. A "regulação interativa" é uma modalidade de avaliação formativa que ocorre no momento da interação didática, exigindo do professor uma observação constante e instrumentos diversificados que não se resumam a provas escritas.</p>
+                <p>Estão <strong>CORRETAS</strong> as afirmativas:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q1" value="A" class="option-input"> A) I e II, apenas.</label>
+                <label class="option-label"><input type="radio" name="q1" value="B" class="option-input"> B) I, III e IV, apenas.</label>
+                <label class="option-label"><input type="radio" name="q1" value="C" class="option-input"> C) II e III, apenas.</label>
+                <label class="option-label"><input type="radio" name="q1" value="D" class="option-input"> D) III e IV, apenas.</label>
+                <label class="option-label"><input type="radio" name="q1" value="E" class="option-input"> E) I, II, III e IV.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>As afirmativas I, III e IV estão alinhadas com a teoria de Perrenoud. O item II está incorreto porque a regulação formativa deve ser contínua e integrada ao fluxo de aprendizagem, não apenas ao final do ciclo. Perrenoud critica a crença na objetividade absoluta dos exames padronizados finais como única forma de justiça.</p>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-card" id="q2">
+            <div class="question-header">Questão 02 - Currículo, Poder e Ideologia</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Apple, M. W. <em>Repensando ideologia e currículo</em>.</p>
+                <p>Michael Apple é uma referência central nas discussões sobre a sociologia do currículo, frequentemente abordado em concursos da área educacional federal. Em seus textos, como "Repensando ideologia e currículo", Apple desloca a pergunta central da educação de "o que é o conhecimento?" para "de quem é o conhecimento que vale mais?". Com base nessa perspectiva crítica, assinale a alternativa que melhor expressa a relação entre escola, currículo e sociedade:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q2" value="A" class="option-input"> A) A escola é uma instituição neutra que transmite o conhecimento universalmente aceito, e o currículo deve ser protegido de interferências ideológicas ou políticas para garantir a formação técnica eficiente dos trabalhadores.</label>
+                <label class="option-label"><input type="radio" name="q2" value="B" class="option-input"> B) O currículo funciona como um mecanismo de seleção e legitimação cultural, onde o conhecimento de grupos hegemônicos é validado como "oficial", enquanto saberes de grupos marginalizados são frequentemente excluídos, contribuindo para a reprodução das desigualdades sociais.</label>
+                <label class="option-label"><input type="radio" name="q2" value="C" class="option-input"> C) A principal função do currículo escolar é adaptar os estudantes às demandas imediatas do mercado de trabalho, garantindo que as empresas tenham mão de obra qualificada, o que elimina a necessidade de discussões sobre poder ou cultura na sala de aula.</label>
+                <label class="option-label"><input type="radio" name="q2" value="D" class="option-input"> D) A ideologia no currículo manifesta-se apenas nas disciplinas de Ciências Humanas, sendo que as Ciências Exatas e Biológicas são isentas de valores culturais ou políticos, representando a verdade científica objetiva.</label>
+                <label class="option-label"><input type="radio" name="q2" value="E" class="option-input"> E) As escolas, diante das pressões econômicas, devem adotar uma postura passiva e aceitar a transformação dos objetivos educacionais em metas empresariais, visto que a eficiência econômica é o único indicador de qualidade educacional relevante.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>Michael Apple defende que o currículo não é neutro, mas uma "tradição seletiva" que legitima a cultura dos grupos hegemônicos. A escola atua na reprodução cultural e econômica das desigualdades. As outras alternativas refletem visões tecnicistas ou tradicionais que Apple critica.</p>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-card" id="q3">
+            <div class="question-header">Questão 03 - Organização Curricular da Educação Profissional</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Oliveira, M. R. N. S. (2011). <em>Organização curricular da educação profissional</em>.</p>
+                <p>Maria Rita Neto Sales Oliveira, ao discutir a organização curricular da Educação Profissional (EP) sob a ótica da "pedagogia da práxis", reflete sobre as políticas públicas das últimas décadas e propõe fundamentos para uma formação integrada. De acordo com a autora e a perspectiva da pedagogia da práxis, é <strong>CORRETO</strong> afirmar que a organização curricular deve:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q3" value="A" class="option-input"> A) Priorizar o treinamento de habilidades motoras e operacionais específicas, desvinculando-as dos fundamentos científicos, para garantir a rápida inserção do trabalhador no setor produtivo.</label>
+                <label class="option-label"><input type="radio" name="q3" value="B" class="option-input"> B) Basear-se na fragmentação modular independente, onde o aluno cursa disciplinas isoladas sem necessidade de integração com a formação geral, facilitando a certificação de competências parciais.</label>
+                <label class="option-label"><input type="radio" name="q3" value="C" class="option-input"> C) Orientar-se pela superação da dualidade entre formação propedêutica e formação profissional, buscando desenvolver o ensino técnico integrado na perspectiva da escola unitária, articulando trabalho, ciência e cultura.</label>
+                <label class="option-label"><input type="radio" name="q3" value="D" class="option-input"> D) Resgatar a formação acadêmica clássica do século XIX em detrimento dos conhecimentos tecnológicos, visto que a tecnologia é efêmera e a cultura clássica é perene.</label>
+                <label class="option-label"><input type="radio" name="q3" value="E" class="option-input"> E) Abandonar as dimensões histórico-antropológicas do trabalho para focar exclusivamente na dimensão metodológica e instrumental, que é a única capaz de gerar empregabilidade.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A "pedagogia da práxis" busca a unidade entre pensar e fazer, superando a dualidade histórica entre ensino propedêutico (elites) e profissional (trabalhadores). Defende-se o Ensino Médio Integrado e a perspectiva da Escola Unitária, articulando ciência, cultura e trabalho.</p>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-card" id="q4">
+            <div class="question-header">Questão 04 - Prática Pedagógica vs. Prática Docente</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Franco, M. A. S. (2016). <em>Práticas pedagógicas e docência: um olhar a partir da epistemologia do conceito</em>.</p>
+                <p>A distinção entre prática docente e prática pedagógica é fundamental para a compreensão da identidade profissional do educador. Segundo Maria Amélia Franco, a prática pedagógica distingue-se de outras práticas educativas por uma característica essencial. Assinale a alternativa que apresenta essa característica definidora:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q4" value="A" class="option-input"> A) A prática pedagógica é aquela realizada exclusivamente por pedagogos formados, enquanto a prática docente é realizada por licenciados em outras áreas.</label>
+                <label class="option-label"><input type="radio" name="q4" value="B" class="option-input"> B) A prática pedagógica é espontânea e intuitiva, dependendo mais do carisma do professor do que de sua formação teórica.</label>
+                <label class="option-label"><input type="radio" name="q4" value="C" class="option-input"> C) A prática pedagógica configura-se como uma práxis carregada de intencionalidade, que dirige e dá sentido à ação, exigindo uma intervenção planejada e reflexiva sobre o objeto com vistas à transformação da realidade social.</label>
+                <label class="option-label"><input type="radio" name="q4" value="D" class="option-input"> D) A prática pedagógica resume-se ao domínio de técnicas didáticas de transmissão de conteúdo, sendo desnecessária a reflexão sobre os fins políticos da educação.</label>
+                <label class="option-label"><input type="radio" name="q4" value="E" class="option-input"> E) A prática pedagógica é sinônimo de prática de ensino, referindo-se apenas ao momento em que o professor está em sala de aula expondo a matéria.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>Para Franco, a prática pedagógica é uma práxis (ação + reflexão) intencional. Não basta "dar aula"; é necessário refletir sobre o sentido político e social da ação educativa, visando a transformação da realidade.</p>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-card" id="q5">
+            <div class="question-header">Questão 05 - História e Política da Educação Profissional</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Gariglio, J. Â. (2012). <em>A reforma da educação profissional...</em>.</p>
+                <p>José Ângelo Gariglio analisa as reformas educacionais ocorridas no Brasil durante a década de 1990, com foco no impacto sobre as instituições federais de educação tecnológica (CEFETs). Sobre o processo de implementação do Decreto nº 2.208/97 e suas consequências, é <strong>CORRETO</strong> afirmar:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q5" value="A" class="option-input"> A) O governo federal, após amplo debate democrático e aceitação das sugestões das universidades e sindicatos, promulgou o decreto para fortalecer o ensino médio integrado.</label>
+                <label class="option-label"><input type="radio" name="q5" value="B" class="option-input"> B) O Decreto nº 2.208/97 foi uma resposta às demandas dos educadores por uma formação politécnica, garantindo a união indissociável entre ensino médio e técnico em todas as escolas federais.</label>
+                <label class="option-label"><input type="radio" name="q5" value="C" class="option-input"> C) O governo enviou inicialmente o Projeto de Lei (PL) 1.603/96, mas, diante do repúdio da comunidade acadêmica, impôs sua proposta de forma autoritária via Decreto nº 2.208/97, que institucionalizou a separação entre o ensino médio e a educação profissional.</label>
+                <label class="option-label"><input type="radio" name="q5" value="D" class="option-input"> D) A reforma de 1997 extinguiu as escolas técnicas federais, transformando-as imediatamente em universidades tecnológicas sem a oferta de cursos de nível médio.</label>
+                <label class="option-label"><input type="radio" name="q5" value="E" class="option-input"> E) O Decreto nº 2.208/97 proibiu a participação da iniciativa privada na oferta de educação profissional, estatizando todo o sistema de formação técnica no país.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>O Decreto nº 2.208/97 foi imposto após a rejeição do PL 1.603/96 pela comunidade acadêmica. Ele institucionalizou a separação entre ensino médio e técnico, desarticulando a formação integrada que era defendida pelos educadores.</p>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-card" id="q6">
+            <div class="question-header">Questão 06 - Didática Crítica e a "Educação Bancária"</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Freire, P. <em>Pedagogia do Oprimido</em>.</p>
+                <p>Paulo Freire, em sua crítica à "educação bancária", descreve um modelo de ensino que anula o poder criativo dos educandos. Considerando a análise freireana e suas implicações para a didática, assinale a alternativa que <strong>NÃO</strong> corresponde a uma característica da educação bancária:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q6" value="A" class="option-input"> A) O educador é o sujeito do processo, aquele que sabe e deposita o conteúdo, enquanto os educandos são objetos passivos e recipientes a serem preenchidos.</label>
+                <label class="option-label"><input type="radio" name="q6" value="B" class="option-input"> B) A educação é um ato político que exige o desvelamento da realidade, onde educador e educando constroem o conhecimento conjuntamente através do diálogo e da problematização do mundo.</label>
+                <label class="option-label"><input type="radio" name="q6" value="C" class="option-input"> C) O conteúdo programático é constituído por retalhos da realidade, desconectados da totalidade em que se engendram, e narrados de forma dissertativa pelo professor.</label>
+                <label class="option-label"><input type="radio" name="q6" value="D" class="option-input"> D) A sonoridade da palavra e a memorização mecânica são valorizadas em detrimento da compreensão crítica do significado existencial dos conteúdos.</label>
+                <label class="option-label"><input type="radio" name="q6" value="E" class="option-input"> E) O educador impõe sua opção e sua autoridade, inibindo a autonomia e a capacidade de pensar autenticamente dos educandos, visando à adaptação destes à ordem social vigente.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>A alternativa B descreve a <strong>Educação Problematizadora/Libertadora</strong>, oposta à bancária. Na educação libertadora, há diálogo e construção conjunta do conhecimento. Todas as outras opções são características da educação bancária criticada por Freire.</p>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-card" id="q7">
+            <div class="question-header">Questão 07 - Planejamento e Projeto Político-Pedagógico (PPP)</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Veiga, I. P. A.; Menegolla & Sant'Anna.</p>
+                <p>O planejamento escolar e o Projeto Político-Pedagógico (PPP) são instrumentos essenciais para a organização do trabalho educativo. Segundo a literatura pedagógica recorrente nas provas da banca, o PPP é definido como um "instrumento direcional de todo o processo educacional". Sobre essa concepção, analise as afirmativas:</p>
+                <p>I. O PPP é um documento burocrático que deve ser arquivado na secretaria da escola para fins de fiscalização, não interferindo na prática diária da sala de aula.<br>
+                II. O caráter "político" do projeto refere-se ao compromisso com a formação do cidadão para um determinado tipo de sociedade, enquanto o "pedagógico" define as ações educativas e didáticas necessárias para efetivar essa intenção.<br>
+                III. O planejamento, materializado no PPP, estabelece as grandes urgências, indica prioridades básicas e ordena os recursos e meios necessários para a consecução das metas educacionais.<br>
+                IV. A elaboração do PPP deve ser tarefa exclusiva da equipe diretiva, pois exige conhecimentos técnicos de gestão que os professores e a comunidade não possuem.</p>
+                <p>Estão <strong>CORRETAS</strong> apenas as afirmativas:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q7" value="A" class="option-input"> A) I e II.</label>
+                <label class="option-label"><input type="radio" name="q7" value="B" class="option-input"> B) II e III.</label>
+                <label class="option-label"><input type="radio" name="q7" value="C" class="option-input"> C) III e IV.</label>
+                <label class="option-label"><input type="radio" name="q7" value="D" class="option-input"> D) I, II e III.</label>
+                <label class="option-label"><input type="radio" name="q7" value="E" class="option-input"> E) II, III e IV.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>O item I está incorreto pois o PPP deve ser um documento vivo, não burocrático. O item IV está incorreto pois o PPP exige construção coletiva e democrática, não sendo exclusivo da direção. II e III estão corretos ao definir as dimensões política/pedagógica e a função de planejamento.</p>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-card" id="q8">
+            <div class="question-header">Questão 08 - O Currículo em Ação e a Intervenção Docente</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Sacristán, J. G. <em>O currículo: uma reflexão sobre a prática</em>.</p>
+                <p>Gimeno Sacristán e outros teóricos do currículo argumentam que o currículo oficial (prescrito) não chega ao aluno de forma intacta. Entre a proposta oficial e a aprendizagem real, existe a mediação do professor. Nesse sentido, é correto afirmar que os professores intervêm na realização do currículo porque:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q8" value="A" class="option-input"> A) Eles reescrevem as leis educacionais em cada aula, anulando a validade da Base Nacional Comum Curricular (BNCC).</label>
+                <label class="option-label"><input type="radio" name="q8" value="B" class="option-input"> B) Eles realizam escolhas de materiais didáticos, interpretam os objetivos propostos, planejam estratégias de ensino e executam práticas que acabam por moldar e transformar o currículo prescrito em "currículo em ação".</label>
+                <label class="option-label"><input type="radio" name="q8" value="C" class="option-input"> C) Eles são obrigados a seguir rigidamente o livro didático, o que impede qualquer tipo de adaptação ou intervenção na proposta curricular original.</label>
+                <label class="option-label"><input type="radio" name="q8" value="D" class="option-input"> D) A intervenção docente ocorre apenas no momento da avaliação final, quando decidem quem é aprovado ou reprovado, sem impacto no desenvolvimento do conteúdo.</label>
+                <label class="option-label"><input type="radio" name="q8" value="E" class="option-input"> E) O currículo é algo estático e imutável, e a percepção de que os professores intervêm nele é apenas uma ilusão teórica sem correspondência com a realidade escolar.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <p>Sacristán argumenta que o professor é um agente ativo que interpreta e molda o currículo oficial. Através de escolhas metodológicas, materiais e ênfases, o professor transforma o currículo prescrito em "currículo em ação", que é o que efetivamente acontece em sala.</p>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-card" id="q9">
+            <div class="question-header">Questão 09 - Didática e Metodologia do Ensino Superior e Técnico</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Legislação e Prática Docente no CEFET-MG.</p>
+                <p>A prática docente no contexto da Educação Básica, Técnica e Tecnológica (EBTT) exige o domínio de conhecimentos específicos da área de atuação articulados com saberes pedagógicos. Na estruturação de uma prova didática ou plano de aula para este contexto, a didática se manifesta na capacidade do professor de:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q9" value="A" class="option-input"> A) Demonstrar erudição acadêmica utilizando linguagem inacessível aos alunos para estabelecer sua autoridade intelectual.</label>
+                <label class="option-label"><input type="radio" name="q9" value="B" class="option-input"> B) Reproduzir memoristicamente os conteúdos dos manuais técnicos sem contextualizá-los com a prática profissional ou social.</label>
+                <label class="option-label"><input type="radio" name="q9" value="C" class="option-input"> C) Realizar a transposição didática, transformando o saber sábio (científico/técnico) em saber ensinado, adequando a linguagem, os recursos e as estratégias ao nível de desenvolvimento dos alunos e aos objetivos do curso.</label>
+                <label class="option-label"><input type="radio" name="q9" value="D" class="option-input"> D) Utilizar o tempo de aula exclusivamente para a exposição oral, evitando o uso de tecnologias ou recursos visuais que possam distrair os alunos.</label>
+                <label class="option-label"><input type="radio" name="q9" value="E" class="option-input"> E) Focar apenas nos alunos com maior facilidade de aprendizado, visto que o ensino técnico exige excelência e não deve se adaptar às dificuldades individuais.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <p>A competência didática reside na <strong>Transposição Didática</strong>: a capacidade de transformar o conhecimento técnico/científico complexo em conteúdo ensinável e acessível, mantendo o rigor e conectando com a realidade do aluno.</p>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10">
+            <div class="question-header">Questão 10 - Planejamento Curricular Multidisciplinar</div>
+            <div class="question-text">
+                <p><strong>Referência Principal:</strong> Definições de Planejamento (Sarulbi; Sant'Anna).</p>
+                <p>O planejamento curricular é uma atividade complexa que envolve a organização do ensino. Em questões anteriores de concursos da área pedagógica, o planejamento curricular é definido como:</p>
+            </div>
+            <div class="options-group">
+                <label class="option-label"><input type="radio" name="q10" value="A" class="option-input"> A) Uma tarefa multidisciplinar que tem por objetivo a organização de um sistema de relações lógicas e psicológicas dentro de um ou vários campos de conhecimento, visando facilitar o processo de ensino-aprendizagem.</label>
+                <label class="option-label"><input type="radio" name="q10" value="B" class="option-input"> B) Um processo administrativo de preenchimento de diários de classe para cumprir as exigências legais das secretarias de educação.</label>
+                <label class="option-label"><input type="radio" name="q10" value="C" class="option-input"> C) Uma atividade solitária do professor, que deve decidir isoladamente o que ensinar, sem considerar a articulação com outras disciplinas ou o projeto da escola.</label>
+                <label class="option-label"><input type="radio" name="q10" value="D" class="option-input"> D) A simples listagem de tópicos de conteúdo a serem vencidos durante o semestre, independentemente da apreensão desses conteúdos pelos estudantes.</label>
+                <label class="option-label"><input type="radio" name="q10" value="E" class="option-input"> E) Um instrumento de controle político utilizado pelo Estado para impedir a autonomia das escolas e dos professores.</label>
+            </div>
+            <div class="resolution-box">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: A</strong></p>
+                <p>O planejamento curricular é multidisciplinar e visa organizar um sistema de relações lógicas (do conteúdo) e psicológicas (do aluno) para facilitar a aprendizagem. Ele vai muito além de burocracia ou listagem de conteúdos.</p>
+            </div>
+        </div>
+
+    </form>
+
+    <div id="submit-section">
+        <div id="score-display"></div>
+        <button type="button" id="finish-btn">Corrigir e Ver Resoluções</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('finish-btn').addEventListener('click', function() {
+        const answers = {
+            q1: 'B',
+            q2: 'B',
+            q3: 'C',
+            q4: 'C',
+            q5: 'C',
+            q6: 'B',
+            q7: 'B',
+            q8: 'B',
+            q9: 'C',
+            q10: 'A'
+        };
+
+        let score = 0;
+        let total = Object.keys(answers).length;
+        let allAnswered = true;
+
+        // Resetar estilos anteriores
+        document.querySelectorAll('.option-label').forEach(el => {
+            el.classList.remove('correct', 'incorrect');
+        });
+        document.querySelectorAll('.status-msg').forEach(el => el.remove());
+
+        // Verificar respostas
+        for (let q in answers) {
+            const selected = document.querySelector(`input[name="${q}"]:checked`);
+            const correctValue = answers[q];
+            const questionCard = document.getElementById(q);
+            
+            // Mostrar caixa de resolução
+            const resBox = questionCard.querySelector('.resolution-box');
+            resBox.style.display = 'block';
+
+            if (selected) {
+                if (selected.value === correctValue) {
+                    score++;
+                    selected.parentElement.classList.add('correct');
+                    addStatus(questionCard, "Correto!", "status-correct");
+                } else {
+                    selected.parentElement.classList.add('incorrect');
+                    // Destacar a correta também
+                    const correctOption = questionCard.querySelector(`input[value="${correctValue}"]`);
+                    if(correctOption) correctOption.parentElement.classList.add('correct');
+                    addStatus(questionCard, "Incorreto", "status-wrong");
+                }
+            } else {
+                // Se não respondeu, destaca a correta e avisa
+                const correctOption = questionCard.querySelector(`input[value="${correctValue}"]`);
+                if(correctOption) correctOption.parentElement.classList.add('correct');
+                addStatus(questionCard, "Não respondida", "status-wrong");
+            }
+        }
+
+        // Exibir pontuação
+        const scoreDisplay = document.getElementById('score-display');
+        scoreDisplay.style.display = 'block';
+        scoreDisplay.innerHTML = `Você acertou <span style="color: var(--accent-color)">${score}</span> de ${total} questões.`;
+        
+        // Desabilitar botão após finalizar
+        this.textContent = "Simulado Finalizado";
+        this.disabled = true;
+        this.style.backgroundColor = "#9ca3af";
+        this.style.boxShadow = "none";
+
+        // Scroll suave para o topo do resultado ou primeira questão
+        scoreDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    function addStatus(card, text, className) {
+        const header = card.querySelector('.question-header');
+        const span = document.createElement('span');
+        span.className = `status-msg ${className}`;
+        span.style.float = 'right';
+        span.innerText = text;
+        
+        // Remove status anterior se houver
+        const oldStatus = header.querySelector('.status-msg');
+        if(oldStatus) oldStatus.remove();
+        
+        header.appendChild(span);
+    }
+</script>
+
+</body>
+</html>

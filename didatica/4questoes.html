@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Didática e Instrumentos Avaliativos - Estilo FCM</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd; /* Off-white para conforto visual */
+            --text-color: #333333;
+            --primary-color: #2c5282; /* Azul sóbrio */
+            --accent-color: #edf2f7;
+            --border-color: #e2e8f0;
+            --success-color: #c6f6d5;
+            --success-text: #22543d;
+            --error-color: #fed7d7;
+            --error-text: #742a2a;
+            --highlight-bg: #fff;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif; /* Serif para leitura longa */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--bg-color);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .question-card {
+            background: var(--highlight-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: all 0.3s ease;
+        }
+
+        .question-header {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .question-text p {
+            margin-bottom: 15px;
+        }
+
+        .question-text em, .question-text i {
+            background-color: #fffbdd; /* Leve destaque para itálicos/citações */
+            padding: 0 4px;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Segoe UI', sans-serif; /* Sans-serif para opções facilita leitura rápida */
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: var(--accent-color);
+        }
+
+        .option-label input {
+            margin-top: 5px;
+            margin-right: 12px;
+        }
+
+        /* Feedback Section */
+        .resolution-box {
+            display: none; /* Escondido inicialmente */
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-color);
+            background-color: #f7fafc;
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            font-family: 'Segoe UI', sans-serif;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* States after submission */
+        .correct-answer-highlight {
+            background-color: var(--success-color) !important;
+            color: var(--success-text);
+            border-color: #9ae6b4;
+            font-weight: bold;
+        }
+
+        .wrong-answer-highlight {
+            background-color: var(--error-color) !important;
+            color: var(--error-text);
+            border-color: #feb2b2;
+        }
+
+        .status-correct {
+            color: #2f855a;
+            font-weight: bold;
+        }
+
+        .status-wrong {
+            color: #c53030;
+            font-weight: bold;
+        }
+
+        /* Controls */
+        .controls {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        button#finish-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
+        }
+
+        button#finish-btn:hover {
+            background-color: #1a365d;
+        }
+
+        button#finish-btn:active {
+            transform: scale(0.98);
+        }
+
+        #score-display {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #score-display h2 {
+            margin: 0;
+            font-size: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Didática: Instrumentos e Critérios Avaliativos</h1>
+        <div class="subtitle">Simulado estilo Fundação CEFETMINAS - Formação Inicial (Rubricas, Portfólios, Observação)</div>
+    </header>
+
+    <div id="score-display">
+        <!-- O resultado aparecerá aqui -->
+    </div>
+
+    <form id="quiz-form">
+        <!-- As questões serão injetadas aqui via JavaScript -->
+    </form>
+
+    <div class="controls">
+        <button type="button" id="finish-btn" onclick="finishQuiz()">Finalizar Simulado e Ver Resoluções</button>
+    </div>
+</div>
+
+<script>
+    // Banco de Dados das Questões (Baseado no Texto Fornecido)
+    const questions = [
+        {
+            id: 1,
+            text: `<strong>Texto Base:</strong><br>"O portfólio não é um 'baú de guardados', onde se acumulam papéis sem critério. Ele é, antes de tudo, um espelho da trajetória formativa, onde o sujeito se vê e se revê. Na formação inicial, ele rompe com a lógica bancária de depósito de informações para instaurar a lógica da curadoria e da reflexão sobre a própria prática." (VILLAS BOAS, B. M. F. *Portfólio, avaliação e trabalho pedagógico*).<br><br>No contexto de um curso de Licenciatura em Química de um Instituto Federal, um professor decide adotar o portfólio como instrumento avaliativo central da disciplina de Prática de Ensino. Contudo, ao final do semestre, percebe que os alunos apenas encadernaram todas as atividades feitas, sem nenhuma análise crítica.<br><br>Considerando os pressupostos teóricos de Benigna Villas Boas e a prática da avaliação formativa, a falha metodológica central nessa implementação foi:`,
+            options: [
+                "A) A ausência de uma prova final escrita que validasse os conhecimentos contidos no portfólio, uma vez que instrumentos qualitativos carecem de rigor estatístico se não forem acompanhados de verificação somativa.",
+                "B) A falta de mediação docente na orientação dos princípios da <strong>seleção</strong> e da <strong>reflexão</strong>, transformando o portfólio em um mero arquivo de tarefas, esvaziando seu potencial de construção da identidade docente e de autorregulação da aprendizagem.",
+                "C) O uso do portfólio em uma disciplina de ciências exatas, visto que a literatura pedagógica restringe o uso desse instrumento às áreas de humanidades e artes, onde a subjetividade é a norma.",
+                "D) A permissividade na escolha dos materiais, pois o professor deveria ter definido rigidamente quais textos e provas deveriam compor a pasta final, garantindo assim a padronização necessária para a comparação meritocrática entre os alunos.",
+                "E) A inexistência de um sistema de recompensas e punições atrelado à entrega parcial das atividades, o que desestimulou os alunos a se dedicarem à confecção artística e estética do material."
+            ],
+            correct: 1, // Index based on 0 (A=0, B=1...)
+            resolution: `<strong>Análise:</strong> A questão aborda o coração da teoria de Benigna Villas Boas sobre portfólios. O erro foi transformar o instrumento em um "arquivão".<br><br>O portfólio distingue-se de uma pasta comum pelos princípios da <strong>seleção</strong> e da <strong>reflexão</strong>. Se o aluno apenas junta tudo, ele não exerceu o pensamento crítico sobre o que aprendeu. A "mediação docente" é falha se o professor não ensina o aluno a refletir. O portfólio visa construir a identidade docente (quem eu sou como professor?) e a autorregulação.`
+        },
+        {
+            id: 2,
+            text: `Analise a seguinte situação à luz da teoria da <strong>Avaliação Mediadora</strong> de Jussara Hoffmann:<br><br><em>*Durante o estágio supervisionado, uma licencianda observa uma turma de Ensino Fundamental. Em seu relatório, ela escreve: "O aluno Pedro não aprendeu frações porque é desatento e conversa muito. A professora explicou a matéria três vezes, mas ele não tem base matemática."*</em><br><br>Ao ler esse relatório, o professor formador do CEFET deve intervir, apontando que a observação da estagiária reproduz uma concepção equivocada de avaliação. A crítica pedagógica correta a esse registro é:`,
+            options: [
+                "A) O registro é falho porque não apresenta dados quantitativos sobre quantas vezes o aluno conversou, impedindo uma análise estatística do comportamento desviante.",
+                "B) A estagiária acertou no diagnóstico, mas errou na forma, pois deveria ter usado termos técnicos da psicologia comportamental para descrever a desatenção de Pedro.",
+                "C) A observação limitou-se a sentenciar e rotular o aluno ('não tem base', 'desatento'), ignorando o 'tempo da admiração' que busca investigar as lógicas de pensamento de Pedro e as metodologias da professora, transferindo a responsabilidade do fracasso exclusivamente para o estudante.",
+                "D) O relatório deveria focar apenas na atuação da professora regente, pois a ética do estágio proíbe que o licenciando observe e registre ações dos alunos menores de idade.",
+                "E) A estagiária deveria ter aplicado um teste diagnóstico em Pedro antes de afirmar que ele não tem base, pois a observação direta não é um instrumento válido para aferir aprendizagem cognitiva."
+            ],
+            correct: 2,
+            resolution: `<strong>Análise:</strong> Focada em Jussara Hoffmann e na observação.<br><br>O registro da estagiária é sentencioso ("não tem base", "é desatento"). Ele encerra a discussão culpando o aluno. A avaliação mediadora exige o "tempo da admiração": investigar <em>por que</em> ele conversa? <em>Como</em> ele tenta resolver o problema? A responsabilidade é compartilhada e o foco deve ser a compreensão do processo para intervir.`
+        },
+        {
+            id: 3,
+            text: `Sobre a utilização de <strong>Rubricas (Matrizes de Avaliação)</strong> na formação de professores, leia o trecho a seguir e analise as afirmativas:<br><br>"As rubricas são pontes entre o ensino e a aprendizagem. Elas traduzem as expectativas do professor em critérios observáveis, permitindo que o aluno compreenda o que define a qualidade de sua produção." (BROOKHART, S. M.).<br><br>I. As <strong>rubricas analíticas</strong> são aquelas que decompõem a tarefa em múltiplos critérios específicos, atribuindo níveis de desempenho para cada um, sendo ideais para fornecer feedback formativo detalhado.<br>II. As <strong>rubricas holísticas</strong> avaliam o trabalho em sua globalidade, atribuindo uma pontuação única baseada na impressão geral, sendo mais indicadas para avaliações somativas rápidas onde o feedback detalhado não é o foco principal.<br>III. O uso de rubricas na formação inicial deve ser restrito ao professor, não devendo ser compartilhado com os alunos antes da entrega da atividade, para evitar que eles "estudem para a rubrica" e limitem sua criatividade.<br>IV. A construção coletiva de rubricas com os estudantes favorece a metacognição, pois envolve os alunos na definição do que é um "bom trabalho", aumentando o engajamento e a transparência do processo avaliativo.<br><br>Estão CORRETAS apenas as afirmativas:`,
+            options: [
+                "A) I e II.",
+                "B) I, II e IV.",
+                "C) II e III.",
+                "D) III e IV.",
+                "E) I, III e IV."
+            ],
+            correct: 1,
+            resolution: `<strong>Análise:</strong> Questão técnica sobre tipos de rubricas.<br><br><strong>Item I (Correto):</strong> Define rubrica analítica.<br><strong>Item II (Correto):</strong> Define rubrica holística.<br><strong>Item III (Incorreto):</strong> O segredo da rubrica formativa é a transparência. Ela deve ser compartilhada antes.<br><strong>Item IV (Correto):</strong> Envolver alunos na criação da rubrica é o ápice da avaliação democrática.`
+        },
+        {
+            id: 4,
+            text: `Vasco Moretto, em suas obras sobre a avaliação da aprendizagem, critica a elaboração de instrumentos que induzem ao erro ou que focam na memorização mecânica. Na perspectiva desse autor, um instrumento avaliativo eficaz na formação de professores deve privilegiar:`,
+            options: [
+                "A) A operatória mental da <strong>resignificação</strong>, onde o aluno é desafiado a estabelecer novas relações entre conceitos, aplicando o conhecimento em situações complexas e contextualizadas, em vez de apenas reproduzir definições.",
+                "B) A <strong>exatidão terminológica</strong> absoluta, descontando pontos de qualquer resposta que não utilize exatamente as mesmas palavras apresentadas no livro-texto adotado, para garantir o rigor científico.",
+                "C) Questões de <strong>múltipla escolha</strong> com 'pegadinhas' sutis, pois a função primordial da avaliação na formação docente é preparar o candidato para passar em concursos públicos difíceis.",
+                "D) A <strong>subjetividade total</strong>, onde não há critérios de certo ou errado, e qualquer opinião do aluno sobre a educação é validada como saber docente legítimo, valorizando a experiência de vida acima da teoria.",
+                "E) A <strong>extensão da resposta</strong>, considerando que quanto mais o aluno escreve, maior é o seu domínio de conteúdo, independentemente da coerência e coesão textual."
+            ],
+            correct: 0,
+            resolution: `<strong>Análise:</strong> Baseada em Vasco Moretto.<br><br>Moretto critica a "pedagogia da resposta" (reprodução). Ele defende a "pedagogia da pergunta" e a <strong>ressignificação</strong>. Avaliar é verificar se o aluno consegue usar o conceito em um novo contexto (operatória mental complexa), não se ele decorou a definição.`
+        },
+        {
+            id: 5,
+            text: `<strong>Texto Base:</strong><br>"A observação na sala de aula não é um ato neutro. Ela é impregnada pelas concepções prévias do observador. Se o professor acredita que ensinar é transmitir, ele observará se os alunos estão quietos ouvindo. Se acredita que aprender é construir, ele observará as interações e as perguntas dos alunos." (Adaptação de HOFFMANN, J.).<br><br>Um edital de seleção para professor substituto do CEFET-MG prevê uma "Prova de Desempenho Didático". Os critérios de avaliação dessa prova, constantes na rubrica da banca, devem estar alinhados a uma concepção sócio-interacionista.<br><br>Assinale a alternativa que apresenta um critério avaliativo <strong>INCOERENTE</strong> com essa concepção e que seria típico de uma avaliação tecnicista tradicional:`,
+            options: [
+                "A) 'Problematização: O candidato propõe situações-problema que conectam o conteúdo aos conhecimentos prévios dos alunos e ao contexto social.'",
+                "B) 'Interação Dialógica: O candidato demonstra escuta ativa e acolhe as dúvidas (simuladas) como oportunidades para aprofundar a discussão conceitual.'",
+                "C) 'Gestão do Tempo: O candidato cumpre rigorosamente as etapas previstas no plano, silenciando intervenções que possam desviar do roteiro pré-estabelecido para garantir a transmissão integral do conteúdo.'",
+                "D) 'Procedimentos Metodológicos: O candidato utiliza estratégias diversificadas que favorecem a participação ativa dos estudantes na construção do conhecimento.'",
+                "E) 'Avaliação Processual: O plano de aula prevê momentos de verificação da aprendizagem durante a aula, e não apenas ao final, permitindo ajustes na abordagem.'"
+            ],
+            correct: 2,
+            resolution: `<strong>Análise:</strong> Identificação da prática tradicional/tecnicista.<br><br>O critério descrito na opção C valoriza o cumprimento burocrático do plano e o silenciamento dos alunos para garantir a "transmissão integral". Isso é pedagogia bancária e tecnicista. O plano deve ser flexível para acolher a dúvida e a interação.`
+        },
+        {
+            id: 6,
+            text: `A <strong>autoavaliação</strong> é um componente essencial do portfólio reflexivo e da avaliação formativa. Contudo, sua implementação na formação inicial de professores enfrenta desafios culturais. Segundo Benigna Villas Boas, para que a autoavaliação não se reduza a uma "autoatribuição de nota" (dar-se 10 para passar), é necessário:`,
+            options: [
+                "A) Que ela seja realizada anonimamente, para que o aluno não sofra represálias do professor caso se avalie muito bem.",
+                "B) Que o professor desconsidere a autoavaliação na média final, usando-a apenas como um desabafo terapêutico do aluno.",
+                "C) Que ela seja fundamentada em critérios pré-estabelecidos e confrontada com a avaliação do professor e dos pares, constituindo um momento de diálogo e negociação de sentidos sobre a aprendizagem.",
+                "D) Que ela ocorra apenas ao final do curso, quando o aluno já tem maturidade suficiente para julgar seu desempenho global.",
+                "E) Que ela substitua integralmente a avaliação do professor, pois na andragogia (educação de adultos) a autonomia deve ser absoluta e soberana."
+            ],
+            correct: 2,
+            resolution: `<strong>Análise:</strong> Sobre autoavaliação (Villas Boas).<br><br>A autoavaliação não é um ato solitário ou arbitrário. Para ter validade formativa, ela precisa de parâmetros (critérios/rubricas) e precisa ser dialógica. O aluno se avalia, o professor avalia, e as discrepâncias são discutidas. Isso gera crescimento.`
+        },
+        {
+            id: 7,
+            text: `Considere o excerto sobre <strong>Avaliação por Pares</strong> (Peer Assessment) na formação docente:<br><br>"A avaliação por pares, mediada por rubricas, descentraliza a autoridade do professor e promove o desenvolvimento de competências críticas nos estudantes."<br><br>No entanto, a implementação dessa prática exige cuidados. Qual das alternativas abaixo descreve corretamente uma condição para o sucesso da avaliação por pares em um curso de Pedagogia?`,
+            options: [
+                "A) O anonimato deve ser evitado a todo custo, pois os alunos precisam aprender a criticar os colegas 'olhando no olho', mesmo que isso gere conflitos pessoais e inimizades na turma.",
+                "B) As rubricas utilizadas devem ser complexas e herméticas, acessíveis apenas aos alunos de alto desempenho, para forçar o nivelamento da turma por cima.",
+                "C) É imprescindível um treinamento prévio dos estudantes no uso da rubrica (calibragem), discutindo o significado de cada critério e nível, para minimizar a subjetividade e garantir que todos compreendam o que está sendo avaliado.",
+                "D) A nota atribuída pelos pares deve ter peso maior que a nota do professor, pois a avaliação entre iguais é ontologicamente mais justa e isenta de relações de poder.",
+                "E) A avaliação por pares deve ser aplicada apenas em atividades simples e mecânicas, deixando as atividades intelectuais complexas para a avaliação exclusiva do docente titular."
+            ],
+            correct: 2,
+            resolution: `<strong>Análise:</strong> Sobre Peer Assessment.<br><br>Pesquisas mostram que a avaliação por pares falha se os alunos não entenderem os critérios da mesma forma que o professor. O "treinamento" ou calibração (discutir a rubrica antes de usar) é condição <em>sine qua non</em> para a validade e confiabilidade do processo.`
+        },
+        {
+            id: 8,
+            text: `Leia a charge descrita a seguir (hipotética):<br><em>*Cena 1: Professora diz "Hoje faremos uma avaliação formativa".<br>Cena 2: Professora entrega uma prova e diz "Se tirar menos de 6, está reprovado e não tem recuperação".<br>Cena 3: Aluno pensa "Mudou o nome, mas o chicote é o mesmo".*</em><br><br>A charge ironiza a apropriação indébita do termo "Avaliação Formativa" sem a mudança efetiva da prática. Segundo a literatura de referência (Perrenoud, Hadji, Hoffmann), o que define <em>essencialmente</em> o caráter formativo de um instrumento não é o seu formato (teste, prova, trabalho), mas sim:`,
+            options: [
+                "A) A sua aplicação constante, ocorrendo em todas as aulas para manter os alunos sempre em estado de alerta e estudando.",
+                "B) A <strong>regulação</strong> das aprendizagens, ou seja, o uso das informações coletadas pelo instrumento para adaptar o ensino e oferecer feedback que ajude o aluno a superar as dificuldades detectadas.",
+                "C) A eliminação de qualquer tipo de nota ou conceito numérico, pois a avaliação formativa é incompatível com sistemas de registro escolar oficiais.",
+                "D) A facilidade das questões, garantindo que todos os alunos acertem e se sintam motivados (pedagogia do sucesso).",
+                "E) A utilização exclusiva de tecnologias digitais e gamificação, modernizando o processo de testagem."
+            ],
+            correct: 1,
+            resolution: `<strong>Análise:</strong> Definição essencial de Avaliação Formativa.<br><br>O conceito chave é <strong>regulação</strong> (feedback + ajuste). Se eu aplico uma prova e uso o resultado para reexplicar o conteúdo de outra forma para quem errou, a prova foi formativa. A intencionalidade e o uso dos dados definem a modalidade.`
+        },
+        {
+            id: 9,
+            text: `Em um concurso para Pedagogo da FCM, é comum a cobrança de conhecimentos sobre a LDB 9.394/96 articulados com a Didática. O Art. 24 da LDB estabelece que a avaliação deve ser "contínua e cumulativa do desempenho do aluno, com prevalência dos aspectos qualitativos sobre os quantitativos".<br><br>Ao traduzir esse dispositivo legal para a prática de uso de <strong>instrumentos avaliativos</strong> na formação inicial, o professor deve:`,
+            options: [
+                "A) Somar todas as notas das provas (cumulativa) e ignorar a participação em sala (qualitativa), pois a lei é apenas uma diretriz teórica sem aplicação prática no ensino superior.",
+                "B) Utilizar apenas a observação informal (qualitativa) para aprovar os alunos, dispensando registros documentais, já que a quantidade de provas não importa.",
+                "C) Diversificar os instrumentos (provas, seminários, portfólios, autoavaliação) para captar diferentes dimensões da aprendizagem, garantindo que o 'qualitativo' signifique a análise da profundidade do conhecimento e não apenas a contagem de acertos.",
+                "D) Dar pontos extras por comportamento e assiduidade, pois isso atende ao critério qualitativo de formação de caráter.",
+                "E) Realizar uma grande prova final que aborde todo o conteúdo do ano (cumulativa), fazendo valer o peso desta sobre as avaliações parciais, conforme a tradição universitária."
+            ],
+            correct: 2,
+            resolution: `<strong>Análise:</strong> Interpretação da LDB (Art. 24) e Didática.<br><br>A "prevalência dos aspectos qualitativos" significa olhar para a qualidade da aprendizagem (evolução, raciocínio). Para isso, é necessário <strong>diversificar instrumentos</strong>. Um único instrumento (só prova) não capta a totalidade qualitativa.`
+        },
+        {
+            id: 10,
+            text: `Sobre a diferença entre <strong>erro construtivo</strong> e <strong>erro por falta de estudo</strong> na análise de avaliações escritas, Vasco Moretto propõe que o professor tenha discernimento. Na formação de professores, como trabalhar o erro dos licenciandos de forma pedagógica?`,
+            options: [
+                "A) O erro deve ser sempre penalizado com a perda de nota proporcional, pois na vida profissional o professor não poderá errar diante de seus alunos.",
+                "B) O professor formador deve classificar os erros e ignorar aqueles conceituais, focando apenas nos erros de português, que são inadmissíveis para um docente.",
+                "C) O erro deve ser objeto de análise e 're-elaboração'. O feedback não deve dar a resposta pronta, mas oferecer pistas ou perguntas que levem o licenciando a perceber a falha em sua lógica (feedback interrogativo).",
+                "D) O professor deve expor os erros mais engraçados da turma no quadro para que todos aprendam com o exemplo negativo, utilizando a vergonha como motor de mudança.",
+                "E) O erro não existe na pós-modernidade; tudo são apenas diferentes pontos de vista, e corrigir um licenciando é um ato de violência epistêmica autoritária."
+            ],
+            correct: 2,
+            resolution: `<strong>Análise:</strong> Tratamento do erro (Moretto).<br><br>O erro é a "janela para a mente do aluno". A intervenção correta não é dar a resposta, mas fazer a pergunta certa que gera o desequilíbrio e leva o aluno a reconstruir o conceito (feedback interrogativo).`
+        }
+    ];
+
+    function renderQuiz() {
+        const form = document.getElementById('quiz-form');
+        let html = '';
+
+        questions.forEach((q, index) => {
+            html += `
+                <article class="question-card" id="card-${index}">
+                    <div class="question-header">Questão ${index + 1}</div>
+                    <div class="question-text">${q.text}</div>
+                    <div class="options-group">
+                        ${q.options.map((opt, i) => `
+                            <label class="option-label" id="label-${index}-${i}">
+                                <input type="radio" name="q${index}" value="${i}">
+                                <span>${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                    <div class="resolution-box" id="res-${index}">
+                        <span class="resolution-title">Gabarito e Resolução:</span>
+                        <div id="res-content-${index}"></div>
+                    </div>
+                </article>
+            `;
+        });
+
+        form.innerHTML = html;
+    }
+
+    function finishQuiz() {
+        let score = 0;
+        let total = questions.length;
+        const btn = document.getElementById('finish-btn');
+        
+        // Desabilitar botão para evitar duplo clique
+        btn.disabled = true;
+        btn.innerText = "Simulado Finalizado";
+        btn.style.backgroundColor = "#718096";
+
+        questions.forEach((q, index) => {
+            // Obter resposta selecionada
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const card = document.getElementById(`card-${index}`);
+            const resolutionBox = document.getElementById(`res-${index}`);
+            const resolutionContent = document.getElementById(`res-content-${index}`);
+            
+            // Lógica de verificação
+            let statusText = "";
+            let userAnswer = -1;
+
+            if (selected) {
+                userAnswer = parseInt(selected.value);
+            }
+
+            // Desabilitar todos os inputs desta questão
+            const inputs = document.querySelectorAll(`input[name="q${index}"]`);
+            inputs.forEach(input => input.disabled = true);
+
+            // Destacar a resposta correta visualmente
+            const correctLabel = document.getElementById(`label-${index}-${q.correct}`);
+            if(correctLabel) correctLabel.classList.add('correct-answer-highlight');
+
+            if (userAnswer === q.correct) {
+                score++;
+                statusText = `<span class="status-correct">Você acertou!</span>`;
+            } else {
+                statusText = `<span class="status-wrong">Você errou.</span>`;
+                // Se errou, destaca a que o usuário marcou em vermelho
+                if (userAnswer !== -1) {
+                    const wrongLabel = document.getElementById(`label-${index}-${userAnswer}`);
+                    if(wrongLabel) wrongLabel.classList.add('wrong-answer-highlight');
+                }
+            }
+
+            // Mostrar resolução
+            resolutionContent.innerHTML = `
+                <p>${statusText}</p>
+                <p>${q.resolution}</p>
+            `;
+            resolutionBox.style.display = 'block';
+            
+            // Scroll suave para o topo do feedback visual não é necessário, 
+            // pois o usuário vai rolar para ver as respostas.
+        });
+
+        // Mostrar Placar Final
+        const scoreDisplay = document.getElementById('score-display');
+        const percentage = (score / total) * 100;
+        
+        let message = "";
+        if (percentage >= 70) message = "Excelente desempenho!";
+        else if (percentage >= 50) message = "Bom trabalho, continue estudando!";
+        else message = "É necessário revisar os conteúdos.";
+
+        scoreDisplay.innerHTML = `
+            <h2>Resultado: ${score} de ${total}</h2>
+            <p>${percentage}% de aproveitamento. ${message}</p>
+        `;
+        scoreDisplay.style.display = 'block';
+        
+        // Rolar para o topo para ver a nota
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Inicializar o quiz
+    renderQuiz();
+</script>
+
+</body>
+</html>

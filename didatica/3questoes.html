@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Avaliação Formativa - Estilo FCM</title>
+    <style>
+        :root {
+            --bg-color: #fdfbf7; /* Cor de papel suave */
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --accent-color: #34495e;
+            --highlight-color: #e67e22;
+            --correct-color: #27ae60;
+            --wrong-color: #c0392b;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Merriweather', 'Georgia', serif; /* Fontes serifadas para leitura longa */
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            color: var(--accent-color);
+            border-left: 5px solid var(--highlight-color);
+            padding-left: 15px;
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: #666;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f0f0f0;
+        }
+
+        .option-input {
+            margin-top: 6px;
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: sans-serif;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            margin-top: 40px;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c3e50;
+        }
+
+        /* Seção de Resultados */
+        #result-section {
+            display: none; /* Oculto inicialmente */
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px dashed var(--accent-color);
+            animation: fadeIn 0.8s;
+        }
+
+        .score-board {
+            text-align: center;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .score-board h3 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .resolution-card {
+            background-color: #fff;
+            border-left: 5px solid #ccc;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .resolution-card.correct {
+            border-left-color: var(--correct-color);
+        }
+
+        .resolution-card.wrong {
+            border-left-color: var(--wrong-color);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            font-family: sans-serif;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .status-correct { background-color: var(--correct-color); }
+        .status-wrong { background-color: var(--wrong-color); }
+
+        .resolution-content h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .user-answer-display {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.8rem; }
+            .question-card { padding: 20px; }
+        }
+    </style>
+    <!-- Importando fonte para leitura agradável -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Avaliação Formativa: Concepções e Práticas</h1>
+        <p class="subtitle">Simulado baseado no estilo Fundação CEFETMINAS</p>
+    </header>
+
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- As questões serão inseridas aqui via JavaScript -->
+        </div>
+
+        <button type="submit" class="btn-submit">Finalizar Quiz e Ver Resoluções</button>
+    </form>
+
+    <div id="result-section">
+        <div class="score-board">
+            <h3>Resultado: <span id="score-display">0</span>/10</h3>
+            <p id="score-message"></p>
+        </div>
+        
+        <h2>Resoluções Detalhadas e Fundamentação Teórica</h2>
+        <div id="resolutions-container">
+            <!-- As resoluções aparecerão aqui -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Dados das Questões e Resoluções (Extraídos do Documento Original)
+    const quizData = [
+        {
+            id: 1,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) A avaliação escolar, na perspectiva de José Carlos Libâneo, não é um ato isolado, mas uma componente intrínseca do processo de ensino-aprendizagem. O autor identifica três funções essenciais da avaliação que operam de forma interdependente. Analise as lacunas abaixo e assinale a alternativa que preenche correta e respectivamente o texto:<br><br>\"A função ________________ refere-se ao cumprimento dos objetivos gerais e específicos da educação, sendo o elemento central para o reajuste do plano de ensino. A função ________________ permite identificar progressos e dificuldades dos alunos e a atuação do professor, ocorrendo ao longo de todo o processo. Por fim, a função de ________________ é necessária para o funcionamento da organização escolar, mas não deve sobrepor-se às demais nem ter caráter meramente classificatório.\"",
+            options: [
+                "A) diagnóstica – somativa – regulação",
+                "B) pedagógico-didática – diagnóstica – controle",
+                "C) formativa – diagnóstica – classificação",
+                "D) pedagógico-didática – processual – verificação",
+                "E) de controle – diagnóstica – pedagogia"
+            ],
+            correctIndex: 1, // B
+            resolutionTitle: "Resolução da Questão 01: Funções da Avaliação em Libâneo",
+            resolutionText: `
+                <p><strong>Gabarito: B</strong></p>
+                <p><strong>Fundamentação Teórica:</strong> José Carlos Libâneo, em sua obra <em>Didática</em>, estrutura a avaliação escolar em três eixos principais:</p>
+                <ol>
+                    <li><strong>Função Pedagógico-Didática:</strong> Refere-se ao cumprimento dos objetivos gerais e específicos da educação. É o elemento central para o reajuste do plano de ensino, conectando o "ensinar" ao "aprender".</li>
+                    <li><strong>Função de Diagnóstico (Diagnóstica):</strong> Permite identificar progressos e dificuldades dos alunos e a atuação do professor. Ocorre ao longo de todo o processo (processual).</li>
+                    <li><strong>Função de Controle:</strong> Necessária para a organização escolar (registros, históricos), mas não deve sobrepor-se às demais funções nem ter caráter meramente classificatório.</li>
+                </ol>
+                <p>A alternativa B preenche corretamente as lacunas nesta ordem exata.</p>
+            `
+        },
+        {
+            id: 2,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) Analise as afirmativas a seguir sobre a concepção de **Avaliação Mediadora** proposta por Jussara Hoffmann, classificando-as como Verdadeiras (V) ou Falsas (F):<br><br>( ) O erro do aluno é concebido como uma hipótese em construção, uma etapa necessária do desenvolvimento cognitivo que exige intervenção dialógica do professor, e não punição.<br>( ) A avaliação mediadora dispensa o uso de registros escritos ou notas, baseando-se exclusivamente na observação informal e na memória docente sobre o desempenho da turma.<br>( ) O feedback ou devolutiva deve ser imediato e promover a reflexão do aluno sobre seu próprio raciocínio (metacognição), transformando o momento da avaliação em momento de aprendizagem.<br>( ) A função classificatória é mantida como prioritária na avaliação mediadora para garantir que os alunos se adaptem à competitividade do mercado de trabalho.",
+            options: [
+                "A) V, F, V, F",
+                "B) V, V, F, V",
+                "C) F, F, V, V",
+                "D) V, F, F, F",
+                "E) F, V, V, F"
+            ],
+            correctIndex: 0, // A
+            resolutionTitle: "Resolução da Questão 02: Avaliação Mediadora (Jussara Hoffmann)",
+            resolutionText: `
+                <p><strong>Gabarito: A</strong></p>
+                <p><strong>Análise das Assertivas:</strong></p>
+                <ul>
+                    <li>(V) <strong>O erro como hipótese:</strong> Para Hoffmann, o erro é epistemologicamente positivo, uma "janela" para a mente do aluno que exige mediação, não punição.</li>
+                    <li>(F) <strong>Dispensa de registros:</strong> A avaliação mediadora exige registros rigorosos e sistemáticos (portfólios, pareceres). A memória do professor é falha; sem registro, não há acompanhamento histórico.</li>
+                    <li>(V) <strong>Feedback e Metacognição:</strong> A devolutiva deve levar o aluno a refletir sobre como pensou, tornando a avaliação um momento de aprendizagem.</li>
+                    <li>(F) <strong>Função classificatória:</strong> A avaliação mediadora é, por essência, anticlassificatória. O foco é o desenvolvimento humano, não a triagem para o mercado.</li>
+                </ul>
+            `
+        },
+        {
+            id: 3,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) Segundo Cipriano Luckesi, a prática escolar brasileira tem sido marcada pela \"pedagogia do exame\". Em contraposição, o autor defende a \"avaliação da aprendizagem\". Assinale a alternativa que apresenta corretamente uma característica distintiva do ato de **avaliar**, segundo Luckesi, em oposição ao ato de **examinar**.",
+            options: [
+                "A) O ato de avaliar é excludente, pois separa os alunos aptos dos inaptos ao final do ciclo letivo.",
+                "B) O ato de avaliar é pontual, ocorrendo em datas pré-determinadas para o fechamento de notas bimestrais.",
+                "C) O ato de avaliar é inclusivo e diagnóstico, tendo como objetivo acolher o aluno para subsidiar a tomada de decisão em busca do melhor resultado possível.",
+                "D) O ato de avaliar foca no produto final da aprendizagem, desconsiderando os processos intermediários de construção do conhecimento.",
+                "E) O ato de avaliar utiliza a nota como instrumento de disciplina e controle social sobre a conduta dos discentes."
+            ],
+            correctIndex: 2, // C
+            resolutionTitle: "Resolução da Questão 03: Luckesi - Examinar vs. Avaliar",
+            resolutionText: `
+                <p><strong>Gabarito: C</strong></p>
+                <p><strong>Fundamentação Teórica:</strong> Luckesi distingue fenomenologicamente os dois atos:</p>
+                <ul>
+                    <li><strong>Examinar:</strong> É excludente, classificatório, pontual, autoritário e focado no produto.</li>
+                    <li><strong>Avaliar:</strong> É <strong>inclusivo</strong> (acolhe o aluno no estado em que se encontra), <strong>diagnóstico</strong> (investiga para agir) e foca na melhoria do processo.</li>
+                </ul>
+                <p>A alternativa C é a única que apresenta as características do ato de avaliar: inclusão, diagnóstico e subsídio para decisão.</p>
+            `
+        },
+        {
+            id: 4,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) Considerando os instrumentos de avaliação formativa e a necessidade de diversificação das práticas avaliativas prevista na LDB 9.394/96, relacione a Coluna 1 (Instrumentos) com a Coluna 2 (Características/Funções):<br><br><strong>Coluna 1</strong><br>1. Portfólio<br>2. Mapa Conceitual<br>3. Prova Operatória<br>4. Observação Sistemática<br><br><strong>Coluna 2</strong><br>( ) Instrumento que exige do aluno a organização e representação gráfica das relações significativas entre conceitos, permitindo ao professor analisar a estrutura cognitiva do aprendiz.<br>( ) Coletânea organizada e reflexiva das produções do aluno ao longo de um período, demonstrando sua trajetória, progressos e dificuldades, favorecendo a autoavaliação.<br>( ) Questões que exigem do aluno não apenas a memória mecânica, mas a capacidade de estabelecer relações, justificar raciocínios e aplicar conhecimentos em situações-problema.<br>( ) Registro contínuo, pautado em pautas ou fichas de acompanhamento, sobre as atitudes, procedimentos e desenvolvimento de competências do aluno em situações cotidianas.",
+            options: [
+                "A) 2, 1, 3, 4",
+                "B) 1, 2, 4, 3",
+                "C) 2, 1, 4, 3",
+                "D) 3, 1, 2, 4",
+                "E) 4, 2, 3, 1"
+            ],
+            correctIndex: 0, // A
+            resolutionTitle: "Resolução da Questão 04: Instrumentos de Avaliação",
+            resolutionText: `
+                <p><strong>Gabarito: A</strong></p>
+                <p><strong>Correlação:</strong></p>
+                <ul>
+                    <li><strong>(2) Mapa Conceitual:</strong> Representação gráfica de relações entre conceitos (estrutura cognitiva).</li>
+                    <li><strong>(1) Portfólio:</strong> Coletânea reflexiva e histórica das produções, favorecendo a autoavaliação.</li>
+                    <li><strong>(3) Prova Operatória:</strong> Exige operações mentais (relações, justificativas) em vez de memória mecânica.</li>
+                    <li><strong>(4) Observação Sistemática:</strong> Registro contínuo de atitudes e procedimentos cotidianos.</li>
+                </ul>
+                <p>A sequência correta é 2, 1, 3, 4.</p>
+            `
+        },
+        {
+            id: 5,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) Sobre as práticas de **feedback** (devolutiva) na avaliação formativa, é INCORRETO afirmar:",
+            options: [
+                "A) O feedback formativo deve ser descritivo e propositivo, indicando ao aluno não apenas o erro, mas caminhos para superá-lo.",
+                "B) O tempo do feedback é crucial; devolutivas tardias perdem sua função reguladora, pois o aluno já se distanciou cognitivamente da tarefa realizada.",
+                "C) O feedback deve focar na pessoa do aluno (elogios à inteligência ou críticas ao caráter) para estimular sua autoestima e engajamento emocional.",
+                "D) A autoavaliação guiada pelo professor é uma forma de feedback interno, onde o aluno aprende a regular seus próprios processos de aprendizagem.",
+                "E) O erro construtivo, quando trabalhado através de feedback, torna-se uma janela para a compreensão da lógica do estudante."
+            ],
+            correctIndex: 2, // C
+            resolutionTitle: "Resolução da Questão 05: Feedback na Avaliação Formativa",
+            resolutionText: `
+                <p><strong>Gabarito: C</strong></p>
+                <p><strong>Por que está incorreta?</strong></p>
+                <p>Baseado em estudos como os de Hattie & Timperley, o feedback focado no <strong>"Self" (Pessoa)</strong> é o menos eficaz e pode ser prejudicial. Elogios à inteligência ("Você é um gênio") ou críticas pessoais geram mindset fixo e medo do erro. O feedback eficaz deve focar na <strong>tarefa</strong>, no <strong>processo</strong> e na <strong>autorregulação</strong>, jamais nos traços de personalidade do aluno.</p>
+            `
+        },
+        {
+            id: 6,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) A Lei de Diretrizes e Bases da Educação Nacional (LDB nº 9.394/96), em seu Artigo 24, estabelece critérios para a verificação do rendimento escolar. Analise as assertivas abaixo e identifique aquela que está em **desacordo** com a referida lei:",
+            options: [
+                "A) A avaliação deve ser contínua e cumulativa do desempenho do aluno.",
+                "B) Há prevalência dos aspectos qualitativos sobre os quantitativos.",
+                "C) Os resultados obtidos ao longo do período devem prevalecer sobre os de eventuais provas finais.",
+                "D) É obrigatória a realização de exames finais em todos os níveis da educação básica para certificação de competências.",
+                "E) É permitida a aceleração de estudos para alunos com atraso escolar."
+            ],
+            correctIndex: 3, // D
+            resolutionTitle: "Resolução da Questão 06: Legislação (LDB Art. 24)",
+            resolutionText: `
+                <p><strong>Gabarito: D</strong></p>
+                <p><strong>Fundamentação Legal:</strong></p>
+                <p>O Artigo 24 da LDB/96 não torna obrigatória a realização de exames finais. O texto da lei menciona "eventuais provas finais", indicando que elas são opcionais e que a escola pode adotar um sistema puramente processual. A obrigatoriedade de exame final como certificação única não consta na legislação para o ensino básico regular, sendo o foco a avaliação contínua e cumulativa.</p>
+            `
+        },
+        {
+            id: 7,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) Libâneo (2013) discute a unidade entre objetivos, conteúdos, métodos e avaliação. Nesse contexto, o planejamento escolar assume um papel fundamental. Sobre a relação entre **Avaliação e Planejamento**, assinale a alternativa correta:",
+            options: [
+                "A) A avaliação é a última etapa do planejamento, servindo apenas para verificar se o aluno reteve a informação transmitida.",
+                "B) O planejamento é um documento burocrático imutável, e a avaliação deve seguir rigidamente o que foi estipulado no início do ano, independentemente da realidade da turma.",
+                "C) A avaliação fornece dados diagnósticos que alimentam o re-planejamento, permitindo ao professor ajustar métodos e conteúdos às necessidades reais dos alunos.",
+                "D) Objetivos de ensino e critérios de avaliação são elementos distintos que não precisam guardar coerência entre si.",
+                "E) A avaliação diagnóstica deve ocorrer apenas no início do ano letivo, sendo dispensável durante o desenvolvimento das unidades didáticas."
+            ],
+            correctIndex: 2, // C
+            resolutionTitle: "Resolução da Questão 07: Avaliação e Planejamento",
+            resolutionText: `
+                <p><strong>Gabarito: C</strong></p>
+                <p><strong>Fundamentação Teórica:</strong></p>
+                <p>A avaliação possui uma função cibernética de feedback para o próprio professor. Ela fornece dados da realidade que devem alimentar o <strong>re-planejamento</strong>. Se o diagnóstico aponta que os alunos não aprenderam, o plano deve ser ajustado (novos métodos, revisão de conteúdos). É o ciclo PDCA aplicado à pedagogia: Planejar -> Executar -> Avaliar -> Ajustar.</p>
+            `
+        },
+        {
+            id: 8,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) Numere os eventos na sequência lógica de um processo de **Avaliação Formativa**, considerando a perspectiva de regulação das aprendizagens:<br><br>( ) Aplicação de instrumento avaliativo diversificado.<br>( ) Definição clara dos objetivos de aprendizagem e critérios de avaliação compartilhados com os alunos.<br>( ) Análise dos resultados e identificação das lacunas de aprendizagem (diagnóstico).<br>( ) Planejamento e execução de novas intervenções pedagógicas e oferta de feedback aos alunos.",
+            options: [
+                "A) 2, 1, 3, 4",
+                "B) 1, 2, 3, 4",
+                "C) 4, 3, 2, 1",
+                "D) 2, 3, 1, 4",
+                "E) 3, 1, 2, 4"
+            ],
+            correctIndex: 0, // A
+            resolutionTitle: "Resolução da Questão 08: Sequência da Avaliação Formativa",
+            resolutionText: `
+                <p><strong>Gabarito: A</strong></p>
+                <p><strong>Sequência Lógica:</strong></p>
+                <ol>
+                    <li><strong>(2) Definição de Objetivos/Critérios:</strong> Saber o que avaliar e comunicar aos alunos.</li>
+                    <li><strong>(1) Aplicação do Instrumento:</strong> Coleta de dados.</li>
+                    <li><strong>(3) Análise/Diagnóstico:</strong> Interpretação dos dados para identificar lacunas.</li>
+                    <li><strong>(4) Intervenção/Feedback:</strong> Ação pedagógica para corrigir rotas e orientar o aluno.</li>
+                </ol>
+                <p>Sequência: 2, 1, 3, 4.</p>
+            `
+        },
+        {
+            id: 9,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) Na discussão sobre a **Pedagogia Diferenciada** e sua relação com a avaliação, Perrenoud afirma que a avaliação formativa só faz sentido se levar a uma diferenciação do ensino. Isso implica que:",
+            options: [
+                "A) O professor deve agrupar os alunos por nível de inteligência e oferecer conteúdos mais simples aos alunos com dificuldades.",
+                "B) A escola deve criar turmas de reforço segregadas, separando os alunos \"fracos\" do convívio com os demais.",
+                "C) A regulação das aprendizagens exige que o professor varie as situações didáticas, os suportes e as estratégias para que todos os alunos alcancem os mesmos objetivos essenciais.",
+                "D) A avaliação deve ser usada para selecionar os alunos com vocação acadêmica, direcionando os demais para o ensino profissionalizante precocious.",
+                "E) O currículo deve ser empobrecido para garantir que todos os alunos tirem notas altas na avaliação."
+            ],
+            correctIndex: 2, // C
+            resolutionTitle: "Resolução da Questão 09: Pedagogia Diferenciada (Perrenoud)",
+            resolutionText: `
+                <p><strong>Gabarito: C</strong></p>
+                <p><strong>Fundamentação Teórica:</strong></p>
+                <p>Pedagogia Diferenciada, segundo Perrenoud, não é segregar ou baixar o nível (o que geraria desigualdade). É <strong>diversificar os caminhos</strong> para alcançar os mesmos objetivos. A avaliação formativa mostra onde o aluno está, e o professor diferencia as estratégias (tempo, suporte visual, material concreto) para garantir a equidade na aprendizagem.</p>
+            `
+        },
+        {
+            id: 10,
+            question: "(FCM – Fundação CEFETMINAS – Adaptada) \"A avaliação não se dá num vazio conceitual, mas reflete a postura teórica do educador.\" Relacione a concepção de avaliação com a tendência pedagógica correspondente:<br><br>1. Avaliação como verificação da memorização e reprodução exata do conteúdo transmitido.<br>2. Avaliação como controle de comportamento e eficiência técnica (instrução programada).<br>3. Avaliação como processo de análise crítica, diagnóstica e emancipatória.<br><br>( ) Tendência Tecnicista<br>( ) Tendência Progressista (Crítico-Social dos Conteúdos)<br>( ) Tendência Tradicional",
+            options: [
+                "A) 1, 2, 3",
+                "B) 2, 3, 1",
+                "C) 3, 1, 2",
+                "D) 2, 1, 3",
+                "E) 1, 3, 2"
+            ],
+            correctIndex: 1, // B
+            resolutionTitle: "Resolução da Questão 10: Tendências Pedagógicas",
+            resolutionText: `
+                <p><strong>Gabarito: B</strong></p>
+                <p><strong>Correlação:</strong></p>
+                <ul>
+                    <li><strong>(2) Tecnicista:</strong> Foco na eficiência técnica, controle de comportamento, instrução programada.</li>
+                    <li><strong>(3) Progressista (Crítico-Social):</strong> Foco na emancipação, diagnóstico, análise crítica e apropriação do saber social.</li>
+                    <li><strong>(1) Tradicional:</strong> Foco na memorização e reprodução exata de verdades absolutas.</li>
+                </ul>
+                <p>Sequência: 2, 3, 1.</p>
+            `
+        }
+    ];
+
+    // Renderização das Questões
+    const questionsContainer = document.getElementById('questions-container');
+
+    quizData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.innerHTML = `
+            <div class="question-text">Questão ${item.id}</div>
+            <div>${item.question}</div>
+            <ul class="options-list">
+                ${item.options.map((opt, optIndex) => `
+                    <li class="option-item">
+                        <label class="option-label">
+                            <input type="radio" name="q${item.id}" value="${optIndex}" class="option-input">
+                            <span>${opt}</span>
+                        </label>
+                    </li>
+                `).join('')}
+            </ul>
+        `;
+        questionsContainer.appendChild(card);
+    });
+
+    // Lógica de Submissão e Resolução
+    document.getElementById('quiz-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let score = 0;
+        const resultSection = document.getElementById('result-section');
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        const scoreDisplay = document.getElementById('score-display');
+        const scoreMessage = document.getElementById('score-message');
+        
+        resolutionsContainer.innerHTML = ''; // Limpa resultados anteriores
+
+        // Desabilitar formulário para evitar mudanças após submit
+        const allInputs = document.querySelectorAll('input[type="radio"]');
+        allInputs.forEach(input => input.disabled = true);
+        document.querySelector('.btn-submit').style.display = 'none';
+
+        quizData.forEach((item) => {
+            const selectedOption = document.querySelector(`input[name="q${item.id}"]:checked`);
+            const userIndex = selectedOption ? parseInt(selectedOption.value) : -1;
+            const isCorrect = userIndex === item.correctIndex;
+
+            if (isCorrect) score++;
+
+            // Criação do card de resolução
+            const resCard = document.createElement('div');
+            resCard.className = `resolution-card ${isCorrect ? 'correct' : 'wrong'}`;
+            
+            const statusBadge = isCorrect 
+                ? '<span class="status-badge status-correct">Acertou</span>' 
+                : '<span class="status-badge status-wrong">Errou</span>';
+
+            const userAnswerText = userIndex !== -1 
+                ? `Sua resposta: ${item.options[userIndex]}` 
+                : `Sua resposta: <em>Nenhuma opção selecionada</em>`;
+
+            resCard.innerHTML = `
+                ${statusBadge}
+                <div class="resolution-content">
+                    <h4>${item.resolutionTitle}</h4>
+                    <div class="user-answer-display">${userAnswerText}</div>
+                    ${item.resolutionText}
+                </div>
+            `;
+            resolutionsContainer.appendChild(resCard);
+        });
+
+        // Atualiza Placar
+        scoreDisplay.textContent = score;
+        
+        if (score === 10) scoreMessage.textContent = "Excelente! Domínio total do conteúdo.";
+        else if (score >= 7) scoreMessage.textContent = "Muito bom! Você tem um ótimo conhecimento.";
+        else if (score >= 5) scoreMessage.textContent = "Bom, mas revise os pontos que errou.";
+        else scoreMessage.textContent = "Atenção: Recomenda-se a leitura aprofundada do material teórico.";
+
+        // Exibe resultados com scroll suave
+        resultSection.style.display = 'block';
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>
