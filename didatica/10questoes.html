@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Didática e Mediação Pedagógica - CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #fcfcfc;
+            color: #2d3748;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+        }
+        .question-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .option-label {
+            cursor: pointer;
+            transition: background 0.2s;
+            display: block;
+            padding: 1rem;
+            border: 2px solid #edf2f7;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .option-label:hover {
+            background-color: #f7fafc;
+        }
+        input[type="radio"]:checked + .option-text {
+            font-weight: 600;
+            color: #2b6cb0;
+        }
+        input[type="radio"]:checked + .option-label {
+            border-color: #4299e1;
+            background-color: #ebf8ff;
+        }
+        .resolution-box {
+            display: none;
+            background-color: #f8fafc;
+            border-left: 4px solid #4299e1;
+        }
+        .correct { border-color: #48bb78 !important; background-color: #f0fff4 !important; }
+        .incorrect { border-color: #f56565 !important; background-color: #fff5f5 !important; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body class="py-10 px-4">
+    <div class="max-w-3xl mx-auto">
+        <header class="mb-12 text-center">
+            <h1 class="text-3xl font-bold mb-4 text-slate-800">Simulado de Didática e Mediação Pedagógica</h1>
+            <p class="text-lg text-slate-600 font-medium">Estilo Fundação CEFETMINAS</p>
+            <div class="h-1 w-20 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+        </header>
+
+        <form id="quiz-form">
+            <div id="questions-container" class="space-y-12">
+                <!-- As questões serão injetadas aqui via JS -->
+            </div>
+
+            <div class="mt-12 text-center">
+                <button type="button" id="submit-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-lg shadow-lg transition-transform active:scale-95">
+                    Finalizar Quiz e Ver Resoluções
+                </button>
+            </div>
+        </form>
+
+        <div id="result-section" class="hidden mt-12 p-8 bg-white border-2 border-blue-100 rounded-xl shadow-xl">
+            <h2 class="text-2xl font-bold mb-4 text-center">Resultado Final</h2>
+            <div class="text-center mb-6">
+                <span id="score-display" class="text-5xl font-extrabold text-blue-600">0</span>
+                <span class="text-2xl text-slate-400">/ 10</span>
+            </div>
+            <p id="feedback-text" class="text-center text-slate-600 mb-6 italic"></p>
+            <button onclick="window.location.reload()" class="block mx-auto text-blue-600 underline font-medium">Tentar novamente</button>
+        </div>
+        
+        <footer class="mt-20 text-center text-slate-400 text-sm border-t pt-8">
+            Fundação CEFETMINAS - Preparatório para Concursos
+        </footer>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                q: "A passagem de um conteúdo de saber preciso a uma versão didática desse objeto de saber denomina-se transposição didática. Considere o esquema da Transposição Didática e analise as afirmativas a seguir sobre o papel da 'Noosfera' e do professor nesse processo:\n\nI. A Noosfera constitui o entorno do sistema de ensino, onde acadêmicos, políticos, pais e autores de livros didáticos negociam e selecionam o que deve compor o currículo, operando a transposição didática externa.\nII. O professor, em sua prática de sala de aula, realiza a transposição didática interna, transformando o 'saber a ensinar' em 'saber ensinado', adaptando-o ao tempo didático e às características cognitivas dos alunos.\nIII. A transposição didática visa garantir que o saber ensinado seja idêntico ao saber sábio, evitando qualquer tipo de deformação ou simplificação.\nIV. A vigilância epistemológica é a atitude necessária para que a distância entre o saber ensinado e o saber sábio não se torne tão grande a ponto de o ensino escolar divulgar conceitos cientificamente falsos ou obsoletos.",
+                options: [
+                    "I e III.",
+                    "II e IV.",
+                    "I, II e IV.",
+                    "II, III e IV.",
+                    "I, II e III."
+                ],
+                correct: 2, // C
+                resolution: "Esta questão aborda a teoria de Yves Chevallard. Os itens I, II e IV estão corretos. A Noosfera é o espaço externo de decisão curricular. O professor atua na transposição interna. A Vigilância Epistemológica garante que a simplificação necessária não destrua a verdade científica. O item III é falso pois a transposição sempre implica transformação do saber original."
+            },
+            {
+                id: 2,
+                q: "Em 'Novas tecnologias e mediação pedagógica', Marcos T. Masetto discute a ressignificação da docência frente à sociedade da informação. Assinale a alternativa que apresenta corretamente a concepção de mediação pedagógica defendida pelo autor:",
+                options: [
+                    "O professor atua como um filtro de informações, selecionando previamente tudo o que o aluno pode acessar.",
+                    "A mediação é entendida como uma 'ponte rolante', onde o professor não é estático, mas move-se ativamente, colaborando e facilitando para que o aprendiz alcance seus objetivos.",
+                    "A mediação pedagógica nas tecnologias dispensa a presença do professor, visto que softwares possuem algoritmos de feedback que substituem a interação.",
+                    "O professor mediador é aquele que domina a manutenção do hardware, garantindo o funcionamento dos computadores.",
+                    "A mediação é um processo unidirecional onde o professor transmite aos alunos os manuais de operação."
+                ],
+                correct: 1, // B
+                resolution: "Masetto utiliza explicitamente a metáfora da 'ponte rolante' para descrever o professor que se move em direção ao aluno, facilitando a construção do conhecimento em vez de ser um obstáculo estático ou apenas um transmissor."
+            },
+            {
+                id: 3,
+                q: "Para José Manuel Moran, a convergência digital e a implementação do ensino híbrido (blended learning) exigem mudanças estruturais. Sobre as dimensões que precisam ser transformadas, assinale a alternativa INCORRETA:",
+                options: [
+                    "Espaços Físicos: As salas de aula devem evoluir para ambientes flexíveis e multifuncionais.",
+                    "Projeto Pedagógico: O currículo deve tornar-se mais flexível e personalizado.",
+                    "Mobilidade: A aprendizagem deve ser restringida aos laboratórios de informática, pois o uso de dispositivos pessoais dispersa a atenção.",
+                    "Gestão Escolar: A administração deve adotar processos mais ágeis e menos burocráticos.",
+                    "Formação Docente: Os professores precisam atuar como curadores de conteúdo e designers de experiências."
+                ],
+                correct: 2, // C
+                resolution: "A alternativa C está incorreta porque Moran defende a mobilidade e o aprendizado ubíquo (em qualquer lugar). Restringir a tecnologia ao laboratório de informática é uma visão ultrapassada que o ensino híbrido busca superar."
+            },
+            {
+                id: 4,
+                q: "Considere a seguinte situação: Um professor percebe que 60% da turma errou frações. Ele registra as notas baixas, devolve as provas e segue para Geometria, dizendo que quem não aprendeu deve estudar mais para a recuperação final. A atitude revela uma concepção de avaliação:",
+                options: [
+                    "Formativa, pois ele devolveu as provas rapidamente.",
+                    "Diagnóstica, pois ele identificou que 60% da turma tinha dificuldades.",
+                    "Classificatória e Excludente, pois ele usou o resultado apenas para rotular e não realizou a regulação das aprendizagens (replanejamento).",
+                    "Mediadora, pois ele alertou sobre a necessidade de estudo autônomo.",
+                    "Somativa aplicada corretamente, visto que o cronograma deve ser cumprido."
+                ],
+                correct: 2, // C
+                resolution: "Avaliação formativa ou mediadora exige que o professor use o erro como diagnóstico para mudar sua estratégia. Simplesmente dar a nota e seguir o conteúdo caracteriza a avaliação classificatória tradicional, que exclui quem não acompanhou o ritmo."
+            },
+            {
+                id: 5,
+                q: "Em 'Pedagogia da Autonomia', Paulo Freire elenca saberes necessários à prática. Analise: I. O professor deve silenciar a curiosidade ingênua do educando logo no início. PORQUE II. Apenas a transmissão rigorosa e bancária permite o desenvolvimento da curiosidade epistemológica.",
+                options: [
+                    "As asserções I e II são verdadeiras, e a II justifica a I.",
+                    "As asserções I e II são verdadeiras, mas a II não justifica a I.",
+                    "A asserção I é verdadeira e a II é falsa.",
+                    "A asserção I é falsa e a II é verdadeira.",
+                    "As asserções I e II são falsas."
+                ],
+                correct: 4, // E
+                resolution: "Ambas são falsas na perspectiva freireana. A curiosidade ingênua é o ponto de partida necessário para a crítica (não deve ser silenciada). A educação 'bancária' é o oposto do que Freire defende para gerar curiosidade epistemológica."
+            },
+            {
+                id: 6,
+                q: "Assinale a alternativa que melhor exemplifica a atuação do Currículo Oculto em uma escola:",
+                options: [
+                    "A lista de tópicos de História no Plano Político Pedagógico.",
+                    "As aulas de reforço oferecidas no contraturno.",
+                    "O aprendizado tácito de que 'homens são melhores em exatas', transmitido sutilmente pelas expectativas dos professores e exemplos nos livros.",
+                    "A realização de uma Feira de Ciências anual com jurados.",
+                    "A decisão do conselho de classe de reprovar alunos por faltas."
+                ],
+                correct: 2, // C
+                resolution: "O Currículo Oculto refere-se a normas, valores e preconceitos transmitidos sem estarem escritos (aprendizagem tácita). As outras opções referem-se ao currículo formal ou processos administrativos explícitos."
+            },
+            {
+                id: 7,
+                q: "Qual das alternativas abaixo expressa corretamente a principal ruptura proposta pela Didática Fundamental (Candau/Libâneo)?",
+                options: [
+                    "A Didática deve abandonar a preocupação com métodos, focando na militância política.",
+                    "A Didática deve ser considerada uma ciência neutra focada na eficiência máxima.",
+                    "A Didática é multidimensional, articulando a dimensão técnica com a político-social (para que e para quem ensinar).",
+                    "A Didática Fundamental propõe o retorno aos métodos tradicionais de memorização.",
+                    "A Didática deve focar apenas na dimensão psicológica e afetiva do aluno."
+                ],
+                correct: 2, // C
+                resolution: "A Didática Fundamental rompe com o tecnicismo puro. Ela entende que a técnica de ensino não pode ser separada da intenção política e social da educação (multidimensionalidade)."
+            },
+            {
+                id: 8,
+                q: "Vani Kenski distingue o uso instrumental do uso pedagógico transformador. Considere as práticas: 1. Lousa interativa para copiar texto longo. 2. Produção de documentário pelos alunos. 3. Tablets trancados como recompensa por silêncio. 4. Uso de Google Earth para propor intervenções na prefeitura.",
+                options: [
+                    "Apenas 1 e 3.",
+                    "Apenas 2 e 4.",
+                    "Apenas 1, 2 e 4.",
+                    "Apenas 2 e 3.",
+                    "1, 2, 3 e 4."
+                ],
+                correct: 1, // B
+                resolution: "As práticas 1 e 3 são apenas instrumentais (ou subutilização). As práticas 2 e 4 envolvem autoria, análise crítica e intervenção na realidade, o que caracteriza o uso transformador defendido por Kenski."
+            },
+            {
+                id: 9,
+                q: "Sobre a caracterização e mediação na EaD, analise: I. EaD é a mediação didático-pedagógica com TIC, onde estudantes e profissionais desenvolvem atividades em lugares ou tempos diversos. II. Na educação básica, a EaD pode ser ofertada como modalidade exclusiva. III. A mediação na EaD exige materiais autoinstrucionais e interação de tutores/professores.",
+                options: [
+                    "Apenas I.",
+                    "Apenas II.",
+                    "Apenas I e III.",
+                    "Apenas II e III.",
+                    "I, II e III."
+                ],
+                correct: 2, // C
+                resolution: "I está correta (definição legal). III está correta (tripé material/tecnologia/tutoria). II está incorreta porque o Ensino Fundamental deve ser obrigatoriamente presencial, com EaD permitida apenas em casos excepcionais ou complementares."
+            },
+            {
+                id: 10,
+                q: "Segundo Antoni Zabala (A Prática Educativa), para atender à diversidade dos alunos (ensino adaptativo), o planejamento deve:",
+                options: [
+                    "Ser rígido e imutável para todas as turmas.",
+                    "Prever atividades uniformes para todos no mesmo tempo.",
+                    "Considerar os conhecimentos prévios e prever atividades diversificadas com diferentes níveis de aprofundamento e ritmos.",
+                    "Ignorar o contexto social focando apenas na lógica interna do conteúdo.",
+                    "Ser realizado exclusivamente pela coordenação, cabendo ao professor a execução."
+                ],
+                correct: 2, // C
+                resolution: "Zabala defende que para ensinar de forma eficaz, o professor deve adaptar as tarefas às necessidades heterogêneas da turma, permitindo que cada aluno avance a partir de seu ponto de partida (ZDP)."
+            }
+        ];
+
+        const container = document.getElementById('questions-container');
+
+        // Renderizar questões
+        questions.forEach((q, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-card p-6 md:p-8 rounded-xl shadow-sm mb-8';
+            card.id = `q-block-${idx}`;
+            
+            let optionsHTML = '';
+            q.options.forEach((opt, optIdx) => {
+                const letter = String.fromCharCode(65 + optIdx);
+                optionsHTML += `
+                    <label class="option-label" for="q${idx}_o${optIdx}">
+                        <input type="radio" name="question${idx}" id="q${idx}_o${optIdx}" value="${optIdx}" class="mr-3">
+                        <span class="option-text"><span class="font-bold">${letter})</span> ${opt}</span>
+                    </label>
+                `;
+            });
+
+            card.innerHTML = `
+                <div class="flex items-center mb-6">
+                    <span class="bg-blue-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold mr-4 shrink-0">
+                        ${q.id}
+                    </span>
+                    <h3 class="text-xl font-semibold text-slate-800 leading-tight">Questão ${q.id}</h3>
+                </div>
+                <div class="whitespace-pre-wrap mb-8 text-slate-700 font-normal">
+                    ${q.q}
+                </div>
+                <div class="options-group space-y-2">
+                    ${optionsHTML}
+                </div>
+                <div id="res-${idx}" class="resolution-box mt-6 p-5 rounded-lg text-sm italic">
+                    <p class="font-bold text-blue-800 mb-2 not-italic">Resolução e Comentário:</p>
+                    ${q.resolution}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            let score = 0;
+            const form = document.getElementById('quiz-form');
+            
+            questions.forEach((q, idx) => {
+                const selected = form.querySelector(`input[name="question${idx}"]:checked`);
+                const resolutionBox = document.getElementById(`res-${idx}`);
+                const questionBlock = document.getElementById(`q-block-${idx}`);
+                
+                resolutionBox.style.display = 'block';
+
+                if (selected) {
+                    const answerIdx = parseInt(selected.value);
+                    if (answerIdx === q.correct) {
+                        score++;
+                        questionBlock.classList.add('border-green-400');
+                    } else {
+                        questionBlock.classList.add('border-red-400');
+                        // Destacar a correta se errou
+                        const correctLabel = form.querySelector(`label[for="q${idx}_o${q.correct}"]`);
+                        correctLabel.style.borderColor = "#48bb78";
+                        correctLabel.style.backgroundColor = "#f0fff4";
+                    }
+                } else {
+                    questionBlock.classList.add('border-yellow-400');
+                    const correctLabel = form.querySelector(`label[for="q${idx}_o${q.correct}"]`);
+                    correctLabel.style.borderColor = "#48bb78";
+                }
+            });
+
+            // Mostrar Resultados
+            document.getElementById('result-section').classList.remove('hidden');
+            document.getElementById('score-display').innerText = score;
+            
+            let feedback = "";
+            if(score === 10) feedback = "Excelente! Você domina as bases da banca CEFETMINAS.";
+            else if(score >= 7) feedback = "Muito bom! Seu desempenho demonstra boa base crítica.";
+            else if(score >= 5) feedback = "Desempenho mediano. Revise os conceitos de transposição didática e mediação.";
+            else feedback = "Atenção! Sugerimos aprofundar a leitura nos autores referenciados (Masetto, Moran e Saviani).";
+            
+            document.getElementById('feedback-text').innerText = feedback;
+            
+            // Desabilitar rádio buttons
+            form.querySelectorAll('input[type="radio"]').forEach(input => input.disabled = true);
+            document.getElementById('submit-btn').classList.add('hidden');
+            
+            window.scrollTo({ top: document.getElementById('result-section').offsetTop - 50, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

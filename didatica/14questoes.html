@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Didática - Situações de Ensino (CEFETMINAS)</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --success-color: #27ae60;
+            --error-color: #d63031;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --resolution-bg: #f1f2f6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        p.subtitle {
+            color: #636e72;
+            margin-top: 0.5rem;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 90%;
+            padding-bottom: 5rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+        }
+
+        .option-label {
+            display: block;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f8f9fa;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+            accent-color: var(--primary-color);
+        }
+
+        /* Feedback Styles */
+        .option-correct {
+            background-color: #eafaf1 !important;
+            border-color: var(--success-color) !important;
+        }
+
+        .option-incorrect {
+            background-color: #fdf2f2 !important;
+            border-color: var(--error-color) !important;
+        }
+
+        .resolution-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #0773c5;
+        }
+
+        #results-summary {
+            display: none;
+            text-align: center;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 2px solid var(--primary-color);
+        }
+
+        .score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .text-center { text-align: center; }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: inherit;
+        }
+
+        @media (max-width: 600px) {
+            .question-card { padding: 1rem; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Simulado Didática: Situações de Ensino</h1>
+        <p class="subtitle">Estilo Fundação CEFETMINAS | 10 Questões Comentadas</p>
+    </header>
+
+    <div class="container">
+        <div id="results-summary">
+            <h3>Resultado do Quiz</h3>
+            <div class="score" id="final-score">0 / 10</div>
+            <p id="score-text"></p>
+            <button onclick="location.reload()" style="background:none; border: 1px solid var(--primary-color); color: var(--primary-color); padding: 8px 16px; border-radius: 4px; cursor: pointer;">Refazer Quiz</button>
+        </div>
+
+        <form id="quiz-form">
+            <!-- Questions will be injected here by JS -->
+            <div id="questions-container"></div>
+            
+            <button type="submit" id="submit-btn">Finalizar Quiz e Ver Resoluções</button>
+        </form>
+    </div>
+
+    <script>
+        const questionsData = [
+            {
+                id: 1,
+                text: "O estudo da transposição didática, conforme teorizado por Yves Chevallard, busca explicar o percurso do saber desde sua gênese na comunidade científica até sua efetivação na sala de aula. Analise as afirmações abaixo:<br><br>I. O 'saber sábio' ou científico sofre transformações adaptativas para se tornar 'saber a ensinar' (currículo) e, posteriormente, 'saber ensinado' (sala de aula).<br>II. A 'noosfera' é o ambiente onde ocorre a interação direta entre professor e aluno, sendo o local onde o saber é criado originalmente.<br>III. A transposição didática externa ocorre fora da sala de aula, na definição dos programas e manuais escolares, enquanto a transposição interna ocorre na prática docente em sala.<br>IV. O objetivo da transposição didática é manter o saber escolar idêntico ao saber científico, evitando qualquer tipo de simplificação ou modificação didática.",
+                options: {
+                    A: "I e III, apenas.",
+                    B: "I, II e IV.",
+                    C: "II e III, apenas.",
+                    D: "I, III e IV.",
+                    E: "I, II, III e IV."
+                },
+                correct: "A",
+                resolution: "O conceito central de Chevallard é que o saber produzido pelos cientistas ('Saber Sábio') não pode ser ensinado tal como é. Ele precisa passar por um processo de 'didatização'. A **Noosfera** não é a sala de aula, mas o ambiente onde representantes da sociedade e especialistas decidem o que será ensinado. A transposição didática *não* visa manter o saber idêntico, pois a modificação para fins pedagógicos é inevitável."
+            },
+            {
+                id: 2,
+                text: "O planejamento é uma ferramenta essencial para a organização do trabalho docente. Analise o texto a seguir: <br><br><i>'É a proposta de trabalho do professor para uma determinada aula ou conjunto de aulas e corresponde ao maior nível de detalhamento e de objetividade do processo de planejamento didático.'</i><br><br>A descrição acima refere-se especificamente ao:",
+                options: {
+                    A: "Projeto Político-Pedagógico (PPP).",
+                    B: "Plano de Ensino.",
+                    C: "Plano de Aula.",
+                    D: "Plano Curricular Nacional.",
+                    E: "Regimento Escolar."
+                },
+                correct: "C",
+                resolution: "O **Plano de Aula** é o nível de maior detalhamento. Enquanto o PPP é macro (escola) e o Plano de Ensino é intermediário (ano/semestre), o Plano de Aula foca na operacionalização do dia a dia."
+            },
+            {
+                id: 3,
+                text: "De acordo com a classificação de Libâneo, associe a características abaixo às tendências:<br><br>1. Liberal Tradicional | 2. Liberal Renovada Progressivista | 3. Liberal Tecnicista | 4. Progressista Crítico-Social dos Conteúdos<br><br>( ) A escola funciona como modeladora do comportamento humano, priorizando a eficiência e o uso de manuais. O professor é administrador da instrução.<br>( ) A difusão de conteúdos é a tarefa primordial. A autoridade do professor é a base da disciplina.<br>( ) A escola deve adequar as necessidades individuais ao meio social. Valoriza-se o 'aprender a aprender'.<br>( ) A primazia dos conteúdos é retomada como ferramenta para a compreensão crítica da sociedade.",
+                options: {
+                    A: "3, 1, 2, 4.",
+                    B: "2, 4, 1, 3.",
+                    C: "3, 2, 1, 4.",
+                    D: "1, 3, 2, 4.",
+                    E: "4, 2, 3, 1."
+                },
+                correct: "A",
+                resolution: "1. Tecnicismo (3) foca na modelagem e manuais. 2. Tradicional (1) foca na autoridade e conteúdos. 3. Escola Nova/Renovada (2) foca no aprender a aprender. 4. Crítico-Social (4) foca no conteúdo para transformação social."
+            },
+            {
+                id: 4,
+                text: "Um professor inicia o ano letivo aplicando atividades diversificadas para identificar os conhecimentos prévios dos estudantes. Com base nos resultados, ele reestrutura seu plano de ensino para atender às lacunas identificadas, sem atribuir notas. Essa prática exemplifica predominantemente a função:",
+                options: {
+                    A: "Somativa, pois verifica o resultado final.",
+                    B: "Classificatória, pois separa os alunos.",
+                    C: "Diagnóstica, pois visa constatar o estado de aprendizagem para reorientar a ação.",
+                    D: "Seletiva, pois prepara para exames externos.",
+                    E: "Burocrática, pois atende a exigência administrativa."
+                },
+                correct: "C",
+                resolution: "A função **Diagnóstica** ocorre no início ou durante o processo para identificar conhecimentos prévios e subsidiar decisões pedagógicas, sem caráter de nota ou classificação."
+            },
+            {
+                id: 5,
+                text: "Assinale a opção que define corretamente o conceito de **Educação Integral** segundo a BNCC:",
+                options: {
+                    A: "Refere-se exclusivamente à ampliação da jornada escolar para o tempo integral (7h).",
+                    B: "Trata-se da formação e do desenvolvimento global do estudante, integrando as dimensões intelectual, física, afetiva, social, ética e simbólica.",
+                    C: "Corresponde à priorização das disciplinas de Português e Matemática.",
+                    D: "É o ensino voltado estritamente para a preparação técnica profissionalizante.",
+                    E: "Define-se pela oferta de alimentação escolar em todas as refeições."
+                },
+                correct: "B",
+                resolution: "Na BNCC, Educação Integral é um conceito pedagógico de desenvolvimento global (multidimensional), não se confundindo apenas com o tempo de permanência na escola (Tempo Integral)."
+            },
+            {
+                id: 6,
+                text: "Analise as assertivas sobre a gestão da sala de aula e a interação docente:<br><br>I. A autoridade docente deve ser construída com base no medo e na coerção.<br>II. A afetividade na relação professor-aluno não se opõe à exigência e ao rigor acadêmico; o vínculo favorece a mobilização para o aprendizado.<br>III. O conflito em sala de aula deve ser sempre suprimido imediatamente, pois não possui valor pedagógico.",
+                options: {
+                    A: "Apenas I.",
+                    B: "Apenas II.",
+                    C: "Apenas I e III.",
+                    D: "Apenas II e III.",
+                    E: "I, II e III."
+                },
+                correct: "B",
+                resolution: "A autoridade baseada no medo (I) é rejeitada pela didática moderna. O conflito (III) é inerente e pode ser motor de desenvolvimento moral se mediado. Apenas a II está correta, pois a afetividade favorece a cognição."
+            },
+            {
+                id: 7,
+                text: "Segundo Vasconcellos (2002) e Veiga (1995), o Projeto Político-Pedagógico (PPP) é o documento de identidade da escola. Para elaborar o PPP de forma democrática, os envolvidos deverão:",
+                options: {
+                    A: "Contratar uma consultoria externa para garantir neutralidade.",
+                    B: "Reproduzir os documentos oficiais da Secretaria de Educação.",
+                    C: "Focar apenas nos postulados filosóficos, deixando as ações para depois.",
+                    D: "Concretizar, na caminhada, o que define claramente o tipo de ação educativa planejada, envolvendo todos os segmentos.",
+                    E: "Restringir a participação aos professores e gestores."
+                },
+                correct: "D",
+                resolution: "O PPP exige construção coletiva e ação concreta. Não deve ser feito por terceiros (consultoria) nem ser mera cópia burocrática, mas refletir a identidade e o planejamento daquela comunidade específica."
+            },
+            {
+                id: 8,
+                text: "Sobre o Atendimento Educacional Especializado (AEE), informe se é (V) ou (F):<br><br>( ) O AEE substitui o ensino regular para alunos com deficiência severa.<br>( ) O AEE deve ser realizado, prioritariamente, no turno inverso da escolarização.<br>( ) O AEE tem como função organizar recursos que eliminem as barreiras para a plena participação.<br>( ) Alunos com Altas Habilidades/Superdotação não são público-alvo do AEE.",
+                options: {
+                    A: "V, V, F, F.",
+                    B: "F, V, V, F.",
+                    C: "F, F, V, V.",
+                    D: "V, F, F, V.",
+                    E: "F, V, F, V."
+                },
+                correct: "B",
+                resolution: "O AEE é **complementar/suplementar** e nunca substitui o ensino regular (F). Ocorre no contraturno (V). Sua função é eliminar barreiras (V). Alunos com Altas Habilidades **são** público-alvo da educação especial (F)."
+            },
+            {
+                id: 9,
+                text: "Sobre a integração de tecnologias digitais (TDIC) à didática, é **INCORRETO** afirmar:",
+                options: {
+                    A: "A tecnologia deve ser utilizada como ferramenta de mediação pedagógica.",
+                    B: "O uso da internet permite que o aprendizado ultrapasse as fronteiras físicas da sala.",
+                    C: "A simples presença de computadores na escola garante a inovação pedagógica, independentemente da formação do professor.",
+                    D: "Metodologias ativas, como o Ensino Híbrido, combinam atividades presenciais com tecnológicas.",
+                    E: "A curadoria de informações pelo professor torna-se essencial."
+                },
+                correct: "C",
+                resolution: "A presença física de equipamentos não garante inovação. Inovação depende de metodologia e da formação do professor para usar o recurso com intencionalidade."
+            },
+            {
+                id: 10,
+                text: "Assinale a alternativa que **NÃO** corresponde a uma incumbência legal do professor segundo o Art. 13 da LDB:",
+                options: {
+                    A: "Participar da elaboração da proposta pedagógica.",
+                    B: "Elaborar e cumprir plano de trabalho.",
+                    C: "Zelar pela aprendizagem dos alunos.",
+                    D: "Assegurar o cumprimento dos dias letivos e participar integralmente do planejamento.",
+                    E: "Prover os meios financeiros para a recuperação dos alunos de menor rendimento."
+                },
+                correct: "E",
+                resolution: "O professor é responsável pelas *estratégias pedagógicas* de recuperação. Prover meios financeiros é incumbência da escola ou do Estado, não do docente individualmente."
+            }
+        ];
+
+        const container = document.getElementById('questions-container');
+
+        // Render Questions
+        questionsData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            let optionsHtml = '';
+            for (const [key, value] of Object.entries(q.options)) {
+                optionsHtml += `
+                    <li class="option-item">
+                        <label class="option-label" id="label-${q.id}-${key}">
+                            <input type="radio" name="q${q.id}" value="${key}" required>
+                            <strong>${key})</strong> ${value}
+                        </label>
+                    </li>
+                `;
+            }
+
+            card.innerHTML = `
+                <span class="question-number">Questão ${q.id}</span>
+                <div class="question-text">${q.text}</div>
+                <ul class="options-list">
+                    ${optionsHtml}
+                </ul>
+                <div class="resolution-box" id="res-${q.id}">
+                    <h4>Resolução Analítica</h4>
+                    <p>${q.resolution}</p>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // Form Submission logic
+        document.getElementById('quiz-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let score = 0;
+            const total = questionsData.length;
+
+            questionsData.forEach((q) => {
+                const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+                const resolutionBox = document.getElementById(`res-${q.id}`);
+                const labels = document.querySelectorAll(`[id^="label-${q.id}-"]`);
+                
+                // Show resolution
+                resolutionBox.style.display = 'block';
+
+                // Mark correct/incorrect
+                labels.forEach(label => {
+                    const optionKey = label.id.split('-').pop();
+                    if (optionKey === q.correct) {
+                        label.classList.add('option-correct');
+                    }
+                });
+
+                if (selected) {
+                    if (selected.value === q.correct) {
+                        score++;
+                    } else {
+                        const wrongLabel = document.getElementById(`label-${q.id}-${selected.value}`);
+                        wrongLabel.classList.add('option-incorrect');
+                    }
+                }
+            });
+
+            // Display Summary
+            const summary = document.getElementById('results-summary');
+            const scoreDisplay = document.getElementById('final-score');
+            const scoreText = document.getElementById('score-text');
+            const submitBtn = document.getElementById('submit-btn');
+
+            summary.style.display = 'block';
+            scoreDisplay.innerText = `${score} / ${total}`;
+            
+            if (score === total) {
+                scoreText.innerText = "Excelente! Você domina os conceitos da Fundação CEFETMINAS.";
+            } else if (score >= 7) {
+                scoreText.innerText = "Muito bem! Você tem uma base sólida, revise as resoluções abaixo.";
+            } else {
+                scoreText.innerText = "Continue estudando. Analise atentamente as resoluções para fortalecer seus conhecimentos.";
+            }
+
+            submitBtn.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Disable all inputs after submission
+            const inputs = document.querySelectorAll('input[type="radio"]');
+            inputs.forEach(input => input.disabled = true);
+        });
+    </script>
+</body>
+</html>

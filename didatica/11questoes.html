@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Didática - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --container-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-secondary: #636e72;
+            --accent-color: #0984e3;
+            --correct-color: #27ae60;
+            --wrong-color: #d63031;
+            --border-color: #dfe6e9;
+            --resolution-bg: #f1f2f6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        header {
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            font-weight: normal;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        .question {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: var(--accent-color);
+            color: white;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            border-color: var(--accent-color);
+            background-color: #ebf5ff;
+        }
+
+        /* Result Styles */
+        .option-item.correct {
+            border-color: var(--correct-color);
+            background-color: #e6ffed;
+            color: #1b5e20;
+        }
+
+        .option-item.wrong {
+            border-color: var(--wrong-color);
+            background-color: #fff5f5;
+            color: #b71c1c;
+        }
+
+        .resolution-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--resolution-bg);
+            border-left: 5px solid var(--accent-color);
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .submit-area {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #0873c4;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #result-summary {
+            display: none;
+            background: #f8f9fa;
+            border: 2px solid var(--accent-color);
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .score-box {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 15px 0;
+        }
+
+        .feedback-badge {
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .correct-badge { background: #e6ffed; color: #27ae60; }
+        .wrong-badge { background: #fff5f5; color: #d63031; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Especializado: Didática</h1>
+        <h2>Fundação CEFETMINAS | Interação Professor-Aluno-Conhecimento</h2>
+    </header>
+
+    <div id="quiz-form">
+        <!-- Questões serão injetadas aqui via JS -->
+    </div>
+
+    <div class="submit-area">
+        <button id="submit-btn" onclick="gradeQuiz()">Finalizar Simulado e Ver Resoluções</button>
+    </div>
+
+    <div id="result-summary">
+        <h2>Resultado Final</h2>
+        <div class="score-box" id="final-score">0 / 10</div>
+        <p id="feedback-text"></p>
+        <p>Role para cima para conferir a resolução detalhada de cada questão.</p>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            text: `O professor José Carlos Libâneo, em sua obra seminal Didática (1994), e reiterado em edições posteriores (2013), estabelece que o processo de ensino é uma atividade conjunta entre professor e alunos, na qual a interação é condição sine qua non para a assimilação ativa de conhecimentos. Ao analisar a organização da situação didática, o autor distingue dois aspectos centrais e indissociáveis nessa interação: o aspecto cognoscitivo e o aspecto socioemocional.\n\nRelacione a COLUNA I com a COLUNA II:\n\nCOLUNA I\n1. Aspecto Cognoscitivo\n2. Aspecto Socioemocional\n\nCOLUNA II\n( ) Refere-se à estruturação lógica dos conteúdos...\n( ) Diz respeito aos vínculos afetivos, às normas de disciplina...\n( ) Envolve o manejo da classe (classroom management)...\n( ) Abrange a clareza na exposição, a adequação da linguagem...\n( ) É o campo onde se manifestam as tensões, as simpatias e antipatias...`,
+            options: [
+                "1, 2, 2, 1, 2.",
+                "1, 2, 1, 1, 2.",
+                "2, 1, 2, 1, 2.",
+                "2, 1, 1, 2, 1.",
+                "1, 1, 2, 2, 1."
+            ],
+            correct: 0,
+            resolution: `Gabarito: A (1, 2, 2, 1, 2). Libâneo biparte a interação em Aspecto Cognoscitivo (foco na tarefa, conteúdo e método) e Aspecto Socioemocional (foco nas relações pessoais, gestão de classe, autoridade e motivação). O manejo da classe e a gestão de tensões são elementos relacionais/socioemocionais.`
+        },
+        {
+            id: 2,
+            text: `Analise as afirmativas a seguir sob a ótica da Pedagogia Histórico-Crítica (PHC) de Dermeval Saviani:\n\nI. O professor atua como mediador essencial entre o aluno e o saber sistematizado...\nII. A relação professor-aluno deve ser horizontalizada no sentido de igualdade de saberes...\nIII. O conhecimento objetivo é o elemento central que justifica a existência da escola...\nIV. A metodologia de ensino na PHC parte da prática social inicial do aluno, passa pela problematização e retorna à prática social final...`,
+            options: [
+                "I e II, apenas.",
+                "I, III e IV, apenas.",
+                "II e IV, apenas.",
+                "I, II, III e IV.",
+                "III e IV, apenas."
+            ],
+            correct: 1,
+            resolution: `Gabarito: B. A PHC critica o horizontalismo ingênuo da II. Para Saviani, professor e aluno não são iguais na posse do saber; se fossem, a escola seria dispensável. As afirmativas I, III e IV descrevem corretamente a mediação, a centralidade do conhecimento e o método dialético da PHC.`
+        },
+        {
+            id: 3,
+            text: `Sobre as dimensões da didática propostas por Vera Maria Candau, marque V para as afirmativas verdadeiras e F para as falsas:\n\n( ) A dimensão técnica deve ser abandonada em favor da dimensão política.\n( ) A dimensão humana/política impregna toda a prática pedagógica.\n( ) A competência técnica e o compromisso político são indissociáveis.\n( ) A didática deve ser compreendida como um conjunto de regras fixas e universais.`,
+            options: [
+                "F, V, V, F.",
+                "V, F, V, F.",
+                "F, V, F, V.",
+                "V, V, V, F.",
+                "F, F, V, V."
+            ],
+            correct: 0,
+            resolution: `Gabarito: A. Candau defende a Didática Fundamental (multidimensional), articulando o técnico, o humano e o político. O técnico não é abandonado, mas subordinado ao político. Regras fixas/universais pertencem à didática tradicional, não à contemporânea.`
+        },
+        {
+            id: 4,
+            text: `Acerca da Transposição Didática (Yves Chevallard) e suas implicações, assinale a alternativa INCORRETA:`,
+            options: [
+                "A Transposição Didática é o processo pelo qual o 'saber sábio' torna-se 'saber a ensinar' e 'saber ensinado'.",
+                "O professor realiza a 'transposição didática interna' ao adaptar o currículo prescrito.",
+                "A 'noosfera' é definida como o ambiente restrito da sala de aula, isolada de influências externas.",
+                "Um risco inerente é o distanciamento excessivo entre o objeto de ensino e o objeto de saber original.",
+                "A aceleração da produção científica exige que a transposição seja mais dinâmica."
+            ],
+            correct: 2,
+            resolution: `Gabarito: C (INCORRETA). A Noosfera não é a sala de aula. É a camada externa (negociadores de currículo: políticos, acadêmicos, autores) onde se decide o que do saber sábio entrará na escola.`
+        },
+        {
+            id: 5,
+            text: `Identifique a situação que configura uma prática de avaliação diagnóstica e inclusiva, coerente com a proposta de Cipriano Luckesi:`,
+            options: [
+                "O professor utiliza a nota como instrumento de controle disciplinar.",
+                "O docente aplica provas com o objetivo exclusivo de classificar os alunos.",
+                "A avaliação é utilizada como um momento de 'acerto de contas', onde o erro é punido.",
+                "O professor analisa os erros dos alunos como indicadores de dificuldades para reorientar sua prática.",
+                "A avaliação ocorre de forma puramente subjetiva baseada no 'bom comportamento'."
+            ],
+            correct: 3,
+            resolution: `Gabarito: D. A avaliação diagnóstica serve para tomar decisões de melhoria. O erro é um dado para nova intervenção docente, visando garantir que todos aprendam.`
+        },
+        {
+            id: 6,
+            text: `Considerando as ideias de Selma Garrido Pimenta sobre os saberes docentes e a 'epistemologia da prática', é CORRETO afirmar que:`,
+            options: [
+                "O saber da experiência é secundário e desprovido de rigor científico.",
+                "A prática docente é um espaço de mera aplicação de conhecimentos pedagógicos de especialistas.",
+                "A ressignificação dos saberes ocorre no confronto com a realidade escolar; o professor mobiliza saberes e produz conhecimento refletindo sobre a prática.",
+                "O saber pedagógico se resume ao domínio do conteúdo específico da disciplina.",
+                "A pesquisa em didática é uma atividade exclusiva dos acadêmicos."
+            ],
+            correct: 2,
+            resolution: `Gabarito: C. Pimenta defende que o professor produz saber a partir da reflexão sobre a prática, articulando saberes disciplinares, pedagógicos e de experiência.`
+        },
+        {
+            id: 7,
+            text: `Assinale a alternativa que melhor expressa a postura da Interculturalidade Crítica defendida por Vera Candau e Antônio Flávio Moreira:`,
+            options: [
+                "Adoção do 'daltonismo cultural', ignorando as diferenças de raça e gênero.",
+                "Implementação de uma homogeneização cultural para eliminar conflitos.",
+                "Reconhecimento da pluralidade cultural e promoção do diálogo, problematizando hegemonias e preconceitos.",
+                "Criação de currículos segregados e escolas específicas para cada grupo.",
+                "Realização de atividades pontuais e folclóricas em datas comemorativas."
+            ],
+            correct: 2,
+            resolution: `Gabarito: C. A interculturalidade crítica promove o diálogo e o confronto propositivo entre saberes, combatendo a desigualdade e respeitando as identidades sem folclorização.`
+        },
+        {
+            id: 8,
+            text: `Informe se é verdadeiro (V) ou falso (F) o que se afirma sobre os níveis de planejamento:\n\n( ) O Planejamento Escolar (PPP) é burocrático e responsabilidade exclusiva da direção.\n( ) O Plano de Ensino é a previsão de objetivos e conteúdos para um período longo (ano/semestre).\n( ) O Plano de Aula é o detalhamento da prática diária e recursos metodológicos.\n( ) O planejamento didático deve ser entendido como um processo flexível.`,
+            options: [
+                "F, V, V, V.",
+                "V, V, F, V.",
+                "F, F, V, F.",
+                "V, F, F, V.",
+                "F, V, F, V."
+            ],
+            correct: 0,
+            resolution: `Gabarito: A. O PPP deve ser construído coletivamente (gestão democrática), não é mera burocracia da direção. Os demais itens descrevem corretamente as funções do planejamento.`
+        },
+        {
+            id: 9,
+            text: `Analise as assertivas sobre a relação de autoridade em sala de aula (Paulo Freire):\n\nI. A autoridade docente é legítima quando fundada na competência técnica e compromisso ético.\nII. A 'disciplina intelectual' é uma exigência do processo de construção do conhecimento.\nIII. O diálogo implica que professor e aluno são absolutamente iguais em saber.\nIV. A liberdade depende de uma interação onde a autoridade atua como suporte e orientação.`,
+            options: [
+                "I e IV, apenas.",
+                "II e III, apenas.",
+                "I, II e IV, apenas.",
+                "I, II e III, apenas.",
+                "III e IV, apenas."
+            ],
+            correct: 2,
+            resolution: `Gabarito: C. A assertiva III está incorreta porque o diálogo freireano não pressupõe simetria absoluta de saberes; o professor tem um saber científico/crítico diferente do aluno e deve dirigir o processo.`
+        },
+        {
+            id: 10,
+            text: `Sobre o uso das TDIC e o Ensino Híbrido, assinale a avaliação CORRETA sobre a reconfiguração da interação professor-aluno:`,
+            options: [
+                "A tecnologia torna a figura do professor obsoleta.",
+                "O professor deixa de ser transmissor exclusivo e assume o papel de mediador, curador e designer de experiências.",
+                "O uso de tecnologia é prejudicial pois fragmenta o conhecimento e isola os estudantes.",
+                "O ensino híbrido é uma modalidade de EaD disfarçada para reduzir custos.",
+                "A plataforma digital assume a responsabilidade total pelo aspecto socioemocional."
+            ],
+            correct: 1,
+            resolution: `Gabarito: B. Na cultura digital, o professor torna-se mentor e designer de caminhos. A tecnologia personaliza o ritmo e o humano qualifica o presencial com interação e debate.`
+        }
+    ];
+
+    function loadQuiz() {
+        const form = document.getElementById('quiz-form');
+        questions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.id = `q-block-${index}`;
+            
+            const optionsHtml = q.options.map((opt, i) => `
+                <li class="option-item" onclick="selectOption(${index}, ${i})">
+                    <input type="radio" name="q${index}" id="q${index}o${i}" value="${i}">
+                    <label for="q${index}o${i}">${String.fromCharCode(65 + i)}) ${opt}</label>
+                </li>
+            `).join('');
+
+            questionDiv.innerHTML = `
+                <span class="question-number">QUESTÃO ${String(index + 1).padStart(2, '0')}</span>
+                <div class="question-text">${q.text}</div>
+                <ul class="options-list">
+                    ${optionsHtml}
+                </ul>
+                <div class="resolution-box" id="res-${index}">
+                    <h4>Resolução Analítica:</h4>
+                    ${q.resolution}
+                </div>
+            `;
+            form.appendChild(questionDiv);
+        });
+    }
+
+    window.selectOption = function(qIndex, oIndex) {
+        // Unselect others
+        const items = document.querySelectorAll(`#q-block-${qIndex} .option-item`);
+        items.forEach(item => item.classList.remove('selected'));
+        
+        // Select current
+        const selectedItem = items[oIndex];
+        selectedItem.classList.add('selected');
+        selectedItem.querySelector('input').checked = true;
+    }
+
+    window.gradeQuiz = function() {
+        let score = 0;
+        const total = questions.length;
+
+        questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const options = document.querySelectorAll(`#q-block-${index} .option-item`);
+            const resolution = document.getElementById(`res-${index}`);
+            
+            resolution.style.display = 'block';
+
+            if (selected) {
+                const userChoice = parseInt(selected.value);
+                if (userChoice === q.correct) {
+                    score++;
+                    options[userChoice].classList.add('correct');
+                } else {
+                    options[userChoice].classList.add('wrong');
+                    options[q.correct].classList.add('correct');
+                }
+            } else {
+                // Not answered
+                options[q.correct].classList.add('correct');
+            }
+        });
+
+        // Show Summary
+        const summary = document.getElementById('result-summary');
+        const scoreBox = document.getElementById('final-score');
+        const feedbackText = document.getElementById('feedback-text');
+        
+        summary.style.display = 'block';
+        scoreBox.innerText = `${score} / ${total}`;
+        
+        if (score >= 8) {
+            feedbackText.innerHTML = '<span class="feedback-badge correct-badge">Excelente Desempenho!</span> Você domina bem os autores da banca.';
+        } else if (score >= 5) {
+            feedbackText.innerHTML = '<span class="feedback-badge" style="background:#fff3cd; color:#856404;">Bom Desempenho.</span> Revise os pontos destacados nas resoluções.';
+        } else {
+            feedbackText.innerHTML = '<span class="feedback-badge wrong-badge">Atenção!</span> É recomendável reler a bibliografia de Libâneo e Saviani.';
+        }
+
+        // Disable further clicks
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').innerText = "Simulado Concluído";
+        
+        window.scrollTo({ top: summary.offsetTop - 50, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadQuiz);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo - Didática IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #1a202c;
+            background-color: #ffffff;
+        }
+        .highlight {
+            background-color: #fef08a; /* Amarelo neutro */
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+        .section-title {
+            color: #1e40af; /* Azul Marinho para contraste */
+            border-left: 4px solid #1e40af;
+            padding-left: 1rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto; /* Ajuste automático para evitar scroll se possível */
+        }
+        th, td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            color: #334155;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .alert-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid #64748b;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .concept-card {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto; /* Em telas muito pequenas o scroll é inevitável para leitura, mas o layout é fluido */
+            }
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-6 py-10">
+
+    <!-- Áudio Player -->
+    <header class="mb-12">
+        <div class="bg-white border-2 border-slate-100 p-6 rounded-2xl shadow-sm">
+            <h1 class="text-3xl font-extrabold text-slate-900 mb-2">Didática: Modos de Organização do Ensino</h1>
+            <p class="text-slate-500 mb-6 italic">Material de Revisão - Concurso IFAM (Banca FCM)</p>
+            <div class="flex flex-col space-y-2">
+                <label class="text-sm font-bold text-slate-700">Reproduzir Aula (MP3):</label>
+                <!-- ESPAÇO PARA O NOME DO ARQUIVO MP3 ABAIXO -->
+                <audio controls class="w-full">
+                    <source src="9modos.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- 1. Introdução e Contribuições da Didática -->
+        <section>
+            <h2 class="section-title text-2xl font-bold">1. Definição e Contribuições da Didática</h2>
+            <p>A Didática é o ramo da Pedagogia que estuda o processo de ensino em sua totalidade. Sua principal contribuição é converter o <span class="highlight">saber científico</span> em <span class="highlight">saber escolar</span>, garantindo a democratização do conhecimento.</p>
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
+                <div class="concept-card">
+                    <p><strong>Função Social:</strong> Visa a formação de sujeitos críticos para a cidadania, não apenas técnicos executores.</p>
+                </div>
+                <div class="concept-card">
+                    <p><strong>Mediação Didática:</strong> O professor não é transmissor, mas o <span class="highlight">mediador</span> entre o aluno e o objeto de conhecimento.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Definições Básicas para a Prova -->
+        <section>
+            <h2 class="section-title text-2xl font-bold">2. Definições Básicas (Flashcards Mentais)</h2>
+            <ul class="space-y-4">
+                <li>🔹 <strong>Intencionalidade:</strong> Todo ato educativo é político e planejado. Não existe "aula neutra".</li>
+                <li>🔹 <strong>Transposição Didática:</strong> Processo de adaptar o conhecimento acadêmico para o nível de compreensão do aluno.</li>
+                <li>🔹 <strong>Contrato Didático:</strong> Regras implícitas e explícitas entre professor e alunos sobre o funcionamento das aulas.</li>
+                <li>🔹 <strong>Unidade Teoria-Prática:</strong> Na EPT, a teoria deve explicar a prática e a prática deve validar a teoria.</li>
+            </ul>
+        </section>
+
+        <!-- 3. Modos de Organização do Ensino -->
+        <section>
+            <h2 class="section-title text-2xl font-bold">3. Modos de Organização do Ensino (O Coração da Prova)</h2>
+            <p class="mb-4">Como o ensino é estruturado no tempo e no espaço:</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modalidade</th>
+                            <th>Características Essenciais</th>
+                            <th>Papel do Professor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Aula Expositiva Dialogada</strong></td>
+                            <td>Mobilização de conhecimentos prévios; participação ativa do aluno.</td>
+                            <td>Provocador e sistematizador de ideias.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sequência Didática (Zabala)</strong></td>
+                            <td>Atividades encadeadas com <span class="highlight">complexidade crescente</span>.</td>
+                            <td>Organizador de percursos de aprendizagem.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pedagogia de Projetos</strong></td>
+                            <td>Visão interdisciplinar; foco na resolução de problemas reais.</td>
+                            <td>Orientador e facilitador da investigação.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Estudo do Meio</strong></td>
+                            <td>Saída do ambiente escolar para análise crítica da realidade.</td>
+                            <td>Mediador entre o campo e a teoria de sala.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Seminários</strong></td>
+                            <td>Desenvolvimento da oratória, pesquisa e debate.</td>
+                            <td>Avaliador e debatedor.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 4. Contribuições de Autores Referência -->
+        <section>
+            <h2 class="section-title text-2xl font-bold">4. Autores e suas Contribuições Técnicas</h2>
+            <div class="space-y-6">
+                <div>
+                    <h3 class="font-bold text-lg text-slate-800">Libâneo: As Etapas da Aula</h3>
+                    <p>Para a FCM, lembre-se das 5 etapas fundamentais de uma aula organizada:</p>
+                    <ol class="list-decimal ml-6 mt-2 space-y-1">
+                        <li><strong>Preparação:</strong> Mobilização e motivação.</li>
+                        <li><strong>Transmissão/Assimilação:</strong> Contato com o conteúdo novo.</li>
+                        <li><strong>Consolidação:</strong> Fixação e exercícios.</li>
+                        <li><strong>Aplicação:</strong> Uso do conhecimento em situações novas.</li>
+                        <li><strong>Avaliação:</strong> Feedback constante.</li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg text-slate-800">Zabala: As Dimensões do Conteúdo</h3>
+                    <p>O ensino deve organizar conteúdos de quatro naturezas:</p>
+                    <ul class="list-disc ml-6 mt-2">
+                        <li><span class="highlight">Factual:</span> Datas, nomes, fatos simples.</li>
+                        <li><span class="highlight">Conceitual:</span> Princípios, leis, conceitos abstratos.</li>
+                        <li><span class="highlight">Procedimental:</span> Saber fazer (fundamental em Informática).</li>
+                        <li><span class="highlight">Atitudinal:</span> Valores, normas e ética profissional.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Especificidades da EPT (IFAM) -->
+        <section>
+            <h2 class="section-title text-2xl font-bold">5. O Ensino no Contexto da EPT e IFAM</h2>
+            <div class="alert-box">
+                <p class="font-semibold mb-2">Conceitos Obrigatórios:</p>
+                <ul class="list-disc ml-5 space-y-2">
+                    <li><strong>Integração Curricular:</strong> Superação da divisão entre "ensino médio regular" e "formação técnica".</li>
+                    <li><strong>Omnilateralidade:</strong> Desenvolvimento integral (físico, intelectual, tecnológico e cultural).</li>
+                    <li><strong>Trabalho como Princípio Educativo:</strong> O trabalho não é apenas prática, é a base da existência humana.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 6. Análise de Tendências e Pegadinhas (FCM) -->
+        <section>
+            <h2 class="section-title text-2xl font-bold text-red-700 border-red-700">6. Radar de Prova: Tendências FCM</h2>
+            <div class="bg-red-50 p-6 rounded-lg border border-red-100">
+                <h3 class="text-red-800 font-bold mb-3">⚠️ Pegadinhas Recorrentes:</h3>
+                <ul class="space-y-3">
+                    <li>❌ <strong>Espontaneísmo:</strong> A banca costuma colocar alternativas dizendo que a organização do ensino deve ser "livre" ou "sem planejamento rigoroso" para respeitar a liberdade. <span class="highlight text-red-800">Falso!</span> Didática exige planejamento rigoroso.</li>
+                    <li>❌ <strong>Técnica pela Técnica:</strong> Em cargos de informática, eles tentam te induzir a marcar que o ensino deve focar apenas no domínio da ferramenta. <span class="highlight text-red-800">Falso!</span> A FCM exige a visão sócio-histórica da tecnologia.</li>
+                    <li>❌ <strong>Confundir Sequência com Projeto:</strong> A Sequência é dirigida pelo professor com objetivos específicos. O Projeto nasce de uma problematização coletiva ou interesse do aluno.</li>
+                </ul>
+                <h3 class="text-green-800 font-bold mt-6 mb-3">✅ O que a banca AMA:</h3>
+                <ul class="space-y-2">
+                    <li>Interdisciplinaridade (conectar programação com matemática/português).</li>
+                    <li>Avaliação mediadora e processual (não apenas prova final).</li>
+                    <li>Contextualização regional (Amazonas/Norte).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Botão Final -->
+        <div class="mt-16 text-center">
+            <hr class="mb-10 border-slate-200">
+            <p class="mb-6 text-slate-600 font-medium">Finalizou a teoria? Agora é hora de fixar com questões.</p>
+            <a href="9questoes.html" class="inline-block bg-slate-900 hover:bg-black text-white font-bold py-5 px-12 rounded-xl transition duration-300 shadow-xl">
+                ACESSAR BANCO DE QUESTÕES →
+            </a>
+        </div>
+    </main>
+
+    <footer class="mt-20 py-10 border-t border-slate-100 text-center text-slate-400 text-sm">
+        <p>© 2024 - Mentoría Concurso IFAM | Professor de Informática</p>
+        <p class="mt-1">Foco: Didática e Organização do Ensino (Fundação CEFETMINAS)</p>
+    </footer>
+
+</body>
+</html>

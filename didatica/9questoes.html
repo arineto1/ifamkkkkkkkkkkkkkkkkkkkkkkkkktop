@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Interativo: Didática (FCM)</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --accent-color: #34495e;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .option-item:hover {
+            background-color: #f8f9fa;
+            border-color: #d1d1d1;
+        }
+
+        .option-item input {
+            margin-top: 7px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            font-size: 1.2rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            margin-top: 20px;
+        }
+
+        #submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        #results-section {
+            display: none;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 3px double var(--border-color);
+        }
+
+        .score-box {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .resolution-card {
+            background: #ffffff;
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .res-correct {
+            color: var(--correct-color);
+            font-weight: bold;
+        }
+
+        .res-incorrect {
+            color: var(--incorrect-color);
+            font-weight: bold;
+        }
+
+        .feedback-label {
+            margin-bottom: 10px;
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .feedback-correct { background-color: #d4edda; color: #155724; }
+        .feedback-incorrect { background-color: #f8d7da; color: #721c24; }
+
+        .explanation-text {
+            font-size: 0.95rem;
+            color: #444;
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Didática e Modos de Organização</h1>
+        <p>Foco: Fundação CEFETMINAS (FCM)</p>
+    </header>
+
+    <div id="quiz-container">
+        <!-- Questions will be injected here -->
+    </div>
+
+    <button id="submit-btn" onclick="processQuiz()">Finalizar Quiz e Ver Resoluções</button>
+
+    <div id="results-section">
+        <div class="score-box">
+            <h2>Seu Resultado</h2>
+            <div class="score-value" id="score-display">0/10</div>
+            <p id="score-text"></p>
+        </div>
+        <div id="resolutions-container">
+            <!-- Resolutions will be injected here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            title: "Questão 01 - Planejamento Escolar",
+            text: "José Carlos Libâneo (2013), ao discutir o planejamento escolar, estabelece distinções fundamentais entre os níveis de planejamento que estruturam o trabalho pedagógico.\n\nI. O Plano de Ensino é a previsão dos objetivos e tarefas do trabalho docente para um ano ou semestre.\nII. O Plano de Aula constitui o detalhamento da previsão de desenvolvimento do conteúdo para uma aula ou conjunto de aulas.\nIII. O planejamento, em uma perspectiva crítico-social, deve ser rígido e imutável.\nIV. O Plano da Escola (PPP) é o documento que define a identidade da instituição.\n\nEstão CORRETAS apenas as afirmativas:",
+            options: [
+                { id: "A", text: "I e II." },
+                { id: "B", text: "I, II e IV." },
+                { id: "C", text: "II e III." },
+                { id: "D", text: "I, III e IV." },
+                { id: "E", text: "I e IV." }
+            ],
+            correct: "B",
+            resolution: "A alternativa B está correta (I, II e IV). O planejamento na perspectiva crítica é flexível e atua como uma 'hipótese de trabalho', nunca rígido (invalidando a III). O Plano da Escola (PPP) define a identidade, o Plano de Ensino organiza o semestre/ano da disciplina e o Plano de Aula detalha o cotidiano imediato."
+        },
+        {
+            id: 2,
+            title: "Questão 02 - Sequências Didáticas (Zabala)",
+            text: "Sobre a concepção de Antoni Zabala acerca das sequências didáticas e a organização dos conteúdos, assinale a alternativa INCORRETA:",
+            options: [
+                { id: "A", text: "As sequências didáticas são um conjunto de atividades ordenadas, estruturadas e articuladas." },
+                { id: "B", text: "A aprendizagem de conteúdos procedimentais exige a realização de situações de uso, exercitação e repetição reflexiva." },
+                { id: "C", text: "Os conteúdos atitudinais são aprendidos de forma estanque e isolada em momentos específicos da aula." },
+                { id: "D", text: "Os conteúdos conceituais requerem uma compreensão do significado e processo de elaboração pessoal." },
+                { id: "E", text: "A avaliação deve possuir uma função reguladora que permite ajustar a intervenção pedagógica." }
+            ],
+            correct: "C",
+            resolution: "A alternativa C é a incorreta. Segundo Zabala, conteúdos atitudinais (valores e normas) não são aprendidos de forma estanque, mas permeiam todo o clima da classe, as relações interpessoais e o cotidiano da sequência didática. Não se ensina atitude apenas com palestras isoladas, mas com vivência."
+        },
+        {
+            id: 3,
+            title: "Questão 03 - Projeto Político-Pedagógico (Veiga)",
+            text: "Analise as asserções sobre os princípios do PPP segundo Ilma Passos Veiga:\n\nI. O PPP deve ser construído de forma coletiva.\nII. A construção do PPP deve priorizar a dimensão técnica delegando a especialistas externos.\nIII. O PPP pressupõe uma ruptura com as relações competitivas e autoritárias.\nIV. É 'político' pelo compromisso de formação do cidadão e 'pedagógico' por definir as ações educativas.",
+            options: [
+                { id: "A", text: "V, F, V, V." },
+                { id: "B", text: "V, V, F, V." },
+                { id: "C", text: "F, V, V, F." },
+                { id: "D", text: "V, F, F, V." },
+                { id: "E", text: "F, F, V, V." }
+            ],
+            correct: "A",
+            resolution: "A sequência correta é V, F, V, V. Veiga refuta a ideia de especialistas externos (item II) elaborando o PPP; este deve ser fruto da reflexão dos próprios atores da escola para gerar pertencimento e refletir a realidade local."
+        },
+        {
+            id: 4,
+            title: "Questão 04 - Interdisciplinaridade (Fazenda)",
+            text: "Com base nas contribuições de Ivani Fazenda, é CORRETO afirmar que a interdisciplinaridade se define essencialmente como:",
+            options: [
+                { id: "A", text: "Integração curricular administrativa e otimização de tempo." },
+                { id: "B", text: "Técnica de fusão de disciplinas em uma 'superdisciplina' generalista." },
+                { id: "C", text: "Uma atitude de ousadia e busca frente ao conhecimento, com humildade e abertura ao diálogo." },
+                { id: "D", text: "Eliminação das fronteiras disciplinares em favor de um currículo base unificado." },
+                { id: "E", text: "Prática de projetos extracurriculares pontuais mantendo o isolamento disciplinar." }
+            ],
+            correct: "C",
+            resolution: "Para Ivani Fazenda, a interdisciplinaridade não é apenas um método, mas uma 'atitude'. Exige humildade para reconhecer a incompletude do próprio saber e ousadia para dialogar com outras áreas."
+        },
+        {
+            id: 5,
+            title: "Questão 05 - Escola como Espaço Sociocultural (Dayrell)",
+            text: "Para organizar o ensino contemplando a realidade da escola como espaço sociocultural, a didática deve:",
+            options: [
+                { id: "A", text: "Ignorar as culturas juvenis focando exclusivamente na cultura erudita." },
+                { id: "B", text: "Reconhecer os alunos como sujeitos sociais e históricos portadores de identidades e experiências." },
+                { id: "C", text: "Padronizar os comportamentos para facilitar a gestão da sala de aula." },
+                { id: "D", text: "Considerar a escola como empresa prestadora de serviços neutros." },
+                { id: "E", text: "Focar exclusivamente na preparação para o mercado de trabalho." }
+            ],
+            correct: "B",
+            resolution: "Juarez Dayrell defende que a escola deve superar a visão do 'aluno abstrato' e reconhecer o 'aluno real' — um sujeito com história, cultura e identidades próprias que devem dialogar com o saber escolar."
+        },
+        {
+            id: 6,
+            title: "Questão 06 - Projetos de Trabalho (Hernández)",
+            text: "Sobre a organização do ensino por Projetos de Trabalho (Fernando Hernández), analise:\n\nI. Surgem de dúvidas ou problemas reais que interessam aos alunos.\nII. O professor é transmissor das respostas corretas e gestor do silêncio.\nIII. Favorece a transdisciplinaridade ao tratar problemas complexos.\nIV. A avaliação foca exclusivamente no produto final (cartaz ou maquete).",
+            options: [
+                { id: "A", text: "I e II." },
+                { id: "B", text: "I e III." },
+                { id: "C", text: "II e IV." },
+                { id: "D", text: "III e IV." },
+                { id: "E", text: "I, II e III." }
+            ],
+            correct: "B",
+            resolution: "Estão corretas I e III. Nos projetos, o professor é mediador/orientador, não mero transmissor (invalidando II). A avaliação é processual e foca no percurso de aprendizagem, não apenas no produto final (invalidando IV)."
+        },
+        {
+            id: 7,
+            title: "Questão 07 - Pedagogia Histórico-Crítica (Saviani)",
+            text: "Descreva a função da didática na perspectiva Histórico-Crítica de Dermeval Saviani:",
+            options: [
+                { id: "A", text: "Adaptação psicológica do aluno à sociedade através de métodos ativos." },
+                { id: "B", text: "Atuação não-diretiva onde o professor é apenas um facilitador espontaneísta." },
+                { id: "C", text: "Instrumentalizar a mediação da transmissão-assimilação do saber sistematizado visando a transformação social." },
+                { id: "D", text: "Reproduzir as relações de produção capitalista e treinar habilidades técnicas." },
+                { id: "E", text: "Centrar-se exclusivamente nos processos de 'aprender a aprender' desconsiderando conteúdos." }
+            ],
+            correct: "C",
+            resolution: "Saviani defende que a escola pública cumpre sua função social ao democratizar o acesso ao saber erudito/sistematizado. A didática serve para garantir que as classes populares dominem os 'clássicos' como ferramenta de luta política."
+        },
+        {
+            id: 8,
+            title: "Questão 08 - Relação Professor-Aluno",
+            text: "Assinale a situação condizente com uma didática crítica e progressista (Freire/Libâneo):",
+            options: [
+                { id: "A", text: "Autoridade impositiva baseada no medo e silêncio absoluto." },
+                { id: "B", text: "Abnegação da autoridade (laissez-faire) confundindo democracia com ausência de direção." },
+                { id: "C", text: "Relação pautada pelo diálogo e horizontalidade, com autoridade pedagógica baseada no respeito mútuo e busca conjunta." },
+                { id: "D", text: "Postura demagógica de 'amigo' evitando correções para não ferir o emocional." },
+                { id: "E", text: "Relação neutra e técnica onde o professor é apenas instrutor e o aluno receptor." }
+            ],
+            correct: "C",
+            resolution: "A didática crítica não nega a autoridade do professor, mas diferencia autoridade de autoritarismo. A relação deve ser dialógica, exigente (rigorosidade metódica) e respeitosa, visando a autonomia do educando."
+        },
+        {
+            id: 9,
+            title: "Questão 09 - Avaliação da Aprendizagem",
+            text: "Sobre a avaliação na organização do trabalho pedagógico, assinale a alternativa CORRETA:",
+            options: [
+                { id: "A", text: "Ocorre apenas ao final para cumprir função burocrática de certificação." },
+                { id: "B", text: "Função principal de controle disciplinar e punição." },
+                { id: "C", text: "Deve ser classificatória para selecionar os melhores e excluir os demais." },
+                { id: "D", text: "Deve ser processual, diagnóstica e formativa para subsidiar a reorientação da prática." },
+                { id: "E", text: "O erro do aluno deve ser punido pois indica falta de estudo." }
+            ],
+            correct: "D",
+            resolution: "Hoffmann e Luckesi defendem a avaliação como mediadora e diagnóstica. Ela não serve para rotular (classificar), mas para identificar onde o aluno está e o que o professor precisa ajustar para que a aprendizagem ocorra."
+        },
+        {
+            id: 10,
+            title: "Questão 10 - Estratégias de Ensino: Oficina Pedagógica",
+            text: "Sobre a organização do ensino através de Oficinas Pedagógicas, é INCORRETO afirmar:",
+            options: [
+                { id: "A", text: "Enfatiza o 'aprender fazendo' integrando teoria e prática." },
+                { id: "B", text: "A participação dos alunos é passiva, limitando-se a observar o especialista." },
+                { id: "C", text: "Promove interação grupal e construção coletiva." },
+                { id: "D", text: "Requer planejamento claro de objetivos, materiais e socialização." },
+                { id: "E", text: "Coloca o aluno como protagonista na reconstrução do saber." }
+            ],
+            correct: "B",
+            resolution: "A alternativa B é a incorreta. Uma oficina é, por definição, um espaço de atividade e protagonismo do aluno. Se o aluno é passivo e apenas observa, a estratégia é uma demonstração ou palestra, não uma oficina."
+        }
+    ];
+
+    function renderQuestions() {
+        const container = document.getElementById('quiz-container');
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${q.id}`;
+
+            const optionsHtml = q.options.map(opt => `
+                <li class="option-item">
+                    <input type="radio" name="question-${q.id}" id="q${q.id}opt${opt.id}" value="${opt.id}">
+                    <label class="option-label" for="q${q.id}opt${opt.id}">
+                        <strong>${opt.id})</strong> ${opt.text}
+                    </label>
+                </li>
+            `).join('');
+
+            card.innerHTML = `
+                <div class="question-header">${q.title}</div>
+                <div class="question-text">${q.text}</div>
+                <ul class="options-list">
+                    ${optionsHtml}
+                </ul>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function processQuiz() {
+        let score = 0;
+        const resContainer = document.getElementById('resolutions-container');
+        resContainer.innerHTML = '';
+
+        quizData.forEach(q => {
+            const selected = document.querySelector(`input[name="question-${q.id}"]:checked`);
+            const isCorrect = selected && selected.value === q.correct;
+            if (isCorrect) score++;
+
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            
+            const feedbackClass = isCorrect ? 'feedback-correct' : 'feedback-incorrect';
+            const feedbackText = isCorrect ? 'Acertou!' : (selected ? `Errou (Sua escolha: ${selected.value})` : 'Não Respondida');
+
+            resCard.innerHTML = `
+                <h3>${q.title}</h3>
+                <span class="feedback-label ${feedbackClass}">${feedbackText}</span>
+                <div>Gabarito Oficial: <span class="res-correct">${q.correct}</span></div>
+                <div class="explanation-text">
+                    <strong>Resolução Comentada:</strong><br>
+                    ${q.resolution}
+                </div>
+            `;
+            resContainer.appendChild(resCard);
+        });
+
+        // Display results
+        document.getElementById('score-display').innerText = `${score} / ${quizData.length}`;
+        document.getElementById('score-text').innerText = score >= 7 ? "Excelente desempenho! Você domina as bases da didática crítica." : "Bom esforço! Revise as resoluções comentadas para fortalecer os pontos de atenção.";
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'none';
+
+        // Scroll to results
+        window.scrollTo({ top: document.getElementById('results-section').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    // Initialize
+    window.onload = renderQuestions;
+</script>
+
+</body>
+</html>

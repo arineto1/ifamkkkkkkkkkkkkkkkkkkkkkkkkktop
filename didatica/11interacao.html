@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Didática e Interação - Professor IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight-blue {
+            background-color: #f0f7ff;
+            color: #2b6cb0;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .highlight-yellow {
+            background-color: #fefcbf;
+            color: #744210;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .section-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            background-color: #fff;
+        }
+
+        .info-box {
+            border-left: 5px solid #2d3748;
+            background-color: #f8fafc;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e0;
+            padding: 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #edf2f7;
+            color: #2d3748;
+            font-weight: 700;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-link {
+            display: inline-block;
+            background-color: #1a202c;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-link:hover {
+            background-color: #2d3748;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        audio {
+            width: 100%;
+            height: 40px;
+        }
+
+        h2 {
+            color: #2d3748;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 0.5rem;
+        }
+
+        .sticky-audio {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-4 sm:px-6">
+
+    <!-- Player de Áudio Fixo no Topo -->
+    <div class="sticky-audio text-center">
+        <div class="max-w-md mx-auto">
+            <p class="text-xs font-bold text-gray-500 uppercase mb-1">Ouça a Aula (Revisão Áudio)</p>
+            <audio controls>
+                <source src="11interacao.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </div>
+    </div>
+
+    <header class="py-12 text-center">
+        <h1 class="text-4xl font-extrabold text-gray-900 leading-tight">
+            Didática: Interação Professor-Aluno-Conhecimento
+        </h1>
+        <p class="text-xl text-gray-600 mt-4 font-medium">Foco: Concurso IFAM | Banca: Fundação CEFETMINAS</p>
+    </header>
+
+    <main>
+        <!-- CONTEÚDO 1: DEFINIÇÃO E CARACTERÍSTICAS -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6">1. Definição do Tema e Características Essenciais</h2>
+            <p class="mb-4">
+                A Didática é o ramo da pedagogia que estuda o <span class="highlight-blue">processo de ensino-aprendizagem</span> em sua totalidade. No contexto do IFAM e da CEFETMINAS, ela não é vista como uma "receita de bolo", mas como uma <span class="highlight-yellow">prática social intencional</span>.
+            </p>
+            <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Interação Dialética</h4>
+                    <p class="text-sm">A relação entre professor e aluno é mútua. O conhecimento não é transferido, mas <span class="font-bold">co-construído</span> através do diálogo e da mediação.</p>
+                </div>
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Dimensão Política</h4>
+                    <p class="text-sm">Todo ato educativo é político. Ensinar informática no IFAM visa a <span class="font-bold">emancipação do trabalhador</span> e não apenas a formação de mão de obra barata.</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>Ponto de Acerto:</strong> Para a banca, a Didática contemporânea deve superar o <span class="font-bold">Tecnicismo</span> (foco apenas nos meios) e o <span class="font-bold">Tradicionalismo</span> (foco apenas no intelecto).
+            </div>
+        </section>
+
+        <!-- CONTEÚDO 2: A TRÍADE DIDÁTICA -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6">2. A Tríade: Professor - Aluno - Conhecimento</h2>
+            <ul class="space-y-6">
+                <li>
+                    <span class="block text-lg font-bold text-blue-800">I. O Professor como Mediador:</span>
+                    O docente é o detentor do saber sistematizado que utiliza <span class="highlight-blue">intencionalidade pedagógica</span> para organizar o ensino. Ele não é apenas um guia, ele dirige a atividade de aprendizagem.
+                </li>
+                <li>
+                    <span class="block text-lg font-bold text-blue-800">II. O Aluno como Sujeito Concreto:</span>
+                    O aluno não é uma "tábula rasa". Ele traz uma <span class="highlight-yellow">prática social inicial</span>. O ensino deve partir do que o aluno conhece para chegar ao conhecimento científico.
+                </li>
+                <li>
+                    <span class="block text-lg font-bold text-blue-800">III. O Conhecimento como Ferramenta de Luta:</span>
+                    O conteúdo científico, artístico e filosófico é o <span class="font-bold">patrimônio da humanidade</span>. O acesso a esse saber é um direito do aluno da classe trabalhadora.
+                </li>
+            </ul>
+        </section>
+
+        <!-- CONTEÚDO 3: CONTRIBUIÇÕES NA SOCIEDADE CONTEMPORÂNEA -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6">3. Didática na Sociedade Contemporânea</h2>
+            <p class="mb-4">As contribuições da Didática hoje focam na resposta aos desafios da era digital e da diversidade:</p>
+            <div class="space-y-4">
+                <div class="border-l-4 border-blue-200 pl-4">
+                    <p><strong>Democratização do Saber:</strong> Garantir que as TICs (Tecnologias de Informação e Comunicação) sejam ferramentas de inclusão, não de exclusão.</p>
+                </div>
+                <div class="border-l-4 border-blue-200 pl-4">
+                    <p><strong>Formação Omnilateral:</strong> Conceito chave do EBTT. Significa a formação <span class="font-bold">integral</span> do ser humano (físico, mental, técnico, cultural e político).</p>
+                </div>
+                <div class="border-l-4 border-blue-200 pl-4">
+                    <p><strong>Educação Profissional e Tecnológica (EPT):</strong> A didática aqui busca integrar <span class="highlight-yellow">Trabalho, Ciência e Cultura</span>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTEÚDO 4: GLOSSÁRIO PARA O DIA DA PROVA -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6">4. Definições Básicas para Memorizar</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Termo</th>
+                            <th>O que significa para a CEFETMINAS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">Práxis</td>
+                            <td>A união indissociável entre <span class="font-bold">Teoria e Prática</span>. Uma alimenta a outra.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Mediação</td>
+                            <td>Ação do professor que intervém na <span class="font-bold">ZDP (Zona de Desenvolvimento Proximal)</span>.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Intencionalidade</td>
+                            <td>O ensino não é neutro nem ao acaso; possui objetivos claros e sociais.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Transposição Didática</td>
+                            <td>Processo de adaptar o saber científico para o nível de compreensão do aluno.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">Avaliação Dialógica</td>
+                            <td>Avaliação processual, formativa e que serve para <span class="font-bold">reorientar o ensino</span>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- CONTEÚDO 5: TENDÊNCIAS PEDAGÓGICAS (COMPLETO) -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6">5. Quadro Comparativo: Tendências de Libâneo</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tendência</th>
+                            <th>Papel do Professor</th>
+                            <th>Papel do Aluno</th>
+                            <th>Foco do Conteúdo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Tradicional</strong></td>
+                            <td>Autoridade, transmissor.</td>
+                            <td>Passivo, receptáculo.</td>
+                            <td>Verdades absolutas, manuais.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Escola Nova</strong></td>
+                            <td>Facilitador, auxiliar.</td>
+                            <td>Centro do processo, ativo.</td>
+                            <td>Experiências, "aprender a aprender".</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tecnicista</strong></td>
+                            <td>Técnico, executor.</td>
+                            <td>Espectador de sistemas.</td>
+                            <td>Habilidades técnicas, manuais.</td>
+                        </tr>
+                        <tr class="bg-blue-50">
+                            <td><strong>Libertadora</strong></td>
+                            <td>Animador (relação horizontal).</td>
+                            <td>Sujeito crítico, dialógico.</td>
+                            <td>Temas geradores (políticos).</td>
+                        </tr>
+                        <tr class="bg-yellow-50 font-bold">
+                            <td><strong>Crítico-Social</strong></td>
+                            <td>Mediador entre aluno e saber.</td>
+                            <td>Sujeito ativo e social.</td>
+                            <td>Saber universal + Realidade social.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-4 text-sm text-red-600 font-bold italic">⚠️ CUIDADO: A CEFETMINAS adora trocar a Crítico-Social pela Escola Nova para te confundir. Lembre-se: Crítico-Social valoriza o CONTEÚDO!</p>
+        </section>
+
+        <!-- CONTEÚDO 6: TENDÊNCIAS DE COBRANÇA E PEGUINHAS -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6">6. Análise de "Peguinhas" da CEFETMINAS</h2>
+            <div class="space-y-4">
+                <div class="p-4 bg-red-50 border border-red-100 rounded-lg">
+                    <p class="font-bold text-red-800">Peguinha 1: A Neutralidade da Tecnologia</p>
+                    <p class="text-sm">A banca frequentemente coloca que a tecnologia traz objetividade e neutralidade ao ensino. <span class="font-bold">ERRO!</span> A tecnologia é mediada e reflete interesses sociais.</p>
+                </div>
+                <div class="p-4 bg-red-50 border border-red-100 rounded-lg">
+                    <p class="font-bold text-red-800">Peguinha 2: O Facilitador vs. Mediador</p>
+                    <p class="text-sm">Se a questão disser que o professor é "meramente um facilitador", ela está indo para a Escola Nova. No IFAM, o professor é <span class="font-bold text-green-700">MEDIADOR E DIRIGENTE</span> do processo.</p>
+                </div>
+                <div class="p-4 bg-red-50 border border-red-100 rounded-lg">
+                    <p class="font-bold text-red-800">Peguinha 3: Prática sem Teoria</p>
+                    <p class="text-sm">Questões que valorizam apenas o "saber fazer" técnico (praticismo) estão incorretas. A banca exige a <span class="font-bold text-green-700">integração entre trabalho e ciência</span>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESUMO DE DUAS PÁGINAS (VERSÃO SINTÉTICA PARA MEMORIZAÇÃO) -->
+        <section class="section-card bg-gray-900 text-white">
+            <h2 class="text-2xl font-bold mb-6 text-white border-gray-700">7. Checklist Final de Memorização</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="space-y-3">
+                    <p class="text-yellow-400 font-bold">SAVIANI (Histórico-Crítica):</p>
+                    <ul class="text-sm space-y-1">
+                        <li>1. Prática Social Inicial</li>
+                        <li>2. Problematização</li>
+                        <li>3. Instrumentalização</li>
+                        <li>4. Catarse (Apropriação)</li>
+                        <li>5. Prática Social Final</li>
+                    </ul>
+                </div>
+                <div class="space-y-3">
+                    <p class="text-yellow-400 font-bold">DIDÁTICA NO IFAM:</p>
+                    <ul class="text-sm space-y-1">
+                        <li>• Foco na Educação Tecnológica.</li>
+                        <li>• Superação da dicotomia teoria/prática.</li>
+                        <li>• Relação dialógica e afetiva.</li>
+                        <li>• Compromisso com a ética e democracia.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t border-gray-700 text-center italic text-gray-400">
+                "Não há ensino sem pesquisa, nem pesquisa sem ensino" - Paulo Freire.
+            </div>
+        </section>
+
+        <!-- BOTÃO PARA QUESTÕES -->
+        <div class="text-center py-12">
+            <p class="text-gray-500 mb-4 font-medium">Pronto para testar seus conhecimentos?</p>
+            <a href="11questoes.html" class="btn-link">
+                Ir para o Banco de Questões (HTML) →
+            </a>
+        </div>
+    </main>
+
+    <footer class="mt-12 mb-8 text-center text-gray-500 text-sm border-t pt-6">
+        <p>© 2024 - Guia de Aprovação IFAM - Professor de Informática</p>
+        <p class="mt-2 uppercase tracking-widest font-bold">Foco. Persistência. Aprovação.</p>
+    </footer>
+
+</body>
+</html>

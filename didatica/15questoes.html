@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado de Didática Geral - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --accent-color: #2980b9;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        .intro {
+            font-style: italic;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f0f7ff;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        .option-item.selected {
+            background-color: #e8f4fd;
+            border-color: var(--accent-color);
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #1c638e;
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: #fff;
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+        }
+
+        .score-box {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .resolution-card {
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .res-item {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #fdfdfd;
+            border-left: 5px solid #ccc;
+        }
+
+        .res-item h4 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .correct-answer-indicator {
+            font-weight: bold;
+            display: block;
+            margin: 10px 0;
+            padding: 5px 10px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 4px;
+            width: fit-content;
+        }
+
+        .user-answer-indicator {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .status-correct { color: var(--success-color); }
+        .status-wrong { color: var(--error-color); }
+
+        .resolution-text {
+            font-size: 0.95rem;
+            color: #444;
+            white-space: pre-line;
+            text-align: justify;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+            header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado de Didática Geral</h1>
+        <p class="intro">Foco na Banca Fundação CEFETMINAS - Nível Avançado</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 1 -->
+        <div class="question-card" id="q1">
+            <span class="question-number">Questão 1</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Baseada na obra de José Carlos Libâneo)</strong><br><br>
+                A Didática, enquanto ramo da Pedagogia, investiga os fundamentos, condições e modos de realização da instrução e do ensino. Em sua obra clássica <em>Didática</em> (1992), José Carlos Libâneo estabelece que o ato didático não é uma atividade neutra, mas sim intencional e política. A análise do ato didático destaca uma relação dinâmica entre três elementos fundamentais: professor, aluno e matéria (conteúdo).<br><br>
+                Considerando a perspectiva crítico-social dos conteúdos defendida pelo autor, analise as afirmativas a seguir:<br><br>
+                I. A apropriação do conhecimento universal pelo estudante é o objetivo máximo das instituições escolares, contudo, essa apropriação não deve ser passiva ou acrítica; o conhecimento deve ser submetido ao crivo de seus determinantes sociais para recuperar seu núcleo de objetividade e permitir a intervenção na realidade.<br>
+                II. O processo de ensino caracteriza-se pela combinação indissociável entre a instrução (transmissão de conhecimentos) e a educação (formação da personalidade), sendo que a instrução é o meio pelo qual a educação escolar atinge seus objetivos de formação humana.<br>
+                III. Na relação professor-aluno, a autoridade pedagógica do docente deve ser suprimida em favor da autogestão do grupo, garantindo que os alunos decidam livremente os conteúdos e métodos, eliminando assim as relações de poder inerentes à instituição escolar.<br>
+                IV. Os métodos de ensino são o conjunto de ações, passos e condições externas e procedimentos utilizados intencionalmente pelo professor para dirigir e estimular o processo de ensino em função da aprendizagem dos alunos.<br><br>
+                Estão corretas as afirmativas:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q1" value="A"> A) I, II e IV, apenas.</label>
+                <label class="option-item"><input type="radio" name="q1" value="B"> B) I, III e IV, apenas.</label>
+                <label class="option-item"><input type="radio" name="q1" value="C"> C) II e III, apenas.</label>
+                <label class="option-item"><input type="radio" name="q1" value="D"> D) I e II, apenas.</label>
+                <label class="option-item"><input type="radio" name="q1" value="E"> E) I, II, III e IV.</label>
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-card" id="q2">
+            <span class="question-number">Questão 2</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Baseada em Pura Lúcia Oliver Martins)</strong><br><br>
+                A Didática Geral estuda as expressões de práticas pedagógicas que decorrem de determinado tipo de relação social no interior do modo de produção que a sustenta. Martins (2012) define quatro concepções fundamentais que influenciam a prática docente: transmissão-assimilação, aprender a aprender, aprender a fazer e a sistematização coletiva do conhecimento.<br><br>
+                Acerca destas concepções pedagógicas que demarcam o processo de ensino e aprendizagem, assinale a alternativa que descreve corretamente os fundamentos da concepção da <strong>sistematização coletiva do conhecimento</strong>:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q2" value="A"> A) O conhecimento é uma verdade absoluta e acabada, cabendo à escola a função de transmiti-lo às novas gerações através da repetição e memorização.</label>
+                <label class="option-item"><input type="radio" name="q2" value="B"> B) A escola é um espaço de ação e reflexão (práxis), onde o professor atua como mediador entre o conhecimento elaborado e o aluno, partindo da prática social dos estudantes (síncrese) para alcançar a compreensão teórica (síntese) e retornar à prática transformada.</label>
+                <label class="option-item"><input type="radio" name="q2" value="C"> C) O foco central do processo educativo é o desenvolvimento de habilidades e competências técnicas para o mercado de trabalho, valorizando o "saber fazer".</label>
+                <label class="option-item"><input type="radio" name="q2" value="D"> D) O processo de ensino-aprendizagem deve centrar-se nos interesses espontâneos da criança e nos processos de descoberta individual.</label>
+                <label class="option-item"><input type="radio" name="q2" value="E"> E) A aprendizagem ocorre fundamentalmente através do condicionamento operante e do reforço positivo, onde o planejamento instrucional rigoroso prevê os comportamentos finais.</label>
+            </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card" id="q3">
+            <span class="question-number">Questão 3</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Baseada em Santos, Costa e Teorias de Currículo)</strong><br><br>
+                O currículo escolar não é um documento estático ou neutro, mas um território de disputa e produção cultural. Avalie as afirmações a seguir sobre as especificidades e conceitos de currículo:<br><br>
+                I. O currículo é considerado um artefato social e cultural; isso significa que ele é moldado por determinações históricas e sociais.<br>
+                II. O currículo oculto refere-se às aprendizagens não planejadas que ocorrem no cotidiano escolar, transmitindo valores, normas de conduta, preconceitos e ideologias.<br>
+                III. O currículo prescrito (ou formal) coincide exatamente com o currículo real (ou em ação), uma vez que os professores aplicam em sala de aula exatamente o que está determinado.<br>
+                IV. O currículo é um local de transmissão de uma cultura incontestada e unitária, funcionando como um espelho fiel da sociedade, sem conflitos.<br>
+                V. O currículo é um terreno de produção e política cultural, no qual os materiais existentes funcionam como matéria-prima de criação e transgressão.<br><br>
+                Está correto <strong>apenas</strong> o que se afirma em:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q3" value="A"> A) I, II e V.</label>
+                <label class="option-item"><input type="radio" name="q3" value="B"> B) II, III e IV.</label>
+                <label class="option-item"><input type="radio" name="q3" value="C"> C) I, III e V.</label>
+                <label class="option-item"><input type="radio" name="q3" value="D"> D) I, II e IV.</label>
+                <label class="option-item"><input type="radio" name="q3" value="E"> E) III, IV e V.</label>
+            </div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card" id="q4">
+            <span class="question-number">Questão 4</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Baseada em Luchesi, Lara e Santos, 2022)</strong><br><br>
+                As metodologias ativas têm ganhado destaque como estratégias para colocar o estudante no centro do processo. Associe as colunas:<br><br>
+                (3) Sala de Aula Invertida / (1) TBL / (2) PBL / (4) Rotação por Estações<br><br>
+                ( ) Estratégia que inverte a lógica tradicional: contato prévio fora da sala e tempo presencial para resolução de dúvidas.<br>
+                ( ) Metodologia estruturada com preparação individual, testes (Garantia de Preparo) e aplicação em equipe.<br>
+                ( ) Abordagem desencadeada por uma situação-problema antes da exposição teórica; grupos tutoriais investigativos.<br>
+                ( ) Modelo de ensino híbrido que organiza a sala em diferentes zonas de trabalho com rotação fixa.<br><br>
+                A sequência correta, de cima para baixo, é:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q4" value="A"> A) 3, 1, 2, 4.</label>
+                <label class="option-item"><input type="radio" name="q4" value="B"> B) 1, 3, 4, 2.</label>
+                <label class="option-item"><input type="radio" name="q4" value="C"> C) 3, 2, 1, 4.</label>
+                <label class="option-item"><input type="radio" name="q4" value="D"> D) 2, 4, 1, 3.</label>
+                <label class="option-item"><input type="radio" name="q4" value="E"> E) 1, 2, 3, 4.</label>
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card" id="q5">
+            <span class="question-number">Questão 5</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Baseada em Veiga e Legislação)</strong><br><br>
+                I. "O Projeto Político Pedagógico não deve ser visto apenas como uma exigência burocrática, mas como um instrumento de luta e transformação, construído coletivamente."<br><br>
+                <strong>PORQUE</strong><br><br>
+                II. "A dimensão política reside na intencionalidade de formar cidadãos, enquanto a pedagógica define as ações educativas; ambas são indissociáveis, pois não existe neutralidade."<br><br>
+                A respeito dessas asserções, assinale a opção correta:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q5" value="A"> A) As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.</label>
+                <label class="option-item"><input type="radio" name="q5" value="B"> B) As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.</label>
+                <label class="option-item"><input type="radio" name="q5" value="C"> C) A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.</label>
+                <label class="option-item"><input type="radio" name="q5" value="D"> D) A asserção I é uma proposição falsa, e a II é uma verdadeira.</label>
+                <label class="option-item"><input type="radio" name="q5" value="E"> E) As asserções I e II são proposições falsas.</label>
+            </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card" id="q6">
+            <span class="question-number">Questão 6</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Baseada em Hoffmann e Luckesi)</strong><br><br>
+                Identifique a função predominante da avaliação:<br><br>
+                1. No início do ano, investiga conhecimentos prévios para ajustar o planejamento.<br>
+                2. Ao final do bimestre, provas com notas para registrar desempenho e classificar.<br>
+                3. Durante o projeto, feedbacks contínuos e reorientação de estratégias em tempo real.<br><br>
+                A correlação correta é:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q6" value="A"> A) 1-Diagnóstica; 2-Somativa; 3-Formativa.</label>
+                <label class="option-item"><input type="radio" name="q6" value="B"> B) 1-Formativa; 2-Diagnóstica; 3-Somativa.</label>
+                <label class="option-item"><input type="radio" name="q6" value="C"> C) 1-Somativa; 2-Formativa; 3-Diagnóstica.</label>
+                <label class="option-item"><input type="radio" name="q6" value="D"> D) 1-Diagnóstica; 2-Formativa; 3-Somativa.</label>
+                <label class="option-item"><input type="radio" name="q6" value="E"> E) 1-Formativa; 2-Somativa; 3-Diagnóstica.</label>
+            </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card" id="q7">
+            <span class="question-number">Questão 7</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Níveis de Currículo)</strong><br><br>
+                Informe V ou F:<br><br>
+                ( ) O <strong>currículo real</strong> refere-se àquilo que efetivamente acontece na sala de aula; fruto da interação professor-aluno.<br>
+                ( ) O <strong>currículo formal</strong> é o estabelecido pelos sistemas de ensino e expresso em documentos oficiais (BNCC, etc).<br>
+                ( ) O <strong>currículo oculto</strong> constitui-se pelas aprendizagens implícitas (atitudes, valores) que não constam nos planos.<br>
+                ( ) O <strong>currículo real</strong> e o <strong>currículo formal</strong> são sinônimos e o professor deve garantir reflexo exato das leis.<br><br>
+                A sequência correta é:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q7" value="A"> A) V, V, V, F.</label>
+                <label class="option-item"><input type="radio" name="q7" value="B"> B) V, F, V, V.</label>
+                <label class="option-item"><input type="radio" name="q7" value="C"> C) F, V, F, V.</label>
+                <label class="option-item"><input type="radio" name="q7" value="D) D) V, V, F, F."></label>
+                <label class="option-item"><input type="radio" name="q7" value="E"> E) F, F, V, V.</label>
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card" id="q8">
+            <span class="question-number">Questão 8</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Bullying)</strong><br><br>
+                Associe o tipo à descrição:<br><br>
+                ( ) Bater, chutar, empurrar ou destruir pertences.<br>
+                ( ) Insultar, xingar, colocar apelidos pejorativos.<br>
+                ( ) Humilhar, excluir, isolar socialmente, ignorar ("gelo").<br>
+                ( ) Utilizar redes sociais e e-mails para hostilizar de forma repetitiva.<br><br>
+                A sequência correta (conforme tipos: 1-Verbal, 2-Físico, 3-Psicológico, 4-Virtual) é:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q8" value="A"> A) 2, 1, 3, 4.</label>
+                <label class="option-item"><input type="radio" name="q8" value="B"> B) 1, 2, 4, 3.</label>
+                <label class="option-item"><input type="radio" name="q8" value="C"> C) 2, 3, 1, 4.</label>
+                <label class="option-item"><input type="radio" name="q8" value="D"> D) 3, 1, 2, 4.</label>
+                <label class="option-item"><input type="radio" name="q8" value="E"> E) 4, 2, 3, 1.</label>
+            </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card" id="q9">
+            <span class="question-number">Questão 9</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Segurança e Disciplina)</strong><br><br>
+                "Não há receita mágica para garantir a segurança do ambiente escolar... o diálogo entre profissionais, educandos e pais vai construir o caminho da solução dos problemas."<br><br>
+                Com base nisso, a disciplina na escola democrática depende de:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q9" value="A"> A) Dispositivos de vigilância ostensiva e endurecimento de punições.</label>
+                <label class="option-item"><input type="radio" name="q9" value="B"> B) Transferência da responsabilidade exclusivamente para as famílias.</label>
+                <label class="option-item"><input type="radio" name="q9" value="C"> C) Construção coletiva de regras e fortalecimento da gestão democrática.</label>
+                <label class="option-item"><input type="radio" name="q9" value="D"> D) Centralização das decisões disciplinares na figura do diretor.</label>
+                <label class="option-item"><input type="radio" name="q9" value="E"> E) Isolamento da escola em relação à comunidade externa.</label>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10">
+            <span class="question-number">Questão 10</span>
+            <div class="question-text">
+                <strong>(Fundação CEFETMINAS / Adaptada - Tendências Pedagógicas)</strong><br><br>
+                Assinale a alternativa que apresenta corretamente as características centrais da Didática na Tendência <strong>Liberal Tecnicista</strong>:
+            </div>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q10" value="A"> A) O centro é o aluno e sua autoaprendizagem; professor facilitador.</label>
+                <label class="option-item"><input type="radio" name="q10" value="B"> B) O centro é a autoridade do professor; metodologia de exposição verbal.</label>
+                <label class="option-item"><input type="radio" name="q10" value="C"> C) O centro é a discussão de temas sociais; conteúdos são temas geradores.</label>
+                <label class="option-item"><input type="radio" name="q10" value="D"> D) O elemento principal é a organização racional dos meios; foco na eficiência e produtividade.</label>
+                <label class="option-item"><input type="radio" name="q10" value="E"> E) O foco é a autogestão pedagógica; recusa de qualquer forma de poder.</label>
+            </div>
+        </div>
+
+        <button type="button" id="submit-btn">Finalizar e Ver Resultados</button>
+    </form>
+
+    <!-- Section for Results and Resolutions -->
+    <div id="results-section">
+        <div class="score-box">
+            <h2 id="score-text">Resultado: 0/10</h2>
+            <p id="performance-msg"></p>
+        </div>
+
+        <div id="resolutions-container">
+            <h3>Resoluções Comentadas</h3>
+            <!-- Resolutions will be injected here via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: 'A', q2: 'B', q3: 'A', q4: 'A', q5: 'A',
+        q6: 'A', q7: 'A', q8: 'A', q9: 'C', q10: 'D'
+    };
+
+    const resolutions = {
+        q1: "José Carlos Libâneo defende a Pedagogia Crítico-Social. As afirmativas I, II e IV estão corretas. A afirmativa III está errada pois Libâneo defende a autoridade pedagógica e a diretividade do professor, não a autogestão plena.",
+        q2: "A Sistematização Coletiva (Letra B) vê a escola como práxis. Parte-se da síncrese (conhecimento difuso) para a síntese (conhecimento elaborado), retornando à prática transformada.",
+        q3: "As afirmativas I (artefato social), II (currículo oculto) e V (produção cultural) são verdadeiras. A III é falsa porque o real nunca é idêntico ao prescrito, e a IV é falsa pois o currículo é local de conflito, não cultura unitária.",
+        q4: "A sequência 3-1-2-4 define: 3 (Flipped Classroom: prévio fora da sala), 1 (TBL: testes de garantia), 2 (PBL: problema como motor inicial), 4 (Rotação: zonas de trabalho).",
+        q5: "Ambas as asserções são verdadeiras. O PPP é instrumento de luta (I) justamente porque integra intencionalidade política e ação pedagógica indissociáveis (II).",
+        q6: "1-Diagnóstica (início/ajuste); 2-Somativa (final/notas); 3-Formativa (processo/feedback).",
+        q7: "Sequência V-V-V-F. A última é falsa: currículo real e formal nunca são sinônimos perfeitos; o professor recontextualiza a prática.",
+        q8: "Sequência 2-1-3-4. 2 (Físico), 1 (Verbal/Xingamento), 3 (Psicológico/Exclusão), 4 (Virtual/Redes).",
+        q9: "Na perspectiva democrática, a segurança e disciplina dependem da construção coletiva de regras e da gestão participativa, e não apenas de vigilância ou punição.",
+        q10: "No Tecnicismo (Letra D), o foco é a organização racional, eficiência e produtividade. O professor é executor e o planejamento é o centro."
+    };
+
+    document.querySelectorAll('.option-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const radio = this.querySelector('input');
+            const name = radio.name;
+            document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                r.parentElement.classList.remove('selected');
+            });
+            this.classList.add('selected');
+        });
+    });
+
+    document.getElementById('submit-btn').addEventListener('click', function() {
+        let score = 0;
+        const total = Object.keys(correctAnswers).length;
+        const form = document.getElementById('quiz-form');
+        const resContainer = document.getElementById('resolutions-container');
+        resContainer.innerHTML = '<h3>Resoluções Comentadas</h3>';
+
+        for (let q in correctAnswers) {
+            const selected = form.querySelector(`input[name="${q}"]:checked`);
+            const userVal = selected ? selected.value : "Não respondida";
+            const isCorrect = userVal === correctAnswers[q];
+
+            if (isCorrect) score++;
+
+            // Create resolution element
+            const resItem = document.createElement('div');
+            resItem.className = 'res-item';
+            resItem.style.borderLeftColor = isCorrect ? 'var(--success-color)' : 'var(--error-color)';
+            
+            resItem.innerHTML = `
+                <h4>Questão ${q.replace('q', '')} - ${isCorrect ? '✅ Acertou' : '❌ Errou'}</h4>
+                <span class="user-answer-indicator">Sua resposta: ${userVal}</span>
+                <span class="correct-answer-indicator">Gabarito Oficial: ${correctAnswers[q]}</span>
+                <div class="resolution-text"><strong>Justificativa:</strong> ${resolutions[q]}</div>
+            `;
+            resContainer.appendChild(resItem);
+        }
+
+        // Display results
+        document.getElementById('score-text').innerText = `Resultado Final: ${score} de ${total}`;
+        const performance = (score / total) * 100;
+        let msg = "";
+        if (performance === 100) msg = "Excelente! Você domina o conteúdo.";
+        else if (performance >= 70) msg = "Muito bom! Continue revisando os detalhes.";
+        else if (performance >= 50) msg = "Bom progresso, mas precisa reforçar a base teórica.";
+        else msg = "Recomendamos ler as obras de Libâneo e Luckesi com mais atenção.";
+        
+        document.getElementById('performance-msg').innerText = msg;
+        document.getElementById('results-section').style.display = 'block';
+
+        // Scroll to results
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+        this.disabled = true;
+        this.innerText = "Simulado Concluído";
+        this.style.opacity = "0.7";
+        this.style.cursor = "default";
+    });
+</script>
+
+</body>
+</html>

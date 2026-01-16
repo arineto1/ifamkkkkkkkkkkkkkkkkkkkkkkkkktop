@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Didática e Tecnologias - IFAM (CEFETMINAS)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --primary-dark: #1a202c;
+            --highlight-bg: #fef3c7;
+            --border-color: #e2e8f0;
+            --bg-main: #ffffff;
+            --text-muted: #475569;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--primary-dark);
+            line-height: 1.7;
+        }
+
+        .container-content {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .highlight {
+            background-color: var(--highlight-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Tabelas sem scroll horizontal */
+        .table-wrapper {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden; /* Garante que nada saia */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto; /* Ajuste automático ao conteúdo */
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .audio-container {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+        }
+
+        h1 { font-weight: 800; line-height: 1.2; color: #0f172a; }
+        h2 { font-weight: 700; margin-top: 3.5rem; margin-bottom: 1.5rem; border-left: 5px solid #2563eb; padding-left: 1rem; font-size: 1.75rem; }
+        h3 { font-weight: 600; margin-top: 2rem; color: #334155; font-size: 1.3rem; }
+
+        .trap-card {
+            background-color: #fff;
+            border: 2px dashed #cbd5e1;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .btn-footer {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 4rem auto;
+            background-color: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 1.25rem;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            transition: all 0.2s;
+        }
+
+        .btn-footer:hover {
+            background-color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 640px) {
+            th, td { padding: 10px; font-size: 0.85rem; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-content">
+        <!-- Header & Audio -->
+        <header>
+            <div class="mb-2">
+                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Tutor Especialista IFAM</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl mb-8">Uso de Tecnologias nos Processos de Ensino</h1>
+            
+            <div class="audio-container">
+                <div class="flex items-center mb-4">
+                    <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                    <span class="font-bold text-slate-700">Resumo em Áudio para Revisão</span>
+                </div>
+                <!-- CAMPO PARA O NOME DO ARQUIVO: substitua 'audio_resumo.mp3' -->
+                <audio controls class="w-full">
+                    <source src="7tecnologias.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+            </div>
+        </header>
+
+        <!-- 1. Introdução e Definições -->
+        <section>
+            <h2>1. Definições Essenciais e Características</h2>
+            <p>O uso de tecnologias na educação não é a mera "adoção de máquinas", mas um <span class="highlight">processo mediador</span>. Para a CEFETMINAS, tecnologia é um artefato social e político.</p>
+            
+            <h3 class="font-bold">Termos que Você Precisa Dominar:</h3>
+            <ul class="space-y-3 mt-4">
+                <li><strong>TDICs:</strong> Tecnologias Digitais de Informação e Comunicação. O foco é no <span class="highlight">Digital</span> e na interatividade.</li>
+                <li><strong>AVA (Ambiente Virtual de Aprendizagem):</strong> O ecossistema onde a aula ocorre (ex: Moodle).</li>
+                <li><strong>LMS (Learning Management System):</strong> O software que gerencia o AVA, focado em <span class="highlight">rastreamento e administração</span>.</li>
+                <li><strong>Mediação Pedagógica:</strong> A tecnologia não ensina; ela faz a ponte entre o aluno e o objeto do conhecimento.</li>
+            </ul>
+        </section>
+
+        <!-- 2. Quadro de Autores (Revisado e Completo) -->
+        <section>
+            <h2>2. O "Trio de Ferro" Pedagógico</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Autor</th>
+                            <th>Teoria Base</th>
+                            <th>Conceito "Ponto de Acerto"</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">Pierre Lévy</td>
+                            <td>Cibercultura</td>
+                            <td><span class="highlight">Inteligência Coletiva:</span> O saber é distribuído. <br><strong>Virtual:</strong> Não se opõe ao real, mas ao atual.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">José Moran</td>
+                            <td>Metodologias Ativas</td>
+                            <td>O professor como <span class="highlight">Curador e Mentor</span>. <br>Defende o Ensino Híbrido como convergência.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">J. A. Valente</td>
+                            <td>Construcionismo</td>
+                            <td>O computador como ferramenta para pensar. <br>Ciclo: <span class="highlight">Descrição → Execução → Reflexão → Depuração</span>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 3. Base Legal e IFAM -->
+        <section>
+            <h2>3. Marcos Regulatórios e Legais</h2>
+            <h3>BNCC - Competência 5</h3>
+            <p>Define que o aluno deve ser capaz de utilizar as tecnologias de forma <span class="highlight">crítica, ética e reflexiva</span> para se comunicar, processar informações e produzir conhecimentos. O foco é <span class="highlight">Protagonismo e Autoria</span>.</p>
+
+            <h3>Educação Profissional (IFAM)</h3>
+            <ul class="list-disc ml-6 space-y-2 mt-4">
+                <li><strong>DCNs 2021:</strong> A tecnologia deve estar integrada ao <span class="highlight">Trabalho como Princípio Educativo</span>.</li>
+                <li><strong>Pensamento Computacional:</strong> Não é apenas programar, é resolver problemas usando <span class="highlight">Decomposição, Padrões, Abstração e Algoritmos</span>.</li>
+            </ul>
+        </section>
+
+        <!-- 4. Metodologias e Taxonomia -->
+        <section>
+            <h2>4. Metodologias Ativas na Prática</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="border p-4 rounded-lg">
+                    <h4 class="font-bold text-blue-800">Sala de Aula Invertida</h4>
+                    <p class="text-sm">Teoria (Assíncrona) + Prática em Sala (Síncrona). Inverte a lógica tradicional.</p>
+                </div>
+                <div class="border p-4 rounded-lg">
+                    <h4 class="font-bold text-blue-800">Gamificação</h4>
+                    <p class="text-sm">Uso de <span class="highlight">elementos de design de jogos</span> (pontos, feedback) para engajar.</p>
+                </div>
+            </div>
+
+            <h3 class="mt-8">Taxonomia de Bloom Digital</h3>
+            <p>Classifica a aprendizagem do simples ao complexo em ambientes digitais:</p>
+            <ul class="list-none space-y-2 mt-2">
+                <li>🔹 <strong>Baixa Ordem:</strong> Lembrar, Compreender (Pesquisar, Favoritar).</li>
+                <li>🔹 <strong>Alta Ordem:</strong> <span class="highlight">Analisar, Avaliar, Criar</span> (Programar, Publicar, Remixar).</li>
+            </ul>
+        </section>
+
+        <!-- 5. Moodle e EaD -->
+        <section>
+            <h2>5. Ferramentas e Ambiência Virtual</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Recursos do Moodle</th>
+                            <th>Caráter Pedagógico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Síncronas</strong></td>
+                            <td>Chat, BBB, Webconf</td>
+                            <td>Imediatez, Socialização.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Assíncronas</strong></td>
+                            <td><span class="highlight">Fórum, Wiki, Glossário</span></td>
+                            <td>Colaboração, Reflexão, Tempo Próprio.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="bg-gray-50 p-4 border-l-4 border-yellow-500 italic">
+                <strong>Atenção:</strong> Diferencie EaD (modalidade) de ERE (Remoto Emergencial). O ERE é uma transposição de emergência, a EaD exige design instrucional prévio.
+            </p>
+        </section>
+
+        <!-- 6. Inclusão e Andragogia -->
+        <section>
+            <h2>6. Diversidade e Público Alvo</h2>
+            <ul class="space-y-4">
+                <li><strong>TA (Tecnologia Assistiva):</strong> Recursos para autonomia de pessoas com deficiência.</li>
+                <li><strong>DUA (Desenho Universal):</strong> <span class="highlight">Planejar a aula para todos</span>, oferecendo múltiplos meios de representação, ação e engajamento.</li>
+                <li><strong>Andragogia:</strong> O ensino superior foca no adulto, que busca <span class="highlight">utilidade prática</span> imediata para o que aprende.</li>
+            </ul>
+        </section>
+
+        <!-- 7. Tendências e Peguinhas da CEFETMINAS -->
+        <section>
+            <h2>7. O Filtro da CEFETMINAS (EBTT)</h2>
+            <div class="trap-card">
+                <p class="font-bold mb-2">⚠️ Peguinha Recorrente: O Determinismo Tecnológico</p>
+                <p class="text-sm">A banca costuma colocar alternativas onde a tecnologia "resolve sozinha" a evasão ou a falta de motivação. <span class="highlight">Elimine-as.</span> A resposta correta sempre aponta que a tecnologia depende do **planejamento docente**.</p>
+            </div>
+            <div class="trap-card">
+                <p class="font-bold mb-2">⚠️ Peguinha Recorrente: Papel do Aluno</p>
+                <p class="text-sm">Cuidado com termos como "espectador" ou "receptor". No uso de tecnologias, o aluno é sempre <span class="highlight">sujeito ativo, produtor e colaborador</span>.</p>
+            </div>
+        </section>
+
+        <!-- Botão Final -->
+        <div class="pb-10">
+            <a href="7questoes.html" class="btn-footer">
+                ACESSAR BANCO DE QUESTÕES →
+            </a>
+            <p class="text-center text-xs text-slate-400">Este conteúdo é exclusivo para preparação do Concurso IFAM - Cargo: Professor de Informática.</p>
+        </div>
+    </div>
+
+</body>
+</html>

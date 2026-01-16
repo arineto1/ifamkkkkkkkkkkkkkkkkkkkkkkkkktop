@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass IFAM: Didática e Planejamento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #111827;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow {
+            background-color: #fef08a;
+            font-weight: 500;
+            padding: 0 2px;
+        }
+
+        .highlight-green {
+            background-color: #dcfce7;
+            font-weight: 500;
+            padding: 0 2px;
+        }
+
+        .section-box {
+            border: 1px solid #e5e7eb;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            margin-bottom: 2.5rem;
+            background-color: #ffffff;
+        }
+
+        h1, h2, h3 {
+            color: #111827;
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            table-layout: fixed; /* Previne scroll horizontal */
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            text-align: left;
+            word-wrap: break-word; /* Força quebra de texto nas células */
+        }
+
+        th {
+            background-color: #f9fafb;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .audio-player-fixed {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1rem 0;
+        }
+
+        .banca-alert {
+            border-left: 4px solid #ef4444;
+            background-color: #fef2f2;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Audio Player Top -->
+    <div class="audio-player-fixed shadow-sm">
+        <div class="max-w-4xl mx-auto px-4">
+            <p class="text-xs font-bold text-gray-500 mb-1 uppercase tracking-widest">Player de Revisão MP3</p>
+            <audio controls class="w-full h-10">
+                <source src="13projeto.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </audio>
+        </div>
+    </div>
+
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        
+        <header class="mb-12 text-center md:text-left">
+            <h1 class="text-4xl font-extrabold tracking-tight mb-4">Didática, Currículo e Planejamento</h1>
+            <p class="text-xl text-gray-600">Guia Definitivo para o Concurso Professor IFAM - Banca <span class="font-semibold">Fundação CEFETMINAS</span></p>
+        </header>
+
+        <!-- Seção 1: Projeto Político-Pedagógico -->
+        <section class="section-box shadow-sm">
+            <h2 class="text-2xl mb-6 flex items-center">
+                <span class="mr-2">📁</span> 1. Projeto Político-Pedagógico (PPP)
+            </h2>
+            <p class="mb-4">Para Ilma Passos Alencastro Veiga, o PPP não é um plano de gaveta. Ele é <span class="highlight-yellow">POLÍTICO</span> porque forma cidadãos para a sociedade atual e <span class="highlight-yellow">PEDAGÓGICO</span> porque organiza as ações de ensino-aprendizagem.</p>
+            
+            <h3 class="font-bold text-lg mb-3">Dimensões Essenciais:</h3>
+            <ul class="list-disc pl-6 space-y-2 mb-6">
+                <li><span class="font-bold">Participação:</span> A gestão deve ser democrática. Quem executa (professores) deve participar do planejamento.</li>
+                <li><span class="font-bold">Autonomia:</span> A escola tem identidade própria (Pedagógica, Administrativa e Financeira).</li>
+                <li><span class="font-bold">Qualidade:</span> Não é a qualidade "total" do mercado, mas a <span class="highlight-green">Qualidade Social</span> (para todos).</li>
+            </ul>
+
+            <div class="banca-alert">
+                <strong>PEGADINHA CEFETMINAS:</strong> A banca pode dizer que o PPP é responsabilidade exclusiva da direção ou de especialistas. <strong>FALSO.</strong> Ele é <span class="highlight-yellow">coletivo e participativo</span>.
+            </div>
+        </section>
+
+        <!-- Seção 2: Currículo e Teorias -->
+        <section class="section-box shadow-sm">
+            <h2 class="text-2xl mb-6 flex items-center">
+                <span class="mr-2">📚</span> 2. Teorias do Currículo
+            </h2>
+            <p class="mb-4">O currículo é um território de disputa de poder. A CEFETMINAS cobra a classificação clássica:</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Teoria</th>
+                        <th>Palavras-Chave (Gabarito)</th>
+                        <th>Foco Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tradicional</strong></td>
+                        <td>Eficiência, Ensino, Objetivos, <span class="highlight-yellow">Neutralidade</span>.</td>
+                        <td>Transmissão de conteúdo puro.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Crítica</strong></td>
+                        <td>Ideologia, Poder, <span class="highlight-green">Emancipação</span>, Luta de Classes.</td>
+                        <td>Questiona o sistema e a reprodução social.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pós-Crítica</strong></td>
+                        <td>Identidade, Diferença, <span class="highlight-yellow">Multiculturalismo</span>, Gênero.</td>
+                        <td>Foco na subjetividade e diversidade.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="font-bold text-lg mt-6 mb-3">A Educação Profissional e Tecnológica (EPT)</h3>
+            <p class="mb-4">O IFAM busca o currículo <span class="highlight-yellow">INTEGRADO</span>. Os pilares (Saviani/Ramos) são:</p>
+            <ul class="list-none space-y-2">
+                <li>✅ <strong>Omnilateralidade:</strong> Desenvolvimento de todas as dimensões humanas.</li>
+                <li>✅ <strong>Politecnia:</strong> Domínio dos fundamentos científicos das técnicas.</li>
+                <li>✅ <strong>Trabalho como Princípio Educativo:</strong> O trabalho não é apenas prática, é base de conhecimento.</li>
+            </ul>
+        </section>
+
+        <!-- Seção 3: Planejamento de Ensino -->
+        <section class="section-box shadow-sm">
+            <h2 class="text-2xl mb-6 flex items-center">
+                <span class="mr-2">🎯</span> 3. Planejamento de Ensino e Seus Elementos
+            </h2>
+            <p class="mb-4">Segundo Libâneo, o planejamento é um processo de <span class="highlight-green">racionalização, organização e coordenação</span> da ação docente.</p>
+            
+            <h3 class="font-bold text-lg mb-3 italic">Componentes do Plano de Ensino:</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="p-4 border rounded">
+                    <p><strong>1. Objetivos:</strong> Onde se quer chegar (Geral e Específico).</p>
+                </div>
+                <div class="p-4 border rounded">
+                    <p><strong>2. Conteúdos:</strong> Conhecimentos, habilidades e atitudes.</p>
+                </div>
+                <div class="p-4 border rounded">
+                    <p><strong>3. Métodos:</strong> Caminho para atingir os objetivos (como ensinar).</p>
+                </div>
+                <div class="p-4 border rounded">
+                    <p><strong>4. Avaliação:</strong> Verificação do progresso (Diagnóstica, Formativa, Somativa).</p>
+                </div>
+            </div>
+
+            <h3 class="font-bold text-lg mb-3">Níveis de Planejamento (Atenção):</h3>
+            <p class="mb-2">A CEFETMINAS costuma pedir para ordenar:</p>
+            <p class="text-sm">1. <strong>Plano da Escola (PPP)</strong> → 2. <strong>Plano de Ensino (Disciplina)</strong> → 3. <strong>Plano de Aula (Diário)</strong>.</p>
+        </section>
+
+        <!-- Seção 4: Avaliação e Erro -->
+        <section class="section-box shadow-sm">
+            <h2 class="text-2xl mb-6 flex items-center">
+                <span class="mr-2">📝</span> 4. Avaliação da Aprendizagem
+            </h2>
+            <p class="mb-4">A avaliação no IF deve ser <span class="highlight-yellow">FORMATIVA</span> e <span class="highlight-yellow">PROCESSUAL</span>.</p>
+            <ul class="space-y-3">
+                <li>📌 <strong>Avaliação Diagnóstica:</strong> Ocorre no início. Identifica o que o aluno já sabe.</li>
+                <li>📌 <strong>Avaliação Formativa:</strong> Ocorre DURANTE o processo. Serve para reorientar o professor e o aluno. O erro é visto como <span class="highlight-green">trampolim para o aprendizado</span>.</li>
+                <li>📌 <strong>Avaliação Somativa:</strong> Ocorre ao final. Classifica e atribui nota. (Menos valorizada na teoria crítica).</li>
+            </ul>
+        </section>
+
+        <!-- Seção 5: Resumo para Memorização (Checklist) -->
+        <section class="section-box shadow-sm bg-gray-50 border-gray-200">
+            <h2 class="text-2xl mb-6 font-bold text-red-700">🚀 Checklist para a Prova</h2>
+            <div class="space-y-3">
+                <div class="flex items-center">
+                    <input type="checkbox" checked class="mr-3 h-5 w-5 text-blue-600">
+                    <span>O PPP é <strong>coletivo, flexível e político</strong>.</span>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" checked class="mr-3 h-5 w-5 text-blue-600">
+                    <span>Currículo de EPT = <strong>Trabalho, Ciência, Cultura e Tecnologia</strong>.</span>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" checked class="mr-3 h-5 w-5 text-blue-600">
+                    <span>O currículo oculto são as <strong>influências implícitas</strong> não previstas.</span>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" checked class="mr-3 h-5 w-5 text-blue-600">
+                    <span>Planejamento de aula é o <strong>detalhamento</strong> do plano de ensino.</span>
+                </div>
+                <div class="flex items-center">
+                    <input type="checkbox" checked class="mr-3 h-5 w-5 text-blue-600">
+                    <span>Gestão Democrática = Artigo 206 da CF/88 e Artigo 3 da LDB.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Final -->
+        <div class="text-center mt-16 mb-24">
+            <p class="text-gray-500 mb-6 font-medium">Pronto para testar seus conhecimentos?</p>
+            <a href="13questoes.html" class="inline-block bg-blue-700 text-white px-10 py-5 rounded-full font-bold text-xl hover:bg-blue-800 transform hover:scale-105 transition-all shadow-xl">
+                🔥 Resolver Questões Fundação CEFETMINAS
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="bg-gray-50 border-t py-12">
+        <div class="max-w-4xl mx-auto px-4 text-center text-gray-400 text-sm">
+            <p>© 2025 - Preparatório Especialista Professor de Informática IFAM</p>
+            <p class="mt-2 italic">"A educação não transforma o mundo. Educação muda as pessoas. Pessoas transformam o mundo." - Paulo Freire</p>
+        </div>
+    </footer>
+
+</body>
+</html>

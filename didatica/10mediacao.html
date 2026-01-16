@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Doc: Didática e Mediação - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+
+        .highlight-yellow { background-color: #fef08a; font-weight: 600; padding: 0 2px; }
+        .highlight-blue { background-color: #e0f2fe; font-weight: 600; padding: 0 2px; }
+        
+        /* Prevenção de scroll horizontal em tabelas */
+        .table-wrapper {
+            width: 100%;
+            margin: 1.5rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto; /* Permite ajuste automático das colunas */
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #334155;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        .sticky-audio {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            padding: 1rem 0;
+            border-bottom: 1px solid #e5e7eb;
+            z-index: 100;
+        }
+
+        .section-title {
+            border-left: 5px solid #1a1a1a;
+            padding-left: 1rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-box {
+            background-color: #f9fafb;
+            border: 1px solid #d1d5db;
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            th, td { padding: 8px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body class="max-w-4xl mx-auto px-6 pb-20">
+
+    <!-- Player de Áudio -->
+    <div class="sticky-audio">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+                <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Resumo em Áudio</span>
+                <p class="text-sm font-medium">Didática e Mediação Pedagógica (EBTT)</p>
+            </div>
+            <audio controls class="h-10 w-full sm:w-64">
+                <source src="10mediacao.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </audio>
+        </div>
+    </div>
+
+    <header class="mt-12 mb-16 text-center">
+        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 mb-4">Didática e Mediação Pedagógica</h1>
+        <p class="text-xl text-gray-600">Guia Definitivo para Professor de Informática - IFAM (CEFETMINAS)</p>
+    </header>
+
+    <!-- 1. DEFINIÇÃO E CARACTERÍSTICAS -->
+    <section>
+        <h2 class="section-title text-2xl font-bold">1. Definição e Características Essenciais</h2>
+        <p class="mb-4">
+            A <strong>Didática</strong> é o ramo da pedagogia que estuda o processo de ensino em sua integridade. Para a CEFETMINAS, ela não é apenas "técnica", mas uma <span class="highlight-yellow">ação política e social intencional</span>.
+        </p>
+        <p class="mb-4">
+            A <strong>Mediação Pedagógica</strong> é a atitude do professor que se coloca como um <span class="highlight-blue">facilitador, incentivador ou mediador</span> entre o estudante e o conhecimento. O foco sai do "ensinar" (transmissão) para o "aprender" (construção).
+        </p>
+        
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Característica</th>
+                        <th>Ensino Presencial</th>
+                        <th>Ensino a Distância (EaD)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Sincronicidade</strong></td>
+                        <td>Majoritariamente síncrono (tempo real).</td>
+                        <td>Predominantemente assíncrono (tempo flexível).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mediação</strong></td>
+                        <td>Fisicamente presente, centrada na fala e gesto.</td>
+                        <td><span class="highlight-yellow">Mediada por tecnologias</span> (TICs) e design instrucional.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Autonomia</strong></td>
+                        <td>Guiada pelo ritmo da turma e do professor.</td>
+                        <td>Exige <span class="highlight-blue">autogerenciamento</span> elevado do aluno.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interação</strong></td>
+                        <td>Direta e imediata.</td>
+                        <td>Multidirecional (Fóruns, Chats, AVAs).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- 2. DEFINIÇÕES BÁSICAS PARA A PROVA -->
+    <section>
+        <h2 class="section-title text-2xl font-bold">2. Definições Básicas (O que o examinador quer ler)</h2>
+        <ul class="space-y-4">
+            <li>
+                <strong>ZDP (Vygotsky):</strong> Conceito chave. O professor atua na <span class="highlight-yellow">Zona de Desenvolvimento Proximal</span>, oferecendo ajuda para que o aluno alcance o que ainda não consegue fazer sozinho.
+            </li>
+            <li>
+                <strong>Intencionalidade:</strong> Toda ação didática deve ter um objetivo claro. Não existe "aula por aula". No IFAM, isso se liga à <span class="highlight-blue">Formação Humana Integral</span>.
+            </li>
+            <li>
+                <strong>Dialogicidade (Paulo Freire):</strong> A mediação deve ser um diálogo, não um monólogo (educação bancária). O saber do aluno de informática (técnico/prático) deve ser valorizado.
+            </li>
+            <li>
+                <strong>Transposição Didática:</strong> O processo de adaptar o conhecimento científico da computação (complexo) para um nível compreensível ao aluno do ensino médio técnico.
+            </li>
+        </ul>
+    </section>
+
+    <!-- 3. FOCO NA CEFETMINAS E EBTT -->
+    <section>
+        <h2 class="section-title text-2xl font-bold">3. Análise de Tendências e 'Peguinhas' da Banca</h2>
+        <div class="alert-box">
+            <h3 class="font-bold text-lg mb-2 text-red-700">⚠️ Alerta de "Peguinha":</h3>
+            <p>A CEFETMINAS costuma colocar questões onde a <strong>tecnologia</strong> aparece como a "solução mágica" para o ensino. <strong>Lembre-se:</strong> Para a didática crítica, a tecnologia é apenas um <span class="highlight-yellow">meio/ferramenta</span>. O que garante a aprendizagem é a <span class="highlight-blue">qualidade da mediação pedagógica</span> e o planejamento.</p>
+        </div>
+
+        <h3 class="text-xl font-bold mt-6 mb-3">Tendências EBTT (Ensino Básico, Técnico e Tecnológico):</h3>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tópico de Cobrança</th>
+                        <th>O que a Banca espera</th>
+                        <th>Cuidado (Não caia nessa)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Relação Professor-Aluno</strong></td>
+                        <td>Horizontalidade e respeito aos saberes prévios.</td>
+                        <td>Professor como autoridade máxima inquestionável.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Papel do Erro</strong></td>
+                        <td>Trampolim para o aprendizado (erro construtivo).</td>
+                        <td>Erro como fracasso ou motivo de punição/nota baixa.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Avaliação</strong></td>
+                        <td>Processual, contínua e formativa.</td>
+                        <td>Somativa, apenas no final do semestre, classificatória.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Interdisciplinaridade</strong></td>
+                        <td>Conectar Informática com Sociedade e Ética.</td>
+                        <td>Ensino técnico isolado de questões sociais.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 class="text-xl font-bold mt-8 mb-4">Pontos de Acerto Imediato:</h3>
+        <ul class="list-disc ml-6 space-y-2">
+            <li><strong>Mediação na EaD:</strong> O tutor/professor não é um "corretor de provas", mas um <span class="highlight-yellow">animador da inteligência coletiva</span>.</li>
+            <li><strong>Educação Profissional:</strong> A didática no IFAM deve buscar a <strong>Omnilateralidade</strong> (desenvolvimento total do ser humano, não só para apertar parafusos ou digitar código).</li>
+            <li><strong>Metodologias Ativas:</strong> Sala de aula invertida e PBL (Aprendizagem Baseada em Problemas) são as queridinhas da banca para cargos de Informática.</li>
+        </ul>
+    </section>
+
+    <!-- BOTÃO FINAL -->
+    <div class="mt-16 text-center">
+        <a href="10questoes.html" class="inline-block bg-black text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition-all transform hover:scale-105 shadow-xl">
+            Praticar com Questões →
+        </a>
+        <p class="mt-4 text-gray-500 text-sm italic">Clique acima para validar seu conhecimento no simulado.</p>
+    </div>
+
+    <footer class="mt-20 pt-8 border-top border-gray-100 text-center text-gray-400 text-xs uppercase tracking-widest">
+        Conteúdo revisado para o edital IFAM - Professor EBTT
+    </footer>
+
+</body>
+</html>

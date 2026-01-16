@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Didática e Profissionalidade Docente - CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --container-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-secondary: #636e72;
+            --accent-color: #0984e3;
+            --correct-color: #27ae60;
+            --incorrect-color: #d63031;
+            --border-color: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .quiz-container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .meta-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .question-card {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f1f7ff;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            background-color: #e3f2fd;
+            border-color: var(--accent-color);
+        }
+
+        /* Classes para o resultado */
+        .option-item.correct {
+            background-color: #d4edda;
+            border-color: var(--correct-color);
+            color: #155724;
+        }
+
+        .option-item.wrong {
+            background-color: #f8d7da;
+            border-color: var(--incorrect-color);
+            color: #721c24;
+        }
+
+        .resolution-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fdfdfe;
+            border-left: 4px solid var(--accent-color);
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        #submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #0773c5;
+        }
+
+        #result-summary {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #e3f2fd;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        #result-summary h2 {
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        .score-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 20px;
+            }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <header>
+        <h1>Simulado de Didática: Estilo Fundação CEFETMINAS</h1>
+        <p class="meta-info">Temas: Práticas pedagógicas, profissionalidade docente e processos de ensino-aprendizagem.</p>
+    </header>
+
+    <div id="result-summary">
+        <h2>Resultado Final</h2>
+        <p class="score-text">Você acertou <span id="score-val">0</span> de 10 questões.</p>
+        <p>Confira as resoluções detalhadas abaixo de cada questão.</p>
+    </div>
+
+    <form id="quiz-form">
+        <div id="questions-wrapper">
+            <!-- As questões serão inseridas aqui via JS -->
+        </div>
+
+        <button type="button" id="submit-btn" onclick="calculateScore()">Finalizar Quiz e Ver Resoluções</button>
+    </form>
+</div>
+
+<script>
+    const questionsData = [
+        {
+            id: 1,
+            subject: "Didática e Processo de Ensino (Libâneo)",
+            text: "José Carlos Libâneo, ao discutir a natureza do trabalho docente, conceitua o processo de ensino como uma atividade conjunta e bilateral. Nessa perspectiva, o ensino não se resume à transmissão de informações, mas estrutura-se como uma mediação. Considerando o papel do professor e do aluno nessa relação dialética, é CORRETO afirmar que a mediação didática consiste:",
+            options: [
+                "Na transmissão hierarquizada dos conteúdos científicos, onde o professor detém o monopólio do saber e o aluno desempenha o papel de receptor passivo, garantindo a fidelidade na reprodução dos conceitos em avaliações somativas.",
+                "No acompanhamento das inclinações naturais e espontâneas dos alunos, transformando a sala de aula em um espaço de vivências lúdicas onde os conteúdos sistemáticos são secundarizados em favor da socialização e do bem-estar emocional.",
+                "Na provisão intencional das condições e meios para que os alunos, sob a direção do professor, mobilizem sua própria atividade mental para assimilar ativa e conscientemente os conhecimentos, desenvolvendo suas capacidades cognoscitivas.",
+                "Na substituição progressiva do saber sistematizado pelos saberes populares trazidos pelos alunos, como forma de resistência política à hegemonia cultural das elites e valorização exclusiva da cultura local e comunitária.",
+                "Na utilização de tecnologias educacionais autodidáticas que permitam ao estudante gerir seu próprio percurso de aprendizagem, reduzindo a intervenção docente a uma função de gestão de recursos e disciplina, conforme a pedagogia das competências."
+            ],
+            correct: 2,
+            resolution: "Para Libâneo, o ensino é uma via de mão dupla. O professor não transfere conhecimento, ele medeia. Mas a mediação exige a atividade mental do aluno. O aluno precisa 'trabalhar' o conteúdo mentalmente para assimilá-lo. O objetivo final é o desenvolvimento das capacidades cognoscitivas através do conteúdo."
+        },
+        {
+            id: 2,
+            subject: "Pedagogia Histórico-Crítica (Saviani)",
+            text: "Dermeval Saviani utiliza a metáfora da 'curvatura da vara' para ilustrar a relação dialética entre a Pedagogia Tradicional e a Escola Nova, propondo a Pedagogia Histórico-Crítica como superação. Considerando a função social da escola defendida por essa corrente pedagógica, assinale a alternativa que expressa CORRETAMENTE o papel do conteúdo escolar:",
+            options: [
+                "A escola deve priorizar o 'aprender a aprender', focando nos métodos de pesquisa e na flexibilidade cognitiva, uma vez que os conteúdos fixos tornam-se obsoletos rapidamente na sociedade da informação.",
+                "A função política da educação escolar cumpre-se na medida em que ela realiza sua especificidade: a transmissão e a apropriação do saber sistematizado (os clássicos), instrumentalizando as classes populares para a compreensão e transformação da prática social.",
+                "A escola, enquanto aparelho ideológico do Estado, está condenada à reprodução das relações de produção capitalistas, devendo o educador crítico abandonar a ilusão de que o ensino de conteúdos possa gerar consciência de classe.",
+                "O currículo escolar deve ser organizado a partir dos interesses imediatos e cotidianos dos alunos, rejeitando os conhecimentos universais e abstratos que historicamente serviram como ferramentas de exclusão e dominação cultural.",
+                "A democratização do ensino deve focar na garantia universal do acesso à escola e na socialização, sendo a cobrança rigorosa de conteúdos uma prática excludente que penaliza os estudantes provenientes das classes trabalhadoras."
+            ],
+            correct: 1,
+            resolution: "Saviani defende que a especificidade da escola é a transmissão do saber sistematizado (ciência, filosofia, arte). Para a PHC, dominar o conteúdo é uma ferramenta política. A classe dominada precisa do conhecimento 'clássico' para entender como a sociedade funciona e poder transformá-la."
+        },
+        {
+            id: 3,
+            subject: "Paulo Freire e a Crítica à Educação Bancária",
+            text: "Na obra Pedagogia do Oprimido, Paulo Freire sistematiza sua crítica à 'concepção bancária' da educação, a qual serve como instrumento de opressão. Analise as assertivas abaixo que descrevem características dessa concepção criticada pelo autor:\n\nI. O educador é o sujeito do processo, aquele que narra e deposita o conteúdo; os educandos são meros objetos, 'vasilhas' a serem enchidas.\nII. A realidade é apresentada pelo educador como algo estático, compartimentado e alheio à experiência existencial dos educandos, devendo ser memorizada.\nIII. A sonoridade da palavra é valorizada em detrimento de sua força transformadora, privilegiando-se a repetição mecânica que aliena a consciência.\nIV. A relação pedagógica é mediada pelo diálogo problematizador, no qual educador e educando, co-intencionados à realidade, aprendem mutuamente.\n\nEstão CORRETAS as características da educação bancária descritas em:",
+            options: [
+                "I e II, apenas.",
+                "I, II e III, apenas.",
+                "III e IV, apenas.",
+                "I, III e IV, apenas.",
+                "I, II, III e IV."
+            ],
+            correct: 1,
+            resolution: "Os itens I, II e III definem a educação bancária (verticalidade, memorização e repetição vazia). O item IV descreve a Educação Problematizadora (a proposta de Freire), e não a Bancária (a crítica)."
+        },
+        {
+            id: 4,
+            subject: "Saberes Docentes (Tardif)",
+            text: "Maurice Tardif analisa a docência como uma profissão baseada na mobilização de saberes plurais e heterogêneos. Sobre a tipologia dos saberes proposta pelo autor, especificamente em relação aos 'Saberes da Experiência', é INCORRETO afirmar que:",
+            options: [
+                "São saberes produzidos pelos próprios professores no exercício cotidiano de suas funções, surgindo do confronto com as condições reais de trabalho e com as situações complexas e variadas da sala de aula.",
+                "Possuem uma natureza prática e subjetiva, mas adquirem certa objetividade ao serem partilhados com os pares, constituindo uma 'cultura docente' validada pela comunidade profissional.",
+                "São saberes sistematizados e codificados pelas universidades e instituições de ensino superior, transmitidos nos cursos de licenciatura sob a forma de disciplinas como Psicologia da Educação e Didática.",
+                "Constituem, frequentemente, o alicerce da competência profissional na visão dos próprios docentes, servindo de filtro para a interpretação e adaptação dos demais saberes (curriculares e disciplinares) à realidade discente.",
+                "Estão intimamente ligados ao 'habitus' docente e à personalidade do professor, sendo muitas vezes difíceis de serem formalizados, verbalizados ou transformados em discursos teóricos sistematizados."
+            ],
+            correct: 2,
+            resolution: "A alternativa C descreve os Saberes da Formação Profissional (aqueles vindos das Ciências da Educação/Universidade). Saberes da experiência são aqueles que nascem da prática cotidiana."
+        },
+        {
+            id: 5,
+            subject: "Práticas Pedagógicas e Didática (Maria Amélia Franco)",
+            text: "Segundo Maria Amélia Franco (2016), a distinção entre 'prática docente' e 'prática pedagógica' é fundamental para a compreensão da complexidade do ato educativo. Analise as asserções a seguir e a relação proposta entre elas:\n\nI. A prática pedagógica transcende a dimensão técnica da sala de aula e configura-se como uma práxis social que impacta a formação humana e coletiva.\nPORQUE\nII. Ela deve ser organizada intencionalmente para atender a determinadas expectativas educacionais de um grupo social, articulando a ação docente com finalidades políticas e reflexivas que visam à transformação da realidade.\n\nA respeito dessas asserções, assinale a opção correta:",
+            options: [
+                "As duas asserções são proposições verdadeiras, e a segunda é uma justificativa correta da primeira.",
+                "As duas asserções são proposições verdadeiras, mas a segunda não é uma justificativa correta da primeira.",
+                "A primeira asserção é uma proposição verdadeira, e a segunda é uma proposição falsa.",
+                "A primeira asserção é uma proposição falsa, e a segunda é uma proposição verdadeira.",
+                "As duas asserções são proposições falsas."
+            ],
+            correct: 0,
+            resolution: "As duas asserções são verdadeiras e a II explica a I. É justamente porque ela é organizada intencionalmente para fins sociais que ela se configura como uma práxis social e transcende a técnica de sala de aula."
+        },
+        {
+            id: 6,
+            subject: "Avaliação da Aprendizagem (Jussara Hoffmann)",
+            text: "Jussara Hoffmann propõe a 'Avaliação Mediadora' como um paradigma contraposto à avaliação classificatória tradicional. Nessa perspectiva, o tratamento dado ao 'erro' do aluno sofre uma mudança radical de concepção. Segundo a autora, na avaliação mediadora, o erro deve ser compreendido como:",
+            options: [
+                "Um indicativo de desatenção ou falta de estudo prévio, devendo ser sancionado com a perda de pontos para estimular a responsabilidade e a disciplina discente.",
+                "Uma falha na transmissão do conteúdo pelo professor, exigindo a repetição idêntica da explicação até que o aluno demonstre a resposta correta esperada.",
+                "Um elemento fecundo e provisório, que revela a hipótese de construção do conhecimento elaborada pelo aluno, servindo de guia para o planejamento da intervenção pedagógica do professor.",
+                "Um dado irrelevante para o processo educativo, uma vez que a avaliação mediadora foca exclusivamente na participação social e na interação, desconsiderando a apropriação conceitual.",
+                "Uma evidência de incapacidade cognitiva ou imaturidade biológica para a aprendizagem daquele conteúdo, justificando o encaminhamento do aluno para serviços de apoio especializados."
+            ],
+            correct: 2,
+            resolution: "Na avaliação mediadora, o erro é visto como uma hipótese de construção do conhecimento. Ele mostra como o aluno está pensando. É 'fecundo' (gera frutos) e 'provisório' (pode ser superado)."
+        },
+        {
+            id: 7,
+            subject: "Projeto Político-Pedagógico (Vasconcellos)",
+            text: "Celso Vasconcellos define o Projeto Político-Pedagógico (PPP) como um instrumento teórico-metodológico de intervenção e mudança da realidade escolar. Entre as finalidades essenciais da construção participativa do PPP, NÃO se inclui:",
+            options: [
+                "A construção da identidade da instituição escolar, definindo coletivamente seus valores, sua missão, sua visão de futuro e os princípios que orientam a ação educativa.",
+                "O resgate da autoestima do grupo de professores e funcionários, fazendo-os acreditar na sua capacidade de intervir e transformar a realidade educativa apesar das dificuldades estruturais.",
+                "A superação da fragmentação do trabalho pedagógico, buscando uma unidade de ação e de intencionalidade em torno de objetivos comuns assumidos por todos os segmentos da escola.",
+                "A padronização burocrática das práticas docentes e dos rituais escolares para facilitar o controle administrativo e a fiscalização externa por parte das secretarias de educação.",
+                "A consolidação da autonomia relativa da escola, permitindo que a comunidade escolar gerencie seus conflitos e tome decisões políticas e pedagógicas alinhadas com as necessidades locais."
+            ],
+            correct: 3,
+            resolution: "O PPP existe para dar autonomia e identidade à escola. A alternativa D fala em 'padronização burocrática' e 'controle externo', que são exatamente o oposto da gestão democrática defendida por Vasconcellos."
+        },
+        {
+            id: 8,
+            subject: "Identidade Profissional e Saberes (Pimenta)",
+            text: "Selma Garrido Pimenta discute a construção da identidade do professor a partir da mobilização e ressignificação de diferentes saberes. Para a autora, a transformação dos saberes de conteúdo (científicos/disciplinares) em saberes ensináveis (conteúdo escolar) ocorre fundamentalmente através da mediação:",
+            options: [
+                "Dos saberes pedagógicos e didáticos, que fornecem o instrumental teórico, prático e metodológico necessário para a transposição do conhecimento científico em conhecimento escolar acessível e significativo.",
+                "Dos saberes experenciais de forma isolada, visto que a teoria pedagógica acadêmica é considerada abstrata e pouco útil para resolver os dilemas imediatos do 'chão de escola'.",
+                "Da assimilação passiva das diretrizes curriculares oficiais (BNCC), que determinam prescritivamente o 'o que' e o 'como' ensinar, dispensando a reflexão do professor.",
+                "Da vocação e do dom natural do professor, entendendo-se que a capacidade de ensinar é uma característica inata da personalidade que independe de formação teórica sistemática.",
+                "Da reprodução fiel dos manuais e livros didáticos, que já apresentam a metodologia de ensino validada pelos especialistas da área, garantindo a eficácia do ensino."
+            ],
+            correct: 0,
+            resolution: "Selma Pimenta defende que os saberes pedagógicos e didáticos fornecem o instrumental necessário para a transposição do conhecimento científico em conhecimento escolar."
+        },
+        {
+            id: 9,
+            subject: "Currículo e Educação Profissional (Maria Rita Neto Sales Oliveira)",
+            text: "No contexto da Educação Profissional e Tecnológica, autoras como Maria Rita Neto Sales Oliveira defendem a 'Pedagogia da Práxis' e a integração curricular. Essa concepção crítica opõe-se ao modelo tecnicista e à pedagogia das competências de mercado porque:",
+            options: [
+                "Defende a separação rigorosa entre o ensino propedêutico (formação teórica para a elite) e o ensino técnico (formação prática para os trabalhadores), visando a eficiência produtiva.",
+                "Busca integrar trabalho, ciência, tecnologia e cultura, compreendendo o trabalho como princípio educativo (ontológico) e visando uma formação omnilateral (integral) do sujeito.",
+                "Propõe a eliminação das disciplinas de formação geral (História, Filosofia, Sociologia) dos cursos técnicos, para focar exclusivamente nas habilidades operacionais exigidas pelas empresas locais.",
+                "Considera que a formação técnica deve ser aligeirada e modular, focada na empregabilidade imediata e na adaptação flexível e acrítica do trabalhador às demandas voláteis do capital.",
+                "Prioriza o treinamento de comportamentos observáveis e mensuráveis, utilizando a metodologia da instrução programada para garantir a padronização do desempenho técnico dos futuros operários."
+            ],
+            correct: 1,
+            resolution: "A Pedagogia da Práxis busca integrar trabalho, ciência e cultura, visando a formação omnilateral (integral) do sujeito, tratando o trabalho como princípio ontológico."
+        },
+        {
+            id: 10,
+            subject: "Legislação e História da Educação Profissional",
+            text: "A trajetória histórica da Rede Federal de Educação Profissional, Científica e Tecnológica (RFEPCT) é marcada pela tensão entre projetos educacionais distintos. O Decreto nº 2.208/1997 e o Decreto nº 5.154/2004 representam, respectivamente, momentos opostos dessa política educacional. Assinale a alternativa que descreve corretamente a característica central de cada decreto:",
+            options: [
+                "O Decreto 2.208/97 instituiu a obrigatoriedade do currículo integrado em todas as escolas técnicas; o Decreto 5.154/04 proibiu essa integração, forçando a separação entre ensino médio e técnico.",
+                "O Decreto 2.208/97 criou os Institutos Federais com autonomia universitária; o Decreto 5.154/04 transformou essas instituições em escolas assistencialistas nos moldes das antigas Escolas de Aprendizes Artífices.",
+                "O Decreto 2.208/97 formalizou a separação estrutural entre Ensino Médio e Educação Profissional (fragmentação/concomitância); o Decreto 5.154/04 permitiu a articulação, restaurando a possibilidade do Ensino Médio Integrado.",
+                "O Decreto 2.208/97 promoveu a federalização de todas as escolas técnicas estaduais; o Decreto 5.154/04 iniciou o processo de privatização do ensino técnico federal através de parcerias com o Sistema S.",
+                "O Decreto 2.208/97 focou na formação humanística sem profissionalização específica; o Decreto 5.154/04 eliminou o ensino médio propedêutico, focando exclusivamente no treinamento manual sem bases científicas."
+            ],
+            correct: 2,
+            resolution: "O Decreto 2.208/97 separou o ensino médio do técnico (fragmentação). O Decreto 5.154/04 permitiu a retomada do Ensino Médio Integrado, base da concepção dos Institutos Federais."
+        }
+    ];
+
+    function renderQuestions() {
+        const wrapper = document.getElementById('questions-wrapper');
+        questionsData.forEach((q, qIndex) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${qIndex}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, oIndex) => {
+                optionsHtml += `
+                    <label class="option-item" id="label-${qIndex}-${oIndex}">
+                        <input type="radio" name="question-${qIndex}" value="${oIndex}">
+                        ${String.fromCharCode(65 + oIndex)}) ${opt}
+                    </label>
+                `;
+            });
+
+            card.innerHTML = `
+                <div class="meta-info">Questão ${q.id} | ${q.subject}</div>
+                <span class="question-text">${q.text.replace(/\n/g, '<br>')}</span>
+                <div class="options-list">
+                    ${optionsHtml}
+                </div>
+                <div class="resolution-box" id="res-${qIndex}">
+                    <h4>Resolução Comentada</h4>
+                    <p>${q.resolution}</p>
+                </div>
+            `;
+            wrapper.appendChild(card);
+        });
+    }
+
+    function calculateScore() {
+        const form = document.getElementById('quiz-form');
+        let score = 0;
+
+        questionsData.forEach((q, qIndex) => {
+            const selected = form.querySelector(`input[name="question-${qIndex}"]:checked`);
+            const resolutionBox = document.getElementById(`res-${qIndex}`);
+            
+            // Mostrar resolução
+            resolutionBox.style.display = 'block';
+
+            // Marcar correta
+            const correctLabel = document.getElementById(`label-${qIndex}-${q.correct}`);
+            correctLabel.classList.add('correct');
+
+            if (selected) {
+                const selectedVal = parseInt(selected.value);
+                if (selectedVal === q.correct) {
+                    score++;
+                } else {
+                    // Marcar errada se o usuário escolheu uma incorreta
+                    const wrongLabel = document.getElementById(`label-${qIndex}-${selectedVal}`);
+                    wrongLabel.classList.add('wrong');
+                }
+            }
+        });
+
+        // Mostrar resumo
+        document.getElementById('score-val').innerText = score;
+        document.getElementById('result-summary').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'none';
+        
+        // Scroll para o topo para ver o resultado
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Desativar inputs para não mudar depois de pronto
+        const allInputs = form.querySelectorAll('input');
+        allInputs.forEach(input => input.disabled = true);
+    }
+
+    // Inicializar quiz ao carregar
+    window.onload = renderQuestions;
+
+</script>
+
+</body>
+</html>

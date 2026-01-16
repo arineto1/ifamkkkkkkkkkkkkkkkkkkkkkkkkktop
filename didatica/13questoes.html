@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Didática, Currículo e Planejamento</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-color: #636e72;
+            --correct-color: #27ae60;
+            --incorrect-color: #d63031;
+            --border-color: #dfe6e9;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Georgia, 'Times New Roman', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.65;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .question-meta {
+            font-weight: bold;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        blockquote {
+            background: #f1f2f6;
+            padding: 1rem 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            margin: 1rem 0;
+            font-style: italic;
+            font-size: 1rem;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin-bottom: 0.75rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f0f7ff;
+            border-color: var(--primary-color);
+        }
+
+        input[type="radio"] {
+            margin-top: 0.3rem;
+            margin-right: 1rem;
+            transform: scale(1.2);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 3rem auto;
+            padding: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0773c5;
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .score-banner {
+            text-align: center;
+            padding: 2rem;
+            background: #e1f5fe;
+            border-radius: 8px;
+            margin-bottom: 3rem;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .resolution-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--secondary-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .resolution-card.correct-ans {
+            border-left-color: var(--correct-color);
+        }
+
+        .resolution-card.incorrect-ans {
+            border-left-color: var(--incorrect-color);
+        }
+
+        .res-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .res-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .res-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-hit { background: #dff9fb; color: var(--correct-color); }
+        .status-miss { background: #ffeaa7; color: var(--incorrect-color); }
+
+        .res-content {
+            font-size: 1rem;
+            color: #444;
+            white-space: pre-wrap;
+        }
+
+        .gabarito-tag {
+            background: #2d3436;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1rem 0.5rem; }
+            .question-card { padding: 1.2rem; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Didática: FCM</h1>
+        <p class="subtitle">Projeto Pedagógico, Currículo e Planejamento de Ensino</p>
+    </header>
+
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- Questions will be injected here via JS -->
+        </div>
+
+        <button type="button" class="btn-submit" onclick="gradeQuiz()">Finalizar Simulado</button>
+    </form>
+
+    <div id="results-section">
+        <div class="score-banner">
+            <h2>Resultado do Simulado</h2>
+            <span class="score-value" id="final-score">0 / 10</span>
+            <p id="score-feedback">Confira abaixo as resoluções detalhadas de cada questão.</p>
+        </div>
+
+        <div id="resolutions-container">
+            <!-- Resolutions will be injected here -->
+        </div>
+        
+        <div style="text-align:center; margin-top: 2rem;">
+            <button class="btn-submit" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Voltar ao Topo</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            meta: "Tema: Organização dos Conteúdos Curriculares | Referência: Zabala, A. (2002)",
+            question: `Analise o fragmento a seguir, extraído da obra <i>A Prática Educativa: Como ensinar</i>:<br><br><blockquote>"É a organização de conteúdos mais tradicional. Os conteúdos escolares são apresentados por matérias independentes umas das outras. A interação entre elas é inexistente ou muito reduzida. O conjunto de matérias é estudado simultaneamente, sem que se explicitem as relações que podem existir entre elas."</blockquote>De acordo com a tipologia estabelecida por Antoni Zabala (2002) acerca das relações disciplinares e da estruturação curricular, a descrição acima corresponde ao conceito de:`,
+            options: ["Interdisciplinaridade.", "Transdisciplinaridade.", "Multidisciplinaridade.", "Pluridisciplinaridade.", "Globalização."],
+            correct: 2, // C
+            resTitle: "Questão 01: A Epistemologia da Organização Curricular em Zabala",
+            resBody: "A questão explora a taxonomia das relações disciplinares proposta pelo educador espanhol Antoni Zabala. A chave reside na expressão 'matérias independentes' e 'interação inexistente'.\n\n- Multidisciplinaridade: Representa o nível mais baixo de integração. É caracterizada pela justaposição de disciplinas sem cruzamento real.\n- Interdisciplinaridade: Há interação real e troca recíproca entre áreas.\n- Transdisciplinaridade: Grau máximo, onde as fronteiras disciplinares se dissolvem em um sistema totalizador.\n\nComo o texto fala explicitamente em interação inexistente, a alternativa correta é Multidisciplinaridade."
+        },
+        {
+            id: 2,
+            meta: "Tema: Projeto Político-Pedagógico (PPP) | Referência: Veiga, I. P. A. (2002)",
+            question: "Em <i>Projeto Político-Pedagógico da Escola: uma construção possível</i>, Ilma Passos Alencastro Veiga postula que o PPP deve ultrapassar a dimensão burocrática. Assinale a alternativa que apresenta corretamente um dos princípios norteadores para a escola pública conforme a autora:",
+            options: [
+                "A centralização das decisões administrativas na figura do gestor escolar.",
+                "A padronização absoluta dos métodos de ensino para assegurar a equidade.",
+                "A valorização do magistério, compreendendo formação continuada e remuneração digna.",
+                "A neutralidade política e ideológica do currículo.",
+                "A fragmentação do trabalho pedagógico como estratégia de especialização."
+            ],
+            correct: 2, // C
+            resTitle: "Questão 02: A Dimensão Política do Planejamento Escolar em Veiga",
+            resBody: "Ilma Veiga estrutura cinco princípios basilares: Igualdade, Qualidade (social), Gestão Democrática, Liberdade/Autonomia e Valorização do Magistério.\n\nA valorização do magistério envolve formação continuada (na escola), condições de trabalho e remuneração digna. A centralização (A), padronização (B) e neutralidade (D) são conceitos combatidos pela autora no contexto de uma escola democrática."
+        },
+        {
+            id: 3,
+            meta: "Tema: Didática e Tendências Pedagógicas | Referência: Libâneo, J. C. (1994)",
+            question: "Na perspectiva da Tendência Pedagógica Crítico-Social dos Conteúdos, defendida por Libâneo, o papel da escola e da prática docente é:",
+            options: [
+                "Priorizar os métodos de pesquisa espontânea em detrimento da sistematização.",
+                "Assegurar a apropriação crítica do saber científico e universal, contextualizando-o socialmente.",
+                "Reproduzir a estrutura social vigente através de um ensino tecnicista.",
+                "Promover a autogestão total eliminando a diretividade do professor.",
+                "Transmitir verdades absolutas exigindo memorização mecânica."
+            ],
+            correct: 1, // B
+            resTitle: "Questão 03: Pedagogia Crítico-Social dos Conteúdos",
+            resBody: "A essência desta tendência é a dialética entre conteúdo e sociedade. A função da escola é garantir o acesso ao saber elaborado (universal), mas como ferramenta para ler a realidade social e transformá-la. \n\nDifere da Escola Nova (que foca no 'aprender a aprender') e do Tecnicismo (que foca na produtividade acrítica). Na Crítico-Social, o conteúdo científico é o instrumento da emancipação política das classes populares."
+        },
+        {
+            id: 4,
+            meta: "Tema: Teorias do Currículo (Pós-Críticas) | Referência: Paraíso, M. A. (2010)",
+            question: "Marlucy Alves Paraíso propõe uma metáfora espacial para a compreensão do currículo. Complete as lacunas: 'O currículo é um espaço ____________ e ____________ por pessoas de diferentes classes, culturas, idades, onde se oferece a possibilidade da palavra.'",
+            options: ["planejado / controlado", "neutro / frequentado", "científico / sistematizado", "habitável / habitado", "institucional / regulado"],
+            correct: 3, // D
+            resTitle: "Questão 04: O Currículo como Espaço de Diferença em Paraíso",
+            resBody: "Paraíso define o currículo como um espaço habitável (acolhedor de existências) e habitado (povoado por sujeitos reais e suas culturas). \n\nEsta visão pertence às Teorias Pós-Críticas, que focam na identidade, diferença e cultura, em oposição às visões tradicionais que veem o currículo como um documento estático ou meramente institucional."
+        },
+        {
+            id: 5,
+            meta: "Tema: Planejamento Participativo | Referência: Gandin, D. (2001)",
+            question: "Danilo Gandin propõe o Planejamento Participativo estruturado metodologicamente em três momentos lógicos fundamentais. Assinale a alternativa correta:",
+            options: [
+                "Diagnóstico, Programação e Avaliação Somativa.",
+                "Marco Referencial, Diagnóstico e Programação.",
+                "Sondagem, Execução e Recuperação.",
+                "Objetivos Gerais, Objetivos Específicos e Recursos.",
+                "Análise de Mercado, Definição de Metas e Controle."
+            ],
+            correct: 1, // B
+            resTitle: "Questão 05: A Metodologia Dialética de Gandin",
+            resBody: "Os três momentos de Gandin são:\n1. Marco Referencial: Define o 'Dever Ser' (Ideais e valores).\n2. Diagnóstico: Compara a realidade atual com o Marco Referencial para julgar a situação.\n3. Programação: Define as ações concretas para aproximar o 'Ser' do 'Dever Ser'.\n\nSem o Marco Referencial, o planejamento torna-se apenas 'conserto' de problemas imediatos sem direção estratégica."
+        },
+        {
+            id: 6,
+            meta: "Tema: Teorias do Currículo | Referência: Silva, T. T. (1999)",
+            question: "Associe os conceitos às Teorias (1. Tradicionais, 2. Críticas, 3. Pós-Críticas):<br>( ) Ideologia, Poder, Emancipação, Classe Social.<br>( ) Ensino, Aprendizagem, Avaliação, Eficiência.<br>( ) Identidade, Alteridade, Diferença, Gênero.",
+            options: ["2, 1, 3", "1, 2, 3", "3, 2, 1", "2, 3, 1", "1, 3, 2"],
+            correct: 0, // A
+            resTitle: "Questão 06: Mapeando as Teorias do Currículo (Silva)",
+            resBody: "- Teorias Críticas (2): Focam em quem o currículo serve (Ideologia, Poder).\n- Teorias Tradicionais (1): Focam no 'como' ensinar de forma neutra (Eficiência, Metodologia).\n- Teorias Pós-Críticas (3): Focam na construção dos sujeitos (Identidade, Diferença, Gênero).\nA sequência correta é 2, 1, 3."
+        },
+        {
+            id: 7,
+            meta: "Tema: Avaliação da Aprendizagem | Referência: Luckesi, C. C. (2011)",
+            question: "Para Luckesi, a avaliação da aprendizagem, quando assume sua função constitutiva e democrática, deve ser predominantemente:",
+            options: ["Classificatória", "Punitiva", "Diagnóstica", "Seletiva", "Somativa"],
+            correct: 2, // C
+            resTitle: "Questão 07: O Ato Amoroso da Avaliação em Luckesi",
+            resBody: "Luckesi distingue examinar (excluir/classificar) de avaliar (incluir/diagnosticar). A avaliação diagnóstica funciona para constatar a realidade e tomar decisões que visem à melhoria da aprendizagem. Ela acolhe o aluno para ajudá-lo a crescer, sendo um ato 'amoroso' no sentido de inclusivo."
+        },
+        {
+            id: 8,
+            meta: "Tema: Níveis de Planejamento Educacional | Referência: Vasconcellos, C. S. (2000)",
+            question: "Segundo Vasconcellos, o instrumento que sistematiza a identidade da escola, suas opções políticas e pedagógicas, servindo de base para os planos de ensino, é o:",
+            options: ["PNE", "Regimento Escolar", "Diário de Classe", "Projeto Político-Pedagógico (PPP)", "BNCC"],
+            correct: 3, // D
+            resTitle: "Questão 08: A Hierarquia dos Planos em Vasconcellos",
+            resBody: "O PPP é o planejamento de nível macro da escola. Ele define o 'rumo' e a identidade da instituição. O Plano de Ensino e o Plano de Aula são níveis micro que devem estar subordinados e alinhados às diretrizes do PPP."
+        },
+        {
+            id: 9,
+            meta: "Tema: Didática no Ensino Profissional e Tecnológico (EPT)",
+            question: "No contexto da EPT (Educação Profissional e Tecnológica), o conceito de Currículo Integrado implica:",
+            options: [
+                "Subordinação dos conhecimentos gerais às demandas imediatas do mercado.",
+                "Compreensão do trabalho como princípio educativo, articulando ciência, tecnologia e cultura.",
+                "Manutenção de grades onde disciplinas técnicas e gerais não dialogam.",
+                "Extinção das disciplinas específicas em favor do empreendedorismo.",
+                "Priorização exclusiva do desenvolvimento de competências manuais."
+            ],
+            correct: 1, // B
+            resTitle: "Questão 09: O Conceito de Currículo Integrado na EPT",
+            resBody: "O Currículo Integrado visa superar a dualidade histórica entre ensino intelectual (propedêutico) e manual (técnico). O Trabalho é visto como princípio educativo e a formação busca a 'omnilateralidade' (integralidade) do ser humano, unindo ciência, cultura e técnica."
+        },
+        {
+            id: 10,
+            meta: "Tema: Gestão Democrática | Referência: LDB 9.394/96",
+            question: "Na gestão democrática, o órgão colegiado de natureza deliberativa que reúne representantes de todos os segmentos para definir diretrizes e acompanhar o PPP é o:",
+            options: ["Grêmio Estudantil", "Conselho de Classe", "Conselho Escolar", "APM", "Colegiado de Diretores"],
+            correct: 2, // C
+            resTitle: "Questão 10: O Conselho Escolar e a Gestão Democrática",
+            resBody: "O Conselho Escolar é o órgão máximo de participação. É composto de forma paritária por professores, funcionários, pais e alunos. Possui funções deliberativas, consultivas e fiscalizadoras, sendo o pilar da democratização da gestão escolar conforme a LDB."
+        }
+    ];
+
+    function initQuiz() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <span class="question-meta">${item.meta}</span>
+                <p class="question-text">${item.id}. ${item.question}</p>
+                <div class="options-list">
+                    ${item.options.map((opt, i) => `
+                        <div class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q${item.id}" value="${i}">
+                                <span>${String.fromCharCode(65 + i)}) ${opt}</span>
+                            </label>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function gradeQuiz() {
+        let score = 0;
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        resolutionsContainer.innerHTML = '';
+        
+        quizData.forEach((item) => {
+            const selected = document.querySelector(`input[name="q${item.id}"]:checked`);
+            const selectedValue = selected ? parseInt(selected.value) : null;
+            const isCorrect = selectedValue === item.correct;
+            
+            if (isCorrect) score++;
+
+            // Create resolution card
+            const resCard = document.createElement('div');
+            resCard.className = `resolution-card ${isCorrect ? 'correct-ans' : 'incorrect-ans'}`;
+            
+            const statusClass = isCorrect ? 'status-hit' : 'status-miss';
+            const statusText = isCorrect ? 'Acertou' : 'Errou';
+            const gabaritoLetter = String.fromCharCode(65 + item.correct);
+
+            resCard.innerHTML = `
+                <div class="res-header">
+                    <div class="res-title">${item.resTitle}</div>
+                    <span class="res-status ${statusClass}">${statusText}</span>
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <span class="gabarito-tag">Gabarito: ${gabaritoLetter}</span>
+                    <small>Sua resposta: ${selectedValue !== null ? String.fromCharCode(65 + selectedValue) : 'Não respondida'}</small>
+                </div>
+                <div class="res-content">${item.resBody}</div>
+            `;
+            resolutionsContainer.appendChild(resCard);
+        });
+
+        // Show results
+        document.getElementById('final-score').innerText = `${score} / 10`;
+        document.getElementById('results-section').style.display = 'block';
+        
+        // Scroll to results
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

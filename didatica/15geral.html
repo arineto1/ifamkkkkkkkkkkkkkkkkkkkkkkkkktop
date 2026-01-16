@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterClass - Didática Geral IFAM (Banca FCM)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef08a;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .section-title {
+            color: #1e40af; /* Blue 800 */
+            border-left: 5px solid #1e40af;
+            padding-left: 1rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .important-box {
+            border: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+
+        .trap-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .trap-icon {
+            color: #dc2626;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-6 py-12">
+
+    <!-- Header -->
+    <header class="text-center mb-12">
+        <h1 class="text-4xl font-extrabold tracking-tight text-gray-900">Didática Geral: Foco IFAM / EBTT</h1>
+        <p class="text-xl text-gray-600 mt-2">Guia de Conteúdo Integral para a Banca Fundação CEFETMINAS</p>
+    </header>
+
+    <!-- Áudio Player -->
+    <div class="important-box border-blue-200">
+        <h3 class="text-sm font-bold uppercase text-blue-600 mb-2">Escute a Revisão (Podcast Tático)</h3>
+        <audio controls class="w-full">
+            <source src="15geral.mp3" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+        <p class="text-xs text-gray-400 mt-2 italic text-center">Arquivo sugerido: revisao_completa_ifam.mp3</p>
+    </div>
+
+    <!-- Seção 1: Definições e Histórico -->
+    <section>
+        <h2 class="section-title text-2xl font-bold">1. Definição e Evolução da Didática</h2>
+        <p>A Didática é o ramo da pedagogia que estuda o <span class="highlight">processo de ensino-aprendizagem</span> em sua globalidade. Para a CEFETMINAS, foque em dois pilares:</p>
+        <div class="grid md:grid-cols-2 gap-4 mt-4">
+            <div class="p-4 border rounded">
+                <p class="font-bold">Comenius (Séc. XVII)</p>
+                <p class="text-sm">Pai da Didática Moderna. Obra: <em>Didática Magna</em>. Defendeu o <span class="highlight">"Ensinar tudo a todos"</span> (Pansofia) e a organização sistemática do ensino.</p>
+            </div>
+            <div class="p-4 border rounded">
+                <p class="font-bold">Libâneo (Contemporâneo)</p>
+                <p class="text-sm">A Didática como <span class="highlight">direção do processo de ensino</span> mediando a relação entre sociedade, conteúdos e alunos.</p>
+            </div>
+        </div>
+        <div class="important-box">
+            <strong>O Triângulo Didático:</strong> Composto por <span class="highlight">Professor, Aluno e Conhecimento</span>. A relação entre eles é mediada pela ação docente intencional.
+        </div>
+    </section>
+
+    <!-- Seção 2: Transposição Didática -->
+    <section>
+        <h2 class="section-title text-2xl font-bold">2. Transposição Didática (Chevallard)</h2>
+        <p>Conceito vital para professores de áreas técnicas (Informática). É o processo de transformar o <span class="highlight">Saber Sábio</span> (científico/acadêmico) em <span class="highlight">Saber a ser Ensinado</span> (conteúdo curricular).</p>
+        <ul class="list-disc ml-6 mt-2">
+            <li><strong>Vigilância Didática:</strong> O professor deve garantir que a simplificação para o aluno não gere erros conceituais científicos.</li>
+        </ul>
+    </section>
+
+    <!-- Seção 3: Tendências Pedagógicas -->
+    <section>
+        <h2 class="section-title text-2xl font-bold">3. Matriz de Tendências Pedagógicas (Libâneo)</h2>
+        <p class="mb-4">Este é o tema que mais reprova. Memorize a divisão clássica:</p>
+        
+        <div class="overflow-x-auto">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Classificação</th>
+                        <th>Tendência</th>
+                        <th>Característica Principal</th>
+                        <th>Papel do Professor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="3" class="font-bold bg-gray-50">Liberais (Mantêm o Status Quo)</td>
+                        <td>Tradicional</td>
+                        <td>Verdades absolutas, repetição.</td>
+                        <td>Autoridade/Transmissor</td>
+                    </tr>
+                    <tr>
+                        <td>Renovada/Escola Nova</td>
+                        <td>Aprender a aprender, experiências.</td>
+                        <td>Auxiliar/Facilitador</td>
+                    </tr>
+                    <tr>
+                        <td>Tecnicista</td>
+                        <td>Eficiência, manuais, produtividade.</td>
+                        <td>Técnico/Executor</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3" class="font-bold bg-gray-50">Progressistas (Transformação Social)</td>
+                        <td>Libertadora (Freire)</td>
+                        <td>Diálogo, temas geradores, não-formal.</td>
+                        <td>Animador (Relação horizontal)</td>
+                    </tr>
+                    <tr>
+                        <td>Libertária</td>
+                        <td>Autogestão, vivência grupal.</td>
+                        <td>Conselheiro/Ponto de apoio</td>
+                    </tr>
+                    <tr>
+                        <td class="bg-blue-50">Crítico-Social</td>
+                        <td><span class="highlight">Conteúdos universais como arma social.</span></td>
+                        <td>Mediador entre saber e aluno</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Seção 4: Elementos da Didática -->
+    <section>
+        <h2 class="section-title text-2xl font-bold">4. O Plano de Ensino e seus Componentes</h2>
+        <p>A didática se materializa no planejamento. Os elementos fundamentais são:</p>
+        <ul class="space-y-3 mt-4">
+            <li><strong>Objetivos:</strong> Onde se quer chegar (Gerais e Específicos). Devem ser expressos em <span class="highlight">verbos de ação</span>.</li>
+            <li><strong>Conteúdos:</strong> Conhecimentos, habilidades e atitudes. Devem ter <span class="highlight">validade e utilidade social</span>.</li>
+            <li><strong>Métodos:</strong> O "Caminho". Como o professor organiza a aula (Expositivo, Trabalho em Grupo, Estudo de Caso).</li>
+            <li><strong>Avaliação:</strong> Verificação do cumprimento dos objetivos.</li>
+        </ul>
+    </section>
+
+    <!-- Seção 5: Avaliação no IFAM (RODA) -->
+    <section>
+        <h2 class="section-title text-2xl font-bold">5. Avaliação e Regras Específicas IFAM (RODA 94/2015)</h2>
+        <div class="important-box">
+            <h4 class="font-bold mb-2">Tipos de Avaliação:</h4>
+            <p><strong>Diagnóstica:</strong> Início do curso (pré-requisitos).</p>
+            <p><strong>Formativa:</strong> Durante o processo. <span class="highlight">Feedback</span>, caráter processual.</p>
+            <p><strong>Somativa:</strong> Final do bimestre/semestre. <span class="highlight">Classificatória</span>.</p>
+        </div>
+
+        <h4 class="font-bold mt-4">Regras de Ouro para Prova:</h4>
+        <div class="overflow-x-auto">
+            <table>
+                <tr>
+                    <th>Item</th>
+                    <th>Regra IFAM (EBTT)</th>
+                </tr>
+                <tr>
+                    <td>Média para Aprovação</td>
+                    <td><span class="highlight">6,0 (seis)</span></td>
+                </tr>
+                <tr>
+                    <td>Frequência Mínima</td>
+                    <td><span class="highlight">75%</span></td>
+                </tr>
+                <tr>
+                    <td>Arredondamento</td>
+                    <td>6,25 -> 6,5 | 6,75 -> 7,0 | 6,2 -> 6,0</td>
+                </tr>
+                <tr>
+                    <td>Instrumentos</td>
+                    <td>Mínimo de <span class="highlight">2 instrumentos</span> por período (Integrado) / <span class="highlight">3 instrumentos</span> (Subsequente).</td>
+                </tr>
+                <tr>
+                    <td>Segunda Chamada</td>
+                    <td>Direito do aluno em caso de ausência justificada (prazo: 2 dias úteis).</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- Seção 6: Metodologias e PPD -->
+    <section>
+        <h2 class="section-title text-2xl font-bold">6. Metodologias Ativas e PPD</h2>
+        <p>O IFAM incentiva a ruptura com o modelo puramente tradicional. Conceitos-chave:</p>
+        <ul class="list-disc ml-6">
+            <li><strong>Aprendizagem Baseada em Problemas (PBL):</strong> Foco no processo de investigação.</li>
+            <li><strong>PPD (Plano de Pesquisa Didática):</strong> Instrumento para articular ensino e pesquisa no IFAM.</li>
+            <li><strong>Práxis:</strong> A união indissociável entre <span class="highlight">Teoria e Prática</span>.</li>
+        </ul>
+    </section>
+
+    <!-- Seção 7: Peguinhas da CEFETMINAS -->
+    <section class="mb-16">
+        <h2 class="section-title text-2xl font-bold text-red-700">7. "Peguinhas" e Análise da Banca</h2>
+        <div class="important-box border-red-200">
+            <div class="trap-item">
+                <span class="trap-icon">⚠</span>
+                <p>A banca adora dizer que a <span class="highlight">Didática Crítico-Social</span> ignora o conteúdo para focar na política. <strong>Falso!</strong> Ela valoriza o conteúdo científico como ferramenta de libertação.</p>
+            </div>
+            <div class="trap-item">
+                <span class="trap-icon">⚠</span>
+                <p>A banca afirma que na <span class="highlight">Educação Profissional</span> o foco é apenas o mercado de trabalho. <strong>Falso!</strong> O foco é a <em>Formação Humana Integral</em> (Omnilateralidade).</p>
+            </div>
+            <div class="trap-item">
+                <span class="trap-icon">⚠</span>
+                <p>Cuidado com a palavra <span class="highlight">"Espontaneísmo"</span>. Para a CEFETMINAS, o ensino deve ser <span class="highlight">planejado e intencional</span>. Se a questão sugerir que o aluno deve "descobrir tudo sozinho sem intervenção", está errada.</p>
+            </div>
+            <div class="trap-item">
+                <span class="trap-icon">⚠</span>
+                <p><strong>Avaliação Somativa</strong> não é proibida. Ela é necessária para fins de registro e certificação, embora a formativa deva prevalecer pedagogicamente.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Button -->
+    <footer class="text-center py-10 border-t">
+        <p class="text-gray-500 mb-6 text-sm">Este resumo contempla 100% dos tópicos de Didática Geral para cargos de Professor de Informática do IFAM.</p>
+        <a href="15questoes.html" class="inline-block bg-gray-900 hover:bg-black text-white font-bold py-4 px-10 rounded-lg transition-transform hover:scale-105 shadow-xl">
+            TESTAR CONHECIMENTO (Ir para Questões)
+        </a>
+    </footer>
+
+</body>
+</html>

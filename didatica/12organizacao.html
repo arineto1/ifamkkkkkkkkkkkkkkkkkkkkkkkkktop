@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass: Didática para o IFAM - CEFETMINAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1b;
+            line-height: 1.7;
+        }
+
+        .container-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .highlight-yellow {
+            background-color: #fef08a;
+            font-weight: 600;
+            padding: 0 2px;
+            border-radius: 4px;
+        }
+
+        .highlight-blue {
+            color: #1e40af;
+            font-weight: 700;
+        }
+
+        .banca-alert {
+            border-left: 5px solid #ef4444;
+            background-color: #fef2f2;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .theory-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            background-color: #fafafa;
+        }
+
+        .responsive-table-wrapper {
+            width: 100%;
+            margin: 20px 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            text-align: left;
+            padding: 12px;
+            font-weight: 700;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #f3f4f6;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+
+        .audio-player-container {
+            position: sticky;
+            top: 20px;
+            z-index: 50;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+
+        h1, h2, h3 {
+            color: #111827;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-content">
+        
+        <!-- PLAYER DE ÁUDIO -->
+        <div class="audio-player-container">
+            <div class="flex flex-col md:flex-row items-center gap-4">
+                <div class="flex-1">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">🎧 Guia de Áudio</p>
+                    <p class="text-sm font-semibold text-gray-700">Resumo Técnico: Didática e Trabalho Docente</p>
+                </div>
+                <audio id="audioLesson" controls class="w-full md:w-64">
+                    <source src="12organizacao.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                </audio>
+            </div>
+        </div>
+
+        <!-- TÍTULO PRINCIPAL -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-extrabold mb-4">Didática: Organização do Trabalho Docente</h1>
+            <p class="text-lg text-gray-600">Foco Total: IFAM | Banca Fundação CEFETMINAS</p>
+            <div class="mt-4 flex justify-center gap-4">
+                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded border border-gray-400">EBTT</span>
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded border border-blue-400">Informática</span>
+            </div>
+        </header>
+
+        <!-- 1. DEFINIÇÃO E CARACTERÍSTICAS -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 border-b-2 border-gray-100 pb-2">1. Definição do Tema e Características</h2>
+            <p class="mb-4">A didática na organização do trabalho docente não é apenas o "como ensinar", mas a <span class="highlight-yellow">intencionalidade pedagógica</span> aplicada à realidade social. Para a CEFETMINAS, o foco está na <span class="highlight-blue">Didática Crítica</span>.</p>
+            
+            <div class="theory-box">
+                <h3 class="font-bold mb-3">Características Essenciais:</h3>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><span class="font-bold">Unidade Teoria-Prática (Práxis):</span> O fazer docente não se separa do pensar.</li>
+                    <li><span class="font-bold">Mediação:</span> O professor como ponte entre o <span class="highlight-yellow">conhecimento científico</span> e o <span class="highlight-yellow">conhecimento prévio</span> do aluno.</li>
+                    <li><span class="font-bold">Dimensão Política:</span> Todo ato educativo visa um tipo de sociedade (Omnilateralidade).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2. DEFINIÇÕES BÁSICAS PARA A PROVA -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 border-b-2 border-gray-100 pb-2">2. Definições Básicas (O que vai cair)</h2>
+            
+            <div class="responsive-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Níveis de Planejamento</th>
+                            <th>Foco e Documento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="font-bold">Educacional</span></td>
+                            <td>Políticas Públicas (PNE, BNCC). Nível Macro.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="font-bold">Escolar</span></td>
+                            <td>A identidade da escola. Documento: <span class="highlight-yellow">PPP (Projeto Político-Pedagógico)</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="font-bold">Curricular</span></td>
+                            <td>Organização dos conteúdos por curso/disciplina (PPC).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="font-bold">Ensino / Aula</span></td>
+                            <td>Ação direta em sala. <span class="highlight-blue">Objetivos, Conteúdos, Métodos e Avaliação</span>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-6">
+                <h3 class="font-bold mb-3">Momentos Didáticos (Libâneo):</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="p-4 border border-gray-100 rounded bg-white shadow-sm">
+                        <p class="font-bold text-blue-800">1. Preparação/Iniciação</p>
+                        <p class="text-xs">Mobilizar o interesse e ligar ao conhecimento prévio.</p>
+                    </div>
+                    <div class="p-4 border border-gray-100 rounded bg-white shadow-sm">
+                        <p class="font-bold text-blue-800">2. Transmissão/Assimilação</p>
+                        <p class="text-xs">Exposição do conteúdo novo mediado pela reflexão.</p>
+                    </div>
+                    <div class="p-4 border border-gray-100 rounded bg-white shadow-sm">
+                        <p class="font-bold text-blue-800">3. Consolidação/Avaliação</p>
+                        <p class="text-xs">Fixação e verificação do alcance dos objetivos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TENDÊNCIAS CEFETMINAS E "PEGUINHAS" -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 border-b-2 border-gray-100 pb-2">3. Análise de Tendências (CEFETMINAS)</h2>
+            
+            <div class="banca-alert">
+                <h3 class="text-red-800 font-bold mb-2">🚨 Alerta de Peguinha: "A neutralidade técnica"</h3>
+                <p class="text-sm">A banca frequentemente coloca alternativas dizendo que o planejamento do professor deve ser <span class="font-bold">neutro e puramente técnico</span>. <span class="uppercase font-bold">Incorreto!</span> Para o IFAM, o planejamento é <span class="highlight-yellow">político-pedagógico</span> e nunca neutro.</p>
+            </div>
+
+            <div class="responsive-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tema</th>
+                            <th>Tendência de Cobrança</th>
+                            <th>Fique Atento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="font-bold">Avaliação</span></td>
+                            <td>Processual e <span class="highlight-yellow">Formativa</span>.</td>
+                            <td>Elimine opções que foquem em "punição" ou "ranking".</td>
+                        </tr>
+                        <tr>
+                            <td><span class="font-bold">Trabalho</span></td>
+                            <td>Como Princípio Educativo.</td>
+                            <td>Trabalho ≠ Emprego. Trabalho = <span class="highlight-blue">Ação Humana</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="font-bold">Métodos</span></td>
+                            <td>Ativos e Dialógicos.</td>
+                            <td>O aluno é <span class="font-bold">sujeito</span>, não receptor passivo.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="font-bold">Gestão</span></td>
+                            <td>Democrática-Participativa.</td>
+                            <td>O PPP é construído pelo <span class="highlight-yellow">coletivo</span>, não pela direção.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 4. RESUMO PARA MEMORIZAÇÃO (2 PÁGINAS) -->
+        <section class="mb-12 p-8 border-2 border-dashed border-gray-300 rounded-2xl">
+            <h2 class="text-3xl font-bold text-center mb-8">Resumo de Memorização (The Cheat Sheet)</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="highlight-blue mb-2">📌 O TRIPE DA DIDÁTICA</h3>
+                    <ul class="text-sm space-y-2">
+                        <li>✅ <strong>OBJETIVOS:</strong> Ponto de partida (sociais e pedagógicos).</li>
+                        <li>✅ <strong>CONTEÚDOS:</strong> Conhecimento sistematizado.</li>
+                        <li>✅ <strong>MÉTODOS:</strong> Caminho para atingir o objetivo.</li>
+                    </ul>
+                    
+                    <h3 class="highlight-blue mt-6 mb-2">📌 AVALIAÇÃO (LUCKESI)</h3>
+                    <ul class="text-sm space-y-2">
+                        <li>🔹 <strong>DIAGNÓSTICA:</strong> Início (sondar).</li>
+                        <li>🔹 <strong>FORMATIVA:</strong> Meio (regular/feedback).</li>
+                        <li>🔹 <strong>SOMATIVA:</strong> Fim (classificar/verificar).</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="highlight-blue mb-2">📌 EDUCAÇÃO INTEGRAL (EPT)</h3>
+                    <ul class="text-sm space-y-2">
+                        <li>🔸 <strong>OMNILATERALIDADE:</strong> Todos os lados do humano.</li>
+                        <li>🔸 <strong>POLITECNIA:</strong> Compreender a técnica cientificamente.</li>
+                        <li>🔸 <strong>INTEGRAÇÃO:</strong> Fim da divisão entre "trabalho manual" e "trabalho intelectual".</li>
+                    </ul>
+
+                    <h3 class="highlight-blue mt-6 mb-2">📌 MNEMÔNICO PPP (VEIGA)</h3>
+                    <div class="bg-gray-100 p-3 rounded font-mono text-xs">
+                        <strong>IG-QUA-GES-LI-VA</strong><br>
+                        1. <strong>IG</strong>ualdade de acesso/permanência.<br>
+                        2. <strong>QUA</strong>lidade para todos.<br>
+                        3. <strong>GES</strong>tão Democrática.<br>
+                        4. <strong>LI</strong>berdade/Autonomia.<br>
+                        5. <strong>VA</strong>lorização do Magistério.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-gray-200">
+                <h3 class="text-center font-bold mb-4">LDB: ARTIGO 13 (DEVERES DOCENTES)</h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-2 text-center text-[10px] uppercase font-bold">
+                    <div class="p-2 bg-blue-50 rounded">Participar do PPP</div>
+                    <div class="p-2 bg-blue-50 rounded">Plano de Trabalho</div>
+                    <div class="p-2 bg-blue-50 rounded">Zelar Aprendizagem</div>
+                    <div class="p-2 bg-blue-50 rounded">Recuperação Paralela</div>
+                    <div class="p-2 bg-blue-50 rounded">Dias/Horas Letivos</div>
+                    <div class="p-2 bg-blue-50 rounded">Articular com Família</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTÃO DE AÇÃO -->
+        <footer class="text-center pb-20">
+            <p class="text-sm text-gray-500 mb-6 italic">Material revisado conforme tendências pedagógicas atuais (Libâneo, Saviani, Luckesi, Veiga).</p>
+            <a href="12questoes.html" class="inline-block bg-black text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-800 transition-all transform hover:scale-105 shadow-xl">
+                TESTAR CONHECIMENTOS (QUESTÕES) →
+            </a>
+        </footer>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Didática e Tecnologias - FCM</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-color: #636e72;
+            --accent-color: #00b894;
+            --error-color: #d63031;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --max-width: 800px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            max-width: var(--max-width);
+            margin: 40px auto;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .question-meta {
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #1e272e;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background-color: #f1f2f6;
+            border-color: var(--primary-color);
+        }
+
+        .option input {
+            margin-top: 5px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-label {
+            font-size: 1rem;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .option.selected {
+            background-color: #e3f2fd;
+            border-color: var(--primary-color);
+        }
+
+        .controls {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background-color: #0773c5;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #results-area {
+            display: none;
+            margin-top: 40px;
+            padding-top: 20px;
+        }
+
+        .score-box {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            display: block;
+            font-weight: 800;
+        }
+
+        .resolution-card {
+            background: #fff;
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .resolution-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .badge-correct { color: var(--accent-color); }
+        .badge-incorrect { color: var(--error-color); }
+
+        .analysis-text {
+            font-size: 0.95rem;
+            color: #4b6584;
+            white-space: pre-wrap;
+        }
+
+        .status-icon {
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado: Didática e Tecnologias</h1>
+    <p class="subtitle">Banca: Fundação CEFETMINAS (FCM)</p>
+</header>
+
+<div class="container" id="quiz-container">
+    <!-- As questões serão injetadas aqui pelo JS -->
+</div>
+
+<div class="controls" id="quiz-controls">
+    <button onclick="calculateResults()">Finalizar e Ver Resoluções</button>
+</div>
+
+<div class="container" id="results-area">
+    <div class="score-box">
+        <span class="score-text">Você acertou</span>
+        <span class="score-value" id="final-score">0/10</span>
+        <p id="performance-msg"></p>
+    </div>
+
+    <h2 style="margin-bottom: 25px;">Gabarito Comentado</h2>
+    <div id="resolutions-list">
+        <!-- As resoluções serão injetadas aqui -->
+    </div>
+
+    <div class="controls">
+        <button onclick="window.location.reload()" style="background-color: var(--secondary-color);">Reiniciar Simulado</button>
+    </div>
+</div>
+
+<footer>
+    <p>Simulado criado com base no perfil pedagógico da Fundação CEFETMINAS.</p>
+</footer>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            meta: "Tema: Cultura Digital e Educação 4.0",
+            question: "O conceito de Educação 4.0 emerge como resposta direta às transformações impostas pela Quarta Revolução Industrial... A prioridade pedagógica no uso das Tecnologias Digitais de Informação e Comunicação (TDIC) nas escolas, para superar o tecnicismo instrumental e promover a formação crítica alinhada à Educação 4.0, deve focar em:",
+            options: [
+                "Incentivar o imediatismo e a fluidez das interações, naturalizando a efemeridade da informação.",
+                "Explorar novas linguagens e multiletramentos, desvendando possibilidades de comunicação e expressão que transcendam o texto impresso.",
+                "Utilizar imagens e narrativas sintéticas com forte apelo emocional para capturar a atenção do aluno.",
+                "Adotar softwares de ensino padronizados que garantam a uniformidade cultural e normativa.",
+                "Posicionar o aluno como um consumidor eficiente das inovações tecnológicas, focando no mercado de trabalho."
+            ],
+            correct: 1, // Letra B
+            explanation: "**Gabarito: B**\n\nExplorar novas linguagens e multiletramentos é o que permite ao estudante não apenas consumir, mas produzir cultura e intervir socialmente. Isso alinha a tecnologia à emancipação e à autoria, fugindo do mero tecnicismo instrumental."
+        },
+        {
+            id: 2,
+            meta: "Tema: Metodologias Ativas - Sala de Aula Invertida",
+            question: "Analise as afirmativas sobre as características e implicações didáticas da Sala de Aula Invertida (I a IV)... Estão CORRETAS apenas as afirmativas:",
+            options: [
+                "I e II.",
+                "I e III.",
+                "II e IV.",
+                "III e IV.",
+                "I, II e III."
+            ],
+            correct: 1, // Letra B
+            explanation: "**Gabarito: B (Afirmativas I e III)**\n\nI. Correta: A instrução ocorre fora e a aplicação ocorre dentro da sala.\nII. Incorreta: Metodologias ativas exigem MAIS planejamento e objetivos claros, não menos.\nIII. Correta: O professor muda de 'sábio no palco' para 'guia ao lado'.\nIV. Incorreta: A sala invertida É uma modalidade de Ensino Híbrido."
+        },
+        {
+            id: 3,
+            meta: "Tema: Tecnologias Assistivas e Inclusão",
+            question: "Segundo Giroto, Poker e Omote (2012), assinale a alternativa que reflete corretamente a perspectiva sobre o uso de tecnologias para estudantes com deficiência:",
+            options: [
+                "Os softwares pedagógicos devem ser desenvolvidos com foco na reabilitação clínica da deficiência.",
+                "A utilização de tecnologias assistivas deve ser restrita ao ambiente da sala de recursos multifuncionais.",
+                "Para usuários com cegueira ou baixa visão, os softwares devem oferecer interfaces multimodais (tátil/auditivo).",
+                "A tecnologia serve primariamente para 'ocupar' o aluno enquanto o professor ensina o restante da turma.",
+                "O uso de Comunicação Aumentativa e Alternativa (CAA) deve ser o último caso após o fracasso da fala."
+            ],
+            correct: 2, // Letra C
+            explanation: "**Gabarito: C**\n\nA acessibilidade digital exige redundância (interfaces multimodais). A visão clínica (A) está superada pelo modelo social, e a restrição de ambiente (B) contraria a inclusão efetiva na sala regular."
+        },
+        {
+            id: 4,
+            meta: "Tema: Relação Educação e Tecnologia (Vani Kenski)",
+            question: "Considere as asserções de Vani Kenski: I. A relação entre educação e tecnologia é simbiótica e estrutural... PORQUE II. A adoção de tecnologias garante automaticamente a inovação pedagógica...",
+            options: [
+                "As asserções I e II são verdadeiras, e a II justifica a I.",
+                "As asserções I e II são verdadeiras, mas a II não justifica a I.",
+                "A asserção I é verdadeira, e a II é falsa.",
+                "A asserção I é falsa, e a II é verdadeira.",
+                "As asserções I e II são falsas."
+            ],
+            correct: 2, // Letra C
+            explanation: "**Gabarito: C**\n\nA asserção I é verdadeira (simbiose estrutural). A II é FALSA porque cai no 'Determinismo Tecnológico'. Máquinas não mudam a prática sozinhas; a inovação depende da metodologia e da intencionalidade docente."
+        },
+        {
+            id: 5,
+            meta: "Tema: Gamificação e Estratégias de Ensino",
+            question: "Sobre a aplicação da gamificação no processo de ensino-aprendizagem, é INCORRETO afirmar:",
+            options: [
+                "Consiste na utilização de mecânicas de jogos em contextos de não-jogo.",
+                "É sustentada pela Teoria do Fluxo (Flow), equilíbrio entre desafio e habilidade.",
+                "Exige necessariamente o uso de softwares complexos e plataformas digitais de alto custo.",
+                "Permite que o erro seja visto como uma etapa do processo (oportunidade de tentar novamente).",
+                "A narrativa (storytelling) é um elemento potente para contextualizar tarefas pedagógicas."
+            ],
+            correct: 2, // Letra C
+            explanation: "**Gabarito: C (Incorreta)**\n\nA gamificação pode ser 'desplugada' (analógica). Afirmar que exige necessariamente alto custo e softwares complexos é um erro conceitual comum."
+        },
+        {
+            id: 6,
+            meta: "Tema: Ensino Híbrido e Personalização",
+            question: "No contexto da implementação de modelos de Ensino Híbrido, a personalização se concretiza quando:",
+            options: [
+                "O professor utiliza os dados coletados nas plataformas para diagnosticar lacunas e intervir nos momentos presenciais.",
+                "A escola permite que cada aluno escolha apenas as disciplinas que deseja cursar.",
+                "O ensino presencial é totalmente substituído por aulas gravadas padronizadas.",
+                "O professor cria um currículo individual e distinto para cada um dos 40 alunos simultaneamente.",
+                "Os alunos utilizam a tecnologia sem roteiros ou objetivos sob premissa de autoeducação."
+            ],
+            correct: 0, // Letra A
+            explanation: "**Gabarito: A**\n\nPersonalização no ensino híbrido é usar dados para atender necessidades individuais de forma escalável. Substituir o professor (C) ou deixar o aluno sem mediação (E) não é o objetivo."
+        },
+        {
+            id: 7,
+            meta: "Tema: BNCC e Competência Digital (Cultura Digital)",
+            question: "De acordo com a Competência Geral 5 da BNCC, os estudantes devem usar tecnologias de forma:",
+            options: [
+                "Técnica, rápida, eficiente e mercadológica.",
+                "Lúdica, passiva, receptiva e individualista.",
+                "Crítica, significativa, reflexiva e ética.",
+                "Automática, instrumental, procedimental e neutra.",
+                "Programada, dirigida, controlada e restrita."
+            ],
+            correct: 2, // Letra C
+            explanation: "**Gabarito: C**\n\nEstes são os quatro pilares éticos e cognitivos da BNCC para a tecnologia. A visão 'mercadológica' (A) ou 'instrumental/neutra' (D) são visões que o documento busca superar."
+        },
+        {
+            id: 8,
+            meta: "Tema: Letramento Digital e Multiletramentos",
+            question: "Em consonância com as teorias de multiletramentos (Rojo/Soares), o uso de tecnologias no ensino deve visar:",
+            options: [
+                "O ensino exclusivo da norma culta, banindo o 'internetês'.",
+                "A capacitação técnica exclusiva para o uso de pacotes de escritório (Word/Excel).",
+                "A inserção nas práticas sociais de leitura e escrita da cibercultura (remixagem, curadoria, memes).",
+                "A substituição integral da leitura de livros impressos por e-books animados.",
+                "O bloqueio do acesso às redes sociais para manter o foco em softwares fechados."
+            ],
+            correct: 2, // Letra C
+            explanation: "**Gabarito: C**\n\nMultiletramentos pressupõem lidar com diversas linguagens e gêneros da esfera digital. O foco é a prática social e crítica, não apenas a formatação de documentos."
+        },
+        {
+            id: 9,
+            meta: "Tema: Crítica ao Tecnicismo Pedagógico",
+            question: "A crítica pedagógica sustenta que a inovação educacional:",
+            options: [
+                "É desnecessária, pois o método tradicional expositivo é perfeito.",
+                "Deve priorizar equipamentos sobre a formação docente.",
+                "Não reside na ferramenta, mas na metodologia; digitalizar aula tradicional não é avanço qualitativo.",
+                "Exige que o professor assuma apenas o papel de técnico de informática.",
+                "Neutraliza desigualdades sociais automaticamente via distribuição de tablets."
+            ],
+            correct: 2, // Letra C
+            explanation: "**Gabarito: C**\n\nTecnologia sem mudança metodológica é apenas 'velha prática em nova embalagem'. O papel do professor e a equidade social (E) são complexos e não resolvidos apenas por hardware."
+        },
+        {
+            id: 10,
+            meta: "Tema: Papel do Professor na Era Digital (Mediação)",
+            question: "Segundo Moran e Bacich, na era da abundância de informações, cabe ao professor:",
+            options: [
+                "Competir com a internet na acumulação de dados e memorização.",
+                "Atuar como designer de experiências de aprendizagem, curador e mediador.",
+                "Abdicar da responsabilidade sobre o conteúdo, deixando a autoaprendizagem livre.",
+                "Proibir o uso de dispositivos móveis para preservar o 'santuário' da sala.",
+                "Focar apenas no socioemocional, deixando o conteúdo acadêmico para tutores virtuais."
+            ],
+            correct: 1, // Letra B
+            explanation: "**Gabarito: B**\n\nO professor torna-se o arquiteto do percurso de aprendizagem. Ele não é mais a única fonte (oráculo), mas é o mediador essencial para transformar informação em conhecimento."
+        }
+    ];
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        container.innerHTML = quizData.map((q, qIndex) => `
+            <div class="question-card" id="q-card-${qIndex}">
+                <div class="question-meta">${q.meta}</div>
+                <div class="question-text"><strong>${q.id}.</strong> ${q.question}</div>
+                <div class="options-container">
+                    ${q.options.map((opt, oIndex) => `
+                        <label class="option" id="opt-${qIndex}-${oIndex}">
+                            <input type="radio" name="q${qIndex}" value="${oIndex}" onclick="selectOption(${qIndex}, ${oIndex})">
+                            <span class="option-label">${String.fromCharCode(65 + oIndex)}) ${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function selectOption(qIndex, oIndex) {
+        // Remove a classe 'selected' de todas as opções daquela questão
+        for(let i=0; i<5; i++) {
+            document.getElementById(`opt-${qIndex}-${i}`).classList.remove('selected');
+        }
+        // Adiciona na selecionada
+        document.getElementById(`opt-${qIndex}-${oIndex}`).classList.add('selected');
+    }
+
+    function calculateResults() {
+        let score = 0;
+        const resolutionsList = document.getElementById('resolutions-list');
+        resolutionsList.innerHTML = '';
+
+        quizData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const isCorrect = selected && parseInt(selected.value) === q.correct;
+            
+            if(isCorrect) score++;
+
+            // Criar card de resolução
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            
+            const userChoice = selected ? String.fromCharCode(65 + parseInt(selected.value)) : "Não respondida";
+            const correctLetter = String.fromCharCode(65 + q.correct);
+
+            resCard.innerHTML = `
+                <div class="resolution-title">
+                    <span>Questão ${q.id}</span>
+                    <span class="${isCorrect ? 'badge-correct' : 'badge-incorrect'}">
+                        ${isCorrect ? '<span class="status-icon">✓</span> Correto' : '<span class="status-icon">✗</span> Incorreto'}
+                    </span>
+                </div>
+                <p style="margin-bottom: 10px;">
+                    Sua resposta: <strong>${userChoice}</strong> | 
+                    Gabarito: <strong>${correctLetter}</strong>
+                </p>
+                <div class="analysis-text">${q.explanation}</div>
+            `;
+            resolutionsList.appendChild(resCard);
+        });
+
+        // Mostrar resultados
+        document.getElementById('quiz-container').style.display = 'none';
+        document.getElementById('quiz-controls').style.display = 'none';
+        document.getElementById('results-area').style.display = 'block';
+        document.getElementById('final-score').innerText = `${score}/${quizData.length}`;
+        
+        const msg = score >= 7 ? "Excelente desempenho! Você demonstra domínio do tema." : 
+                    score >= 5 ? "Bom desempenho. Recomenda-se revisar os pontos onde houve erro." : 
+                    "Continue estudando. Foque nos comentários detalhados abaixo.";
+        document.getElementById('performance-msg').innerText = msg;
+
+        // Rolar para o topo suavemente
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Inicializar
+    window.onload = renderQuiz;
+</script>
+
+</body>
+</html>

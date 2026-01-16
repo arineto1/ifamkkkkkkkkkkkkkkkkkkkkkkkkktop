@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Didática: Organização do Trabalho Docente</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-color: #636e72;
+            --border-color: #dfe6e9;
+            --correct-bg: #ecfaf2;
+            --correct-border: #2ecc71;
+            --wrong-bg: #fff5f5;
+            --wrong-border: #ff7675;
+            --max-width: 850px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.65;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 1.5rem 5rem 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #1e272e;
+        }
+
+        p.subtitle {
+            color: var(--secondary-color);
+            font-size: 1rem;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+        }
+
+        .option-label {
+            display: block;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f1f2f6;
+            border-color: #b2bec3;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .option-label.selected {
+            background-color: #ebf5ff;
+            border-color: var(--primary-color);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 2rem;
+        }
+
+        .btn-submit:hover {
+            background-color: #0873c4;
+        }
+
+        #results-section {
+            display: none;
+            margin-top: 3rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-card {
+            background-color: #fff;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .resolution-card {
+            background-color: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .resolution-header {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .correct { color: #27ae60; background: #eafaf1; }
+        .wrong { color: #c0392b; background: #fdf2f2; }
+
+        .explanation {
+            background-color: #f9f9f9;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .refutation {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 0 1rem; }
+            .question-card { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container" style="padding: 0;">
+        <h1>Simulado: Organização do Trabalho Docente</h1>
+        <p class="subtitle">Banca: Fundação CEFETMINAS | 10 Questões</p>
+    </div>
+</header>
+
+<div class="container">
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- Questions will be injected here by JS -->
+        </div>
+        <button type="submit" class="btn-submit">Finalizar e Ver Resultados</button>
+    </form>
+
+    <div id="results-section">
+        <div class="score-card">
+            <h2>Seu Resultado</h2>
+            <div id="score-display" class="score-value">0 / 10</div>
+            <p id="score-feedback"></p>
+        </div>
+
+        <h2 style="margin-bottom: 1.5rem; border-left: 5px solid var(--primary-color); padding-left: 1rem;">Gabarito Comentado</h2>
+        <div id="resolutions-container">
+            <!-- Resolutions will be injected here -->
+        </div>
+        
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="btn-submit" style="background-color: var(--secondary-color); margin-top: 1rem;">Voltar ao Topo</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "A organização do trabalho docente exige o planejamento das ações pedagógicas que serão vivenciadas na sala de aula e na escola. Segundo Vasconcellos, planejar é:",
+            options: [
+                "A) Elaborar um único plano para as diferentes turmas.",
+                "B) Escolher o livro didático e segui-lo do início ao fim.",
+                "C) Definir um percurso significativo do conteúdo a ser trabalhado.",
+                "D) Utilizar textos extraídos de um único livro.",
+                "E) Dar conta de todo o conteúdo de educação disponível na Internet."
+            ],
+            answer: 2, // Index of C
+            explanation: "O planejamento é a mediação teórico-metodológica para a ação. Segundo Vasconcellos, planejar é definir um percurso significativo do conteúdo, onde o professor antecipa mentalmente a ação para transformá-la, garantindo intencionalidade.",
+            refutation: "As demais opções representam visões burocráticas, homogeneizantes ou alienadas do trabalho docente, que ignoram a autonomia do professor e a diversidade dos alunos."
+        },
+        {
+            id: 2,
+            question: "O plano de aula é a proposta de trabalho do professor para uma determinada aula ou conjunto de aulas e corresponde ao maior nível de detalhamento e de objetividade do processo de planejamento didático. A respeito da organização e do desenvolvimento de materiais pedagógicos que compõem o plano de aula, é correto afirmar que:",
+            options: [
+                "A) para tornar a aula mais atrativa, em alguns dias da semana, o professor deve utilizar ou desenvolver recursos para o trabalho pedagógico.",
+                "B) consideram-se recursos que devem ser preparados para o trabalho: os jogos, as atividades, os audiovisuais e todas as condições para a aplicação de uma técnica.",
+                "C) mesmo sem o planejamento da aula, o professor consegue aproveitar todos os materiais pedagógicos que possui, contribuindo, assim, para a aprendizagem mais eficaz do aluno.",
+                "D) uma das implicações acarretadas pelo grau de complexidade da prática pedagógica em sala de aula é a impossibilidade do professor de desenvolver recursos e materiais pedagógicos."
+            ],
+            answer: 1,
+            explanation: "Recursos didáticos são meios materiais utilizados para auxiliar o processo de ensino-aprendizagem. A alternativa B define corretamente que jogos, atividades e audiovisuais são recursos que exigem preparação e planejamento prévios.",
+            refutation: "A) Recursos não são apenas para 'atrair' em dias isolados. C) Sem planejamento, materiais perdem sua função pedagógica. D) O professor deve sim ser um desenvolvedor de recursos."
+        },
+        {
+            id: 3,
+            question: "Complete as lacunas:\nI. A avaliação ________ deve acontecer no início de cada ciclo ou ano letivo.\nII. A avaliação ________ tem como propósito informar ao professor e ao aluno sobre os resultados da aprendizagem durante as atividades.\nIII. A avaliação ________ tem a função de classificar os alunos ao final da unidade, semestre ou ano letivo.",
+            options: [
+                "A) diagnóstica, formativa, somativa.",
+                "B) primária, secundária, terciária.",
+                "C) diagnóstica, somativa, informativa.",
+                "D) introdutória, informativa, classificatória."
+            ],
+            answer: 0,
+            explanation: "A taxonomia clássica define: Diagnóstica (início/sondagem), Formativa (durante/regulação) e Somativa (final/classificação).",
+            refutation: "B, C e D utilizam termos não técnicos da didática ou invertem as funções das avaliações descritas no enunciado."
+        },
+        {
+            id: 4,
+            question: "Associe corretamente os marcos do PPP segundo Vasconcellos: (1) Marco Situacional, (2) Marco Doutrinal, (3) Marco Operativo.",
+            options: [
+                "A) 1, 2, 3.",
+                "B) 3, 1, 2.",
+                "C) 3, 2, 1.",
+                "D) 2, 1, 3."
+            ],
+            answer: 1,
+            explanation: "A ordem apresentada no enunciado (Operativo, Situacional, Doutrinal) corresponde à sequência 3, 1, 2. Marco Situacional analisa a realidade; Marco Doutrinal define o horizonte/valores; Marco Operativo define as ações concretas.",
+            refutation: "As outras sequências confundem os conceitos de análise da realidade com os de diretrizes ou propostas de intervenção."
+        },
+        {
+            id: 5,
+            question: "Sobre a Pedagogia de Projetos, considere as afirmativas: I. Espalhar cartazes; II. Clareza de propósitos; III. Previsão de múltiplos saberes; IV. Impactar a composição do PPP.",
+            options: [
+                "A) I, II e IV.",
+                "B) I, II e III.",
+                "C) II e III apenas.",
+                "D) II, III e IV."
+            ],
+            answer: 3,
+            explanation: "Trabalhar com projetos exige intencionalidade (II), multidimensionalidade (III) e integração à proposta política da escola (IV).",
+            refutation: "A afirmativa I é incorreta por focar na 'pedagogia de eventos' (superficialidade), enquanto a didática crítica exige profundidade conceitual no projeto."
+        },
+        {
+            id: 6,
+            question: "Sobre as teorias do currículo, é correto afirmar:",
+            options: [
+                "A) I, II e IV estão corretas (Currículo como artefato social, relação de poder e terreno de política cultural).",
+                "B) II, III e IV estão corretas.",
+                "C) Todas estão corretas.",
+                "D) Apenas I e II estão corretas."
+            ],
+            answer: 0,
+            explanation: "O currículo é um artefato social e histórico, nunca neutro, envolvendo relações de poder e produção de identidades.",
+            refutation: "A afirmação III (contida no documento original como errada) dizia que o currículo é transcendente e atemporal, o que nega sua natureza social e histórica."
+        },
+        {
+            id: 7,
+            question: "Associe: (1) Pedagogia Tradicional, (2) Pedagogia Nova.",
+            options: [
+                "A) 2, 1, 1, 2.",
+                "B) 1, 2, 2, 1.",
+                "C) 2, 2, 1, 1.",
+                "D) 1, 1, 2, 2."
+            ],
+            answer: 0,
+            explanation: "A sequência 2, 1, 1, 2 reflete: Aprender a aprender (Nova); Centralidade da instrução (Tradicional); Transmissão de conteúdos (Tradicional); Centralidade do educando (Nova).",
+            refutation: "Esta classificação de Saviani distingue o foco no método/processo (Escola Nova) do foco no conteúdo/professor (Tradicional)."
+        },
+        {
+            id: 8,
+            question: "A quais etapas do planejamento se referem: I. 'O que queremos?', II. 'A que distância estamos?', III. 'O que faremos?'",
+            options: [
+                "A) I - objetivo / II - planejamento / III - execução.",
+                "B) I - objetivo / II - diagnóstico / III - programação.",
+                "C) I - metas / II - programação / III - planejamento.",
+                "D) I - programação / II - objetivo / III - diagnóstico."
+            ],
+            answer: 1,
+            explanation: "I define o Objetivo; II é o Diagnóstico (comparação realidade x ideal); III é a Programação (estratégias).",
+            refutation: "As outras opções confundem os termos técnicos do sistema lógico de planejamento escolar."
+        },
+        {
+            id: 9,
+            question: "Relacione os níveis: 1. PPP, 2. Plano de Ensino, 3. Plano de Aula.",
+            options: [
+                "A) 1, 2, 3.",
+                "B) 3, 1, 2.",
+                "C) 3, 2, 1.",
+                "D) 2, 1, 3."
+            ],
+            answer: 1,
+            explanation: "A ordem nas definições dadas é: Plano de Aula (curto prazo/detalhado), PPP (global/filosofia), Plano de Ensino (ano ou semestre/disciplina).",
+            refutation: "As outras alternativas não respeitam a hierarquia de abrangência (Macro, Meso, Micro) dos planos escolares."
+        },
+        {
+            id: 10,
+            question: "De acordo com Libâneo, a verdadeira democratização do ensino implica:",
+            options: [
+                "A) a aprovação automática dos alunos para evitar a evasão.",
+                "B) a oferta de um ensino de qualidade que garanta a apropriação dos conhecimentos sistematizados.",
+                "C) a substituição dos conteúdos científicos por saberes do cotidiano.",
+                "D) a transformação da escola em um centro de assistência social."
+            ],
+            answer: 1,
+            explanation: "Para Libâneo, democratizar é garantir que as camadas populares dominem os conhecimentos científicos, pois o saber é instrumento de luta e cidadania.",
+            refutation: "A) A aprovação sem saber é farsa. C) O cotidiano é ponto de partida, não de chegada. D) Assistencialismo desvirtua a função pedagógica da escola."
+        }
+    ];
+
+    const questionsContainer = document.getElementById('questions-container');
+    const resolutionsContainer = document.getElementById('resolutions-container');
+    const quizForm = document.getElementById('quiz-form');
+    const resultsSection = document.getElementById('results-section');
+    const scoreDisplay = document.getElementById('score-display');
+    const scoreFeedback = document.getElementById('score-feedback');
+
+    // Initialize Quiz
+    function renderQuiz() {
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <span class="question-text">Questão ${index + 1}: ${q.question}</span>
+                <ul class="options-list">
+                    ${q.options.map((opt, optIndex) => `
+                        <li class="option-item">
+                            <label class="option-label" id="label-q${q.id}-o${optIndex}">
+                                <input type="radio" name="q${q.id}" value="${optIndex}" required>
+                                ${opt}
+                            </label>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+            questionsContainer.appendChild(card);
+
+            // Add visual selection effect
+            const radios = card.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    card.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
+                    if(e.target.checked) {
+                        document.getElementById(`label-q${q.id}-o${e.target.value}`).classList.add('selected');
+                    }
+                });
+            });
+        });
+    }
+
+    // Handle Form Submission
+    quizForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(quizForm);
+        let score = 0;
+        
+        resolutionsContainer.innerHTML = ''; // Clear previous
+
+        quizData.forEach((q, index) => {
+            const userAnswer = parseInt(formData.get(`q${q.id}`));
+            const isCorrect = userAnswer === q.answer;
+            if (isCorrect) score++;
+
+            // Build Resolution Card
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            resCard.innerHTML = `
+                <div class="resolution-header">Questão ${index + 1}</div>
+                <div class="status-badge ${isCorrect ? 'correct' : 'wrong'}">
+                    ${isCorrect ? '✓ VOCÊ ACERTOU' : '✗ VOCÊ ERROU'}
+                </div>
+                <p><strong>Resposta Correta:</strong> ${q.options[q.answer]}</p>
+                <div class="explanation">
+                    <strong>Resolução Analítica:</strong><br>
+                    ${q.explanation}
+                </div>
+                <div class="refutation">
+                    <strong>Por que as outras estão incorretas:</strong><br>
+                    ${q.refutation}
+                </div>
+            `;
+            resolutionsContainer.appendChild(resCard);
+        });
+
+        // Show Results
+        scoreDisplay.textContent = `${score} / ${quizData.length}`;
+        resultsSection.style.display = 'block';
+        
+        if (score >= 8) {
+            scoreFeedback.textContent = "Excelente desempenho! Você domina bem as bases da Didática da CEFETMINAS.";
+            scoreFeedback.style.color = "#27ae60";
+        } else if (score >= 5) {
+            scoreFeedback.textContent = "Bom trabalho, mas revise os pontos onde houve erro para consolidar o conhecimento.";
+            scoreFeedback.style.color = "#d35400";
+        } else {
+            scoreFeedback.textContent = "Recomendamos uma leitura aprofundada dos autores base como Vasconcellos e Libâneo.";
+            scoreFeedback.style.color = "#c0392b";
+        }
+
+        // Hide form and scroll to results
+        quizForm.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    renderQuiz();
+</script>
+
+</body>
+</html>
