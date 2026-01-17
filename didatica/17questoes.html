@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Didática Contextualizada à Amazônia</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --correct-color: #27ae60;
+            --wrong-color: #d63031;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --max-width: 850px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            width: 100%;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #1e272e;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #636e72;
+            font-style: italic;
+        }
+
+        .question-block {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .quote-box {
+            background: #f1f2f6;
+            padding: 15px 20px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f0f7ff;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            margin-top: 6px;
+            cursor: pointer;
+        }
+
+        .selected {
+            background-color: #e3f2fd !important;
+            border-color: var(--accent-color) !important;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0873c4;
+        }
+
+        /* Result Section */
+        #results-container {
+            display: none;
+            margin-top: 50px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .score-summary {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .resolution-item {
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .resolution-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+
+        .correct-answer-label {
+            color: var(--correct-color);
+            font-weight: bold;
+        }
+
+        .wrong-answer-label {
+            color: var(--wrong-color);
+            font-weight: bold;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .bg-correct { background-color: var(--correct-color); }
+        .bg-wrong { background-color: var(--wrong-color); }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Didática: Fundamentos Contextualizados à Amazônia</h1>
+        <p class="description">Simulado Estilo Fundação CEFETMINAS - Práticas e Saberes Locais</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 1 -->
+        <div class="question-block" data-q="1">
+            <span class="question-text">Questão 1</span>
+            <p>A construção curricular na Amazônia enfrenta o desafio histórico de superar a colonialidade do saber, que frequentemente marginaliza as epistemologias locais em favor de um cientificismo descontextualizado. Considerando os fundamentos da didática contextualizada e a relação entre saberes locais e universais, analise o texto abaixo e assinale a alternativa que reflete a perspectiva crítica da educação amazônica:</p>
+            <div class="quote-box">
+                "O currículo não é um instrumento neutro; é um território em disputa. Na Amazônia, o silenciamento dos saberes das águas e da floresta em nome de uma 'qualidade' educacional medida por índices urbanos constitui uma violência epistêmica."
+            </div>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q1" value="A"> A) A didática contextualizada na Amazônia deve priorizar a substituição integral dos conhecimentos científicos ocidentais pelas cosmologias indígenas.</label>
+                <label class="option-item"><input type="radio" name="q1" value="B"> B) A contextualização eficaz ocorre quando o professor utiliza lendas e mitos locais exclusivamente nas aulas de Artes e Ensino Religioso.</label>
+                <label class="option-item"><input type="radio" name="q1" value="C"> C) A didática deve fundamentar-se na interculturalidade crítica, promovendo uma "ecologia de saberes" onde o conhecimento escolar dialoga horizontalmente com os saberes tradicionais.</label>
+                <label class="option-item"><input type="radio" name="q1" value="D"> D) A adaptação curricular para escolas do campo e ribeirinhas restringe-se, legalmente, à flexibilização do calendário escolar.</label>
+                <label class="option-item"><input type="radio" name="q1" value="E"> E) O papel da escola na Amazônia é civilizatório, devendo a didática funcionar como um filtro que corrige concepções errôneas e supersticiosas.</label>
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-block" data-q="2">
+            <span class="question-text">Questão 2</span>
+            <p>Sobre a organização escolar, o calendário e as práticas pedagógicas nas escolas ribeirinhas (Resolução CNE/CEB nº 1/2002), analise as afirmativas a seguir:</p>
+            <p>I. A legislação permite a redução da carga horária mínima anual de 800 horas para 600 horas nas escolas de várzea.<br>
+            II. A adaptação do calendário escolar ao ciclo das águas é uma prerrogativa legal dos sistemas de ensino.<br>
+            III. A metodologia da Pedagogia da Alternância é uma estratégia didática recomendada para o contexto amazônico.<br>
+            IV. O Projeto Político-Pedagógico deve ser unificado e idêntico ao das escolas da sede municipal.</p>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q2" value="A"> A) I e II, apenas.</label>
+                <label class="option-item"><input type="radio" name="q2" value="B"> B) II e III, apenas.</label>
+                <label class="option-item"><input type="radio" name="q2" value="C"> C) III e IV, apenas.</label>
+                <label class="option-item"><input type="radio" name="q2" value="D"> D) I, II e III, apenas.</label>
+                <label class="option-item"><input type="radio" name="q2" value="E"> E) II, III e IV, apenas.</label>
+            </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-block" data-q="3">
+            <span class="question-text">Questão 3</span>
+            <p>Assinale a alternativa que apresenta corretamente um princípio didático-pedagógico fundamental para a educação escolar indígena (Resolução CNE/CEB nº 5/2012) no contexto amazônico atual:</p>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q3" value="A"> A) O bilinguismo aditivo, assegurando que a língua materna indígena seja utilizada como língua de instrução e produção de conhecimentos.</label>
+                <label class="option-item"><input type="radio" name="q3" value="B"> B) A padronização didática, que obriga as escolas indígenas a utilizarem exclusivamente os livros didáticos do PNLD urbanos.</label>
+                <label class="option-item"><input type="radio" name="q3" value="C"> C) A transitoriedade cultural, onde a escola atua como um espaço de passagem da "tradição" para a "modernidade".</label>
+                <label class="option-item"><input type="radio" name="q3" value="D"> D) A exclusividade docente externa, determinando que apenas professores não-indígenas podem lecionar nas aldeias.</label>
+                <label class="option-item"><input type="radio" name="q3" value="E"> E) A dissociação entre gestão escolar e organização comunitária, blindando o espaço escolar das interferências dos caciques.</label>
+            </div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-block" data-q="4">
+            <span class="question-text">Questão 4</span>
+            <p>Segundo a didática contextualizada e a Etnomatemática (Ubiratan D'Ambrosio), ao observar práticas locais como construção de canoas ou trançado de fibras, como o docente deve proceder?</p>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q4" value="A"> A) Utilizar os exemplos locais apenas como "motivação lúdica" no início da aula, descartando-os após a fórmula formal.</label>
+                <label class="option-item"><input type="radio" name="q4" value="B"> B) Ensinar a matemática acadêmica pura o ano todo e reservar uma "Semana do Folclore" para o artesanato.</label>
+                <label class="option-item"><input type="radio" name="q4" value="C"> C) Investigar e dialogar com os processos matemáticos das práticas culturais, utilizando-os como base para a construção de conceitos escolares.</label>
+                <label class="option-item"><input type="radio" name="q4" value="D"> D) Corrigir as formas de medição da comunidade (braças, palmos), demonstrando que são incorretas perante o Sistema Internacional.</label>
+                <label class="option-item"><input type="radio" name="q4" value="E"> E) Substituir integralmente o currículo oficial pela "matemática indígena", abolindo o ensino de álgebra.</label>
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-block" data-q="5">
+            <span class="question-text">Questão 5</span>
+            <p>Sobre a organização do trabalho pedagógico em turmas multisseriadas na Amazônia, assinale a afirmativa INCORRETA:</p>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q5" value="A"> A) Demanda um planejamento flexível e integrado em torno de Eixos Temáticos, superando a fragmentação rígida.</label>
+                <label class="option-item"><input type="radio" name="q5" value="B"> B) A heterogeneidade de idades e saberes é um recurso potente, favorecendo a aprendizagem colaborativa e tutoria entre pares.</label>
+                <label class="option-item"><input type="radio" name="q5" value="C"> C) A didática mais eficaz baseia-se na "aula expositiva única e homogênea", ministrando o conteúdo da série mais avançada para todos.</label>
+                <label class="option-item"><input type="radio" name="q5" value="D"> D) Requer o uso de roteiros de estudo autônomos e cantinhos de aprendizagem diversificados.</label>
+                <label class="option-item"><input type="radio" name="q5" value="E"> E) A formação de professores deve contemplar metodologias específicas para a multisseriação, evitando a transposição mecânica do modelo urbano.</label>
+            </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-block" data-q="6">
+            <span class="question-text">Questão 6</span>
+            <p>Com base nos Temas Transversais e na Educação Ambiental Crítica, a prática docente na Amazônia deve:</p>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q6" value="A"> A) Adotar uma postura de "preservacionismo intocado", removendo populações ribeirinhas de suas terras para conservação.</label>
+                <label class="option-item"><input type="radio" name="q6" value="B"> B) Focar estritamente nos ciclos biológicos (fotossíntese), evitando temas polêmicos como conflitos de terra para manter a neutralidade.</label>
+                <label class="option-item"><input type="radio" name="q6" value="C"> C) Promover uma educação socioambiental que articule dimensões ecológica, econômica e social, reconhecendo povos da floresta como sujeitos de direitos.</label>
+                <label class="option-item"><input type="radio" name="q6" value="D"> D) Reproduzir o discurso de que a Amazônia é o "pulmão do mundo", focando na responsabilidade exclusiva dos alunos locais em salvar o planeta.</label>
+                <label class="option-item"><input type="radio" name="q6" value="E"> E) Priorizar o estudo de biomas exóticos, pois os alunos já conhecem a floresta por vivência empírica.</label>
+            </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-block" data-q="7">
+            <span class="question-text">Questão 7</span>
+            <p>Considerando as contribuições de Luckesi e Hoffmann, assinale a prática avaliativa mais coerente com uma didática contextualizada em escolas ribeirinhas:</p>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q7" value="A"> A) Aplicação exclusiva de provas escritas padronizadas bimestrais idênticas às da capital.</label>
+                <label class="option-item"><input type="radio" name="q7" value="B"> B) Adoção da avaliação diagnóstica e formativa, utilizando múltiplos instrumentos (relatórios, desenhos, mapeamento do território).</label>
+                <label class="option-item"><input type="radio" name="q7" value="C"> C) Aprovação automática baseada apenas na frequência, devido às dificuldades de transporte.</label>
+                <label class="option-item"><input type="radio" name="q7" value="D"> D) Utilização de softwares de correção automática de gabaritos como única ferramenta de nota.</label>
+                <label class="option-item"><input type="radio" name="q7" value="E"> E) Punição com perda de pontos para alunos que utilizarem variantes linguísticas regionais ("falar caboclo").</label>
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-block" data-q="8">
+            <span class="question-text">Questão 8</span>
+            <p>No contexto da didática amazônica e dos "saberes docentes" (Maurice Tardif), o professor deve:</p>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q8" value="A"> A) Abandonar o ensino dos conteúdos oficiais para se dedicar exclusivamente ao registro antropológico das tradições.</label>
+                <label class="option-item"><input type="radio" name="q8" value="B"> B) Atuar como um agente civilizador, impondo a cultura letrada urbana como superior.</label>
+                <label class="option-item"><input type="radio" name="q8" value="C"> C) Desenvolver capacidade de leitura cultural, estabelecendo pontes entre o "mundo da vida" e o "mundo da escola".</label>
+                <label class="option-item"><input type="radio" name="q8" value="D"> D) Restringir sua atuação à sala de aula, evitando contato com as famílias para manter a autoridade.</label>
+                <label class="option-item"><input type="radio" name="q8" value="E"> E) Focar apenas nos saberes disciplinares (Português e Matemática), pois a realidade cultural é responsabilidade da família.</label>
+            </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-block" data-q="9">
+            <span class="question-text">Questão 9</span>
+            <p>Sob a ótica de uma didática crítica, como deve ser a integração de tecnologias (como aulas via satélite) na educação amazônica?</p>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q9" value="A"> A) A tecnologia deve substituir integralmente o professor local, dada a qualidade técnica superior dos estúdios.</label>
+                <label class="option-item"><input type="radio" name="q9" value="B"> B) As tecnologias devem ser rejeitadas, pois representam uma invasão cultural que descaracteriza os modos tradicionais.</label>
+                <label class="option-item"><input type="radio" name="q9" value="C"> C) A tecnologia deve ser ferramenta de mediação, onde o professor presencial articula o conteúdo digital com a realidade local.</label>
+                <label class="option-item"><input type="radio" name="q9" value="D"> D) O simples envio de tablets e instalação de antenas é suficiente para garantir a qualidade do ensino.</label>
+                <label class="option-item"><input type="radio" name="q9" value="E"> E) O uso de tecnologias deve se restringir ao ensino de informática básica (Office).</label>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-block" data-q="10">
+            <span class="question-text">Questão 10</span>
+            <p>Em uma escola de Reserva Extrativista, qual abordagem exemplifica corretamente o uso de um "Tema Gerador" (Paulo Freire)?</p>
+            <div class="options">
+                <label class="option-item"><input type="radio" name="q10" value="A"> A) A Secretaria envia o tema "A Era da Informação" como obrigatório, ignorando a falta de energia na comunidade.</label>
+                <label class="option-item"><input type="radio" name="q10" value="B"> B) O professor seleciona o tema "A Castanha-do-Pará" com a comunidade, desdobrando conteúdos de Biologia, Matemática e Geografia.</label>
+                <label class="option-item"><input type="radio" name="q10" value="C"> C) O currículo é organizado exclusivamente por datas comemorativas nacionais abordadas de forma folclórica.</label>
+                <label class="option-item"><input type="radio" name="q10" value="D"> D) O professor define o tema "O Metrô" para modernizar a visão de mundo, proibindo discussões sobre extrativismo.</label>
+                <label class="option-item"><input type="radio" name="q10" value="E"> E) O aluno decide sozinho o que quer estudar sem planejamento do professor, resultando em currículo espontaneísta.</label>
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="calculateResults()">Finalizar Quiz</button>
+    </form>
+
+    <div id="results-container">
+        <div class="score-summary" id="score-display"></div>
+        <div id="resolutions-list"></div>
+    </div>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: 'C', q2: 'B', q3: 'A', q4: 'C', q5: 'C',
+        q6: 'C', q7: 'B', q8: 'C', q9: 'C', q10: 'B'
+    };
+
+    const resolutions = {
+        q1: "A interculturalidade crítica promove uma 'ecologia de saberes' onde o conhecimento escolar dialoga horizontalmente com os saberes tradicionais, reconhecendo que diferentes formas de explicar o mundo podem coexistir e enriquecer a compreensão da realidade amazônica.",
+        q2: "O Art. 28 da LDB permite a adequação do calendário escolar às condições climáticas e ciclos agrícolas (ciclo das águas), mas nunca a redução da carga horária de 800h. A Pedagogia da Alternância é uma metodologia recomendada para integrar o aprendizado formal à vida comunitária.",
+        q3: "O bilinguismo aditivo assegura que a língua materna indígena seja utilizada não apenas como disciplina, mas como língua de instrução e produção de conhecimentos, fortalecendo a identidade e os processos cognitivos dos estudantes.",
+        q4: "A Etnomatemática propõe investigar e dialogar com as práticas culturais (modelagem, geometria dos trançados), utilizando-os como base para construir conceitos escolares, ampliando a compreensão sobre a diversidade da matemática.",
+        q5: "A alternativa incorreta é a C. Em classes multisseriadas, a aula expositiva homogênea é ineficaz. O correto é o planejamento integrado e flexível que respeite os diferentes níveis de aprendizagem presentes na mesma sala.",
+        q6: "A educação socioambiental crítica articula as dimensões ecológica, econômica e social, reconhecendo povos da floresta como sujeitos de direitos e debatendo criticamente os modelos de desenvolvimento aplicados à região.",
+        q7: "A avaliação deve ser diagnóstica, processual e formativa, utilizando múltiplos instrumentos que valorizem os saberes prévios e considerem as variáveis do contexto (como os ciclos da natureza) no planejamento.",
+        q8: "O professor deve desenvolver a capacidade de leitura cultural, estabelecendo pontes entre o 'mundo da vida' dos alunos (pesca, roça) e o 'mundo da escola', legitimando as práticas locais como matrizes de conhecimento válidas.",
+        q9: "A tecnologia deve funcionar como ferramenta de mediação, onde o professor presencial atua como articulador entre o conteúdo digital e a realidade local, incentivando a autoria e a análise crítica.",
+        q10: "O Tema Gerador nasce da investigação da realidade local. A partir da 'Castanha-do-Pará', desdobram-se conteúdos científicos integrados (Biologia, Matemática, História), promovendo a conscientização e a aprendizagem significativa."
+    };
+
+    // Estilização das opções ao clicar
+    document.querySelectorAll('.option-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const radio = this.querySelector('input');
+            const name = radio.getAttribute('name');
+            document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                r.parentElement.classList.remove('selected');
+            });
+            radio.checked = true;
+            this.classList.add('selected');
+        });
+    });
+
+    function calculateResults() {
+        const form = document.getElementById('quiz-form');
+        const resultsDiv = document.getElementById('results-container');
+        const scoreDisplay = document.getElementById('score-display');
+        const resList = document.getElementById('resolutions-list');
+        
+        let score = 0;
+        let htmlResolutions = "<h3>Resoluções Detalhadas:</h3>";
+
+        for (let i = 1; i <= 10; i++) {
+            const qName = 'q' + i;
+            const selected = form.querySelector(`input[name="${qName}"]:checked`);
+            const isCorrect = selected && selected.value === correctAnswers[qName];
+            
+            if (isCorrect) score++;
+
+            const statusClass = isCorrect ? 'bg-correct' : 'bg-wrong';
+            const statusText = isCorrect ? 'ACERTOU' : 'ERROU';
+            const userChoice = selected ? selected.value : "Não respondida";
+
+            htmlResolutions += `
+                <div class="resolution-item">
+                    <div class="resolution-title">
+                        Questão ${i} 
+                        <span class="status-badge ${statusClass}">${statusText}</span>
+                    </div>
+                    <p><strong>Sua resposta:</strong> ${userChoice}</p>
+                    <p class="correct-answer-label"><strong>Gabarito Correto:</strong> ${correctAnswers[qName]}</p>
+                    <p><strong>Resolução:</strong> ${resolutions[qName]}</p>
+                </div>
+            `;
+        }
+
+        scoreDisplay.innerHTML = `Você acertou ${score} de 10 questões! (${(score/10)*100}%)`;
+        resList.innerHTML = htmlResolutions;
+        resultsDiv.style.display = 'block';
+        
+        // Scroll para os resultados
+        resultsDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

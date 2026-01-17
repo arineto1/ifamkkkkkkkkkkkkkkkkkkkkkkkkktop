@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Interativo: Didática e Formação Docente</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #1a202c;
+            --primary-color: #2b6cb0;
+            --secondary-color: #4a5568;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #38a169;
+            --error-color: #e53e3e;
+            --highlight-bg: #ebf8ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-size: 1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .options-list {
+            list-style: none;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: var(--highlight-bg);
+            border-color: var(--primary-color);
+        }
+
+        input[type="radio"] {
+            margin-right: 12px;
+            margin-top: 6px;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 2rem;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c5282;
+        }
+
+        /* Results & Resolutions Styling */
+        #results-section {
+            display: none;
+            margin-top: 3rem;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .score-board {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .resolution-card {
+            background: #fff;
+            border-left: 5px solid var(--primary-color);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-correct { background: var(--success-color); color: white; }
+        .status-incorrect { background: var(--error-color); color: white; }
+
+        .correct-answer-info {
+            background: #f0fff4;
+            color: #22543d;
+            padding: 0.5rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1rem 0.5rem; }
+            .question-card { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado de Didática e Formação Docente</h1>
+        <p class="subtitle">Estilo Fundação CEFETMINAS | 10 Questões Comentadas</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 1 -->
+        <div class="question-card" id="q1-container">
+            <p class="question-text">1. Ivani Fazenda argumenta que a mera integração de conteúdos não configura prática interdisciplinar. Na formação inicial e seminários interdisciplinares, a autora defende que a interdisciplinaridade deve ser compreendida como:</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q1" value="A"> A) Uma metodologia de ensino baseada na fusão de disciplinas afins, criando uma "superdisciplina".</label>
+                <label class="option-item option-label"><input type="radio" name="q1" value="B"> B) Uma categoria de conhecimento que exige a criação de uma linguagem única e universal.</label>
+                <label class="option-item option-label"><input type="radio" name="q1" value="C"> C) Uma atitude de ousadia e busca frente ao conhecimento, pautada na humildade e na "escuta sensível".</label>
+                <label class="option-item option-label"><input type="radio" name="q1" value="D"> D) Um arranjo curricular administrativo que agrupa professores em departamentos multidisciplinares.</label>
+                <label class="option-item option-label"><input type="radio" name="q1" value="E"> E) A justaposição de conteúdos programáticos em uma mesma grade horária.</label>
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-card" id="q2-container">
+            <p class="question-text">2. Segundo Ilma Passos Veiga, a implementação correta de seminários interdisciplinares na formação continuada deve obedecer a quais etapas lógicas?</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q2" value="A"> A) Leitura individual silenciosa, seguida de prova escrita e exposição oral facultativa.</label>
+                <label class="option-item option-label"><input type="radio" name="q2" value="B"> B) Investigação (pesquisa), Organização (sistematização) e Socialização (debate crítico).</label>
+                <label class="option-item option-label"><input type="radio" name="q2" value="C"> C) Distribuição de tópicos do livro didático, memorização e repetição oral.</label>
+                <label class="option-item option-label"><input type="radio" name="q2" value="D"> D) Exposição magistral do professor especialista seguida de perguntas e respostas pontuais.</label>
+                <label class="option-item option-label"><input type="radio" name="q2" value="E"> E) Definição do tema pelo gestor e leitura de slides padronizados pela coordenação.</label>
+            </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card" id="q3-container">
+            <p class="question-text">3. Sobre a articulação entre formação inicial e continuada e as necessidades locais (LDB e BNC-Formação), analise:</p>
+            <p style="margin-bottom: 1rem; font-size: 0.95rem; font-style: italic;">I. Formação inicial foca no geral; continuada dialoga com o PPP e contexto local.<br>II. Necessidades locais devem ser ignoradas na inicial para garantir padronização.<br>III. BNC-Formação institui competências como eixo norteador.<br>IV. Art. 61 da LDB veda utilização de experiências docentes anteriores.</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q3" value="A"> A) Estão corretas as afirmativas I e III, apenas.</label>
+                <label class="option-item option-label"><input type="radio" name="q3" value="B"> B) Estão corretas as afirmativas II e IV, apenas.</label>
+                <label class="option-item option-label"><input type="radio" name="q3" value="C"> C) Estão corretas as afirmativas I, II e III.</label>
+                <label class="option-item option-label"><input type="radio" name="q3" value="D"> D) Estão corretas as afirmativas III e IV, apenas.</label>
+                <label class="option-item option-label"><input type="radio" name="q3" value="E"> E) Estão corretas as afirmativas I, III e IV.</label>
+            </div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card" id="q4-container">
+            <p class="question-text">4. Como a tríade Conteúdo-Forma-Destinatário de Libâneo se aplica à proposta de seminários sobre necessidades locais?</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q4" value="A"> A) O conteúdo deve ser universal e a forma deve ser a aula expositiva tradicional.</label>
+                <label class="option-item option-label"><input type="radio" name="q4" value="B"> B) A didática é instrumental, servindo apenas para aplicar técnicas de dinâmica de grupo.</label>
+                <label class="option-item option-label"><input type="radio" name="q4" value="C"> C) O método (seminário) não é dissociado do objeto (problemas locais), partindo da análise crítica da realidade.</label>
+                <label class="option-item option-label"><input type="radio" name="q4" value="D"> D) As necessidades locais devem ser tratadas apenas em disciplinas de Geografia.</label>
+                <label class="option-item option-label"><input type="radio" name="q4" value="E"> E) O foco deve estar exclusivamente na Forma, assumindo que o professor já domina o Conteúdo.</label>
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card" id="q5-container">
+            <p class="question-text">5. Segundo Maurice Tardif, qual categoria de saber é primordialmente mobilizada em seminários que visam resolver problemas específicos da comunidade?</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q5" value="A"> A) Saberes Disciplinares: o conhecimento estrito das matérias.</label>
+                <label class="option-item option-label"><input type="radio" name="q5" value="B"> B) Saberes Curriculares: o domínio dos programas oficiais e diretrizes.</label>
+                <label class="option-item option-label"><input type="radio" name="q5" value="C"> C) Saberes da Formação Profissional: teorias pedagógicas da faculdade.</label>
+                <label class="option-item option-label"><input type="radio" name="q5" value="D"> D) Saberes Experienciais: aqueles que brotam da prática cotidiana e condições reais de trabalho.</label>
+                <label class="option-item option-label"><input type="radio" name="q5" value="E"> E) Saberes Espirituais: conhecimentos de ordem metafísica e vocacional.</label>
+            </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card" id="q6-container">
+            <p class="question-text">6. De acordo com Luckesi e Hoffmann, qual abordagem avaliativa é coerente para seminários sobre práticas inclusivas na formação docente?</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q6" value="A"> A) Avaliação somativa final baseada unicamente na oratória e estética de slides.</label>
+                <label class="option-item option-label"><input type="radio" name="q6" value="B"> B) Avaliação diagnóstica e processual, acompanhando a pesquisa e pertinência da intervenção.</label>
+                <label class="option-item option-label"><input type="radio" name="q6" value="C"> C) Avaliação punitiva, focada em descontar pontos por cada erro conceitual.</label>
+                <label class="option-item option-label"><input type="radio" name="q6" value="D"> D) Autoavaliação irrestrita sem necessidade de juízo de valor do formador.</label>
+                <label class="option-item option-label"><input type="radio" name="q6" value="E"> E) Isenção de avaliação para não constranger os cursistas profissionalmente.</label>
+            </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card" id="q7-container">
+            <p class="question-text">7. Como os "Seminários Interdisciplinares" se encaixam no Grupo II (Prática Profissional) da BNC-Formação (Res. 02/2019)?</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q7" value="A"> A) São proibidos, pois a carga horária prática deve ser apenas estágio supervisionado.</label>
+                <label class="option-item option-label"><input type="radio" name="q7" value="B"> B) Devem ser restritos ao Grupo I (Conhecimento), tratando apenas de teorias abstratas.</label>
+                <label class="option-item option-label"><input type="radio" name="q7" value="C"> C) Constituem estratégias privilegiadas para articulação entre teoria e prática e resolução de situações-problema.</label>
+                <label class="option-item option-label"><input type="radio" name="q7" value="D"> D) Servem apenas para o cumprimento de horas complementares opcionais.</label>
+                <label class="option-item option-label"><input type="radio" name="q7" value="E"> E) Devem focar exclusivamente na memorização da legislação educacional.</label>
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card" id="q8-container">
+            <p class="question-text">8. Ao propor um seminário sobre "Sustentabilidade Local" em uma escola técnica, a abordagem interdisciplinar correta implica:</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q8" value="A"> A) Que cada professor fale de sua área em dias diferentes sem diálogo entre si.</label>
+                <label class="option-item option-label"><input type="radio" name="q8" value="B"> B) A definição de um problema complexo real onde as disciplinas são ferramentas de análise e solução.</label>
+                <label class="option-item option-label"><input type="radio" name="q8" value="C"> C) A fusão de todas as disciplinas em uma única matéria, eliminando as divisões específicas.</label>
+                <label class="option-item option-label"><input type="radio" name="q8" value="D"> D) O uso do tema apenas como pretexto para ilustrar o livro didático sem investigação real.</label>
+                <label class="option-item option-label"><input type="radio" name="q8" value="E"> E) A delegação do tema para palestrantes externos (ONGs).</label>
+            </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card" id="q9-container">
+            <p class="question-text">9. Na perspectiva de António Nóvoa e Donald Schön (Professor Reflexivo), a reflexão em seminários deve incidir sobre:</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q9" value="A"> A) A vida pessoal dos alunos para justificar o fracasso escolar.</label>
+                <label class="option-item option-label"><input type="radio" name="q9" value="B"> B) A execução burocrática de tarefas administrativas e preenchimento de diários.</label>
+                <label class="option-item option-label"><input type="radio" name="q9" value="C"> C) A própria ação docente (na ação e sobre a ação) e concepções implícitas de ensino.</label>
+                <label class="option-item option-label"><input type="radio" name="q9" value="D"> D) As teorias educacionais do século XIX, ignorando as contemporâneas.</label>
+                <label class="option-item option-label"><input type="radio" name="q9" value="E"> E) A crítica destrutiva aos colegas e à gestão escolar por catarse emocional.</label>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10-container">
+            <p class="question-text">10. Como os seminários na formação inicial materializam a "Extensão" considerando necessidades locais?</p>
+            <div class="options-list">
+                <label class="option-item option-label"><input type="radio" name="q10" value="A"> A) Realizando os seminários a portas fechadas apenas para o público acadêmico.</label>
+                <label class="option-item option-label"><input type="radio" name="q10" value="B"> B) Limitando a extensão à prestação de serviços pagos para arrecadar fundos.</label>
+                <label class="option-item option-label"><input type="radio" name="q10" value="C"> C) Articulando os temas com demandas da comunidade e devolvendo resultados sob forma de intervenção.</label>
+                <label class="option-item option-label"><input type="radio" name="q10" value="D"> D) Transformando a extensão em aulas de reforço escolar tradicionais sem inovação.</label>
+                <label class="option-item option-label"><input type="radio" name="q10" value="E"> E) Substituindo a pesquisa e o ensino pela extensão em modelo assistencialista.</label>
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Finalizar Simulado e Ver Resoluções</button>
+    </form>
+
+    <!-- Section for results and resolutions -->
+    <div id="results-section">
+        <div class="score-board">
+            <p>Seu Resultado:</p>
+            <span class="score-number" id="final-score">0 / 10</span>
+            <p id="score-message"></p>
+        </div>
+
+        <h2 style="margin-bottom: 2rem; border-bottom: 2px solid var(--primary-color); display: inline-block;">Gabarito Comentado</h2>
+        <div id="resolutions-container">
+            <!-- Resolutions will be injected here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: "C", q2: "B", q3: "A", q4: "C", q5: "D",
+        q6: "B", q7: "C", q8: "B", q9: "C", q10: "C"
+    };
+
+    const explanations = {
+        q1: {
+            title: "Ivani Fazenda: A Atitude Interdisciplinar",
+            text: "Ivani Fazenda define a interdisciplinaridade não como uma categoria de conhecimento, mas como uma **atitude**. Envolve humildade, 'escuta sensível' e busca por um projeto comum sem negar a especificidade das disciplinas."
+        },
+        q2: {
+            title: "Ilma Passos Veiga: Metodologia de Seminários",
+            text: "Veiga estrutura o seminário em três etapas fundamentais: Investigação (pesquisa), Organização (sistematização dos dados) e Socialização (debate dialógico com síntese integradora)."
+        },
+        q3: {
+            title: "Legislação Docente (LDB e BNC)",
+            text: "A formação continuada deve dialogar com o PPP e contexto local (I). A BNC-Formação foca em competências (III). As afirmativas II e IV estão incorretas pois a lei incentiva a flexibilidade e a valorização de experiências prévias."
+        },
+        q4: {
+            title: "Libâneo: Tríade Conteúdo-Forma-Destinatário",
+            text: "A didática crítica de Libâneo exige que o método (seminário) seja coerente com o objeto (necessidades locais), partindo da análise crítica da realidade social e cultural dos sujeitos."
+        },
+        q5: {
+            title: "Maurice Tardif: Saberes Experienciais",
+            text: "Saberes experienciais são os que brotam da prática cotidiana e do confronto com condições reais de trabalho. São fundamentais para resolver problemas locais específicos como evasão escolar."
+        },
+        q6: {
+            title: "Avaliação Transformadora (Luckesi/Hoffmann)",
+            text: "A avaliação deve superar o caráter classificatório. A abordagem processual e diagnóstica acompanha a construção do conhecimento e a pertinência da intervenção na realidade escolar."
+        },
+        q7: {
+            title: "BNC-Formação: Prática Profissional",
+            text: "A Resolução 02/2019 incentiva o uso de estratégias como seminários no Grupo II para articular teoria e prática e resolver situações-problema baseadas na BNCC."
+        },
+        q8: {
+            title: "Interdisciplinaridade via Projetos",
+            text: "A interdisciplinaridade correta exige um problema complexo real como eixo. As disciplinas são convocadas como ferramentas de análise, promovendo integração conceitual em vez de justaposição."
+        },
+        q9: {
+            title: "Professor Reflexivo (Nóvoa/Schön)",
+            text: "O conceito foca na reflexão sobre a própria ação docente. Analisar metodologias e resultados com os estudantes permite a reconstrução permanente da identidade profissional."
+        },
+        q10: {
+            title: "Tripé Ensino-Pesquisa-Extensão",
+            text: "A extensão materializa-se quando os resultados da pesquisa e ensino são devolvidos à comunidade através de intervenções que respondam a demandas reais do entorno."
+        }
+    };
+
+    function submitQuiz() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        resolutionsContainer.innerHTML = ''; // Clear previous
+
+        for (let i = 1; i <= 10; i++) {
+            const questionId = 'q' + i;
+            const selected = form.elements[questionId].value;
+            const isCorrect = selected === correctAnswers[questionId];
+            
+            if (isCorrect) score++;
+
+            // Create resolution card
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            
+            const badge = document.createElement('span');
+            badge.className = isCorrect ? 'status-badge status-correct' : 'status-badge status-incorrect';
+            badge.innerText = isCorrect ? 'ACERTOU' : 'ERROU';
+            
+            const title = document.createElement('span');
+            title.className = 'resolution-title';
+            title.innerText = `Questão ${i}: ${explanations[questionId].title}`;
+
+            const text = document.createElement('p');
+            text.innerHTML = explanations[questionId].text;
+
+            const correctInfo = document.createElement('div');
+            correctInfo.className = 'correct-answer-info';
+            correctInfo.innerText = `Resposta Correta: Alternativa ${correctAnswers[questionId]}`;
+
+            resCard.appendChild(badge);
+            resCard.appendChild(title);
+            resCard.appendChild(text);
+            resCard.appendChild(correctInfo);
+            
+            resolutionsContainer.appendChild(resCard);
+
+            // Highlight in original card
+            const container = document.getElementById(questionId + '-container');
+            container.style.borderColor = isCorrect ? 'var(--success-color)' : 'var(--error-color)';
+        }
+
+        // Show Results
+        document.getElementById('final-score').innerText = `${score} / 10`;
+        const message = document.getElementById('score-message');
+        if (score >= 8) message.innerText = "Excelente desempenho! Você domina as bases da Didática.";
+        else if (score >= 6) message.innerText = "Bom resultado. Revise os pontos onde houve dúvida.";
+        else message.innerText = "Continue estudando os autores clássicos e as legislações recentes.";
+
+        document.getElementById('results-section').style.display = 'block';
+        
+        // Scroll to results
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

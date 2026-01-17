@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Didática, Inclusão e Acessibilidade</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --correct-color: #27ae60;
+            --wrong-color: #d63031;
+            --border-color: #dfe6e9;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .intro {
+            font-style: italic;
+            color: #636e72;
+            margin-top: 10px;
+        }
+
+        .question-block {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f1f2f6;
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .option-item.selected {
+            background-color: #e1f5fe;
+            border-color: var(--primary-color);
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        #finish-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        #finish-btn:hover {
+            background-color: #074b83;
+            transform: translateY(-2px);
+        }
+
+        /* Seção de Resultados e Resoluções */
+        #results-section {
+            display: none;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 4px double var(--primary-color);
+        }
+
+        .score-box {
+            background: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .resolution-card {
+            background: #f8f9fa;
+            border-left: 5px solid var(--primary-color);
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .resolution-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+
+        .status-correct {
+            color: var(--correct-color);
+            font-weight: bold;
+        }
+
+        .status-wrong {
+            color: var(--wrong-color);
+            font-weight: bold;
+        }
+
+        .correct-answer-marker {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+        }
+
+        .wrong-answer-marker {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            font-family: inherit;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado de Didática: Inclusão e Acessibilidade</h1>
+        <p class="intro">Padrão Fundação CEFETMINAS (FCM). Teste seus conhecimentos sobre LBI, AEE e DUA.</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- QUESTÃO 01 -->
+        <div class="question-block" id="q1-block">
+            <span class="question-text">QUESTÃO 01 - A Lei Brasileira de Inclusão (Lei nº 13.146/2015) consolidou a mudança de paradigma no tratamento da deficiência. Considerando a tipificação das barreiras (Art. 3º), classifique (V) ou (F):</span>
+            <p style="font-size: 0.9rem;">
+                ( ) Barreiras atitudinais são comportamentos ou estigmas que prejudicam a participação social.<br>
+                ( ) Barreiras urbanísticas são nos edifícios; arquitetônicas são nas vias e espaços públicos.<br>
+                ( ) Barreiras tecnológicas dificultam o acesso a hardware, software e ambientes virtuais.<br>
+                ( ) Barreiras nas comunicações englobam entraves que impossibilitam a expressão de mensagens.
+            </p>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q1" value="A"> A) V, F, V, V.</label>
+                <label class="option-item"><input type="radio" name="q1" value="B"> B) V, V, F, V.</label>
+                <label class="option-item"><input type="radio" name="q1" value="C"> C) F, F, V, F.</label>
+                <label class="option-item"><input type="radio" name="q1" value="D"> D) V, F, F, V.</label>
+                <label class="option-item"><input type="radio" name="q1" value="E"> E) F, V, V, F.</label>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 02 -->
+        <div class="question-block" id="q2-block">
+            <span class="question-text">QUESTÃO 02 - Sobre a organização e funcionamento do Atendimento Educacional Especializado (AEE), analise as assertivas:</span>
+            <p style="font-size: 0.9rem;">
+                I. O AEE tem caráter substitutivo à escolarização regular para deficiências severas.<br>
+                II. O financiamento é condicionado à dupla matrícula no FUNDEB.<br>
+                III. O AEE destina-se exclusivamente a alunos com deficiência e TEA.<br>
+                IV. O PPP da escola deve institucionalizar a oferta do AEE e sua transversalidade.
+            </p>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q2" value="A"> A) I e III.</label>
+                <label class="option-item"><input type="radio" name="q2" value="B"> B) II e IV.</label>
+                <label class="option-item"><input type="radio" name="q2" value="C"> C) I, II e IV.</label>
+                <label class="option-item"><input type="radio" name="q2" value="D"> D) II, III e IV.</label>
+                <label class="option-item"><input type="radio" name="q2" value="E"> E) III e IV.</label>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 03 -->
+        <div class="question-block" id="q3-block">
+            <span class="question-text">QUESTÃO 03 - Associe as Categorias de Tecnologia Assistiva (Coluna 1) com seus Exemplos (Coluna 2):</span>
+            <p style="font-size: 0.9rem;">
+                ( ) Pranchas de símbolos pictográficos, vocalizadores e softwares de voz.<br>
+                ( ) Engrossadores de lápis, tesouras adaptadas e talheres modificados.<br>
+                ( ) Teclados colmeia, mouses de cabeça, leitores de tela e acionadores.<br>
+                ( ) Mobiliário adaptado, almofadas de posicionamento e encostos rígidos.
+            </p>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q3" value="A"> A) 2, 1, 3, 4.</label>
+                <label class="option-item"><input type="radio" name="q3" value="B"> B) 3, 1, 2, 5.</label>
+                <label class="option-item"><input type="radio" name="q3" value="C"> C) 2, 5, 3, 4.</label>
+                <label class="option-item"><input type="radio" name="q3" value="D"> D) 1, 2, 3, 5.</label>
+                <label class="option-item"><input type="radio" name="q3" value="E"> E) 2, 1, 5, 3.</label>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 04 -->
+        <div class="question-block" id="q4-block">
+            <span class="question-text">QUESTÃO 04 - Um professor permite que um aluno com dislexia grave grave as respostas da prova em áudio e concede 50% a mais de tempo. Tecnicamente, isso é:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q4" value="A"> A) Adaptação de Grande Porte, exigindo aprovação da Secretaria.</label>
+                <label class="option-item"><input type="radio" name="q4" value="B"> B) Adaptações de Acesso ao Currículo e Avaliativas de Pequeno Porte.</label>
+                <label class="option-item"><input type="radio" name="q4" value="C"> C) Flexibilização Curricular Significativa, eliminando objetivos essenciais.</label>
+                <label class="option-item"><input type="radio" name="q4" value="D"> D) Tecnologia Assistiva de Alto Custo, demandando verba suplementar.</label>
+                <label class="option-item"><input type="radio" name="q4" value="E"> E) Adaptações Temporais de Grande Porte, interferindo na grade horária.</label>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 05 -->
+        <div class="question-block" id="q5-block">
+            <span class="question-text">QUESTÃO 05 - Assinale a estratégia alinhada ao princípio de "Proporcionar Múltiplos Meios de Representação" do Desenho Universal para a Aprendizagem (DUA):</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q5" value="A"> A) Escolher entre produzir um vídeo ou um relatório.</label>
+                <label class="option-item"><input type="radio" name="q5" value="B"> B) Utilizar gamificação para fomentar motivação intrínseca.</label>
+                <label class="option-item"><input type="radio" name="q5" value="C"> C) Disponibilizar material em texto, áudio, infográficos e glossários interativos.</label>
+                <label class="option-item"><input type="radio" name="q5" value="D"> D) Criar grupos de aprendizagem cooperativa com papéis específicos.</label>
+                <label class="option-item"><input type="radio" name="q5" value="E"> E) Estabelecer metas de autorregulação e fornecer checklists.</label>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 06 -->
+        <div class="question-block" id="q6-block">
+            <span class="question-text">QUESTÃO 06 - Qual alternativa reflete os princípios da Avaliação Mediadora (Jussara Hoffmann) na inclusão escolar?</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q6" value="A"> A) Avaliação comparativa em relação à média da turma.</label>
+                <label class="option-item"><input type="radio" name="q6" value="B"> B) Uso do diagnóstico inicial para classificar o nível de deficiência.</label>
+                <label class="option-item"><input type="radio" name="q6" value="C"> C) Processo contínuo comparando o aluno consigo mesmo através de registros descritivos.</label>
+                <label class="option-item"><input type="radio" name="q6" value="D"> D) Responsabilidade exclusiva do professor do AEE em emitir o laudo de nota.</label>
+                <label class="option-item"><input type="radio" name="q6" value="E"> E) Aprovação automática obrigatória para evitar danos à autoestima.</label>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 07 -->
+        <div class="question-block" id="q7-block">
+            <span class="question-text">QUESTÃO 07 - Sobre a Educação Bilíngue de Surdos (Decreto nº 5.626/2005), é CORRETO afirmar:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q7" value="A"> A) Priorizar a Língua Portuguesa oral como L1 e Libras como apoio.</label>
+                <label class="option-item"><input type="radio" name="q7" value="B"> B) Focar no treinamento auditivo e terapia da fala no AEE.</label>
+                <label class="option-item"><input type="radio" name="q7" value="C"> C) Libras como L1 e de instrução; Português como L2 preferencialmente escrita.</label>
+                <label class="option-item"><input type="radio" name="q7" value="D"> D) O Intérprete de Libras é o responsável pelo planejamento pedagógico.</label>
+                <label class="option-item"><input type="radio" name="q7" value="E"> E) Ensino do português escrito baseado na consciência fonêmica/fônica.</label>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 08 -->
+        <div class="question-block" id="q8-block">
+            <span class="question-text">QUESTÃO 08 - No trabalho com alunos com Transtorno do Espectro Autista (TEA), qual estratégia é considerada pedagógica e inclusiva?</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q8" value="A"> A) Inibir estereotipias através de contenção física ou punição.</label>
+                <label class="option-item"><input type="radio" name="q8" value="B"> B) Utilizar metáforas complexas e ironias para forçar a abstração.</label>
+                <label class="option-item"><input type="radio" name="q8" value="C"> C) Organizar o ambiente com previsibilidade, recursos visuais e respeitar hiperfocos.</label>
+                <label class="option-item"><input type="radio" name="q8" value="D"> D) Isolar o aluno em espaço separado para evitar desorganização pelo barulho.</label>
+                <label class="option-item"><input type="radio" name="q8" value="E"> E) Dispensar o aluno das atividades coletivas, focando apenas no individual.</label>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 09 -->
+        <div class="question-block" id="q9-block">
+            <span class="question-text">QUESTÃO 09 - Sobre deficiência visual e o Sistema Braille, assinale a afirmativa INCORRETA:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q9" value="A"> A) Braille é um código tátil de 63 combinações a partir de 6 pontos.</label>
+                <label class="option-item"><input type="radio" name="q9" value="B"> B) Baixa visão exige macrotipos e contraste adequado (ex: fundo preto/letra amarela).</label>
+                <label class="option-item"><input type="radio" name="q9" value="C"> C) A audiodescrição traduz imagens e eventos visuais em palavras.</label>
+                <label class="option-item"><input type="radio" name="q9" value="D"> D) O aluno cego deve ser dispensado de Educação Física e Artes por risco à segurança.</label>
+                <label class="option-item"><input type="radio" name="q9" value="E"> E) Uso de maquetes e mapas em relevo permite a construção de imagens mentais.</label>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 10 -->
+        <div class="question-block" id="q10-block">
+            <span class="question-text">QUESTÃO 10 - Sobre o Profissional de Apoio Escolar (conforme LBI), assinale a CORRETA:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q10" value="A"> A) É o professor especializado responsável pela sala de recursos.</label>
+                <label class="option-item"><input type="radio" name="q10" value="B"> B) Exerce atividades de alimentação, higiene e locomoção em todas as atividades.</label>
+                <label class="option-item"><input type="radio" name="q10" value="C"> C) Responsável pela adaptação curricular e elaboração de provas.</label>
+                <label class="option-item"><input type="radio" name="q10" value="D"> D) Contratação facultativa em escolas privadas com cobrança de taxa extra.</label>
+                <label class="option-item"><input type="radio" name="q10" value="E"> E) Atua exclusivamente no recreio, sendo proibida a sala de aula.</label>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" id="finish-btn" onclick="checkQuiz()">Finalizar e Ver Resoluções</button>
+        </div>
+    </form>
+
+    <div id="results-section">
+        <div class="score-box">
+            <h2 id="final-score">Você acertou 0 de 10 questões!</h2>
+            <p id="score-percentage">0% de acerto</p>
+        </div>
+
+        <h2>Resoluções Detalhadas</h2>
+        
+        <div id="resolutions-container">
+            <!-- As resoluções serão inseridas aqui via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const answers = {
+        q1: "A", q2: "B", q3: "A", q4: "B", q5: "C",
+        q6: "C", q7: "C", q8: "C", q9: "D", q10: "B"
+    };
+
+    const resolutions = {
+        q1: "<b>Gabarito: A.</b> A LBI define as barreiras urbanísticas (vias públicas) e arquitetônicas (edifícios). A alternativa inverteu ou confundiu essa distinção. As atitudinais, tecnológicas e de comunicação estão descritas corretamente conforme o Art. 3º.",
+        q2: "<b>Gabarito: B.</b> O AEE nunca é substitutivo, mas complementar/suplementar. Alunos com Altas Habilidades também fazem parte do público-alvo, invalidando a assertiva III.",
+        q3: "<b>Gabarito: A.</b> Pranchas/Voz = CAA (2); Engrossadores = Vida Diária (1); Teclados/Mouses = Informática (3); Mobiliário = Postural (4). O item 5 (Órteses) não possuía correspondente.",
+        q4: "<b>Gabarito: B.</b> Mudar o instrumento avaliativo (oral/gravado) e o tempo sem alterar o conteúdo é considerado adaptação de pequeno porte, de autonomia do professor.",
+        q5: "<b>Gabarito: C.</b> Representação foca no 'entrada' da informação. Oferecer diversos formatos (texto, áudio, visual) garante que todos os alunos acessem o conteúdo.",
+        q6: "<b>Gabarito: C.</b> A avaliação mediadora foca no percurso, é qualitativa e processual, comparando o progresso do aluno com seus próprios marcos anteriores.",
+        q7: "<b>Gabarito: C.</b> A Educação Bilíngue estabelece a Libras como primeira língua (instrução) e o Português como segunda língua, na modalidade escrita.",
+        q8: "<b>Gabarito: C.</b> Alunos com TEA beneficiam-se de rotinas previsíveis e apoios visuais. Inibir movimentos ou isolar o aluno são práticas excludentes.",
+        q9: "<b>Gabarito: D (Incorreta).</b> É ilegal e capacitista dispensar alunos cegos de atividades motoras ou artísticas. O dever da escola é adaptar a prática.",
+        q10: "<b>Gabarito: B.</b> O apoio escolar auxilia na higiene, alimentação e locomoção. Não é função pedagógica nem pode ser cobrada taxa extra em escolas privadas."
+    };
+
+    // Estilização das opções ao clicar
+    document.querySelectorAll('.option-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const radio = this.querySelector('input');
+            radio.checked = true;
+            
+            // Remove 'selected' de outros do mesmo grupo
+            const name = radio.getAttribute('name');
+            document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                r.parentElement.classList.remove('selected');
+            });
+            this.classList.add('selected');
+        });
+    });
+
+    function checkQuiz() {
+        let score = 0;
+        const total = 10;
+        const resContainer = document.getElementById('resolutions-container');
+        resContainer.innerHTML = '';
+
+        for (let i = 1; i <= total; i++) {
+            const questionName = `q${i}`;
+            const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+            const userVal = selected ? selected.value : null;
+            const correctVal = answers[questionName];
+
+            // Criar card de resolução
+            const card = document.createElement('div');
+            card.className = 'resolution-card';
+            
+            let statusHtml = '';
+            if (userVal === correctVal) {
+                score++;
+                statusHtml = `<span class="status-correct">✔ Você acertou!</span>`;
+            } else {
+                statusHtml = `<span class="status-wrong">✘ Você errou. (Sua resposta: ${userVal || 'Nenhuma'})</span>`;
+            }
+
+            card.innerHTML = `
+                <h3>Questão ${i}</h3>
+                <p>${statusHtml}</p>
+                <p>${resolutions[questionName]}</p>
+            `;
+            resContainer.appendChild(card);
+
+            // Marcar cores nas opções
+            document.querySelectorAll(`input[name="${questionName}"]`).forEach(input => {
+                const label = input.parentElement;
+                if (input.value === correctVal) {
+                    label.classList.add('correct-answer-marker');
+                } else if (userVal === input.value && userVal !== correctVal) {
+                    label.classList.add('wrong-answer-marker');
+                }
+            });
+        }
+
+        // Mostrar resultados
+        document.getElementById('final-score').innerText = `Você acertou ${score} de ${total} questões!`;
+        document.getElementById('score-percentage').innerText = `${(score / total) * 100}% de acerto`;
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('finish-btn').disabled = true;
+        document.getElementById('finish-btn').innerText = 'Simulado Concluído';
+        document.getElementById('finish-btn').style.opacity = '0.5';
+
+        // Scroll suave para o resultado
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

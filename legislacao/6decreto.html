@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo - Decreto 12.374/2025 - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+        .highlight {
+            background-color: #fef08a;
+            font-weight: 600;
+            padding: 0 3px;
+            border-radius: 4px;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Garante legibilidade, mas o container segura o scroll se necessário */
+        }
+        /* Para telas muito pequenas, forçamos o texto a quebrar para evitar scroll */
+        @media (max-width: 640px) {
+            .table-container { overflow-x: visible; }
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr { border: 1px solid #e2e8f0; margin-bottom: 10px; border-radius: 8px; }
+            td { border: none; position: relative; padding-left: 50%; text-align: right; border-bottom: 1px solid #f1f5f9; }
+            td:before { position: absolute; left: 12px; width: 45%; padding-right: 10px; white-space: nowrap; content: attr(data-label); text-align: left; font-weight: 700; color: #475569; }
+        }
+        th { background-color: #f8fafc; color: #334155; font-weight: 700; padding: 12px; border-bottom: 2px solid #e2e8f0; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #f1f5f9; }
+        .section-title {
+            border-left: 5px solid #2563eb;
+            padding-left: 15px;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        .alert-box {
+            background-color: #fff7ed;
+            border: 1px solid #ffedd5;
+            border-left: 4px solid #f97316;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="p-5 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Reprodutor de Áudio -->
+    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 mb-10 flex flex-col md:flex-row items-center gap-6">
+        <div class="flex-1">
+            <h3 class="font-extrabold text-slate-800 text-lg">🎧 Podcast de Revisão Ativa</h3>
+            <p class="text-sm text-slate-500">Ouça os pontos chave enquanto acompanha o texto abaixo.</p>
+        </div>
+        <audio controls class="w-full md:w-72">
+            <source src="6decreto.mp3" type="audio/mpeg">
+            Seu navegador não suporta áudio.
+        </audio>
+    </div>
+
+    <header class="text-center mb-16">
+        <span class="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">Material do Aluno - IFAM</span>
+        <h1 class="text-4xl md:text-5xl font-black text-slate-900 mt-4 mb-4">Estágio Probatório Federal</h1>
+        <p class="text-xl text-slate-600">Completo conforme o <span class="font-bold text-blue-600">Decreto nº 12.374/2025</span></p>
+    </header>
+
+    <!-- 1. DEFINIÇÃO E ESCOPO -->
+    <section>
+        <h2 class="section-title text-2xl font-extrabold text-slate-800">1. DEFINIÇÃO E ESCOPO</h2>
+        <p class="mb-4">O Estágio Probatório é o período de <span class="highlight">36 meses de efetivo exercício</span> destinado a verificar se o servidor possui aptidão e capacidade para o desempenho do cargo. O Decreto 12.374/2025 uniformiza esse processo para todos os órgãos do SIPEC (Sistema de Pessoal Civil).</p>
+        
+        <div class="grid md:grid-cols-2 gap-4 mt-6">
+            <div class="p-4 border border-slate-100 rounded-lg shadow-sm">
+                <p class="font-bold text-blue-800 mb-1">A quem se aplica?</p>
+                <p class="text-sm">Servidores ocupantes de cargo público efetivo nomeados <span class="font-bold">após 07/02/2025</span>.</p>
+            </div>
+            <div class="p-4 border border-slate-100 rounded-lg shadow-sm">
+                <p class="font-bold text-blue-800 mb-1">Objetivo da Avaliação</p>
+                <p class="text-sm">Garantir a <span class="font-bold">meritocracia</span> e a profissionalização da administração pública federal.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. DEFINIÇÕES BÁSICAS PARA A PROVA -->
+    <section>
+        <h2 class="section-title text-2xl font-extrabold text-slate-800">2. GLOSSÁRIO TÉCNICO (O QUE CAI)</h2>
+        <ul class="space-y-4">
+            <li><span class="font-bold">PDI (Programa de Desenvolvimento Integrado):</span> Conjunto de ações de capacitação obrigatórias. Para docentes, inclui obrigatoriamente formação didática.</li>
+            <li><span class="font-bold">Interstício:</span> Período mínimo de <span class="highlight">6 meses</span> de trabalho efetivo para que uma avaliação parcial seja válida.</li>
+            <li><span class="font-bold">Chefia Imediata:</span> O avaliador principal (responsável por 60% da nota).</li>
+            <li><span class="font-bold">Comissão de Avaliação:</span> Composta por <span class="highlight">no mínimo 3 membros estáveis</span>, designada pela autoridade máxima da instituição.</li>
+        </ul>
+    </section>
+
+    <!-- 3. CICLOS E PRAZOS (TABELA COMPLETA) -->
+    <section>
+        <h2 class="section-title text-2xl font-extrabold text-slate-800">3. CRONOGRAMA DE AVALIAÇÃO</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Etapa / Ciclo</th>
+                        <th>Período (Meses)</th>
+                        <th>Ação Requerida</th>
+                        <th>Exigência PDI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Etapa">Ambientação</td>
+                        <td data-label="Período">01 - 04</td>
+                        <td data-label="Ação">Plano de Trabalho</td>
+                        <td data-label="PDI">Início das trilhas</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Etapa">1º Ciclo</td>
+                        <td data-label="Período">01 - 12</td>
+                        <td data-label="Ação">Avaliação Parcial 1</td>
+                        <td data-label="PDI">Pelo menos 50%</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Etapa">2º Ciclo</td>
+                        <td data-label="Período">13 - 24</td>
+                        <td data-label="Ação">Avaliação Parcial 2</td>
+                        <td data-label="PDI"><span class="highlight text-red-600">100% Concluído</span></td>
+                    </tr>
+                    <tr>
+                        <td data-label="Etapa">3º Ciclo</td>
+                        <td data-label="Período">25 - 32</td>
+                        <td data-label="Ação">Avaliação Final</td>
+                        <td data-label="PDI">Consolidação</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Etapa">Homologação</td>
+                        <td data-label="Período">33 - 36</td>
+                        <td data-label="Ação">Publicação no DOU</td>
+                        <td data-label="PDI">---</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-xs text-slate-400 italic">* Nota: O não cumprimento dos 100% do PDI até o 24º mês acarreta reprovação automática.</p>
+    </section>
+
+    <!-- 4. SUSPENSÃO DO ESTÁGIO (TOP 1 RECORRÊNCIA) -->
+    <section>
+        <h2 class="section-title text-2xl font-extrabold text-slate-800">4. QUANDO O RELÓGIO PARA? (SUSPENSÃO)</h2>
+        <p class="mb-4">Diferente da interrupção, a suspensão faz com que o prazo pare de contar e retorne de onde parou. O Decreto lista:</p>
+        <div class="grid md:grid-cols-2 gap-4">
+            <ul class="list-disc list-inside space-y-2 text-sm bg-slate-50 p-4 rounded-lg">
+                <li>Licença por motivo de doença em pessoa da família;</li>
+                <li>Licença por motivo de afastamento do cônjuge;</li>
+                <li>Licença para atividade política;</li>
+                <li>Afastamento para exercício de mandato eletivo;</li>
+            </ul>
+            <ul class="list-disc list-inside space-y-2 text-sm bg-slate-50 p-4 rounded-lg">
+                <li>Afastamento para estudo ou missão no exterior;</li>
+                <li>Participação em curso de formação (novo concurso);</li>
+                <li><span class="font-bold">Licença para tratar de interesses particulares (não concedida em estágio, mas suspende se houver vacância).</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 5. COMPOSIÇÃO DA NOTA (OS PESOS) -->
+    <section>
+        <h2 class="section-title text-2xl font-extrabold text-slate-800">5. MATRIZ DE PONTUAÇÃO</h2>
+        <div class="flex flex-col md:flex-row gap-6 items-center bg-blue-50 p-6 rounded-2xl">
+            <div class="text-center p-4">
+                <div class="text-4xl font-black text-blue-600">80%</div>
+                <div class="text-xs font-bold uppercase tracking-tighter">Média Mínima para Aprovação</div>
+            </div>
+            <div class="hidden md:block h-16 w-px bg-blue-200"></div>
+            <div class="flex-1">
+                <p class="text-sm mb-2 font-bold">Distribuição da nota parcial:</p>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-1">
+                    <div class="bg-blue-600 h-4 rounded-full" style="width: 60%"></div>
+                </div>
+                <p class="text-xs text-gray-600 mb-3">60% Chefia Imediata</p>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-1">
+                    <div class="bg-blue-400 h-4 rounded-full" style="width: 25%"></div>
+                </div>
+                <p class="text-xs text-gray-600 mb-3">25% Avaliação por Pares (mínimo 2 pares estáveis)</p>
+                <div class="w-full bg-gray-200 rounded-full h-4 mb-1">
+                    <div class="bg-blue-300 h-4 rounded-full" style="width: 15%"></div>
+                </div>
+                <p class="text-xs text-gray-600">15% Autoavaliação</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. TENDÊNCIAS CEFETMINAS / EBTT -->
+    <section>
+        <h2 class="section-title text-2xl font-extrabold text-slate-800">6. RADAR CEFETMINAS (PARA DOCENTES)</h2>
+        <div class="alert-box space-y-4">
+            <p><strong>Peguinha 1:</strong> A banca vai dizer que a avaliação é apenas da chefia. <span class="font-bold">Falso.</span> É 360º (Chefia, Pares e Autoavaliação).</p>
+            <p><strong>Peguinha 2:</strong> Dirão que o servidor pode ser avaliado por qualquer colega. <span class="font-bold">Falso.</span> O "Par" deve ser estável e trabalhar com o avaliado há pelo menos 6 meses.</p>
+            <p><strong>Foco Docente:</strong> Para o IFAM, a <span class="highlight">avaliação discente (alunos)</span> é obrigatória e deve compor os critérios de desempenho didático.</p>
+            <p><strong>Recurso:</strong> O servidor tem <span class="font-bold">10 dias</span> para interpor recurso contra a nota parcial após a ciência.</p>
+        </div>
+    </section>
+
+    <!-- 7. REPROVAÇÃO: EXONERAÇÃO OU RECONDUÇÃO? -->
+    <section class="mb-20">
+        <h2 class="section-title text-2xl font-extrabold text-slate-800">7. CONSEQUÊNCIAS DA INAPTIDÃO</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+            <div class="p-5 border-2 border-red-50 rounded-xl">
+                <h4 class="font-bold text-red-600 mb-2 uppercase text-sm">Exoneração</h4>
+                <p class="text-sm">Regra geral para quem não atinge 80% ou não conclui o PDI. <span class="font-bold text-red-800">Não é punição (demissão)</span>, é desligamento por inaptidão técnica.</p>
+            </div>
+            <div class="p-5 border-2 border-green-50 rounded-xl">
+                <h4 class="font-bold text-green-600 mb-2 uppercase text-sm">Recondução</h4>
+                <p class="text-sm">Apenas para o servidor <span class="highlight">estável em cargo federal anterior</span> que desiste ou é reprovado no novo estágio. Ele volta para o cargo antigo.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Botão de Ação -->
+    <div class="fixed bottom-8 left-0 right-0 px-5 max-w-5xl mx-auto pointer-events-none">
+        <div class="flex justify-end pointer-events-auto">
+            <a href="6questoes.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full shadow-2xl transition-all transform hover:scale-105 flex items-center gap-2">
+                TESTAR CONHECIMENTOS 
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

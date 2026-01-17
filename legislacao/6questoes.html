@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Decreto nº 12.374/2025</title>
+    <style>
+        :root {
+            --bg-color: #f9fafb;
+            --container-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #4b5563;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --success: #10b981;
+            --error: #ef4444;
+            --border: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        h1 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 10px; }
+        h2 { font-size: 1.1rem; color: var(--text-muted); font-weight: 400; }
+
+        .texto-apoio {
+            background: #f3f4f6;
+            padding: 25px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 30px;
+            font-style: italic;
+            border-radius: 4px;
+        }
+
+        .questao {
+            background: var(--container-bg);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+
+        .questao-numero {
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .enunciado {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alternativas {
+            list-style: none;
+            padding: 0;
+        }
+
+        .alternativa {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .alternativa:hover {
+            background-color: #f8fafc;
+            border-color: var(--primary);
+        }
+
+        .alternativa input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        /* Classes de correção */
+        .correta {
+            background-color: #d1fae5 !important;
+            border-color: var(--success) !important;
+            font-weight: 600;
+        }
+
+        .errada {
+            background-color: #fee2e2 !important;
+            border-color: var(--error) !important;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background-color: var(--primary-hover); }
+
+        #resultado-area {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .score-box {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .resolucoes-area {
+            display: none;
+            margin-top: 50px;
+        }
+
+        .resolucoes-area h2 {
+            font-size: 1.5rem;
+            color: var(--text-main);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        .topico-resolucao {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #9ca3af;
+        }
+
+        .topico-resolucao h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 10px; margin: 10px; }
+            .questao { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>SIMULADO: DECRETO Nº 12.374/2025</h1>
+        <h2>Avaliação de Desempenho em Estágio Probatório - Estilo Fundação CEFETMINAS</h2>
+    </header>
+
+    <div class="texto-apoio">
+        "A administração pública gerencial, introduzida formalmente no Brasil pela Reforma de 1995 e pela Emenda Constitucional nº 19/1998, busca substituir o controle formal de processos pelo controle de resultados... O Decreto nº 12.374/2025 surge como o marco regulatório que materializa essa visão."
+    </div>
+
+    <form id="quiz-form">
+        <!-- Questão 01 -->
+        <div class="questao" id="q1">
+            <span class="questao-numero">Questão 01</span>
+            <div class="enunciado">
+                Considere a situação hipotética de uma repartição federal composta apenas pelo Chefe da Unidade, pelo Servidor "X" (em estágio probatório) e pelo Servidor "Y" (também em estágio probatório). Assinale a alternativa que indica corretamente a composição final da nota de desempenho do Servidor "X".
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q1" value="A"> A) A avaliação será suspensa até que a unidade receba reforço de pessoal.</label>
+                <label class="alternativa"><input type="radio" name="q1" value="B"> B) A nota será composta integralmente (100%) pela avaliação da chefia imediata.</label>
+                <label class="alternativa"><input type="radio" name="q1" value="C"> C) A pontuação será distribuída na proporção de 72,5% para a chefia imediata e 27,5% para a autoavaliação.</label>
+                <label class="alternativa"><input type="radio" name="q1" value="D"> D) A chefia imediata será responsável por 60%, a autoavaliação por 15% e o restante pela média histórica.</label>
+                <label class="alternativa"><input type="radio" name="q1" value="E"> E) A avaliação será realizada por uma comissão ad hoc designada pelo SIPEC.</label>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="questao" id="q2">
+            <span class="questao-numero">Questão 02</span>
+            <div class="enunciado">
+                Analise as afirmativas sobre o Programa de Desenvolvimento Inicial (PDI) e os ciclos avaliativos:
+                <br><br>
+                I. O PDI deve ser concluído integralmente até o final do primeiro ciclo (12 meses).<br>
+                II. A não apresentação do certificado do PDI constitui óbice objetivo à aprovação.<br>
+                III. Os ciclos ocorrem no 12º, 24º e 32º mês, com meta de 50% do PDI no primeiro ciclo.<br>
+                IV. Pós-graduação stricto sensu dispensa automaticamente o PDI.
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q2" value="A"> A) I e III estão corretas.</label>
+                <label class="alternativa"><input type="radio" name="q2" value="B"> B) II e III estão corretas.</label>
+                <label class="alternativa"><input type="radio" name="q2" value="C"> C) I, II e IV estão corretas.</label>
+                <label class="alternativa"><input type="radio" name="q2" value="D"> D) III e IV estão corretas.</label>
+                <label class="alternativa"><input type="radio" name="q2" value="E"> E) II, III e IV estão corretas.</label>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="questao" id="q3">
+            <span class="questao-numero">Questão 03</span>
+            <div class="enunciado">
+                Assinale a alternativa em que, excepcionalmente, o fluxo temporal do estágio probatório NÃO é suspenso:
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q3" value="A"> A) Participação em curso de formação para outro cargo federal.</label>
+                <label class="alternativa"><input type="radio" name="q3" value="B"> B) Licença por motivo de doença em pessoa da família excedendo 30 dias.</label>
+                <label class="alternativa"><input type="radio" name="q3" value="C"> C) Requisição para exercício na Presidência da República (Lei nº 9.007/1995).</label>
+                <label class="alternativa"><input type="radio" name="q3" value="D"> D) Licença para tratar de interesses particulares.</label>
+                <label class="alternativa"><input type="radio" name="q3" value="E"> E) Afastamento para servir em organismo internacional.</label>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="questao" id="q4">
+            <span class="questao-numero">Questão 04</span>
+            <div class="enunciado">
+                Quais são os requisitos para que um servidor atue como avaliador de um colega (avaliação por pares)?
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q4" value="A"> A) Nível superior, pós na área e sem parentesco até o 3º grau.</label>
+                <label class="alternativa"><input type="radio" name="q4" value="B"> B) Servidor estável federal, na mesma equipe há 6 meses e sem PAD.</label>
+                <label class="alternativa"><input type="radio" name="q4" value="C"> C) Lotado na unidade há 12 meses, estável ou não, com nota máxima.</label>
+                <label class="alternativa"><input type="radio" name="q4" value="D"> D) Ser estável e ter atuado na mesma equipe por mais de 6 meses (mínimo de 3 avaliadores).</label>
+                <label class="alternativa"><input type="radio" name="q4" value="E"> E) Ocupar cargo em comissão e ter curso da Enap.</label>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="questao" id="q5">
+            <span class="questao-numero">Questão 05</span>
+            <div class="enunciado">
+                Um servidor obteve as notas: 1º Ciclo (70), 2º Ciclo (85), 3º Ciclo (90). Cumpriu o PDI. Qual a situação funcional?
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q5" value="A"> A) Reprovado (mínimo individual de 80 por ciclo).</label>
+                <label class="alternativa"><input type="radio" name="q5" value="B"> B) Ciclo extra de recuperação de 6 meses.</label>
+                <label class="alternativa"><input type="radio" name="q5" value="C"> C) Aprovado (média simples de 81,66 e PDI cumprido).</label>
+                <label class="alternativa"><input type="radio" name="q5" value="D"> D) Pendente de decisão discricionária da Comissão.</label>
+                <label class="alternativa"><input type="radio" name="q5" value="E"> E) Exonerado (vedada compensação entre ciclos).</label>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="questao" id="q6">
+            <span class="questao-numero">Questão 06</span>
+            <div class="enunciado">
+                Como se aplica o novo Art. 21 (requisição sem suspensão) a servidores já em estágio probatório na data da publicação?
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q6" value="A"> A) Aplica-se imediatamente, alcançando os estágios em curso.</label>
+                <label class="alternativa"><input type="radio" name="q6" value="B"> B) Vedada aplicação pelo princípio da irretroatividade.</label>
+                <label class="alternativa"><input type="radio" name="q6" value="C"> C) Exige termo de opção irretratável do servidor.</label>
+                <label class="alternativa"><input type="radio" name="q6" value="D"> D) Anula o tempo anterior e reinicia a contagem do zero.</label>
+                <label class="alternativa"><input type="radio" name="q6" value="E"> E) Aplica-se apenas para requisições futuras.</label>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="questao" id="q7">
+            <span class="questao-numero">Questão 07</span>
+            <div class="enunciado">
+                Qual o procedimento recursal previsto caso o servidor discorde das notas?
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q7" value="A"> A) Mandado de Segurança Administrativo em 30 dias.</label>
+                <label class="alternativa"><input type="radio" name="q7" value="B"> B) Reconsideração em 10 dias e posterior recurso à Comissão de Avaliação.</label>
+                <label class="alternativa"><input type="radio" name="q7" value="C"> C) Câmara de arbitragem externa com membros do MPF.</label>
+                <label class="alternativa"><input type="radio" name="q7" value="D"> D) Recurso apenas devolutivo com prazo de 5 dias úteis.</label>
+                <label class="alternativa"><input type="radio" name="q7" value="E"> E) Não cabe recurso contra notas de pares e autoavaliação.</label>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="questao" id="q8">
+            <span class="questao-numero">Questão 08</span>
+            <div class="enunciado">
+                Qual a disciplina temporal do estágio probatório segundo o decreto?
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q8" value="A"> A) 24 meses de estágio e espera de 1 ano para estabilidade.</label>
+                <label class="alternativa"><input type="radio" name="q8" value="B"> B) 36 meses, com encerramento do último ciclo no 32º mês para homologação.</label>
+                <label class="alternativa"><input type="radio" name="q8" value="C"> C) Varia entre 30 e 36 meses conforme o desempenho.</label>
+                <label class="alternativa"><input type="radio" name="q8" value="D"> D) 3 anos, mas reduzível se houver serviço público anterior.</label>
+                <label class="alternativa"><input type="radio" name="q8" value="E"> E) 4 anos de avaliação trimestral.</label>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="questao" id="q9">
+            <span class="questao-numero">Questão 09</span>
+            <div class="enunciado">
+                O fator "Capacidade de Iniciativa" é avaliado observando-se, predominantemente:
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q9" value="A"> A) A pontualidade e presença física constante.</label>
+                <label class="alternativa"><input type="radio" name="q9" value="B"> B) A obediência irrestrita a qualquer ordem superior.</label>
+                <label class="alternativa"><input type="radio" name="q9" value="C"> C) Atuação proativa, sugestões de melhoria e busca autônoma de soluções.</label>
+                <label class="alternativa"><input type="radio" name="q9" value="D"> D) Volume quantitativo de processos despachados por dia.</label>
+                <label class="alternativa"><input type="radio" name="q9" value="E"> E) Respeito às normas de conduta social e cortesia.</label>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="questao" id="q10">
+            <span class="questao-numero">Questão 10</span>
+            <div class="enunciado">
+                Servidor estável reprovado em estágio probatório de NOVO cargo federal. Qual a consequência?
+            </div>
+            <div class="alternativas">
+                <label class="alternativa"><input type="radio" name="q10" value="A"> A) Rompimento total do vínculo (exoneração de ambos).</label>
+                <label class="alternativa"><input type="radio" name="q10" value="B"> B) Permanência no cargo novo como não estável.</label>
+                <label class="alternativa"><input type="radio" name="q10" value="C"> C) Recondução ao cargo antigo do qual era estável.</label>
+                <label class="alternativa"><input type="radio" name="q10" value="D"> D) Disponibilidade remunerada proporcional.</label>
+                <label class="alternativa"><input type="radio" name="q10" value="E"> E) Demissão por insuficiência e impedimento de 5 anos.</label>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="btn" onclick="finalizarQuiz()">Finalizar Simulado</button>
+        </div>
+    </form>
+
+    <div id="resultado-area">
+        <div class="score-box" id="score-text">0/10</div>
+        <div id="status-text">Você completou o simulado! Confira as resoluções abaixo.</div>
+    </div>
+
+    <div class="resolucoes-area" id="resolucoes">
+        <h2>RESOLUÇÃO ANALÍTICA E DOUTRINÁRIA</h2>
+        
+        <div class="topico-resolucao">
+            <h3>Tópico 1: A Nova Aritmética (Questão 01)</h3>
+            <p><strong>Gabarito: C.</strong> O Decreto nº 12.374/2025 institucionaliza a avaliação multidimensional. Em unidades com quadro reduzido (sem pares estáveis), os 25% da nota que seriam da equipe são redistribuídos: a Chefia sobe de 60% para 72,5% e a Autoavaliação sobe de 15% para 27,5%.</p>
+        </div>
+
+        <div class="topico-resolucao">
+            <h3>Tópico 2: PDI e Ciclos (Questão 02)</h3>
+            <p><strong>Gabarito: B.</strong> O estágio é uma formação em serviço. O PDI é obrigatório (item II). Os ciclos ocorrem aos 12, 24 e 32 meses, sendo exigido 50% de conclusão do PDI já no primeiro ciclo (item III).</p>
+        </div>
+
+        <div class="topico-resolucao">
+            <h3>Tópico 3: Suspensão e Requisição (Questão 03)</h3>
+            <p><strong>Gabarito: C.</strong> A regra é suspender o estágio em afastamentos. Contudo, a requisição baseada na Lei nº 9.007/1995 (Presidência) é exceção expressa: o estágio NÃO suspende e o servidor continua sendo avaliado no órgão de destino.</p>
+        </div>
+
+        <div class="topico-resolucao">
+            <h3>Tópico 4: Avaliação por Pares (Questão 04)</h3>
+            <p><strong>Gabarito: D.</strong> Para garantir isenção, o par deve ser estável e ter convivido na mesma equipe por no mínimo 6 meses. Exige-se quórum de pelo menos 3 servidores para validar essa modalidade.</p>
+        </div>
+
+        <div class="topico-resolucao">
+            <h3>Tópico 5: Média e Aprovação (Questão 05)</h3>
+            <p><strong>Gabarito: C.</strong> A aprovação exige média aritmética simples ≥ 80 pontos e conclusão do PDI. Notas baixas em um ciclo podem ser compensadas por evolução nos ciclos seguintes.</p>
+        </div>
+
+        <div class="topico-resolucao">
+            <h3>Tópico 6: Regras de Transição (Questão 06)</h3>
+            <p><strong>Gabarito: A.</strong> Embora novos critérios de peso valham apenas para novos empossados, as regras procedimentais de requisição (Art. 21) têm aplicação imediata aos estágios em curso por força do Art. 24, Parágrafo Único.</p>
+        </div>
+
+        <div class="topico-resolucao">
+            <h3>Tópico 7: Recurso Administrativo (Questão 07)</h3>
+            <p><strong>Gabarito: B.</strong> Respeitando o contraditório, o servidor tem 10 dias para pedido de reconsideração e, se negado, novo prazo para recurso à Comissão de Avaliação.</p>
+        </div>
+
+        <div class="topico-resolucao">
+            <h3>Tópico 8: Duração de 36 meses (Questão 08)</h3>
+            <p><strong>Gabarito: B.</strong> Alinhado ao STF e à CF, o estágio dura 36 meses. O 3º ciclo fecha no 32º mês para que os 4 meses restantes permitam o trâmite de homologação da estabilidade.</p>
+        </div>
+
+        <div class="topico-resolucao">
+            <h3>Tópico 9: Fatores de Avaliação (Questão 09)</h3>
+            <p><strong>Gabarito: C.</strong> Capacidade de Iniciativa envolve proatividade e autonomia na resolução de problemas, diferenciando-se da mera disciplina ou produtividade mecânica.</p>
+        </div>
+
+        <div class="topico-resolucao">
+            <h3>Tópico 10: Recondução (Questão 10)</h3>
+            <p><strong>Gabarito: C.</strong> O servidor estável que falha no estágio probatório de um novo cargo federal tem direito à recondução ao cargo de origem, conforme Art. 29 da Lei 8.112/90.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const gabarito = {
+        q1: 'C', q2: 'B', q3: 'C', q4: 'D', q5: 'C',
+        q6: 'A', q7: 'B', q8: 'B', q9: 'C', q10: 'C'
+    };
+
+    function finalizarQuiz() {
+        const form = document.getElementById('quiz-form');
+        const formData = new FormData(form);
+        let acertos = 0;
+        let total = 10;
+
+        // Validar se todas foram respondidas
+        if (formData.entries().next().done) {
+            alert("Por favor, responda as questões antes de finalizar.");
+            return;
+        }
+
+        // Corrigir
+        for (let i = 1; i <= total; i++) {
+            const questaoId = 'q' + i;
+            const respostaUsuario = formData.get(questaoId);
+            const respostaCorreta = gabarito[questaoId];
+            const divQuestao = document.getElementById(questaoId);
+            const alternativas = divQuestao.querySelectorAll('.alternativa');
+
+            alternativas.forEach(label => {
+                const input = label.querySelector('input');
+                // Limpar estilos anteriores
+                label.classList.remove('correta', 'errada');
+                
+                // Destacar a correta
+                if (input.value === respostaCorreta) {
+                    label.classList.add('correta');
+                }
+                // Destacar erro do usuário
+                if (respostaUsuario === input.value && respostaUsuario !== respostaCorreta) {
+                    label.classList.add('errada');
+                }
+            });
+
+            if (respostaUsuario === respostaCorreta) {
+                acertos++;
+            }
+        }
+
+        // Mostrar Resultado
+        const resultadoArea = document.getElementById('resultado-area');
+        const scoreText = document.getElementById('score-text');
+        const resolucoesArea = document.getElementById('resolucoes');
+
+        resultadoArea.style.display = 'block';
+        scoreText.innerText = acertos + " / " + total;
+        scoreText.style.color = acertos >= 8 ? 'var(--success)' : 'var(--error)';
+        
+        resolucoesArea.style.display = 'block';
+
+        // Rolar suavemente para o resultado
+        window.scrollTo({
+            top: resultadoArea.offsetTop - 50,
+            behavior: 'smooth'
+        });
+    }
+</script>
+
+</body>
+</html>

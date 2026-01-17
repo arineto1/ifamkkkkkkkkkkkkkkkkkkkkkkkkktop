@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Integral: CF/88 - Princípios Fundamentais</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 0 4px;
+            font-weight: 600;
+            border-radius: 2px;
+        }
+
+        .mnemonic-box {
+            background-color: #f8fafc;
+            border-left: 5px solid #3b82f6;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .alert-box {
+            background-color: #fff5f5;
+            border: 1px solid #feb2b2;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .section-title {
+            color: #1e40af;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 14px;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Tabela Responsiva Mobile (Sem Scroll) */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr { display: block; }
+            thead tr { position: absolute; top: -9999px; left: -9999px; }
+            tr { border: 1px solid #e2e8f0; margin-bottom: 1rem; border-radius: 8px; overflow: hidden; }
+            td {
+                border: none;
+                border-bottom: 1px solid #f1f5f9;
+                position: relative;
+                padding-left: 50%;
+                text-align: left;
+            }
+            td:before {
+                position: absolute;
+                top: 14px;
+                left: 14px;
+                width: 40%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: 700;
+                color: #64748b;
+                content: attr(data-label);
+            }
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-6 py-10 md:px-16">
+
+    <!-- Header & Audio -->
+    <header class="mb-12">
+        <h1 class="text-4xl font-extrabold text-slate-900 leading-tight mb-4">
+            Dos Princípios Fundamentais <br>
+            <span class="text-blue-600">Artigos 1º ao 4º da CF/88</span>
+        </h1>
+        <p class="text-lg text-slate-600 mb-8">Tutor Especialista: Professor de Informática - IFAM | Banca: Fundação CEFETMINAS</p>
+        
+        <div class="bg-slate-50 border border-slate-200 p-6 rounded-2xl flex flex-col md:flex-row items-center gap-6">
+            <div class="flex-shrink-0">
+                <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">Audio Aula</span>
+            </div>
+            <audio controls class="w-full">
+                <source src="1cf1.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </audio>
+        </div>
+    </header>
+
+    <main>
+        <!-- Definição Geral -->
+        <section>
+            <h2 class="section-title">1. Introdução e Conceitos Essenciais</h2>
+            <p class="mb-4">
+                Os princípios fundamentais são as <span class="highlight">diretrizes políticas e ideológicas</span> que regem o Estado Brasileiro. Para a CEFETMINAS, é crucial entender que eles não são apenas "bonitos", eles têm <span class="highlight">eficácia jurídica plena</span> e orientam a interpretação de toda a Constituição.
+            </p>
+            <div class="alert-box">
+                <strong>Análise Técnica:</strong> O Título I (Art. 1º a 4º) diferencia-se dos "Direitos Fundamentais" (Título II). A banca costuma misturar os conceitos para confundir o candidato.
+            </div>
+        </section>
+
+        <!-- Artigo 1º -->
+        <section>
+            <h2 class="section-title">2. Artigo 1º: Fundamentos da República</h2>
+            <p class="mb-4">A República Federativa do Brasil é formada pela união <span class="highlight">indissolúvel</span> dos Estados e Municípios e do Distrito Federal.</p>
+            
+            <div class="mnemonic-box">
+                <p class="font-bold text-blue-800 mb-2">Mnemônico Clássico: SO-CI-DI-VA-PLU</p>
+                <ol class="space-y-1">
+                    <li><strong>I - SO</strong>berania (Poder supremo interno e independente externo).</li>
+                    <li><strong>II - CI</strong>dadania (Direito de participação política).</li>
+                    <li><strong>III - DI</strong>gnidade da Pessoa Humana (Base de todos os direitos fundamentais).</li>
+                    <li><strong>IV - VA</strong>lores Sociais do Trabalho e da Livre Iniciativa (Equilíbrio entre capital e trabalho).</li>
+                    <li><strong>V - PLU</strong>ralismo Político (Existência de múltiplas visões e partidos).</li>
+                </ol>
+            </div>
+
+            <h3 class="font-bold text-lg mt-6 mb-2">Soberania Popular (Parágrafo Único)</h3>
+            <p class="mb-4">
+                "Todo o poder emana do povo, que o exerce por meio de representantes eleitos ou <span class="highlight">diretamente</span>, nos termos desta Constituição."
+            </p>
+            <ul class="list-disc ml-6 space-y-2 mb-4">
+                <li>O Brasil adota a <strong>Democracia Semidireta</strong> (ou Participativa).</li>
+                <li>Exercício Direto: Plebiscito, Referendo e Iniciativa Popular.</li>
+            </ul>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Conceito</th>
+                        <th>Definição para Prova</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Conceito"><strong>Forma de Estado</strong></td>
+                        <td data-label="Definição"><strong>FEDERAÇÃO</strong> (União indissolúvel, entes autônomos).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Conceito"><strong>Forma de Governo</strong></td>
+                        <td data-label="Definição"><strong>REPÚBLICA</strong> (Eletividade, temporalidade e dever de prestar contas).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Conceito"><strong>Sistema de Governo</strong></td>
+                        <td data-label="Definição"><strong>PRESIDENCIALISMO</strong> (Chefe de Estado = Chefe de Governo).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Conceito"><strong>Regime Político</strong></td>
+                        <td data-label="Definição"><strong>ESTADO DEMOCRÁTICO DE DIREITO</strong>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Artigo 2º -->
+        <section>
+            <h2 class="section-title">3. Artigo 2º: Separação de Poderes</h2>
+            <p class="mb-4">São Poderes da União, <span class="highlight">independentes e harmônicos</span> entre si: o Legislativo, o Executivo e o Judiciário.</p>
+            <div class="alert-box">
+                <strong>Peguinha CEFETMINAS:</strong> A banca pode dizer que um poder é hierarquicamente superior ao outro. <strong>Falso!</strong> Não há hierarquia entre os poderes, apenas divisão de funções.
+            </div>
+        </section>
+
+        <!-- Artigo 3º -->
+        <section>
+            <h2 class="section-title">4. Artigo 3º: Objetivos Fundamentais</h2>
+            <p class="mb-4">São as metas programáticas. Dica de Ouro: <span class="highlight">Sempre começam com VERBOS</span>.</p>
+            
+            <div class="mnemonic-box">
+                <p class="font-bold text-blue-800 mb-2">Mnemônico: CON-GA-ERRA-PRO</p>
+                <ul class="space-y-2">
+                    <li><strong>I - CON</strong>struir uma sociedade livre, justa e solidária;</li>
+                    <li><strong>II - GA</strong>rantir o desenvolvimento nacional;</li>
+                    <li><strong>III - ERRA</strong>dicar a pobreza e a marginalização e <span class="highlight text-red-600">reduzir</span> as desigualdades sociais e regionais;</li>
+                    <li><strong>IV - PRO</strong>mover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Artigo 4º -->
+        <section>
+            <h2 class="section-title">5. Artigo 4º: Relações Internacionais</h2>
+            <p class="mb-4">Princípios que regem o Brasil no cenário mundial.</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Princípio</th>
+                        <th>O que você precisa saber</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Princípio"><strong>Independência Nacional</strong></td>
+                        <td data-label="Dica">Não confundir com Soberania (Art. 1º).</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Princípio"><strong>Direitos Humanos</strong></td>
+                        <td data-label="Dica">Prevalência dos direitos humanos.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Princípio"><strong>Autodeterminação</strong></td>
+                        <td data-label="Dica">Respeito à vontade dos outros povos.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Princípio"><strong>Não-intervenção</strong></td>
+                        <td data-label="Dica">O Brasil não se mete em assuntos internos alheios.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Princípio"><strong>Defesa da Paz</strong></td>
+                        <td data-label="Dica">Solução pacífica de conflitos.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Princípio"><strong>Repúdio ao Terror/Racismo</strong></td>
+                        <td data-label="Dica">Princípio ético nas relações.</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Princípio"><strong>Asilo Político</strong></td>
+                        <td data-label="Dica">Concessão de asilo político.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert-box">
+                <h3 class="font-bold text-red-700 mb-2">⚠️ Integração Latino-Americana (Art. 4º, Parágrafo Único)</h3>
+                <p>O Brasil buscará a integração econômica, política, social e cultural dos povos da <span class="highlight">América Latina</span>, visando à formação de uma <span class="highlight">comunidade latino-americana de nações</span>.</p>
+                <p class="mt-2 text-sm text-slate-600"><strong>Peguinha:</strong> A banca troca "América Latina" por "América do Sul" ou "Países do Mercosul". Fique atento!</p>
+            </div>
+        </section>
+
+        <!-- Tendências CEFETMINAS -->
+        <section class="mb-16">
+            <h2 class="section-title">6. Tendências de Cobrança - Fundação CEFETMINAS</h2>
+            <ul class="space-y-4">
+                <li class="p-4 bg-slate-50 border-l-4 border-yellow-500">
+                    <strong>Troca de Fundamento por Objetivo:</strong> É o erro mais comum. Memorize: Substantivo (Art. 1º) = Fundamento; Verbo (Art. 3º) = Objetivo.
+                </li>
+                <li class="p-4 bg-slate-50 border-l-4 border-yellow-500">
+                    <strong>Literalidade:</strong> A banca gosta de copiar e colar o texto da lei, mudando apenas uma palavra (ex: trocar "pluralismo político" por "bipartidarismo").
+                </li>
+                <li class="p-4 bg-slate-50 border-l-4 border-yellow-500">
+                    <strong>Indissolubilidade:</strong> Lembre-se que o direito de secessão (separação) é proibido na Federação Brasileira.
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer Action -->
+    <footer class="text-center py-12 border-t border-slate-200">
+        <p class="text-slate-500 mb-6 italic">Prepare-se com estratégia. O acerto está nos detalhes.</p>
+        <a href="1questoes.html" class="inline-block bg-blue-700 hover:bg-blue-800 text-white font-bold py-5 px-12 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl">
+            ACESSAR BANCO DE QUESTÕES →
+        </a>
+    </footer>
+
+</body>
+</html>

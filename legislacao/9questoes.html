@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado LGPD - Estilo Fundação CEFETMINAS</title>
+    <style>
+        /* Design System para Leitura Longa */
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --accent-color: #34495e;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            max-width: 850px;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-weight: 300;
+            color: #7f8c8d;
+        }
+
+        main {
+            width: 100%;
+            max-width: 850px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f8f9fa;
+            border-color: #bdc3c7;
+        }
+
+        .option-item input {
+            margin-top: 6px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-item label {
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Estilos de Resposta após finalização */
+        .option-item.correct {
+            background-color: #d4edda;
+            border-color: var(--correct-color);
+            color: #155724;
+        }
+
+        .option-item.incorrect {
+            background-color: #f8d7da;
+            border-color: var(--incorrect-color);
+            color: #721c24;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2c3e50;
+        }
+
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        #results-section {
+            display: none;
+            background-color: #ebf2f7;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border: 2px solid var(--accent-color);
+        }
+
+        .score-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .resolution-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-left: 5px solid var(--accent-color);
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            color: #95a5a6;
+            font-size: 0.8rem;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border-color);
+            margin: 20px 0;
+        }
+
+        /* Tabela para a Questão 2 */
+        .matching-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        .matching-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        @media (max-width: 600px) {
+            main { padding: 10px; }
+            .question-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado Analítico: LGPD</h1>
+    <div class="subtitle">Estilo Fundação CEFETMINAS - 10 Questões</div>
+</header>
+
+<main id="quiz-container">
+    <div id="questions-list">
+        <!-- Questões serão geradas aqui pelo JS -->
+    </div>
+
+    <div id="results-section">
+        <div class="score-display" id="score-text"></div>
+        <p style="text-align:center;">As resoluções detalhadas de cada questão foram liberadas abaixo.</p>
+    </div>
+
+    <div class="btn-container">
+        <button id="finish-btn" onclick="finishQuiz()">Finalizar Quiz e Ver Resultados</button>
+    </div>
+</main>
+
+<footer>
+    © 2025 Simulado Preparatório - Perfil Fundação CEFETMINAS. Conteúdo baseado na Lei nº 13.709/2018.
+</footer>
+
+<script>
+    const questionsData = [
+        {
+            id: 1,
+            question: "A Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018) estabelece um glossário técnico no seu Artigo 5º, fundamental para a interpretação de seus dispositivos. Considere as definições listadas abaixo e assinale a alternativa que apresenta a correlação INCORRETA de acordo com a literalidade da norma:",
+            options: [
+                "A) Dado pessoal sensível: dado pessoal sobre origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a organização de caráter religioso, filosófico ou político, dado referente à saúde ou à vida sexual, dado genético ou biométrico, quando vinculado a uma pessoa natural.",
+                "B) Dado anonimizado: dado relativo a titular que não possa ser identificado, considerando a utilização de meios técnicos razoáveis e disponíveis na ocasião de seu tratamento.",
+                "C) Controlador: pessoa natural ou jurídica, de direito público ou privado, a quem competem as decisões referentes ao tratamento de dados pessoais.",
+                "D) Operador: pessoa natural ou jurídica, de direito público ou privado, que realiza o tratamento de dados pessoais em nome do controlador.",
+                "E) Consentimento: manifestação livre, informada e inequívoca pela qual o titular concorda com o tratamento de seus dados pessoais para uma finalidade genérica e indeterminada."
+            ],
+            correct: 4,
+            resolution: "<strong>GABARITO: E</strong><br><br><strong>Fundamentação:</strong> O erro está na parte final da definição de consentimento. Segundo o Art. 5º, XII, o consentimento deve ser para uma <strong>finalidade determinada</strong>. O Art. 8º, § 4º da LGPD declara explicitamente nulo o consentimento genérico. As demais alternativas reproduzem fielmente os incisos II, XI, VI e VII do mesmo artigo."
+        },
+        {
+            id: 2,
+            question: "De acordo com o Art. 6º da Lei nº 13.709/2018, associe os princípios listados na Coluna 1 com suas respectivas descrições na Coluna 2:<br><br><strong>COLUNA 1</strong><br>1. Princípio da Prevenção<br>2. Princípio da Responsabilização e Prestação de Contas<br>3. Princípio da Qualidade dos Dados<br>4. Princípio da Segurança<br><br><strong>COLUNA 2</strong><br>( ) Utilização de medidas técnicas e administrativas aptas a proteger os dados pessoais de acessos não autorizados e de situações acidentais ou ilícitas...<br>( ) Adoção de medidas para prevenir a ocorrência de danos em virtude do tratamento de dados pessoais.<br>( ) Garantia, aos titulares, de exatidão, clareza, relevância e atualização dos dados...<br>( ) Demonstração, pelo agente, da adoção de medidas eficazes e capazes de comprovar a observância e o cumprimento das normas...<br><br>A sequência correta, de cima para baixo, é:",
+            options: [
+                "A) 4, 1, 3, 2.",
+                "B) 1, 4, 2, 3.",
+                "C) 4, 2, 3, 1.",
+                "D) 2, 1, 3, 4.",
+                "E) 3, 1, 2, 4."
+            ],
+            correct: 0,
+            resolution: "<strong>GABARITO: A</strong><br><br><strong>Fundamentação:</strong> A associação correta baseia-se no Art. 6º:<br>- 4. Segurança: Medidas técnicas e administrativas contra acessos não autorizados.<br>- 1. Prevenção: Adoção de medidas para prevenir danos.<br>- 3. Qualidade: Exatidão, clareza e relevância dos dados.<br>- 2. Responsabilização: Demonstração e prestação de contas (Accountability)."
+        },
+        {
+            id: 3,
+            question: "O tratamento de dados pessoais somente poderá ser realizado mediante hipóteses legais taxativas. Analise as assertivas abaixo sobre as bases legais previstas no Art. 7º da LGPD:<br><br>I. O tratamento pode ser realizado para a proteção da vida ou da incolumidade física do titular ou de terceiro, independentemente de consentimento.<br>II. O legítimo interesse do controlador é uma base legal absoluta, podendo sobrepor-se a quaisquer direitos e liberdades fundamentais do titular, dada a livre iniciativa econômica.<br>III. É dispensado o consentimento para o tratamento de dados tornado manifesto pelo titular, resguardados os direitos do titular e os princípios previstos na lei.<br><br>Está(ão) correta(s) apenas:",
+            options: [
+                "A) I.",
+                "B) II.",
+                "C) III.",
+                "D) I e III.",
+                "E) I, II e III."
+            ],
+            correct: 3,
+            resolution: "<strong>GABARITO: D</strong><br><br><strong>Fundamentação:</strong><br>- Item I: Correto (Art. 7º, VII).<br>- Item II: Incorreto. O legítimo interesse não é absoluto; ele encontra limites nos direitos e liberdades fundamentais do titular (Art. 7º, IX).<br>- Item III: Correto (Art. 7º, § 4º). Dados manifestamente públicos dispensam consentimento, mas exigem respeito aos princípios."
+        },
+        {
+            id: 4,
+            question: "A respeito do tratamento de dados pessoais sensíveis, regulado na Seção II da LGPD, especificamente quanto ao compartilhamento de dados de saúde, assinale a alternativa que está em consonância com o Art. 11, § 4º da referida lei:",
+            options: [
+                "A) É permitida a comunicação ou o uso compartilhado entre controladores de dados pessoais sensíveis referentes à saúde com o objetivo de obter vantagem econômica em qualquer situação, desde que haja anonimização posterior.",
+                "B) É vedada a comunicação ou o uso compartilhado entre controladores de dados pessoais sensíveis referentes à saúde com o objetivo de obter vantagem econômica, exceto nos casos de portabilidade de dados quando consentido pelo titular ou para a prestação de serviços de assistência à saúde suplementar.",
+                "C) As operadoras de planos privados de assistência à saúde podem tratar dados sensíveis para a prática de seleção de riscos na contratação de qualquer modalidade de seguro, visando o equilíbrio atuarial.",
+                "D) O tratamento de dados sensíveis de saúde dispensa a adoção de medidas de segurança da informação, visto que o sigilo médico já é protegido por legislação específica anterior à LGPD.",
+                "E) O consentimento para tratamento de dados sensíveis de saúde pode ser tácito, deduzido a partir do agendamento de uma consulta médica pelo titular."
+            ],
+            correct: 1,
+            resolution: "<strong>GABARITO: B</strong><br><br><strong>Fundamentação:</strong> Esta é a literalidade do Art. 11, § 4º. É proibida a exploração comercial de dados de saúde, salvo para portabilidade e serviços de saúde suplementar. Além disso, o § 5º veda expressamente a seleção de riscos por operadoras de saúde (invalidando a C)."
+        },
+        {
+            id: 5,
+            question: "Sobre a figura do Encarregado (Data Protection Officer - DPO) e suas atribuições (Art. 41), marque a alternativa correta:",
+            options: [
+                "A) O encarregado deve ser necessariamente uma pessoa natural, sendo vedada a nomeação de pessoas jurídicas ou comitês para esta função.",
+                "B) A identidade e as informações de contato do encarregado deverão ser mantidas em sigilo pela organização, sendo reveladas apenas à ANPD.",
+                "C) As atividades do encarregado consistem, entre outras, em aceitar reclamações e comunicações dos titulares, prestar esclarecimentos e adotar providências, bem como receber comunicações da autoridade nacional e adotar providências.",
+                "D) O encarregado possui responsabilidade civil solidária automática por qualquer incidente de segurança ocorrido na empresa, independentemente de culpa ou dolo.",
+                "E) A indicação do encarregado é facultativa para todos os agentes de tratamento, independentemente do porte da empresa ou do volume de dados tratados."
+            ],
+            correct: 2,
+            resolution: "<strong>GABARITO: C</strong><br><br><strong>Fundamentação:</strong><br>- A está errada porque o Encarregado pode ser pessoa jurídica.<br>- B está errada pois o contato do DPO deve ser público (Art. 41, § 1º).<br>- C é a transcrição fiel das atribuições do Art. 41, § 2º, incisos I e II.<br>- D está errada pois a lei não prevê solidariedade automática para o encarregado.<br>- E está errada porque a indicação é a regra, com exceções apenas para pequenos agentes conforme regulamentação da ANPD."
+        },
+        {
+            id: 6,
+            question: "O Art. 18 da LGPD elenca os direitos do titular, que podem ser exercidos mediante requisição expressa. Assinale a alternativa que NÃO corresponde a um direito expressamente previsto neste artigo:",
+            options: [
+                "A) Confirmação da existência de tratamento.",
+                "B) Acesso aos dados.",
+                "C) Correção de dados incompletos, inexatos ou desatualizados.",
+                "D) Anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade com o disposto na Lei.",
+                "E) Direito ao esquecimento absoluto, permitindo a exclusão de todos os registros históricos em bases de dados governamentais, inclusive aqueles necessários para cumprimento de obrigação legal."
+            ],
+            correct: 4,
+            resolution: "<strong>GABARITO: E</strong><br><br><strong>Fundamentação:</strong> O direito à eliminação não é absoluto. Se houver obrigação legal ou regulatória de manter o dado (como dados previdenciários ou fiscais), o controlador deve conservá-los conforme o Art. 16, I da LGPD, impossibilitando o 'esquecimento absoluto' nessas circunstâncias."
+        },
+        {
+            id: 7,
+            question: "O tratamento de dados pessoais pelo Poder Público (Capítulo IV) possui regramentos específicos visando o interesse público. Sobre este tema, analise as afirmativas:<br><br>I. As pessoas jurídicas de direito público referidas na LAI devem realizar o tratamento de dados pessoais para o atendimento de sua finalidade pública.<br>II. É vedado ao Poder Público transferir a entidades privadas dados pessoais constantes de bases de dados a que tenha acesso, exceto em casos de execução descentralizada de atividade pública que exija a transferência.<br>III. A autoridade nacional (ANPD) não possui competência para solicitar ao Poder Público a publicação de relatórios de impacto à proteção de dados pessoais, dada a autonomia federativa.<br><br>Está correto o que se afirma em:",
+            options: [
+                "A) I, apenas.",
+                "B) I e II, apenas.",
+                "C) II e III, apenas.",
+                "D) I e III, apenas.",
+                "E) I, II e III."
+            ],
+            correct: 1,
+            resolution: "<strong>GABARITO: B</strong><br><br><strong>Fundamentação:</strong><br>- I e II estão corretos conforme Arts. 23 e 26 da LGPD.<br>- III está incorreto. A ANPD tem sim competência para solicitar informes e relatórios de impacto de qualquer ente do Poder Público, conforme Art. 31 da lei."
+        },
+        {
+            id: 8,
+            question: "A respeito do Término do Tratamento de Dados (Art. 15 e 16), a LGPD determina que os dados pessoais deverão ser eliminados após o término de seu tratamento. Contudo, é autorizada a conservação para as seguintes finalidades, EXCETO:",
+            options: [
+                "A) Cumprimento de obrigação legal ou regulatória pelo controlador.",
+                "B) Estudo por órgão de pesquisa, garantida, sempre que possível, a anonimização dos dados pessoais.",
+                "C) Transferência a terceiro, desde que respeitados os requisitos de tratamento de dados dispostos na Lei.",
+                "D) Uso exclusivo do controlador, vedado seu acesso por terceiro, e desde que anonimizados os dados.",
+                "E) Manutenção indefinida de banco de dados para fins de marketing futuro, baseada na possibilidade remota de reativação do cliente, sem base legal específica."
+            ],
+            correct: 4,
+            resolution: "<strong>GABARITO: E</strong><br><br><strong>Fundamentação:</strong> O Art. 16 traz um rol exaustivo das hipóteses de conservação. Marketing futuro sem base legal não faz parte desta lista e fere os princípios da finalidade e necessidade."
+        },
+        {
+            id: 9,
+            question: "O Art. 48 determina que o controlador deve comunicar à autoridade nacional e ao titular a ocorrência de incidente de segurança que possa acarretar risco ou dano relevante. Essa comunicação deverá mencionar, no mínimo:<br><br>I. A descrição da natureza dos dados pessoais afetados.<br>II. As informações sobre os titulares envolvidos.<br>III. A indicação das medidas técnicas e de segurança utilizadas para a proteção dos dados.<br>IV. Os riscos relacionados ao incidente.<br><br>São itens obrigatórios na comunicação:",
+            options: [
+                "A) I e II, apenas.",
+                "B) III e IV, apenas.",
+                "C) I, II e IV, apenas.",
+                "D) I, III e IV, apenas.",
+                "E) I, II, III e IV."
+            ],
+            correct: 4,
+            resolution: "<strong>GABARITO: E</strong><br><br><strong>Fundamentação:</strong> De acordo com o Art. 48, § 1º, todos os itens listados são obrigatórios na comunicação de incidentes, visando dar transparência e possibilitar medidas de mitigação pelos titulares e pela ANPD."
+        },
+        {
+            id: 10,
+            question: "Das Sanções Administrativas (Art. 52). A Autoridade Nacional de Proteção de Dados (ANPD) poderá aplicar sanções aos agentes de tratamento que violarem a norma. Entre as sanções listadas abaixo, assinale aquela que NÃO está prevista no rol do Art. 52 da Lei nº 13.709/2018:",
+            options: [
+                "A) Advertência, com indicação de prazo para adoção de medidas corretivas.",
+                "B) Multa simples, de até 2% do faturamento da pessoa jurídica limitada a R$ 50.000.000,00 por infração.",
+                "C) Suspensão do exercício da atividade de tratamento dos dados pessoais a que se refere a infração.",
+                "D) Pena privativa de liberdade (prisão) de 1 a 4 anos para o controlador que dolosamente vazar dados sensíveis.",
+                "E) Proibição parcial ou total do exercício de atividades relacionadas a tratamento de dados."
+            ],
+            correct: 3,
+            resolution: "<strong>GABARITO: D</strong><br><br><strong>Fundamentação:</strong> A LGPD trata de sanções administrativas e civis. Não há previsão de crimes ou penas privativas de liberdade no texto da Lei 13.709/2018. Infrações penais são tratadas pelo Código Penal ou leis especiais."
+        }
+    ];
+
+    function renderQuestions() {
+        const container = document.getElementById('questions-list');
+        questionsData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <li class="option-item" id="opt-${index}-${optIndex}" onclick="selectOption(${index}, ${optIndex})">
+                        <input type="radio" name="q${index}" id="radio-${index}-${optIndex}" value="${optIndex}">
+                        <label for="radio-${index}-${optIndex}">${opt}</label>
+                    </li>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-text">QUESTÃO ${String(index + 1).padStart(2, '0')}</span>
+                <p>${q.question}</p>
+                <ul class="options-list">
+                    ${optionsHtml}
+                </ul>
+                <div class="resolution-box" id="res-${index}">
+                    <h4>Resolução:</h4>
+                    ${q.resolution}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectOption(qIndex, optIndex) {
+        // Se já finalizou, não permite mudar
+        if (document.getElementById('finish-btn').disabled) return;
+        
+        document.getElementById(`radio-${qIndex}-${optIndex}`).checked = true;
+    }
+
+    function finishQuiz() {
+        let score = 0;
+        let unanswered = 0;
+
+        questionsData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            
+            if (!selected) {
+                unanswered++;
+            } else {
+                const answerIndex = parseInt(selected.value);
+                
+                // Mostrar a resolução
+                document.getElementById(`res-${index}`).style.display = 'block';
+
+                if (answerIndex === q.correct) {
+                    score++;
+                    document.getElementById(`opt-${index}-${answerIndex}`).classList.add('correct');
+                } else {
+                    document.getElementById(`opt-${index}-${answerIndex}`).classList.add('incorrect');
+                    document.getElementById(`opt-${index}-${q.correct}`).classList.add('correct');
+                }
+            }
+        });
+
+        if (unanswered > 0 && !confirm(`Você deixou ${unanswered} questões sem resposta. Deseja finalizar assim mesmo?`)) {
+            return;
+        }
+
+        // Exibir Placar
+        const scoreText = document.getElementById('score-text');
+        scoreText.innerHTML = `Você acertou ${score} de ${questionsData.length} questões! (${(score/questionsData.length*100).toFixed(0)}%)`;
+        document.getElementById('results-section').style.display = 'block';
+        
+        // Desabilitar o botão
+        document.getElementById('finish-btn').disabled = true;
+        document.getElementById('finish-btn').innerText = "Quiz Finalizado";
+
+        // Scroll suave para os resultados
+        window.scrollTo({ top: document.getElementById('results-section').offsetTop - 50, behavior: 'smooth' });
+        
+        // Mostrar todas as resoluções
+        questionsData.forEach((_, index) => {
+            document.getElementById(`res-${index}`).style.display = 'block';
+            
+            // Marcar a correta caso o usuário não tenha marcado nada
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if(!selected){
+                document.getElementById(`opt-${index}-${questionsData[index].correct}`).classList.add('correct');
+            }
+        });
+    }
+
+    window.onload = renderQuestions;
+</script>
+
+</body>
+</html>

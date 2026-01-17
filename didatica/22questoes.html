@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Didática e Formação pela Pesquisa - IFAM/ProfEPT</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --accent-color: #2980b9;
+            --border-color: #e0e0e0;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --resolution-bg: #f8f9fa;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Segoe UI', Georgia, serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .meta-info {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .question-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f1f7ff;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            background-color: #eef6fc;
+            border-color: var(--accent-color);
+        }
+
+        /* Classes para feedback pós-correção */
+        .option-item.correct {
+            background-color: #d4edda !important;
+            border-color: var(--success-color) !important;
+        }
+
+        .option-item.wrong {
+            background-color: #f8d7da !important;
+            border-color: var(--error-color) !important;
+        }
+
+        .resolution-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--resolution-bg);
+            border-left: 4px solid var(--accent-color);
+            display: none; /* Escondido inicialmente */
+            font-size: 0.95rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background-color: #1c6391;
+        }
+
+        #result-summary {
+            display: none;
+            background: white;
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: slideDown 0.6s ease;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 15px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Simulado: Didática e Formação pela Pesquisa</h1>
+            <div class="meta-info">Foco: Modelos IFAM — ProfEPT | Banca: Estilo Fundação CEFETMINAS</div>
+        </header>
+
+        <div id="result-summary">
+            <h2>Resultado do Simulado</h2>
+            <div class="score-display" id="score-text">0 / 10</div>
+            <p id="performance-msg"></p>
+            <p>Confira as resoluções detalhadas abaixo de cada questão.</p>
+        </div>
+
+        <form id="quiz-form">
+            <div id="questions-container">
+                <!-- Questões serão geradas via JS -->
+            </div>
+
+            <div class="controls">
+                <button type="button" id="submit-btn" onclick="gradeQuiz()">Finalizar Simulado e Ver Resoluções</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                theme: "Bases Conceituais e Pesquisa como Princípio Pedagógico",
+                text: "O documento base do ProfEPT e as diretrizes curriculares do IFAM enfatizam a superação da dualidade histórica entre formação propedêutica e formação profissional. Nesse contexto, a 'pesquisa como princípio pedagógico' (Demo, 2011; Ramos, 2014) assume um papel central na organização didática do Ensino Médio Integrado. Considerando os modelos de formação implementados no IFAM, analise as afirmativas a seguir sobre a função da pesquisa no currículo da EPT:\n\nI. A pesquisa no Ensino Médio Integrado deve restringir-se aos protocolos da metodologia científica normativa (ABNT), preparando o estudante exclusivamente para a produção de artigos acadêmicos na graduação, sem conexão necessária com a prática laboral técnica.\nII. A formação pela pesquisa pressupõe que o estudante reconstrua o conhecimento técnico-científico, investigando os fundamentos históricos, sociais e tecnológicos dos processos produtivos, configurando-se como uma estratégia didática para a autonomia intelectual e a politecnia.\nIII. Nos Institutos Federais, a pesquisa aplicada deve priorizar a inovação tecnológica voltada aos arranjos produtivos locais, integrando saberes tácitos do mundo do trabalho com o conhecimento sistematizado, conforme preconizado na Lei de Criação dos IFs (Lei nº 11.892/2008).\nIV. A didática da pesquisa na EPT defende a substituição total dos conteúdos teóricos disciplinares por atividades práticas de oficina, visto que o objetivo central é o desenvolvimento de competências operacionais imediatas para o mercado (saber-fazer).",
+                options: [
+                    "I e II, apenas.",
+                    "II e III, apenas.",
+                    "III e IV, apenas.",
+                    "I, II e IV.",
+                    "I, III e IV."
+                ],
+                correct: 1, // B
+                resolution: "<b>Gabarito: B.</b><br><br><b>Análise:</b><br>I. (Incorreto) A pesquisa na EPT visa a emancipação intelectual, não a burocracia normativa (ABNT).<br>II. (Correto) Define a pesquisa como reconstrução do conhecimento para autonomia.<br>III. (Correto) Alinha-se à Lei 11.892/2008 sobre arranjos produtivos locais.<br>IV. (Incorreto) Descreve o tecnicismo, enquanto a EPT busca a práxis (união teoria e prática)."
+            },
+            {
+                id: 2,
+                theme: "Produtos Educacionais e Intervenção na Realidade",
+                text: "O Mestrado Profissional (ProfEPT), ofertado pelo IFAM, diferencia-se da modalidade acadêmica pela exigência de um Produto Educacional (PE) vinculado à dissertação. Sobre a natureza didática e a função social desses produtos educacionais na formação de professores, assinale a alternativa INCORRETA:",
+                options: [
+                    "Os Produtos Educacionais devem resultar de processos de pesquisa interventiva ou pesquisa-ação, buscando solucionar problemas reais.",
+                    "A validação dos produtos educacionais no âmbito do ProfEPT exige a verificação de sua aplicabilidade em sala de aula.",
+                    "O desenvolvimento de produtos educacionais no IFAM frequentemente dialoga com as especificidades regionais amazônicas.",
+                    "A elaboração do Produto Educacional dispensa a fundamentação teórica rigorosa, uma vez que sua natureza é eminentemente técnica e instrumental.",
+                    "A tipologia dos produtos é variada, incluindo desde manuais e guias até jogos e aplicativos."
+                ],
+                correct: 3, // D
+                resolution: "<b>Gabarito: D (Incorreta).</b><br><br><b>Análise:</b> O Produto Educacional exige sim fundamentação teórica rigorosa. A ideia de que o mestrado profissional é 'meramente técnico' é equivocada; o ProfEPT baseia-se no Materialismo Histórico-Dialético para garantir que a intervenção seja crítica e transformadora, não apenas instrumental."
+            },
+            {
+                id: 3,
+                theme: "Formação Docente e Narrativas (Auto)Biográficas",
+                text: "Modelos de formação continuada implementados no IFAM têm recorrido às 'Narrativas Docentes e Autoformação' como estratégia de pesquisa. Qual é o objetivo central da utilização de Histórias de Vida e memoriais reflexivos?",
+                options: [
+                    "Constituir um banco de dados estatístico sobre a origem socioeconômica dos docentes para fins de auditoria.",
+                    "Promover a reflexividade crítica sobre a trajetória pessoal e profissional, permitindo ao docente ressignificar sua prática à luz das teorias.",
+                    "Substituir a formação teórica em didática pela troca informal de experiências cotidianas.",
+                    "Avaliar psicologicamente a aptidão dos professores para o cargo.",
+                    "Padronizar as práticas de ensino através da imitação de modelos de sucesso narrados pelos antigos."
+                ],
+                correct: 1, // B
+                resolution: "<b>Gabarito: B.</b><br><br><b>Análise:</b> As narrativas buscam a reflexividade crítica (Nóvoa, Josso). Ao narrar sua história, o professor sistematiza os 'saberes da experiência' e constrói sua identidade docente de forma consciente."
+            },
+            {
+                id: 4,
+                theme: "Interdisciplinaridade e Currículo Integrado na Amazônia",
+                text: "Um grupo de docentes do IFAM Campus Manaus Centro propõe um projeto de pesquisa envolvendo Química, Biologia e Sociologia para investigar a potabilidade da água em comunidades ribeirinhas e os impactos sociais da contaminação. À luz dos princípios da didática da EPT, essa prática configura-se como:",
+                options: [
+                    "Uma atividade de extensão assistencialista, desvinculada do currículo formal.",
+                    "Um exemplo de interdisciplinaridade artificial, onde as disciplinas se justapõem sem integração real.",
+                    "A materialização da pesquisa como princípio pedagógico em uma perspectiva de totalidade, promovendo a formação omnilateral.",
+                    "Um desvio de função da escola técnica, que deveria focar apenas no ensino industrial.",
+                    "Uma prática pedagógica inviável, pois a legislação proíbe aulas práticas fora do ambiente escolar."
+                ],
+                correct: 2, // C
+                resolution: "<b>Gabarito: C.</b><br><br><b>Análise:</b> A integração entre ciências naturais e sociais para resolver um problema real (água ribeirinha) materializa a formação omnilateral (integral) e a pesquisa como eixo central do currículo."
+            },
+            {
+                id: 5,
+                theme: "Trabalho como Princípio Educativo",
+                text: "No contexto da formação pela pesquisa no IFAM, o conceito de 'Trabalho como Princípio Educativo' implica que:",
+                options: [
+                    "O currículo deve visar exclusivamente a empregabilidade imediata no Polo Industrial de Manaus.",
+                    "O trabalho deve ser compreendido ontologicamente como forma de produção da existência, sendo a pesquisa o meio de desvelar a ciência nos processos laborais.",
+                    "Os estudantes devem trabalhar nas dependências do Instituto como forma de pagamento pelos cursos.",
+                    "A educação profissional deve focar no 'aprender a aprender' de forma abstrata.",
+                    "O ensino de história e filosofia é dispensável perante as competências técnicas."
+                ],
+                correct: 1, // B
+                resolution: "<b>Gabarito: B.</b><br><br><b>Análise:</b> O trabalho é visto como a base da existência humana (ontológico). Na EPT, ele educa porque permite entender a ciência e a tecnologia por trás da produção, superando a alienação do trabalhador."
+            },
+            {
+                id: 6,
+                theme: "Observatórios e Pesquisa Contextualizada",
+                text: "Sobre o papel didático-pedagógico de observatórios (como o Observatório da Juventude no IFAM) na formação da EPT, assinale a alternativa CORRETA:",
+                options: [
+                    "Funcionam como órgãos de censura interna das publicações discentes.",
+                    "São estruturas burocráticas apenas para captação de recursos.",
+                    "Atuam como espaços formativos de articulação entre ensino e pesquisa, produzindo dados que subsidiam o planejamento didático.",
+                    "Devem ser geridos exclusivamente por pesquisadores externos para garantir a neutralidade.",
+                    "Têm como foco único a produção de rankings de desempenho escolar."
+                ],
+                correct: 2, // C
+                resolution: "<b>Gabarito: C.</b><br><br><b>Análise:</b> Observatórios produzem conhecimento sobre a realidade local (quem é o aluno?), o que é essencial para uma didática contextualizada e políticas de inclusão."
+            },
+            {
+                id: 7,
+                theme: "Avaliação da Aprendizagem na Formação pela Pesquisa",
+                text: "Conforme as teorias críticas de currículo e avaliação aplicadas à EPT, a avaliação no modelo de formação pela pesquisa deve ser:",
+                options: [
+                    "Classificatória e somativa, baseada em provas objetivas de retenção.",
+                    "Processual, diagnóstica e formativa, considerando o erro como parte integrante da aprendizagem.",
+                    "Punitiva e seletiva para excluir estudantes sem aptidão nata.",
+                    "Padronizada externamente, baseada apenas nos índices do ENEM.",
+                    "Baseada apenas na autoavaliação, eliminando o papel do professor."
+                ],
+                correct: 1, // B
+                resolution: "<b>Gabarito: B.</b><br><br><b>Análise:</b> Se a pesquisa é o processo, a avaliação deve ser formativa (acompanhar o percurso) e não apenas medir o produto final. O erro é visto como etapa do conhecimento (Hoffmann/Luckesi)."
+            },
+            {
+                id: 8,
+                theme: "Politecnia e Tecnologia",
+                text: "Na formação pela pesquisa implementada no ProfEPT, a tecnologia é entendida didaticamente como:",
+                options: [
+                    "Um conjunto de máquinas modernas que devem ser operadas sem questionamento.",
+                    "A aplicação neutra da ciência, focando apenas em manuais de operação.",
+                    "Um processo social e histórico de transformação da natureza, cujos fundamentos devem ser objeto de investigação crítica.",
+                    "Um conteúdo exclusivo das disciplinas exatas.",
+                    "O simples uso de tablets e computadores em sala de aula."
+                ],
+                correct: 2, // C
+                resolution: "<b>Gabarito: C.</b><br><br><b>Análise:</b> A tecnologia não é neutra. Na politecnia, o aluno deve entender os fundamentos científicos e as consequências sociais da técnica para não ser submisso a ela."
+            },
+            {
+                id: 9,
+                theme: "Práticas de Ensino e Sequências Didáticas",
+                text: "O que caracteriza uma Sequência Didática (SD) fundamentada na pesquisa, diferenciando-a de um plano de aula tradicional expositivo?",
+                options: [
+                    "A SD é apenas uma lista de tópicos em ordem alfabética.",
+                    "A SD organiza o ensino em etapas articuladas (problematização, investigação, sistematização) mediadas pelo professor.",
+                    "A SD dispensa a presença do professor por ser autoinstrucional.",
+                    "O plano tradicional foca na prática, enquanto a SD foca na teoria pura.",
+                    "Não há diferença real entre os dois modelos."
+                ],
+                correct: 1, // B
+                resolution: "<b>Gabarito: B.</b><br><br><b>Análise:</b> A SD no ProfEPT é uma ferramenta de planejamento que organiza a construção do saber através da investigação ativa do aluno sobre um tema gerador."
+            },
+            {
+                id: 10,
+                theme: "Legislação (Lei 11.892/2008) e Finalidades da Pesquisa",
+                text: "De acordo com a Lei nº 11.892/2008, em relação à articulação entre ensino e pesquisa, o IFAM deve:",
+                options: [
+                    "Priorizar a pesquisa básica em detrimento do ensino técnico.",
+                    "Realizar e estimular a pesquisa aplicada e o desenvolvimento científico visando o fortalecimento dos arranjos produtivos locais.",
+                    "Dedicar-se exclusivamente ao ensino médio, restringindo pesquisa à pós-graduação.",
+                    "Centralizar a produção de conhecimento na Reitoria.",
+                    "Focar a pesquisa apenas nas áreas de engenharia e informática."
+                ],
+                correct: 1, // B
+                resolution: "<b>Gabarito: B.</b><br><br><b>Análise:</b> A lei define que os IFs têm como missão a pesquisa aplicada que dialogue com o território e os arranjos sociais e culturais locais (Art. 6º)."
+            }
+        ];
+
+        function loadQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = quizData.map((q, index) => `
+                <div class="question-card" id="q-card-${index}">
+                    <span class="question-number">Questão ${index + 1}</span>
+                    <div class="meta-info" style="margin-bottom:10px;">Tema: ${q.theme}</div>
+                    <div class="question-text">${q.text.replace(/\n/g, '<br>')}</div>
+                    <ul class="options-list">
+                        ${q.options.map((opt, i) => `
+                            <li class="option-item" onclick="selectOption(${index}, ${i})">
+                                <input type="radio" name="q${index}" id="q${index}o${i}" value="${i}">
+                                <label for="q${index}o${i}">${String.fromCharCode(65 + i)}) ${opt}</label>
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <div class="resolution-box" id="res-${index}">
+                        <h4>Resolução Detalhada</h4>
+                        <div>${q.resolution}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.selectOption = function(qIndex, oIndex) {
+            const items = document.querySelectorAll(`#q-card-${qIndex} .option-item`);
+            items.forEach(item => item.classList.remove('selected'));
+            items[oIndex].classList.add('selected');
+            document.getElementById(`q${qIndex}o${oIndex}`).checked = true;
+        };
+
+        window.gradeQuiz = function() {
+            let score = 0;
+            const form = document.getElementById('quiz-form');
+            
+            quizData.forEach((q, index) => {
+                const selected = form.querySelector(`input[name="q${index}"]:checked`);
+                const resolutionBox = document.getElementById(`res-${index}`);
+                const options = document.querySelectorAll(`#q-card-${index} .option-item`);
+                
+                // Mostrar resolução
+                resolutionBox.style.display = 'block';
+
+                if (selected) {
+                    const answer = parseInt(selected.value);
+                    if (answer === q.correct) {
+                        score++;
+                        options[answer].classList.add('correct');
+                    } else {
+                        options[answer].classList.add('wrong');
+                        options[q.correct].classList.add('correct');
+                    }
+                } else {
+                    // Se não respondeu, mostra a correta
+                    options[q.correct].classList.add('correct');
+                }
+            });
+
+            // Exibir resumo
+            const summary = document.getElementById('result-summary');
+            const scoreText = document.getElementById('score-text');
+            const performanceMsg = document.getElementById('performance-msg');
+            
+            summary.style.display = 'block';
+            scoreText.innerText = `${score} / ${quizData.length}`;
+            
+            if(score >= 8) performanceMsg.innerText = "Excelente desempenho! Você domina as bases da EPT e do ProfEPT.";
+            else if(score >= 5) performanceMsg.innerText = "Bom desempenho, mas revise os pontos onde houve dúvida.";
+            else performanceMsg.innerText = "Recomendamos uma leitura aprofundada das Bases Conceituais e do Documento Base do ProfEPT.";
+
+            // Rolar para o topo do resultado
+            summary.scrollIntoView({ behavior: 'smooth' });
+            
+            // Desativar botão e inputs
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('submit-btn').innerText = "Simulado Corrigido";
+            document.querySelectorAll('input').forEach(i => i.disabled = true);
+            document.querySelectorAll('.option-item').forEach(i => i.style.pointerEvents = 'none');
+        };
+
+        window.onload = loadQuestions;
+    </script>
+</body>
+</html>

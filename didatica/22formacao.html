@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Completa: Didática e Pesquisa no IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fef3c7;
+            padding: 1px 3px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #92400e;
+        }
+
+        .section-box {
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: #ffffff;
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #334155;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .audio-player-fixed {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            border-bottom: 1px solid #e2e8f0;
+            z-index: 100;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .important-note {
+            background-color: #f8fafc;
+            border-left: 4px solid #475569;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .cefetminas-alert {
+            background-color: #fffaf0;
+            border: 1px solid #feebc8;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #1e293b;
+            color: white;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .table-container {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Reprodutor de Áudio -->
+    <div class="audio-player-fixed">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center">
+                <span class="text-sm font-bold text-slate-600 mr-4">🔊 RESUMO EM ÁUDIO:</span>
+                <audio controls class="h-10">
+                    <!-- Espaço para o nome do arquivo MP3 -->
+                    <source src="22formacao.mp3" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                </audio>
+            </div>
+            <span class="text-xs text-slate-400 font-medium">Arquivo: aula_didatica_ifam.mp3</span>
+        </div>
+    </div>
+
+    <main class="max-w-4xl mx-auto px-6 py-12">
+        
+        <!-- Cabeçalho -->
+        <header class="mb-16">
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-4 tracking-tight">
+                Didática: Formação pela/para Pesquisa no IFAM
+            </h1>
+            <div class="flex items-center text-slate-500 font-medium">
+                <span class="bg-slate-100 px-3 py-1 rounded text-xs mr-3">PROFESSOR EBTT</span>
+                <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded text-xs">BANCA: CEFETMINAS</span>
+            </div>
+        </header>
+
+        <!-- Introdução e Definições -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center">
+                1. Definição e Características Essenciais
+            </h2>
+            <p class="mb-4">
+                No contexto do IFAM e da Educação Profissional e Tecnológica (EPT), a pesquisa não é apenas uma atividade de laboratório, mas um <span class="highlight">princípio educativo e pedagógico</span>. Ela visa superar a mera reprodução de conhecimento (ensino tradicional) para a <span class="highlight">construção de autonomia</span>.
+            </p>
+            
+            <div class="important-note">
+                <p><strong>A Dualidade Superada:</strong> O modelo do IFAM rejeita a separação entre o "saber fazer" (prático) e o "saber por que se faz" (teórico). A pesquisa é a ponte que une o trabalho manual ao intelectual.</p>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modalidade</th>
+                            <th>Foco Principal</th>
+                            <th>Aplicação Didática</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Pesquisa como Princípio Educativo</strong></td>
+                            <td>Trabalho e Cidadania</td>
+                            <td>O aluno entende a realidade social e produtiva para transformá-la.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pesquisa como Princípio Pedagógico</strong></td>
+                            <td>Metodologia de Ensino</td>
+                            <td>A pesquisa é o <span class="highlight">método</span>. O professor instiga a dúvida em vez de dar respostas prontas.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ProfEPT e Produtos Educacionais -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">2. O Modelo ProfEPT e o IFAM</h2>
+            <p class="mb-6">
+                O Mestrado Profissional em EPT (ProfEPT), implementado no IFAM, é o maior exemplo prático dessa formação. Ele foca na <span class="highlight">Pesquisa Aplicada</span> e na intervenção direta na realidade escolar.
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="p-5 border border-slate-200 rounded-lg">
+                    <h3 class="font-bold text-slate-700 mb-2">Produto Educacional (PE)</h3>
+                    <p class="text-sm text-slate-600">Todo mestrando deve gerar um produto (guia, software, sequência didática) para resolver um problema real da instituição.</p>
+                </div>
+                <div class="p-5 border border-slate-200 rounded-lg">
+                    <h3 class="font-bold text-slate-700 mb-2">Pesquisa-Ação</h3>
+                    <p class="text-sm text-slate-600">O pesquisador está imerso no campo. Ele estuda sua própria prática pedagógica (auto-reflexão crítica).</p>
+                </div>
+            </div>
+
+            <p class="font-semibold text-slate-700 mb-2">Características do Ensino no IFAM (PPI):</p>
+            <ul class="list-disc pl-6 space-y-2 mb-4">
+                <li><span class="highlight">Verticalização:</span> Otimização de infraestrutura e pessoal do técnico à pós-graduação.</li>
+                <li><span class="highlight">Indissociabilidade:</span> Não existe ensino sem pesquisa, nem pesquisa sem extensão.</li>
+                <li><span class="highlight">Interdisciplinaridade:</span> Diálogo entre as bases comuns (BNCC) e as bases técnicas.</li>
+            </ul>
+        </section>
+
+        <!-- Conceitos para a Prova -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">3. Definições Básicas (Memorização para a Prova)</h2>
+            <div class="space-y-4">
+                <div class="flex gap-4 p-4 hover:bg-slate-50 transition-colors rounded">
+                    <span class="text-xl">🎓</span>
+                    <div>
+                        <p class="font-bold">Formação Omnilateral</p>
+                        <p class="text-sm text-slate-600">Formação do homem em todas as suas dimensões: física, mental, social e produtiva. Oposto da formação unilateral (só técnica).</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 p-4 hover:bg-slate-50 transition-colors rounded">
+                    <span class="text-xl">🛠️</span>
+                    <div>
+                        <p class="font-bold">Trabalho como Princípio Educativo</p>
+                        <p class="text-sm text-slate-600">O trabalho é a base da produção da vida humana. A escola deve ensinar a ciência por trás de cada processo produtivo.</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 p-4 hover:bg-slate-50 transition-colors rounded">
+                    <span class="text-xl">🔗</span>
+                    <div>
+                        <p class="font-bold">Politecnia</p>
+                        <p class="text-sm text-slate-600">Domínio dos fundamentos científicos das diversas técnicas produtivas. Não é "saber vários ofícios", mas entender a ciência da técnica.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Análise da Banca -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">4. Tendências CEFETMINAS & Peguinhas</h2>
+            
+            <div class="cefetminas-alert">
+                <h3 class="font-bold text-amber-800 mb-3 uppercase text-sm">Onde o candidato erra (Peguinhas):</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-red-500 mr-2">●</span>
+                        <p><strong>Confundir Politecnia com Polivalência:</strong> A banca vai dizer que politecnia é o aluno aprender a fazer de tudo um pouco. <span class="highlight">ERRADO</span>. Politecnia é a base científica comum a todos os trabalhos.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-red-500 mr-2">●</span>
+                        <p><strong>Achar que Pesquisa é só no Ensino Superior:</strong> A banca sugere que pesquisa no Ensino Médio é facultativa. <span class="highlight">ERRADO</span>. No IFAM, ela é obrigatória desde o nível integrado.</p>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-red-500 mr-2">●</span>
+                        <p><strong>Dualidade Educacional:</strong> Qualquer alternativa que sugira que existe uma escola para quem vai trabalhar e outra para quem vai para a universidade deve ser <span class="highlight">eliminada</span>.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-8">
+                <h3 class="font-bold text-slate-800 mb-4">Base Legal para Citar/Lembrar:</h3>
+                <div class="bg-slate-50 p-6 rounded-lg">
+                    <ul class="text-sm space-y-2">
+                        <li><strong>Decreto nº 5.154/2004:</strong> Regulamenta a integração da educação profissional ao ensino médio.</li>
+                        <li><strong>Lei nº 11.892/2008:</strong> Cria a Rede Federal e os Institutos Federais (foco na verticalização).</li>
+                        <li><strong>Resolução CNE/CP nº 01/2021:</strong> Novas diretrizes para a EPT.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabela Final de Comparação -->
+        <section class="section-box">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">5. Tabela de Apoio à Memorização</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Termo</th>
+                            <th>O que É</th>
+                            <th>O que NÃO É (Pegadinha)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Educar pela Pesquisa</strong></td>
+                            <td>Aprender a aprender. Atitude crítica.</td>
+                            <td>Fazer apenas o TCC final.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ensino Médio Integrado</strong></td>
+                            <td>Base BNCC + Técnica em um só currículo.</td>
+                            <td>Cursos concomitantes (em horários opostos) sem diálogo.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Omnilateralidade</strong></td>
+                            <td>Desenvolvimento humano integral.</td>
+                            <td>Capacitação rápida para o mercado.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Produto Educacional</strong></td>
+                            <td>Resultado de pesquisa-ação no ProfEPT.</td>
+                            <td>Um simples relatório de estágio.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Botão de Ação -->
+        <footer class="text-center py-10">
+            <p class="text-slate-500 mb-6 text-sm">Pronto para testar seus conhecimentos?</p>
+            <a href="22questoes.html" class="btn-primary">
+                Ir para o Banco de Questões
+                <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+            <div class="mt-12 pt-8 border-t border-slate-100 text-xs text-slate-400">
+                Conteúdo revisado conforme o Projeto Pedagógico Institucional (PPI) do IFAM e o Regulamento do ProfEPT.
+            </div>
+        </footer>
+
+    </main>
+
+</body>
+</html>

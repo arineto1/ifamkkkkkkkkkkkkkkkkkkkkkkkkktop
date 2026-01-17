@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Interativo: Princípios Fundamentais (CF/88)</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #2980b9;
+            --correct-color: #27ae60;
+            --wrong-color: #c0392b;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #1e272e;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #636e72;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f1f2f6;
+            border-color: var(--primary-color);
+        }
+
+        .option-item.selected {
+            background-color: #e3f2fd;
+            border-color: var(--primary-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+        }
+
+        button:hover {
+            background-color: #1c5982;
+        }
+
+        /* Results Area */
+        #results-summary {
+            display: none;
+            background: #dfe6e9;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .score-box {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .resolution-box {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 5px solid var(--primary-color);
+            font-size: 0.95rem;
+            color: #2d3436;
+        }
+
+        .resolution-box h4 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .correct-answer-label {
+            color: var(--correct-color);
+            font-weight: bold;
+        }
+
+        .wrong-answer-label {
+            color: var(--wrong-color);
+            font-weight: bold;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .badge-correct { background: #dff9fb; color: var(--correct-color); border: 1px solid var(--correct-color); }
+        .badge-wrong { background: #ffeaa7; color: var(--wrong-color); border: 1px solid var(--wrong-color); }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.4rem; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: CF/88 - Princípios Fundamentais</h1>
+        <p class="description">Foco: Banca Fundação CEFETMINAS (Questões Completas)</p>
+    </header>
+
+    <div id="results-summary">
+        <h2>Resultado Final</h2>
+        <div class="score-box" id="final-score">0 / 10</div>
+        <p id="feedback-text"></p>
+    </div>
+
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- Questions will be injected here via JS -->
+        </div>
+
+        <div class="btn-container">
+            <button type="button" id="submit-btn" onclick="checkAnswers()">Finalizar Simulado e Ver Resoluções</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    const questionsData = [
+        {
+            id: 1,
+            text: "Questão 1. A República Federativa do Brasil, constituída em Estado Democrático de Direito, possui fundamentos basilares que orientam toda a estrutura normativa e social do país. Considerando a literalidade e a interpretação doutrinária do Artigo 1º da Constituição Federal de 1988, analise as afirmativas a seguir:\n\nI. A cidadania, prevista como fundamento, qualifica o indivíduo não apenas como destinatário de ações estatais, mas como titular ativo de direitos políticos e partícipe da vida do Estado.\nII. O pluralismo político, elencado no inciso V, restringe-se à garantia da existência de múltiplos partidos políticos, sendo sinônimo estrito de pluripartidarismo no sistema eleitoral vigente.\nIII. A dignidade da pessoa humana atua como vetor interpretativo supremo, irradiando efeitos sobre todo o ordenamento jurídico e impedindo a coisificação do ser humano nas relações públicas e privadas.\nIV. A soberania, embora fundamento da República, é relativa no cenário internacional, devendo conviver com a soberania de outros Estados e com as normas de direito internacional que o Brasil se compromete a observar.",
+            options: [
+                "I, II e III.",
+                "I, III e IV.",
+                "II e IV.",
+                "I e III.",
+                "III e IV."
+            ],
+            correct: 1, // B
+            explanation: "Estão corretas I, III e IV. A cidadania (I) qualifica o indivíduo como agente de legitimação. A dignidade (III) é o vetor supremo contra a coisificação. A soberania (IV) no cenário internacional convive com a igualdade entre Estados. O item II está incorreto porque Pluralismo Político é gênero, do qual o Pluripartidarismo é apenas uma espécie (instrumental)."
+        },
+        {
+            id: 2,
+            text: "Questão 2. A teoria da Tripartição dos Poderes, idealizada por Montesquieu e consagrada no Artigo 2º da Carta Magna de 1988, estabelece a estrutura funcional do Estado brasileiro. Sobre este tema, assinale a alternativa que apresenta uma afirmativa INCORRETA à luz do texto constitucional e da doutrina majoritária:",
+            options: [
+                "Os Poderes Legislativo, Executivo e Judiciário são independentes e harmônicos entre si, inexistindo hierarquia ou subordinação funcional entre eles.",
+                "A independência dos poderes é absoluta e impede que um Poder exerça, ainda que atipicamente, funções precípuas de outro, sob pena de violação da cláusula pétrea da separação dos poderes.",
+                "O sistema de freios e contrapesos (checks and balances) permite interferências recíprocas e legitimadas entre os Poderes, visando ao equilíbrio institucional e à contenção do arbítrio.",
+                "A harmonia entre os poderes pressupõe o dever de colaboração mútua e cortesia institucional, evitando-se o travamento da máquina pública por disputas políticas ou corporativas.",
+                "A separação dos poderes constitui cláusula pétrea, não podendo ser abolida nem mesmo por meio de Emenda Constitucional, conforme dispõe o Art. 60, § 4º da Constituição."
+            ],
+            correct: 1, // B
+            explanation: "A alternativa B é a incorreta. A independência dos poderes não é absoluta no sentido de impedir funções atípicas. Cada poder possui uma função típica (predominante), mas exerce as outras de forma atípica (secundária). Ex: O Judiciário administra seus recursos (função executiva) e elabora regimentos (função legislativa)."
+        },
+        {
+            id: 3,
+            text: "Questão 3. Os objetivos fundamentais da República Federativa do Brasil, expressos no Artigo 3º, diferenciam-se dos fundamentos (Art. 1º) e dos princípios das relações internacionais (Art. 4º) por representarem metas programáticas a serem perseguidas pelo Estado e pela sociedade. Assinale a alternativa que contém EXCLUSIVAMENTE objetivos fundamentais previstos no texto constitucional:",
+            options: [
+                "Garantir o desenvolvimento nacional; erradicar a pobreza e a marginalização; prevalência dos direitos humanos.",
+                "Construir uma sociedade livre, justa e solidária; promover o bem de todos; independência nacional.",
+                "Erradicar a pobreza e a marginalização; reduzir as desigualdades sociais e regionais; promover o bem de todos, sem preconceitos de origem, raça, sexo, cor, idade e quaisquer outras formas de discriminação.",
+                "Garantir o desenvolvimento nacional; defesa da paz; solução pacífica dos conflitos.",
+                "Construir uma sociedade livre, justa e solidária; pluralismo político; valores sociais do trabalho e da livre iniciativa."
+            ],
+            correct: 2, // C
+            explanation: "A alternativa C contém apenas itens do Art. 3º. Nas demais opções, há mistura com Fundamentos (Art. 1º) ou Princípios Internacionais (Art. 4º). Lembre-se que objetivos iniciam com verbos no infinitivo (ConGaErraPro)."
+        },
+        {
+            id: 4,
+            text: "Questão 4. No contexto das relações internacionais, o Brasil adota uma postura cooperativa e pacifista, regida pelos princípios enumerados no Artigo 4º da Constituição Federal. Analise a situação hipotética abaixo: 'Diante de uma grave violação de direitos em um país vizinho, o Governo Brasileiro emite nota oficial condenando o ocorrido, mas reafirma que não enviará tropas nem interferirá diretamente na política interna daquela nação, respeitando sua autonomia para resolver a crise.' Essa postura diplomática reflete, simultaneamente, a tensão e o equilíbrio entre quais princípios constitucionais das relações internacionais?",
+            options: [
+                "Prevalência dos direitos humanos e Não-intervenção.",
+                "Autodeterminação dos povos e Concessão de asilo político.",
+                "Independência nacional e Defesa da paz.",
+                "Solução pacífica dos conflitos e Repúdio ao terrorismo.",
+                "Igualdade entre os Estados e Cooperação entre os povos."
+            ],
+            correct: 0, // A
+            explanation: "A situação descreve a condenação da violação (Prevalência dos Direitos Humanos) em equilíbrio com a recusa em interferir militarmente (Não-intervenção)."
+        },
+        {
+            id: 5,
+            text: "Questão 5. O parágrafo único do Artigo 1º da Constituição Federal de 1988 estabelece a titularidade e o exercício do poder político no Brasil. A respeito desse dispositivo, avalie as asserções a seguir e a relação proposta entre elas:\n\nI. O Brasil adota o regime de democracia semidireta ou participativa.\nPORQUE\nII. A Constituição prevê que todo o poder emana do povo, que o exerce não apenas por meio de representantes eleitos, mas também diretamente, nos termos da Constituição (plebiscito, referendo, iniciativa popular).",
+            options: [
+                "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+                "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+                "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
+                "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
+                "As asserções I e II são proposições falsas."
+            ],
+            correct: 0, // A
+            explanation: "Ambas são verdadeiras. A democracia é semidireta justamente porque combina a representação (eleitos) com a participação direta (plebiscito, referendo e iniciativa popular)."
+        },
+        {
+            id: 6,
+            text: "Questão 6. A República Federativa do Brasil busca a formação de uma comunidade latino-americana de nações. Segundo o parágrafo único do Artigo 4º da Constituição, essa integração deve abranger os aspectos:",
+            options: [
+                "Exclusivamente econômicos e comerciais, visando ao fortalecimento do Mercosul.",
+                "Econômicos, políticos, sociais e culturais, visando à integração dos povos da América Latina.",
+                "Políticos e militares, com a criação de uma força de defesa regional contra ameaças externas.",
+                "Apenas culturais e sociais, respeitando a soberania econômica absoluta de cada Estado membro.",
+                "Econômicos e tributários, mediante a unificação imediata das moedas e dos bancos centrais."
+            ],
+            correct: 1, // B
+            explanation: "Literalidade do parágrafo único do Art. 4º: 'A República Federativa do Brasil buscará a integração econômica, política, social e cultural dos povos da América Latina...'"
+        },
+        {
+            id: 7,
+            text: "Questão 7. A banca Fundação CEFETMINAS frequentemente explora a literalidade dos incisos constitucionais. Nesse sentido, identifique qual das alternativas abaixo NÃO corresponde a um princípio que rege o Brasil em suas relações internacionais, conforme o rol taxativo do Artigo 4º:",
+            options: [
+                "Repúdio ao terrorismo e ao racismo.",
+                "Cooperação entre os povos para o progresso da humanidade.",
+                "Garantia do desenvolvimento nacional.",
+                "Concessão de asilo político.",
+                "Igualdade entre os Estados."
+            ],
+            correct: 2, // C
+            explanation: "A 'Garantia do desenvolvimento nacional' é um Objetivo Fundamental (Art. 3º, II) e não um princípio das relações internacionais (Art. 4º)."
+        },
+        {
+            id: 8,
+            text: "Questão 8. Sobre a forma de Estado, a forma de governo e o regime político adotados pela Constituição de 1988, correlacione os conceitos:\n1. Forma Federativa | 2. Forma Republicana | 3. Regime Democrático | 4. Sistema Presidencialista\n\n( ) Caracteriza-se pela eletividade, temporalidade e responsabilidade do Chefe de Estado.\n( ) Caracteriza-se pela descentralização política e pela indissolubilidade do vínculo entre os entes.\n( ) Caracteriza-se pela soberania popular e pelo respeito aos direitos fundamentais.\n( ) Caracteriza-se pela união das chefias de Estado e de Governo na mesma pessoa.",
+            options: [
+                "2, 1, 3, 4.",
+                "1, 2, 4, 3.",
+                "3, 1, 2, 4.",
+                "2, 4, 1, 3.",
+                "4, 3, 1, 2."
+            ],
+            correct: 0, // A
+            explanation: "A sequência correta é: 2 (República: eletividade), 1 (Federação: descentralização), 3 (Democracia: soberania popular) e 4 (Presidencialismo: união das chefias)."
+        },
+        {
+            id: 9,
+            text: "Questão 9. Considere o fundamento da 'Livre Iniciativa' (Art. 1º, IV) e o objetivo de 'Erradicar a pobreza' (Art. 3º, III). A coexistência desses dispositivos na mesma Constituição demonstra que o modelo econômico brasileiro é:",
+            options: [
+                "Socialista, priorizando a igualdade material absoluta em detrimento da propriedade privada.",
+                "Liberal clássico, onde o Estado não interfere na economia sob nenhuma hipótese.",
+                "Capitalista, mas condicionado pela função social e pela busca da justiça social, caracterizando um capitalismo social ou humanista.",
+                "Comunista, pois prevê a erradicação da pobreza como meta prioritária do Estado.",
+                "Totalitário, pois o Estado controla tanto a iniciativa privada quanto a distribuição de renda."
+            ],
+            correct: 2, // C
+            explanation: "O Brasil adota um modelo de mercado (Livre iniciativa) mitigado pela valorização do trabalho e justiça social, caracterizando um capitalismo social."
+        },
+        {
+            id: 10,
+            text: "Questão 10. Em relação à 'Autodeterminação dos Povos' (Art. 4º, III) e à 'Independência Nacional' (Art. 4º, I), é correto afirmar que:",
+            options: [
+                "São sinônimos perfeitos e podem ser usados de forma intercambiável.",
+                "A Independência Nacional refere-se à soberania do Estado brasileiro perante outros Estados, enquanto a Autodeterminação dos Povos refere-se ao direito de qualquer povo de escolher seu próprio destino político sem ingerência externa.",
+                "A Autodeterminação dos Povos aplica-se apenas aos povos indígenas dentro do território brasileiro.",
+                "A Independência Nacional é um princípio absoluto que permite ao Brasil descumprir tratados internacionais de direitos humanos sempre que desejar.",
+                "A Autodeterminação dos Povos impede que o Brasil participe de missões de paz da ONU."
+            ],
+            correct: 1, // B
+            explanation: "Correto. Independência é a soberania externa do Brasil. Autodeterminação é o respeito ao direito de outros povos decidirem seus rumos sem colonialismo ou intervenções."
+        }
+    ];
+
+    const questionsContainer = document.getElementById('questions-container');
+
+    // Renderize as questões
+    function renderQuestions() {
+        questionsData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                const label = String.fromCharCode(65 + optIndex); // A, B, C...
+                optionsHtml += `
+                    <label class="option-item" for="q${index}_opt${optIndex}" id="label_q${index}_opt${optIndex}">
+                        <input type="radio" name="question${index}" value="${optIndex}" id="q${index}_opt${optIndex}" onchange="selectOption(${index}, ${optIndex})">
+                        <span><strong>${label})</strong> ${opt}</span>
+                    </label>
+                `;
+            });
+
+            card.innerHTML = `
+                <div id="status-${index}"></div>
+                <span class="question-text">${q.text.replace(/\n/g, '<br>')}</span>
+                <div class="options-list">
+                    ${optionsHtml}
+                </div>
+                <div class="resolution-box" id="res-${index}">
+                    <h4>Resolução Comentada</h4>
+                    <p><strong>Gabarito: ${String.fromCharCode(65 + q.correct)}</strong></p>
+                    <p>${q.explanation}</p>
+                </div>
+            `;
+            questionsContainer.appendChild(card);
+        });
+    }
+
+    function selectOption(qIdx, optIdx) {
+        // Remove 'selected' class from all options of this question
+        const labels = document.querySelectorAll(`[id^="label_q${qIdx}_opt"]`);
+        labels.forEach(l => l.classList.remove('selected'));
+        
+        // Add to selected
+        document.getElementById(`label_q${qIdx}_opt${optIdx}`).classList.add('selected');
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        let unanswered = false;
+
+        questionsData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="question${index}"]:checked`);
+            const statusDiv = document.getElementById(`status-${index}`);
+            const resDiv = document.getElementById(`res-${index}`);
+            const card = document.getElementById(`q-card-${index}`);
+
+            if (selected) {
+                const userAnswer = parseInt(selected.value);
+                if (userAnswer === q.correct) {
+                    score++;
+                    statusDiv.innerHTML = '<span class="status-badge badge-correct">Acertou</span>';
+                } else {
+                    statusDiv.innerHTML = '<span class="status-badge badge-wrong">Errou</span>';
+                }
+            } else {
+                statusDiv.innerHTML = '<span class="status-badge badge-wrong">Não Respondida</span>';
+                unanswered = true;
+            }
+
+            // Show resolution
+            resDiv.style.display = 'block';
+            
+            // Disable inputs
+            const inputs = document.querySelectorAll(`input[name="question${index}"]`);
+            inputs.forEach(i => i.disabled = true);
+        });
+
+        // Show Summary
+        const summary = document.getElementById('results-summary');
+        summary.style.display = 'block';
+        document.getElementById('final-score').innerText = `${score} / ${questionsData.length}`;
+        
+        let feedback = "";
+        if(score === 10) feedback = "Excelente! Você domina os Princípios Fundamentais.";
+        else if(score >= 7) feedback = "Muito bom! Falta pouco para a perfeição.";
+        else if(score >= 5) feedback = "Bom desempenho, mas revise os pontos onde houve dúvida.";
+        else feedback = "Atenção: Revise os artigos 1º ao 4º da CF/88 com calma.";
+        
+        document.getElementById('feedback-text').innerText = feedback;
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        // Hide button
+        document.getElementById('submit-btn').style.display = 'none';
+    }
+
+    // Initialize
+    window.onload = renderQuestions;
+</script>
+
+</body>
+</html>

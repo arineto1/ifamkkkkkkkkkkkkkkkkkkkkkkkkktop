@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Didática na Educação Infantil Amazônica</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --accent-color: #27ae60;
+            --secondary-color: #f8f9fa;
+            --border-color: #dee2e6;
+            --correct-bg: #e8f5e9;
+            --wrong-bg: #ffebee;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #fff;
+            border-bottom: 2px solid var(--accent-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--text-color);
+        }
+
+        header p {
+            margin: 0.5rem 0 0;
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .intro-box {
+            background-color: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent-color);
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .text-base {
+            background: #f1f3f5;
+            padding: 1.2rem;
+            border-radius: 6px;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            border-left: 3px solid #ced4da;
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            background-color: #f0f7f2;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 1rem;
+            transform: scale(1.2);
+        }
+
+        .option-item.selected {
+            border-color: var(--accent-color);
+            background-color: #eef9f1;
+        }
+
+        /* Classes para o Resultado */
+        .resolution-box {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+        }
+
+        .correct-answer {
+            background-color: var(--correct-bg) !important;
+            border-color: #4caf50 !important;
+        }
+
+        .wrong-answer {
+            background-color: var(--wrong-bg) !important;
+            border-color: #f44336 !important;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 3rem;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #219150;
+        }
+
+        #result-summary {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .score-val {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 600px) {
+            main { padding: 0 1rem; }
+            .question-card { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado: Didática na Educação Infantil Amazônica</h1>
+    <p>Estilo: Fundação CEFETMINAS | Temas: Brincar, Registro e Observação</p>
+</header>
+
+<main>
+    <div class="intro-box">
+        Este simulado contém 10 questões inéditas baseadas em contextos amazônicos (ribeirinhos, indígenas e extrativistas). Responda com atenção aos textos base. Após finalizar, você verá seu desempenho e a resolução comentada de cada item.
+    </div>
+
+    <div id="quiz-container">
+        <!-- Questions injected via JS -->
+    </div>
+
+    <div id="result-summary">
+        <h2>Resultado do Simulado</h2>
+        <div class="score-val" id="final-score">0/10</div>
+        <p id="score-text"></p>
+        <button onclick="location.reload()" style="padding: 10px 20px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; background: #fff;">Refazer Simulado</button>
+    </div>
+
+    <button class="btn-submit" id="submit-btn" onclick="checkAnswers()">Finalizar Simulado</button>
+</main>
+
+<script>
+    const questionsData = [
+        {
+            id: 1,
+            textBase: '"As propostas pedagógicas da Educação Infantil das crianças filhas de agricultores familiares, extrativistas, pescadores artesanais, ribeirinhos... devem reconhecer os modos de vida no campo como fundamentais para a constituição da identidade..." (Parecer CNE/CEB nº 20/2009).',
+            prompt: "Considerando o excerto acima e a necessidade de adequação da escola às realidades amazônicas, analise as afirmativas a seguir:\n\nI. A LDB faculta a adequação do calendário escolar às condições climáticas, o que justifica o 'Calendário das Águas', podendo-se reduzir a carga horária mínima anual de 800 horas.\nII. A didática ribeirinha deve priorizar a cultura letrada urbana padrão para compensar o déficit cultural.\nIII. O currículo deve respeitar as características ambientais e socioculturais, promovendo o uso de materiais regionais.",
+            options: [
+                "I, apenas.",
+                "III, apenas.",
+                "I e II, apenas.",
+                "II e III, apenas.",
+                "I, II e III."
+            ],
+            correct: 1, // B
+            resolution: "<b>Gabarito: B</b>. <br><b>Análise:</b> A afirmativa I está incorreta pois a LDB permite flexibilizar o calendário, mas NUNCA reduzir a carga de 800h. A II está incorreta por usar uma visão de 'déficit cultural' superada. A III está correta, pois a contextualização e uso de materiais locais é um direito e diretriz pedagógica."
+        },
+        {
+            id: 2,
+            textBase: "Pesquisas etnográficas em comunidades ribeirinhas descrevem brincadeiras como a 'Taberna', onde crianças utilizam folhas para representar dinheiro. Vygotsky discute o papel do brinquedo na criação da ZDP.",
+            prompt: "Sobre a relação entre as brincadeiras com elementos da natureza e o desenvolvimento infantil, analise as asserções:\n\nI. Ao utilizar uma folha como dinheiro, a criança opera uma desvinculação entre percepção visual e significado, fundamental para o pensamento abstrato.\nPORQUE\nII. A manipulação de objetos não estruturados exige maior esforço imaginativo que o uso de brinquedos industrializados.",
+            options: [
+                "As asserções I e II são verdadeiras, e a II é uma justificativa correta da I.",
+                "As asserções I e II são verdadeiras, mas a II não é uma justificativa correta da I.",
+                "A asserção I é verdadeira, e a II é falsa.",
+                "A asserção I é falsa, e a II é verdadeira.",
+                "As asserções I e II são falsas."
+            ],
+            correct: 0, // A
+            resolution: "<b>Gabarito: A</b>. <br><b>Análise:</b> Vygotsky explica que no brinquedo o significado prevalece sobre o objeto físico. Objetos da natureza (não estruturados) potencializam isso porque 'exigem' que a criança crie o significado, ao contrário de um brinquedo pronto que já define a ação."
+        },
+        {
+            id: 3,
+            textBase: "O professor, ao registrar as atividades das crianças, analisa o brincar como elemento de aprendizagem na educação infantil. (Rocha, 2018). Considere uma escola próxima a um Igarapé.",
+            prompt: "Assinale a alternativa que apresenta a estratégia de registro mais alinhada às concepções contemporâneas de avaliação:",
+            options: [
+                "Aplicação semanal de fichas de 'prontidão' (sim/não) para habilidades motoras isoladas.",
+                "Uso exclusivo de fotografias das crianças posando sorrindo com as atividades finalizadas.",
+                "Elaboração de 'Mini-histórias' e pautas de observação que narrem os processos de investigação das crianças à beira do Igarapé, registrando falas e hipóteses.",
+                "Gravação em áudio para identificar erros gramaticais na fala e planejar intervenções corretivas.",
+                "Coleta de todas as folhas de atividades impressas sem anotações do professor."
+            ],
+            correct: 2, // C
+            resolution: "<b>Gabarito: C</b>. <br><b>Análise:</b> A documentação pedagógica foca no processo e na escuta. As mini-histórias tornam visível a aprendizagem e as investigações infantis, valorizando a identidade amazônica."
+        },
+        {
+            id: 4,
+            textBase: "A BNCC estrutura a Educação Infantil em cinco Campos de Experiência. Um pedagogo planeja uma sequência didática em uma comunidade extrativista de castanha.",
+            prompt: "Associe: (1) Traços, sons... (2) O eu, o outro... (3) Espaços, tempos...\n\n( ) Roda de conversa entrevistando um ancião sobre a história da coleta e regras sociais.\n( ) Coleta de ouriços para uso como carimbos com tintas naturais e sons percussivos.\n( ) Problematização sobre quantos ouriços cabem no paneiro e mudanças na floresta.",
+            options: [
+                "1, 2, 3.",
+                "2, 1, 3.",
+                "3, 2, 1.",
+                "2, 3, 1.",
+                "1, 3, 2."
+            ],
+            correct: 1, // B
+            resolution: "<b>Gabarito: B</b>. <br><b>Análise:</b> Entrevista/História local = Eu/Outro/Nós (2). Tintas/Sons/Formas = Traços e Sons (1). Contagem/Pesos/Clima = Espaços/Tempos/Quantidades (3)."
+        },
+        {
+            id: 5,
+            textBase: "A cultura ribeirinha propicia modos de brincar diferenciados e a escola é o principal locus de socialização nestas comunidades dispersas. (Pontes et al, 2014).",
+            prompt: "Qual deve ser a postura do pedagogo para potencializar as interações sob a ótica sociointeracionista?",
+            options: [
+                "Restringir as brincadeiras livres, focando em atividades individuais de escrita.",
+                "Organizar turmas estritamente homogêneas por idade cronológica.",
+                "Promover atividades multietárias e colaborativas, aproveitando a diversidade de saberes e fomentando ZDPs.",
+                "Adotar postura de não-interferência absoluta nas brincadeiras.",
+                "Substituir os jogos tradicionais por jogos eletrônicos para inclusão digital."
+            ],
+            correct: 2, // C
+            resolution: "<b>Gabarito: C</b>. <br><b>Análise:</b> A interação entre crianças de diferentes idades é riquíssima. O 'mais experiente' ajuda o 'menos experiente' em uma ZDP, característica marcante das escolas rurais/ribeirinhas."
+        },
+        {
+            id: 6,
+            textBase: "Bakhtin destaca que a linguagem se realiza através de gêneros discursivos. A escola deve trabalhar com esses gêneros para promover o letramento.",
+            prompt: "Qual proposta exemplifica o trabalho com gêneros orais na EI amazônica respeitando Bakhtin?",
+            options: [
+                "Treino repetitivo de pronúncia para eliminar o sotaque regional.",
+                "Realização de 'Rodas de Causos e Lendas', onde as crianças recontam narrativas locais apropriando-se da estrutura narrativa.",
+                "Leitura exclusiva de textos informativos retirados de enciclopédias.",
+                "Memorização de listas de nomes de árvores sem contexto comunicativo.",
+                "Proibição da fala das crianças para garantir a disciplina."
+            ],
+            correct: 1, // B
+            resolution: "<b>Gabarito: B</b>. <br><b>Análise:</b> O 'causo' ou 'lenda' é um gênero discursivo da oralidade amazônica. Trabalhá-lo valoriza a cultura e ensina a função social da linguagem."
+        },
+        {
+            id: 7,
+            textBase: "A organização dos espaços na Educação Infantil deve superar o modelo de 'sala de aula fechada'.",
+            prompt: "Considerando o contexto amazônico e o desemparedamento da infância, qual ação é a mais adequada?",
+            options: [
+                "Transformar o quintal em 'laboratório vivo', com trilhas interpretativas e observação de insetos e materiais naturais.",
+                "Cimentar as áreas de terra para evitar sujeira, instalando apenas brinquedos plásticos.",
+                "Restringir o acesso à área externa apenas aos 15 minutos de recreio.",
+                "Proibir o contato com plantas devido ao risco de alergias.",
+                "Utilizar o espaço externo apenas para exercícios físicos repetitivos."
+            ],
+            correct: 0, // A
+            resolution: "<b>Gabarito: A</b>. <br><b>Análise:</b> O desemparedamento propõe que a natureza seja o currículo. Na Amazônia, o quintal é um laboratório riquíssimo para ciência e exploração."
+        },
+        {
+            id: 8,
+            textBase: "O Art. 12 da Resolução CNE/CEB nº 1/2002 dispõe sobre a produção de materiais didáticos para escolas indígenas.",
+            prompt: "Segundo as diretrizes nacionais, como deve ser a produção de materiais em um projeto sobre brincadeiras originárias?",
+            options: [
+                "Comprar apostilas do Sudeste para garantir a qualidade padrão.",
+                "Produzir exclusivamente em língua portuguesa para inspeção oficial.",
+                "Promover produção autoral com participação de anciãos e alunos, valorizando o bilinguismo e a estética daquela etnia.",
+                "Evitar tecnologias digitais para não contaminar a cultura.",
+                "Focar apenas em contos folclóricos genéricos."
+            ],
+            correct: 2, // C
+            resolution: "<b>Gabarito: C</b>. <br><b>Análise:</b> A educação indígena é específica e bilíngue. A autoria de materiais pela própria comunidade é um pilar da legislação vigente."
+        },
+        {
+            id: 9,
+            textBase: "Uma professora percebe que, durante a cheia (maio a julho), o pátio da escola fica alagado.",
+            prompt: "Qual a estratégia didática mais adequada para este período?",
+            options: [
+                "Suspender as aulas por três meses e repor em janeiro.",
+                "Manter aulas teóricas proibindo o brincar devido à falta de espaço seco.",
+                "Adaptar o currículo: usar as 'marombas' (elevados), incorporar a canoa e o estudo do ecossistema aquático como temas centrais.",
+                "Solicitar a transferência imediata da escola para terra firme.",
+                "Manter atividades físicas na água sem equipamentos de segurança."
+            ],
+            correct: 2, // C
+            resolution: "<b>Gabarito: C</b>. <br><b>Análise:</b> É a 'Pedagogia das Águas'. O professor deve transformar o fenômeno natural da cheia em oportunidade de aprendizagem, adaptando os espaços elevados (marombas)."
+        },
+        {
+            id: 10,
+            textBase: "A formação do pedagogo para atuar na Amazônia exige a construção de saberes que vão além da didática geral. (Silva e Pacheco, 2016).",
+            prompt: "Qual competência profissional é imprescindível para este educador?",
+            options: [
+                "Habilidade para aplicar testes de QI padronizados.",
+                "Domínio da Gramática Histórica do Latim.",
+                "Capacidade de escuta etnopedagógica: ler sinais da natureza, ouvir narrativas locais e articular etnosaberes com a ciência.",
+                "Conhecimento avançado em gestão de bolsas de valores.",
+                "Habilidade em adestramento comportamental."
+            ],
+            correct: 2, // C
+            resolution: "<b>Gabarito: C</b>. <br><b>Análise:</b> O educador amazônida atua na mediação entre o conhecimento científico e o saber tradicional/local, exigindo sensibilidade antropológica e pedagógica."
+        }
+    ];
+
+    const container = document.getElementById('quiz-container');
+
+    function renderQuiz() {
+        questionsData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                const letter = String.fromCharCode(65 + optIndex);
+                optionsHtml += `
+                    <label class="option-item" for="q${index}o${optIndex}">
+                        <input type="radio" name="question${index}" id="q${index}o${optIndex}" value="${optIndex}">
+                        <span>${letter}) ${opt}</span>
+                    </label>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-header">QUESTÃO ${index + 1}</span>
+                <div class="text-base">${q.textBase}</div>
+                <div style="white-space: pre-wrap; margin-bottom: 1.5rem;">${q.prompt}</div>
+                <div class="options-list">${optionsHtml}</div>
+                <div class="resolution-box" id="res-${index}">
+                    <span class="status-badge" id="badge-${index}"></span>
+                    <p>${q.resolution}</p>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function checkAnswers() {
+        let score = 0;
+        let allAnswered = true;
+
+        questionsData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="question${index}"]:checked`);
+            const resolutionBox = document.getElementById(`res-${index}`);
+            const badge = document.getElementById(`badge-${index}`);
+            const card = document.getElementById(`q-card-${index}`);
+
+            if (!selected) {
+                allAnswered = false;
+            }
+
+            resolutionBox.style.display = 'block';
+            
+            const optionsElements = card.querySelectorAll('.option-item');
+            
+            // Mark correct answer
+            optionsElements[q.correct].classList.add('correct-answer');
+
+            if (selected) {
+                const userAnswer = parseInt(selected.value);
+                if (userAnswer === q.correct) {
+                    score++;
+                    badge.innerText = "Correto";
+                    badge.style.backgroundColor = "#27ae60";
+                    badge.style.color = "#fff";
+                } else {
+                    badge.innerText = "Incorreto";
+                    badge.style.backgroundColor = "#e74c3c";
+                    badge.style.color = "#fff";
+                    optionsElements[userAnswer].classList.add('wrong-answer');
+                }
+            } else {
+                badge.innerText = "Não Respondida";
+                badge.style.backgroundColor = "#95a5a6";
+                badge.style.color = "#fff";
+            }
+        });
+
+        // Show summary
+        window.scrollTo(0, 0);
+        const summary = document.getElementById('result-summary');
+        summary.style.display = 'block';
+        document.getElementById('final-score').innerText = `${score}/10`;
+        document.getElementById('score-text').innerText = score >= 7 ? "Excelente desempenho! Você domina os conceitos de didática contextualizada." : "Bom esforço. Revise as resoluções comentadas abaixo para consolidar os conceitos.";
+        
+        document.getElementById('submit-btn').style.display = 'none';
+
+        // Disable all inputs
+        const inputs = document.querySelectorAll('input[type="radio"]');
+        inputs.forEach(i => i.disabled = true);
+    }
+
+    // Initialize
+    renderQuiz();
+</script>
+
+</body>
+</html>

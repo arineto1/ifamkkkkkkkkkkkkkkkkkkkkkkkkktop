@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula Mestra: Inclusão e Acessibilidade - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #1f2937;
+            background-color: #ffffff;
+        }
+
+        .highlight {
+            background-color: #fef08a;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .important-box {
+            border-left: 4px solid #2563eb;
+            background-color: #f8fafc;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .table-container {
+            width: 100%;
+            margin: 2rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 14px;
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .audio-section {
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+        }
+
+        .btn-quiz {
+            display: block;
+            width: fit-content;
+            margin: 40px auto;
+            background-color: #111827;
+            color: #ffffff;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .btn-quiz:hover {
+            transform: translateY(-2px);
+            background-color: #000000;
+        }
+
+        h2 {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 8px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-right: 4px;
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
+
+    <header class="text-center mb-12">
+        <h1 class="text-4xl font-black text-gray-900 mb-2">Didática: Inclusão e Acessibilidade</h1>
+        <p class="text-gray-500 font-medium">Guia Definitivo para Concurso de Professor de Informática - IFAM</p>
+    </header>
+
+    <!-- Áudio Player -->
+    <section class="audio-section shadow-sm">
+        <div class="flex items-center gap-4 mb-4">
+            <div class="bg-blue-600 p-3 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                </svg>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg">Resumo em Áudio</h3>
+                <p class="text-sm text-gray-500">Ouça os pontos principais enquanto revisa o texto.</p>
+            </div>
+        </div>
+        <audio controls class="w-full">
+            <source src="19inclusao.mp3" type="audio/mpeg">
+            Seu navegador não suporta áudio.
+        </audio>
+    </section>
+
+    <article class="prose max-w-none">
+        
+        <h2>1. Definição e Evolução Paradigmática</h2>
+        <p>A inclusão não é apenas "matricular" o aluno com deficiência. Para a <span class="highlight">Fundação CEFETMINAS</span>, o conceito chave é a <span class="highlight">quebra de barreiras</span>. A educação inclusiva pressupõe que o sistema de ensino se ajuste às necessidades de todos os alunos, e não o contrário.</p>
+        
+        <div class="important-box">
+            <p><strong>Diferença Crítica:</strong> Enquanto a <strong>Integração</strong> pedia que o aluno "provasse" ser capaz de estar na sala comum, a <strong>Inclusão</strong> exige que a escola remova barreiras arquitetônicas, pedagógicas e atitudinais antes mesmo do aluno chegar.</p>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Conceito</th>
+                        <th>O que você não pode esquecer</th>
+                        <th>Aplicação no IFAM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Paradigma Social</strong></td>
+                        <td>A deficiência é o resultado da interação de impedimentos físicos com as <span class="highlight">barreiras da sociedade</span>.</td>
+                        <td>O laboratório de informática sem software de leitura é a "deficiência" do sistema.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transversalidade</strong></td>
+                        <td>A Educação Especial perpassa <span class="highlight">todos os níveis</span> (do infantil ao superior).</td>
+                        <td>No IFAM, a inclusão ocorre no ensino técnico, graduação e pós.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Terminalidade Específica</strong></td>
+                        <td>Certificação que reconhece o nível de aprendizagem alcançado, quando o aluno não atinge o currículo regular.</td>
+                        <td>Aplicável em casos graves de deficiência intelectual/múltipla (LDB Art. 59).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>2. Público-Alvo da Educação Especial (PAEE)</h2>
+        <p>A banca adora confundir o público-alvo com dificuldades de aprendizagem comuns (como dislexia ou TDAH). Conforme a Política Nacional (2008) e a LDB, o público é restrito a:</p>
+        <ul class="list-disc pl-6 space-y-2">
+            <li><strong>Pessoas com Deficiência:</strong> Impedimentos de longo prazo (físico, intelectual, auditivo, visual ou múltiplo).</li>
+            <li><strong>Transtornos Globais do Desenvolvimento (TGD/TEA):</strong> Alterações no desenvolvimento neuropsicológico (autismo, síndrome de Asperger).</li>
+            <li><strong>Altas Habilidades / Superdotação:</strong> Potencial elevado em qualquer uma das áreas (intelectual, artes, psicomotricidade). <span class="highlight">Nota: O atendimento aqui é SUPLEMENTAR</span>.</li>
+        </ul>
+
+        <h2>3. Acessibilidade na Informática (Essencial para EBTT)</h2>
+        <p>Como o cargo é de Informática, a CEFETMINAS costuma cobrar termos técnicos de acessibilidade digital vinculados à LBI (Lei 13.146/2015):</p>
+        
+        <div class="important-box bg-green-50">
+            <p><strong>LBI Art. 63:</strong> É obrigatória a acessibilidade nos sítios da internet mantidos por empresas situadas no País ou por órgãos de governo. No IFAM, os sistemas acadêmicos e sites de laboratório devem seguir padrões internacionais (WCAG).</p>
+        </div>
+
+        <ul class="list-none space-y-4">
+            <li><strong><span class="tag">TA</span> Tecnologia Assistiva:</strong> Todo recurso ou serviço que visa ampliar habilidades funcionais de pessoas com deficiência. <em>Ex: Mouse adaptado, teclados virtuais, softwares de síntese de voz (DOSVOX, NVDA).</em></li>
+            <li><strong><span class="tag">DUA</span> Desenho Universal para Aprendizagem:</strong> Criar materiais que funcionam para todos de primeira. <em>Ex: Um slide com alto contraste e legenda já atende ao cego, ao daltônico e ao aluno sem deficiência.</em></li>
+            <li><strong>Adaptações Razoáveis:</strong> Modificações necessárias que não imponham ônus desproporcional.</li>
+        </ul>
+
+        <h2>4. Organização no IFAM: NAPNE e AEE</h2>
+        <p>O <strong>NAPNE (Núcleo de Atendimento às Pessoas com Necessidades Específicas)</strong> é o coração da inclusão nos Institutos Federais.</p>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Órgão/Serviço</th>
+                        <th>Função Principal</th>
+                        <th>Quem faz?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>NAPNE</strong></td>
+                        <td>Gestão e <span class="highlight">Sensibilização</span>. Articula ações para eliminar barreiras no campus.</td>
+                        <td>Equipe multidisciplinar (Professores, TAEs, Médicos).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AEE</strong></td>
+                        <td>Atendimento Educacional Especializado. Ensina braille, libras, informática acessível.</td>
+                        <td>Professor com formação em Educação Especial.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sala de Recursos</strong></td>
+                        <td>Espaço físico com materiais de acessibilidade onde ocorre o AEE.</td>
+                        <td>Turno <span class="highlight">oposto</span> ao ensino regular.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>5. Tendências de Cobrança e "Peguinhas" CEFETMINAS</h2>
+        <p>Baseado em provas anteriores de cargos EBTT, preste atenção nestes pontos de atenção:</p>
+        
+        <div class="space-y-4">
+            <div class="p-4 border border-red-200 rounded-lg">
+                <p><strong>Peguinha 1: AEE é Reforço?</strong> <br>
+                A banca dirá que o AEE serve para ensinar a matéria de algoritmos para o aluno com deficiência. <strong>ERRADO</strong>. O AEE ensina ferramentas (Libras, Software). O ensino de algoritmos é dever do Professor de Informática na sala comum.</p>
+            </div>
+            <div class="p-4 border border-red-200 rounded-lg">
+                <p><strong>Peguinha 2: Substitutividade?</strong> <br>
+                A banca dirá que a educação especial pode substituir a regular se a deficiência for grave. <strong>ERRADO</strong>. Segundo a política atual, ela é sempre <span class="highlight">preferencialmente na rede regular</span> e nunca substitutiva.</p>
+            </div>
+            <div class="p-4 border border-red-200 rounded-lg">
+                <p><strong>Peguinha 3: Avaliação Diferenciada?</strong> <br>
+                A banca questionará se o aluno PAEE deve ser avaliado. <strong>SIM</strong>. Mas a avaliação deve ser processual e focar nos <span class="highlight">avanços individuais</span> e não em uma média padronizada da turma.</p>
+            </div>
+        </div>
+
+        <h2 class="mt-12">6. Resumo de Memorização (Checklist Final)</h2>
+        <ul class="list-disc pl-6 space-y-2 mb-10">
+            <li><span class="highlight">AEE:</span> Complementar (Deficiência) ou Suplementar (Superdotação). Sempre no contra-turno.</li>
+            <li><span class="highlight">LDB Art. 59:</span> Garante currículos, métodos, técnicas e recursos específicos.</li>
+            <li><span class="highlight">NAPNE:</span> No IFAM, ele é o setor responsável por organizar a política de inclusão do campus.</li>
+            <li><span class="highlight">LBI (Art. 28):</span> Proíbe a cobrança de valores adicionais em mensalidades ou matrículas de alunos com deficiência (importante para IFs que lidam com parcerias).</li>
+            <li><span class="highlight">Informática Acessível:</span> Focar em W3C, WCAG e e-MAG (Modelo de Acessibilidade em Governo Eletrônico).</li>
+        </ul>
+
+        <a href="19questoes.html" class="btn-quiz shadow-lg">
+            Acessar Banco de Questões (Simulado)
+        </a>
+
+    </article>
+
+    <footer class="mt-20 pt-8 border-t text-center text-gray-400 text-sm">
+        <p>© 2024 - Guia de Estudos para Concurso Professor IFAM - Área Informática</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Didática e Narrativas Docentes</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-secondary: #546e7a;
+            --accent-color: #34495e;
+            --correct-color: #27ae60;
+            --wrong-color: #c0392b;
+            --border-color: #e0e6ed;
+            --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .intro-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .question-header {
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .text-base {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 20px;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option:hover {
+            background-color: #f0f4f8;
+            border-color: var(--accent-color);
+        }
+
+        .option input {
+            margin-right: 12px;
+            margin-top: 5px;
+        }
+
+        .option.selected {
+            background-color: #e8f0fe;
+            border-color: #4285f4;
+        }
+
+        button#submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        button#submit-btn:hover {
+            background-color: #2c3e50;
+        }
+
+        #results-section {
+            display: none;
+            margin-top: 40px;
+        }
+
+        .score-box {
+            background: var(--accent-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .resolution-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--correct-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .resolution-card h3 {
+            margin-top: 0;
+            color: var(--correct-color);
+        }
+
+        .correct-answer-label {
+            font-weight: bold;
+            color: var(--correct-color);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .table-res {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .table-res th, .table-res td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .table-res th {
+            background-color: #f2f2f2;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Didática e Narrativas Docentes</h1>
+        <p class="intro-text">Estilo Banca Fundação CEFETMINAS</p>
+    </header>
+
+    <div id="quiz-container">
+        <!-- Questões serão injetadas aqui via JS -->
+    </div>
+
+    <button id="submit-btn" onclick="calculateResults()">Finalizar Quiz e Ver Resoluções</button>
+
+    <div id="results-section">
+        <div class="score-box">
+            <h2>Resultado Final</h2>
+            <p id="score-text" style="font-size: 1.5rem;"></p>
+        </div>
+
+        <div id="resolutions-container">
+            <h2 style="margin-bottom: 20px;">Gabarito e Resoluções Comentadas</h2>
+            <!-- Resoluções serão injetadas aqui -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            title: "QUESTÃO 01 - Tema: A Metamorfose da Escola vs. Reforma Educacional",
+            textBase: `"A metamorfose da escola não é uma reforma. A reforma melhora o que existe, a metamorfose transforma o que existe em outra coisa. [...] Não se trata de uma mudança superficial, mas de uma alteração na morfologia da escola, nos seus tempos e espaços, nas suas formas de organização e de trabalho. Neste cenário, a formação de professores não pode limitar-se à atualização técnica ou didática; ela exige um movimento de recomposição da própria profissão." (NÓVOA, António, 2019).`,
+            question: "Considerando a distinção teórica entre 'reforma' e 'metamorfose', analise as asserções e a relação proposta:\n\nI. A metamorfose docente exige uma ruptura com o modelo escolar do século XIX, demandando que o professor abandone a posição de mero transmissor para assumir a 'recomposição investigativa'.\n\nPORQUE\n\nII. O conceito de recomposição sugere que a identidade docente foi fragmentada pela crise sanitária, necessitando de um processo autoformativo narrativo para reconstruir a integridade profissional.",
+            options: [
+                "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+                "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+                "A asserção I é uma proposição verdadeira, e a asserção II é uma proposição falsa.",
+                "A asserção I é uma proposição falsa, e a asserção II é uma proposição verdadeira.",
+                "As asserções I e II são falsas."
+            ],
+            correct: 0,
+            resolution: `<strong>Gabarito: A</strong><p>A metamorfose (Asserção I) exige um novo tipo de profissional. Esse novo profissional não nasce pronto; ele precisa passar por um processo de recomposição (Asserção II). A recomposição docente é o mecanismo pelo qual a metamorfose se concretiza no nível do sujeito. Portanto, a Asserção II justifica a necessidade da transformação descrita na I.</p>`
+        },
+        {
+            id: 2,
+            title: "QUESTÃO 02 - Tema: A Jornada do Herói como Dispositivo de Análise",
+            textBase: `Em sua dissertação, Gabriela Santana da Costa utiliza uma estrutura narrativa específica para analisar o percurso dos professores durante a pandemia em etapas de "chamado", "provação" e "retorno transformado".`,
+            question: "Assinale a alternativa que identifica CORRETAMENTE a metáfora metodológica central utilizada na referida pesquisa:",
+            options: [
+                "O Mito de Sísifo: demonstrar a ciclicidade inútil dos esforços docentes.",
+                "A Jornada do Herói (Monomito de Campbell): interpretar a pandemia como a 'caverna profunda' onde o professor enfrenta a morte simbólica da identidade tradicional para retornar com o 'elixir'.",
+                "A Linha de Montagem Fordista: criticar a fragmentação dos saberes docentes no ensino técnico.",
+                "A Metáfora do Jardineiro: sugerir que a recomposição docente é um processo natural que dispensa intervenção tecnológica.",
+                "O Panóptico de Foucault: analisar a vigilância constante das câmeras abertas nas aulas remotas."
+            ],
+            correct: 1,
+            resolution: `<strong>Gabarito: B</strong><p>A estrutura da Jornada do Herói encaixa-se para dar sentido à ruptura narrativa: o Mundo Comum (pré-2020), o Chamado (remoto), a Caverna Oculta (crise do burnout/incompetência) e o Elixir (a recomposição e novos saberes).</p>`
+        },
+        {
+            id: 3,
+            title: "QUESTÃO 03 - Tema: Recomposição da Aprendizagem: Do Discente ao Docente",
+            textBase: `"O termo 'recomposição da aprendizagem' tem sido utilizado para tratar das lacunas cognitivas dos estudantes. No entanto, pesquisas propõem um deslocamento epistemológico desse conceito."`,
+            question: "Com base nesse deslocamento conceitual, é CORRETO afirmar que a 'Recomposição da Aprendizagem Docente':",
+            options: [
+                "Refere-se à necessidade de os professores realizarem novamente os cursos de licenciatura.",
+                "Define-se como um processo estritamente técnico de capacitação em ferramentas digitais.",
+                "Constitui um processo autoformativo e identitário no qual o professor 'recola' os fragmentos de sua prática e autoimagem, superando a visão de déficit.",
+                "Trata-se de uma política de responsabilização individual onde o professor arca com os custos de sua atualização.",
+                "É um sinônimo de 'Recuperação Paralela' para oferecer aulas extras sem remuneração."
+            ],
+            correct: 2,
+            resolution: `<strong>Gabarito: C</strong><p>A recomposição docente é um processo de empoderamento profissional através da reflexão sobre a prática vivida. Não se trata apenas de técnica, mas de reconstruir o sentido de ser professor após a implosão da "forma escolar" tradicional.</p>`
+        },
+        {
+            id: 4,
+            title: "QUESTÃO 04 - Tema: As Cinco Posições de Nóvoa",
+            textBase: `António Nóvoa (2017/2019) delineia cinco posições: Disposição Pessoal, Interposição Profissional, Composição Pedagógica, Recomposição Investigativa e Exposição Pública.`,
+            question: "Assinale a alternativa que melhor descreve a aplicação prática da 'Recomposição Investigativa':",
+            options: [
+                "Realizar pesquisas acadêmicas desvinculadas da sala de aula para garantir publicações.",
+                "Assumir-se como produtor de conhecimento a partir da análise sistemática do próprio trabalho ('o professor pesquisador de sua prática').",
+                "Conduzir investigações administrativas para identificar casos de plágio entre alunos.",
+                "Investigar a vida pessoal dos alunos nas redes sociais para adaptar o marketing digital.",
+                "Recompor kits experimentais em laboratórios garantindo a manutenção sem técnicos."
+            ],
+            correct: 1,
+            resolution: `<strong>Gabarito: B</strong><p>A recomposição investigativa é a atitude do professor que analisa sua própria prática com rigor. O professor deixa de ser apenas consumidor de pesquisa alheia para tornar-se autor de pedagogia.</p>`
+        },
+        {
+            id: 5,
+            title: "QUESTÃO 05 - Tema: Narrativas (Auto)biográficas",
+            textBase: `A pesquisa narrativa defende que narrar a experiência não é apenas coletar dados, mas um fenômeno constitutivo do saber docente.`,
+            question: "Qual é a função primordial dos dispositivos de escrita de si (diários, memoriais, cartas pedagógicas)?",
+            options: [
+                "Função Catártica-Terapêutica: servir exclusivamente como válvula de escape emocional.",
+                "Função Probatória: documentar evidências de cumprimento de carga horária para auditoria.",
+                "Função Biografizadora e Epistêmica: permitir a passagem da 'vivência' para a 'experiência', transformando o acontecimento em conhecimento partilhável.",
+                "Função Literária: estimular a produção de ficção escolar e fantasia.",
+                "Função Avaliativa: fornecer dados para rankings de desempenho e punição."
+            ],
+            correct: 2,
+            resolution: `<strong>Gabarito: C</strong><p>Biografizar é dar forma e sentido ao caos da vida. A narrativa é a ponte que transforma o choque imediato (vivência) em saber acumulado (experiência), promovendo a autoformação crítica.</p>`
+        },
+        {
+            id: 6,
+            title: "QUESTÃO 06 - Tema: Interposição Profissional",
+            textBase: `"A metamorfose da escola provocou a diluição das fronteiras. A casa virou escola, a escola virou tela."`,
+            question: "Como a 'Interposição Profissional' se manifestou na reconfiguração da identidade docente no contexto pandêmico?",
+            options: [
+                "Pelo reforço do isolamento do professor como freelancer autônomo.",
+                "Pela criação de comunidades de prática híbridas e necessidade de negociar eticamente a invasão da privacidade no espaço público da aula.",
+                "Pela total separação entre vida pessoal e profissional através de avatares digitais.",
+                "Pela substituição do professor humano por inteligência artificial.",
+                "Pelo retorno imediato às práticas tradicionais sem deixar marcas."
+            ],
+            correct: 1,
+            resolution: `<strong>Gabarito: B</strong><p>A interposição é o lugar onde a profissão se constrói coletivamente. A pandemia forçou a criação de redes de solidariedade técnica e a negociação da nova profissionalidade que admite a vulnerabilidade do espaço doméstico.</p>`
+        },
+        {
+            id: 7,
+            title: "QUESTÃO 07 - Tema: Saberes Docentes e a Metamorfose",
+            textBase: `Maurice Tardif classifica os saberes em profissionais, disciplinares, curriculares e experienciais.`,
+            question: "Qual alternativa expressa a reconfiguração dos 'Saberes Experienciais' na recomposição docente?",
+            options: [
+                "Perderam valor frente ao domínio técnico de softwares.",
+                "Precisaram ser explicitados e compartilhados coletivamente para enfrentar situações inéditas, tornando-se o núcleo da recomposição.",
+                "Foram substituídos integralmente pelos saberes curriculares da BNCC.",
+                "Foram eliminados pela transferência da responsabilidade para algoritmos.",
+                "Mantiveram-se inalterados por serem imutáveis."
+            ],
+            correct: 1,
+            resolution: `<strong>Gabarito: B</strong><p>Durante a crise, ninguém sabia "como ensinar" naquele contexto. O saber experiencial (prático) teve que ser reinventado, explicitado e trocado entre pares para a sobrevivência da escola.</p>`
+        },
+        {
+            id: 8,
+            title: "QUESTÃO 08 - Tema: A 'Escuta Sensível'",
+            textBase: `Rene Barbiér define a postura do pesquisador/formador como "Escuta Sensível".`,
+            question: "No contexto da recomposição da aprendizagem docente, a Escuta Sensível implica:",
+            options: [
+                "Uma postura clínica de diagnóstico para identificar patologias psíquicas.",
+                "Uma escuta burocrática focada em verificar o alinhamento com normativas oficiais.",
+                "Uma atitude de empatia crítica e não-julgamento, validando a palavra do outro para reconstruir a autoconfiança profissional.",
+                "Uma técnica de interrogatório jornalístico para denunciar a má qualidade do ensino.",
+                "Uma escuta passiva e desinteressada para manter a neutralidade científica."
+            ],
+            correct: 2,
+            resolution: `<strong>Gabarito: C</strong><p>A escuta sensível permite que o professor se ouça através do outro, transformando a angústia em reflexão e, posteriormente, em solução pedagógica. É a ferramenta base da autoformação.</p>`
+        },
+        {
+            id: 9,
+            title: "QUESTÃO 09 - Tema: Produtos Educacionais (Mestrado Profissional)",
+            textBase: `Dissertações em Mestrados Profissionais exigem a elaboração de um Produto Educacional.`,
+            question: "Na pesquisa sobre 'Metamorfose e Recomposição Docente', o produto educacional frequentemente assume a forma de:",
+            options: [
+                "Um manual técnico de conserto de computadores.",
+                "Uma tese puramente teórica de 500 páginas sem aplicação prática.",
+                "Propostas de intervenção como oficinas de narrativas, e-books interativos ou guias de autoformação baseados na Jornada do Herói.",
+                "Um software de vigilância para monitorar o tempo logado dos professores.",
+                "Uma nova legislação federal impondo o ensino híbrido."
+            ],
+            correct: 2,
+            resolution: `<strong>Gabarito: C</strong><p>O mestrado profissional visa intervir na realidade. Produtos que fomentam a reflexão narrativa instrumentalizam outros docentes a realizarem seus próprios processos de recomposição.</p>`
+        },
+        {
+            id: 10,
+            title: "QUESTÃO 10 - Tema: Autoformação e Heteroformação",
+            textBase: `Gaston Pineau teoriza três dimensões: Autoformação (si), Heteroformação (outros) e Ecoformação (mundo).`,
+            question: "Como a recomposição docente articula essas três dimensões?",
+            options: [
+                "Priorizando exclusivamente a ecoformação e sustentabilidade dos prédios.",
+                "Focando apenas na autoformação solitária e autodidatismo.",
+                "Rejeitando a heteroformação por prejudicar a autonomia.",
+                "Articulando a autoformação (reflexão pessoal), heteroformação (troca em comunidades) e ecoformação (aprendizagem com o novo ambiente digital).",
+                "Substituindo todas pela Maquinoformação delegada a robôs."
+            ],
+            correct: 3,
+            resolution: `<strong>Gabarito: D</strong><p>A recomposição exige as três dimensões: o professor reflete (Auto), troca ajuda com colegas (Hetero) e aprende a habitar o novo ambiente técnico/virtual (Eco).</p>`
+        }
+    ];
+
+    function loadQuiz() {
+        const container = document.getElementById('quiz-container');
+        quizData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <span class="question-header">${item.title}</span>
+                <div class="text-base">${item.textBase}</div>
+                <p><strong>${item.question.replace(/\n/g, '<br>')}</strong></p>
+                <div class="options-container" id="q${index}">
+                    ${item.options.map((opt, i) => `
+                        <label class="option" onclick="selectOption(${index}, ${i})">
+                            <input type="radio" name="question${index}" value="${i}">
+                            ${String.fromCharCode(65 + i)}) ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectOption(qIdx, oIdx) {
+        const options = document.querySelectorAll(`#q${qIdx} .option`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        options[oIdx].classList.add('selected');
+    }
+
+    function calculateResults() {
+        let score = 0;
+        const resolutionsContainer = document.getElementById('resolutions-container');
+        resolutionsContainer.innerHTML = '<h2 style="margin-bottom: 20px;">Gabarito e Resoluções Comentadas</h2>';
+
+        quizData.forEach((item, index) => {
+            const selected = document.querySelector(`input[name="question${index}"]:checked`);
+            const isCorrect = selected && parseInt(selected.value) === item.correct;
+            
+            if (isCorrect) score++;
+
+            // Criar card de resolução
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            if (!isCorrect) resCard.style.borderLeftColor = 'var(--wrong-color)';
+            
+            resCard.innerHTML = `
+                <h3>Resolução Questão ${item.id}</h3>
+                <span class="correct-answer-label">Resposta Correta: ${String.fromCharCode(65 + item.correct)}</span>
+                <div>${item.resolution}</div>
+            `;
+            resolutionsContainer.appendChild(resCard);
+        });
+
+        // Mostrar resultados
+        document.getElementById('score-text').innerText = `Você acertou ${score} de ${quizData.length} questões!`;
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'none';
+        
+        // Rolar para os resultados
+        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.onload = loadQuiz;
+</script>
+
+</body>
+</html>

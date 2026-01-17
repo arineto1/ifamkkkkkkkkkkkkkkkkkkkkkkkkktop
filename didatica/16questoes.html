@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado de Didática - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --card-bg: #ffffff;
+            --border-color: #e0e0e0;
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            max-width: 850px;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: #1a1a1a;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        main {
+            width: 100%;
+            max-width: 850px;
+            padding: 0 20px 100px 20px;
+            box-sizing: border-box;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-header {
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            margin-bottom: 25px;
+            color: #1a1a1a;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
+        }
+
+        .option-label input {
+            margin-top: 6px;
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+
+        .option-label.selected {
+            border-color: var(--accent-color);
+            background-color: #ebf5fb;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        #submit-btn:hover {
+            background-color: #2980b9;
+        }
+
+        #results-section {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-board {
+            text-align: center;
+            padding: 40px;
+            background: #fff;
+            border-radius: 12px;
+            border: 2px solid var(--accent-color);
+            margin-bottom: 40px;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            display: block;
+        }
+
+        .resolution-card {
+            background: #fff;
+            border-left: 5px solid var(--accent-color);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .resolution-card.correct { border-left-color: var(--success-color); }
+        .resolution-card.incorrect { border-left-color: var(--error-color); }
+
+        .res-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .res-body {
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .badge-correct { background: #d4edda; color: #155724; }
+        .badge-incorrect { background: #f8d7da; color: #721c24; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.6rem; }
+            .question-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado de Didática</h1>
+    <p class="subtitle">Banca: Fundação CEFETMINAS | Temas: Disciplina, Ciclos e Avaliação</p>
+</header>
+
+<main id="quiz-container">
+    <div id="questions-list"></div>
+    <button id="submit-btn" onclick="calculateResults()">Finalizar e Ver Resultados</button>
+
+    <div id="results-section">
+        <div class="score-board">
+            <span>Você acertou</span>
+            <span class="score-number" id="final-score">0 / 10</span>
+            <p id="feedback-text"></p>
+        </div>
+        <div id="resolutions-list"></div>
+    </div>
+</main>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            topic: "Indisciplina e a Relação Professor-Aluno",
+            text: "No contexto da educação contemporânea, a indisciplina escolar tornou-se uma das queixas mais frequentes... À luz das contribuições de Aquino e da teoria do contrato didático, avalie as asserções a seguir:<br><br>I. A reação coercitiva do Professor Roberto tende a falhar porque a indisciplina... é uma crise de competência na gestão da relação pedagógica...<br>PORQUE<br>II. O contrato didático... pressupõe que as regras de convivência em sala de aula são fixas, universais e preestabelecidas pela instituição escolar...",
+            options: [
+                "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
+                "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
+                "A asserção I é uma proposição verdadeira, e a asserção II é uma proposição falsa.",
+                "A asserção I é uma proposição falsa, e a asserção II é uma proposição verdadeira.",
+                "As asserções I e II são falsas."
+            ],
+            answer: 2,
+            resolution: "A asserção I é verdadeira pois a autoridade hoje precisa ser legitimada pela mediação do conhecimento. A II é falsa porque o Contrato Didático é dinâmico e negociado, não sendo apenas regras fixas da instituição."
+        },
+        {
+            id: 2,
+            topic: "Ciclos de Formação e Progressão",
+            text: "Analise as afirmativas abaixo sobre a implementação dos ciclos e a progressão das aprendizagens, identificando aquelas que coadunam com o pensamento de Perrenoud e Mainardes:<br><br>I. Visa substituir a lógica da seleção pela da inclusão...<br>II. A progressão continuada pressupõe que o tempo de aprendizagem pode ser estendido...<br>III. A gestão dos ciclos dispensa o trabalho colaborativo docente...<br>IV. Crítica de Mainardes refere-se à distorção da 'não-retenção' sem apoio pedagógico...",
+            options: [
+                "I, II e III.",
+                "I, II e IV.",
+                "II e III.",
+                "III e IV.",
+                "I, III e IV."
+            ],
+            answer: 1,
+            resolution: "Os itens I, II e IV estão corretos. O item III é falso porque os ciclos EXIGEM trabalho colaborativo e coletivização da responsabilidade pelos alunos, contrariando o isolamento docente."
+        },
+        {
+            id: 3,
+            topic: "Avaliação Educacional (Luckesi)",
+            text: "Um colegiado decide que a avaliação final será composta por uma única prova dissertativa, cumulativa, com média 7.0 e sem recuperação. Com base na teoria de Luckesi, assinale a alternativa correta:",
+            options: [
+                "Trata-se de uma avaliação somativa realizada na perspectiva do 'exame', pois foca exclusivamente na classificação final e na seleção dos 'aptos'.",
+                "Configura-se como avaliação formativa, pois ao exigir o conteúdo cumulativo, força o aluno a revisar a matéria.",
+                "Exemplifica a avaliação diagnóstica, uma vez que o resultado permitirá à instituição ajustar o currículo.",
+                "Representa a avaliação mediadora, pois a nota final atua como mediação entre o desempenho e o mercado.",
+                "Constitui uma prática mista, unindo a função somativa à função emancipatória."
+            ],
+            answer: 0,
+            resolution: "Segundo Luckesi, o ato de 'examinar' é pontual, classificatório e excludente. Uma prova única sem chance de recuperação é um exame tradicional que negligencia a função diagnóstica e formativa."
+        },
+        {
+            id: 4,
+            topic: "Transposição Didática (Chevallard)",
+            text: "Segundo a Teoria da Transposição Didática de Yves Chevallard, sobre o processo $Saber Sábio \\rightarrow Saber a Ensinar \\rightarrow Saber Ensinado$, analise as proposições:<br><br>I. A 'Noosfera' é onde ocorrem negociações entre acadêmicos e políticos...<br>II. O 'Saber Ensinado' é a reprodução fiel do 'Saber Sábio'...<br>III. O professor atua na transposição didática interna...<br>IV. É um processo de 'vigilância epistemológica'...",
+            options: [
+                "I e II, apenas.",
+                "II e III, apenas.",
+                "I, III e IV, apenas.",
+                "I, II e IV, apenas.",
+                "I, II, III e IV."
+            ],
+            answer: 2,
+            resolution: "I, III e IV estão corretas. A II está incorreta porque o Saber Ensinado nunca é uma reprodução fiel; ele sofre transformações e simplificações necessárias para se tornar ensinável."
+        },
+        {
+            id: 5,
+            topic: "Avaliação Mediadora (Hoffmann)",
+            text: "Assinale a alternativa que apresenta a postura docente coerente com a avaliação mediadora diante de um erro conceitual persistente de um aluno:",
+            options: [
+                "Ignorar o erro para preservar a autoestima do aluno.",
+                "Intervir através do diálogo, problematizando a resposta e oferecendo 'desequilíbrios' (conflitos cognitivos).",
+                "Corrigir imediatamente apresentando a resposta certa e exercícios de repetição.",
+                "Validar qualquer resposta como correta dentro da cultura do aluno.",
+                "Computar o erro na nota final como feedback quantitativo."
+            ],
+            answer: 1,
+            resolution: "A avaliação mediadora de Hoffmann vê o erro como um indício do raciocínio. O professor deve intervir para provocar o aluno a reconstruir suas hipóteses através de desafios cognitivos."
+        },
+        {
+            id: 6,
+            topic: "Planejamento Escolar (Libâneo)",
+            text: "Associe as colunas:<br>1. PPP | 2. Plano de Ensino | 3. Plano de Aula<br><br>( ) Detalhamento para unidade de tempo curta (uma aula).<br>( ) Reflete a identidade da escola, construído coletivamente.<br>( ) Previsão de objetivos e conteúdos para um ano ou semestre.",
+            options: [
+                "3, 1, 2.",
+                "2, 3, 1.",
+                "1, 2, 3.",
+                "3, 2, 1.",
+                "1, 3, 2."
+            ],
+            answer: 0,
+            resolution: "3 (Plano de Aula é o micro), 1 (PPP é a identidade da escola), 2 (Plano de Ensino é a organização da disciplina no semestre/ano)."
+        },
+        {
+            id: 7,
+            topic: "Crise dos Sentidos e Limites (Vasconcellos)",
+            text: "Celso Vasconcellos aponta a 'crise dos sentidos' e a 'crise dos limites'. Sobre o ensino de adolescentes, assinale a correta:",
+            options: [
+                "A crise dos sentidos refere-se à dificuldade dos alunos em enxergar relevância no conteúdo, exigindo ressignificação do conhecimento.",
+                "A crise dos limites é exclusivamente familiar e a escola deve se isentar.",
+                "A solução para a crise dos sentidos é apenas a adoção de tecnologias digitais.",
+                "A solução para a crise dos limites reside no retorno ao autoritarismo.",
+                "Vasconcellos defende que a escola não tem poder para atuar sobre essas crises."
+            ],
+            answer: 0,
+            resolution: "A crise dos sentidos ocorre porque o saber escolar muitas vezes parece desconectado da vida. O professor deve atuar na ressignificação e construção de vínculos."
+        },
+        {
+            id: 8,
+            topic: "Didática no Ensino Técnico (Masetto)",
+            text: "Assinale a prática didática INCOERENTE com as exigências atuais para a formação de profissionais críticos:",
+            options: [
+                "Utilização de metodologias ativas como o PBL.",
+                "Adoção de uma postura de 'professor-transmissor', centralizando a fala em exposições teóricas longas.",
+                "Planejamento flexível baseado no diagnóstico contínuo.",
+                "Integração entre teoria e prática (práxis).",
+                "Estabelecimento de relação empática e respeitosa."
+            ],
+            answer: 1,
+            resolution: "O modelo 'transmissor' que vê o aluno como tábula rasa é incoerente com a EPT, que exige sujeitos ativos, críticos e capazes de resolver problemas reais."
+        },
+        {
+            id: 9,
+            topic: "Avaliação Institucional",
+            text: "Sobre a relação entre Avaliação Institucional e Avaliação da Aprendizagem, analise:<br><br>I. Resultados da aprendizagem são insumos para a avaliação institucional...<br>II. Avaliação externa deve determinar de forma impositiva o currículo...<br>III. A autoavaliação institucional é momento de reflexão sobre infraestrutura e gestão...",
+            options: [
+                "Apenas I.",
+                "Apenas II.",
+                "Apenas I e III.",
+                "Apenas II e III.",
+                "I, II e III."
+            ],
+            answer: 2,
+            resolution: "I e III estão corretas. A II está errada porque a avaliação externa não deve impor currículos, mas sim servir como indicador para melhorias, respeitando a autonomia pedagógica."
+        },
+        {
+            id: 10,
+            topic: "Afetividade e Aprendizagem",
+            text: "Assinale a alternativa correta sobre o papel da afetividade na sala de aula segundo Wallon e Vygotsky:",
+            options: [
+                "A emoção perturba a razão; o professor deve manter distanciamento absoluto.",
+                "A afetividade é irrelevante para o Ensino Médio e Técnico.",
+                "Para Wallon, a afetividade e inteligência são integradas; a emoção pode impulsionar ou bloquear a aprendizagem.",
+                "Vygotsky defende que o desenvolvimento cognitivo independe das relações afetivas.",
+                "A didática da afetividade propõe que o professor elimine qualquer cobrança."
+            ],
+            answer: 2,
+            resolution: "Wallon demonstra que o ser humano é integral. A emoção e a cognição são campos integrados, e um ambiente afetivo positivo favorece o esforço intelectual."
+        }
+    ];
+
+    function renderQuestions() {
+        const list = document.getElementById('questions-list');
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+            
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                const letter = String.fromCharCode(65 + optIndex);
+                optionsHtml += `
+                    <label class="option-label" onclick="selectOption(${index}, ${optIndex})">
+                        <input type="radio" name="question-${index}" value="${optIndex}">
+                        <span><strong>${letter})</strong> ${opt}</span>
+                    </label>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-header">Questão ${q.id} | ${q.topic}</span>
+                <div class="question-text">${q.text}</div>
+                <div class="options-container">
+                    ${optionsHtml}
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    }
+
+    function selectOption(qIndex, optIndex) {
+        const labels = document.querySelectorAll(`#q-card-${qIndex} .option-label`);
+        labels.forEach(l => l.classList.remove('selected'));
+        labels[optIndex].classList.add('selected');
+    }
+
+    function calculateResults() {
+        let score = 0;
+        const resList = document.getElementById('resolutions-list');
+        resList.innerHTML = '';
+
+        questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+            const isCorrect = selected && parseInt(selected.value) === q.answer;
+            
+            if (isCorrect) score++;
+
+            const resCard = document.createElement('div');
+            resCard.className = `resolution-card ${isCorrect ? 'correct' : 'incorrect'}`;
+            
+            const badge = isCorrect ? 
+                '<span class="badge badge-correct">Acertou</span>' : 
+                '<span class="badge badge-incorrect">Errou</span>';
+
+            resCard.innerHTML = `
+                ${badge}
+                <span class="res-title">Questão ${q.id}: ${q.topic}</span>
+                <p><strong>Gabarito:</strong> ${String.fromCharCode(65 + q.answer)}</p>
+                <p class="res-body"><strong>Resolução:</strong> ${q.resolution}</p>
+            `;
+            resList.appendChild(resCard);
+        });
+
+        document.getElementById('final-score').innerText = `${score} / 10`;
+        
+        let feedback = "";
+        if(score >= 8) feedback = "Excelente desempenho! Você domina os temas críticos da didática.";
+        else if(score >= 5) feedback = "Bom trabalho. Revise os pontos onde houve erro para consolidar o conhecimento.";
+        else feedback = "Recomendamos uma leitura mais atenta dos autores citados (Luckesi, Hoffmann, Aquino).";
+        
+        document.getElementById('feedback-text').innerText = feedback;
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'none';
+
+        window.scrollTo({
+            top: document.getElementById('results-section').offsetTop - 20,
+            behavior: 'smooth'
+        });
+    }
+
+    window.onload = renderQuestions;
+</script>
+
+</body>
+</html>

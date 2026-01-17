@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Lei nº 14.540/2023 - Estilo CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --container-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-secondary: #636e72;
+            --accent-color: #0984e3;
+            --success-color: #00b894;
+            --error-color: #d63031;
+            --border-color: #dfe6e9;
+            --highlight-bg: #f1f2f6;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 2px solid var(--highlight-bg);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .meta-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .question-card {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: var(--highlight-bg);
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            margin-top: 6px;
+        }
+
+        .option-item.selected {
+            background-color: #e3f2fd;
+            border-color: var(--accent-color);
+        }
+
+        button#finish-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+
+        button#finish-btn:hover {
+            background-color: #0773c5;
+        }
+
+        /* Results Section */
+        #results-area {
+            display: none;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 3px solid var(--accent-color);
+        }
+
+        .score-box {
+            text-align: center;
+            padding: 30px;
+            background: var(--highlight-bg);
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .resolution-card {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 5px solid var(--accent-color);
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .res-title {
+            font-weight: bold;
+            color: var(--accent-color);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .correct-ans {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .wrong-ans {
+            color: var(--error-color);
+            font-weight: bold;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+
+        .explanation-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Lei nº 14.540/2023</h1>
+        <div class="meta-info">
+            <strong>Banca:</strong> Estilo Fundação CEFETMINAS | 
+            <strong>Assunto:</strong> Programa de Prevenção ao Assédio Sexual na Adm. Pública
+        </div>
+    </header>
+
+    <div id="quiz-form">
+        <!-- Questões serão inseridas via JS -->
+    </div>
+
+    <button id="finish-btn" onclick="calculateResults()">Finalizar e Ver Resoluções</button>
+
+    <div id="results-area">
+        <div class="score-box">
+            <div>Seu Desempenho:</div>
+            <div class="score-number" id="score-display">0/10</div>
+            <div id="score-msg"></div>
+        </div>
+        <div id="resolutions-list">
+            <!-- Resoluções serão inseridas via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            q: "A Lei nº 14.540/2023 institui o Programa de Prevenção e Enfrentamento ao Assédio Sexual e demais Crimes contra a Dignidade Sexual e à Violência Sexual. Considerando o disposto sobre a abrangência desta norma, assinale a alternativa que indica corretamente as entidades obrigadas à sua implementação imediata ou condicionada à regulamentação.",
+            options: [
+                "A lei aplica-se exclusivamente à administração pública federal direta, sendo facultativa a sua adoção pelos Estados e Municípios em virtude da autonomia federativa.",
+                "As instituições privadas concessionárias de serviço público estão obrigadas a implementar o Programa, contudo, a aplicação a estas entidades dependerá de prévia regulamentação pelo ente federativo responsável pela delegação.",
+                "O Programa é obrigatório para todos os órgãos dos Poderes Executivo e Legislativo, mas o Poder Judiciário está isento devido ao seu regime jurídico próprio de magistratura.",
+                "As empresas públicas e sociedades de economia mista, por possuírem personalidade jurídica de direito privado, não se submetem às diretrizes da referida lei, devendo seguir apenas a Consolidação das Leis do Trabalho (CLT).",
+                "A lei entra em vigor para a administração direta e indireta na data de sua publicação, inclusive para as concessionárias de serviço público, que devem adaptar seus contratos no prazo máximo de 30 dias."
+            ],
+            correct: 1,
+            explanation: "O Art. 2º §1º diz que a lei se aplica às privadas delegatárias. Porém, o Art. 10 diz explicitamente: 'A aplicação desta Lei às instituições privadas... ocorrerá após a regulamentação da matéria pelo ente federativo responsável'. Isso cria um vácuo de eficácia até que o decreto regulamentador saia. A lei é nacional, aplicando-se a todos os entes federativos e à administração direta e indireta."
+        },
+        {
+            id: 2,
+            q: "Um Técnico em Assuntos Educacionais de um Instituto Federal está auxiliando na implementação do Programa instituído pela Lei nº 14.540/2023 em uma unidade que atende desde o Ensino Médio até a pós-graduação, mas que possui convênio com uma creche municipal para a Educação Infantil. Considerando as restrições legais para determinadas etapas de ensino, é CORRETO afirmar que:",
+            options: [
+                "Na Educação Infantil e nos anos iniciais do Ensino Fundamental, o Programa deve focar exclusivamente na distribuição de materiais didáticos para as crianças sobre educação sexual.",
+                "A lei proíbe qualquer ação do Programa em escolas de Educação Infantil, para preservar a inocência das crianças, transferindo a responsabilidade integralmente para as famílias.",
+                "Nas duas primeiras etapas da educação básica, o Programa restringir-se-á à formação continuada dos profissionais de educação, observadas as disposições da Lei nº 13.431/2017.",
+                "O Programa deve ser aplicado de forma idêntica em todas as etapas da educação básica e superior, não havendo diferenciação legal baseada na faixa etária dos alunos.",
+                "A formação continuada é obrigatória apenas para professores efetivos, dispensando-se os contratados temporariamente para a Educação Infantil."
+            ],
+            correct: 2,
+            explanation: "Na Educação Infantil e Anos Iniciais, a abordagem direta é sensível. O legislador focou na formação do adulto (professor). O professor capacitado saberá proteger a criança sem necessariamente expô-la a palestras complexas. A referência à Lei 13.431/2017 é literal no texto da Lei 14.540."
+        },
+        {
+            id: 3,
+            q: "O Artigo 5º da Lei nº 14.540/2023 estabelece que os órgãos abrangidos elaborarão ações e estratégias destinadas à prevenção e ao enfrentamento do assédio sexual. Dentre os requisitos essenciais para os canais de denúncia a serem instituídos, a legislação destaca:",
+            options: [
+                "A necessidade de identificação pública do denunciante para evitar denúncias caluniosas e garantir o contraditório imediato.",
+                "A garantia do sigilo das informações e a proteção da identidade do denunciante, vedando-se qualquer forma de retaliação contra vítimas e testemunhas.",
+                "A obrigatoriedade de acareação presencial entre vítima e suposto agressor nas primeiras 24 horas após a denúncia.",
+                "A suspensão automática do exercício funcional do servidor denunciado assim que a denúncia for protocolada no sistema.",
+                "A tramitação do processo administrativo em segredo de justiça, vedado o acesso inclusive aos advogados das partes."
+            ],
+            correct: 1,
+            explanation: "Sem sigilo, não há denúncia. O temor de retaliação é a maior barreira no combate ao assédio. A lei impõe a proteção da identidade. Publicidade ou acareações precoces violam direitos fundamentais e revitimizam a pessoa."
+        },
+        {
+            id: 4,
+            q: "A Lei nº 14.540/2023 visa combater crimes contra a dignidade sexual. Embora seja uma norma administrativa, ela referencia condutas tipificadas no Código Penal. Assinale a alternativa que descreve corretamente a conduta de Importunação Sexual, diferenciando-a do Assédio Sexual, conforme entendimento jurídico aplicável ao contexto da lei.",
+            options: [
+                "Constranger alguém com o intuito de obter vantagem ou favorecimento sexual, prevalecendo-se o agente da sua condição de superior hierárquico.",
+                "Praticar contra alguém e sem a sua anuência ato libidinoso com o objetivo de satisfazer a própria lascívia ou a de terceiro, independente de relação hierárquica.",
+                "Oferecer ou trocar favores sexuais por benefícios na carreira pública, com consentimento mútuo de ambas as partes.",
+                "Expor a intimidade sexual de terceiros por meio da divulgação de fotos ou vídeos sem autorização em grupos de mensagens da repartição.",
+                "Perseguir reiteradamente a vítima, ameaçando-lhe a integridade física ou psicológica, restringindo-lhe a capacidade de locomoção."
+            ],
+            correct: 1,
+            explanation: "Importunação Sexual (Art. 215-A CP) é o ato libidinoso sem anuência (ex: toque indesejado). Diferente do Assédio Sexual (Art. 216-A CP), que exige a condição de superior hierárquico."
+        },
+        {
+            id: 5,
+            q: "A respeito da vigência da Lei nº 14.540/2023, e considerando as normas gerais de Direito Administrativo Brasileiro sobre a aplicação de leis no tempo, assinale a alternativa correta conforme o texto legal expresso:",
+            options: [
+                "A lei entrou em vigor 45 dias após a sua publicação, respeitando o período de vacatio legis padrão.",
+                "A lei teve vigência imediata na data de sua publicação, gerando efeitos instantâneos para a administração pública direta.",
+                "A vigência da lei está condicionada à aprovação do orçamento anual de cada ente federativo para custear as ações do Programa.",
+                "A lei possui vigência temporária, tendo validade apenas durante o mandato presidencial em que foi sancionada.",
+                "A lei entra em vigor apenas após a regulamentação específica de cada órgão correicional da União."
+            ],
+            correct: 1,
+            explanation: "Conforme o Art. 11 da lei: 'Esta Lei entra em vigor na data de sua publicação.' Em leis de proteção de direitos humanos, a vigência costuma ser imediata dada a urgência da matéria."
+        },
+        {
+            id: 6,
+            q: "Para efetivar os objetivos do Programa de Prevenção e Enfrentamento ao Assédio Sexual, a lei determina que os órgãos públicos adotem um conjunto de medidas. NÃO constitui uma das ações ou estratégias expressamente previstas ou derivadas da lógica da Lei nº 14.540/2023:",
+            options: [
+                "Realização de campanhas educativas sobre as condutas que configuram assédio e crimes contra a dignidade sexual.",
+                "Implementação de ações de capacitação e formação para agentes públicos sobre o tema.",
+                "Criação e divulgação de canais de denúncia específicos e acessíveis.",
+                "Estabelecimento de procedimentos para o acolhimento e acompanhamento das vítimas.",
+                "Publicação mensal, no Diário Oficial, da lista nominal de todos os servidores que foram alvo de denúncias, independentemente do resultado da apuração."
+            ],
+            correct: 4,
+            explanation: "Publicar lista de denunciados antes da conclusão do processo é inconstitucional (viola a presunção de inocência) e ilegal. O objetivo da lei é a transparência da política, não o linchamento público de suspeitos sem o devido processo legal."
+        },
+        {
+            id: 7,
+            q: "Um servidor público federal, ao tomar conhecimento de uma denúncia de assédio sexual feita por uma subordinada, decide arquivar o caso informalmente para 'não prejudicar o ambiente de trabalho', sem realizar a devida apuração. À luz da Lei nº 14.540/2023 e do dever de enfrentamento nela previsto, a conduta do gestor:",
+            options: [
+                "É correta, pois o princípio da discricionariedade permite ao gestor decidir quais denúncias investigar.",
+                "É louvável, pois priorizou a harmonia da equipe em detrimento de conflitos interpessoais.",
+                "Viola os objetivos do Programa e pode configurar infração disciplinar (como condescendência criminosa ou prevaricação), uma vez que o enfrentamento e a apuração são deveres institucionais.",
+                "Só seria irregular se a vítima tivesse formalizado a denúncia diretamente na Polícia Civil, não tendo a administração o dever de agir de ofício.",
+                "Está amparada pela autonomia administrativa, visto que a Lei nº 14.540/2023 possui caráter meramente orientativo e pedagógico, sem força vinculante."
+            ],
+            correct: 2,
+            explanation: "O 'enfrentamento' previsto na lei transforma a inércia do gestor em ilícito. Se ele sabe e não age, é conivente. O dever de agir é institucional e o arquivamento informal viola a moralidade administrativa e a própria Lei 14.540."
+        },
+        {
+            id: 8,
+            q: "A Lei nº 14.540/2023 faz remissão expressa à Lei nº 13.431/2017 ao tratar da aplicação do Programa nas etapas iniciais da educação básica. A Lei nº 13.431/2017 é conhecida por estabelecer:",
+            options: [
+                "O Estatuto da Pessoa com Deficiência.",
+                "O Sistema de Garantia de Direitos da Criança e do Adolescente Vítima ou Testemunha de Violência.",
+                "A Lei de Diretrizes e Bases da Educação Nacional.",
+                "O Plano Nacional de Educação.",
+                "A Lei da Palmada (Lei Menino Bernardo)."
+            ],
+            correct: 1,
+            explanation: "A Lei 13.431/2017 é o marco da 'Escuta Especializada'. A conexão feita pela Lei 14.540 indica que, em casos envolvendo crianças, deve-se acionar a rede de proteção para evitar revitimização e danos psicológicos adicionais."
+        },
+        {
+            id: 9,
+            q: "Conforme o Art. 10 da Lei 14.540/2023, a aplicação da lei às instituições privadas que prestam serviços públicos por delegação ocorrerá:",
+            options: [
+                "Automaticamente, por força da supremacia do interesse público.",
+                "Mediante acordo coletivo de trabalho firmado com o sindicato da categoria.",
+                "Após a regulamentação da matéria pelo ente federativo responsável pela concessão, permissão ou autorização.",
+                "Somente se houver previsão expressa no contrato original de concessão, sendo vedados aditivos contratuais para este fim.",
+                "A critério exclusivo da empresa privada, que poderá aderir voluntariamente ao Programa para obter selos de qualidade."
+            ],
+            correct: 2,
+            explanation: "Reitera o Art. 10 do texto legal. A dependência da regulamentação pelo ente delegante é a condição de eficácia para as empresas privadas que prestam serviços públicos."
+        },
+        {
+            id: 10,
+            q: "A visibilidade do Programa é essencial para sua eficácia. A lei determina que a legislação pertinente e os canais de denúncia sejam divulgados. Onde, preferencialmente, essa divulgação deve ocorrer segundo a praxe administrativa e os ditames da lei de acesso à informação integrados ao Programa?",
+            options: [
+                "Apenas nos boletins internos de circulação restrita à chefia.",
+                "Em sítios eletrônicos oficiais dos órgãos e em locais de fácil acesso e visualização nas repartições públicas.",
+                "Exclusivamente via correio eletrônico institucional, para garantir que apenas servidores leiam.",
+                "Em jornais de grande circulação, mediante pagamento de publicidade legal.",
+                "Apenas durante a semana de integração de novos servidores, sendo desnecessária a divulgação contínua."
+            ],
+            correct: 1,
+            explanation: "A divulgação deve ser ampla. Sites oficiais e murais físicos garantem que tanto servidores quanto cidadãos usuários do serviço conheçam os canais de denúncia e a política de enfrentamento."
+        }
+    ];
+
+    function renderQuestions() {
+        const container = document.getElementById('quiz-form');
+        questions.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            let optionsHtml = '';
+            item.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <li class="option-item" onclick="selectOption(${index}, ${optIndex})">
+                        <input type="radio" name="question-${index}" id="q${index}o${optIndex}" value="${optIndex}">
+                        <label for="q${index}o${optIndex}">${String.fromCharCode(65 + optIndex)}) ${opt}</label>
+                    </li>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-text">Questão ${index + 1}:</span>
+                <p>${item.q}</p>
+                <ul class="options-list">
+                    ${optionsHtml}
+                </ul>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectOption(qIdx, oIdx) {
+        const options = document.querySelectorAll(`#q-card-${qIdx} .option-item`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        options[oIdx].classList.add('selected');
+        document.getElementById(`q${qIdx}o${oIdx}`).checked = true;
+    }
+
+    function calculateResults() {
+        let score = 0;
+        const resList = document.getElementById('resolutions-list');
+        resList.innerHTML = '';
+
+        questions.forEach((item, index) => {
+            const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+            const selectedVal = selected ? parseInt(selected.value) : -1;
+            const isCorrect = selectedVal === item.correct;
+
+            if (isCorrect) score++;
+
+            // Criar card de resolução
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            
+            let userFeedback = '';
+            if (selectedVal === -1) {
+                userFeedback = '<span class="wrong-ans">Não respondida</span>';
+            } else if (!isCorrect) {
+                userFeedback = `<span class="wrong-ans">Sua resposta: ${String.fromCharCode(65 + selectedVal)}</span>`;
+            }
+
+            resCard.innerHTML = `
+                <span class="res-title">Resolução da Questão ${index + 1}</span>
+                <div>${userFeedback} <span class="correct-ans">Gabarito: ${String.fromCharCode(65 + item.correct)}</span></div>
+                <div class="explanation-text">${item.explanation}</div>
+            `;
+            resList.appendChild(resCard);
+        });
+
+        document.getElementById('score-display').innerText = `${score}/10`;
+        
+        let msg = "";
+        if(score >= 9) msg = "Excelente desempenho! Você domina a Lei 14.540.";
+        else if(score >= 7) msg = "Bom desempenho. Revise os pontos onde houve dúvida.";
+        else msg = "Continue estudando. A Lei 14.540 possui detalhes literais importantes.";
+        
+        document.getElementById('score-msg').innerText = msg;
+
+        document.getElementById('results-area').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('results-area').offsetTop, behavior: 'smooth' });
+        
+        // Desativar botões
+        document.getElementById('finish-btn').disabled = true;
+        document.getElementById('finish-btn').innerText = "Simulado Finalizado";
+    }
+
+    window.onload = renderQuestions;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: CF/88 - Organização do Estado</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-color: #636e72;
+            --success-color: #27ae60;
+            --error-color: #d63031;
+            --card-bg: #ffffff;
+            --border-color: #dfe6e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 90%;
+            margin: 40px 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f1f2f6;
+        }
+
+        .option-item input[type="radio"] {
+            margin-right: 15px;
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        .selected {
+            background-color: #e3f2fd !important;
+            border-color: var(--primary-color) !important;
+        }
+
+        /* Classes para feedback após conclusão */
+        .correct {
+            background-color: #d4edda !important;
+            border-color: var(--success-color) !important;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            background-color: #f8d7da !important;
+            border-color: var(--error-color) !important;
+        }
+
+        .resolution {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0 8px 8px 0;
+            display: none; /* Escondido inicialmente */
+            font-size: 0.95rem;
+            color: #444;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 15px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #0773c5;
+        }
+
+        #result-area {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .question-card { padding: 20px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Organização do Estado</h1>
+        <p class="subtitle">Constituição Federal de 1988 (Artigos 18 a 43)</p>
+        <p class="subtitle">Estilo: Fundação CEFETMINAS</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 1 -->
+        <div class="question-card" id="q1-container">
+            <span class="question-text">1. O artigo 18 da Constituição Federal de 1988 inaugura o Título III, dispondo sobre a Organização do Estado. A respeito da organização político-administrativa da República Federativa do Brasil, assinale a alternativa correta:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q1" value="A"> A) A organização político-administrativa compreende a União, os Estados, o Distrito Federal e os Municípios, todos soberanos.</label>
+                <label class="option-item"><input type="radio" name="q1" value="B"> B) Os Territórios Federais integram a União e sua criação, transformação em Estado ou reintegração ao Estado de origem serão reguladas em lei complementar.</label>
+                <label class="option-item"><input type="radio" name="q1" value="C"> C) A vedação à dissolução do vínculo federativo permite, excepcionalmente, o direito de secessão apenas nos casos de grave crise institucional.</label>
+                <label class="option-item"><input type="radio" name="q1" value="D"> D) Brasília é a Capital Federal e constitui um ente federativo autônomo, possuindo personalidade jurídica distinta da União e do Distrito Federal.</label>
+                <label class="option-item"><input type="radio" name="q1" value="E"> E) A criação de Municípios far-se-ão por lei federal, obedecidos os requisitos previstos em Lei Complementar Estadual.</label>
+            </div>
+            <div class="resolution" id="res-q1">
+                <strong>Resolução:</strong> O artigo 18, § 2º, define que os Territórios Federais integram a União e sua criação é regulada em lei complementar. Eles não são entes federativos autônomos, mas sim autarquias territoriais da União. Erros das outras: A (entes são autônomos, não soberanos); C (não há direito de secessão); D (Brasília é sede, o ente é o DF); E (criados por lei estadual).
+            </div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-card" id="q2-container">
+            <span class="question-text">2. Sobre as vedações do artigo 19 da Constituição Federal, assinale a alternativa correta:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q2" value="A"> A) É vedado aos entes estabelecer cultos religiosos, sendo inconstitucional qualquer hipótese de colaboração de interesse público.</label>
+                <label class="option-item"><input type="radio" name="q2" value="B"> B) A recusa de fé aos documentos públicos é permitida aos Estados quando houver dúvida fundada.</label>
+                <label class="option-item"><input type="radio" name="q2" value="C"> C) É permitida a criação de distinções entre brasileiros quando visar à proteção do mercado de trabalho local.</label>
+                <label class="option-item"><input type="radio" name="q2" value="D"> D) A manutenção de símbolos religiosos em prédios públicos, como crucifixos, não viola a laicidade do Estado conforme entendimento consolidado.</label>
+                <label class="option-item"><input type="radio" name="q2" value="E"> E) A vedação de criar distinções entre brasileiros não se aplica aos Municípios em concursos públicos.</label>
+            </div>
+            <div class="resolution" id="res-q2">
+                <strong>Resolução:</strong> O STF e o CNJ entendem que a presença de símbolos religiosos em prédios públicos (como crucifixos) é uma manifestação cultural e histórica, não ferindo a laicidade do Estado nem estabelecendo dependência religiosa.
+            </div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card" id="q3-container">
+            <span class="question-text">3. Sobre a repartição de competências legislativas (Arts. 22 e 24), assinale a correta:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q3" value="A"> A) Compete privativamente à União legislar sobre direito tributário, financeiro e urbanístico.</label>
+                <label class="option-item"><input type="radio" name="q3" value="B"> B) No âmbito da legislação concorrente, a competência da União limitar-se-á a estabelecer normas gerais, não excluindo a competência suplementar dos Estados.</label>
+                <label class="option-item"><input type="radio" name="q3" value="C"> C) A superveniência de lei federal sobre normas gerais revoga a lei estadual no que lhe for contrário.</label>
+                <label class="option-item"><input type="radio" name="q3" value="D"> D) Compete privativamente à União legislar sobre águas e energia, sendo vedada qualquer delegação aos Estados.</label>
+                <label class="option-item"><input type="radio" name="q3" value="E"> E) A competência para legislar sobre seguridade social é concorrente entre União e Estados.</label>
+            </div>
+            <div class="resolution" id="res-q3">
+                <strong>Resolução:</strong> No regime de competência concorrente (Art. 24), a União dita as normas gerais (§ 1º) e os Estados suplementam (§ 2º). Se a União não editar norma geral, o Estado exerce competência plena (§ 3º).
+            </div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card" id="q4-container">
+            <span class="question-text">4. De acordo com o artigo 20 da CF/88, qual destes itens NÃO pertence à União?</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q4" value="A"> A) Os recursos minerais, inclusive os do subsolo.</label>
+                <label class="option-item"><input type="radio" name="q4" value="B"> B) Os potenciais de energia hidráulica.</label>
+                <label class="option-item"><input type="radio" name="q4" value="C"> C) As terras devolutas indispensáveis à defesa das fronteiras.</label>
+                <label class="option-item"><input type="radio" name="q4" value="D"> D) As praias marítimas e ilhas oceânicas (salvo sedes de Municípios).</label>
+                <label class="option-item"><input type="radio" name="q4" value="E"> E) As águas superficiais ou subterrâneas, fluentes e em depósito, em regra geral.</label>
+            </div>
+            <div class="resolution" id="res-q4">
+                <strong>Resolução:</strong> As águas superficiais ou subterrâneas pertencem, em regra, aos Estados (Art. 26, I). Pertencem à União apenas aquelas que fazem fronteira com outros países ou banham mais de um estado (Art. 20, III).
+            </div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card" id="q5-container">
+            <span class="question-text">5. Sobre a autonomia municipal (art. 29 e 30), marque a alternativa correta:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q5" value="A"> A) Compete ao Município legislar sobre o horário de funcionamento de estabelecimentos comerciais, em razão do interesse local.</label>
+                <label class="option-item"><input type="radio" name="q5" value="B"> B) É inconstitucional lei municipal que obriga bancos a instalarem portas eletrônicas.</label>
+                <label class="option-item"><input type="radio" name="q5" value="C"> C) O número máximo de Vereadores na Constituição é de 51.</label>
+                <label class="option-item"><input type="radio" name="q5" value="D"> D) O subsídio dos Prefeitos não se sujeita ao teto remuneratório constitucional.</label>
+                <label class="option-item"><input type="radio" name="q5" value="E"> E) Municípios legislam privativamente sobre diretrizes e bases do trânsito.</label>
+            </div>
+            <div class="resolution" id="res-q5">
+                <strong>Resolução:</strong> Súmula Vinculante 38: "É competente o Município para fixar o horário de funcionamento de estabelecimento comercial." Trata-se de interesse local. Erros: B (é constitucional); C (máximo é 55); D (sujeita-se ao teto); E (trânsito é privativo da União).
+            </div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card" id="q6-container">
+            <span class="question-text">6. Sobre o Distrito Federal (art. 32), é correto afirmar:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q6" value="A"> A) O Distrito Federal pode ser dividido em Municípios.</label>
+                <label class="option-item"><input type="radio" name="q6" value="B"> B) Compete ao DF organizar e manter o Judiciário e o Ministério Público locais.</label>
+                <label class="option-item"><input type="radio" name="q6" value="C"> C) A eleição do Governador do DF observará as regras do art. 77 da Constituição.</label>
+                <label class="option-item"><input type="radio" name="q6" value="D"> D) O DF não pode instituir impostos municipais, apenas estaduais.</label>
+                <label class="option-item"><input type="radio" name="q6" value="E"> E) As polícias do DF são subordinadas diretamente ao Presidente da República.</label>
+            </div>
+            <div class="resolution" id="res-q6">
+                <strong>Resolução:</strong> Art. 32, § 2º: A eleição do Governador e Vice segue o art. 77 (maioria absoluta, dois turnos). Erros: A (vedada divisão em municípios); B (quem organiza Judiciário/MP do DF é a União); D (DF acumula impostos estaduais e municipais); E (subordinadas ao Governador do DF).
+            </div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card" id="q7-container">
+            <span class="question-text">7. Sobre a acumulação de cargos públicos (art. 37), assinale a correta:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q7" value="A"> A) É permitida a de dois cargos de professor, a de um de professor com outro técnico/científico e a de dois cargos de profissionais de saúde regulamentados.</label>
+                <label class="option-item"><input type="radio" name="q7" value="B"> B) A proibição de acumular não alcança as subsidiárias de empresas públicas.</label>
+                <label class="option-item"><input type="radio" name="q7" value="C"> C) O teto remuneratório municipal é o subsídio do Governador.</label>
+                <label class="option-item"><input type="radio" name="q7" value="D"> D) É permitida a vinculação de espécies remuneratórias para fins de isonomia.</label>
+                <label class="option-item"><input type="radio" name="q7" value="E"> E) Acréscimos pecuniários serão computados para fins de acréscimos ulteriores.</label>
+            </div>
+            <div class="resolution" id="res-q7">
+                <strong>Resolução:</strong> Art. 37, XVI: A regra é a não acumulação, com as exceções listadas na letra A, desde que haja compatibilidade de horários.
+            </div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card" id="q8-container">
+            <span class="question-text">8. Sobre o Regime Próprio de Previdência Social (Art. 40), assinale a correta:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q8" value="A"> A) É assegurada a contagem de tempo de contribuição fictício.</label>
+                <label class="option-item"><input type="radio" name="q8" value="B"> B) O regime terá caráter contributivo e solidário, mediante contribuição do ente, ativos, aposentados e pensionistas.</label>
+                <label class="option-item"><input type="radio" name="q8" value="C"> C) A redução de idade para professores não se aplica a diretores pedagógicos.</label>
+                <label class="option-item"><input type="radio" name="q8" value="D"> D) O servidor será aposentado compulsoriamente aos 65 anos de idade.</label>
+                <label class="option-item"><input type="radio" name="q8" value="E"> E) Ao servidor ocupante exclusivamente de cargo em comissão aplica-se o RPPS.</label>
+            </div>
+            <div class="resolution" id="res-q8">
+                <strong>Resolução:</strong> Art. 40, *caput*. O sistema é contributivo e solidário. Erros: A (vedado tempo fictício); C (aplica-se a diretores conforme STF); D (compulsória é aos 75 anos); E (comissionados vão para o RGPS/INSS).
+            </div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card" id="q9-container">
+            <span class="question-text">9. Sobre a estabilidade do servidor público (art. 41), assinale a correta:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q9" value="A"> A) O servidor estável nunca perderá o cargo por insuficiência de desempenho.</label>
+                <label class="option-item"><input type="radio" name="q9" value="B"> B) São estáveis após três anos de efetivo exercício, sendo a avaliação especial de desempenho condição obrigatória.</label>
+                <label class="option-item"><input type="radio" name="q9" value="C"> C) Extinto o cargo, o servidor estável fica em disponibilidade com remuneração integral.</label>
+                <label class="option-item"><input type="radio" name="q9" value="D"> D) O estágio probatório é de 24 meses.</label>
+                <label class="option-item"><input type="radio" name="q9" value="E"> E) O servidor em estágio probatório não pode exercer funções de chefia.</label>
+            </div>
+            <div class="resolution" id="res-q9">
+                <strong>Resolução:</strong> Art. 41. A estabilidade exige 3 anos de exercício e aprovação em avaliação especial. Erros: A (pode perder por desempenho sim); C (remuneração é proporcional); D (são 3 anos/36 meses).
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10-container">
+            <span class="question-text">10. Sobre Intervenção e Regiões (art. 34 e 43), marque a correta:</span>
+            <div class="options-list">
+                <label class="option-item"><input type="radio" name="q10" value="A"> A) A União pode conceder isenções de tributos estaduais em regiões de seca.</label>
+                <label class="option-item"><input type="radio" name="q10" value="B"> B) Não existe hipótese de intervenção espontânea (de ofício) pelo Presidente.</label>
+                <label class="option-item"><input type="radio" name="q10" value="C"> C) O decreto de intervenção será submetido à apreciação da Assembleia Legislativa.</label>
+                <label class="option-item"><input type="radio" name="q10" value="D"> D) A União não intervirá nos Estados nem no DF, exceto para manter a integridade nacional, entre outras hipóteses taxativas.</label>
+                <label class="option-item"><input type="radio" name="q10" value="E"> E) A criação de organismos como a SUDENE é iniciativa exclusiva dos Estados.</label>
+            </div>
+            <div class="resolution" id="res-q10">
+                <strong>Resolução:</strong> Art. 34. A intervenção é medida excepcional com casos taxativos. Erros: A (vedada isenção heterônoma); B (há intervenção de ofício); C (submetido ao Congresso Nacional); E (iniciativa da União via lei complementar).
+            </div>
+        </div>
+
+        <div id="result-area">
+            <h2>Resultado do Simulado</h2>
+            <div class="score-display" id="score-text">0 / 10</div>
+            <p id="feedback-text"></p>
+        </div>
+
+        <button type="button" class="btn-submit" id="finish-btn">Finalizar e Ver Resoluções</button>
+    </form>
+
+    <footer>
+        <p>Baseado na Constituição Federal de 1988 - Arts. 18 a 43.</p>
+        <p>Desenvolvido para fins de estudo - Foco CEFETMINAS.</p>
+    </footer>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: 'B', q2: 'D', q3: 'B', q4: 'E', q5: 'A',
+        q6: 'C', q7: 'A', q8: 'B', q9: 'B', q10: 'D'
+    };
+
+    // Estilização visual ao selecionar
+    document.querySelectorAll('.option-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const radio = this.querySelector('input');
+            const name = radio.name;
+            
+            // Remove 'selected' de outros da mesma questão
+            document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                r.parentElement.classList.remove('selected');
+            });
+            
+            // Adiciona ao atual
+            this.classList.add('selected');
+        });
+    });
+
+    document.getElementById('finish-btn').addEventListener('click', function() {
+        const form = document.getElementById('quiz-form');
+        const formData = new FormData(form);
+        let score = 0;
+
+        // Validar se todas foram respondidas (opcional, mas bom para o usuário)
+        const answeredCount = Array.from(formData.keys()).length;
+        if (answeredCount < 10) {
+            if (!confirm("Você não respondeu todas as questões. Deseja finalizar assim mesmo?")) {
+                return;
+            }
+        }
+
+        // Processar resultados
+        for (let i = 1; i <= 10; i++) {
+            const questionName = 'q' + i;
+            const userAnswer = formData.get(questionName);
+            const correctAnswer = correctAnswers[questionName];
+            const container = document.getElementById(questionName + '-container');
+            const options = container.querySelectorAll('.option-item');
+            const resolution = document.getElementById('res-q' + i);
+
+            // Mostrar resolução
+            resolution.style.display = 'block';
+
+            // Marcar corretas e incorretas
+            options.forEach(option => {
+                const radio = option.querySelector('input');
+                
+                // Limpa estilos de seleção prévios
+                option.classList.remove('selected');
+
+                if (radio.value === correctAnswer) {
+                    option.classList.add('correct');
+                }
+                
+                if (userAnswer === radio.value && userAnswer !== correctAnswer) {
+                    option.classList.add('incorrect');
+                }
+            });
+
+            if (userAnswer === correctAnswer) {
+                score++;
+            }
+        }
+
+        // Exibir Placar
+        const resultArea = document.getElementById('result-area');
+        const scoreText = document.getElementById('score-text');
+        const feedbackText = document.getElementById('feedback-text');
+
+        resultArea.style.display = 'block';
+        scoreText.innerText = `${score} / 10`;
+
+        if (score >= 8) {
+            feedbackText.innerText = "Excelente desempenho! Você domina o conteúdo.";
+            feedbackText.style.color = "var(--success-color)";
+        } else if (score >= 6) {
+            feedbackText.innerText = "Bom trabalho. Revise os pontos onde houve dúvida.";
+            feedbackText.style.color = "var(--primary-color)";
+        } else {
+            feedbackText.innerText = "Continue estudando. A Organização do Estado exige atenção aos detalhes literais.";
+            feedbackText.style.color = "var(--error-color)";
+        }
+
+        // Desabilitar rádio buttons para não mudar após fim
+        document.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+        
+        // Esconder botão de finalizar e rolar para o topo do resultado
+        this.style.display = 'none';
+        resultArea.scrollIntoView({ behavior: 'smooth' });
+    });
+</script>
+
+</body>
+</html>

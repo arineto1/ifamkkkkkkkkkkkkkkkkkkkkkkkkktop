@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo: Didática e Formação - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1f2937;
+            line-height: 1.7;
+        }
+
+        .container-main {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem;
+        }
+
+        .highlight-yellow {
+            background-color: #fef08a;
+            font-weight: 600;
+            padding: 0 2px;
+        }
+
+        .highlight-blue {
+            background-color: #dbeafe;
+            font-weight: 600;
+            padding: 0 2px;
+        }
+
+        .section-header {
+            border-bottom: 2px solid #e5e7eb;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            color: #111827;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .audio-box {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            table-layout: auto;
+        }
+
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f3f4f6;
+            font-weight: 700;
+        }
+
+        .tip-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .btn-footer {
+            display: block;
+            width: fit-content;
+            margin: 4rem auto;
+            padding: 1.2rem 3rem;
+            background-color: #111827;
+            color: white;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: transform 0.2s;
+        }
+
+        .btn-footer:hover {
+            transform: scale(1.05);
+            background-color: #000000;
+        }
+
+        /* Prevenção de scroll horizontal em tabelas pequenas */
+        @media (max-width: 600px) {
+            td, th {
+                font-size: 0.8rem;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-main">
+    <!-- Cabeçalho -->
+    <header class="text-center mb-12">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Didática e Formação Docente</h1>
+        <p class="text-lg text-gray-500 italic">Foco: Concurso IFAM | Banca: Fundação CEFETMINAS</p>
+    </header>
+
+    <!-- Áudio Player -->
+    <div class="audio-box">
+        <h3 class="text-sm font-bold uppercase text-gray-400 mb-3 tracking-widest">Apoio em Áudio</h3>
+        <div class="flex items-center gap-4">
+            <div class="flex-1">
+                <p class="text-sm text-gray-600 mb-2">Arquivo: <span class="font-mono text-blue-600 italic">[nome-do-arquivo-aqui.mp3]</span></p>
+                <audio controls class="w-full h-10">
+                    <source src="21formacao.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tópico 1 -->
+    <h2 class="section-header text-xl">1. Formação de Professores: Conceituação Técnica</h2>
+    <p class="mb-6">A formação docente é um processo <span class="highlight-yellow">contínuo e institucionalizado</span>, que não se encerra com o diploma. No contexto dos Institutos Federais (EBTT), ela deve ser <span class="highlight-blue">Omnilateral</span> (integral), unindo o saber técnico, político e pedagógico.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Dimensão</th>
+                <th>Formação Inicial</th>
+                <th>Formação Continuada</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Foco Principal</strong></td>
+                <td>Licenciatura; Construção dos fundamentos e <span class="highlight-yellow">Saberes da Docência</span>.</td>
+                <td>Desenvolvimento profissional <span class="highlight-yellow">em serviço</span>; Reflexão sobre a prática.</td>
+            </tr>
+            <tr>
+                <td><strong>Amparo Legal</strong></td>
+                <td>LDB Art. 62; Diretrizes Curriculares Nacionais (DCNs).</td>
+                <td>LDB Art. 67; Projeto Político Pedagógico (PPP).</td>
+            </tr>
+            <tr>
+                <td><strong>Necessidade</strong></td>
+                <td>Habilitação legal e teórica.</td>
+                <td>Atualização frente às <span class="highlight-blue">mudanças tecnológicas</span> e sociais.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Tópico 2 -->
+    <h2 class="section-header text-xl">2. Saberes Docentes (Pimenta e Tardif)</h2>
+    <p class="mb-4">A CEFETMINAS costuma cobrar a distinção entre os saberes que compõem o professor de Informática:</p>
+    <ul class="list-disc ml-8 space-y-3 mb-8">
+        <li><strong>Saberes da Formação Profissional:</strong> Transmitidos pelas instituições de formação (Ciências da Educação).</li>
+        <li><strong>Saberes Disciplinares:</strong> O conteúdo específico (Algoritmos, Redes, Banco de Dados).</li>
+        <li><strong>Saberes Curriculares:</strong> O modo como a instituição organiza e seleciona os saberes.</li>
+        <li><strong>Saberes da Experiência:</strong> Produzidos pelos professores no <span class="highlight-yellow">cotidiano das salas de aula</span> (o saber-fazer).</li>
+    </ul>
+
+    <!-- Tópico 3 -->
+    <h2 class="section-header text-xl">3. Necessidades Locais e Contexto Amazônico</h2>
+    <p class="mb-6">O IFAM possui capilaridade no interior do Amazonas. A didática deve respeitar as <span class="highlight-blue">especificidades regionais</span>:</p>
+    
+    <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div class="p-4 border border-gray-200 rounded-lg">
+            <h4 class="font-bold mb-2">Características Locais</h4>
+            <p class="text-sm">Logística fluvial, comunidades indígenas/ribeirinhas e o modelo de <span class="highlight-yellow">Ensino Mediado por Tecnologia</span>.</p>
+        </div>
+        <div class="p-4 border border-gray-200 rounded-lg">
+            <h4 class="font-bold mb-2">Necessidades do IFAM</h4>
+            <p class="text-sm">Alinhamento com Arranjos Produtivos Locais (APLs) e a verticalização do ensino.</p>
+        </div>
+    </div>
+
+    <!-- Tópico 4 -->
+    <h2 class="section-header text-xl">4. Seminários Interdisciplinares: Propostas</h2>
+    <p class="mb-4">O seminário no IFAM não é uma técnica de exposição, mas um <span class="highlight-yellow">método de pesquisa</span>. Ele deve promover a <span class="highlight-blue">Práxis</span> (Teoria + Prática).</p>
+    
+    <div class="bg-gray-50 p-6 rounded-lg mb-8">
+        <h4 class="font-bold text-blue-700 mb-3">Roteiro de um Seminário Interdisciplinar Eficaz:</h4>
+        <ol class="list-decimal ml-6 space-y-2">
+            <li><strong>Tema Gerador:</strong> Problema real da comunidade (Ex: Impacto do lixo eletrônico nos rios).</li>
+            <li><strong>Equipe Multidisciplinar:</strong> Professor de Informática (Hardware/Reciclagem) + Professor de Biologia (Impacto ambiental).</li>
+            <li><strong>Investigação:</strong> Alunos utilizam a <span class="highlight-yellow">pesquisa como princípio educativo</span>.</li>
+            <li><strong>Ação Coletiva:</strong> Proposta de intervenção técnica na localidade.</li>
+        </ol>
+    </div>
+
+    <!-- Tópico 5 -->
+    <h2 class="section-header text-xl">5. Tendências de Prova e "Peguinhas"</h2>
+    
+    <div class="tip-box">
+        <h4 class="font-bold text-green-800 mb-2">🎯 O que a CEFETMINAS quer que você saiba:</h4>
+        <ul class="list-none space-y-4">
+            <li>🚫 <strong>Peguinha:</strong> Dizer que a formação continuada serve para "corrigir falhas" da inicial. <br> <span class="text-sm">✅ <strong>Certo:</strong> Ela é uma continuidade inerente à profissão, não um "tapa-buraco".</span></li>
+            <li>🚫 <strong>Peguinha:</strong> Afirmar que o professor técnico (informática) não precisa de formação didática.<br> <span class="text-sm">✅ <strong>Certo:</strong> Todo docente EBTT deve articular saber técnico com saber pedagógico (Resolução CNE/CP 01/2021).</span></li>
+            <li>🚫 <strong>Peguinha:</strong> Tratar a interdisciplinaridade como mera "junção" de temas no cronograma.<br> <span class="text-sm">✅ <strong>Certo:</strong> É uma mudança de postura pedagógica e eliminação da fragmentação do saber.</span></li>
+        </ul>
+    </div>
+
+    <!-- Tópico Final: Memorização Rápida -->
+    <h2 class="section-header text-xl">6. Flash-Cards Mentais</h2>
+    <div class="grid md:grid-cols-3 gap-4 mb-12">
+        <div class="p-4 bg-gray-100 rounded text-center">
+            <p class="font-bold text-sm">IDENTIDADE</p>
+            <p class="text-xs">Não é dada, é construída na reflexão.</p>
+        </div>
+        <div class="p-4 bg-gray-100 rounded text-center">
+            <p class="font-bold text-sm">INTERDISCIPLINAR</p>
+            <p class="text-xs">Ousadia, Humildade e Diálogo.</p>
+        </div>
+        <div class="p-4 bg-gray-100 rounded text-center">
+            <p class="font-bold text-sm">OMNILATERAL</p>
+            <p class="text-xs">Trabalho, Ciência, Tecnologia e Cultura.</p>
+        </div>
+    </div>
+
+    <!-- Botão Final -->
+    <a href="21questoes.html" class="btn-footer">
+        SIMULAR QUESTÕES AGORA
+    </a>
+
+</div>
+
+<footer class="text-center py-10 text-gray-400 text-sm border-t border-gray-100">
+    Conteúdo revisado para Concurso EBTT - IFAM
+</footer>
+
+</body>
+</html>

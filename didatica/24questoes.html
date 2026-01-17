@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Didática e Pós-Graduação Profissional em Ensino</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --container-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #546e7a;
+            --accent: #2563eb;
+            --success: #16a34a;
+            --error: #dc2626;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--container-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        header {
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            color: var(--accent);
+        }
+
+        .intro {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .question-block {
+            margin-bottom: 45px;
+            padding: 25px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            margin-top: 6px;
+            cursor: pointer;
+        }
+
+        .option-item label {
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Classes para o resultado */
+        .correct-answer {
+            background-color: #dcfce7 !important;
+            border-color: var(--success) !important;
+        }
+
+        .wrong-answer {
+            background-color: #fee2e2 !important;
+            border-color: var(--error) !important;
+        }
+
+        .btn-submit {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+
+        #result-section {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #score-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .resolutions-title {
+            margin-top: 50px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            display: none;
+        }
+
+        .resolution-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-left: 4px solid var(--accent);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Didática Profissional</h1>
+        <p class="intro">Banca: Estilo Fundação CEFETMINAS | Assunto: Pós-Graduação Profissional em Ensino</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 01 -->
+        <div class="question-block" id="q1-block">
+            <span class="question-number">Questão 01</span>
+            <span class="question-text">
+                A Portaria MEC nº 389, de 23 de março de 2017, dispõe sobre o mestrado e doutorado profissional no âmbito da pós-graduação stricto sensu. Analise as asserções a seguir e a relação proposta entre elas:<br><br>
+                I. Os programas de mestrado e doutorado profissional devem pautar-se, entre outros objetivos, pela capacitação de profissionais para o exercício de prática avançada e transformadora de procedimentos, visando atender a demandas sociais, organizacionais ou profissionais e do mercado de trabalho.<br><br>
+                PORQUE<br><br>
+                II. A legislação vigente estabelece uma hierarquia acadêmica onde a modalidade profissional é considerada de caráter transitório e técnico, não conferindo as mesmas prerrogativas de docência e pesquisa atribuídas aos programas da modalidade acadêmica, devendo focar exclusivamente na aplicação técnica imediata.
+            </span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q1" value="A" id="q1a"> <label for="q1a">A) As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.</label></div>
+                <div class="option-item"><input type="radio" name="q1" value="B" id="q1b"> <label for="q1b">B) As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.</label></div>
+                <div class="option-item"><input type="radio" name="q1" value="C" id="q1c"> <label for="q1c">C) A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.</label></div>
+                <div class="option-item"><input type="radio" name="q1" value="D" id="q1d"> <label for="q1d">D) A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.</label></div>
+                <div class="option-item"><input type="radio" name="q1" value="E" id="q1e"> <label for="q1e">E) As asserções I e II são proposições falsas.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q1">
+                <strong>Resolução:</strong> O mestrado profissional confere idênticas prerrogativas (docência/pesquisa) ao acadêmico. A asserção II é falsa pois nega essa paridade legal.
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-block" id="q2-block">
+            <span class="question-number">Questão 02</span>
+            <span class="question-text">Segundo o Art. 7º da Portaria MEC nº 389/2017, o trabalho de conclusão final deve ser uma atividade de pesquisa, desenvolvimento ou inovação. Dentre as possibilidades de formato para este trabalho, EXCETO:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q2" value="A" id="q2a"> <label for="q2a">A) Dissertação, revisões sistemáticas e aprofundadas da literatura.</label></div>
+                <div class="option-item"><input type="radio" name="q2" value="B" id="q2b"> <label for="q2b">B) Artigos, patentes, registros de propriedade intelectual e projetos técnicos.</label></div>
+                <div class="option-item"><input type="radio" name="q2" value="C" id="q2c"> <label for="q2c">C) Desenvolvimento de aplicativos, materiais didáticos e instrucionais, produtos, processos e técnicas.</label></div>
+                <div class="option-item"><input type="radio" name="q2" value="D" id="q2d"> <label for="q2d">D) Prova escrita objetiva de conhecimentos específicos, sem a necessidade de produção de texto autoral ou produto técnico.</label></div>
+                <div class="option-item"><input type="radio" name="q2" value="E" id="q2e"> <label for="q2e">E) Produção de programas de mídia, editoria, composições, concertos, relatórios finais de pesquisa, softwares e estudos de caso.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q2">
+                <strong>Resolução:</strong> A pós-graduação stricto sensu exige atividade de pesquisa/autoria. Uma prova objetiva não atende aos critérios de produção intelectual de mestrado.
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-block" id="q3-block">
+            <span class="question-number">Questão 03</span>
+            <span class="question-text">Sobre a identidade e os requisitos da Área 46 (Ensino) da CAPES, assinale a alternativa CORRETA:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q3" value="A" id="q3a"> <label for="q3a">A) A Área 46 foca prioritariamente nos fundamentos históricos e filosóficos da educação.</label></div>
+                <div class="option-item"><input type="radio" name="q3" value="B" id="q3b"> <label for="q3b">B) É exigência da Área de Ensino que todos os docentes envolvidos, inclusive na modalidade Profissional, possuam título de Doutor.</label></div>
+                <div class="option-item"><input type="radio" name="q3" value="C" id="q3c"> <label for="q3c">C) A produção de um Produto Educacional é opcional nos mestrados profissionais da Área 46.</label></div>
+                <div class="option-item"><input type="radio" name="q3" value="D" id="q3d"> <label for="q3d">D) A Área 46 não permite a interdisciplinaridade.</label></div>
+                <div class="option-item"><input type="radio" name="q3" value="E" id="q3e"> <label for="q3e">E) A avaliação dos programas da Área 46 ignora a inserção social e o impacto na educação básica.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q3">
+                <strong>Resolução:</strong> Conforme o Documento de Área, a titulação de doutor é requisito obrigatório para o corpo docente da pós-graduação.
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-block" id="q4-block">
+            <span class="question-number">Questão 04</span>
+            <span class="question-text">Considere um mestrando que desenvolveu um "Ambiente Virtual de Aprendizagem (AVA) gamificado para o ensino de algoritmos". Este produto classifica-se no eixo de:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q4" value="A" id="q4a"> <label for="q4a">A) Material Didático Instrucional.</label></div>
+                <div class="option-item"><input type="radio" name="q4" value="B" id="q4b"> <label for="q4b">B) Gestão e Processos Educacionais.</label></div>
+                <div class="option-item"><input type="radio" name="q4" value="C" id="q4c"> <label for="q4c">C) Tecnologias Educacionais.</label></div>
+                <div class="option-item"><input type="radio" name="q4" value="D" id="q4d"> <label for="q4d">D) Produção Artística e Cultural.</label></div>
+                <div class="option-item"><input type="radio" name="q4" value="E" id="q4e"> <label for="q4e">E) Propostas de Ensino / Sequências Didáticas.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q4">
+                <strong>Resolução:</strong> AVAs, softwares e aplicativos entram no eixo de Tecnologias Educacionais na taxonomia da Área de Ensino.
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-block" id="q5-block">
+            <span class="question-number">Questão 05</span>
+            <span class="question-text">Associe o critério à sua definição: (1) Aderência | (2) Aplicabilidade/Replicabilidade | (3) Complexidade<br><br>
+                ( ) Potencial do produto ser utilizado por outros professores em contextos diversos.<br>
+                ( ) Vínculo direto do produto com a linha de pesquisa do programa.<br>
+                ( ) Fundamentação teórica e rigor metodológico do produto.
+            </span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q5" value="A" id="q5a"> <label for="q5a">A) 2, 1, 3.</label></div>
+                <div class="option-item"><input type="radio" name="q5" value="B" id="q5b"> <label for="q5b">B) 3, 2, 1.</label></div>
+                <div class="option-item"><input type="radio" name="q5" value="C" id="q5c"> <label for="q5c">C) 1, 3, 2.</label></div>
+                <div class="option-item"><input type="radio" name="q5" value="D" id="q5d"> <label for="q5d">D) 2, 3, 1.</label></div>
+                <div class="option-item"><input type="radio" name="q5" value="E" id="q5e"> <label for="q5e">E) 1, 2, 3.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q5">
+                <strong>Resolução:</strong> A replicabilidade foca no uso por terceiros (2); A aderência foca no vínculo com o curso (1); A complexidade foca no rigor científico (3).
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-block" id="q6-block">
+            <span class="question-number">Questão 06</span>
+            <span class="question-text">Qual das abordagens abaixo é MAIS coerente com os objetivos pedagógicos de um Mestrado Profissional em Ensino?</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q6" value="A" id="q6a"> <label for="q6a">A) Ensino Transmissivo: foco em aulas expositivas magistrais.</label></div>
+                <div class="option-item"><input type="radio" name="q6" value="B" id="q6b"> <label for="q6b">B) Aprendizagem Baseada em Problemas (PBL): uso de situações reais do contexto profissional.</label></div>
+                <div class="option-item"><input type="radio" name="q6" value="C" id="q6c"> <label for="q6c">C) Memorização Mecânica: ênfase na retenção literal de normas.</label></div>
+                <div class="option-item"><input type="radio" name="q6" value="D" id="q6d"> <label for="q6d">D) Isolamento Disciplinar: tratamento compartimentado dos conteúdos.</label></div>
+                <div class="option-item"><input type="radio" name="q6" value="E" id="q6e"> <label for="q6e">E) Abordagem Tecnicista Estrita: treinamento sem reflexão crítica.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q6">
+                <strong>Resolução:</strong> O PBL é ideal por integrar os problemas reais da prática profissional com a investigação científica, promovendo a práxis.
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-block" id="q7-block">
+            <span class="question-number">Questão 07</span>
+            <span class="question-text">Sobre os critérios de avaliação da Produção Técnica na Área de Ensino pela CAPES:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q7" value="A" id="q7a"> <label for="q7a">A) A Produção Técnica é considerada irrelevante para a nota do programa.</label></div>
+                <div class="option-item"><input type="radio" name="q7" value="B" id="q7b"> <label for="q7b">B) A CAPES proíbe a avaliação de produtos educacionais.</label></div>
+                <div class="option-item"><input type="radio" name="q7" value="C" id="q7c"> <label for="q7c">C) É avaliada com base em estratos de qualidade, considerando validação, impacto, aderência e disponibilidade.</label></div>
+                <div class="option-item"><input type="radio" name="q7" value="D" id="q7d"> <label for="q7d">D) Apenas produtos que geram patentes registradas são pontuados.</label></div>
+                <div class="option-item"><input type="radio" name="q7" value="E" id="q7e"> <label for="q7e">E) É feita exclusivamente pela contagem quantitativa, sem análise qualitativa.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q7">
+                <strong>Resolução:</strong> A CAPES utiliza métricas qualitativas (estratificação) para avaliar a produção técnica em programas profissionais.
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-block" id="q8-block">
+            <span class="question-number">Questão 08</span>
+            <span class="question-text">Uma comissão de concurso indefere a inscrição de um mestre profissional, alegando que o título não habilita para docência superior. Esta decisão é:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q8" value="A" id="q8a"> <label for="q8a">A) Legal, pois destina-se apenas ao mercado corporativo.</label></div>
+                <div class="option-item"><input type="radio" name="q8" value="B" id="q8b"> <label for="q8b">B) Ilegal, pois a Portaria 389/2017 garante idênticas prerrogativas inclusive para a docência.</label></div>
+                <div class="option-item"><input type="radio" name="q8" value="C" id="q8c"> <label for="q8c">C) Legal, conforme a LDB.</label></div>
+                <div class="option-item"><input type="radio" name="q8" value="D" id="q8d"> <label for="q8d">D) Parcialmente correta para universidades privadas.</label></div>
+                <div class="option-item"><input type="radio" name="q8" value="E" id="q8e"> <label for="q8e">E) Legal, pois impede o ingresso em doutorados.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q8">
+                <strong>Resolução:</strong> A Portaria MEC 389/2017 garante expressamente a equivalência de direitos entre mestrados acadêmicos e profissionais.
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-block" id="q9-block">
+            <span class="question-number">Questão 09</span>
+            <span class="question-text">No mestrado profissional, a dissertação assume frequentemente o papel de reflexão sobre o Produto Educacional. O formato mais adequado é:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q9" value="A" id="q9a"> <label for="q9a">A) Dissertação Tradicional: produto é apenas um apêndice opcional.</label></div>
+                <div class="option-item"><input type="radio" name="q9" value="B" id="q9b"> <label for="q9b">B) Relatório Técnico Árido: apenas códigos ou manuais, sem teoria.</label></div>
+                <div class="option-item"><input type="radio" name="q9" value="C" id="q9c"> <label for="q9c">C) Dissertação Reflexiva Integrada: fundamenta as escolhas, descreve o produto e analisa resultados.</label></div>
+                <div class="option-item"><input type="radio" name="q9" value="D" id="q9d"> <label for="q9d">D) Artigo de Opinião narrativo.</label></div>
+                <div class="option-item"><input type="radio" name="q9" value="E" id="q9e"> <label for="q9e">E) Portfólio de Imagens sem texto analítico.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q9">
+                <strong>Resolução:</strong> A integração dialética entre a fundamentação teórica e a análise da intervenção técnica é o padrão ouro da área.
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-block" id="q10-block">
+            <span class="question-number">Questão 10</span>
+            <span class="question-text">(CEFETMINAS) "A didática não é um receituário de técnicas, mas um campo de investigação sobre o ensino." A formação didática no mestrado profissional deve combater o:</span>
+            <div class="options">
+                <div class="option-item"><input type="radio" name="q10" value="A" id="q10a"> <label for="q10a">A) Pragmatismo reflexivo.</label></div>
+                <div class="option-item"><input type="radio" name="q10" value="B" id="q10b"> <label for="q10b">B) Tecnicismo acrítico.</label></div>
+                <div class="option-item"><input type="radio" name="q10" value="C" id="q10c"> <label for="q10c">C) Interdisciplinaridade.</label></div>
+                <div class="option-item"><input type="radio" name="q10" value="D" id="q10d"> <label for="q10d">D) Compromisso social.</label></div>
+                <div class="option-item"><input type="radio" name="q10" value="E" id="q10e"> <label for="q10e">E) Rigor metodológico.</label></div>
+            </div>
+            <div class="resolution-box" id="res-q10">
+                <strong>Resolução:</strong> O tecnicismo acrítico reduz o professor a um executor. A didática investigativa busca autonomia e reflexão crítica.
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="gradeQuiz()">Finalizar Quiz</button>
+    </form>
+
+    <div id="result-section">
+        <h2>Resultado</h2>
+        <p>Você acertou <span id="score-display">0</span> de 10 questões.</p>
+        <p id="performance-msg"></p>
+    </div>
+
+    <h2 class="resolutions-title">Gabarito Comentado</h2>
+    <!-- As resoluções serão mostradas junto com as questões acima -->
+
+</div>
+
+<script>
+    const answers = {
+        q1: 'C',
+        q2: 'D',
+        q3: 'B',
+        q4: 'C',
+        q5: 'A',
+        q6: 'B',
+        q7: 'C',
+        q8: 'B',
+        q9: 'C',
+        q10: 'B'
+    };
+
+    function gradeQuiz() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        const formData = new FormData(form);
+
+        // Resetar estilos
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('correct-answer', 'wrong-answer');
+        });
+
+        for (let i = 1; i <= 10; i++) {
+            const questionName = 'q' + i;
+            const userAnswer = formData.get(questionName);
+            const correctAnswer = answers[questionName];
+
+            // Marcar a resposta correta em verde
+            const correctOptionId = questionName + correctAnswer.toLowerCase();
+            const correctOptionElement = document.getElementById(correctOptionId);
+            if (correctOptionElement) {
+                correctOptionElement.parentElement.classList.add('correct-answer');
+            }
+
+            if (userAnswer === correctAnswer) {
+                score++;
+            } else if (userAnswer) {
+                // Marcar a resposta errada do usuário em vermelho
+                const userOptionId = questionName + userAnswer.toLowerCase();
+                document.getElementById(userOptionId).parentElement.classList.add('wrong-answer');
+            }
+
+            // Mostrar a caixa de resolução
+            document.getElementById('res-' + questionName).style.display = 'block';
+        }
+
+        // Exibir resultados
+        const resultSection = document.getElementById('result-section');
+        const scoreDisplay = document.getElementById('score-display');
+        const performanceMsg = document.getElementById('performance-msg');
+        const resTitle = document.querySelector('.resolutions-title');
+
+        scoreDisplay.textContent = score;
+        resultSection.style.display = 'block';
+        resTitle.style.display = 'block';
+
+        if (score >= 8) performanceMsg.textContent = "Excelente! Você domina o conteúdo.";
+        else if (score >= 5) performanceMsg.textContent = "Bom desempenho. Revise os pontos onde houve dúvida.";
+        else performanceMsg.textContent = "Recomendamos uma nova leitura da Portaria 389/2017 e dos documentos da Área 46.";
+
+        // Rolar para o resultado
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

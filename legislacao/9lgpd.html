@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Completo LGPD - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #1e293b;
+            background-color: #ffffff;
+        }
+
+        .highlight {
+            background-color: #fef08a;
+            padding: 2px 4px;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+
+        .section-title {
+            border-left: 5px solid #1d4ed8;
+            padding-left: 1.25rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: #1e3a8a;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .important-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #1d4ed8;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            border: 1px solid #cbd5e1;
+            padding: 0.8rem;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 700;
+        }
+
+        tr:nth-child(even) {
+            background-color: #fbfcfd;
+        }
+
+        .container-custom {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .audio-player {
+            background-color: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background-color: #1e40af;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            transition: all 0.3s;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-action:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.2rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-custom">
+        <!-- Cabeçalho -->
+        <header class="mb-12 text-center">
+            <span class="badge">CONCURSO IFAM - PROFESSOR DE INFORMÁTICA</span>
+            <h1 class="text-4xl md:text-5xl font-black mb-4 text-slate-900">Domínio Total: LGPD</h1>
+            <p class="text-xl text-slate-500 font-medium">Lei nº 13.709/2018 - Guia Definitivo de Memorização</p>
+            <div class="h-1.5 w-24 bg-blue-700 mx-auto mt-6 rounded-full"></div>
+        </header>
+
+        <!-- Player de Áudio -->
+        <section class="audio-player">
+            <h3 class="font-bold mb-3 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M5 9l4-4h5l4 4V15l-4 4h-5l-4-4V9z" />
+                </svg>
+                Podcast de Revisão Acelerada
+            </h3>
+            <audio controls class="w-full">
+                <source src="9lgpd.mp3" type="audio/mpeg">
+                Seu navegador não suporta o áudio.
+            </audio>
+            <p class="text-xs text-slate-400 mt-2 italic text-right">Arquivo: revisao_lgpd_ifam.mp3</p>
+        </section>
+
+        <!-- Conteúdo Teórico -->
+        
+        <h2 class="section-title text-2xl">I. Fundamentos e Âmbito de Aplicação</h2>
+        <p class="mb-4">
+            A LGPD aplica-se a qualquer operação de tratamento realizada por pessoa natural ou jurídica, de direito público ou privado, independentemente do meio (físico ou digital).
+        </p>
+
+        <div class="important-box">
+            <strong>Critério de Extraterritorialidade:</strong> A lei aplica-se se:
+            <ul class="list-disc ml-5 mt-2">
+                <li>O tratamento for feito no Brasil.</li>
+                <li>O objetivo for a <mark class="highlight">oferta de bens ou serviços</mark> a indivíduos no Brasil.</li>
+                <li>Os dados tenham sido coletados no Brasil.</li>
+            </ul>
+        </div>
+
+        <h2 class="section-title text-2xl">II. Glossário para o Dia da Prova (Art. 5º)</h2>
+        <div class="overflow-x-hidden">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Termo</th>
+                        <th>Definição Técnica e "Grifo"</th>
+                        <th>Contexto IFAM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Dado Pessoal</strong></td>
+                        <td>Informação relacionada a pessoa natural <mark class="highlight">identificada ou identificável</mark>.</td>
+                        <td>Nome, CPF, IP, E-mail.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dado Sensível</strong></td>
+                        <td>Origem racial, convicção religiosa, opinião política, <mark class="highlight">saúde, vida sexual, genética ou biométrico</mark>.</td>
+                        <td>Biometria do servidor/aluno.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tratamento</strong></td>
+                        <td>Toda operação (coleta, classificação, <mark class="highlight">acesso, reprodução</mark>, processamento, arquivamento, eliminação).</td>
+                        <td>A simples visualização é tratamento.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Consentimento</strong></td>
+                        <td>Manifestação <mark class="highlight">livre, informada e inequívoca</mark>.</td>
+                        <td>Não pode ser "implícito".</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="section-title text-2xl">III. Os 10 Princípios Cardeais (Art. 6º)</h2>
+        <p class="mb-4 italic">A CEFETMINAS costuma trocar as definições desses princípios em questões de múltipla escolha.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">1. Finalidade:</span> Propósitos legítimos, específicos e informados.</div>
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">2. Adequação:</span> Compatibilidade com a finalidade informada.</div>
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">3. Necessidade:</span> Limitação ao <mark class="highlight">mínimo necessário</mark> (Minimização).</div>
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">4. Livre Acesso:</span> Consulta gratuita sobre a forma e duração.</div>
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">5. Qualidade:</span> Exatidão, clareza e atualização dos dados.</div>
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">6. Transparência:</span> Informações claras e acessíveis.</div>
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">7. Segurança:</span> Medidas técnicas para proteger de acessos não autorizados.</div>
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">8. Prevenção:</span> Prevenir a ocorrência de danos.</div>
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">9. Não Discriminação:</span> Impossibilidade de fins discriminatórios ilícitos.</div>
+            <div class="p-4 border rounded-lg bg-slate-50"><span class="font-bold text-blue-700">10. Responsabilização:</span> Demonstração de <mark class="highlight">eficácia e conformidade</mark>.</div>
+        </div>
+
+        <h2 class="section-title text-2xl">IV. Direitos do Titular (Art. 18)</h2>
+        <p class="mb-4">O titular pode requisitar ao IFAM a qualquer momento:</p>
+        <ul class="list-none space-y-2">
+            <li>✅ Confirmação da existência de tratamento.</li>
+            <li>✅ <mark class="highlight">Acesso aos dados</mark>.</li>
+            <li>✅ Correção de dados incompletos ou inexatos.</li>
+            <li>✅ Anonimização, bloqueio ou eliminação de dados desnecessários.</li>
+            <li>✅ <mark class="highlight">Portabilidade</mark> dos dados a outro fornecedor.</li>
+            <li>✅ Informação sobre compartilhamento com entidades públicas/privadas.</li>
+            <li>✅ Revogação do consentimento.</li>
+        </ul>
+
+        <h2 class="section-title text-2xl">V. Tratamento pelo Poder Público (Art. 23 a 27)</h2>
+        <p class="mb-4">Este é o ponto mais crítico para o concurso de Professor do IFAM.</p>
+        <div class="important-box">
+            <strong>Regras de Ouro para Órgãos Públicos:</strong>
+            <ul class="list-disc ml-5 mt-3 space-y-2">
+                <li>Devem informar as <mark class="highlight">hipóteses legais</mark>, finalidades e procedimentos no site.</li>
+                <li>Indicação do <span class="font-bold">Encarregado (DPO)</span> é obrigatória.</li>
+                <li>É vedado repassar dados para entidades privadas, <strong>exceto</strong>:
+                    <br><span class="text-sm italic">- Quando houver previsão legal ou convênios;</span>
+                    <br><span class="text-sm italic">- Quando os dados forem acessíveis publicamente;</span>
+                    <br><span class="text-sm italic">- Para execução descentralizada de atividade pública.</span>
+                </li>
+            </ul>
+        </div>
+
+        <h2 class="section-title text-2xl">VI. Sanções Administrativas (Art. 52)</h2>
+        <div class="overflow-x-hidden border border-slate-200 rounded-lg">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sanção</th>
+                        <th>Aplica-se ao Setor Privado?</th>
+                        <th>Aplica-se ao Poder Público (IFAM)?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Advertência</td>
+                        <td>Sim</td>
+                        <td>Sim</td>
+                    </tr>
+                    <tr>
+                        <td class="font-bold text-red-600">Multa Diária ou Simples</td>
+                        <td>Sim (até R$ 50 mi)</td>
+                        <td class="font-bold text-red-700 underline text-center">NÃO</td>
+                    </tr>
+                    <tr>
+                        <td>Publicização da Infração</td>
+                        <td>Sim</td>
+                        <td>Sim</td>
+                    </tr>
+                    <tr>
+                        <td>Bloqueio/Eliminação de Dados</td>
+                        <td>Sim</td>
+                        <td>Sim</td>
+                    </tr>
+                    <tr>
+                        <td>Suspensão de Atividade</td>
+                        <td>Sim</td>
+                        <td>Sim</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="text-sm text-slate-500 mt-2">Nota: A autoridade (ANPD) enviará sugestão de medidas e informará aos órgãos de controle (TCU/CGU) sobre as infrações públicas.</p>
+
+        <h2 class="section-title text-2xl">VII. Segurança e Boas Práticas</h2>
+        <p class="mb-4">
+            Em caso de <mark class="highlight">incidente de segurança</mark> (vazamento), o Controlador deve comunicar à ANPD e ao Titular em prazo razoável. 
+        </p>
+        <div class="important-box border-l-orange-500">
+            <strong>Segurança por Design:</strong> Conceitos de <span class="italic">Privacy by Design</span> e <span class="italic">Privacy by Default</span> são fundamentais para o desenvolvimento de sistemas no IFAM.
+        </div>
+
+        <!-- Rodapé Final -->
+        <footer class="mt-20 py-10 border-t border-slate-200 text-center">
+            <h3 class="text-2xl font-bold text-slate-800 mb-6">Pronto para a aprovação?</h3>
+            <a href="9questoes.html" class="btn-action">
+                TESTAR CONHECIMENTOS (SIMULADO)
+            </a>
+            <div class="mt-10 text-slate-400 text-sm">
+                <p>&copy; 2024 - Tutor Especialista IFAM</p>
+                <p>Baseado na Lei 13.709/2018 e manuais da ANPD.</p>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

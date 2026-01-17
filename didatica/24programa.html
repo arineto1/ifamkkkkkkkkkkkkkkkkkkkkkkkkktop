@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo de Elite - Didática e Pós-Graduação Profissional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        :root {
+            --paper-bg: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #4b5563;
+            --highlight-bg: #fef9c3;
+            --accent-blue: #2563eb;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            background-color: var(--paper-bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Lora', serif;
+            color: #111827;
+        }
+
+        .content-container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .highlight {
+            background-color: var(--highlight-bg);
+            font-weight: 600;
+            padding: 0 2px;
+            border-bottom: 1px solid #fde047;
+        }
+
+        .audio-card {
+            background: #f9fafb;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-divider {
+            border-top: 2px solid #f3f4f6;
+            margin: 3rem 0;
+        }
+
+        /* Tabela Responsiva sem Scroll Horizontal */
+        .table-wrapper {
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+            vertical-align: top;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #334155;
+            font-weight: 700;
+        }
+
+        .concept-card {
+            border-left: 4px solid var(--accent-blue);
+            background: #f0f7ff;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background-color: #111827;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            text-align: center;
+        }
+
+        .btn-action:hover {
+            background-color: #374151;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 640px) {
+            .content-container { padding: 1rem; }
+            table { font-size: 0.85rem; }
+            th, td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-container">
+        <!-- Cabeçalho -->
+        <header class="text-center mb-12">
+            <span class="text-blue-600 font-bold tracking-widest text-xs uppercase">Especialista IFAM - Didática</span>
+            <h1 class="text-3xl md:text-5xl font-bold mt-2 mb-4">Mestrados e Doutorados Profissionais em Ensino</h1>
+            <p class="text-gray-500 italic">Guia Definitivo de Memorização para o Cargo EBTT</p>
+        </header>
+
+        <!-- Player de Áudio -->
+        <div class="audio-card">
+            <h3 class="text-lg font-semibold mb-3 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                Resumo em Áudio
+            </h3>
+            <audio controls class="w-full">
+                <source src="24programa.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio HTML5.
+            </audio>
+            <p class="text-xs text-gray-400 mt-2 text-center">Insera o arquivo "NOME_DO_ARQUIVO_AQUI.mp3" na mesma pasta para funcionar.</p>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <section>
+            <h2 class="text-2xl font-bold mb-4">1. Base Legal e Definições Essenciais</h2>
+            <p class="mb-4">Para a <span class="highlight">Fundação CEFETMINAS</span>, é vital diferenciar a Pós-Graduação <em>Stricto Sensu</em> (Mestrado/Doutorado) nas suas duas modalidades.</p>
+            
+            <div class="concept-card">
+                <strong>Definição Portaria CAPES 60/2019:</strong> O Mestrado/Doutorado Profissional é uma modalidade de pós-graduação stricto sensu voltada para a <span class="highlight">capacitação de profissionais</span>, mediante a produção de conhecimentos e técnicas aplicáveis ao setor produtivo ou social.
+            </div>
+
+            <ul class="list-disc pl-5 space-y-3 mt-4">
+                <li><span class="highlight">Paridade Absoluta:</span> Os títulos profissionais e acadêmicos possuem <span class="highlight">idêntico valor legal</span> e prerrogativas, inclusive para docência e progressão funcional (Art. 4º).</li>
+                <li><span class="highlight">Foco na Aplicação:</span> Enquanto o acadêmico foca na "geração de novos conhecimentos científicos puros", o profissional foca na <span class="highlight">resolução de problemas complexos</span> e inovação no ambiente de trabalho.</li>
+                <li><span class="highlight">Financiamento:</span> Pode ser financiado por entidades parceiras (públicas ou privadas), diferentemente do acadêmico, que é prioritariamente via fomento público direto.</li>
+            </ul>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section>
+            <h2 class="text-2xl font-bold mb-4">2. A Identidade da Área 46 (Ensino)</h2>
+            <p class="mb-4">A Área 46 na CAPES (Ensino) é onde se concentram os principais programas de pós-graduação para professores do IFAM.</p>
+            
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Mestrado Profissional em Ensino</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Objeto</strong></td>
+                            <td>A sala de aula e o processo de ensino-aprendizagem.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Produto Final</strong></td>
+                            <td>Exige obrigatoriamente um <span class="highlight">Produto Educacional (PE)</span> + Dissertação.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Público-alvo</strong></td>
+                            <td>Professores em exercício e profissionais da educação.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Natureza</strong></td>
+                            <td>Pesquisa Translacional (Teoria aplicada à prática).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold mt-6 mb-2">Critérios de Avaliação do Produto Educacional (PE)</h3>
+            <p class="mb-2">A banca pode cobrar o que torna um produto "válido":</p>
+            <ol class="list-decimal pl-5 space-y-2">
+                <li><strong>Aderência:</strong> Alinhamento com a proposta do curso e linha de pesquisa.</li>
+                <li><strong>Impacto:</strong> Melhora mensurável no ensino ou na gestão educacional.</li>
+                <li><strong>Reprodutibilidade/Aplicabilidade:</strong> Outros professores devem conseguir usar o seu produto.</li>
+                <li><strong>Inovação:</strong> Não precisa ser "invenção", mas uma nova forma de abordar o conteúdo.</li>
+            </ol>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section>
+            <h2 class="text-2xl font-bold mb-4">3. Conceitos Pedagógicos da EPT</h2>
+            <p class="mb-4">A pós-graduação profissional no IFAM está intrinsecamente ligada à Educação Profissional e Tecnológica (EPT).</p>
+            
+            <div class="space-y-4">
+                <div class="p-4 border border-gray-200 rounded-lg">
+                    <h4 class="font-bold text-blue-800">Omnilateralidade</h4>
+                    <p class="text-sm">Desenvolvimento integral do ser humano: dimensões física, intelectual, afetiva e estética. Opõe-se à formação "técnica-bitolada".</p>
+                </div>
+                <div class="p-4 border border-gray-200 rounded-lg">
+                    <h4 class="font-bold text-blue-800">Politecnia</h4>
+                    <p class="text-sm">Domínio dos fundamentos científicos das diferentes técnicas de produção. O aluno entende a ciência por trás da máquina.</p>
+                </div>
+                <div class="p-4 border border-gray-200 rounded-lg">
+                    <h4 class="font-bold text-blue-800">Pesquisa como Princípio Educativo</h4>
+                    <p class="text-sm">O aluno não apenas recebe informação, ele a reconstrói através da investigação do seu entorno socio-técnico.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <section>
+            <h2 class="text-2xl font-bold mb-4">4. Raio-X da Fundação CEFETMINAS (Tendências)</h2>
+            <p class="mb-4">Com base no histórico da banca em cargos de TI e EBTT:</p>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ponto de Atenção</th>
+                            <th>O que a Banca adora cobrar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>LDB Art. 66</strong></td>
+                            <td>Diz que a preparação para o magistério superior será em <span class="highlight">nível de pós-graduação</span> (prioritariamente mestrado/doutorado).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ProfEPT</strong></td>
+                            <td>O fato de ser um mestrado <span class="highlight">em rede nacional</span> e semipresencial.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Doutorado Profissional</strong></td>
+                            <td>A banca pode dizer que ele não existe. <strong>Existe sim</strong>, regulamentado pela Portaria 60/2019.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trabalho Docente</strong></td>
+                            <td>A integração entre teoria e prática (Práxis) na formação do professor pesquisador.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="section-divider"></div>
+
+        <!-- Seção de Revisão Rápida -->
+        <section class="bg-gray-50 p-6 rounded-xl border border-gray-200 mb-12">
+            <h2 class="text-xl font-bold mb-4 text-center">⚡ Flash-Review (Memorize!)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2 font-bold">✓</span>
+                    <span>Títulos profissionais valem para concursos de doutorado acadêmico.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2 font-bold">✓</span>
+                    <span>A Área 46 exige validação do Produto Educacional em campo.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2 font-bold">✓</span>
+                    <span>A carga horária e rigor científico são equivalentes ao acadêmico.</span>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2 font-bold">✓</span>
+                    <span>A pós-graduação lato sensu (especialização) NÃO é stricto sensu.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ação Final -->
+        <footer class="text-center pb-20">
+            <p class="text-gray-400 text-sm mb-6">Fim do Resumo Técnico. Pronto para testar seus conhecimentos?</p>
+            <a href="24questoes.html" class="btn-action">
+                Ir para Questões de Fixação
+            </a>
+            <div class="mt-8">
+                <p class="text-xs text-gray-400">Desenvolvido para candidatos ao IFAM - Professor de Informática</p>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

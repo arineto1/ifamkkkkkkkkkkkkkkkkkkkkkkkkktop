@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass: Lei 8.112/90 - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fde68a; /* Amarelo ouro para contraste */
+            color: #000;
+            padding: 1px 3px;
+            font-weight: 600;
+            border-radius: 2px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            min-width: 600px; /* Garante que o conteúdo não fique espremido */
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #f3f4f6;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f9fafb;
+            font-weight: 700;
+            color: #374151;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .section-header {
+            border-left: 5px solid #1e40af;
+            padding-left: 1rem;
+            margin: 3rem 0 1.5rem 0;
+        }
+
+        .audio-player {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+
+        .tip-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box {
+            background-color: #fff1f2;
+            border-left: 4px solid #e11d48;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .btn-questions {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #1e40af;
+            color: white;
+            padding: 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-questions:hover {
+            background-color: #1e3a8a;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="p-6 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Bloco de Áudio -->
+    <header>
+        <h1 class="text-4xl font-extrabold text-slate-900 mb-2">Estatuto do Servidor Federal</h1>
+        <p class="text-xl text-slate-500 mb-8">Guia Definitivo para Professor EBTT - IFAM</p>
+        
+        <div class="audio-player">
+            <p class="font-bold text-slate-700 mb-3">🔊 Podcast de Revisão (Play):</p>
+            <audio controls class="w-full">
+                <!-- NOME DO ARQUIVO MP3 ABAIXO -->
+                <source src="5regime.mp3" type="audio/mpeg">
+                Seu navegador não suporta áudio.
+            </audio>
+            <p class="text-xs text-slate-400 mt-2">Arquivo: aula_lei_8112_ifam.mp3 | Duração sugerida: 15min</p>
+        </div>
+    </header>
+
+    <main>
+        <!-- CONCEITOS INICIAIS -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-blue-900">I. Base Legal e Abrangência</h2>
+            </div>
+            <p>A Lei 8.112/90 institui o regime jurídico dos servidores da <span class="highlight">União, autarquias (como o IFAM) e fundações públicas federais</span>. É um regime estatutário, o que significa que as regras são fixadas por lei, não havendo contrato de trabalho.</p>
+            <div class="tip-box">
+                <strong>Peguinha CEFETMINAS:</strong> A banca pode tentar incluir empregados de empresas públicas (como a CEF) ou sociedades de economia mista (como o BB) sob esta lei. <strong>Errado!</strong> Eles são celetistas (CLT).
+            </div>
+        </section>
+
+        <!-- PROVIMENTO E VACÂNCIA -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-blue-900">II. Provimento e Movimentação</h2>
+            </div>
+            <p>Provimento é o preenchimento de um cargo público. O único provimento originário é a <span class="highlight">Nomeação</span>.</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Forma de Provimento</th>
+                            <th>O que você precisa saber para a prova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Nomeação</strong></td>
+                            <td>Única forma originária. Pode ser para cargo efetivo ou em comissão.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Readaptação</strong></td>
+                            <td>Investidura em cargo compatível com <span class="highlight">limitação física ou mental</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reversão</strong></td>
+                            <td>Retorno do <span class="highlight">aposentado</span> (por invalidez ou interesse da administração).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reintegração</strong></td>
+                            <td>Retorno do servidor estável após <span class="highlight">anulação de sua demissão</span>. Direito a ressarcimento.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Recondução</strong></td>
+                            <td>Retorno do estável ao cargo anterior por <span class="highlight">inabilitação em estágio probatório</span> ou reintegração do anterior dono da vaga.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Promoção</strong></td>
+                            <td>É forma de provimento e vacância simultaneamente.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-3">Vacância (O cargo fica vazio)</h3>
+            <p>Ocorre por: Exoneração, Demissão, Promoção, Readaptação, Aposentadoria, Posse em cargo inacumulável e Falecimento.</p>
+            <div class="warning-box">
+                <strong>Nota Técnica:</strong> <span class="highlight">Ascensão e Transferência</span> foram extintas e são inconstitucionais. Se aparecerem na prova como formas válidas, a questão está errada.
+            </div>
+        </section>
+
+        <!-- ACUMULAÇÃO DE CARGOS -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-blue-900">III. Acumulação de Cargos (Tema Especial EBTT)</h2>
+            </div>
+            <p>A regra é a não acumulação. Porém, havendo <span class="highlight">compatibilidade de horários</span>, é permitida:</p>
+            <ul class="list-disc ml-8 space-y-2 mb-4">
+                <li>Dois cargos de <span class="highlight">professor</span> (Ex: IFAM + SEDUC/AM).</li>
+                <li>Um de professor com outro <span class="highlight">técnico ou científico</span>.</li>
+                <li>Dois cargos ou empregos privativos de <span class="highlight">profissionais de saúde</span>.</li>
+            </ul>
+            <p class="italic text-sm">Obs: A acumulação de proventos de aposentadoria com remuneração de cargo segue a mesma lógica.</p>
+        </section>
+
+        <!-- LICENÇAS E AFASTAMENTOS -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-blue-900">IV. Licenças e Afastamentos</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Licença / Afastamento</th>
+                            <th>Remuneração?</th>
+                            <th>Detalhe para Memorizar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Por motivo de doença em pessoa da família</td>
+                            <td>Sim (até certo prazo)</td>
+                            <td>Inclui cônjuge, pais, filhos, padrasto/madrasta e dependentes.</td>
+                        </tr>
+                        <tr>
+                            <td>Para atividade política</td>
+                            <td>Parcial</td>
+                            <td>Sem remuneração da escolha até a véspera do registro; Com remuneração após o registro até 10 dias após eleição.</td>
+                        </tr>
+                        <tr>
+                            <td>Para Capacitação</td>
+                            <td><span class="highlight">Sim</span></td>
+                            <td>Até 3 meses, a cada 5 anos de efetivo exercício. <span class="italic">(Substituiu a Licença-Prêmio)</span>.</td>
+                        </tr>
+                        <tr>
+                            <td>Tratar de Interesses Particulares</td>
+                            <td><span class="highlight">Não</span></td>
+                            <td>Máximo 3 anos consecutivos. <span class="highlight">Discricionária</span> (Administração pode negar).</td>
+                        </tr>
+                        <tr>
+                            <td>Mandato Classista</td>
+                            <td>Não</td>
+                            <td>Sem remuneração do cargo público.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- REGIME DISCIPLINAR -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-blue-900">V. Regime Disciplinar e Penalidades</h2>
+            </div>
+            <p>O servidor possui deveres e proibições. O descumprimento gera sanções:</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="border p-4 rounded-lg border-blue-100">
+                    <h4 class="font-bold text-blue-700">Advertência</h4>
+                    <p class="text-sm">Por escrito. Cancelada após <span class="highlight">3 anos</span> sem novas faltas.</p>
+                </div>
+                <div class="border p-4 rounded-lg border-blue-100">
+                    <h4 class="font-bold text-blue-700">Suspensão</h4>
+                    <p class="text-sm">Até 90 dias. Cancelada após <span class="highlight">5 anos</span>. Pode ser convertida em multa (50%).</p>
+                </div>
+                <div class="border p-4 rounded-lg border-red-100">
+                    <h4 class="font-bold text-red-700">Demissão</h4>
+                    <p class="text-sm">Abandono de cargo (>30 dias), inassiduidade habitual (>60 dias em 1 ano), crime contra ADM.</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-4 mb-2">Prazos de Prescrição (Onde a banca foca):</h3>
+            <ul class="list-none space-y-2 text-sm">
+                <li>✅ <span class="font-bold">180 dias</span> para Advertência.</li>
+                <li>✅ <span class="font-bold">2 anos</span> para Suspensão.</li>
+                <li>✅ <span class="font-bold">5 anos</span> para Demissão/Cassação.</li>
+            </ul>
+        </section>
+
+        <!-- LEI 12.772 - EBTT -->
+        <section>
+            <div class="section-header">
+                <h2 class="text-2xl font-bold text-blue-900">VI. Especificidades EBTT (Carreira IFAM)</h2>
+            </div>
+            <ul class="list-disc ml-8 space-y-4">
+                <li><span class="font-bold">Estágio Probatório:</span> Embora a lei fale em 24 meses, o STF e a CF/88 definiram como <span class="highlight">3 anos (36 meses)</span> para aquisição da estabilidade. A avaliação é feita por comissão própria.</li>
+                <li><span class="font-bold">RSC (Reconhecimento de Saberes e Competências):</span> Não é titulação, mas garante o valor financeiro da Retribuição por Titulação (RT). Não se aplica a aposentados sem paridade total.</li>
+                <li><span class="font-bold">Regime de Trabalho:</span> 20h, 40h ou <span class="highlight">Dedicação Exclusiva (DE)</span>.</li>
+            </ul>
+        </section>
+
+        <!-- RESUMO DE REVISÃO RÁPIDA -->
+        <section class="bg-slate-50 p-8 rounded-2xl border border-slate-200 mt-12">
+            <h2 class="text-2xl font-bold text-slate-800 mb-6">📌 Checklist de Véspera (Memorização)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-bold text-blue-800 border-b mb-2">Prazos Matemáticos</h4>
+                    <ul class="text-sm space-y-1">
+                        <li>• Posse: <span class="highlight">30 dias</span> (contados da publicação).</li>
+                        <li>• Exercício: <span class="highlight">15 dias</span> (contados da posse).</li>
+                        <li>• Estágio Probatório: 36 meses.</li>
+                        <li>• Interstício progressão: 24 meses (EBTT).</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-blue-800 border-b mb-2">Conceitos Chave</h4>
+                    <ul class="text-sm space-y-1">
+                        <li>• Remoção: Deslocamento do <span class="highlight">servidor</span>.</li>
+                        <li>• Redistribuição: Deslocamento do <span class="highlight">cargo</span>.</li>
+                        <li>• Substituição: Para cargos de chefia.</li>
+                        <li>• GAE: Gratificação de Atividade Executiva (já incorporada).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <a href="5questoes.html" class="btn-questions">
+            IR PARA O BANCO DE QUESTÕES CEFETMINAS
+        </a>
+
+    </main>
+
+    <footer class="mt-20 text-center text-slate-400 text-sm border-t pt-8">
+        <p>Tutor Especialista: Concurso IFAM - Informática</p>
+        <p class="mt-2">Todos os direitos reservados à sua aprovação.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Analítico: Direitos e Garantias Fundamentais</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --primary-color: #34495e;
+            --accent-color: #2980b9;
+            --correct-color: #27ae60;
+            --incorrect-color: #c0392b;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Georgia, 'Times New Roman', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .description {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            background-color: #f0f4f8;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 10px;
+        }
+
+        .option-item.selected {
+            background-color: #e1f5fe;
+            border-color: var(--accent-color);
+        }
+
+        #btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 40px;
+        }
+
+        #btn-submit:hover {
+            background-color: #1a252f;
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none;
+            margin-top: 50px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-board {
+            text-align: center;
+            background: var(--primary-color);
+            color: white;
+            padding: 40px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+
+        .score-number {
+            font-size: 4rem;
+            display: block;
+        }
+
+        .resolution-card {
+            background: #fff;
+            border-left: 5px solid var(--accent-color);
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .resolution-title {
+            font-weight: bold;
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: block;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .status-correct { background-color: #d4edda; color: #155724; }
+        .status-incorrect { background-color: #f8d7da; color: #721c24; }
+
+        .hidden { display: none; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px 15px; }
+            h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Analítico de Direito Constitucional</h1>
+        <p class="description">Foco: Direitos e Garantias Fundamentais (Art. 5º a 17 da CF/88)<br>Estilo Banca Fundação CEFETMINAS</p>
+    </header>
+
+    <div id="quiz-container">
+        <!-- Perguntas serão injetadas aqui via JS -->
+    </div>
+
+    <button id="btn-submit" onclick="showResults()">Finalizar Simulado e Ver Resoluções</button>
+
+    <section id="results-section">
+        <div class="score-board">
+            <span class="score-number" id="final-score">0/10</span>
+            <p id="score-text">Você concluiu o simulado!</p>
+        </div>
+
+        <div id="resolutions-container">
+            <!-- Resoluções serão injetadas aqui -->
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="window.location.reload()" style="padding: 10px 20px; cursor:pointer;">Reiniciar Simulado</button>
+        </div>
+    </section>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            origin: "Fundação CEFETMINAS / Prefeitura de Bela Vista de Minas - Psicólogo",
+            question: "A Constituição da República Federativa do Brasil de 1988, em seu Título II, inaugura o catálogo dos direitos e garantias fundamentais. Analise as afirmativas abaixo sobre o art. 5º da Carta Magna:\n\nI. Homens e mulheres são iguais em direitos e obrigações, nos termos da Constituição, consagrando a isonomia material e formal.\nII. Ninguém será obrigado a fazer ou deixar de fazer alguma coisa senão em virtude de lei, estabelecendo o princípio da legalidade genérica.\nIII. Os condenados poderão ser submetidos a tortura e a tratamento desumano ou degradante apenas nas situações previstas em lei específica de segurança nacional.\nIV. É livre a manifestação do pensamento, admitindo-se o anonimato para garantir a segurança do manifestante.",
+            options: [
+                { label: "A) I e II.", value: "A" },
+                { label: "B) II e IV.", value: "B" },
+                { label: "C) I, II e III.", value: "C" },
+                { label: "D) I, III e IV.", value: "D" }
+            ],
+            correct: "A",
+            resolution: `**Análise Microestrutural da Questão:** A questão exige o domínio da literalidade do Artigo 5º da Constituição Federal de 1988, especificamente dos incisos I, II, III e IV.\n\n**Afirmativa I (Correta):** Consagra a isonomia material e formal (Art. 5º, I).\n**Afirmativa II (Correta):** Princípio da Legalidade Genérica (Art. 5º, II).\n**Afirmativa III (Incorreta):** A vedação à tortura é absoluta. Não há exceção por lei de segurança nacional.\n**Afirmativa IV (Incorreta):** É vedado o anonimato (Art. 5º, IV).`
+        },
+        {
+            id: 2,
+            origin: "Fundação CEFETMINAS / IFNMG - Assistente em Administração",
+            question: "O sistema de garantias constitucionais prevê instrumentos processuais específicos para a tutela de liberdades e informações. Preencha corretamente as lacunas das frases a seguir:\n\n1. Conceder-se-á _________________ para assegurar o conhecimento de informações relativas à pessoa do impetrante...\n2. Conceder-se-á _________________ sempre que alguém sofrer ou se achar ameaçado de sofrer violência ou coação em sua liberdade de locomoção...\n3. Conceder-se-á _________________ para proteger direito líquido e certo, não amparado por habeas corpus ou habeas data...",
+            options: [
+                { label: "A) habeas data / habeas corpus / mandado de segurança.", value: "A" },
+                { label: "B) habeas data / mandado de segurança / habeas corpus.", value: "B" },
+                { label: "C) mandado de segurança / habeas data / habeas corpus.", value: "C" },
+                { label: "D) mandado de segurança / habeas corpus / habeas data.", value: "D" }
+            ],
+            correct: "A",
+            resolution: `**Lacuna 1: Habeas Data (Art. 5º, LXXII).** Destinado ao conhecimento ou retificação de informações personalíssimas.\n**Lacuna 2: Habeas Corpus (Art. 5º, LXVIII).** Protege a liberdade de locomoção.\n**Lacuna 3: Mandado de Segurança (Art. 5º, LXIX).** Natureza residual para direito líquido e certo não amparado pelos anteriores.`
+        },
+        {
+            id: 3,
+            origin: "Fundação CEFETMINAS / Prefeitura de Ponte Nova - Advogado do CREAS",
+            question: "Quanto ao regime jurídico dos remédios constitucionais na CF/88 e na jurisprudência do STF, é correto afirmar que:",
+            options: [
+                { label: "A) o procedimento do mandado de segurança estabelece fase instrutória e fase executória, permitindo dilação probatória ampla.", value: "A" },
+                { label: "B) o STF alterou sua jurisprudência a fim de inadmitir efeitos concretistas para o mandado de injunção.", value: "B" },
+                { label: "C) o mandado de segurança coletivo impetrado por associação deve ser acompanhado de autorização específica dos associados.", value: "C" },
+                { label: "D) é cabível o Habeas Data para a anotação nos assentamentos do interessado, de contestação ou explicação sobre dado verdadeiro, mas justificável e que esteja sob pendência judicial ou amigável.", value: "D" }
+            ],
+            correct: "D",
+            resolution: `**Alternativa D (Correta):** Baseada no Art. 7º, inciso III, da Lei 9.507/1997. O HD serve também para incluir explicações sobre dados verdadeiros mas que estão sob litígio.\n\n*Nota sobre erros das outras:* MS não permite dilação probatória; MI hoje é concretista (Lei 13.300); MS Coletivo dispensa autorização específica (Súmula 629 STF).`
+        },
+        {
+            id: 4,
+            origin: "Fundação CEFETMINAS / IPREV Mariana - Advogado Autárquico",
+            question: "Considerando a disciplina constitucional das ações de garantia e a legitimidade processual, assinale a alternativa correta:",
+            options: [
+                { label: "A) O mandado de injunção coletivo pode ser promovido pela Defensoria Pública, quando a tutela for relevante para a promoção dos direitos humanos.", value: "A" },
+                { label: "B) A negativa de certidão para defesa de direitos deve ser atacada pela via do habeas data.", value: "B" },
+                { label: "C) Em relação ao MS coletivo por associação, é necessária a autorização expressa e relação nominal.", value: "C" },
+                { label: "D) A legitimidade do MP para interpor MS como órgão despersonalizado é irrestrita.", value: "D" }
+            ],
+            correct: "A",
+            resolution: `**Alternativa A (Correta):** Conforme Art. 12, III, da Lei 13.300/2016 e o papel de custos vulnerabilis da Defensoria Pública.\n\n*Erros:* Negativa de certidão é MS (Direito de Certidão); MS Coletivo é substituição processual (não precisa de lista); MP tem limites funcionais (Art. 127).`
+        },
+        {
+            id: 5,
+            origin: "Fundação CEFETMINAS / IFFAR - Professor",
+            question: "Sobre as hipóteses de nacionalidade brasileira previstas no art. 12 da Constituição Federal, assinale a alternativa que descreve corretamente um caso de brasileiro NATURALIZADO:",
+            options: [
+                { label: "A) Os nascidos na RFB, ainda que de pais estrangeiros, desde que estes não estejam a serviço de seu país.", value: "A" },
+                { label: "B) Os nascidos no estrangeiro, de pai ou mãe brasileira, desde que qualquer deles esteja a serviço da RFB.", value: "B" },
+                { label: "C) Os que, na forma da lei, adquiram a nacionalidade, exigidas aos originários de países de língua portuguesa apenas residência por um ano ininterrupto e idoneidade moral.", value: "C" },
+                { label: "D) Os nascidos no estrangeiro de pai ou mãe brasileira que venham a residir na RFB e optem pela nacionalidade brasileira.", value: "D" }
+            ],
+            correct: "C",
+            resolution: `**Alternativa C (Correta):** Hipótese de Naturalização Ordinária (Art. 12, II, 'a') facilitada para lusófonos.\n\n*Natos:* A e B são natos originários (jus soli e jus sanguinis funcional). D é a opção confirmativa que gera status de nato.`
+        },
+        {
+            id: 6,
+            origin: "Fundação CEFETMINAS / IFB - Professor",
+            question: "A soberania popular será exercida pelo sufrágio universal e pelo voto direto e secreto, com valor igual para todos, e, nos termos da lei, mediante:",
+            options: [
+                { label: "A) plebiscito, referendo e iniciativa popular.", value: "A" },
+                { label: "B) plebiscito, intervenção federal e ação popular.", value: "B" },
+                { label: "C) referendo, ação civil pública e recall político.", value: "C" },
+                { label: "D) iniciativa popular, veto popular e estado de defesa.", value: "D" }
+            ],
+            correct: "A",
+            resolution: `**Alternativa A (Correta):** Art. 14, I, II e III da CF/88. Mecanismos de democracia direta.\n\n*Nota:* Intervenção federal e estado de defesa são medidas de exceção; Recall e Veto Popular não existem na CF atual.`
+        },
+        {
+            id: 7,
+            origin: "Fundação CEFETMINAS / Adaptada - Estilo Ponte Nova",
+            question: "A respeito da Ação Popular, remédio constitucional previsto no inciso LXXIII do art. 5º, analise a legitimidade e o objeto da ação:",
+            options: [
+                { label: "A) Qualquer pessoa, física ou jurídica, é parte legítima para propor.", value: "A" },
+                { label: "B) O Ministério Público é parte legítima para propor ação popular de forma concorrente.", value: "B" },
+                { label: "C) Qualquer cidadão é parte legítima para propor ação popular que vise a anular ato lesivo ao patrimônio público, moralidade, meio ambiente e patrimônio histórico, ficando isento de custas (salvo má-fé).", value: "C" },
+                { label: "D) A ação popular pode ser utilizada para amparar direito líquido e certo individual.", value: "D" }
+            ],
+            correct: "C",
+            resolution: `**Alternativa C (Correta):** Literalidade do Art. 5º, LXXIII. \n\n*Erros:* Pessoa jurídica não tem cidadania (Súmula 365 STF); MP não propõe AP (propõe ACP); Direito individual é via MS.`
+        },
+        {
+            id: 8,
+            origin: "Fundação CEFETMINAS / Adaptada",
+            question: "Acerca dos Direitos Sociais previstos no art. 6º da Constituição Federal, assinale a alternativa correta:",
+            options: [
+                { label: "A) São direitos sociais a educação, a saúde, a alimentação, o trabalho, a moradia, o transporte, o lazer, a segurança, a previdência social, a proteção à maternidade e à infância, a assistência aos desamparados.", value: "A" },
+                { label: "B) O direito ao transporte foi excluído do rol pela Emenda do Teto de Gastos.", value: "B" },
+                { label: "C) Os direitos sociais são normas de eficácia plena, independendo de disponibilidade orçamentária.", value: "C" },
+                { label: "D) A alimentação e a moradia não constam expressamente no texto do art. 6º.", value: "D" }
+            ],
+            correct: "A",
+            resolution: `**Alternativa A (Correta):** Rol atualizado do Art. 6º.\n\n*Nota:* Transporte foi incluído pela EC 90/2015. São normas de eficácia limitada/programática (sujeitas à reserva do possível). Moradia (EC 26) e Alimentação (EC 64) estão expressas.`
+        },
+        {
+            id: 9,
+            origin: "Fundação CEFETMINAS / Adaptada - Estilo IFBA",
+            question: "Sobre os Partidos Políticos e a fidelidade partidária, nos termos do art. 17 da Constituição Federal:",
+            options: [
+                { label: "A) É livre a criação, fusão, incorporação e extinção de partidos políticos, resguardados a soberania nacional, o regime democrático, o pluripartidarismo e os direitos fundamentais.", value: "A" },
+                { label: "B) Devem registrar seus estatutos exclusivamente no Ministério da Justiça.", value: "B" },
+                { label: "C) É permitida a utilização pelos partidos políticos de organização paramilitar.", value: "C" },
+                { label: "D) A CF veda expressamente aos partidos o recebimento de recursos do fundo partidário.", value: "D" }
+            ],
+            correct: "A",
+            resolution: `**Alternativa A (Correta):** Caput do Art. 17.\n\n*Erros:* Registro é no TSE (§2º); Organização paramilitar é vedada (§4º); Fundo partidário e rádio/TV são garantidos (§3º).`
+        },
+        {
+            id: 10,
+            origin: "Fundação CEFETMINAS / Adaptada",
+            question: "No que tange aos direitos de associação profissional ou sindical (art. 8º da CF/88), analise as assertivas:\n\nI. A lei não poderá exigir autorização do Estado para a fundação de sindicato, vedadas a interferência e intervenção.\nII. É obrigatória a participação dos sindicatos nas negociações coletivas.\nIII. O aposentado filiado tem direito a votar e ser votado.\nIV. É permitida a criação de mais de uma organização sindical na mesma base territorial.",
+            options: [
+                { label: "A) I, II e III estão corretas.", value: "A" },
+                { label: "B) II, III e IV estão corretas.", value: "B" },
+                { label: "C) I e IV estão corretas.", value: "C" },
+                { label: "D) Todas estão corretas.", value: "D" }
+            ],
+            correct: "A",
+            resolution: `**Análise:**\nI, II e III são dispositivos expressos do Art. 8º.\n**Erro do IV:** O Brasil adota a Unicidade Sindical (Art. 8º, II), vedando mais de um sindicato da mesma categoria na mesma base territorial (mínimo de um município).`
+        }
+    ];
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-container');
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+            
+            let optionsHtml = '';
+            q.options.forEach(opt => {
+                optionsHtml += `
+                    <li class="option-item" onclick="selectOption(${index}, '${opt.value}')" id="opt-${index}-${opt.value}">
+                        <input type="radio" name="q${index}" value="${opt.value}" id="radio-${index}-${opt.value}">
+                        <label for="radio-${index}-${opt.value}">${opt.label}</label>
+                    </li>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-header">Questão ${index + 1}</span>
+                <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;"><i>${q.origin}</i></p>
+                <div class="question-text">${q.question}</div>
+                <ul class="options-list">
+                    ${optionsHtml}
+                </ul>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function selectOption(qIndex, val) {
+        // Unselect others
+        const items = document.querySelectorAll(`#q-card-${qIndex} .option-item`);
+        items.forEach(i => i.classList.remove('selected'));
+        
+        // Select this
+        const item = document.getElementById(`opt-${qIndex}-${val}`);
+        item.classList.add('selected');
+        
+        // Check radio
+        document.getElementById(`radio-${qIndex}-${val}`).checked = true;
+    }
+
+    function showResults() {
+        let score = 0;
+        const resContainer = document.getElementById('resolutions-container');
+        resContainer.innerHTML = ''; // Clear previous if any
+
+        quizData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            const userVal = selected ? selected.value : null;
+            const isCorrect = userVal === q.correct;
+
+            if (isCorrect) score++;
+
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            
+            resCard.innerHTML = `
+                <span class="resolution-title">Resolução: Questão ${index + 1}</span>
+                <div class="status-badge ${isCorrect ? 'status-correct' : 'status-incorrect'}">
+                    ${isCorrect ? 'Você acertou!' : 'Você errou.'} (Gabarito: ${q.correct})
+                </div>
+                <div style="margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px;">
+                    ${q.resolution.replace(/\n/g, '<br>')}
+                </div>
+            `;
+            resContainer.appendChild(resCard);
+        });
+
+        // Update score UI
+        document.getElementById('final-score').innerText = `${score}/10`;
+        
+        // Hide quiz and show results
+        document.getElementById('quiz-container').classList.add('hidden');
+        document.getElementById('btn-submit').classList.add('hidden');
+        document.getElementById('results-section').style.display = 'block';
+        
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initialize
+    window.onload = renderQuiz;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado CF/88: Da Educação - Banca FCM</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --correct-color: #27ae60;
+            --wrong-color: #d63031;
+            --border-color: #dfe6e9;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: "Segoe UI", Georgia, serif;
+            line-height: 1.7;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #1e272e;
+        }
+
+        .description {
+            font-style: italic;
+            color: #636e72;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            transition: transform 0.2s ease;
+        }
+
+        .question-header {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: block;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f1f2f6;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        input[type="radio"]:checked + span {
+            font-weight: bold;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
+        }
+
+        .btn-submit:hover {
+            background-color: #0773c5;
+        }
+
+        /* Result Section */
+        #results-area {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .resolution-box {
+            display: none; /* Shown after finish */
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-left: 5px solid var(--accent-color);
+            font-size: 0.95rem;
+            color: #444;
+            border-radius: 4px;
+        }
+
+        .correct-answer {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+            color: #155724 !important;
+        }
+
+        .wrong-answer {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+            color: #721c24 !important;
+        }
+
+        .correct-indicator {
+            font-weight: bold;
+            color: var(--correct-color);
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado CF/88: Direito Educacional</h1>
+        <p class="description">Foco: Fundação CEFETMINAS (Arts. 205 a 214)</p>
+    </header>
+
+    <form id="quiz-form">
+        <!-- Questão 01 -->
+        <div class="question-card" id="q-0">
+            <div class="question-header"><span>Questão 01</span> <span>Art. 206</span></div>
+            <div class="question-text">O Artigo 206 da Constituição Federal de 1988 elenca os princípios basilares que regem o ensino nacional. Analise as assertivas abaixo:
+
+I. A gestão democrática do ensino é um princípio constitucional obrigatório tanto para as instituições de ensino públicas quanto para as instituições privadas que recebam recursos públicos.
+II. A garantia de padrão de qualidade e a valorização dos profissionais da educação escolar, com a existência de pisos salariais profissionais nacionais, são princípios que se aplicam aos profissionais das redes públicas e privadas de educação básica.
+III. O princípio da gratuidade do ensino é assegurado exclusivamente aos estabelecimentos oficiais, não se estendendo constitucionalmente como obrigatoriedade às instituições privadas.
+
+Assinale a alternativa que apresenta a correta classificação das assertivas:</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q0" value="A"> A) Apenas a assertiva III é verdadeira.</label>
+                <label class="option-label"><input type="radio" name="q0" value="B"> B) As assertivas I e II são verdadeiras.</label>
+                <label class="option-label"><input type="radio" name="q0" value="C"> C) As assertivas I e III são falsas.</label>
+                <label class="option-label"><input type="radio" name="q0" value="D"> D) Todas as assertivas são verdadeiras.</label>
+                <label class="option-label"><input type="radio" name="q0" value="E"> E) Apenas as assertivas I e II são falsas.</label>
+            </div>
+            <div class="resolution-box" id="res-0">
+                <span class="correct-indicator">Gabarito: A</span>
+                <strong>Resolução:</strong> O inciso VI do Art. 206 estabelece a "gestão democrática do ensino público". O inciso VIII garante o piso salarial profissional nacional especificamente para a educação pública. A gratuidade (inciso IV) é restrita a estabelecimentos oficiais (públicos).
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-card" id="q-1">
+            <div class="question-header"><span>Questão 02</span> <span>Art. 208</span></div>
+            <div class="question-text">Sobre o dever do Estado com a educação, analise as sentenças:
+I. O Poder Público deve garantir a educação básica obrigatória e gratuita dos 4 aos 17 anos de idade.
+PORQUE
+II. A educação infantil, em creche e pré-escola, passou a integrar a educação básica obrigatória em sua totalidade (0 a 5 anos).</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q1" value="A"> A) As asserções I e II são verdadeiras, e a II justifica a I.</label>
+                <label class="option-label"><input type="radio" name="q1" value="B"> B) As asserções I e II são verdadeiras, mas a II não justifica a I.</label>
+                <label class="option-label"><input type="radio" name="q1" value="C"> C) A asserção I é verdadeira, e a II é falsa.</label>
+                <label class="option-label"><input type="radio" name="q1" value="D"> D) A asserção I é falsa, e a II é verdadeira.</label>
+            </div>
+            <div class="resolution-box" id="res-1">
+                <span class="correct-indicator">Gabarito: C</span>
+                <strong>Resolução:</strong> A EC 59/2009 define a educação obrigatória dos 4 aos 17 anos. A educação infantil (0-3 anos em creches) é dever do Estado, mas não é parte da "educação obrigatória" (compulsória), que inicia aos 4 anos.
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-card" id="q-2">
+            <div class="question-header"><span>Questão 03</span> <span>Art. 208, III</span></div>
+            <div class="question-text">Segundo o Art. 208, inciso III, o dever do Estado será efetivado mediante a garantia de atendimento educacional especializado aos portadores de deficiência:</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q2" value="A"> A) Obrigatoriamente na rede regular de ensino.</label>
+                <label class="option-label"><input type="radio" name="q2" value="B"> B) Preferencialmente na rede regular de ensino.</label>
+                <label class="option-label"><input type="radio" name="q2" value="C"> C) Exclusivamente em centros de referência e apoio pedagógico.</label>
+                <label class="option-label"><input type="radio" name="q2" value="D"> D) Prioritariamente na rede privada conveniada.</label>
+            </div>
+            <div class="resolution-box" id="res-2">
+                <span class="correct-indicator">Gabarito: B</span>
+                <strong>Resolução:</strong> A literalidade do Art. 208, III, da CF/88 estabelece que o atendimento especializado deve ocorrer "preferencialmente" na rede regular de ensino.
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-card" id="q-3">
+            <div class="question-header"><span>Questão 04</span> <span>Art. 210</span></div>
+            <div class="question-text">Uma escola pública municipal de ensino fundamental decide tornar a frequência às aulas de ensino religioso obrigatória para todos os alunos. Segundo a CF:</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q3" value="A"> A) É constitucional, pois o ensino religioso é parte da formação básica.</label>
+                <label class="option-label"><input type="radio" name="q3" value="B"> B) É inconstitucional, pois a CF veda o ensino religioso em escolas públicas.</label>
+                <label class="option-label"><input type="radio" name="q3" value="C"> C) É inconstitucional, pois a matrícula e a frequência devem ser facultativas.</label>
+                <label class="option-label"><input type="radio" name="q3" value="D"> D) É constitucional, desde que o conteúdo seja ecumênico.</label>
+            </div>
+            <div class="resolution-box" id="res-3">
+                <span class="correct-indicator">Gabarito: C</span>
+                <strong>Resolução:</strong> O Art. 210, §1º, determina que o ensino religioso é de matrícula facultativa, embora de oferta obrigatória pela escola nos horários normais.
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-card" id="q-4">
+            <div class="question-header"><span>Questão 05</span> <span>Art. 207</span></div>
+            <div class="question-text">As universidades gozam de autonomia. Assinale a alternativa que apresenta corretamente o princípio estruturante do Art. 207:</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q4" value="A"> A) Princípio da gestão democrática para todas as instituições superiores.</label>
+                <label class="option-label"><input type="radio" name="q4" value="B"> B) Princípio da indissociabilidade entre ensino e pesquisa apenas.</label>
+                <label class="option-label"><input type="radio" name="q4" value="C"> C) Princípio da indissociabilidade entre ensino, pesquisa e extensão.</label>
+                <label class="option-label"><input type="radio" name="q4" value="D"> D) Princípio da gratuidade universal para extensão.</label>
+            </div>
+            <div class="resolution-box" id="res-4">
+                <span class="correct-indicator">Gabarito: C</span>
+                <strong>Resolução:</strong> O caput do Art. 207 estabelece o princípio da indissociabilidade entre ensino, pesquisa e extensão. O §2º estende a autonomia às instituições de pesquisa científica.
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-card" id="q-5">
+            <div class="question-header"><span>Questão 06</span> <span>Art. 212</span></div>
+            <div class="question-text">Sobre os percentuais mínimos de investimento em educação, assinale a correta:</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q5" value="A"> A) União: 18%; Estados e Municípios: 25%; Excluídas transferências.</label>
+                <label class="option-label"><input type="radio" name="q5" value="B"> B) União: 18%; Estados e Municípios: 25%; Compreendida a proveniente de transferências.</label>
+                <label class="option-label"><input type="radio" name="q5" value="C"> C) União: 25%; Estados e Municípios: 18%.</label>
+                <label class="option-label"><input type="radio" name="q5" value="D"> D) União: 15%; Estados e Municípios: 30%.</label>
+            </div>
+            <div class="resolution-box" id="res-5">
+                <span class="correct-indicator">Gabarito: B</span>
+                <strong>Resolução:</strong> Art. 212: União (nunca menos de 18%) e Estados/DF/Municípios (25% no mínimo), incidindo sobre a receita de impostos incluindo transferências.
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-card" id="q-6">
+            <div class="question-header"><span>Questão 07</span> <span>Art. 212-A (FUNDEB)</span></div>
+            <div class="question-text">Sobre o Novo FUNDEB (EC 108/2020), assinale a assertiva INCORRETA:</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q6" value="A"> A) A complementação da União será equivalente a, no mínimo, 23%.</label>
+                <label class="option-label"><input type="radio" name="q6" value="B"> B) Uma parcela da complementação será distribuída via VAAT.</label>
+                <label class="option-label"><input type="radio" name="q6" value="C"> C) O padrão mínimo de qualidade terá como referência o Custo Aluno Qualidade (CAQ).</label>
+                <label class="option-label"><input type="radio" name="q6" value="D"> D) A totalidade (100%) dos recursos deve ser usada para pagamento de professores.</label>
+            </div>
+            <div class="resolution-box" id="res-6">
+                <span class="correct-indicator">Gabarito: D</span>
+                <strong>Resolução:</strong> O Art. 212-A, XI, define que no mínimo 70% (e não 100%) do fundo deve ser destinado ao pagamento dos profissionais da educação básica.
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-card" id="q-7">
+            <div class="question-header"><span>Questão 08</span> <span>Art. 213</span></div>
+            <div class="question-text">Recursos públicos podem ser destinados a escolas comunitárias, confessionais ou filantrópicas que:
+I. Comprovem finalidade não lucrativa.
+II. Apliquem excedentes em educação.
+III. Assegurem destinação de patrimônio ao Poder Público no encerramento.
+IV. Ofertem 50% de vagas gratuitas.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q7" value="A"> A) I, II e III apenas.</label>
+                <label class="option-label"><input type="radio" name="q7" value="B"> B) I e II apenas.</label>
+                <label class="option-label"><input type="radio" name="q7" value="C"> C) II, III e IV apenas.</label>
+                <label class="option-label"><input type="radio" name="q7" value="D"> D) I, III e IV apenas.</label>
+                <label class="option-label"><input type="radio" name="q7" value="E"> E) Todos os itens.</label>
+            </div>
+            <div class="resolution-box" id="res-7">
+                <span class="correct-indicator">Gabarito: A</span>
+                <strong>Resolução:</strong> Os incisos I e II do Art. 213 exigem finalidade não lucrativa, reinvestimento e destinação de patrimônio. A cota de 50% de vagas gratuitas não está no texto constitucional do 213.
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-card" id="q-8">
+            <div class="question-header"><span>Questão 09</span> <span>Art. 214 (PNE)</span></div>
+            <div class="question-text">Dentre os objetivos do Plano Nacional de Educação (PNE), NÃO se encontra expressamente listado no referido artigo:</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q8" value="A"> A) A erradicação do analfabetismo.</label>
+                <label class="option-label"><input type="radio" name="q8" value="B"> B) A universalização do atendimento escolar.</label>
+                <label class="option-label"><input type="radio" name="q8" value="C"> C) A superação das desigualdades educacionais.</label>
+                <label class="option-label"><input type="radio" name="q8" value="D"> D) A privatização gradual das universidades federais.</label>
+                <label class="option-label"><input type="radio" name="q8" value="E"> E) Meta de aplicação de recursos como proporção do PIB.</label>
+            </div>
+            <div class="resolution-box" id="res-8">
+                <span class="correct-indicator">Gabarito: D</span>
+                <strong>Resolução:</strong> O Art. 214 foca na expansão e melhoria do ensino público. A privatização de universidades federais contraria o espírito da CF/88.
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q-9">
+            <div class="question-header"><span>Questão 10</span> <span>Art. 211</span></div>
+            <div class="question-text">Sobre o regime de colaboração entre os entes federados (Art. 211), assinale a alternativa correta:</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q9" value="A"> A) Municípios atuarão prioritariamente no ensino médio.</label>
+                <label class="option-label"><input type="radio" name="q9" value="B"> B) União exercerá função redistributiva e supletiva.</label>
+                <label class="option-label"><input type="radio" name="q9" value="C"> C) Estados atuarão prioritariamente na educação infantil.</label>
+                <label class="option-label"><input type="radio" name="q9" value="D"> D) Municípios devem priorizar o ensino médio após a pré-escola.</label>
+            </div>
+            <div class="resolution-box" id="res-9">
+                <span class="correct-indicator">Gabarito: B</span>
+                <strong>Resolução:</strong> Art. 211, §1º: A União organiza o sistema federal e atua com função redistributiva e supletiva. Municípios priorizam Fundamental e Infantil. Estados priorizam Fundamental e Médio.
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="gradeQuiz()">Finalizar Quiz e Ver Resoluções</button>
+    </form>
+
+    <div id="results-area">
+        <div class="score-display" id="score-text"></div>
+        <p id="performance-msg"></p>
+        <button onclick="window.location.reload()" style="padding: 10px; cursor: pointer;">Tentar Novamente</button>
+    </div>
+</div>
+
+<script>
+    const answers = ['A', 'C', 'B', 'C', 'C', 'B', 'D', 'A', 'D', 'B'];
+
+    function gradeQuiz() {
+        const form = document.getElementById('quiz-form');
+        let score = 0;
+        
+        // Disable inputs and highlight answers
+        for (let i = 0; i < 10; i++) {
+            const selected = form.querySelector(`input[name="q${i}"]:checked`);
+            const questionCard = document.getElementById(`q-${i}`);
+            const resolutionBox = document.getElementById(`res-${i}`);
+            
+            // Show resolution
+            resolutionBox.style.display = 'block';
+
+            // Check correctness
+            const labels = questionCard.querySelectorAll('.option-label');
+            labels.forEach(label => {
+                const input = label.querySelector('input');
+                if (input.value === answers[i]) {
+                    label.classList.add('correct-answer');
+                }
+                if (selected && selected.value !== answers[i] && input.value === selected.value) {
+                    label.classList.add('wrong-answer');
+                }
+                input.disabled = true;
+            });
+
+            if (selected && selected.value === answers[i]) {
+                score++;
+            }
+        }
+
+        // Display results
+        const resultsArea = document.getElementById('results-area');
+        const scoreText = document.getElementById('score-text');
+        const perfMsg = document.getElementById('performance-msg');
+
+        resultsArea.style.display = 'block';
+        scoreText.innerText = `Você acertou ${score} de 10 questões!`;
+        
+        if (score >= 8) {
+            perfMsg.innerText = "Excelente desempenho! Você domina a literalidade da CF/88.";
+        } else if (score >= 5) {
+            perfMsg.innerText = "Bom desempenho, mas revise os pontos onde houve erro.";
+        } else {
+            perfMsg.innerText = "Recomendamos a leitura atenta dos Arts. 205 a 214 da CF/88.";
+        }
+
+        // Scroll to results
+        resultsArea.scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

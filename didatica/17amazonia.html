@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Mestre - Didática Amazônica - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: #1a202c;
+            background-color: #ffffff;
+        }
+
+        .highlight {
+            background-color: #fef9c3;
+            color: #1a202c;
+            font-weight: 600;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px; /* Garante leitura em telas pequenas via scroll interno do container apenas */
+        }
+
+        th, td {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .audio-section {
+            background-color: #f9fafb;
+            padding: 24px;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            margin-bottom: 32px;
+        }
+
+        .alert-box {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 16px;
+            margin: 24px 0;
+        }
+
+        h2 {
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 8px;
+            margin-top: 40px;
+            color: #2d3748;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            margin-top: 24px;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+
+        .btn-link {
+            display: inline-block;
+            background-color: #2d3748;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-link:hover {
+            background-color: #1a202c;
+            transform: translateY(-1px);
+        }
+
+        .critical-item {
+            font-weight: 700;
+            color: #c53030;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-12 max-w-5xl mx-auto">
+
+    <header class="text-center mb-12">
+        <h1 class="text-4xl font-extrabold text-gray-900 leading-tight">Didática e Saberes Locais na Amazônia</h1>
+        <p class="text-xl text-gray-600 mt-4">Guia de Aprovação - Professor de Informática (IFAM / CEFETMINAS)</p>
+    </header>
+
+    <!-- Áudio Player -->
+    <div class="audio-section">
+        <h4 class="text-lg font-bold mb-3 flex items-center">
+            <span class="mr-2">🎧</span> Estudo em Áudio (Resumo para Ouvir)
+        </h4>
+        <audio controls class="w-full">
+            <source src="17amazonia.mp3" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+        <p class="text-xs text-gray-500 mt-2 italic">* Substitua "aula_didatica_ifam.mp3" pelo nome do seu arquivo.</p>
+    </div>
+
+    <nav class="mb-10 p-4 bg-gray-50 rounded-lg text-sm">
+        <p class="font-bold mb-2 text-gray-700">Sumário Rápido:</p>
+        <div class="flex flex-wrap gap-4">
+            <a href="#fundamentos" class="text-blue-700 hover:underline">1. Fundamentos</a>
+            <a href="#saberes" class="text-blue-700 hover:underline">2. Saberes Locais</a>
+            <a href="#pedagogia" class="text-blue-700 hover:underline">3. Pedagogias Específicas</a>
+            <a href="#informatica" class="text-blue-700 hover:underline">4. TI na Amazônia</a>
+            <a href="#cefetminas" class="text-blue-700 hover:underline">5. Análise da Banca</a>
+        </div>
+    </nav>
+
+    <section id="fundamentos">
+        <h2>1. Fundamentos da Didática Contextualizada</h2>
+        <p>A Didática na Amazônia não é uma "nova didática", mas a aplicação da <span class="highlight">Didática Crítico-Social</span> às particularidades da região. Ela se baseia na premissa de que o ensino não pode ser neutro ou descolado da realidade geográfica e cultural.</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pilar</th>
+                        <th>Definição Técnica para a Prova</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Contextualização</strong></td>
+                        <td>Partir do <span class="highlight">conhecimento sincrético</span> (senso comum do aluno) para chegar ao <span class="highlight">conhecimento sintético</span> (científico).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Identidade Amazônica</strong></td>
+                        <td>Reconhecer o aluno como "sujeito das águas, das florestas e do campo". Combate à <span class="highlight">homogeneização cultural</span>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Base Legal (LDB)</strong></td>
+                        <td><strong>Art. 23:</strong> Permite organizar o calendário conforme ciclos naturais. <strong>Art. 28:</strong> Adaptações curriculares e metodológicas para a vida rural.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="saberes">
+        <h2>2. Práticas e Saberes Locais</h2>
+        <p>Para a CEFETMINAS, o saber local é <span class="highlight">ponto de partida</span>, nunca o ponto de chegada exclusivo. A escola deve promover o diálogo entre o saber tradicional e o saber universal.</p>
+        
+        <h3>O Conceito de Interculturalidade</h3>
+        <ul class="list-disc ml-6 space-y-2">
+            <li><strong>Multiculturalismo:</strong> Apenas tolera a existência do outro (visão folclórica). <span class="critical-item">Banca costuma dar como errado se for a única opção.</span></li>
+            <li><strong>Interculturalidade Crítica:</strong> Propõe o <span class="highlight">diálogo e a transformação</span> das relações de poder entre os saberes.</li>
+        </ul>
+
+        <h3>Didática das Águas</h3>
+        <p>A prática pedagógica que respeita os regimes de <span class="highlight">cheia, vazante, seca e repiquete</span>. Isso afeta o transporte escolar, a alimentação e os temas geradores das aulas de informática.</p>
+    </section>
+
+    <section id="pedagogia">
+        <h2>3. Pedagogia da Alternância (Foco Total)</h2>
+        <p>Modelo pedagógico central nos Institutos Federais da região Norte para atender populações ribeirinhas e do campo.</p>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tempo</th>
+                        <th>Local</th>
+                        <th>Objetivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Tempo Escola (TE)</strong></td>
+                        <td>Dependências do IFAM</td>
+                        <td>Teoria, laboratórios, sistematização do conhecimento científico.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tempo Comunidade (TC)</strong></td>
+                        <td>Família / Propriedade</td>
+                        <td>Pesquisa socioeconômica, aplicação prática, <span class="highlight">intervenção na realidade</span>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p class="mt-2 text-sm italic font-semibold">Instrumentos Pedagógicos: Plano de Estudo (PE), Caderno da Realidade, Visita Domiciliar e Socialização.</p>
+    </section>
+
+    <section id="informatica">
+        <h2>4. Didática Contextualizada na Informática (TI)</h2>
+        <p>Como aplicar a didática amazônica em disciplinas técnicas de Informática? Este é o seu diferencial na prova discursiva ou objetiva de conhecimentos específicos.</p>
+        
+        <ul class="list-disc ml-6 space-y-4">
+            <li><strong>Etnocomputação:</strong> Estudo da computação presente nas práticas culturais (ex: algoritmos de tecelagem, lógica de navegação fluvial).</li>
+            <li><strong>Software Livre e Soberania:</strong> Uso de tecnologias abertas para evitar a dependência tecnológica em comunidades isoladas.</li>
+            <li><strong>Inclusão Digital Crítica:</strong> Não é apenas "ensinar a usar o Windows", mas usar a TI para <span class="highlight">solucionar problemas locais</span> (ex: sistema de monitoramento de nível de rio).</li>
+            <li><strong>Computação Desplugada:</strong> Ensinar lógica de programação sem energia elétrica ou internet, usando materiais da floresta (sementes, gravetos).</li>
+        </ul>
+    </section>
+
+    <section id="cefetminas">
+        <h2>5. Análise Estratégica: Fundação CEFETMINAS</h2>
+        
+        <div class="alert-box">
+            <h4 class="font-bold text-amber-800 uppercase tracking-wider text-sm mb-2">🚨 Atenção: Tendências de Cobrança</h4>
+            <p>A banca prefere a linha pedagógica de <strong>José Carlos Libâneo</strong> e <strong>Dermeval Saviani</strong>. Foque na transição entre o saber empírico e o científico.</p>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tema</th>
+                        <th>O que a banca quer ouvir</th>
+                        <th>O que é "Peguinha"</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Avaliação</strong></td>
+                        <td>Processual, formativa, diagnóstica.</td>
+                        <td>Exclusivamente somativa ou punitiva.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Currículo</strong></td>
+                        <td>Flexível, integrado, interdisciplinar.</td>
+                        <td>Rígido, linear, tecnicista.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Professor</strong></td>
+                        <td>Mediador, pesquisador da prática.</td>
+                        <td>Transmissor, detentor único do saber.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tecnologia</strong></td>
+                        <td>Ferramenta de emancipação social.</td>
+                        <td>Fim em si mesma (tecnocentrismo).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="conclusao" class="mt-12 mb-20 text-center">
+        <h3 class="mb-6">Pronto para testar seus conhecimentos?</h3>
+        <a href="17questoes.html" class="btn-link">
+            ACESSAR BANCO DE QUESTÕES →
+        </a>
+        <p class="text-sm text-gray-400 mt-4 italic">Conteúdo revisado conforme Editais IFAM - Professor EBTT.</p>
+    </section>
+
+    <footer class="text-center text-gray-500 text-xs pb-10">
+        © 2024 - Tutor Especialista em Concursos IFAM - Preparação de Alto Rendimento.
+    </footer>
+
+</body>
+</html>

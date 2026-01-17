@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Lei 8.112/90 - Fundação CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --accent-color: #34495e;
+            --correct-color: #27ae60;
+            --wrong-color: #c0392b;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #7f8c8d;
+        }
+
+        main {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .question-header {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+        }
+
+        .question-text {
+            margin-bottom: 20px;
+            white-space: pre-line;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f8f9fa;
+            border-color: #bdc3c7;
+        }
+
+        .option-item input {
+            margin-top: 6px;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .option-item.selected {
+            background-color: #ebf5fb;
+            border-color: #3498db;
+        }
+
+        #submit-btn {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        #submit-btn:hover {
+            background-color: #2c3e50;
+        }
+
+        #results-section {
+            display: none;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .score-box {
+            background: #f1f4f6;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .resolution-card {
+            background: #fff;
+            border-left: 5px solid var(--accent-color);
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            background-color: #fafafa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .status-correct { background: var(--correct-color); color: white; }
+        .status-wrong { background: var(--wrong-color); color: white; }
+
+        .hidden { display: none; }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5rem; }
+            .question-card { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado: Lei nº 8.112/1990</h1>
+    <p class="subtitle">Estilo Fundação CEFETMINAS - Regime Jurídico Único</p>
+</header>
+
+<main>
+    <form id="quiz-form">
+        <div id="questions-container">
+            <!-- As questões serão inseridas aqui via JS -->
+        </div>
+        
+        <button type="button" id="submit-btn" onclick="calculateResults()">Finalizar Quiz</button>
+    </form>
+
+    <div id="results-section">
+        <div class="score-box">
+            <span class="subtitle">Seu Desempenho</span>
+            <span class="score-number" id="score-text">0 / 10</span>
+            <p id="performance-msg"></p>
+        </div>
+
+        <h2 style="text-align: center; margin-bottom: 30px;">Gabarito Comentado</h2>
+        <div id="resolutions-container">
+            <!-- Resoluções detalhadas aparecerão aqui -->
+        </div>
+        
+        <button type="button" id="retry-btn" onclick="window.location.reload()" style="background:none; border: 1px solid #ccc; padding: 10px 20px; cursor: pointer; display: block; margin: 40px auto;">Refazer Simulado</button>
+    </div>
+</main>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            title: "Questão 01 - Provimento e Vacância",
+            text: "A Lei nº 8.112/1990 prevê diversas formas de movimentação do servidor na estrutura da Administração Pública Federal, algumas das quais constituem provimento derivado. Considerando as definições legais dos institutos de reintegração, recondução, reversão e readaptação, numere a Coluna II de acordo com a Coluna I.\n\nColuna I\n1. Reversão\n2. Recondução\n3. Reintegração\n4. Readaptação\n\nColuna II\n( ) Investidura do servidor em cargo de atribuições e responsabilidades compatíveis com a limitação que tenha sofrido em sua capacidade física ou mental verificada em inspeção médica.\n( ) Retorno à atividade de servidor aposentado, seja por invalidez, quando junta médica oficial declarar insubsistentes os motivos da aposentadoria, ou no interesse da administração.\n( ) Reinvestidura do servidor estável no cargo anteriormente ocupado, ou no cargo resultante de sua transformação, quando invalidada a sua demissão por decisão administrativa ou judicial, com ressarcimento de todas as vantagens.\n( ) Retorno do servidor estável ao cargo anteriormente ocupado, decorrente de inabilitação em estágio probatório relativo a outro cargo ou reintegração do anterior ocupante.",
+            options: [
+                { label: "A) 4 – 1 – 3 – 2", value: "A" },
+                { label: "B) 1 – 2 – 4 – 3", value: "B" },
+                { label: "C) 4 – 2 – 3 – 1", value: "C" },
+                { label: "D) 3 – 1 – 2 – 4", value: "D" },
+                { label: "E) 2 – 4 – 1 – 3", value: "E" }
+            ],
+            correct: "A",
+            resolution: "A readaptação (4) refere-se à limitação física ou mental. A reversão (1) é o retorno do aposentado. A reintegração (3) é a volta após demissão invalidada. A recondução (2) é o retorno do servidor estável por inabilitação ou reintegração do anterior ocupante."
+        },
+        {
+            id: 2,
+            title: "Questão 02 - Regime Disciplinar",
+            text: "No âmbito do poder disciplinar da Administração Pública Federal, a Lei nº 8.112/90 tipifica as infrações e estabelece as respectivas sanções. Considerando o rol taxativo de penalidades disciplinares previsto no referido diploma legal, assinale a alternativa que NÃO corresponde a uma espécie de penalidade disciplinar.",
+            options: [
+                { label: "A) Demissão.", value: "A" },
+                { label: "B) Suspensão.", value: "B" },
+                { label: "C) Advertência.", value: "C" },
+                { label: "D) Exoneração.", value: "D" },
+                { label: "E) Destituição de cargo em comissão.", value: "E" }
+            ],
+            correct: "D",
+            resolution: "A exoneração não possui caráter punitivo; é uma forma de vacância a pedido ou de ofício (quando não satisfeitas as condições do estágio probatório ou prazo de exercício). As penalidades são: advertência, suspensão, demissão, cassação de aposentadoria/disponibilidade e destituição de cargo em comissão/função de confiança."
+        },
+        {
+            id: 3,
+            title: "Questão 03 - Licenças",
+            text: "Acerca do regime de licenças previsto na Lei nº 8.112/1990, analise as afirmativas a seguir:\n\nI. A licença para tratar de interesses particulares poderá ser concedida ao servidor ocupante de cargo efetivo, a critério da Administração, pelo prazo de até três anos consecutivos, sem remuneração, desde que o servidor não esteja em estágio probatório.\nII. É assegurado ao servidor o direito à licença por motivo de doença em pessoa da família, com remuneração integral, por até 60 (sessenta) dias, consecutivos ou não, mantida a remuneração do servidor.\nIII. A licença para capacitação permite que, após cada quinquênio de efetivo exercício, o servidor possa afastar-se do exercício do cargo efetivo, com a respectiva remuneração, por até três meses, para participar de curso de capacitação profissional.\nIV. O servidor terá direito a licença, sem remuneração, durante o período que mediar entre a sua escolha em convenção partidária, como candidato a cargo eletivo, e a véspera do registro de sua candidatura perante a Justiça Eleitoral.",
+            options: [
+                { label: "A) I e II.", value: "A" },
+                { label: "B) I, III e IV.", value: "B" },
+                { label: "C) II e III.", value: "C" },
+                { label: "D) III e IV.", value: "D" },
+                { label: "E) I, II, III e IV.", value: "E" }
+            ],
+            correct: "B",
+            resolution: "Os itens I, III e IV estão em total consonância com os arts. 91, 87 e 86 da Lei 8.112/90. O item II está incompleto/incorreto porque a licença por motivo de doença em pessoa da família exige perícia médica oficial e comprovação de que a assistência do servidor é indispensável e simultânea com o exercício do cargo."
+        },
+        {
+            id: 4,
+            title: "Questão 04 - Responsabilidades",
+            text: "Sobre a responsabilidade dos servidores públicos federais e as disposições gerais sobre o Processo Administrativo Disciplinar (PAD), classifique as sentenças abaixo como Verdadeiras (V) ou Falsas (F).\n\n( ) A responsabilidade civil do servidor decorre de ato omissivo ou comissivo, doloso ou culposo, que resulte em prejuízo ao erário ou a terceiros.\n( ) As sanções civis, penais e administrativas poderão cumular-se, sendo independentes entre si.\n( ) A responsabilidade administrativa do servidor será afastada no caso de absolvição criminal que negue a existência do fato ou sua autoria.\n( ) A prescrição da ação disciplinar para infrações puníveis com demissão ocorre em 2 (dois) anos, contados da data em que o fato se tornou conhecido.",
+            options: [
+                { label: "A) V, V, V, F.", value: "A" },
+                { label: "B) V, F, V, V.", value: "B" },
+                { label: "C) F, V, F, V.", value: "C" },
+                { label: "D) V, V, F, F.", value: "D" },
+                { label: "E) F, F, V, V.", value: "E" }
+            ],
+            correct: "A",
+            resolution: "A última proposição é falsa porque o prazo prescricional para infrações puníveis com demissão é de 5 anos (Art. 142, I). 2 anos é o prazo para suspensão."
+        },
+        {
+            id: 5,
+            title: "Questão 05 - Conceitos Fundamentais",
+            text: "A estrutura da Administração Pública Federal é composta por unidades básicas de competência. Segundo a definição expressa no Art. 3º da Lei nº 8.112/1990, o 'conjunto de atribuições e responsabilidades previstas na estrutura organizacional que devem ser cometidas a um servidor' denomina-se:",
+            options: [
+                { label: "A) Função de Confiança.", value: "A" },
+                { label: "B) Cargo Público.", value: "B" },
+                { label: "C) Emprego Público.", value: "C" },
+                { label: "D) Lotação.", value: "D" },
+                { label: "E) Classe Funcional.", value: "E" }
+            ],
+            correct: "B",
+            resolution: "Esta é a definição literal de Cargo Público contida no Art. 3º da Lei 8.112/90."
+        },
+        {
+            id: 6,
+            title: "Questão 06 - Investidura",
+            text: "Sobre os prazos e condições para nomeação, posse e exercício, assinale a alternativa CORRETA.",
+            options: [
+                { label: "A) A posse ocorrerá no prazo improrrogável de 15 (quinze) dias contados da publicação do ato de provimento.", value: "A" },
+                { label: "B) É vedada a posse mediante procuração específica, devendo o ato ser sempre presencial.", value: "B" },
+                { label: "C) Se a posse não ocorrer dentro do prazo legal, o ato de nomeação será tornado sem efeito.", value: "C" },
+                { label: "D) O exercício do cargo deve ocorrer no prazo de 30 (trinta) dias contados da data da posse.", value: "D" },
+                { label: "E) O servidor empossado que não entrar em exercício no prazo legal será demitido por abandono de cargo.", value: "E" }
+            ],
+            correct: "C",
+            resolution: "O prazo para posse é de 30 dias (pode ser por procuração). Se não ocorrer, a nomeação é tornada sem efeito. O prazo de exercício é de 15 dias após a posse; se não houver exercício, o servidor é exonerado."
+        },
+        {
+            id: 7,
+            title: "Questão 07 - Vacância",
+            text: "Assinale a alternativa que apresenta, EXCLUSIVAMENTE, hipóteses de vacância previstas no Art. 33 da Lei nº 8.112/90.",
+            options: [
+                { label: "A) Exoneração, demissão, promoção, readaptação e aposentadoria.", value: "A" },
+                { label: "B) Nomeação, reversão, reintegração e recondução.", value: "B" },
+                { label: "C) Exoneração, suspensão, destituição de função e falecimento.", value: "C" },
+                { label: "D) Ascensão, transferência, demissão e posse em outro cargo inacumulável.", value: "D" },
+                { label: "E) Aposentadoria, disponibilidade, aproveitamento e remoção.", value: "E" }
+            ],
+            correct: "A",
+            resolution: "A lista completa do Art. 33 inclui: exoneração, demissão, promoção, readaptação, aposentadoria, posse em outro cargo inacumulável e falecimento. Ascensão e transferência foram revogadas."
+        },
+        {
+            id: 8,
+            title: "Questão 08 - Proibições",
+            text: "Considerando o regime disciplinar e ético do servidor público, assinale a alternativa que descreve corretamente uma PROIBIÇÃO imposta ao servidor.",
+            options: [
+                { label: "A) Representar contra ilegalidade, omissão ou abuso de poder.", value: "A" },
+                { label: "B) Promover manifestações de apreço ou desapreço no recinto da repartição.", value: "B" },
+                { label: "C) Participar da gerência de sociedade privada como acionista ou cotista.", value: "C" },
+                { label: "D) Manter sob sua chefia cônjuge ou parente até o segundo grau civil.", value: "D" },
+                { label: "E) Cumprir as ordens superiores, exceto quando ilegais.", value: "E" }
+            ],
+            correct: "B",
+            resolution: "Promover manifestações de apreço ou desapreço no recinto da repartição é uma proibição expressa no Art. 117, V. Participar como acionista ou cotista é permitido. Representar e cumprir ordens (legais) são deveres."
+        },
+        {
+            id: 9,
+            title: "Questão 09 - Acumulação",
+            text: "Assinale a alternativa INCORRETA sobre a acumulação de cargos.",
+            options: [
+                { label: "A) É vedada a acumulação remunerada de cargos públicos, exceto a de dois cargos de professor.", value: "A" },
+                { label: "B) A proibição estende-se a autarquias, fundações e empresas públicas.", value: "B" },
+                { label: "C) É permitida a acumulação de dois cargos de saúde independentemente da compatibilidade de horários.", value: "C" },
+                { label: "D) O servidor não poderá exercer mais de um cargo em comissão, exceto interinidade.", value: "D" },
+                { label: "E) Detectada acumulação ilegal, o servidor tem 10 dias para optar.", value: "E" }
+            ],
+            correct: "C",
+            resolution: "A compatibilidade de horários é requisito obrigatório em TODAS as hipóteses de acumulação lícita previstas na Constituição Federal e na Lei 8.112/90."
+        },
+        {
+            id: 10,
+            title: "Questão 10 - Estabilidade",
+            text: "Sobre a estabilidade e o estágio probatório, assinale a afirmativa CORRETA.",
+            options: [
+                { label: "A) O estágio probatório tem duração de 24 meses.", value: "A" },
+                { label: "B) O servidor reprovado no estágio será exonerado ou, se estável, reconduzido.", value: "B" },
+                { label: "C) A estabilidade ocorre automaticamente após 3 anos, sem avaliação.", value: "C" },
+                { label: "D) No estágio, é vedado exercer qualquer cargo em comissão.", value: "D" },
+                { label: "E) A licença para atividade política é vedada no estágio probatório.", value: "E" }
+            ],
+            correct: "B",
+            resolution: "Conforme o Art. 20, § 2º, o servidor não aprovado é exonerado ou reconduzido (se estável em cargo anterior). O prazo do estágio é de 36 meses e exige avaliação especial de desempenho."
+        }
+    ];
+
+    function initQuiz() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <div class="question-header">${q.title}</div>
+                <div class="question-text">${q.text}</div>
+                <div class="options-list">
+                    ${q.options.map(opt => `
+                        <label class="option-item" id="label-${q.id}-${opt.value}">
+                            <input type="radio" name="q${q.id}" value="${opt.value}" onchange="highlightOption(${q.id}, '${opt.value}')">
+                            <span>${opt.label}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function highlightOption(qId, val) {
+        // Remove selection from others in same question
+        const options = document.querySelectorAll(`label[id^="label-${qId}-"]`);
+        options.forEach(opt => opt.classList.remove('selected'));
+        // Add to current
+        document.getElementById(`label-${qId}-${val}`).classList.add('selected');
+    }
+
+    function calculateResults() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        const resContainer = document.getElementById('resolutions-container');
+        resContainer.innerHTML = '';
+
+        quizData.forEach(q => {
+            const selected = form.querySelector(`input[name="q${q.id}"]:checked`);
+            const isCorrect = selected && selected.value === q.correct;
+            if (isCorrect) score++;
+
+            const resCard = document.createElement('div');
+            resCard.className = 'question-card';
+            resCard.innerHTML = `
+                <span class="status-badge ${isCorrect ? 'status-correct' : 'status-wrong'}">
+                    ${isCorrect ? 'Acertou' : 'Errou'}
+                </span>
+                <div class="question-header">${q.title}</div>
+                <p><strong>Sua resposta:</strong> ${selected ? selected.value : 'Não respondida'}</p>
+                <p><strong>Gabarito:</strong> ${q.correct}</p>
+                <div class="resolution-card">
+                    <strong>Resolução:</strong><br>
+                    ${q.resolution}
+                </div>
+            `;
+            resContainer.appendChild(resCard);
+        });
+
+        // Show results
+        document.getElementById('score-text').innerText = `${score} / ${quizData.length}`;
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'none';
+        
+        // Hide questions
+        document.getElementById('questions-container').classList.add('hidden');
+
+        // Feedback message
+        const msg = document.getElementById('performance-msg');
+        if (score === 10) msg.innerText = "Excelente! Você dominou o conteúdo.";
+        else if (score >= 7) msg.innerText = "Bom desempenho. Revise os pontos onde houve dúvida.";
+        else msg.innerText = "Continue estudando. A Lei 8.112 exige atenção aos detalhes.";
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

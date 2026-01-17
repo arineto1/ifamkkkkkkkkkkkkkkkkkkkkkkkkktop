@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Didática: IFAM/UFAM - Estilo CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --correct-color: #27ae60;
+            --wrong-color: #d63031;
+            --box-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --max-width: 850px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Georgia, serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            max-width: var(--max-width);
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #1e272e;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            width: 100%;
+        }
+
+        .question-card {
+            background: var(--box-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .text-reference {
+            background-color: #f1f2f6;
+            padding: 20px;
+            border-left: 4px solid var(--accent-color);
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f8f9fa;
+        }
+
+        .option-label input {
+            margin-top: 6px;
+            margin-right: 12px;
+        }
+
+        .option-label.selected {
+            border-color: var(--accent-color);
+            background-color: #e3f2fd;
+        }
+
+        /* Classes para feedback após correção */
+        .option-label.correct {
+            border-color: var(--correct-color);
+            background-color: #e8f5e9;
+            font-weight: bold;
+        }
+
+        .option-label.wrong {
+            border-color: var(--wrong-color);
+            background-color: #ffebee;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+
+        .btn-submit:hover {
+            background-color: #0771c1;
+        }
+
+        #results-section {
+            display: none;
+            width: 100%;
+            max-width: var(--max-width);
+            margin-top: 20px;
+        }
+
+        .score-box {
+            background: #2d3436;
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .score-value {
+            font-size: 3rem;
+            display: block;
+            font-weight: bold;
+        }
+
+        .resolutions-header {
+            font-size: 1.5rem;
+            border-bottom: 2px solid #2d3436;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+
+        .resolution-item {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+
+        .resolution-item h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+
+        .res-text {
+            color: #444;
+            white-space: pre-line;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado de Didática e Práticas de Ensino</h1>
+    <p>Contexto Rede Federal (IFAM/UFAM) - Estilo Fundação CEFETMINAS</p>
+</header>
+
+<div class="container">
+    <form id="quiz-form">
+        <!-- Questão 01 -->
+        <div class="question-card" id="q1">
+            <div class="text-reference">
+                <strong>Texto 1:</strong> "O estudo discute 'A Formação de Professores e as Novas Tecnologias no Ensino do Movimento Uniformemente Variado: uma sequência didática com o software GeoGebra'..."<br><br>
+                <strong>Texto 2:</strong> Antoni Zabala define as sequências didáticas como um conjunto de atividades ordenadas, estruturadas e articuladas...
+            </div>
+            <p class="question-text">01. Considerando a proposta de integração tecnológica descrita na pesquisa do IFAM e os fundamentos de Zabala, analise as afirmativas:</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q1" value="A"> A) I e II.</label>
+                <label class="option-label"><input type="radio" name="q1" value="B"> B) I, II e III.</label>
+                <label class="option-label"><input type="radio" name="q1" value="C"> C) II e IV.</label>
+                <label class="option-label"><input type="radio" name="q1" value="D"> D) I, III e IV.</label>
+                <label class="option-label"><input type="radio" name="q1" value="E"> E) III e IV.</label>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-card" id="q2">
+            <div class="text-reference">
+                Uma pesquisa estruturou um produto educacional baseado nos "Três Momentos Pedagógicos" (3MP) para o ensino de Ciências...
+            </div>
+            <p class="question-text">02. No contexto da transposição didática dessa metodologia, assinale a alternativa que apresenta a correlação CORRETA entre a etapa e sua função:</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q2" value="A"> A) Problematização Inicial: Momento de exposição teórica exaustiva pelo professor.</label>
+                <label class="option-label"><input type="radio" name="q2" value="B"> B) Organização do Conhecimento: Etapa onde ocorre o estudo sistemático dos conceitos científicos.</label>
+                <label class="option-label"><input type="radio" name="q2" value="C"> C) Aplicação do Conhecimento: Realização de uma avaliação somativa classificatória.</label>
+                <label class="option-label"><input type="radio" name="q2" value="D"> D) Problematização Inicial: Utilização de questionários diagnósticos para separar estudantes por nível.</label>
+                <label class="option-label"><input type="radio" name="q2" value="E"> E) Organização do Conhecimento: Realização de atividades puramente lúdicas após a tensão.</label>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-card" id="q3">
+            <div class="text-reference">
+                "A estratégia envolveu a utilização das toadas dos Bois Caprichoso e Garantido como recurso pedagógico, permitindo aos estudantes refletirem sobre questões ambientais e identidade cultural."
+            </div>
+            <p class="question-text">03. Avalie as asserções a seguir e a relação proposta entre elas:</p>
+            <p>I. A utilização das toadas do Boi-Bumbá configura-se como uma estratégia de ancoragem cultural que facilita a Aprendizagem Significativa (Ausubel).<br>PORQUE<br>II. A Interculturalidade Crítica propõe que o conhecimento científico universal deve anular e substituir os saberes tradicionais.</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q3" value="A"> A) As asserções I e II são verdadeiras, e a II justifica a I.</label>
+                <label class="option-label"><input type="radio" name="q3" value="B"> B) As asserções I e II são verdadeiras, mas a II não justifica a I.</label>
+                <label class="option-label"><input type="radio" name="q3" value="C"> C) A asserção I é verdadeira, e a II é falsa.</label>
+                <label class="option-label"><input type="radio" name="q3" value="D"> D) A asserção I é falsa, e a II é verdadeira.</label>
+                <label class="option-label"><input type="radio" name="q3" value="E"> E) As asserções I e II são falsas.</label>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-card" id="q4">
+            <div class="text-reference">
+                "A luta pela Educação do Campo requer resistência... pesquisada em uma escola de Parintins/AM e seus impactos no conhecimento."
+            </div>
+            <p class="question-text">04. No âmbito da Educação do Campo, o conceito de "Trabalho como Princípio Educativo" deve ser entendido como:</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q4" value="A"> A) Implementação de currículos vocacionais para manuseio de ferramentas agrícolas precocemente.</label>
+                <label class="option-label"><input type="radio" name="q4" value="B"> B) Compreensão ontológica da produção da existência, articulando saberes do trabalho camponês com científicos.</label>
+                <label class="option-label"><input type="radio" name="q4" value="C"> C) Substituição das disciplinas da base comum por oficinas práticas de pesca e artesanato.</label>
+                <label class="option-label"><input type="radio" name="q4" value="D"> D) Oferta de cursos de curta duração focados exclusivamente no agronegócio e produtividade.</label>
+                <label class="option-label"><input type="radio" name="q4" value="E"> E) Metodologia que utiliza trabalho voluntário de limpeza dos alunos para reduzir custos.</label>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-card" id="q5">
+            <div class="text-reference">
+                Pesquisas no IFAM têm utilizado a Engenharia Didática como metodologia para o desenvolvimento de sequências didáticas no ensino de Matemática.
+            </div>
+            <p class="question-text">05. Assinale a alternativa que descreve corretamente a fase de "Análise a Priori" na Engenharia Didática:</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q5" value="A"> A) Momento estatístico final de tabulação de notas.</label>
+                <label class="option-label"><input type="radio" name="q5" value="B"> B) Aplicação prática livre em sala de aula sem roteiro.</label>
+                <label class="option-label"><input type="radio" name="q5" value="C"> C) Etapa de construção hipotética prevendo possíveis comportamentos e erros antes da intervenção.</label>
+                <label class="option-label"><input type="radio" name="q5" value="D"> D) Entrevista inicial com a gestão para verificar laboratórios.</label>
+                <label class="option-label"><input type="radio" name="q5" value="E"> E) Revisão bibliográfica sem relação direta com o planejamento das aulas.</label>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-card" id="q6">
+            <div class="text-reference">
+                "Um docente de Eletricidade Básica aplica uma prova, atribui notas baixas e segue para o próximo conteúdo, alegando que 'quem não aprendeu, reprova'."
+            </div>
+            <p class="question-text">06. Com base na perspectiva da Avaliação Mediadora (Hoffmann) e Diagnóstica (Luckesi), essa prática é:</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q6" value="A"> A) Correta, pois a função social é certificar apenas aptidões inatas.</label>
+                <label class="option-label"><input type="radio" name="q6" value="B"> B) Equivocada, pois a avaliação deve ser punitiva mas aplicada apenas no final do semestre.</label>
+                <label class="option-label"><input type="radio" name="q6" value="C"> C) Correta, mantendo a 'Pedagogia do Exame' para garantir seriedade acadêmica.</label>
+                <label class="option-label"><input type="radio" name="q6" value="D"> D) Equivocada, pois desconsidera o caráter processual. O erro deve ser tratado como etapa da construção.</label>
+                <label class="option-label"><input type="radio" name="q6" value="E"> E) Parcialmente correta, bastando aplicar uma recuperação baseada na repetição da mesma prova.</label>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-card" id="q7">
+            <div class="text-reference">
+                Produção UFAM: "Literatura indígena: práticas leitoras para a sala de aula", em consonância com a Lei 11.645/08.
+            </div>
+            <p class="question-text">07. Para superar a visão colonialista, o professor deve adotar qual postura metodológica?</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q7" value="A"> A) Restringir o estudo a lendas do passado para não politizar a sala.</label>
+                <label class="option-label"><input type="radio" name="q7" value="B"> B) Utilizar "Rodas de Conversa" e oficinas reconhecendo a autoria e estética indígena atual.</label>
+                <label class="option-label"><input type="radio" name="q7" value="C"> C) Focar na análise gramatical dos textos traduzidos ignorando o contexto cultural.</label>
+                <label class="option-label"><input type="radio" name="q7" value="D"> D) Delegar o ensino exclusivamente a palestrantes no "Dia do Índio".</label>
+                <label class="option-label"><input type="radio" name="q7" value="E"> E) Adotar apenas como curiosidade antropológica, sem reconhecer como literatura de fato.</label>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-card" id="q8">
+            <div class="text-reference">
+                "Educação Ambiental como estímulo à institucionalização de práticas de TI Verde: estudo de caso no IFAM em Itacoatiara."
+            </div>
+            <p class="question-text">08. A institucionalização da EA nos cursos de Informática, conforme o IFAM, deve ocorrer através da:</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q8" value="A"> A) Criação de uma disciplina isolada de Ecologia sem conexão com a técnica.</label>
+                <label class="option-label"><input type="radio" name="q8" value="B"> B) Realização de campanhas esporádicas de coleta de lixo desvinculadas do currículo.</label>
+                <label class="option-label"><input type="radio" name="q8" value="C"> C) Transversalidade e interdisciplinaridade, integrando sustentabilidade diretamente nas disciplinas técnicas.</label>
+                <label class="option-label"><input type="radio" name="q8" value="D"> D) Leitura obrigatória da legislação ambiental sem alteração nas práticas de laboratório.</label>
+                <label class="option-label"><input type="radio" name="q8" value="E"> E) Proibição do uso de computadores para reduzir consumo, trocando práticas por teoria.</label>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-card" id="q9">
+            <div class="text-reference">
+                Pesquisas na UFAM indicam que práticas de gamificação podem engajar alunos mesmo com limitações estruturais.
+            </div>
+            <p class="question-text">09. Ao transpor a Gamificação para o planejamento didático, o docente deve compreender que:</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q9" value="A"> A) Gamificar significa transformar a sala em espaço de lazer onde o lúdico substitui o rigor.</label>
+                <label class="option-label"><input type="radio" name="q9" value="B"> B) Utiliza elementos de design de jogos para potencializar motivação e resolução de problemas complexos.</label>
+                <label class="option-label"><input type="radio" name="q9" value="C"> C) Deve ser restrita aos alunos com dificuldades, pois alunos de alto desempenho preferem aulas tradicionais.</label>
+                <label class="option-label"><input type="radio" name="q9" value="D"> D) A principal vantagem é a competição acirrada estimulada por rankings públicos de notas.</label>
+                <label class="option-label"><input type="radio" name="q9" value="E"> E) Dispensa planejamento pedagógico prévio, pois a mecânica se autorregula.</label>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card" id="q10">
+            <div class="text-reference">
+                Libâneo define o processo de ensino como atividade conjunta organizada sob a direção do professor, visando a assimilação ativa.
+            </div>
+            <p class="question-text">10. A "direção do professor", segundo Libâneo e a realidade dos IFs, deve ser entendida como:</p>
+            <div class="options">
+                <label class="option-label"><input type="radio" name="q10" value="A"> A) Autoritarismo pedagógico onde o professor detém o monopólio do saber.</label>
+                <label class="option-label"><input type="radio" name="q10" value="B"> B) Mediação pedagógica intencional, intervindo para o aluno transitar do nível real ao potencial.</label>
+                <label class="option-label"><input type="radio" name="q10" value="C"> C) Facilitação não-diretiva, onde o professor se abstém de interferir no processo espontâneo.</label>
+                <label class="option-label"><input type="radio" name="q10" value="D"> D) Treinamento técnico instrucional focado na repetição mecânica até a automatização.</label>
+                <label class="option-label"><input type="radio" name="q10" value="E"> E) Gestão burocrática limitada ao controle de frequência e registro de conteúdos.</label>
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Finalizar e Ver Resoluções</button>
+    </form>
+
+    <div id="results-section">
+        <div class="score-box">
+            <span id="score-text">Você acertou</span>
+            <span class="score-value" id="score-display">0/10</span>
+            <p id="feedback-text"></p>
+        </div>
+
+        <h2 class="resolutions-header">Gabarito e Resoluções Comentadas</h2>
+        <div id="resolutions-container">
+            <!-- As resoluções serão inseridas aqui via JS -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const answers = {
+        q1: "A", q2: "B", q3: "C", q4: "B", q5: "C",
+        q6: "D", q7: "B", q8: "C", q9: "B", q10: "B"
+    };
+
+    const resolutions = {
+        q1: "O uso do software GeoGebra planejado no HTP (Horário de Trabalho Pedagógico) valida a visão de Zabala de que a sequência didática engloba o planejamento prévio. A inovação tecnológica só altera a prática se mudar a natureza da interação aluno-professor-conteúdo.",
+        q2: "Nos Três Momentos Pedagógicos (3MP), a Organização do Conhecimento é a fase onde os conceitos científicos são estudados de forma sistemática para explicar a realidade problematizada inicialmente.",
+        q3: "A primeira afirmação é verdadeira (teoria de Ausubel). A segunda é falsa porque a Interculturalidade Crítica não propõe a substituição dos saberes, mas o diálogo entre eles.",
+        q4: "O Trabalho como Princípio Educativo na perspectiva crítica busca a formação onilateral, integrando a prática social do camponês com a teoria científica, sem abrir mão da base nacional comum.",
+        q5: "A Análise a Priori é a etapa onde o professor antecipa as estratégias e obstáculos dos alunos para fundamentar o desenho das atividades e das variáveis didáticas.",
+        q6: "A Avaliação Mediadora (Hoffmann) entende o erro como provisório e exige novas estratégias de ensino. Ignorar o desempenho baixo e seguir o conteúdo caracteriza a 'Pedagogia do Exame' criticada por Luckesi.",
+        q7: "A postura correta envolve o reconhecimento da autoria e estética indígena contemporânea através de metodologias horizontais como Rodas de Conversa, conforme propõem os documentos da UFAM.",
+        q8: "A Educação Ambiental deve ser transversal e interdisciplinar, integrando-se organicamente às disciplinas técnicas (como descarte de e-lixo na manutenção) em vez de ser uma disciplina isolada.",
+        q9: "Gamificação não é apenas jogar, mas usar a lógica de design dos jogos (feedback, progressão, missões) para motivar o engajamento na resolução de problemas complexos.",
+        q10: "Para Libâneo, dirigir o processo significa mediação intencional. O professor atua na Zona de Desenvolvimento Proximal (Vigotski) para levar o aluno ao desenvolvimento intelectual e cidadão."
+    };
+
+    function submitQuiz() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        const resultsSection = document.getElementById('results-section');
+        const resContainer = document.getElementById('resolutions-container');
+        
+        resContainer.innerHTML = ''; // Limpa resoluções anteriores
+
+        for (let q in answers) {
+            const selected = form.querySelector(`input[name="${q}"]:checked`);
+            const qCard = document.getElementById(q);
+            const options = qCard.querySelectorAll('.option-label');
+
+            // Reset classes
+            options.forEach(opt => {
+                opt.classList.remove('correct', 'wrong', 'selected');
+            });
+
+            // Feedback visual nas questões
+            options.forEach(opt => {
+                const radio = opt.querySelector('input');
+                if (radio.value === answers[q]) {
+                    opt.classList.add('correct');
+                }
+                if (selected && radio.checked && radio.value !== answers[q]) {
+                    opt.classList.add('wrong');
+                }
+                if (radio.checked) {
+                    opt.classList.add('selected');
+                }
+            });
+
+            if (selected && selected.value === answers[q]) {
+                score++;
+            }
+
+            // Gerar card de resolução
+            const resItem = document.createElement('div');
+            resItem.className = 'resolution-item';
+            resItem.innerHTML = `
+                <h3>Questão ${q.replace('q', '')} - Resolução</h3>
+                <p><strong>Gabarito: ${answers[q]}</strong></p>
+                <div class="res-text">${resolutions[q]}</div>
+            `;
+            resContainer.appendChild(resItem);
+        }
+
+        // Mostrar resultados
+        document.getElementById('score-display').innerText = `${score}/10`;
+        const feedback = score >= 7 ? "Excelente desempenho! Você domina as bases da Didática Crítica." : "Bom estudo! Aproveite as resoluções para reforçar os conceitos.";
+        document.getElementById('feedback-text').innerText = feedback;
+        
+        resultsSection.style.display = 'block';
+        
+        // Scroll suave para o resultado
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Adiciona efeito visual de seleção ao clicar no card
+    document.querySelectorAll('.option-label').forEach(label => {
+        label.addEventListener('click', function() {
+            const name = this.querySelector('input').name;
+            document.querySelectorAll(`input[name="${name}"]`).forEach(input => {
+                input.parentElement.classList.remove('selected');
+            });
+            this.classList.add('selected');
+        });
+    });
+</script>
+
+</body>
+</html>

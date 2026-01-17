@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Lei nº 11.892/2008 - Estilo CEFETMINAS</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --primary-color: #34495e;
+            --accent-color: #2980b9;
+            --border-color: #e0e0e0;
+            --correct-bg: #e8f5e9;
+            --incorrect-bg: #ffebee;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        body {
+            font-family: 'Segoe UI', Georgia, serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .question-block {
+            margin-bottom: 50px;
+            padding: 20px;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            margin-top: 7px;
+        }
+
+        .option-item label {
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 40px;
+        }
+
+        .btn-submit:hover {
+            background-color: #2c3e50;
+        }
+
+        /* Classes de Feedback */
+        .results-section {
+            display: none;
+            margin-top: 50px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .score-board {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .resolution {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .correct {
+            background-color: var(--correct-bg) !important;
+            border-color: #4caf50 !important;
+        }
+
+        .incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-color: #f44336 !important;
+        }
+
+        .correct-answer-mark {
+            color: #2e7d32;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Lei nº 11.892/2008</h1>
+        <p class="subtitle">10 questões de alto nível no estilo Fundação CEFETMINAS</p>
+    </header>
+
+    <form id="quiz-form">
+        <div id="questions-container"></div>
+        <button type="button" class="btn-submit" onclick="submitQuiz()">Finalizar e Ver Resoluções</button>
+    </form>
+
+    <div id="results-section" class="results-section">
+        <div class="score-board" id="score-board"></div>
+        <div id="resolutions-list"></div>
+        <button type="button" class="btn-submit" onclick="window.location.reload()">Reiniciar Simulado</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "A Lei nº 11.892, de 29 de dezembro de 2008, reordenou a educação profissional no Brasil, instituindo a Rede Federal de Educação Profissional, Científica e Tecnológica. Sobre a composição e a natureza jurídica das instituições que integram essa rede, analise as afirmativas a seguir:\n\nI. Integram a Rede Federal, além dos Institutos Federais, a Universidade Tecnológica Federal do Paraná (UTFPR), o Colégio Pedro II e os Centros Federais de Educação Tecnológica de Minas Gerais (CEFET-MG) e do Rio de Janeiro (CEFET-RJ).\nII. As instituições mencionadas na lei possuem natureza jurídica de fundação pública de direito privado, dotadas de autonomia administrativa e financeira, mas subordinadas pedagogicamente às Universidades Federais de seus respectivos estados.\nIII. As Escolas Técnicas vinculadas às Universidades Federais são partes integrantes da Rede Federal de Educação Profissional, Científica e Tecnológica.\nIV. Os Institutos Federais são vinculados ao Ministério da Ciência, Tecnologia e Inovação, dada a sua natureza de institutos de pesquisa aplicada.",
+            options: [
+                "I e II.",
+                "I e III.",
+                "II e IV.",
+                "I, III e IV.",
+                "III e IV."
+            ],
+            correct: 1,
+            resolution: "<b>Gabarito: B (I e III)</b><br>O Item I está correto (Art. 1º, II, III e V). O Item II está incorreto pois a natureza é de Autarquia e possuem autonomia plena. O Item III está correto (Art. 1º, IV). O Item IV está incorreto pois a vinculação é ao Ministério da Educação (MEC)."
+        },
+        {
+            id: 2,
+            question: "O Artigo 2º da Lei nº 11.892/2008 define os Institutos Federais como instituições de educação superior, básica e profissional, pluricurriculares e multicampi. No que tange às prerrogativas de regulação, avaliação e supervisão dos cursos de educação superior ofertados por essas instituições, a legislação estabelece que:",
+            options: [
+                "Os Institutos Federais submetem-se à regulação dos Conselhos Estaduais de Educação nas unidades federativas onde possuem campi.",
+                "A criação de novos cursos superiores depende de prévia autorização do Ministério da Educação e do Ministério da Economia.",
+                "Os Institutos Federais são equiparados às universidades federais, possuindo autonomia para criar e extinguir cursos nos limites de sua área de atuação territorial.",
+                "A autonomia para registro de diplomas é exclusiva das universidades, devendo os Institutos Federais encaminhar seus diplomas para registro em universidade federal tutora.",
+                "Os Institutos Federais possuem autonomia restrita à oferta de cursos superiores de tecnologia, sendo vedada a oferta de bacharelados sem autorização legislativa específica."
+            ],
+            correct: 2,
+            resolution: "<b>Gabarito: C</b><br>Fundamentação: Artigo 2º, § 1º e § 3º. A equiparação às universidades federais garante autonomia para criar/extinguir cursos e registrar seus próprios diplomas."
+        },
+        {
+            id: 3,
+            question: "Dentre as finalidades e características dos Institutos Federais, dispostas no Art. 6º da Lei nº 11.892/2008, destaca-se a promoção da integração e verticalização da educação básica à educação profissional e educação superior. O conceito de verticalização, no contexto da referida lei, implica:",
+            options: [
+                "A hierarquização administrativa rígida entre a Reitoria e os Campi, centralizando todas as decisões pedagógicas.",
+                "A obrigatoriedade de o aluno cursar o ensino médio, a graduação e a pós-graduação obrigatoriamente na mesma instituição para obter o diploma.",
+                "A otimização da infraestrutura física, dos quadros de pessoal e dos recursos de gestão para permitir itinerários formativos contínuos dentro da mesma instituição.",
+                "A priorização exclusiva de cursos de pós-graduação stricto sensu em detrimento dos cursos técnicos de nível médio.",
+                "A organização do currículo em módulos estanques que impedem o aproveitamento de estudos entre diferentes níveis de ensino."
+            ],
+            correct: 2,
+            resolution: "<b>Gabarito: C</b><br>A verticalização visa a otimização de recursos para permitir que o estudante avance nos níveis de escolaridade (do técnico ao mestrado) no mesmo ambiente educacional."
+        },
+        {
+            id: 4,
+            question: "Considere os itens abaixo e identifique qual deles NÃO corresponde a um objetivo dos Institutos Federais previsto expressamente no Art. 7º da Lei nº 11.892/2008:",
+            options: [
+                "Ministrar educação profissional técnica de nível médio, prioritariamente na forma de cursos integrados, para os concluintes do ensino fundamental e para o público da educação de jovens e adultos.",
+                "Realizar e estimular a pesquisa aplicada, a produção cultural, o empreendedorismo, o cooperativismo e o desenvolvimento científico e tecnológico.",
+                "Ministrar cursos em nível de educação superior, abrangendo cursos superiores de tecnologia, licenciaturas, bacharelados e engenharia.",
+                "Atuar como órgão certificador de competências profissionais de trabalhadores, com base em saberes adquiridos no trabalho ou na vida.",
+                "Centralizar a produção e distribuição de livros didáticos para todo o sistema público de ensino fundamental do país."
+            ],
+            correct: 4,
+            resolution: "<b>Gabarito: E</b><br>A distribuição nacional de livros didáticos é competência do FNDE/PNLD. Os IFs podem produzir material próprio, mas não centralizam a distribuição nacional para o ensino fundamental."
+        },
+        {
+            id: 5,
+            question: "Um determinado Instituto Federal, em seu Plano de Desenvolvimento Institucional (PDI), projetou a seguinte distribuição de vagas para o próximo quinquênio:\n• 10% para cursos técnicos de nível médio;\n• 60% para cursos de bacharelado em Direito e Administração;\n• 30% para cursos de pós-graduação.\n\nÀ luz do Art. 8º da Lei nº 11.892/2008, essa distribuição é:",
+            options: [
+                "Legal, pois os Institutos Federais possuem autonomia didático-pedagógica para definir a oferta de vagas conforme a demanda de mercado.",
+                "Ilegal, pois a lei exige o mínimo de 50% de vagas para a educação profissional técnica de nível médio e o mínimo de 20% para cursos de licenciatura.",
+                "Legal, desde que autorizada pelo Conselho Nacional de Educação (CNE).",
+                "Ilegal, pois a oferta de cursos de bacharelado é vedada aos Institutos Federais, que devem focar apenas em tecnologia.",
+                "Legal, pois a exigência de cotas aplica-se apenas aos campi agrícolas, não se estendendo aos campi urbanos."
+            ],
+            correct: 1,
+            resolution: "<b>Gabarito: B</b><br>A lei exige o mínimo de 50% para Educação Profissional Técnica de Nível Médio e o mínimo de 20% para Licenciaturas. O cenário proposto viola ambos os requisitos."
+        },
+        {
+            id: 6,
+            question: "Sobre a estrutura organizacional dos Institutos Federais, assinale a alternativa CORRETA.",
+            options: [
+                "A estrutura multicampi implica que cada campus possui personalidade jurídica própria, independente da Reitoria.",
+                "O orçamento anual é único para toda a instituição, sendo vedada a identificação de proposta orçamentária para cada campus.",
+                "Cada Instituto Federal é organizado em estrutura multicampi, com proposta orçamentária anual identificada para cada campus e a reitoria, exceto no que diz respeito a pessoal, encargos sociais e benefícios aos servidores.",
+                "A criação de novos campi depende de lei específica aprovada pelo Congresso Nacional, sendo vedada a expansão por ato administrativo.",
+                "A Reitoria deve funcionar obrigatoriamente dentro das instalações do maior campus da instituição."
+            ],
+            correct: 2,
+            resolution: "<b>Gabarito: C</b><br>O Art. 9º define que a proposta orçamentária é identificada para cada campus, com exceção de despesas centralizadas como pessoal e encargos sociais."
+        },
+        {
+            id: 7,
+            question: "O Conselho Superior é o órgão máximo de caráter consultivo e deliberativo dos Institutos Federais. Sobre sua composição, a Lei nº 11.892/2008 determina que:",
+            options: [
+                "Será composto exclusivamente por servidores docentes e técnicos da instituição, vedada a participação de alunos.",
+                "Terá representação paritária dos segmentos da comunidade acadêmica (docentes, discentes e técnicos), além de representantes da sociedade civil, egressos, MEC e Colégio de Dirigentes.",
+                "O Presidente do Conselho Superior será eleito pelos seus pares, podendo ser qualquer membro da comunidade externa.",
+                "Os representantes da sociedade civil serão indicados livremente pelo Reitor, sem necessidade de processo de escolha.",
+                "O Ministério da Educação terá poder de veto sobre todas as decisões do Conselho Superior."
+            ],
+            correct: 1,
+            resolution: "<b>Gabarito: B</b><br>O Art. 10º estabelece a composição paritária entre os segmentos internos e a inclusão de representação externa, garantindo a gestão democrática."
+        },
+        {
+            id: 8,
+            question: "No processo de escolha do Reitor e dos Diretores-Gerais dos campi, a legislação estabelece regras específicas para a ponderação dos votos da comunidade. Assinale a alternativa que reflete o critério estabelecido na Lei nº 11.892/2008.",
+            options: [
+                "Voto universal e igualitário, onde 'uma cabeça vale um voto', independentemente do segmento.",
+                "Voto censitário, baseado no tempo de serviço do servidor.",
+                "Peso de 70% para o corpo docente, 15% para técnicos e 15% para discentes, seguindo o padrão da LDB para universidades.",
+                "Peso de 1/3 (um terço) para o corpo docente, 1/3 (um terço) para os servidores técnico-administrativos e 1/3 (um terço) para o corpo discente.",
+                "Decisão exclusiva do Colégio de Dirigentes, sem consulta à comunidade."
+            ],
+            correct: 3,
+            resolution: "<b>Gabarito: D</b><br>Diferente das universidades (70/30), os IFs adotam o peso de 1/3 para cada segmento, conforme o Art. 13, § 2º."
+        },
+        {
+            id: 9,
+            question: "Um professor de uma Universidade Federal, com 20 anos de experiência e título de Doutor, deseja candidatar-se ao cargo de Reitor de um Instituto Federal recém-criado em seu estado. Ele nunca atuou na Rede Federal de Educação Profissional, Científica e Tecnológica. De acordo com os requisitos legais:",
+            options: [
+                "Ele pode candidatar-se, pois possui o título de Doutor e é servidor federal.",
+                "Ele pode candidatar-se, desde que peça transferência para o Instituto Federal 6 meses antes da eleição.",
+                "Ele não pode candidatar-se, pois a lei exige o mínimo de 5 anos de efetivo exercício em instituição federal de educação profissional, científica e tecnológica.",
+                "Ele pode ser nomeado Reitor Pro Tempore, mas não pode concorrer à eleição para mandato regular.",
+                "A candidatura é permitida apenas se não houver candidatos internos interessados."
+            ],
+            correct: 2,
+            resolution: "<b>Gabarito: C</b><br>O Art. 12, § 1º, exige o mínimo de 5 anos de efetivo exercício na Rede Federal de Educação Profissional e Tecnológica especificamente."
+        },
+        {
+            id: 10,
+            question: "A inclusão do Colégio Pedro II na Lei nº 11.892/2008 teve como efeito jurídico:",
+            options: [
+                "Sua transformação em universidade federal.",
+                "A perda de sua autonomia administrativa, passando a ser subordinado ao Instituto Federal do Rio de Janeiro.",
+                "Sua equiparação aos Institutos Federais para fins de incidência das disposições que regem a autonomia e a gestão, mantendo sua especificidade na educação básica.",
+                "A obrigatoriedade de extinguir o ensino fundamental e focar apenas no ensino técnico.",
+                "A transferência de sua gestão para o Governo do Estado do Rio de Janeiro."
+            ],
+            correct: 2,
+            resolution: "<b>Gabarito: C</b><br>O Art. 4º-A equipara o Colégio Pedro II aos IFs para fins de autonomia e gestão, permitindo inclusive a oferta de pós-graduação mantendo a base histórica."
+        }
+    ];
+
+    function loadQuestions() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((q, index) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question-block';
+            qDiv.id = `q-block-${index}`;
+            
+            let optionsHtml = '';
+            q.options.forEach((opt, optIndex) => {
+                optionsHtml += `
+                    <li class="option-item" id="opt-${index}-${optIndex}">
+                        <input type="radio" name="q${index}" id="q${index}o${optIndex}" value="${optIndex}">
+                        <label for="q${index}o${optIndex}">${String.fromCharCode(65 + optIndex)}) ${opt}</label>
+                    </li>
+                `;
+            });
+
+            qDiv.innerHTML = `
+                <div class="question-text">QUESTÃO ${index + 1}<br><br>${q.question.replace(/\n/g, '<br>')}</div>
+                <ul class="options-list">${optionsHtml}</ul>
+                <div class="resolution" id="res-${index}">${q.resolution}</div>
+            `;
+            container.appendChild(qDiv);
+        });
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        
+        quizData.forEach((q, index) => {
+            const selected = form.querySelector(`input[name="q${index}"]:checked`);
+            const qBlock = document.getElementById(`q-block-${index}`);
+            const resDiv = document.getElementById(`res-${index}`);
+            
+            // Mostrar a resolução
+            resDiv.style.display = 'block';
+
+            if (selected) {
+                const answer = parseInt(selected.value);
+                const correctItem = document.getElementById(`opt-${index}-${q.correct}`);
+                const selectedItem = document.getElementById(`opt-${index}-${answer}`);
+
+                if (answer === q.correct) {
+                    score++;
+                    selectedItem.classList.add('correct');
+                } else {
+                    selectedItem.classList.add('incorrect');
+                    correctItem.classList.add('correct');
+                    const mark = document.createElement('span');
+                    mark.className = 'correct-answer-mark';
+                    mark.innerText = '(Gabarito Correto)';
+                    correctItem.appendChild(mark);
+                }
+            } else {
+                // Se não respondeu, marca a correta
+                const correctItem = document.getElementById(`opt-${index}-${q.correct}`);
+                correctItem.classList.add('correct');
+            }
+        });
+
+        // Mostrar Placar
+        const scoreBoard = document.getElementById('score-board');
+        scoreBoard.innerHTML = `Você acertou ${score} de ${quizData.length} questões! (${(score/quizData.length)*100}%)`;
+        
+        document.getElementById('results-section').style.display = 'block';
+        
+        // Desabilitar inputs
+        const inputs = form.querySelectorAll('input');
+        inputs.forEach(i => i.disabled = true);
+        
+        // Esconder botão de submissão original
+        form.querySelector('.btn-submit').style.display = 'none';
+
+        // Scroll suave para o resultado
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = loadQuestions;
+</script>
+
+</body>
+</html>
