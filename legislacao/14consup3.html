@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo Dirigido: Resolução 072/2022 - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --text-main: #1a1a1a;
+            --bg-main: #ffffff;
+            --highlight-color: #fef08a; /* Amarelo clássico de grifo */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: var(--highlight-color);
+            font-weight: 600;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        .section-card {
+            padding: 2rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .audio-container {
+            background-color: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Tabela Responsiva sem Scroll Horizontal */
+        .table-container {
+            width: 100%;
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 12px 15px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #334155;
+            font-weight: 700;
+        }
+
+        /* Cores para a tabela de tendências */
+        .status-falso { color: #dc2626; font-weight: 700; }
+        .status-verdadeiro { color: #16a34a; font-weight: 700; }
+
+        .btn-footer {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 3rem auto;
+            background-color: #0f172a;
+            color: white;
+            padding: 1.25rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            transition: transform 0.2s;
+        }
+
+        .btn-footer:hover {
+            background-color: #334155;
+            transform: translateY(-2px);
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            color: #0f172a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            color: #334155;
+        }
+
+        .list-bullet {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+
+        .list-bullet li {
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+
+        .list-bullet li::before {
+            content: "→";
+            position: absolute;
+            left: -1.5rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="max-w-4xl mx-auto px-6 py-12">
+        
+        <!-- Reprodutor de Áudio -->
+        <div class="audio-container">
+            <h3 class="mt-0 mb-4 text-center text-slate-700">🎧 Podcast de Revisão: Resolução 072/2022</h3>
+            <audio controls class="w-full">
+                <!-- Substitua 'meuaudio.mp3' pelo seu arquivo -->
+                <source src="NOME_DO_ARQUIVO.mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+            <p class="text-xs text-center text-slate-500 mt-2 italic">Dica: Ouça em 1.5x para uma revisão rápida pré-prova.</p>
+        </div>
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl font-bold tracking-tight mb-2">Resolução nº 072/2022</h1>
+            <p class="text-xl text-slate-500">Estatuto do IFAM - Resumo Estratégico para Concurso (CEFETMINAS)</p>
+        </header>
+
+        <!-- Seção 1 -->
+        <section class="section-card">
+            <h2>1. Natureza e Identidade</h2>
+            <p>O IFAM é uma <span class="highlight">Autarquia Federal</span> com personalidade jurídica de direito público.</p>
+            <ul class="list-bullet mt-4">
+                <li><span class="highlight">Vinculação:</span> Ministério da Educação (MEC). Não há subordinação hierárquica direta para gestão.</li>
+                <li><strong>Autonomias (4 pilares):</strong> <span class="highlight">Administrativa, Patrimonial/Financeira, Didático-Pedagógica e Disciplinar.</span></li>
+                <li><strong>Características:</strong> Instituição <span class="highlight">Multicampi</span> e <span class="highlight">Pluricurricular</span>.</li>
+                <li><strong>Diferencial:</strong> Atua como instituição <span class="highlight">acreditadora e certificadora</span> de competências profissionais.</li>
+            </ul>
+        </section>
+
+        <!-- Seção 2 -->
+        <section class="section-card">
+            <h2>2. Órgãos Colegiados (Decisivos para Prova)</h2>
+            
+            <h3>A. Conselho Superior (CONSUP) – Órgão Máximo</h3>
+            <p>Natureza: <span class="highlight">Consultiva e Deliberativa</span>. Presidência: Reitor.</p>
+            <ul class="list-bullet mt-3">
+                <li><strong>Composição Paritária:</strong> <span class="highlight">1/3 dos membros do Colégio de Dirigentes (COLDI)</span> + Segmentos Internos (Docentes, TAEs e Discentes) em igual número.</li>
+                <li><strong>Representação Externa:</strong> 2 Egressos, 5 da Sociedade Civil e 1 representante do MEC.</li>
+                <li><strong>Mandato:</strong> 2 anos, permitida <span class="highlight">uma única recondução consecutiva</span>.</li>
+                <li><strong>Quórum Especial:</strong> Necessário <span class="highlight">maioria qualificada de 2/3</span> para alterar o Estatuto.</li>
+            </ul>
+
+            <h3>B. Colégio de Dirigentes (COLDI) – Órgão de Gestão</h3>
+            <p>Natureza: <span class="highlight">Eminentemente Consultiva</span>. Funções: Harmonizar e assessorar a Reitoria.</p>
+            <ul class="list-bullet mt-2">
+                <li><strong>Membros:</strong> Reitor, Pró-Reitores e <span class="highlight">TODOS</span> os Diretores-Gerais de Campi.</li>
+            </ul>
+
+            <h3>C. Conselho de Ensino, Pesquisa e Extensão (CONSEPE/CEPE)</h3>
+            <ul class="list-bullet">
+                <li>Foco em matérias <span class="highlight">técnico-acadêmicas</span>.</li>
+                <li>Aprova <span class="highlight">Projetos Pedagógicos (PPCs)</span> e normas de avaliação.</li>
+            </ul>
+        </section>
+
+        <!-- Seção 3 -->
+        <section class="section-card">
+            <h2>3. Administração Executiva (Reitoria)</h2>
+            <p>Principais atribuições das Pró-Reitorias para fins de memorização:</p>
+            <div class="space-y-3 mt-4">
+                <p>• <strong>PROEN (Ensino):</strong> Vida acadêmica, ingresso e cursos. É a que <span class="highlight">comumente substitui o Reitor</span>.</p>
+                <p>• <strong>PROEX (Extensão):</strong> Relação com sociedade, egressos e <span class="highlight">Incubadora AYTY</span>.</p>
+                <p>• <strong>PPGI (Pesquisa e Inovação):</strong> Ciência, Pós-graduação e <span class="highlight">Núcleo de Inovação Tecnológica (NIT)</span>.</p>
+                <p>• <strong>PRODIN (Desenvolvimento):</strong> Planejamento Estratégico, <span class="highlight">Tecnologia da Informação (TI)</span> e expansão.</p>
+                <p>• <strong>PROAD (Administração):</strong> Orçamento, finanças, compras e <span class="highlight">Gestão de Pessoas (DGP)</span>.</p>
+            </div>
+        </section>
+
+        <!-- Seção 4 -->
+        <section class="section-card">
+            <h2>4. Metas e Porcentagens Legais</h2>
+            <div class="bg-slate-50 p-6 rounded-lg border">
+                <ul class="list-bullet">
+                    <li><span class="highlight">Mínimo 50%:</span> Vagas para Educação Profissional Técnica (prioridade para a forma <strong>Integrada</strong>).</li>
+                    <li><span class="highlight">Mínimo 20%:</span> Vagas para Cursos de Licenciatura e formação docente.</li>
+                    <li><span class="highlight">200 Dias:</span> Calendário mínimo de efetivo trabalho acadêmico.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Seção 5 -->
+        <section class="section-card">
+            <h2>5. Tendências CEFETMINAS & Peguinhas</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Afirmação da Banca</th>
+                            <th>Status</th>
+                            <th>Por que erram?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>"O IFAM é subordinado ao Ministério da Educação."</td>
+                            <td class="status-falso">FALSO</td>
+                            <td>O IFAM possui autonomia administrativa e é apenas <span class="highlight">vinculado</span> ao MEC.</td>
+                        </tr>
+                        <tr>
+                            <td>"Todos os Diretores de Campi compõem o Conselho Superior."</td>
+                            <td class="status-falso">FALSO</td>
+                            <td>Apenas <strong>1/3</strong> deles compõem o CONSUP. No COLDI sim, estão todos.</td>
+                        </tr>
+                        <tr>
+                            <td>"O Reitor desempata as votações no CONSUP."</td>
+                            <td class="status-verdadeiro">VERDADEIRO</td>
+                            <td>Possui o chamado <span class="highlight">voto de minerva</span> (ou de qualidade).</td>
+                        </tr>
+                        <tr>
+                            <td>"Docentes eleitos para o CONSUP têm mandato de 4 anos."</td>
+                            <td class="status-falso">FALSO</td>
+                            <td>O mandato é de <strong>2 anos</strong>, com apenas 1 recondução permitida.</td>
+                        </tr>
+                        <tr>
+                            <td>"Compete ao COLDI aprovar as contas anuais e o estatuto."</td>
+                            <td class="status-falso">FALSO</td>
+                            <td>Isso é competência deliberativa do <span class="highlight">CONSUP</span>. O COLDI é consultivo.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Seção 6 -->
+        <section class="section-card border-none">
+            <h2>6. Estratégia de Acerto (Resumo Final)</h2>
+            <ol class="list-decimal pl-5 space-y-4">
+                <li><strong>Poder de Decisão:</strong> Pensou em regra, norma ou autorização? Resposta: <span class="highlight">CONSUP</span>. Pensou em ajudar na gestão? Resposta: <span class="highlight">COLDI</span>.</li>
+                <li><strong>Paridade Social:</strong> Os segmentos internos (alunos, professores e TAEs) devem ter representação idêntica ao número de diretores no conselho (geralmente de 5 a 7 por categoria).</li>
+                <li><strong>Terminologia:</strong> A CEFETMINAS cobra os verbos <span class="highlight">"Apreciar", "Homologar" e "Deliberar"</span>. Leia a questão buscando essas palavras-chave.</li>
+            </ol>
+        </section>
+
+        <a href="14questoes.html" class="btn-footer">
+            TESTAR CONHECIMENTOS (SIMULADO)
+        </a>
+
+        <footer class="text-center text-slate-400 text-sm pb-12">
+            Preparação Professor de Informática - IFAM | Foco na Resolução 072/2022
+        </footer>
+    </div>
+
+</body>
+</html>

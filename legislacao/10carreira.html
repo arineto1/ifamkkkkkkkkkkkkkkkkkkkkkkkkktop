@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Estruturado: Lei 12.772/2012 - IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.7;
+        }
+        h1, h2, h3 {
+            font-family: 'Merriweather', serif;
+            color: #111827;
+        }
+        .highlight {
+            background-color: #fef08a;
+            padding: 0 3px;
+            font-weight: 600;
+            border-radius: 2px;
+        }
+        .important-box {
+            border-left: 4px solid #059669;
+            background-color: #f9fafb;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        /* Garantindo que tabelas não tenham scroll horizontal */
+        .table-responsive {
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            text-align: left;
+            word-wrap: break-word;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 700;
+        }
+        /* Mobile adjustment for tables to stack if needed */
+        @media (max-width: 600px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr { border: 1px solid #ccc; margin-bottom: 5px; }
+            td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+            }
+            td:before {
+                position: absolute;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+                content: attr(data-label);
+            }
+        }
+        .audio-player {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-12 max-w-5xl mx-auto">
+
+    <!-- Audio Player Section -->
+    <div class="audio-player">
+        <h3 class="text-lg font-bold mb-3 text-emerald-800 flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM9 7a1 1 0 00-1 1v4a1 1 0 001.707.707l3-3a1 1 0 000-1.414l-3-3A1 1 0 009 7z"></path></svg>
+            Aula em Áudio (Resumo Tático)
+        </h3>
+        <audio controls class="w-full">
+            <!-- NOME DO ARQUIVO PARA SUBSTITUIR -->
+            <source src="10carreira.mp3" type="audio/mpeg">
+            Seu navegador não suporta áudio.
+        </audio>
+        <p class="text-xs text-gray-500 mt-2">Dica: Ouça este resumo 3x antes da prova para fixar prazos e siglas.</p>
+    </div>
+
+    <header class="mb-12 border-b pb-6">
+        <h1 class="text-4xl font-bold mb-4">Plano de Carreira e Cargos de Magistério Federal</h1>
+        <p class="text-xl text-gray-600 italic">Aula completa focada no concurso IFAM - Banca Fundação CEFETMINAS</p>
+    </header>
+
+    <main>
+        <!-- Definição e Características -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-emerald-900">1. Definição e Características Essenciais</h2>
+            <p class="mb-4">
+                A <span class="highlight">Lei nº 12.772/2012</span> rege o Plano de Carreiras e Cargos de Magistério Federal, dividindo-se em Magistério Superior e <span class="highlight">Ensino Básico, Técnico e Tecnológico (EBTT)</span>. Para o IFAM, o foco é total no EBTT.
+            </p>
+            <ul class="list-disc ml-6 space-y-2">
+                <li><strong>Caráter Nacional:</strong> Aplica-se a todos os Institutos Federais (IFs).</li>
+                <li><strong>Regime de Trabalho:</strong> Prioridade para <span class="highlight">Dedicação Exclusiva (DE)</span>, mas permite 20h ou 40h sem DE em casos específicos.</li>
+                <li><strong>Estrutura:</strong> Carreira composta por Classes e Níveis, baseada em mérito (avaliação) e titulação.</li>
+            </ul>
+        </section>
+
+        <!-- Estrutura de Classes -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-emerald-900">2. Estrutura da Carreira (Pós-Reestruturação)</h2>
+            <p class="mb-4 text-sm text-gray-600">Essencial para questões sobre "onde o docente começa" e "até onde vai".</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Classe</th>
+                            <th>Denominação</th>
+                            <th>Níveis</th>
+                            <th>Requisito de Promoção</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Classe">A</td>
+                            <td data-label="Denominação">Assistente</td>
+                            <td data-label="Níveis">1</td>
+                            <td data-label="Requisito">Ingresso por concurso.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Classe">B</td>
+                            <td data-label="Denominação">Adjunto</td>
+                            <td data-label="Níveis">1, 2, 3, 4</td>
+                            <td data-label="Requisito"><span class="highlight">36 meses</span> no nível anterior + Avaliação.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Classe">C</td>
+                            <td data-label="Denominação">Associado</td>
+                            <td data-label="Níveis">1, 2, 3, 4</td>
+                            <td data-label="Requisito"><span class="highlight">24 meses</span> no nível B-4 + Avaliação.</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Classe">D</td>
+                            <td data-label="Denominação">Titular</td>
+                            <td data-label="Níveis">1</td>
+                            <td data-label="Requisito"><span class="highlight">24 meses</span> no nível C-4 + Doutorado + Defesa de Memorial.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Desenvolvimento na Carreira -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-emerald-900">3. Desenvolvimento: O Caminho do Acerto</h2>
+            <div class="important-box">
+                <p><strong>Diferença Fatal para a Prova:</strong></p>
+                <ul class="list-none space-y-2 mt-2">
+                    <li>🔹 <strong>Progressão:</strong> Entre NÍVEIS (Ex: B-1 para B-2). Exige 24 meses.</li>
+                    <li>🔹 <strong>Promoção:</strong> Entre CLASSES (Ex: B para C). Exige interstício + avaliação.</li>
+                </ul>
+            </div>
+
+            <h3 class="text-xl font-semibold mb-3">Aceleração de Promoção</h3>
+            <p class="mb-4 italic text-sm">A CEFETMINAS adora cobrar isso!</p>
+            <p>Ocorre <span class="highlight">após o término do estágio probatório</span> (3 anos). O docente pode "pular" níveis se tiver título superior ao exigido:</p>
+            <ul class="list-disc ml-6 mb-6">
+                <li>Para a <strong>Classe B (Adjunto)</strong>: se possuir título de <span class="highlight">Especialista</span>.</li>
+                <li>Para a <strong>Classe C (Associado)</strong>: se possuir título de <span class="highlight">Mestre ou Doutor</span>.</li>
+            </ul>
+        </section>
+
+        <!-- Remuneração e RSC -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-emerald-900">4. Retribuição por Titulação (RT) e RSC</h2>
+            <p class="mb-4">A remuneração total = Vencimento Básico + RT.</p>
+            <h3 class="font-bold mb-2">RSC (Reconhecimento de Saberes e Competências):</h3>
+            <p class="mb-4">O RSC é exclusivo do EBTT. Ele permite que o docente receba o valor da RT de um degrau acima.</p>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nível RSC</th>
+                            <th>Para quem tem:</th>
+                            <th>Recebe como se fosse:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Nível">RSC-I</td>
+                            <td data-label="Possui">Graduação</td>
+                            <td data-label="Recebe">Especialização</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Nível">RSC-II</td>
+                            <td data-label="Possui">Especialização</td>
+                            <td data-label="Recebe">Mestrado</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Nível">RSC-III</td>
+                            <td data-label="Possui">Mestrado</td>
+                            <td data-label="Recebe">Doutorado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-red-600 font-bold">Peguinha: RSC não serve para fins acadêmicos (ex: não permite orientar mestrado se você não tiver o título real).</p>
+        </section>
+
+        <!-- Afastamentos e CPPD -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-emerald-900">5. Afastamentos e CPPD</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="border p-4 rounded shadow-sm">
+                    <h4 class="font-bold text-emerald-700 mb-2">Afastamentos</h4>
+                    <p class="text-sm">Docentes podem se afastar para Mestrado (após 3 anos de exercício) e Doutorado/Pós-Doc (após 4 anos), <span class="highlight">incluindo o período de estágio probatório</span>.</p>
+                </div>
+                <div class="border p-4 rounded shadow-sm">
+                    <h4 class="font-bold text-emerald-700 mb-2">CPPD</h4>
+                    <p class="text-sm">A Comissão Permanente de Pessoal Docente é eleita pelos pares. Sua função é <span class="highlight">assessorar</span> a administração em assuntos de carreira, avaliação e regime de trabalho.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Peguinhas da CEFETMINAS -->
+        <section class="mb-12 bg-gray-50 p-6 rounded-lg border-2 border-dashed border-gray-300">
+            <h2 class="text-2xl font-bold mb-4 text-red-800">🎯 Tendências de Cobrança e Peguinhas (CEFETMINAS)</h2>
+            <ul class="space-y-4">
+                <li class="flex items-start">
+                    <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded mr-2">TRAP</span>
+                    <p>Afirmar que o RSC é automático. <strong>Errado:</strong> Precisa de processo administrativo e avaliação de comissão.</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded mr-2">TRAP</span>
+                    <p>Dizer que o interstício para progressão é de 1 ano. <strong>Errado:</strong> São <span class="highlight">24 meses</span> (2 anos).</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded mr-2">TRAP</span>
+                    <p>Confundir Magistério Superior com EBTT. <strong>Fique atento:</strong> No IFAM, o cargo é Professor EBTT. As regras de RSC, por exemplo, não existem para o Magistério Superior (Universidades).</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded mr-2">TRAP</span>
+                    <p>Afirmar que Professor Titular-Livre entra em estágio probatório. <strong>Cuidado:</strong> Sim, o ingresso é por concurso e segue as normas gerais, mas a classe é única.</p>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Navigation Button -->
+    <div class="mt-16 text-center">
+        <a href="10questoes.html" class="inline-block bg-zinc-900 hover:bg-zinc-700 text-white font-bold py-5 px-10 rounded-xl transition-all shadow-xl hover:-translate-y-1">
+            💻 PRATICAR COM QUESTÕES →
+        </a>
+        <p class="mt-4 text-gray-500 text-sm italic">"O sucesso é a soma de pequenos esforços repetidos dia após dia."</p>
+    </div>
+
+</body>
+</html>

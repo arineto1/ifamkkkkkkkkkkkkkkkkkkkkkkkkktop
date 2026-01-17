@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado IFAM - Resoluções Internas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .question-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            border: 2px solid #f1f5f9;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 0.75rem;
+        }
+
+        .option-label:hover {
+            background-color: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        input[type="radio"]:checked + .option-content {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        input[type="radio"]:checked + .option-label {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        .resolution {
+            display: none;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            border-radius: 4px;
+        }
+
+        .wrong-answer {
+            background-color: #fef2f2;
+            border-color: #ef4444 !important;
+        }
+
+        .correct-answer {
+            background-color: #f0fdf4;
+            border-color: #22c55e !important;
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="sticky-header py-4 mb-8">
+        <div class="max-w-4xl mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-slate-800">Simulado IFAM: Resoluções Internas</h1>
+            <div id="score-display" class="hidden font-semibold text-blue-600 bg-blue-50 px-4 py-2 rounded-full border border-blue-100">
+                Acertos: <span id="correct-count">0</span>/10
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 pb-20">
+        <form id="quiz-form">
+            <div id="questions-container">
+                <!-- As questões serão inseridas via JavaScript -->
+            </div>
+
+            <div class="flex justify-center mt-10">
+                <button type="button" id="submit-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-12 rounded-xl shadow-lg transition-all transform hover:scale-105">
+                    Finalizar Simulado e Ver Resoluções
+                </button>
+            </div>
+        </form>
+
+        <div id="final-result" class="hidden mt-12 p-8 bg-white border-2 border-blue-500 rounded-2xl text-center">
+            <h2 class="text-2xl font-bold mb-2">Desempenho Final</h2>
+            <p class="text-slate-600 mb-4">Confira abaixo o gabarito detalhado e as resoluções de cada questão.</p>
+            <button onclick="window.location.reload()" class="text-blue-600 underline font-medium">Refazer Simulado</button>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                id: 1,
+                subject: "Estatuto do IFAM (Resolução nº 072/2022) – Finalidades e Cotas",
+                question: "Conforme disposto no Estatuto do IFAM e em consonância com a Lei nº 11.892/2008, o Instituto possui compromisso legal com a oferta de educação profissional e tecnológica. Assinale a alternativa que apresenta corretamente a distribuição percentual mínima de vagas que deve ser observada pelo IFAM em seus processos seletivos e planejamento acadêmico.",
+                options: [
+                    "50% para cursos de graduação tecnológica e 20% para o ensino médio propedêutico.",
+                    "60% para cursos técnicos integrados e 10% para programas de mestrado profissional.",
+                    "50% para a educação profissional técnica de nível médio e 20% para cursos de licenciatura e formação pedagógica.",
+                    "70% para a educação profissional técnica de nível médio, sendo prioritariamente na forma subsequente.",
+                    "50% para cursos de bacharelado em engenharia e 30% para a educação de jovens e adultos (PROEJA)."
+                ],
+                correct: 2,
+                resolution: "O Art. 7º do Estatuto do IFAM (Res. 072/2022) determina a reserva de 50% das vagas para Educação Profissional Técnica de Nível Médio e 20% para cursos de Licenciatura e programas de formação pedagógica. A chave é o par '50% Técnico Médio + 20% Licenciatura'."
+            },
+            {
+                id: 2,
+                subject: "Regimento Geral (Resolução nº 002/2011) – Competências de Gestão",
+                question: "O Regimento Geral do IFAM estabelece uma estrutura descentralizada de administração através da gestão delegada aos Campi. Considerando as competências privativas do Diretor Geral de um Campus, assinale a alternativa INCORRETA:",
+                options: [
+                    "O Diretor Geral exerce a representação legal do Campus em todos os atos de sua jurisdição.",
+                    "Compete ao Diretor Geral nomear e exonerar servidores para ocuparem Funções Gratificadas (FG) no âmbito do Campus.",
+                    "O Diretor Geral é a autoridade competente para presidir o Conselho Educacional do Campus.",
+                    "Compete ao Diretor Geral expedir e registrar diplomas de Doutorado e Mestrado ofertados pelo Campus, sem necessidade de tramitação pela Reitoria.",
+                    "O Diretor Geral tem competência para instaurar inquéritos disciplinares discentes no âmbito da unidade de ensino."
+                ],
+                correct: 3,
+                resolution: "A expedição e o registro de diplomas de nível superior (especialmente Stricto Sensu) são atos de validação nacional que competem institucionalmente à Reitoria, devido à necessidade de registro centralizado. O Diretor Geral assina certificados técnicos, mas diplomas de pós-graduação exigem tramitação sistêmica."
+            },
+            {
+                id: 3,
+                subject: "Resolução nº 66/2017 – Carga Horária Docente em Sala de Aula",
+                question: "Um professor do IFAM, em regime de Dedicação Exclusiva (40h DE), está elaborando seu Plano Individual de Trabalho (PIT). Segundo a Resolução nº 66/2017/CONSUP/IFAM, a carga horária semanal dedicada estritamente às atividades de aula (regência) deve respeitar quais limites mínimo e máximo?",
+                options: [
+                    "Mínimo de 10 horas e máximo de 20 horas.",
+                    "Mínimo de 8 horas e máximo de 12 horas.",
+                    "Mínimo de 4 horas e máximo de 16 horas.",
+                    "Fixo de 14 horas, podendo ser reduzido apenas em caso de doença.",
+                    "Mínimo de 8 horas e máximo de 16 horas, dependendo do número de alunos."
+                ],
+                correct: 1,
+                resolution: "Conforme o Art. 10 da Resolução 66/2017, para docentes em regime de 40h ou DE, a carga horária de regência direta deve situar-se entre o mínimo de 8 e o máximo de 12 horas semanais."
+            },
+            {
+                id: 4,
+                subject: "Resolução nº 94/2015 – Organização Didática (Cancelamento de Matrícula)",
+                question: "O Art. 99 da Resolução nº 94/2015 do CONSUP/IFAM prevê situações taxativas que ensejam o cancelamento automático da matrícula (jubilamento). Analise as situações hipotéticas abaixo e identifique aquela que configura causa legal para o cancelamento de matrícula:",
+                options: [
+                    "Discente que obteve média final 5,8 em duas disciplinas consecutivas.",
+                    "Discente que não compareceu às aulas, injustificadamente, nos primeiros 10 (dez) dias letivos ininterruptos do semestre.",
+                    "Discente que solicitou trancamento de matrícula no segundo período do curso por motivos de trabalho.",
+                    "Discente que reprovou por faltas em uma disciplina, mas manteve frequência global de 70%.",
+                    "Discente que entregou o Trabalho de Conclusão de Curso com 15 dias de atraso."
+                ],
+                correct: 1,
+                resolution: "O Art. 99, inciso II, determina o cancelamento automático se o aluno não comparecer injustificadamente nos primeiros 10 dias letivos ininterruptos. Isso é considerado abandono inicial da vaga."
+            },
+            {
+                id: 5,
+                subject: "Estatuto do IFAM – Alteração Estatutária",
+                question: "O Estatuto do IFAM é o documento que rege a vida institucional. Para garantir a estabilidade das normas, sua alteração exige um rito qualificado. Assinale a alternativa que indica corretamente o quórum necessário no Conselho Superior (CONSUP) para aprovar alterações no Estatuto.",
+                options: [
+                    "Maioria simples dos presentes na reunião.",
+                    "Maioria absoluta dos membros do conselho (50% + 1).",
+                    "Unanimidade dos membros presentes.",
+                    "2/3 (dois terços) dos integrantes do Conselho Superior.",
+                    "3/5 (três quintos) dos membros, após consulta pública obrigatória."
+                ],
+                correct: 3,
+                resolution: "O Art. 58 do Estatuto define que qualquer mudança estatutária exige o quórum qualificado de 2/3 (dois terços) de todos os integrantes do Conselho Superior."
+            },
+            {
+                id: 6,
+                subject: "Resolução nº 66/2017 – Exceções à Carga Didática",
+                question: "A Resolução nº 66/2017 permite que determinados servidores docentes sejam dispensados integralmente da carga horária de sala de aula devido à natureza de suas funções administrativas. Quais cargos abaixo gozam dessa prerrogativa de dispensa total?",
+                options: [
+                    "Coordenadores de Curso e Chefes de Departamento.",
+                    "Reitor, Pró-Reitores e Diretores Gerais de Campus.",
+                    "Membros da Comissão Própria de Avaliação (CPA).",
+                    "Docentes com mais de 25 anos de serviço público.",
+                    "Coordenadores de Projetos de Pesquisa com financiamento externo."
+                ],
+                correct: 1,
+                resolution: "Docentes ocupantes de cargos de alta gestão (CD-1 e CD-2), como Reitor, Pró-Reitores e Diretores Gerais de Campus, podem ser integralmente dispensados da carga de aula devido à complexidade administrativa."
+            },
+            {
+                id: 7,
+                subject: "Regimento Geral – Órgãos Colegiados",
+                question: "Cada Campus do IFAM conta com um Conselho Educacional. Sobre a natureza e a presidência deste órgão, conforme estipulado no Regimento Geral, é correto afirmar:",
+                options: [
+                    "É um órgão deliberativo superior, presidido pelo Reitor.",
+                    "É um órgão consultivo de assessoramento, presidido pelo Diretor Geral do Campus.",
+                    "É um órgão fiscalizador, presidido por um representante eleito da comunidade externa.",
+                    "É um órgão executivo financeiro, presidido pelo Diretor de Administração.",
+                    "É um órgão normativo máximo, presidido pelo Decano do Campus."
+                ],
+                correct: 1,
+                resolution: "O Conselho Educacional é um órgão consultivo de assessoramento à gestão local, presidido pelo Diretor Geral do Campus, conforme o Regimento Geral."
+            },
+            {
+                id: 8,
+                subject: "Resolução nº 94/2015 – Avaliação da Aprendizagem",
+                question: "Um aluno do curso técnico integrado faltou a uma avaliação agendada devido a uma enfermidade comprovada por atestado médico. De acordo com a Organização Didática do IFAM (Resolução nº 94/2015), qual é o procedimento correto e qual é a média mínima para aprovação no IFAM?",
+                options: [
+                    "O aluno está reprovado na avaliação; média mínima 7,0.",
+                    "O aluno deve aguardar a recuperação final; média mínima 5,0.",
+                    "O aluno tem direito à Segunda Chamada mediante requerimento; média mínima 6,0.",
+                    "O professor deve aplicar nova prova na aula seguinte sem formalidades; média mínima 6,0.",
+                    "O aluno recebe nota zero, mas pode compensar com trabalhos extras; média mínima 5,0."
+                ],
+                correct: 2,
+                resolution: "O índice de aprovação no IFAM é 6,0. Em caso de falta justificada, o aluno tem direito à Segunda Chamada mediante requerimento formal à coordenação."
+            },
+            {
+                id: 9,
+                subject: "Resolução nº 66/2017 (Anexo) – Atividade de Pós-Graduação",
+                question: "No que tange à pontuação de carga horária docente para atividades na Pós-Graduação Stricto Sensu (Mestrado/Doutorado), conforme o anexo da Resolução nº 66/2017, qual é a carga horária máxima semanal atribuída por orientando e o limite de orientandos permitidos?",
+                options: [
+                    "2 horas por orientando, até o limite de 10 alunos.",
+                    "4 horas por orientando, até o limite de 8 alunos.",
+                    "1 hora por orientando, sem limite definido.",
+                    "6 horas por orientando, até o limite de 5 alunos.",
+                    "10 horas totais, independentemente do número de alunos."
+                ],
+                correct: 1,
+                resolution: "Cada orientando de pós-graduação stricto sensu pode contabilizar até 4 horas na carga horária semanal, com um teto máximo de 8 orientandos por docente para fins de contagem."
+            },
+            {
+                id: 10,
+                subject: "Estatuto do IFAM – Estrutura Administrativa",
+                question: "A estrutura multicampi do IFAM exige coordenação entre as unidades. O órgão colegiado consultivo que reúne o Reitor, os Pró-Reitores e os Diretores Gerais de todos os Campi para tratar de assuntos executivos e de gestão sistêmica denomina-se:",
+                options: [
+                    "Conselho Superior (CONSUP).",
+                    "Conselho Fiscal (CONFIS).",
+                    "Colégio de Dirigentes (CODIR).",
+                    "Fórum de Desenvolvimento Institucional.",
+                    "Câmara de Ensino Básico (CEB)."
+                ],
+                correct: 2,
+                resolution: "O Colégio de Dirigentes (CODIR) é o órgão consultivo e de assessoramento que reúne a alta gestão (Reitor, Pró-Reitores e Diretores de Campus) para harmonizar as ações executivas."
+            }
+        ];
+
+        const container = document.getElementById('questions-container');
+
+        // Renderizar questões
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+            
+            card.innerHTML = `
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded">QUESTÃO ${q.id}</span>
+                    <span class="text-slate-400 text-xs uppercase font-medium tracking-wider">${q.subject}</span>
+                </div>
+                <p class="text-lg font-medium mb-6 text-slate-800">${q.question}</p>
+                <div class="options-list">
+                    ${q.options.map((opt, optIdx) => `
+                        <label class="option-label" for="q${index}o${optIdx}">
+                            <input type="radio" name="question${index}" id="q${index}o${optIdx}" value="${optIdx}" class="mt-1 mr-3">
+                            <span class="option-content text-slate-700">${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+                <div class="resolution" id="res-${index}">
+                    <p class="font-bold text-green-800 mb-1 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        Resolução Detalhada:
+                    </p>
+                    <p class="text-green-900">${q.resolution}</p>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // Lógica do Quiz
+        document.getElementById('submit-btn').addEventListener('click', () => {
+            let correctCount = 0;
+            const form = document.getElementById('quiz-form');
+
+            quizData.forEach((q, index) => {
+                const selected = form.querySelector(`input[name="question${index}"]:checked`);
+                const resolutionDiv = document.getElementById(`res-${index}`);
+                const optionsLabels = document.querySelectorAll(`#q-card-${index} .option-label`);
+                
+                resolutionDiv.style.display = 'block';
+
+                if (selected) {
+                    const answerIdx = parseInt(selected.value);
+                    if (answerIdx === q.correct) {
+                        correctCount++;
+                        optionsLabels[answerIdx].classList.add('correct-answer');
+                    } else {
+                        optionsLabels[answerIdx].classList.add('wrong-answer');
+                        optionsLabels[q.correct].classList.add('correct-answer');
+                    }
+                } else {
+                    // Se não respondeu, apenas destaca a correta
+                    optionsLabels[q.correct].classList.add('correct-answer');
+                }
+            });
+
+            // Exibir resultados
+            document.getElementById('score-display').classList.remove('hidden');
+            document.getElementById('correct-count').innerText = correctCount;
+            document.getElementById('final-result').classList.remove('hidden');
+            document.getElementById('submit-btn').style.display = 'none';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

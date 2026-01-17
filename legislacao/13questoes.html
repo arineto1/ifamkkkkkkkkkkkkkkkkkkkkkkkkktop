@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Resolução nº 66-CONSUP/IFAM</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2c3e50;
+            --accent-color: #27ae60;
+            --border-color: #e0e0e0;
+            --card-bg: #ffffff;
+            --correct-bg: #d4edda;
+            --wrong-bg: #f8d7da;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        header p {
+            margin-top: 0.5rem;
+            color: #666;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem 5rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 0.75rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-item:hover {
+            background-color: #f1f1f1;
+            border-color: #bbb;
+        }
+
+        .option-item.selected {
+            border-color: var(--accent-color);
+            background-color: #f0fff4;
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .submit-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        button#submit-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        button#submit-btn:hover {
+            background-color: #219150;
+            transform: translateY(-2px);
+        }
+
+        #results-area {
+            display: none;
+            margin-top: 3rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .result-summary {
+            background: #eef2f7;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .result-summary h2 {
+            margin-top: 0;
+        }
+
+        .score-box {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .resolution-section {
+            background: #fff;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            display: none;
+        }
+
+        .resolution-section h4 {
+            margin-top: 0;
+            color: #2c3e50;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .feedback-correct {
+            background-color: var(--correct-bg) !important;
+            border-color: #c3e6cb !important;
+            color: #155724;
+        }
+
+        .feedback-wrong {
+            background-color: var(--wrong-bg) !important;
+            border-color: #f5c6cb !important;
+            color: #721c24;
+        }
+
+        .correct-answer-indicator {
+            font-weight: bold;
+            color: #155724;
+            margin-top: 10px;
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 0 1rem 3rem; }
+            header h1 { font-size: 1.4rem; }
+            .question-card { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <h1>Simulado Especializado</h1>
+        <p>Resolução nº 66-CONSUP/IFAM de 15 de dezembro de 2017</p>
+    </div>
+</header>
+
+<div class="container">
+    <div id="quiz-container">
+        <!-- Questions will be injected here -->
+    </div>
+
+    <div class="submit-container">
+        <button id="submit-btn" onclick="gradeQuiz()">Finalizar Simulado e Ver Resultados</button>
+    </div>
+
+    <div id="results-area">
+        <div class="result-summary">
+            <h2>Resultado Final</h2>
+            <div class="score-box" id="score-display">0/10</div>
+            <p id="score-text">Você completou o simulado!</p>
+        </div>
+        
+        <div id="resolutions-container">
+            <!-- Resolutions will be shown here along with the feedback -->
+        </div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            category: "Fundamentação Legal e Hierarquia Normativa",
+            text: "A Resolução nº 66-CONSUP/IFAM, de 15 de dezembro de 2017, não opera em um vácuo legislativo, mas sim como um instrumento regulamentador de diplomas legais hierarquicamente superiores que estruturam a Educação Profissional e Tecnológica no Brasil. Conforme o preâmbulo do texto normativo, a regulamentação das atividades docentes (RAD) pertencentes ao cargo do Ensino Básico, Técnico e Tecnológico (EBTT) observa as finalidades e objetivos estabelecidos em diversas leis federais. Assinale a alternativa que identifica corretamente a correlação entre o diploma legal citado nos \"Considerandos\" da Resolução e o seu objeto de regulação principal que impacta diretamente a carga horária docente no IFAM:",
+            options: [
+                { label: "A", text: "A Lei nº 8.112/1990 é citada exclusivamente para definir a carga horária máxima de 60 horas semanais em casos de acumulação de cargos, sem impacto no regime de Dedicação Exclusiva." },
+                { label: "B", text: "A Lei nº 11.892/2008 é referenciada como a base instituidora da Rede Federal, cujos objetivos finalísticos determinam a necessidade da distribuição de carga horária entre ensino, pesquisa e extensão." },
+                { label: "C", text: "A Lei nº 9.394/1996 (LDB) é utilizada para fixar o regime de previdência complementar dos servidores docentes, desvinculando-o das atividades de pós-graduação." },
+                { label: "D", text: "A Lei nº 12.722/2012 é o fundamento para a criação dos cursos de pós-graduação stricto sensu, mas não trata do desenvolvimento na carreira EBTT." },
+                { label: "E", text: "A Portaria nº 17 SETEC/MEC de 2016 revogou a autonomia do Conselho Superior (CONSUP), transferindo a competência de regulamentação do PIT diretamente para o Ministério da Educação." }
+            ],
+            correct: "B",
+            resolution: "**Gabarito: B**. A Lei nº 11.892/2008 institui a Rede Federal e define os objetivos dos Institutos Federais (Art. 6º), exigindo a indissociabilidade entre ensino, pesquisa e extensão, o que fundamenta a distribuição de carga horária docente."
+        },
+        {
+            id: 2,
+            category: "Regimes de Trabalho e Alteração de Carga Horária",
+            text: "O regime de trabalho dos docentes do IFAM é estruturado para atender às demandas complexas da educação profissional. De acordo com o corpo do texto da Resolução nº 66/2017 e suas remissões legais, sobre os regimes de trabalho de 20 horas, 40 horas e Dedicação Exclusiva (DE), analise a situação hipotética a seguir: O Professor Carlos, atualmente em regime de 20 horas semanais, deseja alterar seu regime para 40 horas semanais (movimento ascendente), enquanto a Professora Ana, em regime de 40 horas, pleiteia a redução para 20 horas (movimento descendente). Segundo a regulamentação vigente no IFAM:",
+            options: [
+                { label: "A", text: "Ambas as alterações (ascendente e descendente) são direitos subjetivos automáticos dos docentes, bastando a comunicação prévia com 30 dias de antecedência à Diretoria de Ensino." },
+                { label: "B", text: "A alteração de regime de 20h para 40h (ascendente) é condicionada estritamente à existência de recursos orçamentários e financeiros para cobrir as despesas decorrentes, além do interesse institucional." },
+                { label: "C", text: "O regime de Dedicação Exclusiva permite o exercício de outra atividade remunerada privada de forma irrestrita, desde que haja compatibilidade de horários comprovada no Plano Individual de Trabalho (PIT)." },
+                { label: "D", text: "A redução de carga horária (descendente) solicitada pela Professora Ana é vedada durante o estágio probatório, independentemente da justificativa ou conveniência administrativa." },
+                { label: "E", text: "Os docentes em regime de 20 horas podem ser compelidos pela administração a assumir o regime de Dedicação Exclusiva compulsoriamente em casos de déficit de professores no campus." }
+            ],
+            correct: "B",
+            resolution: "**Gabarito: B**. Mudanças ascendentes de regime (20h -> 40h/DE) implicam aumento de gasto público e, portanto, dependem de disponibilidade orçamentária e interesse da administração, não sendo um direito automático."
+        },
+        {
+            id: 3,
+            category: "Qualificação Docente e Afastamento Parcial (Art. 28)",
+            text: "O Artigo 28 da Resolução nº 66-CONSUP/IFAM estabelece um regime especial de cumprimento de carga horária para docentes que frequentam cursos de Pós-Graduação Stricto Sensu (Mestrado ou Doutorado) em instituição localizada na mesma cidade ou região metropolitana de seu campus de lotação. Para usufruir da adequação de horário prevista neste artigo, o docente deve cumprir requisitos rígidos. Assinale a alternativa que apresenta corretamente a carga horária de ensino obrigatória e as restrições impostas:",
+            options: [
+                { label: "A", text: "O docente fica dispensado de todas as atividades de ensino, devendo dedicar 40 horas semanais exclusivamente à pesquisa e aos estudos da pós-graduação." },
+                { label: "B", text: "O docente deve manter uma carga horária mínima de 08 (oito) horas e máxima de 12 (doze) horas semanais de efetivo trabalho em sala de aula, ficando dispensado das atividades de pesquisa, extensão e gestão." },
+                { label: "C", text: "A carga horária de ensino é reduzida para 04 (quatro) horas semanais, mas o docente é obrigado a manter atividades de gestão e representação institucional para compensar a redução em sala de aula." },
+                { label: "D", text: "O docente deve cumprir o mínimo de 10 (dez) horas de aula, mas pode abater essas horas com atividades de orientação de TCC, desde que autorizadas pelo coordenador do curso." },
+                { label: "E", text: "Não há limite mínimo de horas em sala de aula, cabendo à Diretoria de Ensino definir a carga horária conforme a necessidade do semestre, podendo chegar a zero horas." }
+            ],
+            correct: "B",
+            resolution: "**Gabarito: B**. Conforme o Art. 28, o docente em qualificação na mesma localidade deve cumprir entre 8 e 12 horas de sala de aula, sendo dispensado de outras atividades (pesquisa/extensão/gestão) para focar na pós-graduação."
+        },
+        {
+            id: 4,
+            category: "Vedações Administrativas durante a Qualificação",
+            text: "Ainda sobre a situação regulada pelo Artigo 28 da Resolução nº 66/2017 (docente cursando pós-graduação na mesma localidade), a norma impõe vedações específicas para garantir que o foco do servidor seja a conclusão de sua titulação, sem prejuízo das atividades essenciais de ensino. Considerando o parágrafo 2º do referido artigo, é CORRETO afirmar que o docente nesta situação:",
+            options: [
+                { label: "A", text: "Pode assumir coordenações de cursos de Formação Inicial e Continuada (FIC) livremente, pois estes não são considerados cursos regulares." },
+                { label: "B", text: "Fica impossibilitado de assumir atividades de administração e vinculadas aos programas institucionais, incluindo Educação a Distância (EaD), exceto em casos de excepcional interesse institucional no âmbito do IFAM." },
+                { label: "C", text: "Pode acumular a função de Coordenador de Pesquisa, visto que a atividade de pesquisa é compatível e complementar à sua pós-graduação stricto sensu." },
+                { label: "D", text: "Está autorizado a exercer cargos de direção geral (CD) e funções gratificadas (FG) desde que abra mão da redução de carga horária de ensino prevista no caput do artigo." },
+                { label: "E", text: "Deve obrigatoriamente assumir a tutoria de alunos em programas de assistência estudantil como contrapartida pela redução da carga horária de ensino." }
+            ],
+            correct: "B",
+            resolution: "**Gabarito: B**. O parágrafo 2º do Art. 28 veda atividades administrativas e em programas institucionais (como EaD) para que o docente foque na titulação, salvo excepcional interesse do IFAM."
+        },
+        {
+            id: 5,
+            category: "Atividades de Pós-Graduação - Cargas Horárias de Gestão (Anexo A)",
+            text: "O Anexo A da Resolução nº 66-CONSUP/IFAM regulamenta a Carga Horária Total Semanal Máxima (CHTSMax) que pode ser alocada no Plano Individual de Trabalho (PIT) para atividades vinculadas a Programas de Pós-Graduação Stricto Sensu. Considerando a tabela de pontuação e limites de horas para atividades de gestão acadêmica na pós-graduação, identifique a alternativa que apresenta a atribuição de carga horária CORRETA:",
+            options: [
+                { label: "A", text: "A Coordenação de Programa/Curso de Pós-Graduação permite a alocação de até 40 (quarenta) horas semanais, equivalendo à dedicação integral do docente." },
+                { label: "B", text: "A Vice-Coordenação de Programa possui um limite reduzido de 10 (dez) horas semanais, correspondendo a 50% da carga do Coordenador." },
+                { label: "C", text: "A Coordenação de Programa/Curso, a Vice-Coordenação de Programa e a Coordenação de Centro de Pesquisa vinculado aos PPGs possuem, todas, CHTSMax de 20 (vinte) horas." },
+                { label: "D", text: "A Editoria Chefe de Revista ligada a um PPG é considerada atividade de menor complexidade, limitada a 04 (quatro) horas semanais." },
+                { label: "E", text: "A Coordenação de Projetos de Inserção Social cadastrados nos PPGs permite a alocação de 20 (vinte) horas semanais, equiparando-se à Coordenação do Curso." }
+            ],
+            correct: "C",
+            resolution: "**Gabarito: C**. O Anexo A equipara as funções de alta gestão da pós-graduação (Coordenação, Vice e Centro de Pesquisa) com o teto de 20 horas semanais no PIT."
+        },
+        {
+            id: 6,
+            category: "Produção Intelectual e Limitações Quantitativas",
+            text: "A produção intelectual é um componente vital da carreira EBTT, especialmente para docentes atuantes na pós-graduação. Contudo, a Resolução nº 66/2017 impõe travas quantitativas para evitar que o PIT seja preenchido exclusivamente com produção bibliográfica em detrimento de outras atividades. De acordo com o Anexo A, inciso VII, referente à \"Autoria ou organização de livros\", a regra de contabilização é:",
+            options: [
+                { label: "A", text: "CHTSMax de 08 (oito) horas, sem limitação de quantidade de obras por semestre." },
+                { label: "B", text: "CHTSMax de 20 (vinte) horas, limitado a 01 (um) livro por ano." },
+                { label: "C", text: "CHTSMax de 08 (oito) horas, limitado a 01 (um) livro por semestre." },
+                { label: "D", text: "CHTSMax de 04 (quatro) horas por livro, podendo acumular até 03 (três) livros simultaneamente no PIT." },
+                { label: "E", text: "A autoria de livros não gera carga horária no PIT, contando apenas para a progressão funcional por mérito." }
+            ],
+            correct: "C",
+            resolution: "**Gabarito: C**. Para evitar o esvaziamento das salas de aula, a norma limita a atribuição de carga para autoria de livros a 8 horas semanais e a apenas 1 obra por semestre letivo."
+        },
+        {
+            id: 7,
+            category: "Orientação em Pós-Graduação Stricto Sensu",
+            text: "A atividade de orientação de dissertações e teses exige dedicação individualizada do docente. O Anexo A da Resolução nº 66/2017 reconhece esse esforço atribuindo horas específicas no PIT. Assinale a alternativa que reflete corretamente os limites de horas por orientação e o teto de orientandos permitidos para fins de registro de carga horária:",
+            options: [
+                { label: "A", text: "02 horas por orientando, com máximo de 10 orientandos por semestre." },
+                { label: "B", text: "04 horas por orientando, com máximo de 08 orientandos por semestre." },
+                { label: "C", text: "04 horas por orientando, com máximo de 04 orientandos por semestre." },
+                { label: "D", text: "06 horas por orientando, limitado a 05 orientandos por semestre." },
+                { label: "E", text: "01 hora por orientando, sem limite máximo, incentivando a alta produtividade." }
+            ],
+            correct: "B",
+            resolution: "**Gabarito: B**. Conforme o Inciso IX do Art. 2º do Anexo A, cada orientação de Stricto Sensu garante 4 horas no PIT, com um teto pedagógico de 8 orientandos simultâneos."
+        },
+        {
+            id: 8,
+            category: "Coordenação de Projetos e Inserção Social",
+            text: "No contexto da integração entre o IFAM e a sociedade, os projetos de inserção social e os projetos intra/interinstitucionais ocupam papel estratégico. O Anexo A da Resolução nº 66/2017 estipula a Carga Horária Total Semanal Máxima (CHTSMax) para a coordenação dessas atividades (Incisos V e VI). O valor correto dessa carga horária é:",
+            options: [
+                { label: "A", text: "04 (quatro) horas semanais." },
+                { label: "B", text: "08 (oito) horas semanais." },
+                { label: "C", text: "12 (doze) horas semanais." },
+                { label: "D", text: "15 (quinze) horas semanais." },
+                { label: "E", text: "20 (vinte) horas semanais." }
+            ],
+            correct: "B",
+            resolution: "**Gabarito: B**. Atividades de coordenação de projetos (sociais ou institucionais) recebem 8 horas semanais, valor padronizado para permitir a gestão sem prejuízo excessivo ao ensino."
+        },
+        {
+            id: 9,
+            category: "Presidência de Comissões de Seleção",
+            text: "A gestão acadêmica envolve também a operacionalização do ingresso de novos discentes. Para o docente que assume a responsabilidade de presidir a comissão do processo seletivo dos Programas de Pós-Graduação (PPGs), a Resolução nº 66/2017 define uma carga horária específica, reconhecendo a temporalidade e a carga de trabalho dessa função. Qual é a CHTSMax atribuída a esta atividade conforme o Anexo A?",
+            options: [
+                { label: "A", text: "02 (duas) horas." },
+                { label: "B", text: "04 (quatro) horas." },
+                { label: "C", text: "06 (seis) horas." },
+                { label: "D", text: "08 (oito) horas." },
+                { label: "E", text: "10 (dez) horas." }
+            ],
+            correct: "C",
+            resolution: "**Gabarito: C**. A presidência de comissão de seleção para PPGs atribui 6 horas no PIT, reconhecendo o trabalho burocrático e logístico envolvido no processo."
+        },
+        {
+            id: 10,
+            category: "Plano Individual de Trabalho (PIT) e Validação",
+            text: "O Plano Individual de Trabalho (PIT) é o instrumento de planejamento das atividades docentes. Sua elaboração e validação seguem um rito processual definido. Considerando a estrutura administrativa dos campi do IFAM e as competências implícitas na validação das atividades docentes descritas na resolução, a validação final das atividades de Gestão e Representação Institucional, pela sua natureza política e administrativa, cabe à:",
+            options: [
+                { label: "A", text: "Coordenação de Curso." },
+                { label: "B", text: "Diretoria de Ensino." },
+                { label: "C", text: "Direção Geral do Campus." },
+                { label: "D", text: "Coordenação de Gestão de Pessoas (CGP)." },
+                { label: "E", text: "Comissão Permanente de Pessoal Docente (CPPD)." }
+            ],
+            correct: "C",
+            resolution: "**Gabarito: C**. Atividades macro de gestão e representação institucional (como participar de conselhos superiores) são validadas pela autoridade máxima do campus: o Diretor Geral."
+        }
+    ];
+
+    const quizContainer = document.getElementById('quiz-container');
+
+    // Load questions
+    function initQuiz() {
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+            
+            let optionsHTML = '';
+            q.options.forEach(opt => {
+                optionsHTML += `
+                    <li class="option-item" onclick="selectOption(${index}, '${opt.label}')">
+                        <input type="radio" name="question-${index}" id="q${index}${opt.label}" value="${opt.label}">
+                        <label for="q${index}${opt.label}">${opt.label}) ${opt.text}</label>
+                    </li>
+                `;
+            });
+
+            card.innerHTML = `
+                <span class="question-header">QUESTÃO ${String(index + 1).padStart(2, '0')} - ${q.category}</span>
+                <div class="question-text">${q.text}</div>
+                <ul class="options-list">
+                    ${optionsHTML}
+                </ul>
+                <div class="resolution-section" id="res-${index}">
+                    <h4>Resolução e Comentário</h4>
+                    <p>${q.resolution}</p>
+                </div>
+            `;
+            quizContainer.appendChild(card);
+        });
+    }
+
+    function selectOption(qIndex, label) {
+        // Deselect others
+        const card = document.getElementById(`q-card-${qIndex}`);
+        const options = card.querySelectorAll('.option-item');
+        options.forEach(opt => opt.classList.remove('selected'));
+        
+        // Select current
+        const radio = card.querySelector(`input[value="${label}"]`);
+        radio.checked = true;
+        radio.parentElement.classList.add('selected');
+    }
+
+    function gradeQuiz() {
+        let score = 0;
+        const total = questions.length;
+
+        questions.forEach((q, index) => {
+            const card = document.getElementById(`q-card-${index}`);
+            const selectedRadio = card.querySelector(`input[name="question-${index}"]:checked`);
+            const resolution = document.getElementById(`res-${index}`);
+            
+            // Show resolution
+            resolution.style.display = 'block';
+
+            if (selectedRadio) {
+                const userAns = selectedRadio.value;
+                const options = card.querySelectorAll('.option-item');
+                
+                options.forEach(opt => {
+                    const val = opt.querySelector('input').value;
+                    if (val === q.correct) {
+                        opt.classList.add('feedback-correct');
+                    }
+                    if (val === userAns && userAns !== q.correct) {
+                        opt.classList.add('feedback-wrong');
+                    }
+                });
+
+                if (userAns === q.correct) {
+                    score++;
+                }
+            } else {
+                // Not answered: just highlight correct one
+                const options = card.querySelectorAll('.option-item');
+                options.forEach(opt => {
+                    if (opt.querySelector('input').value === q.correct) {
+                        opt.classList.add('feedback-correct');
+                    }
+                });
+                const warning = document.createElement('span');
+                warning.className = 'feedback-wrong';
+                warning.style.padding = '5px';
+                warning.style.borderRadius = '4px';
+                warning.style.fontSize = '0.8rem';
+                warning.innerText = 'Questão não respondida.';
+                card.appendChild(warning);
+            }
+        });
+
+        // Display results
+        document.getElementById('score-display').innerText = `${score}/${total}`;
+        document.getElementById('results-area').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'none';
+
+        // Scroll to results
+        document.getElementById('results-area').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

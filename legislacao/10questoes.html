@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado: Lei 12.772/2012 - Magistério Federal</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --correct-color: #27ae60;
+            --wrong-color: #d63031;
+            --border-color: #dfe6e9;
+            --container-width: 850px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #000;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            width: 100%;
+            padding: 0 20px 100px 20px;
+            box-sizing: border-box;
+        }
+
+        .question-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--accent-color);
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+
+        .question-text {
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+            white-space: pre-line;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s, border 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f1f2f6;
+        }
+
+        .option-label input {
+            margin-top: 5px;
+            margin-right: 15px;
+        }
+
+        .submit-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn-submit {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.1s, opacity 0.2s;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* Results Styles */
+        #results-section {
+            display: none;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: #f1f2f6;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .resolution-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid var(--accent-color);
+            font-size: 0.95rem;
+            text-align: left;
+        }
+
+        .feedback-correct {
+            border-color: var(--correct-color) !important;
+            background-color: rgba(39, 174, 96, 0.1);
+        }
+
+        .feedback-wrong {
+            border-color: var(--wrong-color) !important;
+            background-color: rgba(214, 48, 49, 0.1);
+        }
+
+        .correct-answer-indicator {
+            color: var(--correct-color);
+            font-weight: bold;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-left: 10px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .question-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado: Lei nº 12.772/2012 (Plano de Carreira Magistério Federal)</h1>
+</header>
+
+<div class="container">
+    <form id="quiz-form">
+        <div id="questions-container"></div>
+        
+        <div class="submit-container">
+            <button type="button" class="btn-submit" onclick="gradeQuiz()">Finalizar e Ver Gabarito</button>
+        </div>
+    </form>
+
+    <div id="results-section">
+        <div class="score-display" id="score-text"></div>
+        <p>Confira abaixo as resoluções comentadas para cada questão.</p>
+        <button class="btn-submit" style="background: var(--text-color); margin-top: 10px;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Voltar ao Topo</button>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "A Lei nº 12.772, de 28 de dezembro de 2012, promoveu uma reestruturação significativa nas carreiras de Magistério Federal, segregando e especificando as estruturas para o Magistério Superior e para o Ensino Básico, Técnico e Tecnológico (EBTT). No que tange à Estrutura da Carreira de Magistério Superior, disposta no Anexo I da referida Lei, assinale a alternativa que apresenta a correta correlação hierárquica das Classes, partindo do nível de ingresso para o topo da carreira, considerando as denominações vigentes.",
+            options: [
+                "Classe A (Professor Auxiliar ou Professor Assistente A ou Professor Adjunto A); Classe B (Professor Assistente); Classe C (Professor Adjunto); Classe D (Professor Associado); Classe E (Professor Titular).",
+                "Classe de Ingresso (Professor Auxiliar); Classe Intermediária I (Professor Assistente); Classe Intermediária II (Professor Adjunto); Classe Especial (Professor Associado); Classe Titular (Professor Catedrático).",
+                "Classe A (Professor Colaborador); Classe B (Professor Assistente); Classe C (Professor Adjunto); Classe D (Professor Livre-Docente); Classe E (Professor Titular).",
+                "Classe 1 (Auxiliar); Classe 2 (Assistente); Classe 3 (Adjunto); Classe 4 (Associado); Classe 5 (Titular), sendo o ingresso permitido exclusivamente na Classe 1.",
+                "Classe A (Professor Assistente); Classe B (Professor Adjunto); Classe C (Professor Associado); Classe D (Professor Titular); Classe E (Professor Emérito)."
+            ],
+            correct: 0,
+            resolution: "A reestruturação de 2012 unificou e simplificou a progressão. A estrutura correta da Carreira de Magistério Superior é composta pelas Classes A, B, C, D e E. A Classe A é a única porta de entrada, cujas denominações variam conforme a titulação (Auxiliar, Assistente A ou Adjunto A). As demais seguem a progressão vertical até o topo (Titular)."
+        },
+        {
+            id: 2,
+            question: "O regime de trabalho é um dos pilares da dedicação acadêmica nas Instituições Federais de Ensino (IFEs). A Lei nº 12.772/2012, em seu Artigo 20, estabelece o Regime de Dedicação Exclusiva (DE) como preferencial. Contudo, o Artigo 21 elenca exceções taxativas que não configuram violação a este regime. Analise as situações abaixo à luz do Artigo 21 e seus parágrafos:\n\nI. Percebimento de direitos autorais ou direitos de propriedade intelectual.\nII. Participação esporádica em palestras, conferências, atividades artísticas e culturais, remuneradas ou não.\nIII. Colaboração esporádica de natureza científica ou tecnológica, remunerada, em assuntos de especialidade do docente, desde que não exceda a 50 (cinquenta) horas anuais.\nIV. Retribuição pecuniária por participação em bancas de comissões julgadoras ou de verificação da regularidade de funcionamento de cursos oficiais, desde que não configure vínculo empregatício.\n\nEstão em conformidade com as exceções legais ao regime de Dedicação Exclusiva apenas as situações descritas em:",
+            options: ["I e II.", "I, II e IV.", "II, III e IV.", "I, III e IV.", "I, II, III e IV."],
+            correct: 1,
+            resolution: "O item III está incorreto porque o limite estabelecido no Art. 21, § 1º, para colaboração esporádica de natureza científica ou tecnológica é de 30 (trinta) horas anuais, e não 50 horas. Os itens I, II e IV são exceções expressamente previstas no Artigo 21."
+        },
+        {
+            id: 3,
+            question: "O Reconhecimento de Saberes e Competências (RSC) é um instituto criado especificamente para a Carreira de Magistério do Ensino Básico, Técnico e Tecnológico (EBTT), visando valorizar a experiência profissional do docente. Sobre o RSC, conforme disciplinado nos Artigos 18 da Lei nº 12.772/2012, é INCORRETO afirmar:",
+            options: [
+                "O RSC poderá ser concedido em três níveis (RSC-I, RSC-II e RSC-III), sendo que a equivalência para fins de percepção da Retribuição por Titulação (RT) corresponde, respectivamente, à Especialização, ao Mestrado e ao Doutorado.",
+                "O RSC será apurado por meio de avaliação de banca examinadora constituída especialmente para este fim, no âmbito de cada Instituição Federal de Ensino, observadas as normas do Conselho Permanente para Reconhecimento de Saberes e Competências (CPRSC).",
+                "O Reconhecimento de Saberes e Competências (RSC) poderá ser utilizado para fins de equiparação de titulação para o cumprimento de requisitos exigidos para a promoção na Carreira, permitindo o acesso à Classe de Titular sem a necessidade do diploma formal de Doutor.",
+                "A concessão do RSC não altera o nível ou a classe em que o docente se encontra posicionado na carreira, impactando exclusivamente o valor financeiro da Retribuição por Titulação (RT).",
+                "O RSC-III, quando concedido a um docente que possui apenas o título de Mestre, garantirá a ele a percepção da RT equivalente à de Doutor, somada ao Vencimento Básico de sua classe e nível atuais."
+            ],
+            correct: 2,
+            resolution: "De acordo com o Art. 18, § 2º, o RSC não poderá ser utilizado para fins de equiparação de titulação para cumprimento de requisitos para a promoção na Carreira. Seu efeito é exclusivamente financeiro (RT)."
+        },
+        {
+            id: 4,
+            question: "A progressão e a promoção nas Carreiras de Magistério Federal exigem o cumprimento de interstícios e requisitos de avaliação. A Lei nº 12.772/2012 introduziu o conceito de Aceleração da Promoção (Art. 13). Assinale a alternativa que descreve corretamente as condições e os efeitos deste mecanismo para um docente aprovado no estágio probatório do Magistério Superior.",
+            options: [
+                "O docente que apresentar título de Mestre durante o estágio probatório será reposicionado imediatamente no Nível 1 da Classe D (Professor Associado).",
+                "A Aceleração da Promoção permite que o docente, após a aprovação no estágio probatório, seja promovido para o nível inicial da Classe B (Professor Assistente), se possuir Mestrado, ou para o nível inicial da Classe C (Professor Adjunto), se possuir Doutorado, dispensado o cumprimento do interstício nessas classes.",
+                "A Aceleração da Promoção reduz o interstício obrigatório de 24 meses para 12 meses para todas as progressões futuras, caso o docente ingresse já com o título de Doutor.",
+                "O docente do EBTT não tem direito à Aceleração da Promoção, sendo este um benefício exclusivo da Carreira de Magistério Superior, devendo aquele cumprir todos os interstícios nível a nível.",
+                "Para obter a Aceleração da Promoção, o docente deve submeter-se a uma nova banca examinadora composta por membros externos, distinta da comissão de avaliação do estágio probatório."
+            ],
+            correct: 1,
+            resolution: "Conforme o Art. 13, a aceleração ocorre após a aprovação no estágio probatório. Docentes com Mestrado saltam para a Classe B e docentes com Doutorado saltam para a Classe C, dispensando-se o cumprimento de interstícios nas classes intermediárias."
+        },
+        {
+            id: 5,
+            question: "Para o ingresso no cargo isolado de Professor Titular-Livre do Magistério Superior ou do Ensino Básico, Técnico e Tecnológico, a Lei nº 12.772/2012 (com as alterações da Lei nº 12.863/2013) estabelece requisitos rigorosos de titulação e experiência. Assinale a alternativa que preenche corretamente as lacunas sobre tais requisitos:\n\n\"O concurso público para o cargo de Professor Titular-Livre exigirá o título de ______ e ______ anos de experiência ou de obtenção do título de ______, ambos na área de conhecimento exigida no concurso.\"",
+            options: [
+                "Mestre; 15 (quinze); Mestre.",
+                "Doutor; 10 (dez); Doutor.",
+                "Doutor; 20 (vinte); Doutor.",
+                "Pós-Doutor; 10 (dez); Livre-Docência.",
+                "Doutor; 15 (quinze); Livre-Docência."
+            ],
+            correct: 1,
+            resolution: "Atualmente, conforme os Artigos 8º e 10 da Lei 12.772/2012 (atualizados), exige-se título de Doutor e 10 anos de experiência ou 10 anos da obtenção do título de Doutor na área exigida."
+        },
+        {
+            id: 6,
+            question: "A Lei nº 12.772/2012 altera dispositivos da Lei nº 8.745/1993 referentes à contratação por tempo determinado. No que concerne especificamente à contratação de Professor Visitante Estrangeiro, o prazo máximo de duração do contrato, conforme a redação dada pela legislação atualizada, é de:",
+            options: [
+                "1 (um) ano, improrrogável.",
+                "2 (dois) anos, prorrogável por mais 2 (dois) anos, totalizando 4 (quatro) anos.",
+                "4 (quatro) anos, improrrogável.",
+                "4 (quatro) anos, podendo ser prorrogado, desde que o prazo total não exceda a 8 (oito) anos.",
+                "O prazo necessário à execução do projeto, sem limite temporal definido em lei, desde que haja recursos orçamentários disponíveis."
+            ],
+            correct: 1,
+            resolution: "Conforme o Art. 4º, parágrafo único, inciso V da Lei 8.745/93 (alterada pela 12.772), a contratação de professor visitante estrangeiro pode ser feita por períodos que, somados com prorrogações, chegam ao limite de 4 anos."
+        },
+        {
+            id: 7,
+            question: "Considere a Estrutura Remuneratória do Plano de Carreiras e Cargos de Magistério Federal. De acordo com o Art. 16 da Lei nº 12.772/2012, a remuneração dos ocupantes dos cargos é composta pelo Vencimento Básico somado à Retribuição por Titulação (RT). Sobre a Retribuição por Titulação (RT), é correto afirmar:",
+            options: [
+                "A RT é uma gratificação temporária que deixa de ser paga quando o servidor se aposenta.",
+                "O valor da RT é idêntico para todos os regimes de trabalho (20h, 40h e DE), variando apenas conforme a titulação do docente.",
+                "A RT será considerada para o cálculo dos proventos de aposentadoria e pensões, desde que o certificado ou título tenha sido obtido antes da data da inativação.",
+                "É permitida a percepção cumulativa de RTs referentes a diferentes títulos (ex: receber simultaneamente a RT de Especialização e a RT de Mestrado).",
+                "Em nenhuma hipótese a RT poderá ser superior ao Vencimento Básico do servidor."
+            ],
+            correct: 2,
+            resolution: "A RT compõe a estrutura remuneratória fixa e é levada para a aposentadoria/pensão (Art. 16). Não é cumulativa (paga-se pelo maior título) e varia significativamente dependendo do regime de trabalho (DE recebe mais do que 20h pela mesma titulação)."
+        },
+        {
+            id: 8,
+            question: "A Comissão Permanente de Pessoal Docente (CPPD) é um órgão essencial na governança da carreira nas IFEs. Segundo o Art. 26 da Lei nº 12.772/2012, assinale a afirmativa correta sobre a CPPD.",
+            options: [
+                "A CPPD possui natureza deliberativa máxima, sobrepondo-se às decisões do Conselho Superior da IFE em matérias de pessoal docente.",
+                "Os membros da CPPD são de livre nomeação e exoneração pelo Reitor da IFE, garantindo o alinhamento com a gestão institucional.",
+                "A CPPD deve prestar assessoramento ao colegiado competente ou dirigente máximo na instituição para formulação e acompanhamento da política de pessoal docente, sendo seus membros eleitos pelos pares.",
+                "A existência da CPPD é facultativa nas Universidades Federais, sendo obrigatória apenas nos Institutos Federais de Educação, Ciência e Tecnologia.",
+                "A CPPD é composta exclusivamente por servidores técnico-administrativos em educação e discentes, para garantir a isenção na avaliação dos docentes."
+            ],
+            correct: 2,
+            resolution: "Conforme o Art. 26, a CPPD é um órgão de assessoramento cujos membros são eleitos pelos seus pares (docentes). Sua função é técnica e opinativa, subsidiando as decisões institucionais sobre a carreira."
+        },
+        {
+            id: 9,
+            question: "O docente integrante do Plano de Carreiras e Cargos de Magistério Federal possui direito a férias anuais. De acordo com o Art. 36 da Lei nº 12.772/2012, o período de férias é de:",
+            options: [
+                "30 (trinta) dias, conforme o Regime Jurídico Único (Lei nº 8.112/1990).",
+                "60 (sessenta) dias, sendo 30 dias a cada semestre letivo.",
+                "45 (quarenta e cinco) dias, sendo permitido o parcelamento em até três etapas.",
+                "45 (quarenta e cinco) dias, vedado qualquer tipo de parcelamento.",
+                "30 (trinta) dias para docentes em regime de 20 horas e 45 (quarenta e cinco) dias para docentes em regime de Dedicação Exclusiva."
+            ],
+            correct: 2,
+            resolution: "A Lei 12.772/2012 estabelece no Art. 36 que os docentes das IFEs fazem jus a 45 dias de férias anuais. O parcelamento é permitido para adequação ao calendário acadêmico."
+        },
+        {
+            id: 10,
+            question: "Para a Promoção à Classe E (Professor Titular) na Carreira de Magistério Superior, o docente deve cumprir requisitos específicos que vão além do simples decurso de tempo. De acordo com a Lei nº 12.772/2012, são requisitos cumulativos para essa promoção:",
+            options: [
+                "Possuir o título de Doutor, ser aprovado em avaliação de desempenho e cumprir o interstício de 24 (vinte e quatro) meses no último nível da Classe D (Professor Associado IV), mediante defesa de memorial ou tese inédita.",
+                "Possuir título de Mestre ou Doutor e ter atingido o topo da Classe de Professor Associado há pelo menos 12 meses.",
+                "Ser aprovado em concurso público de provas e títulos específico para a classe de Titular, aberto a candidatos externos e internos.",
+                "Possuir o título de Livre-Docente e cumprir interstício de 36 (trinta e seis) meses na Classe de Professor Associado IV.",
+                "Ter exercido cargos de direção (CD) ou funções gratificadas (FG) por pelo menos 2 (dois) anos durante a permanência na Classe de Professor Associado."
+            ],
+            correct: 0,
+            resolution: "O acesso à Classe E (Titular) exige: Doutorado, interstício de 24 meses no Nível 4 da Classe D, aprovação em avaliação de desempenho e defesa de memorial ou tese acadêmica inédita perante comissão especial (Art. 12)."
+        }
+    ];
+
+    function loadQuiz() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.id = `q-card-${index}`;
+
+            const optionsHtml = q.options.map((opt, i) => `
+                <label class="option-label" id="label-${index}-${i}">
+                    <input type="radio" name="question-${index}" value="${i}">
+                    <span><strong>${String.fromCharCode(65 + i)})</strong> ${opt}</span>
+                </label>
+            `).join('');
+
+            card.innerHTML = `
+                <div class="question-header">QUESTÃO ${String(index + 1).padStart(2, '0')} <span id="status-${index}" class="status-badge"></span></div>
+                <div class="question-text">${q.question}</div>
+                <div class="options">
+                    ${optionsHtml}
+                </div>
+                <div id="correct-ans-${index}" class="correct-answer-indicator">Resposta correta: ${String.fromCharCode(65 + q.correct)}</div>
+                <div id="res-${index}" class="resolution-box">
+                    <strong>Resolução:</strong><br>${q.resolution}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function gradeQuiz() {
+        let score = 0;
+        const form = document.getElementById('quiz-form');
+        
+        quizData.forEach((q, index) => {
+            const selected = form.querySelector(`input[name="question-${index}"]:checked`);
+            const card = document.getElementById(`q-card-${index}`);
+            const resBox = document.getElementById(`res-${index}`);
+            const statusBadge = document.getElementById(`status-${index}`);
+            const correctIndicator = document.getElementById(`correct-ans-${index}`);
+
+            // Reset classes
+            const labels = card.querySelectorAll('.option-label');
+            labels.forEach(l => l.classList.remove('feedback-correct', 'feedback-wrong'));
+
+            resBox.style.display = 'block';
+            statusBadge.style.display = 'inline-block';
+
+            if (selected) {
+                const answer = parseInt(selected.value);
+                if (answer === q.correct) {
+                    score++;
+                    labels[answer].classList.add('feedback-correct');
+                    statusBadge.innerText = "Correta";
+                    statusBadge.style.backgroundColor = "var(--correct-color)";
+                    statusBadge.style.color = "white";
+                } else {
+                    labels[answer].classList.add('feedback-wrong');
+                    labels[q.correct].classList.add('feedback-correct');
+                    statusBadge.innerText = "Incorreta";
+                    statusBadge.style.backgroundColor = "var(--wrong-color)";
+                    statusBadge.style.color = "white";
+                    correctIndicator.style.display = 'block';
+                }
+            } else {
+                labels[q.correct].classList.add('feedback-correct');
+                statusBadge.innerText = "Não respondida";
+                statusBadge.style.backgroundColor = "#636e72";
+                statusBadge.style.color = "white";
+                correctIndicator.style.display = 'block';
+            }
+        });
+
+        // Show result section
+        const resultsSection = document.getElementById('results-section');
+        resultsSection.style.display = 'block';
+        document.getElementById('score-text').innerText = `Você acertou ${score} de ${quizData.length} questões!`;
+        
+        // Scroll to results
+        resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+        // Disable all inputs
+        const allInputs = form.querySelectorAll('input');
+        allInputs.forEach(input => input.disabled = true);
+        
+        // Hide submit button
+        document.querySelector('.submit-container').style.display = 'none';
+    }
+
+    window.onload = loadQuiz;
+</script>
+
+</body>
+</html>

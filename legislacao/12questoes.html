@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado IFAM - Resolução 94/2015</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --accent-color: #27ae60;
+            --secondary-text: #576574;
+            --border-color: #dcdde1;
+            --correct-bg: #e8f8f0;
+            --wrong-bg: #fdf2f2;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 2rem 1rem;
+            text-align: center;
+            background: #fff;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--accent-color);
+        }
+
+        header p {
+            color: var(--secondary-text);
+            margin-top: 0.5rem;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 95%;
+            margin-bottom: 5rem;
+        }
+
+        .intro-box {
+            background: #f1f2f6;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .question-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s;
+        }
+
+        .question-header {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .question-text {
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            margin-top: 5px;
+            accent-color: var(--accent-color);
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 1.2rem;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 2rem;
+        }
+
+        .btn-submit:hover {
+            background-color: #219150;
+        }
+
+        /* Results Section */
+        #results-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .score-summary {
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            border: 2px solid var(--accent-color);
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .resolution-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .correct-ans {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .wrong-ans {
+            color: #e74c3c;
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+
+        .feedback-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .badge-success { background: var(--correct-bg); color: #27ae60; }
+        .badge-error { background: var(--wrong-bg); color: #e74c3c; }
+
+        .resolution-text {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+            font-size: 0.95rem;
+            color: var(--secondary-text);
+        }
+
+        .resolution-text h4 {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            color: var(--secondary-text);
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .question-card { padding: 1rem; }
+            header h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Simulado: Resolução nº 94/2015 – CONSUP/IFAM</h1>
+    <p>Estilo Fundação CEFETMINAS - Organização Didática</p>
+</header>
+
+<div class="container">
+    <div id="quiz-container">
+        <div class="intro-box">
+            <strong>Texto de Apoio I:</strong> A organização didático-pedagógica de uma instituição federal de ensino não é apenas um conjunto de regras burocráticas; é o reflexo de sua missão institucional e de sua concepção de educação. O Instituto Federal do Amazonas (IFAM), por meio da Resolução nº 94/2015, estabelece os pilares que sustentam desde a avaliação da aprendizagem até a convivência ética no ambiente escolar.
+        </div>
+
+        <form id="quiz-form">
+            <!-- Questions will be injected here -->
+            <div id="questions-list"></div>
+            <button type="button" class="btn-submit" onclick="submitQuiz()">Finalizar e Ver Resoluções</button>
+        </form>
+    </div>
+
+    <div id="results-section">
+        <div class="score-summary">
+            <h2>Resultado do Simulado</h2>
+            <div class="score-number" id="score-display">0/10</div>
+            <p id="score-message"></p>
+            <button class="btn-submit" style="width: auto; padding: 0.8rem 2rem;" onclick="window.location.reload()">Refazer Simulado</button>
+        </div>
+
+        <h3 style="margin-bottom: 1.5rem;">Resoluções Detalhadas:</h3>
+        <div id="resolutions-list"></div>
+    </div>
+</div>
+
+<footer>
+    Instituto Federal do Amazonas - IFAM | Simulado Baseado na Resolução 94/2015
+</footer>
+
+<script>
+    const questions = [
+        {
+            id: 1,
+            title: "Questão 01 - Regime Disciplinar",
+            text: "Durante uma aula prática em laboratório, o discente Marcos foi flagrado portando e consumindo bebida alcoólica e proferindo ofensas verbais diretas à honra do servidor. Com base nas normas disciplinares da Resolução nº 94/2015, assinale a alternativa que apresenta a correta classificação das faltas e o procedimento sancionatório adequado:",
+            options: [
+                "A) A conduta é classificada como falta média, sendo competência exclusiva do Coordenador de Curso aplicar a suspensão preventiva de 3 dias.",
+                "B) O consumo de álcool e a agressão verbal configuram falta grave ou gravíssima. A penalidade de Suspensão, se aplicada, é de competência do Diretor Geral do Campus e não poderá exceder 5 dias letivos.",
+                "C) Por tratar-se de ofensa a servidor público federal, a competência para punição é deslocada automaticamente para o Reitor do IFAM.",
+                "D) O docente em sala de aula possui autonomia plena para aplicar a penalidade de 'Retirada de Sala' com atribuição de falta, o que encerra o processo disciplinar.",
+                "E) A 'algazarra' é tipificada como falta leve, passível apenas de advertência verbal; o uso de álcool transfere a competência para a Polícia Federal."
+            ],
+            correct: 1,
+            resolution: "A conduta descrita (consumo de álcool e agressão verbal) é classificada como falta Grave ou Gravíssima. Segundo o Art. 246 da Resolução, a competência para aplicar Suspensão ou Desligamento é privativa do Diretor Geral do Campus. A suspensão aplicada pela Direção não pode exceder 5 dias letivos sem processo administrativo mais amplo."
+        },
+        {
+            id: 2,
+            title: "Questão 02 - Sistema de Avaliação (Ensino Técnico)",
+            text: "A discente Júlia (Técnico Integrado) possui Média Anual (MA) de 5,4 e frequência de 85% em Lógica de Programação. Assinale a opção correta sobre a situação de Júlia:",
+            options: [
+                "A) Júlia está reprovada diretamente, pois a Média Anual mínima para ter direito à recuperação é de 6,0 pontos.",
+                "B) A discente deve ser submetida ao Conselho de Classe imediatamente para aprovação sem necessidade de realizar o Exame Final.",
+                "C) Júlia tem direito a realizar o Exame Final (EF), pois sua Média Anual situa-se no intervalo entre 2,0 e 5,9. Para ser promovida, precisará de Média Final (MF) igual ou superior a 5,0.",
+                "D) Caso Júlia obtenha nota 4,0 no Exame Final, sua Média Final será 4,7. Nessa situação, ela estará automaticamente reprovada, sem direito a análise pelo Conselho de Classe.",
+                "E) Para ser aprovada no Exame Final, Júlia precisará tirar, obrigatoriamente, nota 7,0."
+            ],
+            correct: 2,
+            resolution: "No regime anual do IFAM, alunos com MA entre 2,0 e 5,9 têm direito ao Exame Final. A aprovação ocorre se a média aritmética entre a MA e a nota do EF for igual ou superior a 5,0. Se a MF ficar entre 4,0 e 4,9, o caso ainda vai para o Conselho de Classe."
+        },
+        {
+            id: 3,
+            title: "Questão 03 - Frequência e Assiduidade",
+            text: "Assinale a alternativa que interpreta corretamente as normas de frequência estabelecidas no documento:",
+            options: [
+                "A) A frequência mínima exigida para aprovação é de 70% da carga horária total.",
+                "B) O estudante com Média Anual superior a 8,0 será aprovado mesmo que sua frequência seja inferior a 75%.",
+                "C) O aluno com frequência inferior a 75% na carga horária do componente curricular será considerado retido (reprovado) por faltas, independentemente das notas obtidas.",
+                "D) As faltas justificadas por atestado médico são abonadas, permitindo 100% de frequência no sistema.",
+                "E) Em casos de greve de transporte público, o Diretor Geral pode reduzir a exigência de frequência mínima para 50%."
+            ],
+            correct: 2,
+            resolution: "Conforme a LDB e a Resolução 94/2015, a frequência mínima é de 75%. O descumprimento gera retenção automática por faltas, e o atestado médico apenas justifica a ausência em avaliações (segunda chamada), mas não remove a falta do registro de frequência."
+        },
+        {
+            id: 4,
+            title: "Questão 04 - Progressão Parcial (Dependência)",
+            text: "Um estudante do 2º ano obteve reprovação em Matemática (MF 4,5), Física (MF 4,0) e Topografia (MF 4,8). Qual é a situação acadêmica do estudante?",
+            options: [
+                "A) O estudante será promovido ao 3º ano em regime de Progressão Parcial.",
+                "B) O estudante está retido (reprovado) na série, pois não obteve aprovação em 3 componentes curriculares, excedendo o limite máximo de 2 disciplinas.",
+                "C) O estudante pode escolher duas disciplinas para cursar em dependência e eliminar a terceira através de um exame de proficiência.",
+                "D) A disciplina de Topografia, por ser da área técnica, não conta para o limite de dependências.",
+                "E) O Conselho de Classe é obrigado a aprovar o estudante em pelo menos uma das disciplinas."
+            ],
+            correct: 1,
+            resolution: "A Resolução permite a Progressão Parcial em até 2 (duas) disciplinas. Como o aluno reprovou em 3, ele está retido na série atual."
+        },
+        {
+            id: 5,
+            title: "Questão 05 - Direitos e Deveres – Uniforme Escolar",
+            text: "Sobre a obrigatoriedade e o uso do uniforme no IFAM, assinale a afirmativa correta:",
+            options: [
+                "A) O uso do uniforme é obrigatório apenas para os estudantes bolsistas.",
+                "B) É permitido aos alunos customizar o uniforme (cortes, pinturas) para expressar individualidade.",
+                "C) O dever de trajar-se corretamente com o uniforme escolar aplica-se aos Cursos Técnicos, excetuando-se os discentes de Graduação e Pós-Graduação.",
+                "D) O aluno sem uniforme será imediatamente suspenso por 3 dias sem direito a justificativa.",
+                "E) O uso de calçados abertos (chinelos) é permitido em laboratórios."
+            ],
+            correct: 2,
+            resolution: "O uso do uniforme é um dever do discente de nível técnico. O próprio regimento abre exceção explícita para os alunos de nível Superior (Graduação) e Pós-Graduação."
+        },
+        {
+            id: 6,
+            title: "Questão 06 - Ensino Superior – Avaliação",
+            text: "Considere as regras para o nível superior e identifique a alternativa correta:",
+            options: [
+                "A) Na Graduação, a média mínima para aprovação direta é 7,0.",
+                "B) O acadêmico de graduação que obtiver Média da Disciplina (MD) igual a 3,5 terá direito a realizar o Exame Final. Se a MF for >= 5,0, será aprovado.",
+                "C) A retenção na Graduação ocorre apenas se o aluno reprovar em mais de 5 disciplinas.",
+                "D) Não existe Exame Final na Graduação; a avaliação é somativa e única.",
+                "E) A frequência mínima na Graduação é de 50%."
+            ],
+            correct: 1,
+            resolution: "Na Graduação, a média para aprovação direta é 6,0. Quem fica entre 2,0 e 5,9 tem direito ao Exame Final, onde a aprovação requer Média Final 5,0."
+        },
+        {
+            id: 7,
+            title: "Questão 07 - Prazos – Revisão de Avaliação",
+            text: "Caso um estudante discorde da nota atribuída em uma avaliação escrita, qual é o procedimento correto?",
+            options: [
+                "A) O pedido de revisão deve ser feito via protocolo no prazo máximo de 72 (setenta e duas) horas úteis após a divulgação.",
+                "B) O aluno deve solicitar verbalmente ao professor na aula seguinte; se negado, não há recurso.",
+                "C) O prazo é de 15 dias corridos contados a partir do fim do bimestre.",
+                "D) A revisão de prova é permitida apenas para notas abaixo de 3,0.",
+                "E) O estudante deve convocar uma assembleia do Grêmio Estudantil."
+            ],
+            correct: 0,
+            resolution: "O direito de revisão é garantido pelo Art. 163, devendo o requerimento ser formalizado via protocolo no prazo de 72 horas úteis após a publicação do resultado."
+        },
+        {
+            id: 8,
+            title: "Questão 08 - Atribuições do Conselho de Classe",
+            text: "Sobre as competências e funcionamento do Conselho de Classe no IFAM, é correto afirmar:",
+            options: [
+                "A) Sua função é estritamente burocrática, servindo apenas para assinar os diários.",
+                "B) O Conselho de Classe tem competência para avaliar as condições de promoção de alunos que obtiveram Média Final entre 4,0 e 5,0.",
+                "C) O Conselho de Classe é formado exclusivamente pelos representantes de turma (alunos).",
+                "D) As decisões do Conselho sobre notas são apenas sugestivas.",
+                "E) O Conselho reúne-se diariamente para monitorar a frequência."
+            ],
+            correct: 1,
+            resolution: "O Conselho de Classe Deliberativo analisa o desempenho global do aluno. No caso de Média Final entre 4,0 e 5,0, o conselho decide soberanamente sobre a promoção ou retenção baseando-se em critérios qualitativos."
+        },
+        {
+            id: 9,
+            title: "Questão 09 - Matrícula e Renovação",
+            text: "Assinale a situação que IMPEDE a renovação automática ou regular de matrícula:",
+            options: [
+                "A) Ter sido aprovado em todas as disciplinas com média 10,0.",
+                "B) Estar em situação de 'Progressão Parcial' (dependência), o que exige ajuste de matrícula manual.",
+                "C) Ter participado de projetos de pesquisa no ano anterior.",
+                "D) Ter solicitado a carteirinha estudantil fora do prazo.",
+                "E) Ter frequentado a biblioteca mais de 3 vezes por semana."
+            ],
+            correct: 1,
+            resolution: "Alunos em Progressão Parcial não possuem renovação automática, pois precisam realizar o ajuste de matrícula para incluir as disciplinas em dependência, respeitando o limite de carga horária e horários."
+        },
+        {
+            id: 10,
+            title: "Questão 10 - Disposições Finais",
+            text: "De acordo com o Título VI, como devem ser tratados os casos omissos e as alterações no Regulamento?",
+            options: [
+                "A) O Regulamento é imutável e perpétuo.",
+                "B) As modificações podem ocorrer por força de Lei ou mediante proposta ao CONSEPE, aprovada pelo CONSUP.",
+                "C) Os casos omissos são resolvidos por votação direta dos alunos em assembleia.",
+                "D) Qualquer professor pode alterar o regulamento dentro de sua sala de aula.",
+                "E) As alterações entram em vigor retroativamente, anulando reprovações passadas."
+            ],
+            correct: 1,
+            resolution: "Alterações na Organização Didática seguem o rito institucional: proposta técnica via CONSEPE e aprovação final pelo Conselho Superior (CONSUP), o órgão máximo do IFAM."
+        }
+    ];
+
+    function initQuiz() {
+        const list = document.getElementById('questions-list');
+        questions.forEach((q, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <div class="question-header">${q.title}</div>
+                <div class="question-text">${q.text}</div>
+                <div class="options-container">
+                    ${q.options.map((opt, optIndex) => `
+                        <label class="option-label">
+                            <input type="radio" name="q${index}" value="${optIndex}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            list.appendChild(card);
+        });
+    }
+
+    function submitQuiz() {
+        const form = document.getElementById('quiz-form');
+        const formData = new FormData(form);
+        let score = 0;
+        const resultsList = document.getElementById('resolutions-list');
+        resultsList.innerHTML = '';
+
+        questions.forEach((q, index) => {
+            const selected = formData.get(`q${index}`);
+            const isCorrect = selected == q.correct;
+            if (isCorrect) score++;
+
+            const resCard = document.createElement('div');
+            resCard.className = 'resolution-card';
+            
+            const badgeClass = isCorrect ? 'badge-success' : 'badge-error';
+            const badgeText = isCorrect ? 'Acertou' : 'Errou';
+
+            let userChoiceText = selected !== null ? q.options[selected] : "Não respondida";
+            let correctChoiceText = q.options[q.correct];
+
+            resCard.innerHTML = `
+                <span class="feedback-badge ${badgeClass}">${badgeText}</span>
+                <div class="question-header">${q.title}</div>
+                <p><strong>Sua resposta:</strong> <span class="${isCorrect ? 'correct-ans' : 'wrong-ans'}">${userChoiceText}</span></p>
+                ${!isCorrect ? `<p><strong>Resposta Correta:</strong> <span class="correct-ans">${correctChoiceText}</span></p>` : ''}
+                
+                <div class="resolution-text">
+                    <h4>Resolução e Análise:</h4>
+                    ${q.resolution}
+                </div>
+            `;
+            resultsList.appendChild(resCard);
+        });
+
+        // Show Results
+        document.getElementById('quiz-container').style.display = 'none';
+        document.getElementById('results-section').style.display = 'block';
+        document.getElementById('score-display').innerText = `${score}/10`;
+        
+        let msg = "";
+        if(score >= 8) msg = "Excelente desempenho! Você domina a Resolução 94/2015.";
+        else if(score >= 6) msg = "Bom resultado, mas revise os pontos que errou para garantir a aprovação.";
+        else msg = "Atenção: Revise a Organização Didática do IFAM. A banca CEFETMINAS exige precisão técnica.";
+        document.getElementById('score-message').innerText = msg;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

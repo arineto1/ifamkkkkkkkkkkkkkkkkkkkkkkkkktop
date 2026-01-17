@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: Resolução nº 072/CONSUP/IFAM</title>
+    <style>
+        :root {
+            --bg-color: #fcfcfc;
+            --text-color: #1a1a1a;
+            --secondary-text: #4a4a4a;
+            --accent-color: #2563eb;
+            --success-color: #16a34a;
+            --error-color: #dc2626;
+            --border-color: #e5e7eb;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: var(--secondary-text);
+            font-size: 1rem;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: #f3f4f6;
+            border-color: #d1d5db;
+        }
+
+        input[type="radio"] {
+            margin-top: 5px;
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* Result Styles */
+        #result-section {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .score-summary {
+            text-align: center;
+            padding: 30px;
+            background: #eff6ff;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .score-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+
+        .resolution-card {
+            border-left: 5px solid var(--accent-color);
+            padding-left: 20px;
+            margin-top: 20px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .status-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+        }
+
+        .status-correct { background: #dcfce7; color: var(--success-color); }
+        .status-incorrect { background: #fee2e2; color: var(--error-color); }
+
+        .resolution-text h4 {
+            margin-top: 15px;
+            color: var(--accent-color);
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .question-card { padding: 15px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado: Resolução nº 072/CONSUP/IFAM</h1>
+        <p class="description">Estilo Fundação CEFETMINAS - 10 Questões de Legislação Institucional</p>
+    </header>
+
+    <div id="quiz-form">
+        <div id="questions-container"></div>
+        
+        <div class="submit-container">
+            <button onclick="calculateResult()">Finalizar Quiz e Ver Resoluções</button>
+        </div>
+    </div>
+
+    <div id="result-section">
+        <div class="score-summary">
+            <div class="score-label">Sua Pontuação</div>
+            <div class="score-number" id="final-score">0/10</div>
+            <p id="score-message"></p>
+        </div>
+        <div id="resolutions-list"></div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="window.location.reload()">Refazer Quiz</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            id: 1,
+            question: "O Conselho Superior (CONSUP) do Instituto Federal de Educação, Ciência e Tecnologia do Amazonas (IFAM), órgão máximo de caráter consultivo e deliberativo, possui atribuições fundamentais para a governança institucional, conforme consolidado na Resolução nº 072/CONSUP/IFAM, de 15 de agosto de 2022, que aprova a revisão do Estatuto do IFAM. No que tange às competências explicitadas no referido instrumento normativo, assinale a alternativa que apresenta corretamente uma atribuição do colegiado.",
+            options: [
+                "Executar diretamente as dotações orçamentárias descentralizadas pelo Ministério da Educação, substituindo a Pró-Reitoria de Administração em casos de urgência financeira.",
+                "Apreciar e recomendar o calendário de referência anual, bem como as normas de aperfeiçoamento da gestão institucional.",
+                "Nomear, sem necessidade de consulta à comunidade acadêmica, os Diretores-Gerais dos Campi em vacância, a fim de garantir a continuidade administrativa imediata.",
+                "Atuar como primeira instância em processos disciplinares discentes, avocando para si a competência dos Conselhos de Campus.",
+                "Elaborar unilateralmente o Plano de Desenvolvimento Institucional (PDI) sem a participação das comissões locais, aprovando-o por meio de decreto autônomo."
+            ],
+            correct: 1,
+            resolution: `<h4>Análise Técnica</h4><p>O CONSUP funciona como instância de validação estratégica. De acordo com o texto estatutário, compete ao conselho: 1. Apreciar e recomendar o calendário de referência anual; 2. Apreciar e recomendar normas de aperfeiçoamento da gestão.</p><p>As demais opções atribuem funções executivas (A), ferem o princípio democrático (C e E) ou invertem a ordem de instâncias administrativas (D).</p>`
+        },
+        {
+            id: 2,
+            question: "A continuidade do serviço público é um princípio basilar da administração, refletido nos mecanismos de substituição de autoridades previstos no Estatuto do IFAM (Resolução nº 072/2022). Sobre a substituição do Pró-Reitor de Ensino em seus impedimentos legais, o texto estatutário determina que:",
+            options: [
+                "A substituição dar-se-á automaticamente pelo servidor mais antigo do quadro de docentes, independentemente de sua lotação atual.",
+                "O Reitor deverá nomear um interventor externo ao quadro do IFAM para garantir a isenção nas decisões pedagógicas durante o afastamento do titular.",
+                "O cargo ficará vago até o retorno do titular, sendo as decisões urgentes tomadas colegiadamente pelo CONSUP.",
+                "O Pró-Reitor de Ensino, nos seus impedimentos legais, indicará à Reitoria o seu substituto.",
+                "A substituição será feita por sistema de rodízio mensal entre os Diretores de Ensino dos campi da capital."
+            ],
+            correct: 3,
+            resolution: `<h4>Análise Técnica</h4><p>A Resolução nº 072/2022 estabelece que os Pró-Reitores, em seus impedimentos legais, devem indicar à Reitoria o seu substituto. Isso garante a manutenção da diretriz técnica da pasta, permitindo que alguém familiarizado com os processos internos assuma a função temporariamente.</p>`
+        },
+        {
+            id: 3,
+            question: "Conforme o Relatório de Gestão que contextualiza a aplicação da Resolução nº 072/CONSUP/IFAM, de 2022, o tratamento de riscos no âmbito do Instituto é realizado por meio de instrumentos específicos que visam fortalecer a governança e a conformidade. Assinale a opção que NÃO corresponde a um dos instrumentos de tratamento de riscos formalmente citados nos documentos de gestão vinculados à norma.",
+            options: [
+                "Plano de risco operacional, realizado em sistema próprio de gestão (SIGPP).",
+                "Riscos avaliados para contratações, em consonância com a Instrução Normativa nº 05/2017.",
+                "Riscos de integridade, selecionados com base em temas de fraude e corrupção.",
+                "Auditoria externa contábil independente realizada trimestralmente por empresas de capital aberto contratadas via pregão internacional.",
+                "Instrumentos de mapeamento que contribuem indiretamente para o cumprimento dos objetivos estratégicos da autarquia."
+            ],
+            correct: 3,
+            resolution: `<h4>Análise Técnica</h4><p>Autarquias federais como o IFAM são auditadas pelo Tribunal de Contas da União (TCU) e pela Controladoria-Geral da União (CGU). Não há previsão legal ou prática para a contratação trimestral de auditorias privadas via pregão internacional para validar contas ordinárias, sendo este um modelo típico do setor privado (S.A.).</p>`
+        },
+        {
+            id: 4,
+            question: "O Art. 54 da Resolução nº 072/CONSUP/IFAM dispõe sobre a natureza da atuação do Instituto em relação ao reconhecimento de saberes, reforçando sua missão social e educacional. De acordo com o referido artigo, no âmbito de sua atuação, o IFAM funciona como:",
+            options: [
+                "Instituição acreditadora e certificadora de competências profissionais, nos termos da legislação vigente.",
+                "Agência reguladora exclusiva do ensino técnico privado no estado do Amazonas.",
+                "Entidade filantrópica de direito privado, focada na assistência social estudantil.",
+                "Órgão de fiscalização trabalhista, com poder de autuar empresas que não contratam estagiários.",
+                "Centro de pesquisa básica sem competência para a emissão de certificações profissionais ou diplomas."
+            ],
+            correct: 0,
+            resolution: `<h4>Análise Técnica</h4><p>O Art. 54 consolida o papel social dos Institutos Federais na valorização da experiência laboral. Atuar como instituição acreditadora e certificadora permite ao IFAM validar competências adquiridas por trabalhadores na prática, integrando-as ao sistema formal de ensino.</p>`
+        },
+        {
+            id: 5,
+            question: "A concessão de honrarias é uma prerrogativa das instituições de ensino superior para reconhecer contribuições relevantes à ciência, educação e sociedade. Segundo o Art. 55 do Estatuto do IFAM (aprovado pela Resolução nº 072/2022), o Instituto poderá conferir, conforme disciplinado no Regimento Geral, títulos de:",
+            options: [
+                "Notório Saber Político.",
+                "Mérito Acadêmico.",
+                "Chanceler Honorário.",
+                "Benfeitor Vitalício.",
+                "Doutor Honoris Causa Empresarial."
+            ],
+            correct: 1,
+            resolution: `<h4>Análise Técnica</h4><p>O texto literal do Art. 55 menciona especificamente o título de "Mérito Acadêmico", remetendo a sua regulamentação ao Regimento Geral do Instituto. As outras opções utilizam nomenclaturas que não constam na Resolução nº 072/2022.</p>`
+        },
+        {
+            id: 6,
+            question: "A gestão democrática nos Institutos Federais é assegurada pela participação de diversos segmentos da comunidade na instância máxima de deliberação, o Conselho Superior. Considerando as normas estatutárias vigentes (Resolução nº 072/2022) e os atos de designação decorrentes, assinale a afirmativa correta sobre a representação dos servidores no CONSUP.",
+            options: [
+                "Os servidores Técnico-Administrativos em Educação (TAEs) não possuem assento no CONSUP, sendo representados exclusivamente pelo Pró-Reitor de Gestão de Pessoas.",
+                "A representação é restrita aos servidores docentes com título de doutor, excluindo-se as demais categorias.",
+                "Existem representantes dos servidores Técnico-Administrativos, contando com membros titulares e suplentes, conforme estabelecido em portarias de designação baseadas no Estatuto.",
+                "Os representantes dos servidores são indicados livremente pelo Reitor, sem necessidade de processo eletivo ou consulta aos pares.",
+                "A representação discente tem peso duplo em relação à representação dos servidores técnicos e docentes nas votações do conselho."
+            ],
+            correct: 2,
+            resolution: `<h4>Análise Técnica</h4><p>A gestão dos IFs é baseada na paridade e representatividade. O CONSUP conta obrigatoriamente com representantes eleitos dos docentes, dos discentes e dos técnicos-administrativos, possuindo titulares e suplentes para garantir a continuidade das deliberações.</p>`
+        },
+        {
+            id: 7,
+            question: "Dentre as competências do Conselho Superior elencadas na revisão estatutária de 2022, destaca-se a função de zelar pela administração geral da instituição. Assinale a alternativa que descreve uma competência genérica ou residual atribuída ao CONSUP pelo texto estatutário.",
+            options: [
+                "Apreciar os assuntos de interesse da administração do IFAM aos quais lhe forem submetidos.",
+                "Realizar pessoalmente as licitações para obras de engenharia nos campi do interior.",
+                "Designar os fiscais de contratos administrativos de serviços terceirizados.",
+                "Elaborar as folhas de pagamento mensais dos servidores ativos e inativos.",
+                "Julgar processos criminais envolvendo servidores no exercício da função."
+            ],
+            correct: 0,
+            resolution: `<h4>Análise Técnica</h4><p>A Resolução 072 prevê uma cláusula de competência residual no inciso V, permitindo que o conselho aprecie assuntos de interesse geral da administração submetidos a ele. Funções como licitação (B), fiscalização de contrato (C) e folha de pagamento (D) são meramente executivas. O julgamento criminal (E) é competência exclusiva do Poder Judiciário.</p>`
+        },
+        {
+            id: 8,
+            question: "A Resolução nº 072/CONSUP/IFAM estabelece simetria nos processos de substituição dos gestores da alta administração. Em relação à Pró-Reitoria de Gestão de Pessoas (DGP), o procedimento para substituição do titular em seus impedimentos legais é:",
+            options: [
+                "A realização de nova eleição direta entre os servidores da Pró-Reitoria no prazo de 24 horas.",
+                "A indicação do substituto feita pelo próprio Pró-Reitor de Gestão de Pessoas à Reitoria.",
+                "A ocupação interina do cargo pelo Diretor-Geral do Campus Manaus Centro.",
+                "A suspensão das atividades da Pró-Reitoria até o retorno do titular.",
+                "A designação automática do servidor com menor tempo de serviço para fins de aprendizado institucional."
+            ],
+            correct: 1,
+            resolution: `<h4>Análise Técnica</h4><p>Seguindo o padrão das demais pró-reitorias, o titular da DGP indica o seu substituto legal à Reitoria. Este modelo preserva a confiança técnica necessária para a gestão de áreas sensíveis como a de pessoal.</p>`
+        },
+        {
+            id: 9,
+            question: "A estrutura multicampi do IFAM exige uma definição clara de competências para evitar conflitos de governança. Com base na Resolução nº 072/2022, é correto afirmar que a função de 'apreciar e recomendar normas de aperfeiçoamento da gestão' pertence:",
+            options: [
+                "Ao Grêmio Estudantil de cada unidade.",
+                "À Comissão Própria de Avaliação (CPA) de forma isolada.",
+                "Ao Conselho Superior (CONSUP).",
+                "Exclusivamente ao Colégio de Dirigentes (CODIR).",
+                "À Auditoria Interna, com poder de veto sobre as decisões do Reitor."
+            ],
+            correct: 2,
+            resolution: `<h4>Análise Técnica</h4><p>O CONSUP é o órgão máximo de caráter deliberativo. Embora existam outros conselhos (como o CODIR e o CEPE), a atribuição estatutária de recomendar normas de aperfeiçoamento da gestão macro-institucional é do Conselho Superior.</p>`
+        },
+        {
+            id: 10,
+            question: "A aprovação da Resolução nº 072/CONSUP/IFAM em 15 de agosto de 2022 ocorreu concomitantemente a outros atos de gestão, como a Resolução nº 074/2022. A leitura sistêmica desses documentos indica que o objetivo institucional preponderante nesse período foi:",
+            options: [
+                "A extinção das atividades de pesquisa para focar exclusivamente no ensino técnico.",
+                "A revisão e atualização dos instrumentos normativos estruturantes, como o Estatuto e Regimentos Internos de órgãos vinculados (ex: Incubadoras).",
+                "A centralização administrativa com a eliminação das Diretorias Sistêmicas.",
+                "O rompimento do vínculo com o Ministério da Educação para se tornar uma Universidade Estadual.",
+                "A proibição de parcerias com o setor produtivo e o fechamento das incubadoras de empresas."
+            ],
+            correct: 1,
+            resolution: `<h4>Análise Técnica</h4><p>O ano de 2022 marcou um ciclo de modernização normativa no IFAM. A aprovação do novo Estatuto (Res 072) aliada a novos regimentos para órgãos de inovação (como as incubadoras, Res 074) demonstra um esforço para atualizar a governança da instituição frente aos novos desafios legais e tecnológicos.</p>`
+        }
+    ];
+
+    function initQuiz() {
+        const container = document.getElementById('questions-container');
+        quizData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <span class="question-text">${index + 1}. ${item.question}</span>
+                <div class="options-list">
+                    ${item.options.map((opt, optIndex) => `
+                        <div class="option-item">
+                            <label class="option-label">
+                                <input type="radio" name="q${item.id}" value="${optIndex}">
+                                <span>${String.fromCharCode(65 + optIndex)}) ${opt}</span>
+                            </label>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function calculateResult() {
+        let score = 0;
+        const resolutionsList = document.getElementById('resolutions-list');
+        resolutionsList.innerHTML = '<h2>Resoluções Detalhadas</h2>';
+
+        quizData.forEach((item) => {
+            const selected = document.querySelector(`input[name="q${item.id}"]:checked`);
+            const isCorrect = selected && parseInt(selected.value) === item.correct;
+            
+            if (isCorrect) score++;
+
+            const resCard = document.createElement('div');
+            resCard.className = 'question-card';
+            
+            const statusClass = isCorrect ? 'status-correct' : 'status-incorrect';
+            const statusText = isCorrect ? 'CORRETA' : 'INCORRETA OU NÃO RESPONDIDA';
+            
+            resCard.innerHTML = `
+                <div class="status-tag ${statusClass}">${statusText}</div>
+                <div class="question-text">${item.id}. ${item.question}</div>
+                <p><strong>Sua resposta:</strong> ${selected ? String.fromCharCode(65 + parseInt(selected.value)) : 'Nenhuma'}</p>
+                <p><strong>Gabarito:</strong> ${String.fromCharCode(65 + item.correct)}</p>
+                <div class="resolution-card">
+                    <div class="resolution-text">${item.resolution}</div>
+                </div>
+            `;
+            resolutionsList.appendChild(resCard);
+        });
+
+        document.getElementById('final-score').innerText = `${score}/10`;
+        document.getElementById('quiz-form').style.display = 'none';
+        document.getElementById('result-section').style.display = 'block';
+        
+        let message = "";
+        if(score === 10) message = "Excelente! Você domina a Resolução 072.";
+        else if(score >= 7) message = "Muito bom! Continue revisando os detalhes técnicos.";
+        else message = "Recomendamos uma leitura atenta do Estatuto revisado em 2022.";
+        
+        document.getElementById('score-message').innerText = message;
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo Dirigido: Legislação Interna IFAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1a202c;
+            line-height: 1.7;
+        }
+
+        .highlight {
+            background-color: #fefcbf;
+            padding: 0.1rem 0.3rem;
+            border-radius: 0.2rem;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .section-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 700;
+            color: #334155;
+            white-space: nowrap;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tip-box {
+            background-color: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .alert-box {
+            background-color: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-12">
+
+    <div class="max-w-5xl mx-auto">
+        <!-- Reprodutor de Áudio -->
+        <div class="mb-12 p-6 border border-gray-200 rounded-xl bg-gray-50 flex flex-col md:flex-row items-center gap-6">
+            <div class="flex-shrink-0">
+                <span class="text-4xl">🎙️</span>
+            </div>
+            <div class="flex-grow w-full">
+                <h3 class="text-sm font-bold text-gray-600 uppercase mb-2">Audioaula: Resumo Geral das Resoluções</h3>
+                <audio controls class="w-full">
+                    <source src="11ifam.mp3" type="audio/mpeg">
+                    Seu navegador não suporta o elemento de áudio.
+                </audio>
+                <p class="text-xs text-gray-400 mt-2">Arquivo esperado: <code class="bg-gray-200 px-1 rounded">aula_resumo_ifam.mp3</code></p>
+            </div>
+        </div>
+
+        <header class="text-center mb-16">
+            <h1 class="text-3xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">RESOLUÇÕES INTERNAS IFAM</h1>
+            <p class="text-xl text-gray-500 max-w-2xl mx-auto">Guia definitivo de legislação institucional para o cargo de Professor EBTT - Banca Fundação CEFETMINAS.</p>
+        </header>
+
+        <!-- PARTE 1: NATUREZA E ESTATUTO -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">I. Natureza Jurídica e Estrutura (Res. 072/2022)</h2>
+            <p class="mb-4 text-gray-700">O IFAM é uma autarquia federal, detentora de <span class="highlight">autonomia administrativa, patrimonial, financeira, didático-científica e disciplinar</span>.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Finalidades Principais:</h4>
+                    <ul class="list-disc ml-5 text-sm space-y-1">
+                        <li>Oferta de educação profissional e tecnológica em todos os níveis.</li>
+                        <li>Desenvolver a <span class="highlight">educação profissional como processo educativo e investigativo</span>.</li>
+                        <li>Promover a produção, desenvolvimento e transferência de tecnologias sociais.</li>
+                    </ul>
+                </div>
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-2">Sede e Foro:</h4>
+                    <p class="text-sm">A Reitoria está instalada em <span class="highlight">Manaus/AM</span>. O IFAM é multicampi, mas a personalidade jurídica é <span class="highlight">única</span>.</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">Governança: CONSUP vs COLDI</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Órgão</th>
+                            <th>Caráter</th>
+                            <th>Composição/Destaque</th>
+                            <th>Atribuição Chave</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-bold">CONSUP</td>
+                            <td><span class="highlight">Deliberativo</span> e Consultivo</td>
+                            <td>Reitor (Pres.), Representantes Docentes, TAEs, Discentes, Egressos, Sociedade Civil, MEC e Diretores.</td>
+                            <td>Aprovar o <span class="highlight">PDI</span>, o Orçamento e o <span class="highlight">Estatuto</span>.</td>
+                        </tr>
+                        <tr>
+                            <td class="font-bold">COLDI</td>
+                            <td>Consultivo</td>
+                            <td>Reitor, Pró-Reitores e <span class="highlight">Todos os Diretores-Gerais</span>.</td>
+                            <td>Coordenar a gestão entre os campi e avaliar a execução orçamentária.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert-box">
+                <strong>PEGADINHA:</strong> A banca costuma dizer que o COLDI tem natureza deliberativa para confundir com o CONSUP. O COLDI é apenas <strong>Apoio à Decisão</strong> do Reitor.
+            </div>
+        </section>
+
+        <!-- PARTE 2: ORGANIZAÇÃO DIDÁTICA -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">II. Organização Didática (Res. 094/2015)</h2>
+            
+            <h3 class="text-xl font-bold mb-4">Regime Acadêmico e Avaliação</h3>
+            <ul class="space-y-4">
+                <li class="flex items-start">
+                    <span class="bg-gray-200 p-1 rounded mr-3 text-xs mt-1">01</span>
+                    <div><strong>Ingresso:</strong> Ocorre por Processo Seletivo Público, SISU ou transferência/reingresso conforme edital.</div>
+                </li>
+                <li class="flex items-start">
+                    <span class="bg-gray-200 p-1 rounded mr-3 text-xs mt-1">02</span>
+                    <div><strong>Frequência:</strong> Exigência de <span class="highlight">no mínimo 75%</span>. Não existe abono de faltas, exceto nos casos previstos em lei (exercícios domiciliares).</div>
+                </li>
+                <li class="flex items-start">
+                    <span class="bg-gray-200 p-1 rounded mr-3 text-xs mt-1">03</span>
+                    <div><strong>Média de Aprovação:</strong> A nota para aprovação direta é <span class="highlight">6,0 (seis)</span>. Abaixo de 6,0 e acima de 4,0, o aluno tem direito à <span class="highlight">Reavaliação</span>.</div>
+                </li>
+            </ul>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">Prazos e Recursos (Essencial para Prova)</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Evento</th>
+                            <th>Prazo</th>
+                            <th>Início da Contagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Solicitação de 2ª Chamada</td>
+                            <td><span class="highlight">72 horas úteis</span></td>
+                            <td>Da data da ausência.</td>
+                        </tr>
+                        <tr>
+                            <td>Revisão de Prova/Nota</td>
+                            <td><span class="highlight">72 horas úteis</span></td>
+                            <td>Da divulgação oficial do resultado.</td>
+                        </tr>
+                        <tr>
+                            <td>Entrega de Diários/Notas</td>
+                            <td>Conforme Calendário Acadêmico</td>
+                            <td>Sob pena de responsabilidade administrativa.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tip-box">
+                <strong>DICA DO TUTOR:</strong> Se um aluno for aprovado pelo <strong>Conselho de Classe</strong> (mesmo sem a nota mínima), sua nota final no sistema será obrigatoriamente <span class="highlight">5,0</span>.
+            </div>
+        </section>
+
+        <!-- PARTE 3: RAD (REGULAMENTO DE ATIVIDADE DOCENTE) -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2">III. RAD - Atividade Docente (Res. 066/2017)</h2>
+            <p class="mb-6">O RAD disciplina a distribuição da jornada de trabalho do professor. A carga horária total é de 40h ou 20h.</p>
+
+            <h3 class="text-xl font-bold mb-4 text-gray-700">Distribuição de Carga Horária Semanal</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Atividade</th>
+                            <th>Regime 40h/DE (Horas Semanais)</th>
+                            <th>Observações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Aulas (Regência)</strong></td>
+                            <td><span class="highlight">Mínimo 10h / Máximo 20h</span></td>
+                            <td>Pode reduzir para 8h se houver cargo de gestão ou stricto sensu.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Manutenção do Ensino</strong></td>
+                            <td>Carga igual ao número de aulas</td>
+                            <td>Preparação de aulas e correção de provas.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Apoio ao Ensino</strong></td>
+                            <td>Mínimo de <span class="highlight">02 horas</span></td>
+                            <td>Atendimento ao aluno e reuniões pedagógicas.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pesquisa e Extensão</strong></td>
+                            <td>Conforme projeto aprovado</td>
+                            <td>Deve haver edital ou registro institucional.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold mt-8 mb-4 text-gray-700">Limites de Orientação (Pontos de Corte)</h3>
+            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <li class="p-3 bg-gray-50 border rounded">🎓 <strong>TCC Graduação:</strong> Máximo <span class="highlight">05 alunos</span> simultâneos.</li>
+                <li class="p-3 bg-gray-50 border rounded">🔬 <strong>Iniciação Científica:</strong> Máximo <span class="highlight">04 alunos</span>.</li>
+                <li class="p-3 bg-gray-50 border rounded">📚 <strong>Mestrado/Doutorado:</strong> Conforme regimento da pós.</li>
+                <li class="p-3 bg-gray-50 border rounded">🏢 <strong>Estágio:</strong> Máximo <span class="highlight">10 alunos</span> (se for orientador principal).</li>
+            </ul>
+        </section>
+
+        <!-- PARTE 4: ESTRATÉGIA CEFETMINAS -->
+        <section class="section-card">
+            <h2 class="text-2xl font-bold mb-6 border-b pb-2 text-red-700">IV. Radar CEFETMINAS: Onde eles atacam</h2>
+            <div class="space-y-6">
+                <div>
+                    <h4 class="font-bold mb-1">1. Composição de Colegiados</h4>
+                    <p class="text-gray-600">Eles costumam afirmar que o representante de <strong>Egressos</strong> não vota no CONSUP. <span class="highlight">Errado!</span> Ele é membro nato com direito a voto.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-1">2. Carga Horária de Gestão</h4>
+                    <p class="text-gray-600">A banca diz que o Coordenador de Curso está dispensado de dar aulas. <span class="highlight">Errado!</span> Todo docente, mesmo em cargo de gestão (exceto Reitor e Pró-Reitores), deve cumprir carga mínima de regência, geralmente <span class="highlight">02 horas</span>.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-1">3. Abono de Faltas</h4>
+                    <p class="text-gray-600">Na Organização Didática do IFAM, <strong>não existe abono</strong>. O que existe é a reposição de atividades por regime domiciliar em casos específicos (doença, maternidade).</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-16 text-center space-y-8 pb-12">
+            <div class="text-sm text-gray-400">
+                Conteúdo revisado conforme atualizações do Portal de Normas do IFAM (2024).
+            </div>
+            
+            <a href="11questoes.html" class="inline-block bg-black text-white px-12 py-5 rounded-full font-bold text-lg hover:bg-gray-800 transition shadow-2xl">
+                🚀 RESOLVER QUESTÕES DE FIXAÇÃO
+            </a>
+        </footer>
+    </div>
+
+</body>
+</html>
