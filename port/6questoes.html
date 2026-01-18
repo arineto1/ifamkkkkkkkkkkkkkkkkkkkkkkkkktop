@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado CEFETMINAS - Tipos de Discurso</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #2d3436;
+            --primary-color: #0984e3;
+            --secondary-bg: #ffffff;
+            --border-color: #dfe6e9;
+            --correct-color: #27ae60;
+            --wrong-color: #c0392b;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        body {
+            font-family: 'Segoe UI', Georgia, serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 850px;
+            width: 100%;
+            background: var(--secondary-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3436;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 40px;
+        }
+
+        .text-box {
+            background-color: #f1f2f6;
+            padding: 20px;
+            border-left: 5px solid var(--primary-color);
+            margin-bottom: 30px;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .question {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .question-header {
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option {
+            margin-bottom: 10px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .option:hover {
+            background-color: #f1f2f6;
+        }
+
+        .option input {
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        button#submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button#submit-btn:hover {
+            background-color: #0873c4;
+        }
+
+        #result-container {
+            display: none;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .score-summary {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #e1f5fe;
+            border-radius: 8px;
+        }
+
+        .resolution {
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .res-header {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .correct-answer {
+            background-color: #d4edda !important;
+            border-color: #c3e6cb !important;
+        }
+
+        .wrong-answer {
+            background-color: #f8d7da !important;
+            border-color: #f5c6cb !important;
+        }
+
+        .feedback-correct { color: var(--correct-color); font-weight: bold; }
+        .feedback-wrong { color: var(--wrong-color); font-weight: bold; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Simulado: Tipos de Discurso (CEFETMINAS)</h1>
+
+    <!-- TEXTO I -->
+    <div class="text-box">
+        <strong>TEXTO DE APOIO I: Fragmento de "Vidas Secas" (Simulação Estilística)</strong><br><br>
+        Fabiano ajustou a correia da espingarda e cuspiu no chão seco. O sol a pino castigava a caatinga, transformando os mandacarus em espectros trêmulos de calor. A cadela Baleia arfava, a língua pendurada, os olhos pidões fixos no dono. Fabiano sentiu uma pontada de remorso. <em>Pobre bicho. Tão fiel, tão servil, e ele ali, pensando em sacrificá-la. Mas o que podia fazer? A doença alastrava-se, as feridas no lombo não cicatrizavam. Seria misericórdia ou covardia? Talvez as duas coisas.</em><br>
+        — Vamos, Baleia — murmurou, a voz áspera como a terra sob as alpercatas.<br>
+        A cachorra levantou-se com dificuldade, abanando o toco de rabo. <em>Ela entendia? Sabia que aquele era o último passeio?</em> Fabiano preferiu não encarar os olhos castanhos. <em>Se olhasse, desistiria. E se desistisse, o sofrimento seria maior. Sinhá Vitória tinha razão. Era preciso ser forte.</em><br>
+        Caminharam até o pé da imburana. Fabiano parou.<br>
+        — Fica aí — ordenou, sem convicção.<br>
+        Baleia obedeceu, sentando-se nas patas traseiras.<br>
+        Fabiano ergueu a arma. O ferro queimava na mão suada.<br>
+        — Perdoa, minha velha — disse, e o estrondo rompeu o silêncio do sertão, espantando um bando de avoantes que dormitava nos galhos secos.
+    </div>
+
+    <!-- QUESTÃO 01 -->
+    <div class="question" id="q1">
+        <span class="question-header">QUESTÃO 01 - Considere o trecho do primeiro parágrafo: "Pobre bicho... Talvez as duas coisas." Sobre os objetivos linguísticos e o efeito de sentido gerado por essa escolha narrativa, é CORRETO afirmar que:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q1" value="A"> A) O narrador utiliza o discurso indireto livre para julgar moralmente as ações de Fabiano...</label>
+            <label class="option"><input type="radio" name="q1" value="B"> B) A fusão entre a voz do narrador (3ª pessoa) e a consciência de Fabiano permite uma dramatização da dúvida interior...</label>
+            <label class="option"><input type="radio" name="q1" value="C"> C) O trecho configura-se como um monólogo interior em discurso direto, marcado pela presença implícita de aspas...</label>
+            <label class="option"><input type="radio" name="q1" value="D"> D) O objetivo principal é resumir os acontecimentos anteriores à cena do tiro...</label>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 02 -->
+    <div class="question" id="q2">
+        <span class="question-header">QUESTÃO 02 - No diálogo final da cena: "— Perdoa, minha velha — disse...". Caso o narrador optasse por transpor a fala de Fabiano para o Discurso Indireto, a reescrita CORRETA seria:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q2" value="A"> A) Fabiano disse que perdoa sua velha e o estrondo rompeu o silêncio.</label>
+            <label class="option"><input type="radio" name="q2" value="B"> B) Fabiano pediu à sua velha que o perdoasse, e o estrondo rompeu o silêncio.</label>
+            <label class="option"><input type="radio" name="q2" value="C"> C) Fabiano diz para a velha perdoar ele, momento em que o estrondo rompeu o silêncio.</label>
+            <label class="option"><input type="radio" name="q2" value="D"> D) Fabiano falara que a velha o perdoaria, quando o estrondo rompeu o silêncio.</label>
+        </div>
+    </div>
+
+    <!-- TEXTO II -->
+    <div class="text-box">
+        <strong>TEXTO DE APOIO II: A Política dos Discursos (Texto Argumentativo)</strong><br><br>
+        Na arena jornalística, a escolha entre citar uma fonte diretamente ou parafraseá-la nunca é inocente. O discurso direto ("O presidente afirmou: 'Não recuarei'") confere à declaração um caráter de documento... Já o discurso indireto ("O presidente afirmou que não recuaria") insere a fala do outro na sintaxe do repórter. Aqui, ocorre uma subordinação não apenas gramatical, mas ideológica...
+    </div>
+
+    <!-- QUESTÃO 03 -->
+    <div class="question" id="q3">
+        <span class="question-header">QUESTÃO 03 - Segundo a análise proposta no Texto II, o objetivo discursivo predominante ao se optar pelo uso do Discurso Indireto em textos jornalísticos é:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q3" value="A"> A) Garantir a isenção absoluta do repórter, eliminando as marcas de subjetividade.</label>
+            <label class="option"><input type="radio" name="q3" value="B"> B) Produzir um efeito de "verdade testemunhal", permitindo acesso às palavras exatas.</label>
+            <label class="option"><input type="radio" name="q3" value="C"> C) Exercer um controle interpretativo sobre a informação, integrando a voz da fonte à estrutura sintática e ideológica do texto.</label>
+            <label class="option"><input type="radio" name="q3" value="D"> D) Conferir maior dinamismo e dramaticidade à notícia, aproximando o leitor da cena.</label>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 04 -->
+    <div class="question" id="q4">
+        <span class="question-header">QUESTÃO 04 - O uso das aspas em citações de discurso direto tem a função linguística primordial de:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q4" value="A"> A) Isolar a voz do narrador para proteger a coerência gramatical do texto.</label>
+            <label class="option"><input type="radio" name="q4" value="B"> B) Destacar termos neológicos ou estrangeirismos que o autor desconhece.</label>
+            <label class="option"><input type="radio" name="q4" value="C"> C) Delimitar a fronteira entre o discurso citante (narrador) e o discurso citado, marcando a suspensão da autoria.</label>
+            <label class="option"><input type="radio" name="q4" value="D"> D) Sinalizar ironia ou deboche por parte do narrador em relação ao conteúdo da fala.</label>
+        </div>
+    </div>
+
+    <!-- TEXTO III -->
+    <div class="text-box">
+        <strong>TEXTO DE APOIO III: Diálogo no Escritório</strong><br><br>
+        A estagiária Mariana entrou na sala: — Dr. Cláudio, o relatório financeiro... bem, ele não bate com os dados do sistema.<br>
+        Cláudio esfregou as têmporas: — Você revisou as planilhas de entrada? — perguntou.<br>
+        — Revisei três vezes. O erro parece ser anterior à minha gestão — respondeu Mariana.<br>
+        Cláudio suspirou: <em>— Então temos um problema maior do que eu imaginava. Se a auditoria pegar isso, rolarão cabeças.</em><br>
+        — O que faremos? — insistiu ela.<br>
+        — Traga-me os arquivos de 2023. Agora.
+    </div>
+
+    <!-- QUESTÃO 05 -->
+    <div class="question" id="q5">
+        <span class="question-header">QUESTÃO 05 - Se transformarmos o pensamento de Cláudio para o Discurso Indireto (narrado por observador no passado), a construção seria:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q5" value="A"> A) Cláudio concluiu que então tinham um problema maior do que ele imaginava, e que se a auditoria pegasse aquilo, rolariam cabeças.</label>
+            <label class="option"><input type="radio" name="q5" value="B"> B) Cláudio disse que então temos um problema maior do que ele imaginava, e se a auditoria pegar isso, vão rolar cabeças.</label>
+            <label class="option"><input type="radio" name="q5" value="C"> C) Cláudio concluiu que então teriam um problema maior do que ele imaginou, e se a auditoria pegasse aquilo, rolarão cabeças.</label>
+            <label class="option"><input type="radio" name="q5" value="D"> D) Cláudio disse que então tinham um problema maior do que eu imaginava, e que se a auditoria pegasse aquilo, rolariam cabeças.</label>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 06 -->
+    <div class="question" id="q6">
+        <span class="question-header">QUESTÃO 06 - No terceiro parágrafo, se o narrador optasse por utilizar o Discurso Indireto Livre para revelar a indignação de Mariana, a reescrita seria:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q6" value="A"> A) Mariana respondeu que revisou três vezes e que o erro parecia ser anterior à sua gestão.</label>
+            <label class="option"><input type="radio" name="q6" value="B"> B) Mariana disse: "Eu revisei três vezes! Não é justo que me culpem!"</label>
+            <label class="option"><input type="radio" name="q6" value="C"> C) Mariana respondeu com firmeza. Revisara três vezes! Não havia dúvida. Aquele erro maldito era anterior à sua gestão. Como ousavam questioná-la?</label>
+            <label class="option"><input type="radio" name="q6" value="D"> D) Mariana pensou que tinha revisado três vezes e que o erro era anterior à gestão dela.</label>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 07 -->
+    <div class="question" id="q7">
+        <span class="question-header">QUESTÃO 07 - A transposição de "— Traga-me os arquivos de 2023. Agora." para o discurso indireto (narrativa no passado) é:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q7" value="A"> A) Cláudio ordenou que ela lhe trouxesse os arquivos de 2023 agora mesmo.</label>
+            <label class="option"><input type="radio" name="q7" value="B"> B) Cláudio pediu para que ela trouxesse os arquivos de 2023 naquele momento.</label>
+            <label class="option"><input type="radio" name="q7" value="C"> C) Cláudio ordenou que ela lhe trouxesse os arquivos de 2023 imediatamente (ou naquele momento).</label>
+            <label class="option"><input type="radio" name="q7" value="D"> D) Cláudio mandou que ela traga os arquivos de 2023 na mesma hora.</label>
+        </div>
+    </div>
+
+    <!-- TEXTO IV -->
+    <div class="text-box">
+        <strong>TEXTO DE APOIO IV: Fragmento de Machado de Assis (Dom Casmurro)</strong><br><br>
+        "...Capitu deixou-se fitar e examinar. Só me perguntava o que era, se nunca os vira; eu que não, que os conhecia assim, mas que de longe não pareciam tão grandes..."
+    </div>
+
+    <!-- QUESTÃO 08 -->
+    <div class="question" id="q8">
+        <span class="question-header">QUESTÃO 08 - Uma característica marcante deste trecho de Machado de Assis, que o diferencia do discurso indireto padrão, é:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q8" value="A"> A) A ausência sistemática da conjunção integrante "que" e do verbo de elocução.</label>
+            <label class="option"><input type="radio" name="q8" value="B"> B) O uso de elipses do verbo de elocução ("eu [respondi] que não") e a acumulação de orações dependentes.</label>
+            <label class="option"><input type="radio" name="q8" value="C"> C) A mistura indevida de tempos verbais, alternando presente e pretérito.</label>
+            <label class="option"><input type="radio" name="q8" value="D"> D) A transformação do discurso indireto em direto no meio da frase.</label>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 09 -->
+    <div class="question" id="q9">
+        <span class="question-header">QUESTÃO 09 - Texto A: "Vai chover, pensou ela." | Texto B: "Ia chover. O ar estava pesado." A classificação correta e efeito são:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q9" value="A"> A) Texto A: Discurso Direto Mental (objetividade); Texto B: Discurso Indireto Livre (fusão narrativa).</label>
+            <label class="option"><input type="radio" name="q9" value="B"> B) Texto A: Discurso Indireto (distanciamento); Texto B: Discurso Direto (aproximação).</label>
+            <label class="option"><input type="radio" name="q9" value="C"> C) Texto A: Discurso Indireto Livre; Texto B: Discurso Indireto.</label>
+            <label class="option"><input type="radio" name="q9" value="D"> D) Texto A: Discurso Citado; Texto B: Discurso Narrativizado.</label>
+        </div>
+    </div>
+
+    <!-- QUESTÃO 10 -->
+    <div class="question" id="q10">
+        <span class="question-header">QUESTÃO 10 - Transpondo "— Este é o meu lugar e ninguém me tira daqui!" para o Indireto, as substituições pronominais corretas são:</span>
+        <div class="options">
+            <label class="option"><input type="radio" name="q10" value="A"> A) Este -> Aquele; meu -> seu; me -> o; daqui -> dali.</label>
+            <label class="option"><input type="radio" name="q10" value="B"> B) Este -> Esse; meu -> dele; me -> lhe; daqui -> de lá.</label>
+            <label class="option"><input type="radio" name="q10" value="C"> C) Este -> Aquele; meu -> dele/seu; me -> o; daqui -> dali.</label>
+            <label class="option"><input type="radio" name="q10" value="D"> D) Este -> O mesmo; meu -> do próprio; me -> a ele; daqui -> daquele local.</label>
+        </div>
+    </div>
+
+    <button id="submit-btn" onclick="calculateResult()">Finalizar Quiz e Ver Resoluções</button>
+
+    <div id="result-container">
+        <div class="score-summary" id="score-summary"></div>
+        <div id="resolutions-list"></div>
+    </div>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: 'B', q2: 'B', q3: 'C', q4: 'C', q5: 'A',
+        q6: 'C', q7: 'C', q8: 'B', q9: 'A', q10: 'C'
+    };
+
+    const resolutions = {
+        q1: "A fusão entre narrador e consciência permite a mímese do fluxo de pensamento, eliminando verbos de elocução (Discurso Indireto Livre).",
+        q2: "O imperativo 'Perdoa' no passado exige o pretérito imperfeito do subjuntivo ('perdoasse') e o ajuste pronominal para a 3ª pessoa.",
+        q3: "O discurso indireto no jornalismo exerce controle interpretativo, subordinando a fala alheia à sintaxe e ideologia do repórter.",
+        q4: "As aspas delimitam a fronteira entre as vozes (Polifonia), marcando onde termina a fala do narrador e começa a da fonte.",
+        q5: "A correlação verbal exige: temos -> tinham; imaginava -> imaginava/imaginara; pegar -> pegasse; rolarão -> rolariam.",
+        q6: "O DIL remove marcas formais como 'Mariana disse que' e insere a voz da personagem (exclamações, indignação) na voz do narrador.",
+        q7: "A ordem ('Traga-me') torna-se uma ordem subordinada no passado ('ordenou que trouxesse'), com ajuste deitico de tempo (agora -> naquele momento).",
+        q8: "Machado utiliza elipses do verbo dicendi (verbo de elocução subentendido) para dar agilidade e um tom de memória à narrativa.",
+        q9: "O texto A apresenta a fala mental exata (Direto), enquanto o texto B funde o pensamento à narração factual (Indireto Livre).",
+        q10: "A transposição requer distanciamento total: Este (perto) vira Aquele (longe); Meu vira Dele; Me vira O (objeto direto); Daqui vira Dali."
+    };
+
+    function calculateResult() {
+        let score = 0;
+        const total = Object.keys(correctAnswers).length;
+        const resList = document.getElementById('resolutions-list');
+        resList.innerHTML = '<h2>Resoluções Detalhadas</h2>';
+
+        for (let q in correctAnswers) {
+            const selected = document.querySelector(`input[name="${q}"]:checked`);
+            const qDiv = document.getElementById(q);
+            const isCorrect = selected && selected.value === correctAnswers[q];
+            
+            if (isCorrect) score++;
+
+            // Highlight answers
+            const options = qDiv.querySelectorAll('.option');
+            options.forEach(opt => {
+                const input = opt.querySelector('input');
+                if (input.value === correctAnswers[q]) {
+                    opt.classList.add('correct-answer');
+                } else if (selected && input.value === selected.value) {
+                    opt.classList.add('wrong-answer');
+                }
+            });
+
+            // Build resolution UI
+            const resDiv = document.createElement('div');
+            resDiv.className = 'resolution';
+            resDiv.innerHTML = `
+                <span class="res-header">Questão ${q.substring(1)}: ${isCorrect ? '<span class="feedback-correct">Acertou!</span>' : '<span class="feedback-wrong">Errou!</span>'}</span>
+                <p><strong>Gabarito: ${correctAnswers[q]}</strong></p>
+                <p>${resolutions[q]}</p>
+            `;
+            resList.appendChild(resDiv);
+        }
+
+        // Show Score
+        const summary = document.getElementById('score-summary');
+        summary.innerHTML = `Você acertou <strong>${score}</strong> de <strong>${total}</strong> questões! (${(score/total*100).toFixed(0)}%)`;
+        
+        document.getElementById('result-container').style.display = 'block';
+        document.getElementById('submit-btn').style.display = 'none';
+        
+        // Scroll to results
+        window.scrollTo({ top: document.getElementById('result-container').offsetTop, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>

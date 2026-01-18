@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Estruturado - IFAM Informática</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        body {
+            background-color: #ffffff;
+            color: #1f2937;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+        .highlight {
+            background-color: #fef08a;
+            color: #111827;
+            padding: 0 4px;
+            border-radius: 2px;
+            font-weight: 600;
+        }
+        .section-title {
+            color: #111827;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .banca-alert {
+            border-left: 4px solid #ef4444;
+            background-color: #fff1f2;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        /* Garantir que tabelas não tenham scroll horizontal */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+        .memorize-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body class="max-w-5xl mx-auto px-6 py-10">
+
+    <!-- Áudio Aula -->
+    <div class="mb-10 p-6 bg-slate-50 rounded-xl border border-slate-200">
+        <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-3">Escute a Revisão (MP3)</h3>
+        <audio controls class="w-full">
+            <source src="5funcoes.mp3" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+        <p class="text-xs text-slate-400 mt-2 italic">Dica: Ouça enquanto acompanha os grifos amarelos no texto.</p>
+    </div>
+
+    <header class="text-center mb-16">
+        <h1 class="text-4xl font-extrabold text-gray-900">Funções da Linguagem e Intertextualidade</h1>
+        <p class="text-xl text-gray-600 mt-2">Foco: Concurso IFAM (Professor EBTT) - Banca CEFETMINAS</p>
+    </header>
+
+    <main>
+        <!-- PARTE 1: DEFINIÇÃO E CARACTERÍSTICAS -->
+        <section>
+            <h2 class="section-title text-2xl uppercase">1. Definições e Características Essenciais</h2>
+            <p class="mb-4">Para a CEFETMINAS, o texto não é apenas informação, mas um <span class="highlight">ato de comunicação</span> que envolve seis elementos. O foco da prova é identificar qual deles "manda" na mensagem.</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Função</th>
+                            <th>Foco Principal</th>
+                            <th>Onde aparece?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Referencial</strong></td>
+                            <td>Contexto/Assunto</td>
+                            <td>Manuais de TI, notícias, artigos científicos. Linguagem denotativa.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Emotiva</strong></td>
+                            <td>Emissor (Eu)</td>
+                            <td>Diários, poemas líricos. Uso de <span class="highlight">interjeições e 1ª pessoa</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conativa (Apelativa)</strong></td>
+                            <td>Receptor (Você)</td>
+                            <td>Propagandas, tutoriais ("Instale o driver"). Uso de <span class="highlight">verbos no imperativo</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fática</strong></td>
+                            <td>Canal (Contato)</td>
+                            <td>Saudações, "testando som", "né?", "entende?". Foco na manutenção do fluxo.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Metalinguística</strong></td>
+                            <td>Código (Língua)</td>
+                            <td>Dicionários, gramáticas, poemas sobre o ato de escrever. <span class="highlight">O código explica o código</span>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Poética</strong></td>
+                            <td>Mensagem (Forma)</td>
+                            <td>Publicidade criativa, literatura. Uso de metáforas e sonoridade.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="text-xl font-bold mt-8 mb-4">Elementos do Discurso Crítico</h3>
+            <ul class="list-disc pl-5 space-y-3">
+                <li><span class="highlight">Ironia:</span> Figura de linguagem que consiste em dizer o contrário do que se pretende, com intenção sarcástica. Exige leitura do contexto.</li>
+                <li><span class="highlight">Metalinguagem:</span> Muito frequente em charges da CEFETMINAS onde o personagem fala sobre o próprio balão de fala ou sobre o desenhista.</li>
+                <li><span class="highlight">Intertextualidade:</span> Quando um texto "bebe" da fonte de outro. Pode ser implícita ou explícita.</li>
+            </ul>
+        </section>
+
+        <!-- PARTE 2: RESUMO DE MEMORIZAÇÃO -->
+        <section>
+            <h2 class="section-title text-2xl uppercase">2. Checklist de Memorização (Dia da Prova)</h2>
+            <div class="memorize-box">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold border-b mb-2 text-blue-800">Paródia vs. Paráfrase</h4>
+                        <p><strong>Paródia:</strong> Quebra o original. Tem <span class="highlight">caráter crítico, irônico ou humorístico</span>. Inverte a ideologia.</p>
+                        <p class="mt-2"><strong>Paráfrase:</strong> Reafirma o original. Diz a mesma coisa com outras palavras. <span class="highlight">Mantém a ideologia</span>.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold border-b mb-2 text-blue-800">Gatilhos de Identificação</h4>
+                        <ul class="text-sm">
+                            <li>• <strong>Vocaivos/Imperativos</strong> = Conativa</li>
+                            <li>• <strong>"Eu acho", "Sinto"</strong> = Emotiva</li>
+                            <li>• <strong>Dados técnicos/Estatísticas</strong> = Referencial</li>
+                            <li>• <strong>"Defini-se como..."</strong> = Metalinguagem</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p class="italic text-sm text-gray-500 mt-2">Dica: Se a questão mencionar "Polifonia", procure por várias vozes ou opiniões dentro do mesmo texto.</p>
+        </section>
+
+        <!-- PARTE 3: ANÁLISE CEFETMINAS -->
+        <section>
+            <h2 class="section-title text-2xl uppercase">3. Tendências e 'Peguinhas' da CEFETMINAS</h2>
+            
+            <div class="banca-alert">
+                <h4 class="font-bold text-red-700 mb-2">⚠️ O Peguinha do "Referente"</h4>
+                <p>A banca costuma colocar textos técnicos (de Informática) e perguntar a função. Muitos alunos marcam "Referencial" automaticamente. <span class="highlight">CUIDADO:</span> Se o manual de instalação der ordens diretas (Clique aqui, Baixe agora), a função predominante passa a ser a **Conativa**.</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="p-4 border rounded-lg bg-gray-50">
+                    <h4 class="font-bold text-gray-800">Tendência 1: Textos Multimodais</h4>
+                    <p>A CEFETMINAS ama charges e tirinhas (Mafalda, Hagar, Calvin). Nelas, a <span class="highlight">Ironia</span> é a rainha. A questão geralmente pede para identificar o elemento que gera o humor. Quase sempre é a quebra de expectativa entre o que é dito e o que é feito.</p>
+                </div>
+
+                <div class="p-4 border rounded-lg bg-gray-50">
+                    <h4 class="font-bold text-gray-800">Tendência 2: Intertextualidade em Anúncios</h4>
+                    <p>Espere questões que cruzam um quadro famoso (ex: Monalisa) com um anúncio de tecnologia. Isso é <span class="highlight">Intertextualidade por Alusão</span>. Se a intenção for apenas copiar o estilo, é Pastiche; se for para rir, é Paródia.</p>
+                </div>
+
+                <div class="p-4 border rounded-lg bg-gray-50">
+                    <h4 class="font-bold text-gray-800">Tendência 3: A Função Poética fora do Poema</h4>
+                    <p>Eles cobram a função poética em **slogans publicitários** de empresas de tecnologia (ex: "Think Different"). O foco não é a informação, mas a sonoridade e o impacto da frase.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOTÃO FINAL -->
+        <div class="mt-20 text-center">
+            <hr class="mb-10">
+            <p class="text-gray-500 mb-6">Pronto para testar seus conhecimentos?</p>
+            <a href="5questoes.html" class="inline-block bg-black text-white px-12 py-4 rounded-md font-bold text-lg hover:bg-gray-800 transition-all transform hover:-translate-y-1">
+                ACESSAR BANCO DE QUESTÕES
+            </a>
+            <p class="mt-6 text-xs text-gray-400">Desenvolvido para o programa de treinamento IFAM 2024/2025</p>
+        </div>
+    </main>
+
+</body>
+</html>

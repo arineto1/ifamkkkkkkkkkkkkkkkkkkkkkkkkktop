@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado FCM/CEFETMINAS - Linguagem e Discurso</title>
+    <style>
+        :root {
+            --bg-color: #fdfdfd;
+            --text-color: #2c3e50;
+            --accent-color: #34495e;
+            --border-color: #e0e0e0;
+            --success-color: #27ae60;
+            --error-color: #c0392b;
+            --highlight-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.65;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .intro-box {
+            background-color: var(--highlight-bg);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px 25px;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .text-base {
+            background-color: #f4f7f6;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-style: italic;
+            border-left: 3px solid #ccc;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .option-item:hover {
+            background-color: #f0f4f8;
+            border-color: var(--accent-color);
+        }
+
+        .option-item input {
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+
+        .option-item.selected {
+            background-color: #e8f0fe;
+            border-color: #4285f4;
+        }
+
+        .submit-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2c3e50;
+            transform: translateY(-2px);
+        }
+
+        #results {
+            display: none;
+            margin-top: 50px;
+        }
+
+        .score-board {
+            text-align: center;
+            background: var(--accent-color);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .resolution-card {
+            margin-top: 20px;
+            padding: 20px;
+            border-top: 1px dashed #ccc;
+            background-color: #fafafa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .badge-correct { background-color: var(--success-color); color: white; }
+        .badge-wrong { background-color: var(--error-color); color: white; }
+
+        .explanation {
+            font-size: 0.95rem;
+            margin-top: 10px;
+            color: #444;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        strong { color: #000; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Especializado: FCM/CEFETMINAS</h1>
+        <p>Funções da Linguagem, Intertextualidade, Paródia e Ironia</p>
+    </header>
+
+    <div class="intro-box">
+        Este simulado reflete o perfil da banca <strong>Fundação CEFETMINAS (FCM)</strong>, focada em Linguística Textual e Análise do Discurso. Responda às 10 questões abaixo para avaliar sua competência leitora e domínio dos tópicos discursivos.
+    </div>
+
+    <form id="quizForm">
+        <!-- Questão 01 -->
+        <div class="question-card">
+            <strong>QUESTÃO 01: Funções da Linguagem e Intencionalidade</strong>
+            <div class="text-base">
+                "Como os assaltos crescem dia a dia, não podendo contê-los, a PM, sabiamente, dá conselhos aos cidadãos para serem menos assaltados:<br>
+                I. Não demonstre que carrega dinheiro.<br>
+                II. Jamais deixe objetos à vista, dentro do carro.<br>
+                III. Levante todos os vidros, mesmo em movimento.<br>
+                IV. Não deixe documentos no veículo. (...)"<br>
+                (FERNANDES, Millôr. Prevenção contra assaltos.)
+            </div>
+            <p>Considerando a organização discursiva do texto de Millôr Fernandes e o uso das formas verbais, assinale a opção que indica corretamente a função da linguagem predominante e sua justificativa:</p>
+            <div class="options" data-q="0">
+                <label class="option-item"><input type="radio" name="q0" value="A"> <span>A) <strong>Referencial</strong>, pois o texto se estrutura como um relatório objetivo sobre o aumento da violência urbana nas grandes cidades.</span></label>
+                <label class="option-item"><input type="radio" name="q0" value="B"> <span>B) <strong>Emotiva</strong>, dado que o foco central é a expressão do medo e da insegurança pessoal do narrador diante da criminalidade.</span></label>
+                <label class="option-item"><input type="radio" name="q0" value="C"> <span>C) <strong>Conativa</strong>, caracterizada pelo emprego de verbos no modo imperativo, visando orientar ou persuadir o comportamento do interlocutor.</span></label>
+                <label class="option-item"><input type="radio" name="q0" value="D"> <span>D) <strong>Fática</strong>, uma vez que o autor busca testar o canal de comunicação com o leitor através de perguntas retóricas.</span></label>
+                <label class="option-item"><input type="radio" name="q0" value="E"> <span>E) <strong>Metalinguística</strong>, pois o texto se propõe a redefinir o conceito jurídico de "assalto" e "prevenção".</span></label>
+            </div>
+        </div>
+
+        <!-- Questão 02 -->
+        <div class="question-card">
+            <strong>QUESTÃO 02: Metalinguagem e Neologismo</strong>
+            <div class="text-base">
+                "Há o <strong>hipotrélico</strong>. O termo é novo, de impesquisada origem e ainda sem definição que lhe apanhe em todas as pétalas o significado. Sabe-se, só, que vem do bom português. Para a prática, tome-se hipotrélico querendo dizer: antipodático, sengraçante imprizido; ou, talvez, vice-dito: indivíduo pedante, importuno, agudo, falto de respeito para com a opinião alheia."<br>
+                (ROSA, João Guimarães. Tutaméia: terceiras estórias.)
+            </div>
+            <p>No fragmento acima, o narrador apresenta e define um termo neológico. Esse procedimento de utilizar o código linguístico para discorrer sobre o próprio código evidencia a predominância da função:</p>
+            <div class="options" data-q="1">
+                <label class="option-item"><input type="radio" name="q1" value="A"> <span>A) <strong>Poética</strong>, focada exclusivamente na sonoridade das palavras inventadas, sem preocupação com o sentido.</span></label>
+                <label class="option-item"><input type="radio" name="q1" value="B"> <span>B) <strong>Metalinguística</strong>, pois a linguagem é utilizada como objeto de análise para explicar e conceituar o termo "hipotrélico".</span></label>
+                <label class="option-item"><input type="radio" name="q1" value="C"> <span>C) <strong>Fática</strong>, caracterizada pela tentativa de manter a atenção do leitor sobre o ato de leitura.</span></label>
+                <label class="option-item"><input type="radio" name="q1" value="D"> <span>D) <strong>Referencial</strong>, dado que o foco é a descrição objetiva de um verbete dicionarizado e de uso corrente.</span></label>
+                <label class="option-item"><input type="radio" name="q1" value="E"> <span>E) <strong>Emotiva</strong>, pois o narrador prioriza a expressão de seus sentimentos de angústia em relação à língua portuguesa.</span></label>
+            </div>
+        </div>
+
+        <!-- Questão 03 -->
+        <div class="question-card">
+            <strong>QUESTÃO 03: Intertextualidade e Paródia Musical</strong>
+            <p><strong>Texto I:</strong> "Ai, meu Deus, que saudade da Amélia / Aquilo sim é que era mulher / Às vezes passava fome ao meu lado / E achava bonito não ter o que comer" (Ataulfo Alves; Mário Lago)</p>
+            <p><strong>Texto II:</strong> "A despeito de tanto mestrado / Ganha menos que o namorado / E não entende o porquê / [...] / Vira a mesa, assume o jogo / Faz questão de se cuidar / Nem serva, nem objeto / Já não quer ser o outro / Hoje ela é um também" (Pitty; Mendonça, Martin)</p>
+            <p>Ao retomar a figura da mulher idealizada no samba para subverter suas características de submissão, o Texto II estabelece uma relação intertextual classificada como:</p>
+            <div class="options" data-q="2">
+                <label class="option-item"><input type="radio" name="q2" value="A"> <span>A) <strong>Citação</strong>, pois transcreve literalmente os versos da música original para reafirmar seu valor histórico.</span></label>
+                <label class="option-item"><input type="radio" name="q2" value="B"> <span>B) <strong>Paráfrase</strong>, pois reafirma a ideologia do texto de origem com outras palavras, mantendo a visão tradicional da mulher.</span></label>
+                <label class="option-item"><input type="radio" name="q2" value="C"> <span>C) <strong>Pastiche</strong>, pois imita o estilo musical do samba sem intenção crítica ou transformadora.</span></label>
+                <label class="option-item"><input type="radio" name="q2" value="D"> <span>D) <strong>Paródia</strong>, pois promove uma releitura que inverte e critica os valores sociais e comportamentais do texto original.</span></label>
+                <label class="option-item"><input type="radio" name="q2" value="E"> <span>E) <strong>Epígrafe</strong>, pois utiliza o texto antigo apenas como introdução decorativa, sem relação temática profunda.</span></label>
+            </div>
+        </div>
+
+        <!-- Questão 04 -->
+        <div class="question-card">
+            <strong>QUESTÃO 04: Função Referencial e Texto Técnico</strong>
+            <div class="text-base">
+                "<strong>Dispepsia</strong>: s.f. Med. Dificuldade de digestão; sensação de desconforto digestivo, especialmente de peso ou plenitude, que ocorre após as refeições. Pode ser acompanhada de náuseas, vômitos e azia."<br>
+                (Dicionário Houaiss da Língua Portuguesa.)
+            </div>
+            <p>Assinale a alternativa correta sobre a função da linguagem predominante no verbete acima, considerando seu objetivo comunicativo principal:</p>
+            <div class="options" data-q="3">
+                <label class="option-item"><input type="radio" name="q3" value="A"> <span>A) <strong>Metalinguística</strong>, pois o foco exclusivo é a análise gramatical e etimológica da palavra "dispepsia".</span></label>
+                <label class="option-item"><input type="radio" name="q3" value="B"> <span>B) <strong>Referencial</strong>, pois o texto prioriza a transmissão objetiva de informações sobre o referente (a condição médica), utilizando linguagem denotativa.</span></label>
+                <label class="option-item"><input type="radio" name="q3" value="C"> <span>C) <strong>Poética</strong>, pois há uma preocupação central com o ritmo, a rima e a sonoridade na descrição dos sintomas.</span></label>
+                <label class="option-item"><input type="radio" name="q3" value="D"> <span>D) <strong>Apelativa</strong>, pois o texto utiliza verbos no imperativo para convencer o leitor a procurar tratamento médico imediato.</span></label>
+                <label class="option-item"><input type="radio" name="q3" value="E"> <span>E) <strong>Emotiva</strong>, pois o texto é construído em primeira pessoa para expressar o sofrimento subjetivo do paciente.</span></label>
+            </div>
+        </div>
+
+        <!-- Questão 05 -->
+        <div class="question-card">
+            <strong>QUESTÃO 05: Leitura de Imagem e Ironia</strong>
+            <div class="text-base">
+                [Charge "Fake News" de Quinho: Personagens comentando sobre a maravilha da "era da informação" enquanto são atingidos por uma avalanche de lixo saindo de um smartphone.]
+            </div>
+            <p>Na charge descrita, a construção de sentido apoia-se fundamentalmente em uma figura de linguagem que expressa o contrário do que o discurso verbal sugere. Essa figura é:</p>
+            <div class="options" data-q="4">
+                <label class="option-item"><input type="radio" name="q4" value="A"> <span>A) <strong>Sinestesia</strong>, pela mistura de sensações auditivas e visuais causadas pelo lixo.</span></label>
+                <label class="option-item"><input type="radio" name="q4" value="B"> <span>B) <strong>Ironia</strong>, pelo contraste agudo entre a expectativa positiva do discurso ("era da informação") e a realidade degradante apresentada visualmente.</span></label>
+                <label class="option-item"><input type="radio" name="q4" value="C"> <span>C) <strong>Metonímia</strong>, pelo uso da parte (o celular) para representar o todo (a indústria tecnológica.</span></label>
+                <label class="option-item"><input type="radio" name="q4" value="D"> <span>D) <strong>Eufemismo</strong>, pela tentativa de suavizar a gravidade do problema das notícias falsas.</span></label>
+                <label class="option-item"><input type="radio" name="q4" value="E"> <span>E) <strong>Prosopopeia</strong>, pela atribuição de vida e movimento aos objetos inanimados da cena.</span></label>
+            </div>
+        </div>
+
+        <!-- Questão 06 -->
+        <div class="question-card">
+            <strong>QUESTÃO 06: O Objeto Livro e a Metalinguagem</strong>
+            <p>Título de capa de livro: <strong>"Quem matou o livro policial?"</strong>, de Luiz Antonio Aguiar.</p>
+            <p>Esse recurso, que discute o destino do romance policial dentro de uma obra que dialoga com esse gênero, configura predominantemente:</p>
+            <div class="options" data-q="5">
+                <label class="option-item"><input type="radio" name="q5" value="A"> <span>A) <strong>Função Fática</strong>, pois o título serve apenas para chamar a atenção do leitor na prateleira.</span></label>
+                <label class="option-item"><input type="radio" name="q5" value="B"> <span>B) <strong>Metonímia e Intertextualidade</strong>, ao usar o livro físico para representar seus autores.</span></label>
+                <label class="option-item"><input type="radio" name="q5" value="C"> <span>C) <strong>Metalinguagem e Personificação</strong>, ao transformar o "livro policial" em vítima de um crime, permitindo que a literatura discuta a própria literatura.</span></label>
+                <label class="option-item"><input type="radio" name="q5" value="D"> <span>D) <strong>Função Emotiva</strong>, para expressar a tristeza do autor pelo fim dos livros impressos.</span></label>
+                <label class="option-item"><input type="radio" name="q5" value="E"> <span>E) <strong>Comparação</strong>, ao igualar explicitamente o livro a um ser humano mortal.</span></label>
+            </div>
+        </div>
+
+        <!-- Questão 07 -->
+        <div class="question-card">
+            <strong>QUESTÃO 07: Diálogo Temático e Figuras de Linguagem</strong>
+            <p><strong>Texto I (Camões):</strong> "Amor é fogo que arde sem se ver; / É ferida que dói e não se sente;"</p>
+            <p><strong>Texto II (Lima Barreto):</strong> "(...) dá entusiasmo e abatimento, que encoraja e entibia; que faz esperar e desesperar, isso tudo, quase a um tempo..."</p>
+            <p>As palavras do narrador de Clara dos Anjos associam-se ao poema de Camões pela natureza contraditória do amor. A relação se dá pelo uso recorrente de:</p>
+            <div class="options" data-q="6">
+                <label class="option-item"><input type="radio" name="q6" value="A"> <span>A) <strong>Antíteses</strong>, aproximando termos de sentidos opostos para enfatizar a natureza contraditória e ambígua do amor.</span></label>
+                <label class="option-item"><input type="radio" name="q6" value="B"> <span>B) <strong>Hipérboles</strong>, exagerando desmedidamente o sofrimento físico dos amantes.</span></label>
+                <label class="option-item"><input type="radio" name="q6" value="C"> <span>C) <strong>Ironia</strong>, ridicularizando a ingenuidade daqueles que se apaixonam.</span></label>
+                <label class="option-item"><input type="radio" name="q6" value="D"> <span>D) <strong>Eufemismos</strong>, suavizando a dor e a tragédia inerentes à paixão romântica.</span></label>
+                <label class="option-item"><input type="radio" name="q6" value="E"> <span>E) <strong>Pleonasmos</strong>, repetindo desnecessariamente a mesma ideia de felicidade plena.</span></label>
+            </div>
+        </div>
+
+        <!-- Questão 08 -->
+        <div class="question-card">
+            <strong>QUESTÃO 08: Metáfora Visual em Tirinhas</strong>
+            <div class="text-base">
+                [Tirinha de Laerte: Um homem vestido com beca segura um aspirador de pó e um diploma. Ele começa a "aspirar" o ambiente.]
+            </div>
+            <p>A justaposição do traje acadêmico com o aspirador de pó sugere uma construção figurada que pode ser interpretada como:</p>
+            <div class="options" data-q="7">
+                <label class="option-item"><input type="radio" name="q7" value="A"> <span>A) <strong>Aspirar ao sucesso</strong>, brincando com a polissemia do verbo "aspirar" (desejar) e a ação literal do objeto.</span></label>
+                <label class="option-item"><input type="radio" name="q7" value="B"> <span>B) <strong>Pleonasmo visual</strong>, reforçando a ideia de que a formatura é uma limpeza espiritual.</span></label>
+                <label class="option-item"><input type="radio" name="q7" value="C"> <span>C) <strong>Onomatopeia</strong>, sugerindo o som ruidoso das cerimônias de colação de grau.</span></label>
+                <label class="option-item"><input type="radio" name="q7" value="D"> <span>D) <strong>Anacoluto</strong>, pois a imagem apresenta uma quebra sintática que impede qualquer interpretação lógica.</span></label>
+                <label class="option-item"><input type="radio" name="q7" value="E"> <span>E) <strong>Função Referencial</strong>, documentando de forma realista como são as formaturas modernas.</span></label>
+            </div>
+        </div>
+
+        <!-- Questão 09 -->
+        <div class="question-card">
+            <strong>QUESTÃO 09: Estética Narrativa e Influência Cinematográfica</strong>
+            <div class="text-base">
+                "A mulher levanta o braço. Está no passeio. Não tem pressa, mas levanta o braço e acena com a mão. O táxi não para. Está vazio, mas não para. A mulher veste calças elegantes, castanhas. [...] O plano agora abre-se mais."<br>
+                (TAVARES, Gonçalo M. O Táxi.)
+            </div>
+            <p>O foco em detalhes visuais externos e o uso de termos como "O plano agora abre-se mais" indicam uma influência direta da:</p>
+            <div class="options" data-q="8">
+                <label class="option-item"><input type="radio" name="q8" value="A"> <span>A) <strong>Linguagem Fotográfico-Cinematográfica</strong>, aproximando a narrativa de um roteiro ou descrição de câmera.</span></label>
+                <label class="option-item"><input type="radio" name="q8" value="B"> <span>B) <strong>Linguagem Jornalística</strong>, focada apenas na imparcialidade e na datação dos fatos.</span></label>
+                <label class="option-item"><input type="radio" name="q8" value="C"> <span>C) <strong>Linguagem Oral Coloquial</strong>, reproduzindo fielmente e sem filtros uma conversa de rua.</span></label>
+                <label class="option-item"><input type="radio" name="q8" value="D"> <span>D) <strong>Função Apelativa</strong>, tentando convencer o leitor a utilizar serviços de transporte público.</span></label>
+                <label class="option-item"><input type="radio" name="q8" value="E"> <span>E) <strong>Função Metalinguística</strong>, onde o foco principal é discutir as regras gramaticais da língua portuguesa.</span></label>
+            </div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card">
+            <strong>QUESTÃO 10: Variação Linguística e Identidade</strong>
+            <div class="text-base">
+                "Ah, pô, a boa night só quando eu saio com a galera e sabe qual é? E tipo assim... Aí é irado, sabe qual é? Geral se amarra assim e pô só isso."
+            </div>
+            <p>O uso intensivo de gírias e marcadores conversacionais revela uma marca explícita de:</p>
+            <div class="options" data-q="9">
+                <label class="option-item"><input type="radio" name="q9" value="A"> <span>A) <strong>Norma Culta Padrão</strong>, adequada a situações formais de entrevista acadêmica.</span></label>
+                <label class="option-item"><input type="radio" name="q9" value="B"> <span>B) <strong>Variação Diatópica (Regional)</strong>, indicando exclusivamente a procedência geográfica do falante.</span></label>
+                <label class="option-item"><input type="radio" name="q9" value="C) <span>C) <strong>Variação Diastrática (Social)</strong>, servindo como código de identidade e pertencimento a um grupo social específico (jovens).</span></label>
+                <label class="option-item"><input type="radio" name="q9" value="D"> <span>D) <strong>Linguagem Técnica (Jargão)</strong>, específica de uma profissão científica.</span></label>
+                <label class="option-item"><input type="radio" name="q9" value="E"> <span>E) <strong>Função Poética</strong>, devido à preocupação métrica e rítmica na construção das frases.</span></label>
+            </div>
+        </div>
+
+        <div class="submit-container">
+            <button type="button" onclick="finishQuiz()">Finalizar Simulado e Ver Resoluções</button>
+        </div>
+    </form>
+
+    <div id="results">
+        <div class="score-board">
+            <h2>Resultado Final</h2>
+            <p id="scoreText" style="font-size: 1.5rem;"></p>
+        </div>
+        <div id="resolutionsContainer"></div>
+    </div>
+
+    <footer>
+        Fundação CEFETMINAS - Documento de Estudo Técnico • 2024
+    </footer>
+</div>
+
+<script>
+    const correctAnswers = ["C", "B", "D", "B", "B", "C", "A", "A", "A", "C"];
+    const resolutions = [
+        "A Função Conativa (ou Apelativa) é centrada no receptor. No texto de Millôr, o uso do Imperativo ('Não demonstre', 'Levante') visa orientar o comportamento do interlocutor.",
+        "A Função Metalinguística ocorre quando o código se volta sobre si mesmo. Um texto que define uma palavra (neologismo de Rosa) é metalinguístico por excelência.",
+        "A paródia é a intertextualidade da subversão. Pitty retoma a 'Amélia' original para criticar e inverter os valores de submissão do samba.",
+        "Em verbetes que descrevem fenômenos (doenças, objetos), a predominância é da Função Referencial, pois o foco é a transmissão objetiva de informações sobre o referente.",
+        "A Ironia consiste em mostrar o contrário do que se enuncia. A charge expõe a contradição entre a 'era da informação' e a realidade do 'lixo' informativo.",
+        "O livro discute o próprio gênero 'livro policial' (Metalinguagem) e atribui vida/morte ao gênero literário (Personificação).",
+        "A Antítese baseia-se na aproximação de opostos ('fogo/não se vê', 'encoraja/entibia'). Ambos os autores usam contrastes para descrever o amor.",
+        "A tirinha brinca com a polissemia do verbo 'aspirar'. O formando deseja (aspira) o sucesso, mas visualmente está realizando uma limpeza.",
+        "Gonçalo M. Tavares utiliza uma escrita que mimetiza a câmera de cinema, focada no que se vê e em termos técnicos como 'plano'.",
+        "Variação Diastrática é aquela relacionada a grupos sociais ou faixas etárias. As gírias marcam o pertencimento do falante à tribo urbana juvenil."
+    ];
+
+    // Highlight selected option
+    document.querySelectorAll('.option-item input').forEach(input => {
+        input.addEventListener('change', function() {
+            const parent = this.closest('.options');
+            parent.querySelectorAll('.option-item').forEach(li => li.classList.remove('selected'));
+            this.closest('.option-item').classList.add('selected');
+        });
+    });
+
+    function finishQuiz() {
+        const form = document.getElementById('quizForm');
+        let score = 0;
+        let htmlResolutions = "<h3>Resoluções Detalhadas:</h3>";
+
+        for (let i = 0; i < 10; i++) {
+            const userAnswer = form['q' + i].value;
+            const isCorrect = userAnswer === correctAnswers[i];
+            
+            if (isCorrect) score++;
+
+            htmlResolutions += `
+                <div class="question-card">
+                    <strong>Questão ${i + 1}</strong><br>
+                    <span class="badge ${isCorrect ? 'badge-correct' : 'badge-wrong'}">
+                        ${isCorrect ? 'Você Acertou!' : 'Você Errou!'} (Sua resposta: ${userAnswer || 'Nenhuma'} | Correta: ${correctAnswers[i]})
+                    </span>
+                    <div class="resolution-card">
+                        <strong>Resolução:</strong>
+                        <p class="explanation">${resolutions[i]}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        document.getElementById('scoreText').innerText = `Você acertou ${score} de 10 questões (${(score/10)*100}%)`;
+        document.getElementById('resolutionsContainer').innerHTML = htmlResolutions;
+        document.getElementById('results').style.display = 'block';
+        
+        window.scrollTo({
+            top: document.getElementById('results').offsetTop - 20,
+            behavior: 'smooth'
+        });
+    }
+</script>
+
+</body>
+</html>
