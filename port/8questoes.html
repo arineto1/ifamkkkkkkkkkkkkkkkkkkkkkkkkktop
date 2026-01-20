@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado CEFETMINAS: Variedades Linguísticas</title>
+    <style>
+        :root {
+            --bg-color: #f9f9f7;
+            --container-bg: #ffffff;
+            --text-color: #2c2c2c;
+            --accent-color: #004aad;
+            --border-color: #e0e0e0;
+            --success-color: #2e7d32;
+            --error-color: #c62828;
+            --highlight-bg: #f0f4f8;
+            --resolution-bg: #fff8e1;
+            --resolution-border: #ffecb3;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        p.intro {
+            font-style: italic;
+            color: #555;
+        }
+
+        .text-block {
+            background-color: var(--highlight-bg);
+            padding: 20px;
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        .text-title {
+            font-weight: bold;
+            font-family: 'Segoe UI', sans-serif;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .question-block {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .enunciado {
+            margin-bottom: 20px;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option-item {
+            margin-bottom: 12px;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .option-label:hover {
+            background-color: #f5f5f5;
+        }
+
+        .option-input {
+            margin-right: 12px;
+            margin-top: 5px;
+        }
+
+        /* Estilos de Feedback */
+        .correct-answer {
+            background-color: #e8f5e9 !important;
+            border: 1px solid var(--success-color) !important;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .wrong-answer {
+            background-color: #ffebee !important;
+            border: 1px solid var(--error-color) !important;
+            color: var(--error-color);
+        }
+
+        .resolution-box {
+            display: none; /* Escondido inicialmente */
+            margin-top: 20px;
+            background-color: var(--resolution-bg);
+            border: 1px solid var(--resolution-border);
+            padding: 20px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
+        .resolution-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            color: #8d6e63;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-submit:hover {
+            background-color: #003380;
+        }
+
+        #score-section {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .score-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Simulado Fundação CEFETMINAS</h1>
+        <p class="intro">Variedades linguísticas e adequação social entre os registros formal e informal da escrita padrão.</p>
+    </header>
+
+    <div id="score-section">
+        <h2>Resultado Final</h2>
+        <div class="score-display" id="final-score"></div>
+        <p>Confira abaixo as resoluções detalhadas de cada questão.</p>
+    </div>
+
+    <form id="quiz-form">
+
+        <!-- TEXTO I -->
+        <div class="text-block">
+            <span class="text-title">TEXTO I – Para as questões 01 e 02</span>
+            <strong>Fragmento de E-mail Corporativo</strong><br>
+            De: Coordenador de Logística<br>
+            Para: Diretoria Geral<br>
+            Assunto: Situação da Frota<br><br>
+            "Prezados,<br>
+            Venho por meio desta comunicar que a situação tá russa. A galera da manutenção deu o cano na gente e os caminhões tão tudo parado no pátio. Se a gente não desenrolar isso logo, vai dar ruim nas entregas da semana. Aguardo uma luz de vocês."
+        </div>
+
+        <!-- QUESTÃO 01 -->
+        <div class="question-block" id="q1-block">
+            <div class="question-title">QUESTÃO 01</div>
+            <div class="enunciado">
+                A respeito da adequação do Texto I ao contexto de comunicação empresarial hierarquizada, assinale a alternativa que apresenta a análise CORRETA segundo os preceitos da sociolinguística e da redação oficial:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="A" class="option-input"> A) O texto é adequado, pois, na era digital, a objetividade e a rapidez da informação sobrepõem-se às exigências arcaicas de formalidade, sendo o uso de gírias um recurso de agilidade.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="B" class="option-input"> B) O texto apresenta grave inadequação de registro (variação diafásica), uma vez que utiliza marcas de oralidade e gírias ("tá russa", "deu o cano", "dar ruim") incompatíveis com a formalidade esperada na interlocução com a Diretoria.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="C" class="option-input"> C) As construções "tão tudo parado" e "a gente" representam variações diatópicas exclusivas da região Sudeste, devendo ser preservadas como patrimônio cultural do falante, independentemente do contexto corporativo.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q1" value="D" class="option-input"> D) O texto exemplifica o uso correto da norma-padrão na modalidade escrita, caracterizando-se apenas por um estilo pessoal mais despojado do autor, sem prejuízo à clareza da mensagem.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q1">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <ul>
+                    <li><strong>Análise:</strong> O e-mail contém marcas explícitas de oralidade e gíria ("tá russa", "dar ruim", "galera"). O contexto é <strong>vertical</strong> (Coordenador para Diretoria) e o gênero é <strong>relatório de problema</strong> (Situação da Frota).</li>
+                    <li><strong>Fundamentação:</strong> A FCM avalia a <strong>adequação</strong>. O ambiente corporativo exige polidez e norma culta em comunicações de crise ou hierárquicas. O uso de gíria sugere desleixo ou falta de profissionalismo.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 02 -->
+        <div class="question-block" id="q2-block">
+            <div class="question-title">QUESTÃO 02</div>
+            <div class="enunciado">
+                No trecho <em>"os caminhões tão tudo parado"</em>, observa-se um fenômeno de concordância frequente na variedade popular do português brasileiro. Sob a ótica da linguística variacionista adotada pela banca, esse fenômeno deve ser compreendido como:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="A" class="option-input"> A) Um erro grosseiro de gramática que demonstra a incapacidade cognitiva do falante de estabelecer relações lógicas entre sujeito e predicado.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="B" class="option-input"> B) Uma regra variável de concordância nominal e verbal, típica de dialetos de menor prestígio (variação diastrática), onde a marca de plural ocorre apenas no primeiro elemento do sintagma (o artigo/determinante), dispensando a redundância nos demais.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="C" class="option-input"> C) Uma figura de linguagem conhecida como silepse de número, utilizada intencionalmente pelo autor para gerar efeito estilístico de ênfase na quantidade de caminhões.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q2" value="D" class="option-input"> D) Um vício de linguagem decorrente da pressa na digitação, não correspondendo a nenhuma regra sistêmica da língua portuguesa falada ou escrita.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q2">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <ul>
+                    <li><strong>Análise:</strong> "Os caminhões tão tudo parado". Sujeito plural, verbo e predicativo sem marca de plural.</li>
+                    <li><strong>Fundamentação:</strong> A linguística explica que no português popular vigora a regra da <strong>não-redundância</strong>. Se o artigo "Os" já marca o plural, o resto da frase não precisa marcar. Isso é uma regra sistêmica de <strong>variação diastrática</strong> (classes populares), não um "erro cognitivo".</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TEXTO II -->
+        <div class="text-block">
+            <span class="text-title">TEXTO II – Para a questão 03</span>
+            "Variedades linguísticas são as variações que uma língua apresenta, de acordo com as condições sociais, culturais, regionais e históricas em que é utilizada."<br>
+            (CEREJA & MAGALHÃES, 2013, p.30).
+        </div>
+
+        <!-- QUESTÃO 03 -->
+        <div class="question-block" id="q3-block">
+            <div class="question-title">QUESTÃO 03</div>
+            <div class="enunciado">
+                Considerando a definição de Cereja & Magalhães e a classificação das variedades linguísticas, associe corretamente a <strong>Coluna 1</strong> (Tipos de Variação) com a <strong>Coluna 2</strong> (Exemplos/Definições), identificando a sequência CORRETA.<br><br>
+                <strong>Coluna 1</strong><br>
+                1. Variação Diatópica<br>
+                2. Variação Diastrática<br>
+                3. Variação Diafásica<br>
+                4. Variação Diacrônica<br><br>
+                <strong>Coluna 2</strong><br>
+                ( ) O uso da palavra "Vosmecê" em textos do século XIX em comparação ao "Você" atual.<br>
+                ( ) A diferença entre o falar de um advogado em uma audiência e o falar desse mesmo advogado em um churrasco com amigos.<br>
+                ( ) A utilização do termo "macaxeira" no Nordeste e "aipim" no Sul para designar o mesmo vegetal.<br>
+                ( ) O uso de gírias específicas por grupos de skatistas ou o jargão técnico de médicos, marcando o grupo social.<br><br>
+                A sequência correta, de cima para baixo, é:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="A" class="option-input"> A) 4, 3, 1, 2.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="B" class="option-input"> B) 1, 2, 4, 3.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="C" class="option-input"> C) 4, 2, 1, 3.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q3" value="D" class="option-input"> D) 3, 4, 2, 1.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q3">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: A</strong></p>
+                <ul>
+                    <li><em>Vosmecê vs. Você</em> = Tempo = <strong>4. Diacrônica</strong>.</li>
+                    <li><em>Advogado (Audiência vs. Churrasco)</em> = Situação = <strong>3. Diafásica</strong>.</li>
+                    <li><em>Macaxeira vs. Aipim</em> = Região = <strong>1. Diatópica</strong>.</li>
+                    <li><em>Skatistas/Médicos</em> = Grupo Social = <strong>2. Diastrática</strong>.</li>
+                    <li>Sequência: 4, 3, 1, 2.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TEXTO III -->
+        <div class="text-block">
+            <span class="text-title">TEXTO III – Para a questão 04</span>
+            <strong>Campanha Publicitária do Governo (Fictícia)</strong><br>
+            <em>Imagem:</em> Jovem usando boné para trás.<br>
+            <em>Texto:</em> "Não banque o sem noção! Use camisinha. É nóis na fita contra as ISTs."
+        </div>
+
+        <!-- QUESTÃO 04 -->
+        <div class="question-block" id="q4-block">
+            <div class="question-title">QUESTÃO 04</div>
+            <div class="enunciado">
+                Ao optar pelo uso da expressão "É nóis na fita" e "sem noção" em uma campanha de saúde pública, o emissor oficial realiza uma escolha estratégica. Sobre essa escolha, é CORRETO afirmar que:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="A" class="option-input"> A) Constitui um desvio inaceitável da norma culta, pois documentos e campanhas governamentais devem obrigatoriamente seguir a norma-padrão (Lei nº 8.069), independentemente do público-alvo.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="B" class="option-input"> B) Demonstra o desconhecimento das regras gramaticais por parte da agência de publicidade, comprometendo a credibilidade da informação científica sobre as ISTs.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="C" class="option-input"> C) Representa uma adequação ao perfil do público-alvo (jovens), utilizando o registro coloquial/gíria (variação diastrática e diafásica) como ferramenta pragmática para gerar identificação e aumentar a eficácia da mensagem preventiva.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q4" value="D" class="option-input"> D) Trata-se de uma variação diatópica, uma vez que essas expressões são compreendidas apenas nas periferias das grandes capitais, excluindo a população rural da campanha.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q4">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <ul>
+                    <li><strong>Análise:</strong> Campanha oficial usando gíria ("sem noção", "é nóis").</li>
+                    <li><strong>Fundamentação:</strong> Caso clássico de <strong>pragmática</strong>. A eficácia da comunicação depende da identificação. Usar a linguagem do público-alvo (jovens) cria um vínculo de confiança ("ethos" de proximidade). A adequação aqui não é à norma culta, mas ao <strong>objetivo comunicativo</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- TEXTO IV -->
+        <div class="text-block">
+            <span class="text-title">TEXTO IV – Para a questão 05</span>
+            "O mais importante a enfatizar é que a norma-padrão não é uma variedade linguística: ela é um construto sociocultural, artificial, da mesma natureza dos códigos penais..."<br>
+            (BAGNO, M. <em>Preconceito Linguístico</em>).
+        </div>
+
+        <!-- QUESTÃO 05 -->
+        <div class="question-block" id="q5-block">
+            <div class="question-title">QUESTÃO 05</div>
+            <div class="enunciado">
+                Com base na citação de Marcos Bagno e nos estudos sociolinguísticos contemporâneos, analise as afirmativas a seguir sobre a norma-padrão:<br><br>
+                I. A norma-padrão corresponde à "língua natural" falada pelas elites culturais, sendo adquirida espontaneamente desde o berço, sem necessidade de instrução formal.<br>
+                II. A norma-padrão funciona como um modelo idealizado e codificado, necessário para a uniformidade da escrita oficial e científica, mas não deve ser utilizada como instrumento de discriminação social.<br>
+                III. Por ser um "construto artificial", a norma-padrão deve ser abolida do ensino escolar, dando lugar apenas ao ensino das variedades populares e orais.<br>
+                IV. O domínio da norma-padrão é um fator de mobilidade social e poder, pois é a variedade exigida em situações de prestígio, embora linguisticamente não seja superior às demais.<br><br>
+                Estão CORRETAS apenas as afirmativas:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="A" class="option-input"> A) I e III.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="B" class="option-input"> B) II e IV.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="C" class="option-input"> C) I, II e IV.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q5" value="D" class="option-input"> D) II e III.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q5">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <ul>
+                    <li><strong>Item I (Falso):</strong> Ninguém nasce falando a norma culta. Ela não é natural, é cultural/escolar.</li>
+                    <li><strong>Item II (Verdadeiro):</strong> Ela é um modelo necessário para a padronização oficial, mas não pode justificar preconceito.</li>
+                    <li><strong>Item III (Falso):</strong> Bagno critica o preconceito, mas não defende a abolição do ensino da norma culta.</li>
+                    <li><strong>Item IV (Verdadeiro):</strong> Reconhece o valor sociológico (poder/prestígio) da norma.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 06 -->
+        <div class="question-block" id="q6-block">
+            <div class="question-title">QUESTÃO 06</div>
+            <div class="enunciado">
+                Leia a tirinha a seguir (descrição textual):<br>
+                <em>Quadro 1:</em> Chico Bento diz a Zé Lelé: "Eu prantei umas arvringa no quintar."<br>
+                <em>Quadro 2:</em> Zé Lelé responde: "E carece de muita água?"<br>
+                <em>Quadro 3:</em> Chico: "Só quando o céu num manda chuva."<br><br>
+                A linguagem utilizada pelos personagens Chico Bento e Zé Lelé é caracterizada por fenômenos como o rotacismo (<em>prantei</em>, <em>arvringa</em>) e a redução de ditongos. Para a Fundação CEFETMINAS, essa variedade deve ser classificada predominantemente como:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="A" class="option-input"> A) Variação Diatópica (Regional), marcando a identidade do falante do meio rural ("caipira"), e deve ser respeitada como manifestação cultural legítima, adequada ao contexto dos personagens.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="B" class="option-input"> B) Variação Diacrônica (Histórica), pois reflete o modo como se falava o português no século XVI, preservado intacto no campo.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="C" class="option-input"> C) Variação Diafásica (Situacional), pois os personagens falam assim apenas porque estão entre amigos, mas dominariam a norma culta se estivessem na cidade.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q6" value="D" class="option-input"> D) Desvio Gramatical, devendo ser corrigida em sala de aula para que os alunos não reproduzam os erros de pronúncia na escrita.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q6">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: A</strong></p>
+                <ul>
+                    <li><strong>Análise:</strong> Chico Bento. Rotacismo (l por r).</li>
+                    <li><strong>Fundamentação:</strong> A FCM trata Chico Bento sob a ótica da <strong>identidade cultural</strong>. O falar caipira é uma <strong>variação diatópica</strong> (região rural) e diastrática. A chave da questão é o <strong>respeito</strong> à variedade.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 07 -->
+        <div class="question-block" id="q7-block">
+            <div class="question-title">QUESTÃO 07</div>
+            <div class="enunciado">
+                Analise o período abaixo:<br>
+                <em>"Me disseram que a prova ia ser difícil, mas cheguei lá e vi que não era nada daquilo."</em><br><br>
+                Quanto à colocação pronominal do pronome "Me" no início da frase, assinale a alternativa que reflete a posição da banca em provas de nível superior:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="A" class="option-input"> A) A construção está plenamente correta segundo a gramática normativa tradicional, que aceita a próclise no início de orações absolutas.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="B" class="option-input"> B) Trata-se de uma inadequação à norma-padrão escrita (que exige ênclise: "Disseram-me"), mas é uma construção legítima e majoritária na língua oral brasileira, mesmo entre falantes cultos (brasileirismo sintático).</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="C" class="option-input"> C) É um erro de regência verbal, pois o verbo "dizer" não aceita pronome oblíquo átono.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q7" value="D" class="option-input"> D) Configura uma variação diatópica exclusiva do Nordeste brasileiro, sendo rejeitada pelos falantes cultos do Sul e Sudeste.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q7">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <ul>
+                    <li><strong>Análise:</strong> "Me disseram" (Próclise no início de frase).</li>
+                    <li><strong>Fundamentação:</strong> Para a gramática tradicional, é erro. Para a linguística e a banca FCM, é reconhecido como <strong>brasileirismo sintático</strong>. Na fala brasileira, a próclise é a regra não-marcada. É inadequado na escrita formal rígida, mas legítimo na língua oral.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 08 -->
+        <div class="question-block" id="q8-block">
+            <div class="question-title">QUESTÃO 08</div>
+            <div class="enunciado">
+                Sobre o uso de "estrangeirismos" e "neologismos" na língua portuguesa (temas frequentes no edital da FCM), analise a situação a seguir:<br>
+                Um profissional de TI envia um e-mail: <em>"Precisamos fazer um brainstorm para setar o budget do novo software."</em><br><br>
+                Sobre esse uso, a análise sociolinguística indica que:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="A" class="option-input"> A) O uso excessivo de anglicismos (brainstorm, budget) configura um vício de linguagem que empobrece o vernáculo e dificulta a comunicação, devendo ser evitado sempre que houver equivalente em português.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="B" class="option-input"> B) Trata-se de um jargão profissional (variação diastrática/técnica) que funciona como marca de identidade do grupo de TI, sendo adequado entre pares, mas que pode gerar ruído (inadequação) se direcionado a um público leigo.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="C" class="option-input"> C) Os termos estrangeiros já foram incorporados oficialmente ao vocabulário ortográfico da língua portuguesa, portanto, não há qualquer restrição ao seu uso em documentos oficiais.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q8" value="D" class="option-input"> D) O uso demonstra que o falante possui alto nível cultural e domínio de línguas estrangeiras, o que sempre valoriza o texto escrito.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q8">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: B</strong></p>
+                <ul>
+                    <li><strong>Análise:</strong> <em>Brainstorm, budget, setar</em>.</li>
+                    <li><strong>Fundamentação:</strong> O uso de termos em inglês na área de TI é um <strong>jargão</strong> (variação técnica/diastrática). O problema apontado é o risco de <strong>inadequação diafásica</strong> se usado com quem não é da área, gerando ruído.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 09 -->
+        <div class="question-block" id="q9-block">
+            <div class="question-title">QUESTÃO 09</div>
+            <div class="enunciado">
+                Sobre a relação entre fala e escrita e os níveis de formalidade, classifique as afirmativas abaixo como Verdadeiras (V) ou Falsas (F):<br><br>
+                ( ) A escrita não é a simples transcrição da fala; é um sistema de representação com regras próprias de organização e elaboração.<br>
+                ( ) A informalidade é exclusiva da fala; não existe possibilidade de escrita informal, pois todo texto escrito deve seguir a norma-padrão.<br>
+                ( ) Gêneros digitais como o chat e o WhatsApp permitiram o surgimento de uma modalidade escrita com fortes marcas de oralidade (híbrida), como o uso de emoticons e abreviações fonéticas.<br>
+                ( ) A adequação vocabular exige que se evite a repetição de palavras na escrita formal, utilizando-se recursos de coesão referencial (sinônimos, pronomes), enquanto na fala a repetição é um recurso comum de ênfase e manutenção do turno.<br><br>
+                A sequência correta é:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="A" class="option-input"> A) V, F, V, V.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="B" class="option-input"> B) V, V, F, F.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="C" class="option-input"> C) F, V, V, F.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q9" value="D" class="option-input"> D) V, F, F, V.</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q9">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: A</strong></p>
+                <ul>
+                    <li>(V) Escrita e fala são modalidades distintas.</li>
+                    <li>(F) Existe escrita informal (bilhete, chat).</li>
+                    <li>(V) Gêneros digitais são híbridos (escrita com traços orais).</li>
+                    <li>(V) A repetição é aceitável na fala para ênfase, mas evitada na escrita.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- QUESTÃO 10 -->
+        <div class="question-block" id="q10-block">
+            <div class="question-title">QUESTÃO 10</div>
+            <div class="enunciado">
+                Em um tribunal, um advogado dirige-se ao juiz dizendo:<br>
+                <em>"E aí, meritíssimo! A parada é a seguinte: meu cliente não tem nada a ver com esse rolo."</em><br><br>
+                A reação negativa do juiz a essa fala deve-se a uma quebra da:
+            </div>
+            <ul class="options">
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="A" class="option-input"> A) Variação Diatópica.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="B" class="option-input"> B) Expectativa de Variação Diacrônica.</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="C" class="option-input"> C) Adequação Diafásica (Registro).</label></li>
+                <li class="option-item"><label class="option-label"><input type="radio" name="q10" value="D" class="option-input"> D) Competência Linguística (Gramatical).</label></li>
+            </ul>
+            <div class="resolution-box" id="res-q10">
+                <span class="resolution-title">Resolução:</span>
+                <p><strong>Gabarito: C</strong></p>
+                <ul>
+                    <li><strong>Análise:</strong> Advogado usando gíria ("parada", "rolo") com o juiz.</li>
+                    <li><strong>Fundamentação:</strong> O advogado sabe falar difícil, mas escolheu o registro errado para o momento solene. Isso é erro de <strong>Adequação Diafásica</strong>. O problema não é a gramática, mas a pragmática.</li>
+                </ul>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Finalizar Simulado e Ver Resoluções</button>
+
+    </form>
+</div>
+
+<script>
+    // Gabarito
+    const correctAnswers = {
+        q1: 'B',
+        q2: 'B',
+        q3: 'A',
+        q4: 'C',
+        q5: 'B',
+        q6: 'A',
+        q7: 'B',
+        q8: 'B',
+        q9: 'A',
+        q10: 'C'
+    };
+
+    document.getElementById('quiz-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let score = 0;
+        let total = Object.keys(correctAnswers).length;
+        
+        // Iterar sobre cada questão
+        for (let question in correctAnswers) {
+            const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+            const resolutionBox = document.getElementById(`res-${question}`);
+            const allOptions = document.querySelectorAll(`input[name="${question}"]`);
+            
+            // Mostrar resolução
+            resolutionBox.style.display = 'block';
+            
+            // Desabilitar inputs para evitar mudança após submit
+            allOptions.forEach(input => {
+                input.disabled = true;
+                
+                // Marcar a resposta correta visualmente
+                if (input.value === correctAnswers[question]) {
+                    input.parentElement.classList.add('correct-answer');
+                }
+            });
+
+            if (selectedOption) {
+                if (selectedOption.value === correctAnswers[question]) {
+                    score++;
+                } else {
+                    // Marcar a resposta errada do usuário
+                    selectedOption.parentElement.classList.add('wrong-answer');
+                }
+            }
+        }
+        
+        // Mostrar resultado final
+        const scoreSection = document.getElementById('score-section');
+        const scoreDisplay = document.getElementById('final-score');
+        
+        scoreSection.style.display = 'block';
+        scoreDisplay.textContent = `${score} / ${total} Acertos`;
+        
+        // Rolar suavemente para o topo para ver a nota
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
+
+</body>
+</html>
